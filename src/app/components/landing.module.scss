@@ -1,0 +1,132 @@
+.landing {
+    width: 100%;
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h6 {
+        font-size: 23px;
+        font-weight: 500;
+        margin: 11px;
+        background: linear-gradient(to right, #878bf7, white);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    h1 {
+        font-size: 48px;
+        font-weight: 500;
+        margin: 4px;        
+       
+    }
+
+    .ai span {
+        color: #0911DB;
+        font-weight: 600;
+    }
+    
+
+    .action {
+        margin-top: 48px;
+        display: flex;
+        gap: 24px;
+
+        .call {
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            box-shadow: 0 5px 5px 0px rgba(0,0,0,0.25);
+            transition: all 0.3s ease-out;
+            cursor: pointer;
+
+            &:hover{                
+                background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
+                transform: scale(1.1);
+            }
+        }
+        .case {
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: #9b9bab30;
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            box-shadow: 0 5px 5px 0px rgba(0,0,0,0.25);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+
+            &:hover{
+                background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .landing {
+        margin-top:25%;
+        height: auto; /* Adjust height for mobile devices */
+        padding: 50px 20px; /* Add padding to reduce width */
+
+        h6 {
+            font-size: 18px; /* Smaller text size for mobile */
+            margin: 5px; /* Adjust margin */
+        }
+        h1 {
+            font-size: 30px; /* Smaller text size for mobile */
+            margin: 3px; /* Adjust margin */
+        }
+
+        .action {
+            flex-direction: column; /* Stack buttons vertically */
+            margin-top: 32px; /* Adjust margin top */
+
+            .call, .case {
+                padding: 8px 16px; /* Smaller padding */
+                font-size: 13px; /* Smaller font size */
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .landing{
+        margin-top:20%;
+        // margin-left:5%;
+        
+        h6 {
+            font-size: 14px; 
+        }
+        h1 {
+            font-size: 22px; 
+        }
+        
+        .action .call,.action .case {
+            font-size: 12px; 
+        }
+    }
+}
+
+@media (max-width: 390px) {
+    .landing{
+        margin-top:20%;
+        margin-left:5%;
+        
+        h6 {
+            font-size: 14px; 
+        }
+        h1 {
+            font-size: 20px; 
+        }
+        
+        .action .call,.action .case {
+            font-size: 12px; 
+        }
+    }
+}

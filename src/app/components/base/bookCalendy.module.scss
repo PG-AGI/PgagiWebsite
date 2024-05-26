@@ -1,0 +1,65 @@
+.calendly {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .window {
+        position: relative;
+        width: 80%;
+        height: 80%;
+        max-height: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        border: 1px solid;
+        border-image-source: linear-gradient(113.19deg, rgba(255, 255, 255, 0.09) -0.58%, rgba(153, 153, 153, 0.09) 71.21%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+
+        .closeButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            z-index: 1010; // Ensure it's above other modal contents
+        }
+
+        .widget {
+            position: relative;
+            max-width: 678px;
+            min-height: 850px;
+            width: 100%;
+            height: 100%;
+            // overflow: hidden; // Hides the scrollbar
+
+            > div {
+                height: 100% !important;
+
+                > iframe {
+                    height: 100%;
+                    width: 100%;
+                    overflow: hidden; // Important to also hide scrollbars inside iframe
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .calendly .window {
+        width: 95%;
+        height: 95%;
+    }
+}
