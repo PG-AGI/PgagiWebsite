@@ -18,7 +18,7 @@ export default function Trending() {
 
   return (
     <section className={styles.trending}>
-      <h3>{"Here's What's Trending!"}</h3>
+      <h3>{"What's Trending!"}</h3>
       <div className={styles.trendingList} ref={trendingRef}>
         {trendingList.map((item, i) => (
           <div key={i} className={styles.trendingItem}>

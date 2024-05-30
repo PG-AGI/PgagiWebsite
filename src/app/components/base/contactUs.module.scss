@@ -63,6 +63,36 @@
           background: #d9d9d957;
           box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.356);
           resize: vertical;
+
+          color: fieldtext !important;
+      transition: background-color 5000s ease-in-out 0s;
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        appearance: menulist-button;
+        background: #d9d9d957 !important;
+        color: fieldtext !important;
+        box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
+      }
+
+      &:-moz-autofill,
+      &:-moz-autofill:hover,
+      &:-moz-autofill:focus,
+      &:-moz-autofill:active {
+        appearance: menulist-button;
+        background: #d9d9d957 !important;
+        color: fieldtext !important;
+        box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
+      }
+
+      &:-internal-autofill-selected {
+        appearance: menulist-button;
+        background: #d9d9d957 !important;
+        color: fieldtext !important;
+        box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
+      }
         }
       
         button {

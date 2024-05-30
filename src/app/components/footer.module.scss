@@ -1,238 +1,6 @@
-// .footer {
-//     position: relative;
-//     height: 350px;
-//     display: flex;
-//     flex-direction: column;
-//     padding: 0 100px;
-//     background: linear-gradient(180deg, #0007A7 0%, #000341 100%);
-
-
-//     .wrapper {
-//         position: relative;
-//         flex: 1;
-//         display: flex;
-
-//         .brand {
-//             position: relative;
-//             flex: 1;
-//             display: flex;
-//             flex-direction: column;
-//             align-items: flex-start;
-//             justify-content: center;
-//             gap: 16px;
-
-//             .logo {
-//                 display: flex;
-//                 flex-direction: column;
-                
-                
-
-//                 img {
-//                     width: 65px;
-//                     height: 65px;
-//                 }  
-//                 p {
-//                     font-size: 14px;
-//                     font-weight: 800;
-//                     margin: 1px 0px 0px 8px;                    
-//                 }              
-//             }
-            
-
-//             .social {
-//                 display: flex;
-//                 gap: 8px;
-
-//                 .icon {
-//                     width: 45px;
-//                     height: 45px;
-//                     background: #4c4c4c;
-//                     border-radius: 9999px;
-//                     display: flex;
-//                     align-items: center;
-//                     justify-content: center;
-//                     cursor: pointer;
-
-//                     &:hover {
-//                         background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
-//                     }
-
-//                     a {
-//                         display: flex;
-//                         align-items: center;
-//                         justify-content: center;
-//                     }
-
-//                     img {
-//                         width: 24px;
-//                         height: auto;
-//                         transition: filter 0.3s ease; // Smooth transition for hover effect
-//                     }
-//                 }
-//             }
-//         }
-//         .about {
-//             position: relative;
-//             flex: 1;
-//             display: flex;
-//             justify-content: center;
-//             gap: 70px;
-//             margin-top: 79px;
-
-//             .services{
-//                 display: flex;
-//                 flex-direction: column;
-//                 gap: 4px;
-
-//                 h6{
-//                     font-size: 18px;
-//                     font-weight: 500;
-//                     color: #ffff;
-//                     margin: 0;
-//                     margin-bottom: 18px;
-//                 }
-//                 span{
-//                     font-size: 16px;
-//                     font-weight: 300;
-//                     display: flex;
-//                     flex-direction: column;
-//                     gap: 4px;
-//                     margin-bottom: 8px;
-//                 }
-//             }
-
-//             .list {
-//                 display: flex;
-//                 flex-direction: column;
-//                 gap: 4px;
-
-//                 h6 {
-//                     font-size: 18px;
-//                     font-weight: 500;
-//                     color: #ffff;
-//                     margin: 0;
-//                     margin-bottom: 18px;
-//                 }
-//                 span {
-//                     font-size: 16px;
-//                     font-weight: 300;
-//                     display: flex;
-//                     flex-direction: column;
-//                     gap: 4px;
-//                     margin-bottom: 8px;
-//                 }
-                
-//             }
-//             .company {
-//                 display: flex;
-//                 flex-direction: column;
-//                 gap: 4px;
-
-//                 h6 {
-//                     font-size: 18px;
-//                     font-weight: 500;
-//                     color: #ffff;
-//                     margin: 0;
-//                     margin-bottom: 18px;
-//                 }
-//                 span {
-//                     font-size: 16px;
-//                     font-weight: 300;
-//                     display: flex;
-//                     flex-direction: column;
-//                     gap: 4px;
-//                 }
-//                 a{
-//                     margin-bottom: 8px;
-//                     text-decoration: none;
-//                 }
-//             }
-
-//             // .signUp{
-                
-//             //     display: flex;
-//             //     flex-direction: column;
-//             //     gap: 4px;
-//             //     position: relative;
-//             //     left: 138px;
-
-//             //     h6 {
-//             //         font-size: 18px;
-//             //         font-weight: 500;
-//             //         color: #ffff;
-//             //         margin: 0;
-//             //         margin-bottom: 18px;
-//             //     }
-
-//             //     .input{
-//             //         background: transparent;
-                    
-                
-//             //     }
-//             // }
-
-      
-//             .signUp {
-//                 display: flex;
-//                 flex-direction: column;
-//                 gap: 4px;
-//                 position: relative;
-//                 left: 138px;
-              
-//                 h6 {
-//                   font-size: 18px;
-//                   font-weight: 500;
-//                   color: #ffffff;
-//                   margin: 0;
-//                   margin-bottom: 18px;
-//                 }
-              
-//                 .input {
-//                   input {
-//                     background: transparent;
-//                     border: none;
-//                     border-bottom: 2px solid white;
-//                     padding: 5px 0;
-//                     color: white;
-              
-//                     &::placeholder {
-//                       color: white;
-//                       opacity: 0.6; // Add a slightly lower opacity for the placeholder text
-//                     }
-              
-//                     &:focus {
-//                       outline: none; // Remove the default outline when focused
-//                     }
-//                   }
-//                 }
-//               }
-//   }
-// }
-//         }
-    
-//     .copyright {
-//         position: relative;
-//         width: 100%;
-//         text-align: center;
-//         color: #757575;
-//         font-size: 16px;
-//         font-weight: 500;
-//         padding-top: 24px;
-//         border-top: 1px solid #5f5f5f;
-
-//         &::after {
-//             content: '';
-//             display: block;
-//             height: 50px;
-//         }
-//     }
-// }
-
-
-
 .footer {
     position: relative;
-    height: 1000px;
+    height: 820px;
     display: flex;
     flex-direction: column;
     padding: 0px 190px;
@@ -374,7 +142,7 @@
                 flex-direction: column;
                 gap: 4px;
                 position: relative;
-                transform: translateX(90%);
+                transform: translateX(105%);
             
                 h6 {
                     font-size: 18px;
@@ -459,7 +227,7 @@
           overflow: hidden;
         }
         .pg{
-            margin-top: 135px;
+            margin-top: 45px;
             margin-bottom: -175px;  
             background: linear-gradient(180deg, #FFFFFF 0%, #999999 100%);
             -webkit-background-clip: text;
@@ -473,7 +241,7 @@
             background-clip: text;
             text-align: center;
             color: transparent;    
-            margin-bottom: 136px;      
+            margin-bottom: -71px;      
         }
     }
 
@@ -492,7 +260,7 @@
         &::after {
             content: '';
             display: block;
-            height: 30px;
+            // height: 10px;
         }
         .flexing{
             display: flex;
@@ -671,7 +439,7 @@
         .services{
             display: flex;
             // margin-top:10%;
-            transform: translateX(-50px);
+            transform: translateX(-20px);
             
             
           h6 {
@@ -698,7 +466,7 @@
         .list{
             display: flex;
             margin-top:-13%;
-            transform: translateX(-50px);
+            transform: translateX(-30px);
 
             
           h6 {
@@ -728,7 +496,7 @@
         //   gap: 4px;
         //   align-items: center;
           margin-top: -10px;
-          transform: translateX(-50%);
+          transform: translateX(-30%);
           
 
           h6 {

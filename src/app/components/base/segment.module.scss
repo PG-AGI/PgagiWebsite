@@ -1,5 +1,5 @@
 .segment {
-    width: 100vw;
+    width: 99vw;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -233,6 +233,24 @@
                     padding-left: calc(var(--blobSize) * 0.75);
                 }
             }
+        }
+    }
+}
+
+@media (max-width:478px){
+    .segment{
+        width: 95vw;
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-right: 5px;
+        
+        .container{
+            padding: 50px;
+            p{
+                
+            }            
         }
     }
 }

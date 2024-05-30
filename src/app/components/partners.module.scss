@@ -44,7 +44,7 @@
 }
 @media (max-width: 478px){
     .partners{
-        margin-top: 10%;
+        margin-top: 25%;
         margin-left: 2%;
         h3{
             align-items: center;
@@ -88,12 +88,14 @@
 
 @media (max-width: 390px){
     .partners{
-        margin-left: 15%;
+        margin-left: 10%;
+        margin-right: 10%;
         h3{
             align-items: center;
             justify-content: center;
             font-size: 18px;
             margin-top: -5%;
+            margin-left: 5%;
         }
     }
 }

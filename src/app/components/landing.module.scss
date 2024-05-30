@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 25px;
 
     h6 {
         font-size: 23px;
@@ -16,8 +17,8 @@
         color: transparent;
     }
     h1 {
-        font-size: 48px;
-        font-weight: 500;
+        font-size: 58px;
+        font-weight: 700;
         margin: 4px;        
        
     }
@@ -68,9 +69,41 @@
     }
 }
 
+@media (max-width: 1600px) and (max-height: 900px) {
+    .landing {
+      padding: 1.5rem;
+  
+      h6 {
+        font-size: 1rem;
+      }
+  
+      h1 {
+        font-size: 2rem;
+  
+        &.ai {
+          font-size: 2.5rem;
+        }
+      }
+  
+      .action {
+        flex-direction: column;
+        gap: 0.5rem;
+  
+        button {
+          width: 100%;
+          font-size: 0.875rem;
+  
+          &.call, &.case {
+            padding: 0.5rem 1rem;
+          }
+        }
+      }
+    }
+  }
+
 @media (max-width: 768px) {
     .landing {
-        margin-top:25%;
+        margin-top:35%;
         height: auto; /* Adjust height for mobile devices */
         padding: 50px 20px; /* Add padding to reduce width */
 
@@ -97,7 +130,7 @@
 
 @media (max-width: 480px) {
     .landing{
-        margin-top:20%;
+        margin-top:35%;
         // margin-left:5%;
         
         h6 {
@@ -107,7 +140,10 @@
             font-size: 22px; 
         }
         
-        .action .call,.action .case {
+        .action{
+            margin-top: 70px;
+        } 
+        .call,.action .case {
             font-size: 12px; 
         }
     }
@@ -115,8 +151,8 @@
 
 @media (max-width: 390px) {
     .landing{
-        margin-top:20%;
-        margin-left:5%;
+        margin-top:40%;
+        margin-left:1%;
         
         h6 {
             font-size: 14px; 

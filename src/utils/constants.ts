@@ -2,10 +2,10 @@ import linkedin from '../app/assets/social/in.png'
 import instagram from '../app/assets/social/instagram.png'
 import youtube from '../app/assets/social/youtube.png'
 import x from '../app/assets/social/x.png'
-import case_study from '../app/assets/trending_cards/case_study.png';
-import ai_news from '../app/assets/trending_cards/ai_news.png';
-import news from '../app/assets/trending_cards/news.png';
-import blogs from '../app/assets/trending_cards/blogs.png';
+import case_study from '../app/assets/trending_cards/case_study2.png';
+import ai_news from '../app/assets/trending_cards/ai_news2.png';
+import news from '../app/assets/trending_cards/news2.png';
+import blogs from '../app/assets/trending_cards/blogs2.png';
 import { StaticImageData } from 'next/image';
 
 export const trendingList = [
@@ -106,11 +106,11 @@ export const links = [
 ]
 
 export const services = [
-  'Toingg',
-  'AI Recruiter',
-  'Shopify AI Bot',
-  'AI Therapist',
-  'Trading Agent'
+  'Generative AI Solutions',
+  'AI-Driven Business Automation',
+  'Ethical AI Development',
+  'Prompt Engineering & Tuning',
+  'AI Integration & Deployment'
 ]
 
 export const resources = [  
