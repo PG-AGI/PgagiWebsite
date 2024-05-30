@@ -12,7 +12,7 @@ const images = [ais, hx, social, ciek, aixl];
 export default function Partners () {
     return (
         <section className={styles.partners}>
-            <h3>Partnered with innovators like</h3>
+            <h3>Partnered with Innovators like</h3>
             <div className={styles.partnerList}>
                 {
                     images.map((image, i) => (
