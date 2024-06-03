@@ -121,8 +121,8 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-          <a href="">What we think</a>
-          <a href="">Who we are</a>
+          <Link href="/blogs">What we think</Link>
+          <Link href="/aboutUs">Who We Are</Link>
         </div>
         <button className={styles.contact} onClick={handleContactUs}>Contact us</button>
         <div className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`} onClick={toggleMenu}>
