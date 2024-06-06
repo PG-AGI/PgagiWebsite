@@ -222,24 +222,8 @@ export const whatWeDoLinks = {
 
 export const topContent = [
   {
-    "title": "Latest Update",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, possimus.",   
+    "title": "Latest Update",   
     "image":topSection
-  },
-  {
-    "title": "Latest Update",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, possimus.",   
-    "image":news
-  },
-  {
-    "title": "Latest Update",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, possimus.",   
-    "image":ai_news
-  },
-  {
-    "title": "Latest Update",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, possimus.",   
-    "image":blogs
   },
 ]
 

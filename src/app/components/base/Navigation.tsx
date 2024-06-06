@@ -77,7 +77,7 @@ export default function Navigation() {
       <div className={styles.banner}>
         AI Calling Agent -{" "}
         <a href="https://call.toingg.com/" target="_blank" rel="noopener noreferrer">
-          Learn more
+          Try for Free
         </a>
       </div>
       <Link className={clsx(styles.logo, !navbarVisible && styles.logoHidden)} href='/'>

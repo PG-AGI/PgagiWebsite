@@ -48,15 +48,17 @@ export default function AboutUs() {
 
     <section className={styles.ourVision}>
         <div className={styles.container}>
-            <h2>Our Vision</h2>
-            <p>At PGAGI, we believe in a future
-                 where AI and human intelligence 
-                 coexist in harmony, creating a 
-                 world that is smarter, faster,
-                  and better. We are not just
-                   building AI, we are shaping a future 
-                   where AI is a fundamental and positive 
-                   force for businesses, societies, and the planet.</p>
+                <div className={styles.Text_container}>
+                <h2>Our Vision</h2>
+                <p>At PGAGI, we believe in a future
+                    where AI and human intelligence 
+                    coexist in harmony, creating a 
+                    world that is smarter, faster,
+                    and better. We are not just
+                    building AI, we are shaping a future 
+                    where AI is a fundamental and positive 
+                            force for businesses, societies, and the planet.</p>
+            </div>
             <Image className={styles.img} src={box2} alt="" layout="fill" objectFit='cover'/>
         </div>
 
@@ -64,10 +66,12 @@ export default function AboutUs() {
 
     <section className={styles.ourMission}>
         <div className={styles.container}>
-            <h2>Our Mission</h2>
-            <p>Empowering Innovation, Shaping Tomorrow - Transforming
-                Businesses through Advanced near AGI Solutions.
-            </p>
+            <div className={styles.Text_container}>
+                <h2>Our Mission</h2>
+                <p>Empowering Innovation, Shaping Tomorrow - Transforming
+                    Businesses through Advanced near AGI Solutions.
+                </p>
+            </div>
             <Image className={styles.img} src={box1} alt="" layout="fill" objectFit='cover'/>
         </div>
 
@@ -77,7 +81,7 @@ export default function AboutUs() {
         <h2>Our Values</h2>
         <div className={styles.innovation}>
             <h3>Innovation</h3>
-            <p>Constantly pushing the boundaries of what's possible with AI.</p>
+            <p>Constantly pushing the boundaries of what&apos;s possible with AI.</p>
             <Image className={styles.img} src={up} alt="" layout="fill"/>
         </div>   
            <div className={styles.collab}>
@@ -119,7 +123,7 @@ export default function AboutUs() {
           <div className={styles.content}>
           <p>Harness the Power of AI</p>
           <p>for Unmatched Business Performance</p>
-          <button className={styles.call} onClick={handleBookCall}>Let's Connect</button>
+          <button className={styles.call} onClick={handleBookCall}>Let&apos;s Connect</button>
           </div>
           <Image  className={styles.imgTag} src={bg2} alt="" layout="fill" objectFit='cover'/>
           <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />

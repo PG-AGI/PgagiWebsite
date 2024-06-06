@@ -58,8 +58,7 @@ export default function BlogPage() {
         {topContent.map((item, i) => (
           <div key={i} className={styles.topItem}>
             <div className={styles.content}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>              
+              <h3>{item.title}</h3>              
             </div>
             <Image className={styles.imgTag} src={item.image.src} alt={item.title} layout="fill" objectFit="cover" />
           </div>
@@ -86,7 +85,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-         <section className={styles.blogSection}>
+        <section className={styles.blogSection}>
           <h2>Blogs</h2>
           <div className={styles.blogList} ref={blogRef}>
           {blogContent.map((item, i) => (
@@ -135,7 +134,7 @@ export default function BlogPage() {
           <div className={styles.content}>
           <p>Harness the Power of AI</p>
           <p>for Unmatched Business Performance</p>
-          <button className={styles.call} onClick={handleBookCall}>Let's Connect</button>
+          <button className={styles.call} onClick={handleBookCall}>Let&apos;s Connect</button>
           </div>
           <Image  className={styles.imgTag} src={bg} alt="" layout="fill" objectFit='cover'/>
           <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />

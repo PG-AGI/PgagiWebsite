@@ -120,15 +120,16 @@
     }
 
     .caseStudyList {
-        width: 100%;
-        display: flex;
-        gap: 56px;
-        padding: 36px 0;
-        scroll-behavior: smooth;
-        overflow-x: auto;
-        overflow-y: hidden;
-        align-items: center;
-        justify-content: center;
+      width: 90vw;
+      display: flex;
+      gap: 36px;
+      padding: 36px 0;
+      scroll-behavior: smooth;
+      overflow-x: auto;
+      overflow-y: hidden;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: row;
 
         &::-webkit-scrollbar {
             width: 0 !important;
@@ -137,7 +138,7 @@
         .caseItem {
             position: relative;
             min-width: 375px;
-            height: 55vh;
+            height: 65vh;
             border-radius: 16px;
             overflow: hidden;
             padding: 48px 24px;
@@ -195,14 +196,16 @@
   }
 
   .blogList {
-      width: 100%;
-      display: flex;
-      gap: 56px;
-      padding: 36px 0;
-      scroll-behavior: smooth;
-      overflow-x: auto;
-      align-items: center;
-      justify-content: center;
+          width: 90vw;
+            display: flex;
+            gap: 36px;
+            padding: 36px 0;
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            overflow-y: hidden;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row;
 
       &::-webkit-scrollbar {
           width: 0 !important;
@@ -211,7 +214,7 @@
       .blogItem {
           position: relative;
           min-width: 375px;
-          height: 55vh;
+          height: 65vh;
           border-radius: 16px;
           overflow: hidden;
           padding: 48px 24px;
@@ -269,14 +272,16 @@
     }
   
     .newsList {
-        width: 100%;
+        width: 90vw;
         display: flex;
-        gap: 56px;
+        gap: 36px;
         padding: 36px 0;
         scroll-behavior: smooth;
         overflow-x: auto;
+        overflow-y: hidden;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        flex-direction: row;
   
         &::-webkit-scrollbar {
             width: 0 !important;
@@ -285,7 +290,7 @@
         .newsItem {
             position: relative;
             min-width: 375px;
-            height: 55vh;
+            height: 65vh;
             border-radius: 16px;
             overflow: hidden;
             padding: 48px 24px;
