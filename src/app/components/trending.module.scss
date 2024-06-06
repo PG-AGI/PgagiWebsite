@@ -16,14 +16,14 @@
     }
 
     .trendingList {
-        width: 100%;
+        width: 95%;
         display: flex;
         gap: 56px;
         padding: 36px 0;
         scroll-behavior: smooth;
         overflow-x: auto;
+        justify-content: space-evenly;
         align-items: center;
-        justify-content: center;
 
         &::-webkit-scrollbar {
             width: 0 !important;

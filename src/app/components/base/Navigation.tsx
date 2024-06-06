@@ -77,7 +77,7 @@ export default function Navigation() {
       <div className={styles.banner}>
         AI Calling Agent -{" "}
         <a href="https://call.toingg.com/" target="_blank" rel="noopener noreferrer">
-          Learn more
+          Try for Free
         </a>
       </div>
       <Link className={clsx(styles.logo, !navbarVisible && styles.logoHidden)} href='/'>
@@ -121,8 +121,8 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-          <a href="">What we think</a>
-          <a href="">Who we are</a>
+          <Link href="/blogs">What we think</Link>
+          <Link href="/aboutUs">Who We Are</Link>
         </div>
         <button className={styles.contact} onClick={handleContactUs}>Contact us</button>
         <div className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`} onClick={toggleMenu}>

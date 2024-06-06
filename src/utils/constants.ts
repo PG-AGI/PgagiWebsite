@@ -6,6 +6,12 @@ import case_study from '../app/assets/trending_cards/case_study2.png';
 import ai_news from '../app/assets/trending_cards/ai_news2.png';
 import news from '../app/assets/trending_cards/news2.png';
 import blogs from '../app/assets/trending_cards/blogs2.png';
+import ais from '../app/assets/partners/ais3.png';
+import hx from '../app/assets/partners/hx.png';
+import social from '../app/assets/partners/social27.png';
+import ciek from '../app/assets/partners/ciek2.png';
+import aixl from '../app/assets/partners/aixl2.png';
+import topSection from '../app/assets/topSection.png';
 import { StaticImageData } from 'next/image';
 
 export const trendingList = [
@@ -213,3 +219,188 @@ export const whatWeDoLinks = {
     "Hypnosis Script Generator",
 	],
 };
+
+export const topContent = [
+  {
+    "title": "Latest Update",   
+    "image":topSection
+  },
+]
+
+export const blogContent = [
+  {
+    "title": "Case study",
+    "description": "Revolutionizing Recruitment with AI",
+    "brief":"Discover how our AI Recruiter Agent revolutionizes the staffing industry with predictive analytics and humanized interactions, enhancing recruitment precision and efficiency.",
+    "image":case_study
+  },
+  {
+    "title": "Blog",
+    "description": "Prompt Engineering vs Prompt Tuning",
+    "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
+    "image":blogs
+
+  },
+  {
+    "title": "AI News",
+    "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
+    "brief":"Meta launches Llama 3 AI, boasting advanced reasoning and coding, set to revolutionize AI interactions and integration across its platforms.",
+    "image":ai_news,
+    "url": "https://www.businessinsider.in/tech/news/mark-zuckerberg-announces-big-ai-news/articleshow/109412432.cms"
+
+
+  },
+  {
+    "title": "Case Study",
+    "description": "Next-Gen AI Hypnotherapist",
+    "brief":"Experience the future of hypnotherapy with our AI-powered platform, automating the creation of personalized hypnosis scripts for enhanced therapeutic sessions.",
+    "image":news
+
+  },
+]
+
+export const caseStudyContent = [
+  {
+    "title": "Case study",
+    "description": "Revolutionizing Recruitment with AI",    
+    "image":case_study
+  },
+  {
+    "title": "Latest Update",
+    "description": "TutorGPT: Smart AI for Smarter Learning",
+    "image":news
+  },
+  {
+    "title": "Latest Update",
+    "description": "DSPy: Your Guide to AI Prompt Mastery",
+    "image":ai_news
+  },
+  {
+    "title": "Latest Update",
+    "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
+    "image":blogs
+  },
+  // {
+  //   "title": "Latest Update",
+  //   "description": "TutorGPT: Smart AI for Smarter Learning",
+  //   "image":news
+  // },
+  // {
+  //   "title": "Latest Update",
+  //   "description": "DSPy: Your Guide to AI Prompt Mastery",
+  //   "image":ai_news
+  // },
+  // {
+  //   "title": "Latest Update",
+  //   "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
+  //   "image":blogs
+  // },
+]
+
+export const newsContent = [
+  {
+    "title": "Case study",
+    "description": "Revolutionizing Recruitment with AI",
+    "brief":"Discover how our AI Recruiter Agent revolutionizes the staffing industry with predictive analytics and humanized interactions, enhancing recruitment precision and efficiency.",
+    "image":case_study
+  },
+   {
+      "title": "Case Study",
+      "description": "Next-Gen AI Hypnotherapist",
+      // "brief":"Experience the future of hypnotherapy with our AI-powered platform, automating the creation of personalized hypnosis scripts for enhanced therapeutic sessions.",
+      "image":news
+
+    },
+    {
+      "title": "Blog",
+      "description": "DSPy: Your Guide to AI Prompt Mastery",
+      "brief":"Discover the simplicity of DSPy in optimizing AI prompts, improving model performance and saving development time.",
+      "image":blogs
+
+    },
+    {
+      "title": "News",
+      "description": "Interactive AI Q&A on YouTube",
+      "brief":"Check out YouTube’s AI-driven Q&A feature for Premium users, offering seamless, real-time interaction with video content.",
+      "image":ai_news
+
+    },
+]
+
+export const storyContent = [
+  {
+    "title": "HireXtra.com is Unicorn AI HRTech Platform",
+    // "description": "Revolutionizing Recruitment with AI",    
+    "image":hx
+  },
+   {
+      "title": "Events that accelerate Sales & build Community",
+      // "description": "Next-Gen AI Hypnotherapist",      
+      "image":social
+
+    },
+    {
+      "title": "CIEK help maximize customer value and return on marketing investments.",
+      // "description": "DSPy: Your Guide to AI Prompt Mastery",
+      "image":ciek
+
+    },
+    {
+      "title": "AIXL",
+      // "description": "Interactive AI Q&A on YouTube",      
+      "image":aixl
+
+    },
+    {
+      "title": "ais",
+      // "description": "Interactive AI Q&A on YouTube",      
+      "image":ais
+
+    },
+]
+
+export const aboutUs =[
+  {
+    "titile" : "Innovation",
+    "description" : "Constantly pushing the boundaries of what's possible with AI."
+  },
+  {
+    "titile" : "Collaboration",
+    "description" : "Working closely with clients to achieve their goals."
+  },
+  {
+    "titile" : "Integrity",
+    "description" : " Upholding the highest standards of honesty and transparency."
+  },
+  {
+    "titile" : "Excellence",
+    "description" : "Committed to delivering the best quality in all our projects."
+  },
+  {
+    "titile" : "Customer Focus",
+    "description" : "Ensuring client satisfaction through dedicated service and support."
+  }
+]
+
+export const whyChoose =[
+  {
+    "title": "Expertise and Experience: ",
+    "description" : "Our team consists of seasoned AI professionals and researchers who are well-versed in the latest technologies and methodologies.",
+  },
+  {
+    "title": "Customized Solutions: ",
+    "description" : "We tailor our AI solutions to meet the specific needs of each client, ensuring maximum impact and efficiency.",
+  },
+  {
+    "title": "Innovative Approach ",
+    "description" : "We stay ahead of industry trends, utilizing cutting-edge techniques and tools to deliver innovative and effective AI solutions.",
+  },
+  {
+    "title": "Comprehensive Support: ",
+    "description" : "From strategy development to implementation and training, we provide end-to-end support to ensure seamless integration and optimal use of AI.",
+  },
+  {
+    "title": "Proven Track Record: ",
+    "description" : "Our successful projects and satisfied clients are a testament to our ability to deliver high-quality AI solutions that drive real business results.",
+  },
+]
