@@ -7,7 +7,7 @@ import { inter } from "../utils/fontHelper";
 export const metadata: Metadata = {
 	title: "PGAGI",
 	description: "",
-	icons: "favicon.ico",
+	icons: "icon.svg",
 	
 };
 
