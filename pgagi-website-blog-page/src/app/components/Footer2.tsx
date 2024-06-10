@@ -1,16 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { links, resources,  services } from "../components/constants";
+import { links, resources, services } from "../components/constants";
 import styles from "./footer.module.scss";
 import logo from '../assets/logo.png';
 
 export default function Footer() {
+  const [email, setEmail] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/newsletter", {
@@ -30,7 +29,6 @@ export default function Footer() {
       setMessage("An error occurred. Please try again.");
     }
   };
-
 
   return (
     <section className={styles.footer}>
@@ -77,18 +75,16 @@ export default function Footer() {
         </div>
       </div>
       <div className={styles.footerText}>
-                <p className={styles.pgHidden}>Playing God With</p>
-                <p className={styles.agiHidden}>AGI</p>
-
-                <p className={styles.pg}>Playing God</p>
-                <p className={styles.agi}>With AGI</p>
-            
+        <p className={styles.pgHidden}>Playing God With</p>
+        <p className={styles.agiHidden}>AGI</p>
+        <p className={styles.pg}>Playing God</p>
+        <p className={styles.agi}>With AGI</p>
       </div>
-      <div className={styles.copyright}> 
-      <div className={styles.flexing}>
-        <p>Copyright©2024</p>
-        <p className={styles.right}>Privacy Policy</p>
-        </div>      
+      <div className={styles.copyright}>
+        <div className={styles.flexing}>
+          <p>Copyright©2024</p>
+          <p className={styles.right}>Privacy Policy</p>
+        </div>
       </div>
     </section>
   );
