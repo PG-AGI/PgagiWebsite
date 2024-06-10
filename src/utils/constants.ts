@@ -5,7 +5,20 @@ import x from '../app/assets/social/x.png'
 import case_study from '../app/assets/trending_cards/case_study2.png';
 import ai_news from '../app/assets/trending_cards/ai_news2.png';
 import news from '../app/assets/trending_cards/news2.png';
+import case1 from '../app/assets/trending_cards/case1.svg';
+import case2 from '../app/assets/trending_cards/case2.svg';
+import case3 from '../app/assets/trending_cards/case3.svg';
+import case4 from '../app/assets/trending_cards/case4.svg';
+import news1 from '../app/assets/trending_cards/news1.svg';
+import news2 from '../app/assets/trending_cards/news2.svg';
+import news3 from '../app/assets/trending_cards/news3.svg';
+import news4 from '../app/assets/trending_cards/news4.svg';
+import news5 from '../app/assets/trending_cards/news5.svg';
 import blogs from '../app/assets/trending_cards/blogs2.png';
+import blog1 from '../app/assets/trending_cards/blog1.svg';
+import blog2 from '../app/assets/trending_cards/blog2.svg';
+import blog3 from '../app/assets/trending_cards/blog3.svg';
+import blog4 from '../app/assets/trending_cards/blog4.svg';
 import ais from '../app/assets/partners/ais3.png';
 import hx from '../app/assets/partners/hx.png';
 import social from '../app/assets/partners/social27.png';
@@ -232,20 +245,20 @@ export const blogContent = [
     "title": "Case study",
     "description": "Revolutionizing Recruitment with AI",
     "brief":"Discover how our AI Recruiter Agent revolutionizes the staffing industry with predictive analytics and humanized interactions, enhancing recruitment precision and efficiency.",
-    "image":case_study
+    "image":blog1
   },
   {
     "title": "Blog",
     "description": "Prompt Engineering vs Prompt Tuning",
     "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
-    "image":blogs
+    "image":blog2
 
   },
   {
     "title": "AI News",
     "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
     "brief":"Meta launches Llama 3 AI, boasting advanced reasoning and coding, set to revolutionize AI interactions and integration across its platforms.",
-    "image":ai_news,
+    "image":blog3,
     "url": "https://www.businessinsider.in/tech/news/mark-zuckerberg-announces-big-ai-news/articleshow/109412432.cms"
 
 
@@ -254,7 +267,7 @@ export const blogContent = [
     "title": "Case Study",
     "description": "Next-Gen AI Hypnotherapist",
     "brief":"Experience the future of hypnotherapy with our AI-powered platform, automating the creation of personalized hypnosis scripts for enhanced therapeutic sessions.",
-    "image":news
+    "image":blog4
 
   },
 ]
@@ -263,22 +276,22 @@ export const caseStudyContent = [
   {
     "title": "Case study",
     "description": "Revolutionizing Recruitment with AI",    
-    "image":case_study
+    "image":case1
   },
   {
     "title": "Latest Update",
     "description": "TutorGPT: Smart AI for Smarter Learning",
-    "image":news
+    "image":case2
   },
   {
     "title": "Latest Update",
     "description": "DSPy: Your Guide to AI Prompt Mastery",
-    "image":ai_news
+    "image":case3
   },
   {
     "title": "Latest Update",
     "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
-    "image":blogs
+    "image":case4
   },
   // {
   //   "title": "Latest Update",
@@ -302,27 +315,34 @@ export const newsContent = [
     "title": "Case study",
     "description": "Revolutionizing Recruitment with AI",
     "brief":"Discover how our AI Recruiter Agent revolutionizes the staffing industry with predictive analytics and humanized interactions, enhancing recruitment precision and efficiency.",
-    "image":case_study
+    "image":news1
   },
    {
       "title": "Case Study",
       "description": "Next-Gen AI Hypnotherapist",
       // "brief":"Experience the future of hypnotherapy with our AI-powered platform, automating the creation of personalized hypnosis scripts for enhanced therapeutic sessions.",
-      "image":news
+      "image":news5
 
     },
     {
       "title": "Blog",
       "description": "DSPy: Your Guide to AI Prompt Mastery",
       "brief":"Discover the simplicity of DSPy in optimizing AI prompts, improving model performance and saving development time.",
-      "image":blogs
+      "image":news2
+
+    },
+    {
+      "title": "Blog",
+      "description": "DSPy: Your Guide to AI Prompt Mastery",
+      "brief":"Discover the simplicity of DSPy in optimizing AI prompts, improving model performance and saving development time.",
+      "image":news4
 
     },
     {
       "title": "News",
       "description": "Interactive AI Q&A on YouTube",
       "brief":"Check out YouTube’s AI-driven Q&A feature for Premium users, offering seamless, real-time interaction with video content.",
-      "image":ai_news
+      "image":news3
 
     },
 ]
