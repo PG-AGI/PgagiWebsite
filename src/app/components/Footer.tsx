@@ -44,11 +44,36 @@
 // }
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { links, resources, socialList, services } from "@/utils/constants";
 import styles from "./footer.module.scss";
 import logo from '../assets/logo.png';
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      if (response.ok) {
+        setMessage("Successfully signed up for the newsletter!");
+        setEmail("");
+      } else {
+        setMessage("Failed to sign up for the newsletter. Please try again.");
+      }
+    } catch (error) {
+      setMessage("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <section className={styles.footer}>
       <div className={styles.wrapper}>
@@ -76,14 +101,21 @@ export default function Footer() {
             </span>
           </div>
           <div className={styles.signUp}>
-    <h6>Sign up for our newsletter to stay up to date</h6>
-    <div className={styles.inputWithButton}>
-        <input type="text" placeholder="Your Email ID....." />
-        <button type="submit">
-            <span className={styles.arrowIcon}>→</span> {/* You can replace this with an SVG or icon font if you prefer */}
-        </button>
-    </div>
-</div>
+            <h6>Sign up for our newsletter to stay up to date</h6>
+            <form onSubmit={handleSubmit} className={styles.inputWithButton}>
+              <input
+                type="email"
+                placeholder="Your Email ID..."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <button type="submit">
+                <span className={styles.arrowIcon}>→</span>
+              </button>
+            </form>
+            {message && <p>{message}</p>}
+          </div>
         </div>
       </div>
       <div className={styles.footerText}>
