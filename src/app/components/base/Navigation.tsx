@@ -121,7 +121,7 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-          <Link href="/blogs">What we think</Link>
+          <Link href="/what-we-think">What we think</Link>
           <Link href="/aboutUs">Who We Are</Link>
         </div>
         <button className={styles.contact} onClick={handleContactUs}>Contact us</button>

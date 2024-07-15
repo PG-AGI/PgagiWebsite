@@ -8,13 +8,20 @@ import { trendingList } from "@/utils/constants";
 export default function Trending() {
   const trendingRef = useRef<HTMLDivElement>(null);
 
+  // const handleExpand = (url: string | undefined) => {
+  //   console.log("Hi")
+  //   if (url) {
+  //     window.location.href = url;
+  //   } else {
+  //     console.error("URL is not defined");
+  //   }
+  // };
+
   const handleExpand = (url: string | undefined) => {
-    if (url) {
-      window.location.href = url;
-    } else {
-      console.error("URL is not defined");
-    }
-  };
+    if (typeof window !== "undefined") {
+        window.location.href = "https://pgagi.in/blogs";
+      }
+} 
 
   return (
     <section className={styles.trending}>

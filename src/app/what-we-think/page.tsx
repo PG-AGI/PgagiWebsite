@@ -89,6 +89,7 @@ export default function BlogPage() {
           <h2>Blogs</h2>
           <div className={styles.blogList} ref={blogRef}>
           {blogContent.map((item, i) => (
+            <Link href='/what-we-think/blogs'>
           <div key={i} className={styles.blogItem}>
             <div className={styles.content}>
               {/* <h3>{item.title}</h3> */}
@@ -96,6 +97,7 @@ export default function BlogPage() {
             </div>
             <Image className={styles.imgTag} src={item.image.src} alt={item.title} layout="fill" objectFit="cover" />
           </div>
+          </Link>
         ))}
           </div>
         </section>

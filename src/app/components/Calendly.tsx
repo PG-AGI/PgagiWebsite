@@ -28,7 +28,7 @@ export default function Calendly() {
                     <p className={styles.top}>Let’s do</p>
                     <p>it together!</p>
                 </div>
-                <div className={styles.widget} ref={widgetRef}>
+                <div className={styles.widget}>
                     <InlineWidget url="https://calendly.com/admin-quf_/30min" />
                 </div>
             </div>

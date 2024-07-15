@@ -23,7 +23,7 @@ const Page = async () => {
 
   return (
     <>
-    {/* <GlareBackground/> */}
+    <GlareBackground/>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30px', backgroundColor: '#040AA3;', width: '100%' }}>
     <span style={{ marginRight: '10px' }} className='text-white'>AI Calling Agent</span>
     <div>

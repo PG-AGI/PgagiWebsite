@@ -12,7 +12,6 @@ import Footer from "./components/Footer";
 import Calendly from "./components/Calendly";
 import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
-
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 

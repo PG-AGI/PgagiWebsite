@@ -11,6 +11,7 @@ import GlareBackground from '../components/GlareBackground';
 
 const Page = async () => {
   const posts = await getAllPostsMeta();
+  console.log("hi");
   const latestPosts = posts.slice(-1);
 
   const categories = [
@@ -27,12 +28,12 @@ const Page = async () => {
   return (
     <>
     {/* <GlareBackground/> */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30px', backgroundColor: '#040AA3', width: '100%' }}>
-    <span style={{ marginRight: '10px' }} className='text-white'>AI Calling Agent</span>
-    <div>
-        <Link href="https://call.toingg.com/" style={{ fontWeight: 'bold' }} className='text-white'>Learn more</Link>
-    </div>
-</div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30px', backgroundColor: '#040AA3', width: '100%' }}>
+        <span style={{ marginRight: '10px' }} className='text-white'>AI Calling Agent</span>
+        <div>
+            <Link href="https://call.toingg.com/" style={{ fontWeight: 'bold' }} className='text-white'>Learn more</Link>
+        </div>
+      </div>
       {/* <Navbar /> */}
       {/* <div className='flex flex-wrap items-center justify-center' style={{ height: '87px', backgroundColor: '#14213D', paddingRight: '130px' }}> */}
         {/* <div>
