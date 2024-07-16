@@ -1,0 +1,32 @@
+.main {
+  padding: 16px;
+  min-width: 400px;
+  width: 100%;
+  margin: 0px;
+  h6 {
+    text-align: center;
+    font-size: 1.125rem /* 18px */;
+    line-height: 1.75rem /* 28px */;
+    font-weight: 600;
+    margin-bottom: 1rem /* 16px */;
+    margin-left: 1rem /* 16px */;
+  }
+  div {
+    .newsitems {
+      text-align: justify;
+      align-items: center;
+      margin-bottom: 12px;
+      margin: 12px;
+      padding: 16px;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .main {
+    width: 80%;
+  }
+}
+
+.newsitems:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
