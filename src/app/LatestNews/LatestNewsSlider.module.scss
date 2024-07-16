@@ -1,0 +1,51 @@
+.main {
+  margin-bottom: 32px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  .sect {
+    width: 100%;
+    display: flex;
+    border-radius: 30px;
+    .poster {
+      width: 100%;
+      border-radius: 30px;
+      position: relative;
+      height: 320px;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 32px;
+      transition: transform 0.3s ease-in-out;
+      .posterblur {
+        position: absolute;
+        inset: 0px;
+        background-color: black;
+        border-radius: 30px;
+        opacity: 0.6;
+      }
+      .postertitle {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        margin: 16px;
+        .postername {
+          font-size: 2.25rem /* 36px */;
+          line-height: 2.5rem /* 40px */;
+          font-weight: 700;
+          -webkit-text-fill-color: white;
+        }
+        .posterdetails {
+          font-size: 1.125rem /* 18px */;
+          line-height: 1.75rem /* 28px */;
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+      }
+    }
+    .poster:hover {
+      .poster {
+        transform: scale(1.02);
+      }
+    }
+  }
+}

@@ -1,12 +1,13 @@
+"use-client"
 import { getAllPostsMeta } from '../../lib/mdx';
-import Navbar from '../components/navbar';
-// import { MdSearch } from 'react-icons/md';
+import GlareBackground from '../components/base/GlareBackground';
 import LatestTrends from '../components/LatestTrends';
 import LatestNewsSlider from '../LatestNews/LatestNewsSlider';
 import Image from 'next/image';
 import Link from 'next/link';
-
-
+import styles from './posts.module.scss';
+import Navigation from '../components/base/Navigation';
+// import Footer from '../components/Footer';
 const Page = async () => {
   const posts = await getAllPostsMeta();
   const latestPosts = posts.slice(-1);
@@ -29,19 +30,15 @@ const Page = async () => {
   ];
 
   return (
-    <>
-      <Navbar />
-      <div className='flex flex-wrap items-center justify-between' style={{ height: '87px', backgroundColor: '#14213D' }}>
-        <div>
-          <p
-            className='text-2xl font-semibold text-white ml-20 sm:text-center sm:text-4xl sm:ml-36 '
-          >
-            Explore Blogs here!
-          </p>
-        </div>
-        
-        {/* seacrh bar */}
+    <div className={styles.main}>
+      <GlareBackground/>
+      <Navigation/>
 
+      <div className={styles.semi}>
+        {/* <h2 className={styles.explore}>
+          Explore Blogs here!
+        </h2> */}
+        {/* Search bar (uncomment to use) */}
         {/* <div className="relative flex sm:items-center md:mr-24 md:ml-20 ml-16 sm:mr-32">
           <div className="absolute top-2 left-2">
             <MdSearch className="h-6 w-6 text-gray-600" />
@@ -54,33 +51,34 @@ const Page = async () => {
         </div> */}
       </div>
 
-      <section className='py-4 sm:px-8'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto sm:ml-24 '>
-          <div className='sm:col-span-2'>
-            <div className='mt-10 ml-2'>
-              <h2 className='text-2xl font-semibold'>Posts, articles, and discussions</h2>
+
+      <section className={styles.sect}>
+        <div className={styles.container}>
+          <div className={styles.cat}>
+            <div className={styles.header}>
+              <h2>Posts, articles, and discussions</h2>
             </div>
             {/* Category buttons */}
-            <div className='flex flex-wrap gap-1 mb-4 ml-2'>
+            <div className={styles.categories}>
               {categories.map(category => (
                 <button
                   key={category}
-                  className='text-sm p-2 rounded-full text-gray-500 hover:shadow-md'
+                  className={styles.categoryButton}
                 >
                   {category}
                 </button>
               ))}
             </div>
             {/* Latest Trends Carousel */}
-            <div className='sm:w-full m-2'>
+            <div className={styles.latestTrends}>
               <LatestNewsSlider latestPosts={latestPosts} />
             </div>
-            <div className='flex flex-wrap '>
-              {posts?.map(post => (
+            <div className={styles.postWrapper}>
+              {posts.map(post => (
                 <Link
                   href={`posts/${post.slug}`}
-                  key={post?.title}
-                  className='w-full h-auto sm:w-1/2 lg:w-1/2 xl:w-1/2 px-4 py-4 rounded-3xl '
+                  key={post.title}
+                  className={styles.post}
                 >
                   <div>
                     <Image
@@ -88,25 +86,24 @@ const Page = async () => {
                       alt={post.title}
                       width={400}
                       height={400}
-                      className='w-full h-auto sm:h-60 object-cover mb-4 rounded-3xl'
+                      className={styles.postImage}
                     />
-                    <h3 className='text-lg font-semibold mb-1'>{post.title}</h3>
-                    <div className='flex items-center text-gray-400'>
-                      <p className='text-sm'>By {post.author}  • Published {post.publishDate}</p>
-                      {/* <span className='mx-1'>•</span>
-                      <time className='text-sm'>Published {post.publishDate}</time> */}
+                    <h3 className={styles.postTitle}>{post.title}</h3>
+                    <div className={styles.postInfo}>
+                      <p>By {post.author} • Published {post.publishDate}</p>
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
-          <div className='sm:col-span-1 sm:py-8'>
+          <div className={styles.news}>
             <LatestTrends />
           </div>
         </div>
       </section>
-    </>
+      {/* <Footer/> */}
+    </div>
   );
 };
 

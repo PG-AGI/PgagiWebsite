@@ -1,5 +1,4 @@
 'use client'
-
 import Landing from "./components/Landing";
 import Navigation from "./components/base/Navigation";
 import Partners from "./components/Partners";
@@ -32,12 +31,12 @@ export default function Home() {
 			if (scroll >= offset && scroll <= offset + window.innerHeight * 5) {
 				if (scrollY <= 1) pos = 50 - percent / 2
 				else if (Math.floor(scrollY % 2) === 0) pos = 100 - percent
-				else pos =  percent
+				else pos = percent
 				blob.style.top = '50%'
 				blob.style.left = `${pos}%`;
 			}
 			if (scroll >= offset + window.innerHeight * 5 && scroll <= offset + window.innerHeight * 6) {
-				pos =  percent
+				pos = percent
 				if (percent > 80) blob.style.top = `${50 + (percent - 80)}%`;
 				else blob.style.top = '50%'
 				blob.style.left = `${pos}%`;
@@ -61,7 +60,7 @@ export default function Home() {
 						<Segment
 							key={i}
 							index={i}
-							type={ i === 0 ? "middle" : i % 2 === 0 ? "left" : "right" }
+							type={i === 0 ? "middle" : i % 2 === 0 ? "left" : "right"}
 							title={data.title}
 							subtitle={data.subtitle}
 						/>
