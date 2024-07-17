@@ -15,7 +15,6 @@
     .newsitems {
       text-align: justify;
       align-items: center;
-      margin-bottom: 12px;
       margin: 12px;
       padding: 16px;
     }
@@ -29,4 +28,62 @@
 
 .newsitems:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 775px) {
+  .main {
+    padding: 0px;
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h6 {
+      margin: 0px;
+      width: auto;
+    }
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      flex: 1 1 calc(50% - 2rem);
+      justify-content: baseline;
+      align-items: baseline;
+      gap: 4px;
+      margin: 4px;
+      .newsitems {
+        background: rgba(255, 255, 255, 0.01);
+        text-align: start;
+        margin: 0px;
+        padding: 4px;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .main {
+    padding: 0px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h6 {
+      margin: 0px;
+      width: auto;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 8px;
+      .newsitems {
+        background: rgba(255, 255, 255, 0.05);
+        text-align: start;
+        margin: 0px;
+        padding: 8px;
+      }
+    }
+  }
 }

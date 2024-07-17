@@ -26,20 +26,15 @@ const Page = async ({ params }) => {
           <div className={styles.postertitle}>
             <p>{meta.title}</p>
           </div>
-        </div>
-        {/* thumbnail and title */}
-
-        {/* author and date  */}
-        <div className={styles.authoranddate}>
-          <div className={styles.authordiv}>
-            <p>By {meta.author}</p>
-          </div>
-          <div className={styles.datediv}>
-            <p>{meta.publishDate}</p>
+          <div className={styles.authoranddate}>
+            <div className={styles.authordiv}>
+              <p>By {meta.author}</p>
+            </div>
+            <div className={styles.datediv}>
+              <p>{meta.publishDate}</p>
+            </div>
           </div>
         </div>
-        {/* author and date  */}
-
         {/* Fetching content */}
         <div className={styles.container}>
           <div>

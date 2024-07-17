@@ -42,10 +42,11 @@
         }
 
         .categories {
-          width: 80%;
+          width: auto;
           gap: 4px;
           display: flex;
           flex-direction: row;
+          flex-wrap: wrap;
           flex: 1 1 calc(25% - 1rem);
           overflow-x: auto;
           overflow-y: hidden;
@@ -56,6 +57,9 @@
             font-size: 0.8rem;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 999px;
             -webkit-text-fill-color: #6b7280;
             background-color: transparent;
             border: 0px;
@@ -135,6 +139,48 @@
         .news {
           width: 800px;
           grid-column: span 1 / span 1;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 775px) {
+  .main {
+    width: auto;
+    .sect {
+      padding: 0px;
+      .container {
+        flex-direction: column;
+        padding: 0px;
+        .cat {
+          .categories {
+            gap: 12px;
+            .categoryButton {
+              background-color: rgba(200, 200, 200, 0.09);
+            }
+          }
+          .news {
+            max-width: 775px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .main {
+    max-width: 500px;
+    .sect {
+      padding: 0px;
+      .container {
+        flex-direction: column;
+        padding: 0px;
+        .cat {
+          .news {
+            max-width: 500px;
+          }
         }
       }
     }
