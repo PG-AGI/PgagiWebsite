@@ -76,7 +76,7 @@ export default function Navigation() {
     <nav className={styles.navigation}>
       <div className={styles.banner}>
         AI Calling Agent -{" "}
-        <a href="https://www.toingg.com/" target="_blank" rel="noopener noreferrer">
+        <a href="https://call.toingg.com/" target="_blank" rel="noopener noreferrer">
           Try for Free
         </a>
       </div>
