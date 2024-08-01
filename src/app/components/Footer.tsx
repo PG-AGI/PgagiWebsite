@@ -13,21 +13,20 @@ export default function Footer() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/newsletter", {
-        method: "POST",
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       });
+      const data = await response.json();
+      setMessage(data.message);
       if (response.ok) {
-        setMessage("Successfully signed up for the newsletter!");
-        setEmail("");
-      } else {
-        setMessage("Failed to sign up for the newsletter. Please try again.");
+        setEmail('');
       }
     } catch (error) {
-      setMessage("An error occurred. Please try again.");
+      setMessage('An error occurred. Please try again.');
     }
   };
 
@@ -90,3 +89,63 @@ export default function Footer() {
     </section>
   );
 }
+
+
+
+// Assuming your Footer component is in src/app/components/Footer.tsx
+
+// 'use client';
+
+// import { useState } from 'react';
+// import styles from './footer.module.scss';
+
+// export default function Footer() {
+//   const [email, setEmail] = useState<string>('');
+//   const [message, setMessage] = useState<string>('');
+
+//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     try {
+//       const response = await fetch('/api/newsletter', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email }),
+//       });
+//       if (response.ok) {
+//         setMessage('Successfully signed up for the newsletter!');
+//         setEmail('');
+//       } else {
+//         setMessage('Failed to sign up for the newsletter. Please try again.');
+//       }
+//     } catch (error) {
+//       setMessage('An error occurred. Please try again.');
+//     }
+//   };
+
+//   return (
+//     <section className={styles.footer}>
+//       <div className={styles.wrapper}>
+//         <div className={styles.about}>
+//           <div className={styles.signUp}>
+//             <h6>Sign up for our newsletter to stay up to date</h6>
+//             <form onSubmit={handleSubmit} className={styles.inputWithButton}>
+//               <input
+//                 type="email"
+//                 placeholder="Your Email ID..."
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 required
+//               />
+//               <button type="submit">
+//                 <span className={styles.arrowIcon}>→</span>
+//               </button>
+//             </form>
+//             {message && <p>{message}</p>}
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
