@@ -137,7 +137,7 @@
 // }
 
 // throtling 
-// 'use client'
+'use client'
 
 import Image from "next/image";
 import logo from '../../assets/logo.png';
@@ -146,7 +146,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { whatWeDoLinks } from "@/utils/constants";
-import BookCallModal from "./bookCallModela";
 import ContactUsForm from "./contactUsForm";
 
 // Throttle function to limit the number of times a function is called
