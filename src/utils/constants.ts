@@ -275,7 +275,8 @@ export const blogContent = [
 export const caseStudyContent = [
   {
     "title": "Case study",
-    "description": "Revolutionizing Recruitment with AI",    
+    "description": "Revolutionizing Recruitment with AI", 
+    "slug": "blog1"   ,
     "image":case1
   },
   {
