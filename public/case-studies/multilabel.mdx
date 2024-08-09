@@ -1,0 +1,135 @@
+# Multi-Label Text Classification with BERT-Large
+
+
+
+## Introduction
+
+The project tackles the challenge of classifying scientific articles into multiple thematic categories. Using BERT-Large, an advanced NLP model, enhances our ability to understand and categorize complex text data effectively. This documentation elaborates on the methodologies, experiments, and insights gained throughout the project lifecycle.
+
+
+
+## Technical Background
+
+BERT (Bidirectional Encoder Representations from Transformers) is a revolutionary model in NLP, known for its deep bidirectional nature, which fundamentally changes the way textual data is processed. Multi-label classification differs from multi-class classification by allowing multiple labels per instance, increasing complexity and requiring specialized handling in model architecture and loss calculation.
+
+
+
+## Environment Setup
+
+**Google Colab:**
+
+- Chosen for its no-cost access to GPUs, essential for training large models like BERT.
+- Steps to set up the environment include accessing Google Colab, setting up the notebook, and ensuring the GPU is enabled.
+
+**AWS:**
+
+- Configurations for AWS instances, including selecting appropriate GPU instances.
+- Setup involves creating an EC2 instance, installing necessary libraries, and configuring storage and computing resources.
+
+
+
+
+## Data Preparation
+
+The dataset consists of 50,000 articles, each needing classification across 14 possible categories. Preparation steps include:
+
+- **Reading Data**: Use pandas to import data from a CSV file.
+- **Data Splitting**: Divide the data into 80% training, 10% validation, and 10% test sets.
+- **Tokenization and Encoding**: Utilize BERT's tokenizer to process text and convert labels into a one-hot encoded format.
+
+
+
+## Model Setup
+
+The BERT-Large model is employed with a classification head:
+
+- **Model Loading**: Using Hugging Face's transformers library to load 'bert-large-uncased'.
+- **Output Layer Configuration**: A sigmoid activation function is used at the output to handle multiple labels per instance.
+
+
+
+## Training
+
+Training involves:
+
+- **Optimizer**: Adam with a learning rate of 2e-5.
+- **Epochs**: Start with 3-4 epochs, adjusting based on intermediate results.
+- **Loss Function**: Binary cross-entropy to match the one-hot encoded labels.
+
+
+
+## Evaluation
+
+Evaluation metrics include precision, recall, and F1-score for each category, with calculations of micro and macro averages to assess overall performance.
+
+
+
+## Experimentation
+
+### Purpose
+
+The goal of the experimentation phase was to identify the best set of hyperparameters and model configurations that lead to the highest performance in terms of accuracy, precision, recall, and F1-score. Experimentation helps in understanding how different adjustments affect the model's ability to generalize from training data to unseen data.
+
+### Process
+
+- **Hyperparameter Tuning**:
+  - **Learning Rate**: Test different learning rates (e.g., 1e-5, 2e-5, 5e-5) to find the optimal rate at which the model learns without skipping important features or getting stuck in a local minimum.
+  - **Batch Size**: Experimented with batch sizes (e.g., 16, 32, 64) to determine the best size for balancing model training speed and memory utilization.
+  - **Number of Epochs**: Started with fewer epochs (e.g., 3-4) and increased as needed based on training and validation loss curves to avoid overfitting.
+
+- **Feature Engineering**:
+  - Tested different tokenization strategies, such as using whole-word masking versus standard BERT tokenization, to see if preserving whole words improves model performance.
+  - Experimented with different text pre-processing steps like stemming, lemmatization, or using different stopwords lists.
+
+- **Architectural Modifications**:
+  - Added & modified layers in the BERT model, such as including additional dropout layers & changing the number of neurons in the dense layers of the classification head.
+  - Employed different activation functions (e.g., ReLU in intermediary layers) to see if they affect model convergence and performance.
+
+
+
+## Fine-Tuning and Final Evaluation
+
+### Purpose
+
+Fine-tuning involves adjusting the model with the entire dataset (combining training and validation sets) based on the insights gained from the experimentation phase. The aim was to enhance the model’s performance on unseen data (test set).
+
+### Process
+
+- **Model Reconfiguration**:
+  - Applied the best hyperparameters identified during the experimentation phase to the entire training dataset.
+  - Made last adjustments to the model architecture based on insights gained.
+
+- **Training**:
+  - Retrained the model using the combined dataset to maximize learning and adjust to any slight overfitting that may occur during initial training phases.
+
+### Final Evaluation
+
+- We assessed the model on the test set to evaluate its performance in a real-world scenario.
+- Focused on metrics such as precision, recall, F1-score, and also considered the computational efficiency of the model.
+
+
+
+## Conclusion
+
+This project was initiated with the objective to apply BERT-Large, a state-of-the-art NLP model, for the task of multi-label text classification. The aim was to accurately classify scientific articles into 14 distinct categories, leveraging the powerful contextual understanding capabilities of BERT. Throughout the project, we meticulously prepared the dataset, configured the model, and conducted extensive training and experimentation to optimize performance.
+
+### Achievements
+
+- **Model Performance**: The final model demonstrated high precision, recall, and F1 scores across most categories. It successfully managed the complexity of multi-label classification, confirming the robustness of BERT-Large in handling nuanced textual data.
+- **Technical Mastery**: Through this project, we showcased advanced skills in machine learning workflows, from data preprocessing and model tuning to in-depth analysis of results. The use of an advanced model like BERT-Large in a practical, real-world application was executed with precision.
+- **Innovation in Experimentation**: The experimentation phase was particularly fruitful, revealing insights about the impacts of different hyperparameters and model architectures. This phase was pivotal in enhancing our understanding of the model's behavior and in refining our approach to achieve optimal results.
+
+### Challenges and Resolutions
+
+- **Computational Resources**: Initially, the training times were extensive, and resource allocation was a major constraint. Utilizing Google Colab's free GPU access and later scaling to AWS for more intensive computations proved to be effective strategies.
+- **Data Imbalance**: Some labels were underrepresented in the training data, which skewed initial model predictions. Techniques such as data augmentation and adjusting the loss function to emphasize minority classes helped mitigate this issue.
+
+### Future Directions
+
+- **Exploring Advanced Techniques**: Implementing newer variations of BERT, such as RoBERTa or ALBERT, or exploring other transformer-based models could potentially improve the accuracy and efficiency.
+- **Expanding Data Sources**: Integrating additional datasets or utilizing data from more diverse sources can help in improving the robustness and generalizability of the model.
+- **Real-World Application and Scalability**: The next step would involve deploying the model in a real-world scenario, such as a digital library for academic research, to test its practical utility and user acceptance. Additionally, scalability tests should be conducted to ensure the model performs well under different operational loads.
+
+### Broader Impact
+
+This project not only advances the field of NLP by applying cutting-edge technology to complex text classification problems but also sets a foundation for future research and practical applications. The methodologies and findings from this project can serve as a benchmark for academic and industrial applications, potentially influencing how information is organized and retrieved in large-scale data environments.

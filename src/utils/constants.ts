@@ -242,58 +242,133 @@ export const topContent = [
 
 export const blogContent = [
   {
-    "title": "Case study",
-    "description": "Revolutionizing Recruitment with AI",
+    "title": "Blogs",
+    "description": "TS Arena: Benchmarking Text-to-Speech Models in the Wild",
     "brief":"Discover how our AI Recruiter Agent revolutionizes the staffing industry with predictive analytics and humanized interactions, enhancing recruitment precision and efficiency.",
+    "slug": "blog3",
     "image":blog1
   },
   {
     "title": "Blog",
-    "description": "Prompt Engineering vs Prompt Tuning",
+    "description": "Community Dataset: Dataset is better together",
     "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
+    "slug": "community-datasets",
     "image":blog2
 
   },
   {
-    "title": "AI News",
-    "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
-    "brief":"Meta launches Llama 3 AI, boasting advanced reasoning and coding, set to revolutionize AI interactions and integration across its platforms.",
-    "image":blog3,
-    "url": "https://www.businessinsider.in/tech/news/mark-zuckerberg-announces-big-ai-news/articleshow/109412432.cms"
-
+    "title": "Blog",
+    "description": "Revolutionizing Hiring with A.I",
+    "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
+    "slug": "hiring",
+    "image":blog3
 
   },
   {
-    "title": "Case Study",
-    "description": "Next-Gen AI Hypnotherapist",
-    "brief":"Experience the future of hypnotherapy with our AI-powered platform, automating the creation of personalized hypnosis scripts for enhanced therapeutic sessions.",
+    "title": "Blog",
+    "description": "Introduction to Matryoshka Embedding Models",
+    "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
+    "slug": "matrayoshka",
     "image":blog4
 
   },
+  {
+    "title": "Blog",
+    "description": "StarCoder: A State-of-the-Art LLM for Code",
+    "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
+    "slug": "starcoder",
+    "image":blog1
+
+  },
+  
 ]
 
 export const caseStudyContent = [
   {
     "title": "Case study",
     "description": "Revolutionizing Recruitment with AI", 
-    "slug": "blog1"   ,
+    "slug": "hiring"   ,
     "image":case1
   },
   {
-    "title": "Latest Update",
+    "title": "Case study",
     "description": "TutorGPT: Smart AI for Smarter Learning",
+    "slug": "tutorgpt",
     "image":case2
   },
   {
-    "title": "Latest Update",
-    "description": "DSPy: Your Guide to AI Prompt Mastery",
+    "title": "Case study",
+    "description": "MultiAgent Trading: Smart AI for Crypto Trading",
+    "slug": "multiagent",
     "image":case3
   },
   {
-    "title": "Latest Update",
-    "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
+    "title": "Case study",
+    "description": "Advance NBA Betting Application",
+    "slug": "nbabetting",
     "image":case4
   },
+  {
+    "title": "Case study",
+    "description": "Telemetry Data Analytics for iRacing Optimization",
+    "slug": "telemetry",
+    "image":case1 
+  },
+  {
+    "title": "Case study",
+    "description": "Voice Assistant ChatBot -Shopify",
+    "slug": "shopifychatbot",
+    "image":case2 
+  },
+  {
+    "title": "Case study",
+    "description": "Multi-Label Text Classification with BERT-Large",
+    "slug": "multilabel",
+    "image":case3 
+  },
+  {
+    "title": "Case study",
+    "description": "Innovative Healthcare Marketplace with AI/ML Technology",
+    "slug": "healthcare",
+    "image":case4 
+  },
+  {
+    "title": "Case study",
+    "description": "AI Chatbot for Legal Assistance",
+    "slug": "legalassistant",
+    "image":case1 
+  },
+  {
+    "title": "Case study",
+    "description": "Realistic AI Model for Digital Influencers",
+    "slug": "digitalinfluencer",
+    "image":case2 
+  },
+  {
+    "title": "Case study",
+    "description": "AI Interviewer Using Mistral 7b Architecture",
+    "slug": "mistral7b",
+    "image":case3 
+  },
+  {
+    "title": "Case study",
+    "description": "Custom MT5 Indicator Development for Enhanced Binary Options Trading",
+    "slug": "mt5indicator",
+    "image":case4 
+  },
+  {
+    "title": "Case study",
+    "description": "Automated Trading Agent for cTrader to MT5 Integration",
+    "slug": "tradingagent",
+    "image":case1 
+  },
+  {
+    "title": "Case study",
+    "description": "Toingg: Revolutionary AI Calling Agent",
+    "slug": "toingg",
+    "image":case2 
+  },
+  
   // {
   //   "title": "Latest Update",
   //   "description": "TutorGPT: Smart AI for Smarter Learning",
