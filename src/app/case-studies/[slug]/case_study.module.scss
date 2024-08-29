@@ -19,6 +19,8 @@
   margin-top: 20px;
   padding: 20px; /* Added padding for better spacing */
   box-sizing: border-box; /* Ensure padding is included in the total width/height */
+  border: 1px solid rgba(136, 54, 241, 0.5); /* Cool border with a slight transparency */
+  background: rgba(15, 14, 23, 0.85); 
 }
 
 .caseStudyTitle {
@@ -27,7 +29,7 @@
   margin-bottom: 20px;
   text-align: center;
   color: #f5f5f5;
-  font-family: 'Inter', sans-serif; /* Set Inter font for title */
+  font-family: 'Inter', sans-serif; 
 }
 
 .separator {
@@ -35,7 +37,7 @@
   height: 1px;
   background: #ddd;
   margin: 30px auto;
-  width: 70%; /* Make the separator line 70% of the container's width */
+  width: 70%;
 }
 
 .caseStudyContent {
@@ -43,7 +45,15 @@
   line-height: 1.6;
   color: #34495e;
   max-width: 100%;
-  font-family: 'Inter', sans-serif; /* Set Inter font for content */
+  font-family: 'Inter', sans-serif; 
+  img{
+    width: 50rem;
+    height: 50rem;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
 
   h2 {
     font-size: 28px;
@@ -52,6 +62,9 @@
     position: relative;
     padding-bottom: 10px;
     font-family: 'Inter', sans-serif; /* Set Inter font for h2 headings */
+    background: linear-gradient(90deg, #a25eed, #f694ff); /* Add gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   h3 {
@@ -61,12 +74,16 @@
     position: relative;
     padding-bottom: 10px;
     font-family: 'Inter', sans-serif; /* Set Inter font for h3 headings */
+    background: linear-gradient(90deg, #8836F1, #a25eed); /* Add gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   p {
     margin-bottom: 20px;
     position: relative;
     padding-bottom: 10px;
+    text-align: justify; /* Align text to justify */
 
     /* Add separator between sub-paragraphs */
     & + &::before {
@@ -104,6 +121,19 @@
   height: 333px;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.loaderContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
 }
 
 /* Responsive Design */
@@ -171,4 +201,16 @@
       font-size: 16px;
     }
   }
+}
+.loaderContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
 }
