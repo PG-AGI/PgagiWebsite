@@ -150,20 +150,10 @@ import clsx from "clsx";
 import { whatWeDoLinks } from "@/utils/constants";
 import ContactUsForm from "./contactUsForm";
 
-// Throttle function to limit the number of times a function is called
-function throttle<T extends (...args: any[]) => void>(fn: T, wait: number) {
-  let time = Date.now();
-  return function (...args: Parameters<T>) {
-    if (time + wait - Date.now() < 0) {
-      fn(...args);
-      time = Date.now();
-    }
-  };
-}
+
 
 export default function Navigation() {
-  const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [navbarVisible, setNavbarVisible] = useState(true);
+  const [navbarVisible] = useState(true);
   const [whatWeDo, setWhatWeDo] = useState<'solutions' | 'industries' | 'caseStudy'>('solutions');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
