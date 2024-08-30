@@ -11,10 +11,10 @@
   z-index: 0;
   font-family: 'Poppins', sans-serif; 
 }
-
 .caseStudyPage {
-  max-width: 80rem;
+  max-width: 100%;
   margin: 0 auto;
+  
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
@@ -22,6 +22,7 @@
   box-sizing: border-box; /* Ensure padding is included in the total width/height */
   
   background: rgba(15, 14, 23, 0.85); 
+ 
 }
 
 .caseStudyTitle {
@@ -42,11 +43,14 @@
 }
 
 .caseStudyContent {
-  font-size: 16px;
+  font-size: 1.3rem;
   line-height: 1.6;
   color: #34495e;
   max-width: 100%;
   font-family: 'Poppins', sans-serif; 
+  padding: 10%;
+
+ 
   img{
     width: 50rem;
     height: 50rem;
@@ -56,8 +60,8 @@
     object-fit: cover;
   }
   h1{
-    text-align: center; /* Center the title */
-  font-size: 36px;
+  text-align: center; /* Center the title */
+  font-size: 2.3rem;
   font-weight: 700;
   margin-bottom: 20px;
   background: linear-gradient(90deg, #FFFFFF, #7E7E7E);
@@ -68,18 +72,20 @@
     font-size: 28px;
     margin-top: 30px;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 2px;
+    margin-bottom: -4rem;
     background: linear-gradient(90deg, #FFFFFF, #8836F1); /* Purple gradient for h2 */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block; /* Ensure gradient is applied to the text */
+
   }
 
   h3 {
     font-size: 24px;
     margin-top: 20px;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     background: linear-gradient(90deg, #2EF5DE, #5C63FA); /* Cyan/Green gradient for h3 */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -88,8 +94,9 @@
   p {
     margin-bottom: 20px;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     text-align: justify; /* Align text to justify */
+    z-index: 10;
 
     /* Add separator between sub-paragraphs */
     & + &::before {
@@ -109,6 +116,7 @@
     border-radius: 8px;
     background: #f5f5f5;
     padding: 2rem;
+    
   }
 }
 

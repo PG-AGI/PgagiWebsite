@@ -74,12 +74,11 @@ const CaseStudyPage = () => {
         <div>
           <Navigation />
         </div>
-        <div className={styles.imageContainer}>
+        {/*<div className={styles.imageContainer}>
           <Image src={caseFrame} alt="Top Frame" className={styles.topImage} />
-        </div>
+        </div>*/}
         <div className={styles.caseStudyPage}>
           {/* <h1 className={styles.caseStudyTitle}>{title}</h1> */}
-          <hr className={styles.separator} />
           <div
             className={styles.caseStudyContent}
             dangerouslySetInnerHTML={{ __html: content }}
