@@ -120,14 +120,14 @@ export default function AboutUs() {
 
     </section>
     <section className={styles.featured}>
-          <div className={styles.content}>
-          <p>Harness the Power of AI</p>
-          <p>for Unmatched Business Performance</p>
-          <button className={styles.call} onClick={handleBookCall}>Let&apos;s Connect</button>
-          </div>
-          <Image  className={styles.imgTag} src={bg2} alt="" layout="fill" objectFit='cover'/>
-          <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
-        </section>
+        <div className={styles.content}>
+            <p>Harness the Power of AI</p>
+            <p>for Unmatched Business Performance</p>
+            <button className={styles.call} onClick={handleBookCall}>Let&apos;s Connect</button>
+        </div>
+        <Image  className={styles.imgTag} src={bg2} alt="" layout="fill" objectFit='cover'/>
+        <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
+    </section>
     <Footer/>
     </div>    
   );

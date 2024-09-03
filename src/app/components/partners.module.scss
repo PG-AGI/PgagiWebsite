@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 300px;
-    margin-top: -5%;
 
     h3 {
         font-size: 25px;
@@ -17,7 +16,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 96px;
+        gap: 5%;
 
         img {
             width: auto;
@@ -44,8 +43,9 @@
 }
 @media (max-width: 478px){
     .partners{
+        display: flex;
+        flex-wrap: wrap;
         margin-top: 25%;
-        margin-left: 2%;
         h3{
             align-items: center;
             justify-content: center;
@@ -53,9 +53,7 @@
             margin-top: -5%;
         }
         .partnerList{
-            position: relative;
-            margin-top: -2%;
-            gap:25px;
+            gap:100%;
             width:5%;
             align-items: center;
             justify-content: center;
@@ -88,14 +86,14 @@
 
 @media (max-width: 390px){
     .partners{
-        margin-left: 10%;
-        margin-right: 10%;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 25%;
         h3{
-            align-items: center;
+            text-align: center;
             justify-content: center;
             font-size: 18px;
             margin-top: -5%;
-            margin-left: 5%;
         }
     }
 }

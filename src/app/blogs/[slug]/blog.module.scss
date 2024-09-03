@@ -1,5 +1,6 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* Blog Page Styling */
 .main {
@@ -8,27 +9,37 @@
   display: flex;
   flex-direction: column;
   z-index: 0;
-  font-family: 'Inter', sans-serif; /* Set Inter as the default font for the main container */
+  font-family: 'Poppins', sans-serif; /* Set Inter as the default font for the main container */
+  background: #0f0e17; 
+  color: #a7a9be; 
+  z-index: 4;
 }
 
 .blogPage {
-  max-width: 800px;
+  max-width: 80rem;
   margin: 0 auto;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   margin-top: 20px;
-  padding: 20px; /* Added padding for better spacing */
-  box-sizing: border-box; /* Ensure padding is included in the total width/height */
+  padding: 30px; /* Increased padding for better spacing */
+  box-sizing: border-box;
+  background: rgba(15, 14, 23, 0.85); 
 }
-
 .blogTitle {
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 20px;
-  text-align: center;
-  color: #f5f5f5;
-  font-family: 'Inter', sans-serif; /* Set Inter font for title */
+  text-align: center; /* Center the title */
+  background: linear-gradient(90deg, #ff8a00, #e52e71); /* Gradient color for title */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  margin-left: auto; 
+  margin-right: auto; 
 }
+
+
 
 .separator {
   border: 0;
@@ -40,27 +51,41 @@
 
 .blogContent {
   font-size: 16px;
-  line-height: 1.6;
-  color: #34495e;
+  line-height: 1.8; /* Increase line height for better readability */
+  color: #a7a9be;
   max-width: 100%;
-  font-family: 'Inter', sans-serif; /* Set Inter font for content */
+  font-family: 'Poppins', sans-serif; /* Set Inter font for content */
+  text-align: justify; /* Justify the content */
+  h1{
+    text-align: center; /* Center the title */
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #FFFFFF, #7E7E7E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
 
   h2 {
     font-size: 28px;
     margin-top: 30px;
-    color: #5e5e5e;
     position: relative;
     padding-bottom: 10px;
-    font-family: 'Inter', sans-serif; /* Set Inter font for h2 headings */
+    background: linear-gradient(90deg, #FFFFFF, #8836F1); /* Purple gradient for h2 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* Ensure gradient is applied to the text */
   }
+  
 
   h3 {
     font-size: 24px;
     margin-top: 20px;
-    color: #5e5e5e;
     position: relative;
     padding-bottom: 10px;
-    font-family: 'Inter', sans-serif; /* Set Inter font for h3 headings */
+    background: linear-gradient(90deg, #2EF5DE, #5C63FA); /* Cyan/Green gradient for h3 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   p {
@@ -74,16 +99,16 @@
       display: block;
       width: 70%;
       margin: 20px auto;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #444; /* Darker separator for sub-paragraphs */
     }
   }
-
   img {
     max-width: 100%;
     height: auto;
     display: block;
     margin: 20px auto;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow to images */
   }
 }
 
@@ -94,7 +119,8 @@
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  opacity: 0.7;
+  opacity: 0.8;
+
 }
 
 .topImage {
@@ -109,7 +135,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .blogPage {
-    padding: 15px; /* Adjusted padding for better mobile display */
+    padding: 20px; 
   }
 
   .blogTitle {
@@ -131,7 +157,7 @@
 
 @media (max-width: 768px) {
   .blogPage {
-    padding: 10px; /* Adjusted padding for mobile display */
+    padding: 15px; /* Adjusted padding for mobile display */
   }
 
   .blogTitle {
@@ -171,4 +197,16 @@
       font-size: 16px;
     }
   }
+}
+.loaderContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
 }

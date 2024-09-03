@@ -1,5 +1,6 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 
 /* Case Study Page Styling */
 .main {
@@ -8,17 +9,20 @@
   display: flex;
   flex-direction: column;
   z-index: 0;
-  font-family: 'Inter', sans-serif; /* Set Inter as the default font for the main container */
+  font-family: 'Poppins', sans-serif; 
 }
-
 .caseStudyPage {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
+  
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   padding: 20px; /* Added padding for better spacing */
   box-sizing: border-box; /* Ensure padding is included in the total width/height */
+  
+  background: rgba(15, 14, 23, 0.85); 
+ 
 }
 
 .caseStudyTitle {
@@ -27,7 +31,7 @@
   margin-bottom: 20px;
   text-align: center;
   color: #f5f5f5;
-  font-family: 'Inter', sans-serif; /* Set Inter font for title */
+  font-family: 'Poppins', sans-serif; 
 }
 
 .separator {
@@ -35,38 +39,64 @@
   height: 1px;
   background: #ddd;
   margin: 30px auto;
-  width: 70%; /* Make the separator line 70% of the container's width */
+  width: 70%;
 }
 
 .caseStudyContent {
-  font-size: 16px;
+  font-size: 1.3rem;
   line-height: 1.6;
   color: #34495e;
   max-width: 100%;
-  font-family: 'Inter', sans-serif; /* Set Inter font for content */
+  font-family: 'Poppins', sans-serif; 
+  padding: 10%;
 
+ 
+  img{
+    width: 50rem;
+    height: 50rem;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  h1{
+  text-align: center; /* Center the title */
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #FFFFFF, #7E7E7E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
   h2 {
     font-size: 28px;
     margin-top: 30px;
-    color: #5e5e5e;
     position: relative;
-    padding-bottom: 10px;
-    font-family: 'Inter', sans-serif; /* Set Inter font for h2 headings */
+    padding-bottom: 2px;
+    margin-bottom: -4rem;
+    background: linear-gradient(90deg, #FFFFFF, #8836F1); /* Purple gradient for h2 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* Ensure gradient is applied to the text */
+
   }
 
   h3 {
     font-size: 24px;
     margin-top: 20px;
-    color: #5e5e5e;
     position: relative;
-    padding-bottom: 10px;
-    font-family: 'Inter', sans-serif; /* Set Inter font for h3 headings */
+    padding-bottom: 5px;
+    background: linear-gradient(90deg, #2EF5DE, #5C63FA); /* Cyan/Green gradient for h3 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   p {
     margin-bottom: 20px;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    text-align: justify; /* Align text to justify */
+    z-index: 10;
 
     /* Add separator between sub-paragraphs */
     & + &::before {
@@ -84,6 +114,9 @@
     display: block;
     margin: 20px auto;
     border-radius: 8px;
+    background: #f5f5f5;
+    padding: 2rem;
+    
   }
 }
 
@@ -104,6 +137,19 @@
   height: 333px;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.loaderContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
 }
 
 /* Responsive Design */
@@ -171,4 +217,16 @@
       font-size: 16px;
     }
   }
+}
+.loaderContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
 }

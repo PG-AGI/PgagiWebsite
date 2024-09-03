@@ -1,11 +1,10 @@
 .landing {
     width: 100%;
-    height: 900px;
+    height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 25px;
 
     h6 {
         font-size: 23px;
@@ -103,7 +102,7 @@
 
 @media (max-width: 768px) {
     .landing {
-        margin-top:35%;
+        // margin-top:35%;
         height: auto; /* Adjust height for mobile devices */
         padding: 50px 20px; /* Add padding to reduce width */
 
@@ -130,7 +129,7 @@
 
 @media (max-width: 480px) {
     .landing{
-        margin-top:35%;
+        // margin-top:35%;
         // margin-left:5%;
         
         h6 {
@@ -151,9 +150,7 @@
 
 @media (max-width: 390px) {
     .landing{
-        margin-top:40%;
-        margin-left:1%;
-        
+        // margin-top:40%;        
         h6 {
             font-size: 14px; 
         }

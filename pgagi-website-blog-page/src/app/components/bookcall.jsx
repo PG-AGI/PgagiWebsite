@@ -17,13 +17,13 @@ export default function Book() {
             </div> */}
           </div>
           <div className="justify-center items-center flex mt-8 w-full lg:w-1/2 sm:w-full md:justify-center md:w-full bg-white p-2 sm:p-6 rounded-lg shadow-lg" style={{ marginTop: '-100px' }}>
-  <iframe
-    src={url}
-    width="100%" 
-    height="600px"
-    frameBorder="0"
-  ></iframe>
-</div>
+            <iframe
+              src={Calendlylink}
+              width="100%" 
+              height="600px"
+              frameBorder="0"
+            ></iframe>
+          </div>
 
         </div>
       </div>
