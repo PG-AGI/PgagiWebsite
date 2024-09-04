@@ -69,11 +69,7 @@ const BlogPage = () => {
       <div>
         <Navigation />
       </div>
-      <div className={styles.imageContainer}>
-        <Image src={caseFrame} alt="Top Frame" className={styles.topImage} />
-      </div>
       <div className={styles.blogPage}>
-        <hr className={styles.separator} />
         <div
           className={styles.blogContent}
           dangerouslySetInnerHTML={{ __html: content }}

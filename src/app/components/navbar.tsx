@@ -410,7 +410,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { whatWeDoLinks } from "@/utils/constants";
-import ContactUsForm from "./contactUsForm";
+import ContactUsForm from "@/app/components/base/contactUsForm";
 
 // Throttle function to limit the number of times a function is called
 function throttle<T extends (...args: any[]) => void>(fn: T, wait: number) {
