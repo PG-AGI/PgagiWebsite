@@ -10,6 +10,8 @@
   flex-direction: column;
   z-index: 0;
   font-family: 'Poppins', sans-serif; 
+
+
 }
 .caseStudyPage {
   max-width: 100%;
@@ -17,11 +19,10 @@
   
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  padding: 20px; /* Added padding for better spacing */
-  box-sizing: border-box; /* Ensure padding is included in the total width/height */
+  margin-top: -10%;
+  padding: 20px;
+  box-sizing: border-box; 
   
-  //background: rgba(15, 14, 23, 0.85); 
  
 }
 
