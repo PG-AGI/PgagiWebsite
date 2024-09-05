@@ -449,13 +449,16 @@
   }
 
   .banner {
+    position: absolute; // Ensure the banner is fixed to the top
+    top: 0;
     width: 100%;
+    z-index: 10;
     text-align: center;
     font-size: 16px;
     font-weight: 400;
-    padding: 10px 0 6px 0;
+    padding: 10px 0 6px 0; // Adjust padding if necessary
     background: #040aa3;
-
+  
     a {
       font-weight: 800;
       text-decoration: none;
