@@ -250,33 +250,53 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import styles from "./trending.module.scss";
 import { trendingList } from "@/utils/constants";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 
 export default function Trending() {
-  const trendingRef = useRef<HTMLDivElement>(null);
+  const router = useRouter(); // Initialize useRouter
 
-  const handleExpand = (url: string | undefined) => {
-    if (url) {
-      window.location.href = url;
-    } else {
-      console.error("URL is not defined");
+  const handleExpand = (title: string) => {
+    switch (title) {
+      case "Case study":
+        // Navigate to the specific section within the blogs page
+        router.push("/blogs#case-studies");
+        break;
+      case "Blog":
+        router.push("/blogs#blogs");
+        break;
+      case "AI News":
+        // This is an external link
+        router.push("/blogs#ainews");
+        break;
+      default:
+        console.error("URL is not defined");
     }
   };
 
   return (
     <section className={styles.trending}>
       <h3>{"What's Trending!"}</h3>
-      <div className={styles.trendingList} ref={trendingRef}>
+      <div className={styles.trendingList}>
         {trendingList.map((item, i) => (
           <div key={i} className={styles.trendingItem}>
             <div className={styles.content}>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
               <p className={styles.brief}>{item.brief}</p>
-              <button className={styles.expandButton} onClick={() => handleExpand(item.url)}>
+              <button
+                className={styles.expandButton}
+                onClick={() => handleExpand(item.title)}
+              >
                 <FontAwesomeIcon icon={faArrowRight} />
               </button>
             </div>
-            <Image className={styles.imgTag} src={item.image.src} alt={item.title} layout="fill" objectFit="cover" />
+            <Image
+              className={styles.imgTag}
+              src={item.image.src}
+              alt={item.title}
+              layout="fill"
+              objectFit="cover"
+            />
           </div>
         ))}
       </div>

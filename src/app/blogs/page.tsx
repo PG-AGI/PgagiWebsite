@@ -254,7 +254,7 @@ export default function BlogPage() {
           ))}
         </div>
 
-        <section className={styles.caseSection}>
+        <section className={styles.caseSection} id="case-studies" ref={caseRef}>
           <h2>Case Studies</h2>
           <div className={styles.caseStudyList} ref={caseRef}>
             {caseStudyContent.map((item, i) => (
@@ -276,7 +276,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        <section className={styles.blogSection}>
+        <section className={styles.blogSection} id="blogs" ref={blogRef}>
           <button className={styles.learnMore} onClick={handleBlogsClick}>
             <span className={styles.circle}>
               <span className={`${styles.icon} ${styles.arrow}`}></span>
@@ -303,7 +303,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        <section className={styles.newsSection}>
+        <section className={styles.newsSection} id='ainews' ref={newsRef}>
           <h2>AI News</h2>
           <div className={styles.newsList} ref={newsRef}>
             {newsContent.map((item, i) => (

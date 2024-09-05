@@ -28,64 +28,26 @@ import topSection from '../app/assets/topSection.png';
 import { StaticImageData } from 'next/image';
 
 export const trendingList = [
-    {
-      "title": "Case study",
-      "description": "Revolutionizing Recruitment with AI",
-      "brief":"Discover how our AI Recruiter Agent revolutionizes the staffing industry with predictive analytics and humanized interactions, enhancing recruitment precision and efficiency.",
-      "image":case_study
-    },
-    {
-      "title": "Blog",
-      "description": "Prompt Engineering vs Prompt Tuning",
-      "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
-      "image":blogs
+  {
+    "title": "Case Studies",
+    "description": "Explore Our Success Stories",
+    "brief": "Discover how businesses across various industries have leveraged our solutions to overcome challenges and drive success.",
+    "image": case_study
+  },
+  {
+    "title": "Blogs",
+    "description": "Insights and Expertise",
+    "brief": "Stay updated with the latest industry insights, expert opinions, and trends through our regularly updated blog section.",
+    "image": blogs
+  },
+  {
+    "title": "AI News",
+    "description": "Latest Developments in AI",
+    "brief": "Get the latest updates on advancements in artificial intelligence, innovations, and key industry developments.",
+    "image": ai_news
+  },
+];
 
-    },
-    {
-      "title": "AI News",
-      "description": "Meta Unveils Groundbreaking Enhancements to Its AI with Llama 3 Release",
-      "brief":"Meta launches Llama 3 AI, boasting advanced reasoning and coding, set to revolutionize AI interactions and integration across its platforms.",
-      "image":ai_news,
-      "url": "https://www.businessinsider.in/tech/news/mark-zuckerberg-announces-big-ai-news/articleshow/109412432.cms"
-  
-
-    },
-    // {
-    //   "title": "Case Study",
-    //   "description": "Next-Gen AI Hypnotherapist",
-    //   "brief":"Experience the future of hypnotherapy with our AI-powered platform, automating the creation of personalized hypnosis scripts for enhanced therapeutic sessions.",
-    //   "image":""
-
-    // },
-    // {
-    //   "title": "Blog",
-    //   "description": "DSPy: Your Guide to AI Prompt Mastery",
-    //   "brief":"Discover the simplicity of DSPy in optimizing AI prompts, improving model performance and saving development time.",
-    //   "image":""
-
-    // },
-    // {
-    //   "title": "News",
-    //   "description": "Interactive AI Q&A on YouTube",
-    //   "brief":"Check out YouTube’s AI-driven Q&A feature for Premium users, offering seamless, real-time interaction with video content.",
-    //   "image":news
-
-    // },
-    {
-      "title": "Case Study",
-      "description": "TutorGPT: Smart AI for Smarter Learning",
-      "brief":"Discover TutorGPT, the Advanced AI educational platform offering personalized tutoring and enhancing learning experience, helping students to achieve a deeper understanding of complex subjects.",
-      "image": case_study
-      
-    },
-    // {
-    //   "title": "Blog",
-    //   "description": "Unlock AI Potential with DSPy Signatures",
-    //   "brief":"Explore how DSPy Signatures enhance AI prompt creation, leading to more precise and efficient language model outputs.",
-    //   "image":""
-
-    // }
-]
 
 export const segmentList = [
   {
