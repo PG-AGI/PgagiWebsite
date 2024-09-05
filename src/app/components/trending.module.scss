@@ -874,8 +874,10 @@
         align-items: center;
 
         &::-webkit-scrollbar {
-            width: 0 !important;
-        }
+            display: none; 
+          }
+     
+          scrollbar-width: none; 
 
         .trendingItem {
             position: relative;
