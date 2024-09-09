@@ -916,7 +916,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
-            }
+              }
 
             h3 {
                 font-size: 18px;
@@ -942,6 +942,13 @@
                 left: 3px;
                 font-weight: 500;
             }
+            
+              
+              .trendingItem:hover .storybrief {
+                display: block; /* Show the brief on hover */
+              }
+              
+              
 
             .expandButton {
                 display: none;
@@ -964,6 +971,109 @@
         }
     }
 }
+.trendingItem {
+    position: relative;
+    min-width: 18rem;
+    height: 32rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    padding: 48px 24px;
+    background: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: background 0.3s ease, opacity 0.3s ease;
+    z-index: 0;
+  
+    &:hover {
+      background: linear-gradient(335.48deg, #000000 15%, #040868 100%);
+      
+      .imgTag {
+        opacity: 0;
+      }
+  
+      .storybrief {
+        display: block;
+        opacity: 1;
+        max-height: 70%; 
+        width: 80%; 
+        padding: 10px; 
+        overflow-y: auto;
+        left: 0.25%;
+        bottom: 2%; 
+      }
+    }
+  
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFF;
+      margin: 25px 10px 10px 28px;
+    }
+  
+    p {
+      color: #FFF;
+      font-size: 15px;
+      font-weight: 600;
+      margin: 10px 26px 26px 26px;
+    }
+  
+    .brief {
+      display: none;
+    }
+  
+    .storybrief {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease, bottom 0.3s ease, max-height 0.3s ease, width 0.3s ease;
+      color: #FFF;
+      font-size: 14px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.7); /* Background for readability */
+      border-radius: 8px;
+      font-weight: 500;
+      white-space: normal;
+      overflow-y: auto;
+      position: absolute;
+      bottom: 20px; /* Positioned lower */
+      left: 1%; /* Centered */
+      //right: 5%; /* Centered */
+      max-height: 70%;
+      width: 90%;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+    }
+  
+    .expandButton {
+      display: none;
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      background-color: #8987f800;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+  
+      &:hover {
+        background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
+        transform: scale(1.4);
+      }
+    }
+  }
+  
 
 @media (max-width:478px) {
     .trending {
