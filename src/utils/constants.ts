@@ -4,7 +4,6 @@ import youtube from '../app/assets/social/youtube.png'
 import x from '../app/assets/social/x.png'
 import case_study from '../app/assets/trending_cards/case_study2.png';
 import ai_news from '../app/assets/trending_cards/ai_news2.png';
-import stories from '../app/assets/trending_cards/stories.png'
 import news from '../app/assets/trending_cards/news2.png';
 import case1 from '../app/assets/trending_cards/case1.svg';
 import case2 from '../app/assets/trending_cards/case2.svg';
@@ -46,12 +45,6 @@ export const trendingList = [
     "description": "Latest Developments in AI",
     "brief": "Get the latest updates on advancements in artificial intelligence, innovations, and key industry developments.",
     "image": ai_news
-  },
-  {
-"title": "Stories",
-  "description": "Inspiring Journeys and Success Stories",
-  "brief": "Explore the personal journeys, challenges, and triumphs of individuals and businesses who have leveraged AI to make an impact and drive success.",
-  "image": stories
   },
 ];
 

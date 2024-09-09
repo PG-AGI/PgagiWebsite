@@ -58,7 +58,6 @@
 // // //   );
 // // // }
 
-
 // // import { useRef, useEffect } from "react";
 // // import Image from "next/image";
 // // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -159,7 +158,6 @@
 // //   );
 // // }
 
-
 // import { useRef, useEffect } from "react";
 // import Image from "next/image";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -243,7 +241,6 @@
 //   );
 // }
 
-
 import { useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -287,7 +284,11 @@ export default function Trending() {
       <h3>{"What's Trending!"}</h3>
       <div className={styles.trendingList}>
         {trendingList.map((item, i) => (
-          <div key={i} className={styles.trendingItem} onClick={() => handleExpand(item.title)}>
+          <div
+            key={i}
+            className={styles.trendingItem}
+            onClick={() => handleExpand(item.title)}
+          >
             <div className={styles.content}>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
@@ -305,6 +306,35 @@ export default function Trending() {
             />
           </div>
         ))}
+
+        <div
+          className={styles.trendingItem}
+          onClick={() => handleExpand("Success Stories")}
+        >
+          <div className={styles.content}>
+            <h3>Success Stories</h3>
+            <p>Transformative Journeys and Breakthroughs</p>
+            <p className={styles.storybrief}>
+              Steep Grind Hire Extra faced the challenge of sorting through
+              countless profiles and dealing with a slow recruitment process. We
+              envisioned a bold solution: an autonomous AI recruiter powered by
+              13 agents to streamline the hiring journey. \n\nWhat once took
+              weeks was transformed into minutes, as job descriptions were
+              analyzed, candidates matched, and interviews scheduled—without
+              human intervention. The recruitment process became faster and more
+              efficient. \n\nWith determination, research, and numerous demos,
+              we revolutionized recruitment, setting new standards for precision
+              and efficiency in hiring.
+            </p>
+          </div>
+          <Image
+            className={styles.imgTag}
+            src="https://i.postimg.cc/0N4WqqpX/reel-photo-and-video.png"
+            alt="Success Stories"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
       </div>
     </section>
   );
