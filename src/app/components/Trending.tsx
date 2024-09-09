@@ -244,28 +244,26 @@
 // }
 
 
-import { useRef } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import styles from "./trending.module.scss";
 import { trendingList } from "@/utils/constants";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useRouter } from "next/navigation";
 
 export default function Trending() {
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
   const handleExpand = (title: string) => {
     switch (title) {
-      case "Case study":
-        // Navigate to the specific section within the blogs page
+      case "Case Studies":
         router.push("/blogs#case-studies");
         break;
-      case "Blog":
+      case "Blogs":
         router.push("/blogs#blogs");
         break;
       case "AI News":
-        // This is an external link
         router.push("/blogs#ainews");
         break;
       default:
@@ -273,22 +271,30 @@ export default function Trending() {
     }
   };
 
+  // This will handle scrolling after the route change
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [router]);
+
   return (
     <section className={styles.trending}>
       <h3>{"What's Trending!"}</h3>
       <div className={styles.trendingList}>
         {trendingList.map((item, i) => (
-          <div key={i} className={styles.trendingItem}>
+          <div key={i} className={styles.trendingItem} onClick={() => handleExpand(item.title)}>
             <div className={styles.content}>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
               <p className={styles.brief}>{item.brief}</p>
-              <button
-                className={styles.expandButton}
-                onClick={() => handleExpand(item.title)}
-              >
+              {/*<button className={styles.expandButton}>
                 <FontAwesomeIcon icon={faArrowRight} />
-              </button>
+              </button>*/}
             </div>
             <Image
               className={styles.imgTag}

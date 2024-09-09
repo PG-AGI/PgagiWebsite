@@ -176,6 +176,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion'; // Import Framer Motion
 import GlareBackground from '../components/base/GlareBackground';
 import Navigation from '../components/base/Navigation';
 import Footer from '../components/Footer';
@@ -226,15 +227,32 @@ export default function BlogPage() {
     router.push('/posts'); // Navigate to /posts when the button is clicked
   };
 
+  // Framer Motion variants for animation
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
   return (
     <div className={styles.main}>
       <Link href="/" />
       <GlareBackground />
       <Navigation />
       <div className={styles.topSection}>
-        <div className={styles.topList} ref={topRef}>
+        <motion.div
+          className={styles.topList}
+          ref={topRef}
+          initial="hidden"
+          whileInView="visible"
+          variants={sectionVariants}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {topContent.map((item, i) => (
-            <div key={i} className={styles.topItem}>
+            <motion.div
+              key={i}
+              className={styles.topItem}
+              variants={sectionVariants}
+            >
               <div className={styles.content}>
                 <h3>{item.title}</h3>
               </div>
@@ -245,18 +263,26 @@ export default function BlogPage() {
                 layout="fill"
                 objectFit="cover"
               />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
         <div className={styles.dots}>
           {topContent.map((_, i) => (
             <div key={i} className={`${styles.dot} ${currentIndex === i ? styles.active : ''}`} />
           ))}
         </div>
 
-        <section className={styles.caseSection} id="case-studies" ref={caseRef}>
+        <motion.section
+          className={styles.caseSection}
+          id="case-studies"
+          ref={caseRef}
+          initial="hidden"
+          whileInView="visible"
+          variants={sectionVariants}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <h2>Case Studies</h2>
-          <div className={styles.caseStudyList} ref={caseRef}>
+          <div className={styles.caseStudyList}>
             {caseStudyContent.map((item, i) => (
               <Link href={`/case-studies/${item.slug}`} key={i}>
                 <div className={styles.caseItem}>
@@ -274,16 +300,24 @@ export default function BlogPage() {
               </Link>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        <section className={styles.blogSection} id="blogs" ref={blogRef}>
+        <motion.section
+          className={styles.blogSection}
+          id="blogs"
+          ref={blogRef}
+          initial="hidden"
+          whileInView="visible"
+          variants={sectionVariants}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <button className={styles.learnMore} onClick={handleBlogsClick}>
             <span className={styles.circle}>
               <span className={`${styles.icon} ${styles.arrow}`}></span>
             </span>
             <span className={styles.buttonText}>Blogs</span>
           </button>
-          <div className={styles.blogList} ref={blogRef}>
+          <div className={styles.blogList}>
             {blogContent.map((item, i) => (
               <Link href={`/blogs/${item.slug}`} key={i}>
                 <div className={styles.blogItem}>
@@ -301,11 +335,19 @@ export default function BlogPage() {
               </Link>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        <section className={styles.newsSection} id='ainews' ref={newsRef}>
+        <motion.section
+          className={styles.newsSection}
+          id='ainews'
+          ref={newsRef}
+          initial="hidden"
+          whileInView="visible"
+          variants={sectionVariants}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <h2>AI News</h2>
-          <div className={styles.newsList} ref={newsRef}>
+          <div className={styles.newsList}>
             {newsContent.map((item, i) => (
               <div key={i} className={styles.newsItem}>
                 <div className={styles.content}>
@@ -321,9 +363,15 @@ export default function BlogPage() {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        <section className={styles.featured}>
+        <motion.section
+          className={styles.featured}
+          initial="hidden"
+          whileInView="visible"
+          variants={sectionVariants}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className={styles.content}>
             <p>Harness the Power of AI</p>
             <p>for Unmatched Business Performance</p>
@@ -337,7 +385,7 @@ export default function BlogPage() {
             objectFit="cover"
           />
           <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
-        </section>
+        </motion.section>
       </div>
       <Footer />
     </div>

@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 import Calendly from "./components/Calendly";
 import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
-
+import { motion } from 'framer-motion';
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 
@@ -43,7 +43,10 @@ export default function Home() {
 			}
 		});
 	}, []);
-
+	const fadeIn = {
+		hidden: { opacity: 0, y: 50 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+	};
 	return (
 		<main className={styles.main}>
 			<GlareBackground />
