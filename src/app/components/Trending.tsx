@@ -314,25 +314,28 @@ export default function Trending() {
           <div className={styles.content}>
             <h3>Success Stories</h3>
             <p>Transformative Journeys and Breakthroughs</p>
-            <p className={styles.storybrief}>
-              Steep Grind Hire Extra faced the challenge of sorting through
-              countless profiles and dealing with a slow recruitment process. We
-              envisioned a bold solution: an autonomous AI recruiter powered by
-              13 agents to streamline the hiring journey. \n\nWhat once took
-              weeks was transformed into minutes, as job descriptions were
-              analyzed, candidates matched, and interviews scheduled—without
-              human intervention. The recruitment process became faster and more
-              efficient. \n\nWith determination, research, and numerous demos,
-              we revolutionized recruitment, setting new standards for precision
-              and efficiency in hiring.
-            </p>
+
+            <div className={styles.storybriefContainer}>
+              <p className={styles.storybrief1}>
+                Steep Grind <a href="https://hirextra.com/">HireXtra.com</a> faced slow, manual recruitment.
+              </p>
+              <p className={styles.storybrief1}>
+                We built an autonomous AI recruiter with 13 agents, transforming
+                their process.
+              </p>
+              <p className={styles.storybrief1}>
+                Tasks that once took weeks—like analyzing job descriptions,
+                matching candidates, and taking interviews—are now completed in
+                minutes, revolutionizing their recruitment.
+              </p>
+            </div>
           </div>
           <Image
             className={styles.imgTag}
             src="https://i.postimg.cc/0N4WqqpX/reel-photo-and-video.png"
             alt="Success Stories"
-            layout="fill"
-            objectFit="cover"
+            fill 
+            style={{ objectFit: "cover" }}
           />
         </div>
       </div>
