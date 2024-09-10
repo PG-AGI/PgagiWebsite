@@ -1,5 +1,3 @@
-// src/app/case-studies/[slug]/page.tsx
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -13,6 +11,7 @@ import Navigation from "../../components/base/Navigation";
 import styles from "./case_study.module.scss"; // Import the SCSS module
 import Footer from "../../components/Footer";
 import { ClipLoader } from "react-spinners";
+import { motion } from "framer-motion"; // Import framer-motion
 
 // Import the image directly from your assets
 import caseFrame from "../../assets/case.png";
@@ -54,39 +53,71 @@ const CaseStudyPage = () => {
   if (!content)
     return (
       <div className={styles.loaderContainer}>
-        <ClipLoader color="#8836F1" size={80} />{" "}
-      
+        <ClipLoader color="#8836F1" size={80} />
       </div>
     );
 
   return (
     <>
-      <>
-        <GlareBackground />
-        {/* Add the Google Fonts link */}
-        <Head>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
+      <GlareBackground />
+      {/* Add the Google Fonts link */}
+      <Head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
 
-        <div>
-          <Navigation />
-        </div>
-        {/*<div className={styles.imageContainer}>
-          <Image src={caseFrame} alt="Top Frame" className={styles.topImage} />
-        </div>*/}
-        <div className={styles.caseStudyPage}>
-          {/* <h1 className={styles.caseStudyTitle}>{title}</h1> */}
-          <div
-            className={styles.caseStudyContent}
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
-          <hr className={styles.separator} />
-        </div>
-      </>
-      <Footer />
+      {/* Animate the Navigation */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Navigation />
+      </motion.div>
+
+      {/* Image can be animated similarly if you decide to include it */}
+      {/* <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className={styles.imageContainer}
+      >
+        <Image src={caseFrame} alt="Top Frame" className={styles.topImage} />
+      </motion.div> */}
+
+      {/* Animate the case study content */}
+      <motion.div
+        className={styles.caseStudyPage}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Animate the content as it enters */}
+        <motion.div
+          className={styles.caseStudyContent}
+          dangerouslySetInnerHTML={{ __html: content }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        />
+        <motion.hr
+          className={styles.separator}
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 1 }}
+        />
+      </motion.div>
+
+      {/* Animate the Footer */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Footer />
+      </motion.div>
     </>
   );
 };
