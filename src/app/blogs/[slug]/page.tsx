@@ -11,6 +11,7 @@ import styles from "./blog.module.scss";
 import Footer from "../../components/Footer";
 import GlareBackground from "../../components/base/GlareBackground";
 import { ClipLoader } from "react-spinners";
+import { motion } from "framer-motion"; // Import framer-motion
 
 // Import the image directly from your assets
 import caseFrame from "../../assets/case.png"; // Use your own image or placeholder
@@ -59,7 +60,7 @@ const BlogPage = () => {
 
   return (
     <>
-      <GlareBackground /> 
+      <GlareBackground />
       <Head>
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
@@ -69,14 +70,33 @@ const BlogPage = () => {
       <div>
         <Navigation />
       </div>
-      <div className={styles.blogPage}>
-        <div
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className={styles.blogPage}
+      >
+        <motion.div
           className={styles.blogContent}
           dangerouslySetInnerHTML={{ __html: content }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
         />
-        <hr className={styles.separator} />
-      </div>
-      <Footer />
+        <motion.hr
+          className={styles.separator}
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 1 }}
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Footer />
+      </motion.div>
     </>
   );
 };
