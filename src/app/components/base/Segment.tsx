@@ -31,6 +31,7 @@ export default function Segment (props: TSegmentProps) {
                 }
             </div>
         </section>
+        /*test*/
     )
 }
 
