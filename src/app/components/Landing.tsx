@@ -1,10 +1,13 @@
+'use client'
 import { TypeAnimation } from 'react-type-animation';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from "./landing.module.scss";
 import BookCallModal from './base/bookCallModela';
+import { useRouter } from 'next/navigation';
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const router = useRouter();
 
     const handleBookCall = () => {
         setIsModalOpen(true);
@@ -13,7 +16,19 @@ export default function Landing() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
+    const handleExpand = () => {
+        
+            router.push("/blogs#case-studies");
+    }
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+          const element = document.querySelector(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      }, [router]);
     return (
         <section className={styles.landing}>
             <h6>Start your AI journey with us</h6>
@@ -36,7 +51,7 @@ export default function Landing() {
             </h1>
             <div className={styles.action}>
                 <button className={styles.call} onClick={handleBookCall}>Book a call</button>
-                <button className={styles.case}>See Case Studies</button>
+                <button className={styles.case} onClick={handleExpand}>See Case Studies</button>
             </div>
             <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </section>

@@ -48,5 +48,6 @@ def newsletter(request : NewsLetter):
     k = db["newsletter"].insert_one({"email" : request.email})
     return {"message" : "Stored to database"}
 
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=5000)

@@ -1,0 +1,259 @@
+
+.tokenCalculatorContainer {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  max-width: 35rem;
+  margin: 2rem auto;
+  margin-top: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px); // Ensure proper blur effect
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative; // Ensure proper positioning of the popup
+  margin-bottom: 10rem;
+}
+
+.closeButton {
+  background: rgba(255, 255, 255, 0.1);
+ 
+}
+
+.closeButton:hover {
+  background-color: rgba(255, 0, 0, 0.7); // Red background on hover
+}
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formLabel {
+  font-size: 1rem;
+  color: #f5f5f5;
+  margin-bottom: 0.5rem;
+}
+
+.inputField {
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5); // Subtle underline
+  background-color: transparent;
+  color: #fff;
+  width: 100%;
+  margin-bottom: 1.5rem;
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 1); // Emphasize underline on focus
+  }
+
+  &::placeholder {
+    color: #d1d1d1;
+    
+  }
+}
+
+.dropdownField {
+  color: #fff; // Ensure dropdown text is white
+  background-color: transparent; // Make dropdown background transparent
+  border: none;
+  width: 100%;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+  option {
+    background-color: #333; // Dark background for dropdown options
+    color: white; // Ensure text is visible
+  }
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 1); // Add focus effect
+  }
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.calculateButton {
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 30px; // Rounded button edges
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 45%;
+  margin: auto;
+}
+
+.calculateButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #8b5cf6; // Adjust hover border color to a light purple
+}
+
+.calculateButton:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+.resultContainer h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+.resultContainer p {
+  font-size: 3rem;
+  color: #ffdf00; // Gold color for the result text
+  text-align: center;
+}
+
+.bookConsultationButton {
+  padding: 0.75rem 2rem;
+  background-color: #0056ff; // Blue button
+  color: #fff;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 86, 255, 0.5);
+  display: flex;
+  margin: auto;
+}
+
+.bookConsultationButton:hover {
+  background-color: #003bbf; // Darker blue on hover
+}
+
+.modelDetails {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.05); // Light background for contrast
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Subtle shadow for lifted effect
+  border: 1px solid rgba(255, 255, 255, 0.1); // Subtle border
+  margin-bottom: 1rem;
+
+  h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-align: center; // Center-align heading
+    text-transform: uppercase; // Uppercase for emphasis
+    letter-spacing: 0.1rem; // Spacing between letters for style
+  }
+
+  p {
+    font-size: 1rem;
+    color: #ddd; // Light color for detail text
+    margin-bottom: 0.75rem;
+    line-height: 1.5; // Increase line-height for readability
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); // Add a subtle bottom border to each row
+    padding-bottom: 0.5rem;
+  }
+
+  // Additional styling for specific model details
+  .contextWindow, .inputCost, .outputCost, .inputTokens {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.05); // Slight background for each detail
+    border-radius: 5px;
+  }
+
+  // Hover effect for model details
+  p:hover {
+    color: #fff; // Change color on hover
+    background-color: rgba(255, 255, 255, 0.1); // Highlight the hovered item
+    transition: background-color 0.3s ease;
+  }
+}
+
+/* The container holding the popup, placed relative to the tokenCalculatorContainer */
+.popupContainer {
+  position: absolute; 
+  top: 50%; // Center vertically
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 100%;
+  height: auto;
+  z-index: 1000; // Ensure it's above other content
+}
+
+/* Popup styling */
+.popup {
+  background-color: rgba(0, 0, 0, 0.348); // Translucent background
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); // Lifted effect
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.5); // Subtle border
+  z-index: 1001; // Ensure it's above other content
+}
+
+.popupContent h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.popup input {
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5); // Subtle underline
+  background-color: transparent;
+  color: #fff;
+  width: 100%;
+  margin-bottom: 1.5rem;
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 1); // Emphasize underline on focus
+  }
+
+  &::placeholder {
+    color: #d1d1d1;
+    
+  }}
+
+.popup button {
+  padding: 0.75rem 2rem;
+  background-color: #0056ff;
+  color: white;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 86, 255, 0.5);
+}
+
+.popup button:hover {
+  background-color: #003bbf;
+}
+
+@media (max-width: 768px) {
+  .tokenCalculatorContainer {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .popup {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
