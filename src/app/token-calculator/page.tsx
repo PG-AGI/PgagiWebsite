@@ -5,6 +5,7 @@ import Navigation from "@/app/components/base/Navigation";
 import styles from "./TokenCalculator.module.scss";
 import Footer from "../components/Footer";
 import { ArrowLeftToLine } from "lucide-react";
+import ErrorMessage from "@/app/components/ErrorMessage"; // Import the ErrorMessage component
 
 const TokenCalculator = () => {
   const [models, setModels] = useState<any[]>([]);
@@ -14,6 +15,10 @@ const TokenCalculator = () => {
   const [totalCost, setTotalCost] = useState("0");
   const [whatYouCanBuild, setWhatYouCanBuild] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+
+  const [inputTokenError, setInputTokenError] = useState<string | null>(null);
+  const [outputTokenError, setOutputTokenError] = useState<string | null>(null);
 
   const [showCostInput, setShowCostInput] = useState(false);
   const [showCostResult, setShowCostResult] = useState(false);
@@ -25,9 +30,7 @@ const TokenCalculator = () => {
 
   useEffect(() => {
     const loadModelData = async () => {
-      const response = await fetch(
-        "/data/model_prices_and_context_window.json"
-      );
+      const response = await fetch("/data/model_prices_and_context_window.json");
       const jsonData = await response.json();
       const modelArray = Object.entries(jsonData).map(([key, value]: any) => ({
         name: key,
@@ -64,9 +67,37 @@ const TokenCalculator = () => {
 
   const calculateCost = () => {
     if (selectedModel) {
+      const inputTokensNum = Number(inputTokens);
+      const outputTokensNum = Number(outputTokens);
+      let hasError = false;
+
+      // Reset previous errors
+      setInputTokenError(null);
+      setOutputTokenError(null);
+
+      // Check if input tokens exceed the model's maximum allowed tokens
+      if (inputTokensNum > selectedModel.max_input_tokens) {
+        setInputTokenError(
+          `Input tokens exceed the maximum allowed (${selectedModel.max_input_tokens}).`
+        );
+        hasError = true;
+      }
+
+      // Check if output tokens exceed the model's maximum allowed tokens
+      if (outputTokensNum > selectedModel.max_output_tokens) {
+        setOutputTokenError(
+          `Output tokens exceed the maximum allowed (${selectedModel.max_output_tokens}).`
+        );
+        hasError = true;
+      }
+
+      if (hasError) {
+        return;
+      }
+
       const total =
-        Number(inputTokens) * selectedModel.input_cost_per_token +
-        Number(outputTokens) * selectedModel.output_cost_per_token;
+        inputTokensNum * selectedModel.input_cost_per_token +
+        outputTokensNum * selectedModel.output_cost_per_token;
       setTotalCost(total.toFixed(6));
       setShowEmailPopup(true);
     }
@@ -76,7 +107,7 @@ const TokenCalculator = () => {
     const selected = models.find((model) => model.name === e.target.value);
     setSelectedModel(selected);
     setShowModelDetails(true);
-  
+
     // Scroll to model details when they open
     setTimeout(() => {
       if (costInputRef.current) {
@@ -86,13 +117,23 @@ const TokenCalculator = () => {
       }
     }, 100);
   };
-  
+
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const submitEmail = () => {
+    if (!validateEmail(email)) {
+      setEmailError("Put a valid email id");
+      return;
+    }
+
     saveDataToDatabase();
     setShowEmailPopup(false);
     setShowCostResult(true);
 
-     setTimeout(() => {
+    setTimeout(() => {
       if (resultRef.current) {
         const resultTop = resultRef.current.getBoundingClientRect().top;
         const scrollPosition = window.scrollY + resultTop - 200;
@@ -212,6 +253,12 @@ const TokenCalculator = () => {
                     placeholder="0"
                     className={styles.inputField}
                   />
+                  {inputTokenError && (
+                    <ErrorMessage
+                      message={inputTokenError}
+                      onClose={() => setInputTokenError(null)}
+                    />
+                  )}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -227,6 +274,12 @@ const TokenCalculator = () => {
                     placeholder="0"
                     className={styles.inputField}
                   />
+                  {outputTokenError && (
+                    <ErrorMessage
+                      message={outputTokenError}
+                      onClose={() => setOutputTokenError(null)}
+                    />
+                  )}
                 </div>
 
                 <div className={styles.buttonRow}>
@@ -252,11 +305,25 @@ const TokenCalculator = () => {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (emailError) {
+                        setEmailError(null);
+                      }
+                    }}
                     placeholder="Enter your email"
                     className={styles.inputField}
                   />
-                  <button onClick={submitEmail} className={styles.submitButton}>
+                  {emailError && (
+                    <ErrorMessage
+                      message={emailError}
+                      onClose={() => setEmailError(null)}
+                    />
+                  )}
+                  <button
+                    onClick={submitEmail}
+                    className={styles.submitButton}
+                  >
                     Submit
                   </button>
                 </div>
