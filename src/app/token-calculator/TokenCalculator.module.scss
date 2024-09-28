@@ -92,6 +92,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   width: 45%;
+  margin: auto;
 }
 
 .calculateButton:hover {
@@ -126,6 +127,12 @@
   cursor: pointer;
   margin-top: 1rem;
   box-shadow: 0 4px 10px rgba(0, 86, 255, 0.5);
+
+  /* Center the button */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; /* Optional, ensures text is centered inside the button */
 }
 
 .bookConsultationButton:hover {
@@ -237,7 +244,7 @@
 .closeButton {
   position: absolute;
   top: 8px;
-  right: 8px;
+  left: 10px;
   background: none;
   border: none;
   color: white;
