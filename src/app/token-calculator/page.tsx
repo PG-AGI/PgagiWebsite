@@ -1,31 +1,33 @@
-'use client';
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import GlareBackground from "@/app/components/base/GlareBackground";
 import Navigation from "@/app/components/base/Navigation";
 import styles from "./TokenCalculator.module.scss";
 import Footer from "../components/Footer";
-import {ArrowLeftToLine } from 'lucide-react'
+import { ArrowLeftToLine } from "lucide-react";
 
 const TokenCalculator = () => {
   const [models, setModels] = useState<any[]>([]);
   const [selectedModel, setSelectedModel] = useState<any>(null);
-  const [inputTokens, setInputTokens] = useState(0);
-  const [outputTokens, setOutputTokens] = useState(0);
+  const [inputTokens, setInputTokens] = useState<number | string>(0);
+  const [outputTokens, setOutputTokens] = useState<number | string>(0);
   const [totalCost, setTotalCost] = useState("0");
-  const [whatYouCanBuild, setWhatYouCanBuild] = useState(""); // Track user input
-  const [email, setEmail] = useState(""); // Track email input
+  const [whatYouCanBuild, setWhatYouCanBuild] = useState("");
+  const [email, setEmail] = useState("");
 
-  const [showCostInput, setShowCostInput] = useState(false); 
-  const [showCostResult, setShowCostResult] = useState(false); 
-  const [showEmailPopup, setShowEmailPopup] = useState(false); 
+  const [showCostInput, setShowCostInput] = useState(false);
+  const [showCostResult, setShowCostResult] = useState(false);
+  const [showEmailPopup, setShowEmailPopup] = useState(false);
   const [showModelDetails, setShowModelDetails] = useState(false);
 
-  // Add a reference to the result container
   const resultRef = useRef<HTMLDivElement>(null);
+  const costInputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadModelData = async () => {
-      const response = await fetch("/data/model_prices_and_context_window.json");
+      const response = await fetch(
+        "/data/model_prices_and_context_window.json"
+      );
       const jsonData = await response.json();
       const modelArray = Object.entries(jsonData).map(([key, value]: any) => ({
         name: key,
@@ -38,10 +40,10 @@ const TokenCalculator = () => {
 
   const saveDataToDatabase = async () => {
     try {
-      const response = await fetch('/api/saveData', {
-        method: 'POST',
+      const response = await fetch("/api/saveData", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           whatYouCanBuild,
@@ -50,57 +52,81 @@ const TokenCalculator = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save data');
+        throw new Error("Failed to save data");
       }
 
       const data = await response.json();
-      console.log('Data saved:', data);
+      console.log("Data saved:", data);
     } catch (error) {
-      console.error('Error saving data:', error);
+      console.error("Error saving data:", error);
     }
   };
 
   const calculateCost = () => {
     if (selectedModel) {
       const total =
-        inputTokens * selectedModel.input_cost_per_token +
-        outputTokens * selectedModel.output_cost_per_token;
+        Number(inputTokens) * selectedModel.input_cost_per_token +
+        Number(outputTokens) * selectedModel.output_cost_per_token;
       setTotalCost(total.toFixed(6));
-      setShowEmailPopup(true); 
+      setShowEmailPopup(true);
     }
   };
 
   const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = models.find((model) => model.name === e.target.value);
     setSelectedModel(selected);
-    setShowModelDetails(true); 
+    setShowModelDetails(true);
+  
+    // Scroll to model details when they open
+    setTimeout(() => {
+      if (costInputRef.current) {
+        const resultTop = costInputRef.current.getBoundingClientRect().top;
+        const scrollPosition = window.scrollY + resultTop - 300; // Adjust scroll offset as needed
+        window.scrollTo({ top: scrollPosition, behavior: "smooth" });
+      }
+    }, 100);
   };
-
+  
   const submitEmail = () => {
     saveDataToDatabase();
     setShowEmailPopup(false);
     setShowCostResult(true);
 
-    setTimeout(() => {
+     setTimeout(() => {
       if (resultRef.current) {
         const resultTop = resultRef.current.getBoundingClientRect().top;
         const scrollPosition = window.scrollY + resultTop - 200;
         window.scrollTo({ top: scrollPosition, behavior: "smooth" });
       }
     }, 100);
-    
-    
+  };
+
+  const handleInputFocus = (
+    setTokens: React.Dispatch<React.SetStateAction<number | string>>
+  ) => {
+    setTokens("");
+  };
+
+  const handleInputBlur = (
+    tokens: number | string,
+    setTokens: React.Dispatch<React.SetStateAction<number | string>>
+  ) => {
+    if (tokens === "") {
+      setTokens(0);
+    }
   };
 
   return (
     <>
       <GlareBackground />
       <Navigation />
-      <div className={`${styles.tokenCalculatorContainer} ${showEmailPopup ? styles.blurBackground : ''}`}>
+      <div className={styles.tokenCalculatorContainer}>
         {showCostResult ? (
-         
           <div className={styles.resultContainer} ref={resultRef}>
-            <button className={styles.closeButton} onClick={() => setShowCostResult(false)}>
+            <button
+              className={styles.closeButton}
+              onClick={() => setShowCostResult(false)}
+            >
               <ArrowLeftToLine />
             </button>
             <h2>Total Cost</h2>
@@ -147,18 +173,29 @@ const TokenCalculator = () => {
             </div>
 
             {showModelDetails && selectedModel && (
-              <div className={styles.modelDetails}>
+              <div className={styles.modelDetails} ref={costInputRef}>
                 <h3>Model Details</h3>
-                <p className={styles.inputCost}>Max Input Tokens: ${selectedModel.max_input_tokens}</p>
-                <p className={styles.inputCost}>Cost Per Input Token: ${selectedModel.input_cost_per_token}</p>
-                <p className={styles.outputCost}>Max Output Tokens: ${selectedModel.max_output_tokens}</p>
-                <p className={styles.outputCost}>Cost Per Output Token: ${selectedModel.output_cost_per_token}</p>
+                <p className={styles.inputCost}>
+                  Max Input Tokens: {selectedModel.max_input_tokens}
+                </p>
+                <p className={styles.inputCost}>
+                  Cost Per Input Token: ${selectedModel.input_cost_per_token}
+                </p>
+                <p className={styles.outputCost}>
+                  Max Output Tokens: {selectedModel.max_output_tokens}
+                </p>
+                <p className={styles.outputCost}>
+                  Cost Per Output Token: ${selectedModel.output_cost_per_token}
+                </p>
               </div>
             )}
 
             {!showCostInput ? (
               <div className={styles.buttonRow}>
-                <button onClick={() => setShowCostInput(true)} className={styles.calculateButton}>
+                <button
+                  onClick={() => setShowCostInput(true)}
+                  className={styles.calculateButton}
+                >
                   Calculate Cost
                 </button>
               </div>
@@ -170,6 +207,9 @@ const TokenCalculator = () => {
                     type="number"
                     value={inputTokens}
                     onChange={(e) => setInputTokens(Number(e.target.value))}
+                    onFocus={() => handleInputFocus(setInputTokens)}
+                    onBlur={() => handleInputBlur(inputTokens, setInputTokens)}
+                    placeholder="0"
                     className={styles.inputField}
                   />
                 </div>
@@ -180,12 +220,20 @@ const TokenCalculator = () => {
                     type="number"
                     value={outputTokens}
                     onChange={(e) => setOutputTokens(Number(e.target.value))}
+                    onFocus={() => handleInputFocus(setOutputTokens)}
+                    onBlur={() =>
+                      handleInputBlur(outputTokens, setOutputTokens)
+                    }
+                    placeholder="0"
                     className={styles.inputField}
                   />
                 </div>
 
                 <div className={styles.buttonRow}>
-                  <button onClick={calculateCost} className={styles.calculateButton}>
+                  <button
+                    onClick={calculateCost}
+                    className={styles.calculateButton}
+                  >
                     Calculate
                   </button>
                 </div>
@@ -195,21 +243,26 @@ const TokenCalculator = () => {
         )}
 
         {showEmailPopup && (
-          <div className={styles.popup}>
-            <div className={styles.popupContent}>
-              <h3>Enter your email to view the result</h3>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className={styles.inputField}
-              />
-              <button onClick={submitEmail} className={styles.submitButton}>
-                Submit
-              </button>
+          <>
+            <div className={styles.overlay} /> {/* Dark background and blur */}
+            <div className={styles.popupContainer}>
+              <div className={styles.popup}>
+                <div className={styles.popupContent}>
+                  <h3>Enter your email to view the result</h3>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className={styles.inputField}
+                  />
+                  <button onClick={submitEmail} className={styles.submitButton}>
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
       <Footer />
