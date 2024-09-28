@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import styles from './ErrorMessage.module.scss';
 
@@ -32,7 +32,12 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, duration = 5000, o
   return (
     <div className={styles.errorMessage}>
       <span>{message}</span>
-      <div className={styles.progressBar} style={{ width: `${progress}%` }}></div>
+      <div className={styles.progressBar}>
+        <div
+          className={styles.innerProgressBar}
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
     </div>
   );
 };
