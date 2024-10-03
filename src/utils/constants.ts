@@ -47,6 +47,29 @@ export const trendingList = [
     "image": ai_news
   },
 ];
+export const webinarList=[
+  {
+    "type":"Recent Event",
+    "title":"How to build your first AI Agent",
+    "description":"Lorem ipsum dolor sit amet consectetur. Augue quis auctor ut molestie odio",
+    "status":true,
+    "link":"#"
+  },
+  {
+    "type":"On Demand Event",
+    "title":"Crafting Voices with AI",
+    "description":"Lorem ipsum dolor sit amet consectetur. Augue quis auctor ut molestie odio",
+    "status":false,
+    "link":"#"
+  },
+  {
+    "type":"Recent Event",
+    "title":"Learn how to Amplify Business with AI Voice",
+    "description":"Lorem ipsum dolor sit amet consectetur. Augue quis auctor ut molestie odio",
+    "status":true,
+    "link":"#"
+  }
+]
 
 
 export const segmentList = [

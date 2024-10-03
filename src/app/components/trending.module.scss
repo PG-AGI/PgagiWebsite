@@ -865,7 +865,7 @@
     }
 
     .trendingList {
-        width: 80%;
+        width: 90%;
         display: flex;
         gap: 0.938rem;
         padding: 36px 0;
@@ -882,7 +882,7 @@
 
         .trendingItem {
             position: relative;
-            min-width: 18rem;
+            min-width: 20rem;
             height: 32rem;
             border-radius: 0.5rem;
             overflow: hidden;
