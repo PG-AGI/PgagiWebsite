@@ -12,6 +12,7 @@ import Calendly from "./components/Calendly";
 import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
+import Webinars from "./components/Webinars";
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 
@@ -54,6 +55,7 @@ export default function Home() {
 			<Landing />
 			<Partners />
 			<Trending />
+			<Webinars/>
 			<section className={styles.segmentSection}>
 				<div className={styles.lottieWindow}>
 					<Lottie className={styles.blob} src="/blob.lottie" />
