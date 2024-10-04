@@ -1,4 +1,7 @@
 .webinar_main{
+    // *{
+    //     border: solid green;
+    // }
     background-color: white;
     width: 100%;
     color: black;
@@ -92,11 +95,11 @@
         }
     }
     .intro{
-        width: 50%;
+        width: 55%;
         color: black;
         display: flex;
         // align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
         .introContainer{
             // padding-left: 2vw;
             padding-top: 4vh;
@@ -129,13 +132,12 @@
             color: black;
             font-weight: 600;
             font-size: 2.5rem;
-            padding-right: 12vw;
+            // padding-right: 12vw;
         }
     }
     .form{
         .InterestedContainer{
-            
-            width: 80%;
+            width: 70%;
             height: 7vh;
             display: flex;
             align-items: center;
@@ -170,7 +172,7 @@
         height: 60%;
         width: 80%;
         input{
-            width: 25vw;
+            width: 80%;
             height: 6vh;
             border: solid 1px gray;
             border-radius: 10px;
@@ -202,15 +204,15 @@
         }
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: start;
         // padding-left: 5vw;
         // justify-content: center;
         color: black;
-        width: 50%;
+        width: 45%;
         h1{
             color: black;
             margin-bottom: 7vh;
-            font-size: 2.5rem;
+            font-size: 2.1rem;
             font-weight: 600;
         }
         .EventContainer{
@@ -235,4 +237,41 @@
             }
         }
     }
+}
+@media (max-width:478px) {
+    .sections{
+        height: 300vh;
+        .arrowButton{
+            display: none;
+        }
+    }
+    .form{
+        width: 100% !important;
+        justify-content: center;
+        .formContainer{
+            width: 100%;
+        }
+        .InterestedContainer{
+            width: 100%;
+            .Interested{
+                width: 70%;
+            }
+        }
+        .EventContainer{
+            height: 30vh;
+            width: 100%;
+        }
+
+    }
+    .sections{
+        flex-direction: column;
+        // height: 200vh;
+        border: solid rebeccapurple;
+        .intro{
+            width: 100vw;
+            justify-content: center;
+        }
+        
+    }
+    
 }

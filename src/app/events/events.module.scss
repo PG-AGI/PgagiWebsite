@@ -1,0 +1,117 @@
+.eventsMain{
+    background-color: white;
+    width: 100%;
+    .eventPrevBar{
+        height: 10vh;
+        padding-left: 10vw;
+        display: flex;
+        align-items: center;
+        a{
+            color: gray;
+            cursor: pointer;
+        }
+    }
+    .eventsHead{
+        background-color: #F5F5F5;
+        padding: 6vh 10vw;
+        color: black;
+        font-size: 2.4rem;
+        font-weight: 500;
+    }
+    .eventsContainer{
+        .eventsListHead{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4vh 0;
+            button{
+                border: 1px solid #0007A7;
+                padding: 10px 30px;
+                border-radius: 30px;
+                font-size: 1rem;
+                font-weight: 600;
+                margin: 0 2vw;
+            }
+            .eventBtn{
+                color: black;
+                background-color: transparent;
+            }
+            .eventBtnActive{
+                color: white;
+                background-color: #0007A7;
+            }
+        }
+        .eventsList{
+            .eventItem{
+                .eventDate{
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0 5vw;
+                    .month{
+                        p{
+                            color:  #5E5E5E;
+                            padding-right: 3vw;
+                            font-weight: 400;
+                        }
+                        hr{
+                            border: 1px solid #7E7E7E;
+                            width: 100%;
+                        }
+                        color: black;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .day{
+                        color:  #5E5E5E;
+                        font-weight: 400;
+                    }
+                }
+            .eventContent{
+                .eventImage{
+                    width: 15%;
+                }
+                padding: 4vh 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                .eventContentBox{
+                    width: 40%;
+                .eventTitle{
+                    color: black;
+                    font-size: 2.2rem;
+                    font-weight: 700;
+                }
+                .eventDescription{
+                    color: #5E5E5E;
+                }
+            }
+            }
+            // .eventTimeHead{
+            //     border: solid greenyellow;
+            //     width: 100%;
+            //     color: black;
+            // }
+        }
+        }
+    }
+}
+@media (max-width:478px) {
+.eventsMain{
+    .eventsContainer{
+        .eventsList{
+            .eventItem{
+                .eventContent{
+                    flex-direction: column;
+                    .eventImage{
+                        width: 70%;
+                    }
+                    .eventContentBox{
+                        width: 80%;
+                    }
+                }
+            }
+        }
+    }
+}
+}

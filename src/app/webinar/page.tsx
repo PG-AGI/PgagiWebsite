@@ -35,6 +35,7 @@ export default function Webinars() {
                         <h1>Enroll for FREE!!</h1>
                         <input placeholder="Your Name" />
                         <input placeholder="Your Email" />
+                        <input placeholder="Your Occupation" />
                         <button>Enroll Now</button>
                     </div>
                     <div className={styles.InterestedContainer}>

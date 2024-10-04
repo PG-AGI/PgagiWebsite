@@ -70,7 +70,29 @@ export const webinarList=[
     "link":"#"
   }
 ]
-
+export const eventsList=[
+  {
+    "title":"AI in Action: Elevating Communication Through Voice Software",
+    "description":"Lorem ipsum dolor sit amet consectetur. Eu molestie pretium porttitor aliquam aenean amet. Nibh orci odio ut scelerisque mattis mauris sagittis. Fusce lacinia sapien lectus euismod massa convallis. Consectetur condimentum at non neque mauris consectetur.",
+    "day":"WED",
+    "date":"30,OCTOBER,2024",
+    "Image":"/images/img5.png"
+  },
+  {
+    "title":"AI in Action: Elevating Communication Through Voice Software",
+    "description":"Lorem ipsum dolor sit amet consectetur. Eu molestie pretium porttitor aliquam aenean amet. Nibh orci odio ut scelerisque mattis mauris sagittis. Fusce lacinia sapien lectus euismod massa convallis. Consectetur condimentum at non neque mauris consectetur.",
+    "day":"WED",
+    "date":"30,OCTOBER,2024",
+    "Image":"/images/img5.png"
+  },
+  {
+    "title":"AI in Action: Elevating Communication Through Voice Software",
+    "description":"Lorem ipsum dolor sit amet consectetur. Eu molestie pretium porttitor aliquam aenean amet. Nibh orci odio ut scelerisque mattis mauris sagittis. Fusce lacinia sapien lectus euismod massa convallis. Consectetur condimentum at non neque mauris consectetur.",
+    "day":"WED",
+    "date":"30,OCTOBER,2024",
+    "Image":"/images/img5.png"
+  }
+]
 
 export const segmentList = [
   {
