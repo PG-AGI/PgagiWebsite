@@ -1,3 +1,4 @@
+'use client'
 import { eventFormData } from "@/utils/constants";
 import EventForm from "@/app/components/EventForm";
 

@@ -74,7 +74,7 @@ export const webinarList = [
   }
 ];
 
-export const eventFormData = [
+export let eventFormData = [
   {
     id: "ai-agent",
     title: "How to build your first AI Agent",

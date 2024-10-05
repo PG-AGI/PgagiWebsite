@@ -1,6 +1,7 @@
 import styles from './eventform.module.scss';
 import Image from "next/image";
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export interface Event {
     id: string;
@@ -15,6 +16,41 @@ interface EventFormProps {
   event: Event;
 }  
 export default function EventForm({event}:EventFormProps) {
+    const [timeLeft, setTimeLeft] = useState('');
+    const [interestedCount, setInterestedCount] = useState(event.interested);
+
+    // Function to handle incrementing the count when the button is clicked
+    const handleInterestClick = () => {
+      setInterestedCount(prevCount => prevCount + 1);
+    };
+
+  useEffect(() => {
+    const eventDate = new Date(event.date).getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const difference = eventDate - now;
+
+      if (difference <= 0) {
+        setTimeLeft("The event has started!");
+      } else {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+      }
+    };
+
+    // Initial call to set the countdown and then set interval
+    updateCountdown();
+    const intervalId = setInterval(updateCountdown, 1000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [event.date]);
+
   return (
     <div className={styles.webinar_main}>
       <div className={styles.sections}>
@@ -54,12 +90,11 @@ export default function EventForm({event}:EventFormProps) {
         
         <div className={styles.InterestedContainer}>
           <div className={styles.Interested}>
-          <div><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <button onClick={handleInterestClick}><div><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21.7151 10.0776C21.7151 9.59009 21.5215 9.12256 21.1768 8.77785C20.8321 8.43314 20.3645 8.23949 19.877 8.23949H14.0687L14.951 4.03944C14.9693 3.94753 14.9785 3.84644 14.9785 3.74534C14.9785 3.36853 14.8223 3.0193 14.5741 2.77115L13.6 1.80615L7.55262 7.85349C7.21257 8.19353 7.01038 8.65306 7.01038 9.15854V18.349C7.01038 18.8365 7.20404 19.304 7.54875 19.6487C7.89346 19.9935 8.36098 20.1871 8.84848 20.1871H17.1199C17.8827 20.1871 18.5352 19.7276 18.811 19.0659L21.5865 12.5866C21.6692 12.3752 21.7151 12.1546 21.7151 11.9157V10.0776ZM1.49609 20.1871H5.17228V9.15854H1.49609V20.1871Z" fill="black" />
                             </svg>
-                            </div>
-            <p>{event.interested} are interested</p>
-            <button>Interested?</button>
+                            </div></button>
+            <p>{interestedCount} are interested</p>
           </div>
         </div>
         <div className={styles.EventContainer}>
@@ -103,7 +138,7 @@ export default function EventForm({event}:EventFormProps) {
       <div className={styles.eventTimer}>
         <div className={styles.eventTime}>
           <span>EVENT STARTS IN</span>
-          <p>2HRS   30 MINS   10 SECS</p>
+          <p>{timeLeft}</p>
         </div>
         <button>
           Enroll Now!
