@@ -11,7 +11,7 @@
         justify-content: start;
         width: 100%;
         height: 40vh;
-        margin-top: 30vh;
+        margin-top: 10vh;
         background-color: #F2F2F2;
         padding: 0 10vw;
         h3{
@@ -146,7 +146,7 @@
             .Interested{
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: center;
                 padding: 0 2vw;
                 width: 70%;
                 background-color: #E1E1E1;
@@ -157,10 +157,10 @@
                 }
                 button{
                     color: #000AFF;
-                    width: 90px;
-                    padding: 2px 0;
+                    border: none;
+                    padding: 2px 10px;
+                    cursor: pointer;
                     border-radius: 5px;
-                    border: 1px black solid;
                     background-color: transparent;
                 }
             }
