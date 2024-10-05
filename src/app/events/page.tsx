@@ -7,7 +7,7 @@ export default function Webinars() {
     return (
         <div className={styles.eventsMain}>
             <div className={styles.eventPrevBar}>
-                <a>{'<'}     Go back</a>
+                <a href={'/'}>{'<'}     Go back</a>
             </div>
             <div className={styles.eventsHead}>
             Webinars and Events
@@ -27,9 +27,9 @@ export default function Webinars() {
                                 
                             </div>
                             <div className={styles.eventContent}>
-                                <Image src={item.Image} width={300} height={300} alt={item.title} className={styles.eventImage} />
+                                <Image src={item.image} width={300} height={300} alt={item.title} className={styles.eventImage} />
                                 <div className={styles.eventContentBox}>
-                                <h3 className={styles.eventTitle}>{item.title}</h3>
+                                <a href={item.link}><h3 className={styles.eventTitle}>{item.title}</h3></a>
                                 <p className={styles.eventDescription}>{item.description}</p>
                                 </div>
                             </div>

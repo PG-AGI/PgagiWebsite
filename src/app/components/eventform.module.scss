@@ -107,6 +107,7 @@
             button{
                 border: none;
                 color: #5E5E5E;
+                cursor: pointer;
                 background-color: transparent;
                 font-size: 1rem;
                 font-weight: 400;
@@ -137,7 +138,7 @@
     }
     .form{
         .InterestedContainer{
-            width: 70%;
+            width: 80%;
             height: 7vh;
             display: flex;
             align-items: center;
@@ -147,7 +148,7 @@
                 align-items: center;
                 justify-content: space-between;
                 padding: 0 2vw;
-                width: 55%;
+                width: 70%;
                 background-color: #E1E1E1;
                 height: 100%;
                 border-radius: 10px;
@@ -238,40 +239,110 @@
         }
     }
 }
-@media (max-width:478px) {
-    .sections{
-        height: 300vh;
-        .arrowButton{
-            display: none;
-        }
-    }
-    .form{
-        width: 100% !important;
-        justify-content: center;
-        .formContainer{
-            width: 100%;
-        }
-        .InterestedContainer{
-            width: 100%;
-            .Interested{
-                width: 70%;
-            }
-        }
-        .EventContainer{
-            height: 30vh;
-            width: 100%;
-        }
-
-    }
-    .sections{
+@media (max-width: 478px) {
+    .webinar_main {
+      .sections {
         flex-direction: column;
-        // height: 200vh;
-        border: solid rebeccapurple;
-        .intro{
-            width: 100vw;
-            justify-content: center;
+        height: auto;
+        min-height: 100vh;
+        .arrowButton {
+          display: none;
         }
-        
+  
+        .intro {
+          width: 100%;
+          padding: 20px;
+  
+          .introContainer {
+            width: 100%;
+            padding-top: 2vh;
+  
+            h1 {
+              font-size: 2rem;
+            }
+  
+            .introEventContainer {
+              h4 {
+                font-size: 1.1rem;
+              }
+              p {
+                font-size: 1rem;
+                padding-right: 0;
+              }
+            }
+          }
+        }
+      }
+  
+      .form {
+        width: 100%;
+        padding: 20px;
+  
+        h1 {
+          font-size: 1.8rem;
+          margin-bottom: 4vh;
+        }
+  
+        .EventContainer {
+          width: 100%;
+          margin-bottom: 4vh;
+  
+          h4 {
+            font-size: 1.3rem;
+          }
+        }
+  
+        .InterestedContainer {
+          width: 100%;
+          margin-bottom: 4vh;
+          margin-top: 10vh;
+          .Interested {
+            width: 100%;
+          }
+        }
+  
+        .formContainer {
+          width: 100%;
+  
+          input {
+            width: 100%;
+          }
+  
+          button {
+            width: 100%;
+            font-size: 1.1rem;
+          }
+        }
+      }
+  
+      .eventDetail {
+        height: auto;
+        padding: 20px;
+        padding-bottom: 20vh;
+        h3 {
+          font-size: 1.1rem;
+        }
+      }
+  
+      .eventTimer {
+        height: auto;
+        padding: 10px 0;
+        flex-wrap: wrap;
+  
+        .eventTime {
+          width: 50%;
+          margin-bottom: 10px;
+  
+          span {
+            font-size: 1rem;
+          }
+        }
+  
+        button {
+          width: 100%;
+          margin: 10px 0;
+          font-size: 1.1rem;
+        }
+      }
     }
-    
-}
+  }

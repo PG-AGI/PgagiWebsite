@@ -18,6 +18,7 @@
             font-weight: 600;
             z-index: 10;
         }
+        a{
 
         button {
             height: 5vh;
@@ -34,7 +35,7 @@
             &:hover {
                 cursor: pointer;
             }
-        }
+        }}
     }
 
     .webinarList {
