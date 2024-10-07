@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { webinarList } from "@/utils/constants";
+import { webinarList } from "@/utils/events";
 import styles from './webinar.module.scss';
 
 export default function Webinars() {

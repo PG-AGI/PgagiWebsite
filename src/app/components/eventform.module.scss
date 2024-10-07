@@ -59,13 +59,13 @@
             -webkit-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
             -moz-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
             box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
-            height: 60px;
-            padding-left: 3vw;
-            padding-right: 3vw;
+            height: 40px;
+            padding-left: 2vw;
+            padding-right: 2vw;
             border: none;
-            border-radius: 25px;
+            border-radius: 15px;
             font-weight: 500;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
 
             &:hover {
                 background-color: #2f2f2f;
@@ -182,20 +182,21 @@
             color: black;
         }
         button {
-            bottom: 5vh;
-            color: white;
-            background-color: black;
-            margin-top: 5vh;
-            -webkit-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
-            -moz-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
-            box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
-            height: 60px;
-            padding-left: 3vw;
-            padding-right: 3vw;
-            border: none;
-            border-radius: 25px;
-            font-weight: 500;
-            font-size: 1.3rem;
+          bottom: 5vh;
+          margin-left: 2vw;
+          color: white;
+          background-color: black;
+          margin-top: 3vh;
+          -webkit-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
+          -moz-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
+          height: 40px;
+          padding-left: 2vw;
+          padding-right: 2vw;
+          border: none;
+          border-radius: 15px;
+          font-weight: 500;
+          font-size: 1.1rem;
 
             &:hover {
                 background-color: #2f2f2f;
@@ -346,3 +347,51 @@
       }
     }
   }
+.errorMessage{
+  color: red;
+}
+.successMessage{
+  color: green;
+}
+.otpModal{
+  *{
+    color: black;
+  }
+  input{
+    width: 80%;
+    height: 6vh;
+    border: solid 1px gray;
+    border-radius: 10px;
+    margin-bottom: 2vh;
+    padding-left: 20px;
+    color: black;
+  }
+  button{
+    bottom: 5vh;
+          margin-left: 2vw;
+          color: white;
+          background-color: black;
+          margin-top: 3vh;
+          -webkit-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
+          -moz-box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 0px 27px -3px rgba(0, 0, 0, 0.75);
+          height: 40px;
+          padding-left: 2vw;
+          padding-right: 2vw;
+          border: none;
+          border-radius: 15px;
+          font-weight: 500;
+          font-size: 1.1rem;
+
+            &:hover {
+                background-color: #2f2f2f;
+                cursor: pointer;
+            }
+  }
+}
+.msgCont{
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
