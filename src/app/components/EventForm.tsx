@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { updateInterestedCount } from '@/utils/events';
 import OTPModal from './otpModel';
 import { generateOtp, sendOtp, verifyOtp } from '@/utils/otpService'
-import clientPromise from '@/utils/mongodb';
 
 export interface Event {
   id: string;
@@ -40,7 +39,6 @@ export default function EventForm({ event }: EventFormProps) {
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
-  // const [interestedCount, setInterestedCount] = useState(event.interested);
 
   // Function to handle incrementing the count when the button is clicked
   const handleInterestClick = () => {
@@ -67,8 +65,20 @@ export default function EventForm({ event }: EventFormProps) {
       setError('Please provide a valid email.');
       return;
     }
-
     try {
+      const response = await fetch(`/api/events/enroll?email=${email}&event_id=${event.id}`, {
+        method: 'GET',
+      });
+  
+      if (response.status === 400) {
+        const data = await response.json();
+        setError(data.message || 'User is already registered for this event.');
+        return;
+      }
+  
+      if (!response.ok) {
+        throw new Error('Failed to verify registration status.');
+      }
       const otp = generateOtp();
       setGeneratedOtp(otp);
       await sendOtp(email, otp);
@@ -80,56 +90,80 @@ export default function EventForm({ event }: EventFormProps) {
   };
 
   // Handle OTP verification
-  const handleVerifyOtp = async () => {
-    setIsVerifying(true);
-    setError('');
-    setSuccess('');
-
-    const isValid = verifyOtp(inputOtp, generatedOtp);
-
-    if (isValid) {
-      setSuccess('OTP verified successfully! Enrollment complete.');
-      setIsModalOpen(false);
-      // Proceed to the next step, e.g., submit the form data to your backend
-      console.log('Form Data:', formData);
-      // Reset form or redirect as needed
-      const response = await fetch('/api/enroll', {
+  const sendEnrollmentEmail = async (formData:any) => {
+    try {
+      const response = await fetch('/api/events/sendEmail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({...formData,event_id:event.id}),
+        body: JSON.stringify(formData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send enrollment email.');
+      }
+  
+      const data = await response.json();
+      console.log('Enrollment email sent successfully:', data);
+      return { success: true, message: 'Enrollment email sent successfully!' };
+    } catch (error:any) {
+      console.error('Error sending enrollment email:', error);
+      return { success: false, message: error.message };
+    }
+  };
+  
+  const handleVerifyOtp = async () => {
+    setIsVerifying(true);
+    setError('');
+    setSuccess('');
+  
+    const isValid = verifyOtp(inputOtp, generatedOtp);
+  
+    if (isValid) {
+      setSuccess('OTP verified successfully! Enrollment complete.');
+      setIsModalOpen(false);
+      console.log('Form Data:', formData);
+      
+      // Call your enroll API
+      const response = await fetch('/api/events/enroll', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({...formData, event_id: event.id}),
       });
   
       if (response.ok) {
-        setSuccess('Successfully enrolled and OTP sent!');
+        setSuccess('Successfully enrolled! Sending confirmation email...');
+        
+        // Call the send email API after successful enrollment
+        const emailResponse = await sendEnrollmentEmail({
+          ...formData,
+          event_id: event.id,
+          email: formData.email,
+          name: formData.name,
+          date: event.date,
+          eventName:event.title,
+          time:"3:pm",
+          link: "https://decodingml.substack.com/", // Assuming your event object contains this data
+        });
+  
+        if (emailResponse.success) {
+          setSuccess(emailResponse.message);
+        } else {
+          setError(emailResponse.message);
+        }
+  
       } else {
-        console.log(response);
-        // const data = await response.json();
-        // throw new Error(data.message || 'Failed to enroll');
+        setError('Failed to enroll. Please try again.');
       }
     } else {
       setError('Invalid OTP. Please try again.');
     }
-
+  
     setIsVerifying(false);
   };
-
-  // useEffect(() => {
-  //   const loadMongoClient = async () => {
-  //     try {
-  //       const client = await clientPromise;
-  //       const db = client.db('events'); // Database name
-  //       console.log('MongoDB client loaded successfully', db);
-  //     } catch (err) {
-  //       console.error('Failed to load MongoDB client', err);
-  //     }
-  //   };
-
-  //   loadMongoClient();
-  // }, []);
-
-
 
   useEffect(() => {
     const eventDate = new Date(event.date).getTime();
