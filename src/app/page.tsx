@@ -13,6 +13,7 @@ import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
 import Webinars from "./components/Webinars";
+import Products from "./components/products";
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 
@@ -54,6 +55,7 @@ export default function Home() {
 			<Navigation />
 			<Landing />
 			<Partners />
+			<Products/>
 			<Trending />
 			<Webinars/>
 			<section className={styles.segmentSection}>
