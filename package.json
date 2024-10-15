@@ -30,6 +30,7 @@
     "react-burger-menu": "^3.0.9",
     "react-calendly": "^4.3.0",
     "react-dom": "^18",
+    "react-responsive-carousel": "^3.2.23",
     "react-spinners": "^0.14.1",
     "react-toastify": "^10.0.5",
     "react-type-animation": "^3.2.0",
