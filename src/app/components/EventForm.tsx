@@ -26,12 +26,13 @@ interface FormData {
 
 export default function EventForm({ event }: EventFormProps) {
   const [timeLeft, setTimeLeft] = useState('');
+  const [interestedCount, setInterestedCount] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     occupation: '',
   });
-  
+
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [generatedOtp, setGeneratedOtp] = useState<string>('');
@@ -39,11 +40,66 @@ export default function EventForm({ event }: EventFormProps) {
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
+  const [interestedLoading, setInterestedLoading] = useState<boolean>(false);
 
-  // Function to handle incrementing the count when the button is clicked
-  const handleInterestClick = () => {
-    updateInterestedCount(event.id, event.interested + 1);
+  // Fetch the interested count when the component mounts or eventId changes
+  useEffect(() => {
+    if (event.id) {
+      fetchInterestedCount(event.id);
+    }
+  }, [event.id]);
+
+  // Function to fetch the interested count
+  const fetchInterestedCount = async (eventId: string) => {
+    setInterestedLoading(true);
+    try {
+      const response = await fetch(`/api/events/interested?event_id=${eventId}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setInterestedCount(data.result.interestedCount);
+      } else {
+        setError(data.message || 'Error fetching interested count');
+      }
+    } catch (err) {
+      setError('Failed to fetch interested count');
+    } finally {
+      setInterestedLoading(false);
+    }
   };
+
+  // Function to increment the interested count
+  const incrementInterestedCount = async () => {
+    // setInterestedLoading(true);
+    setInterestedCount(interestedCount+1);
+    try {
+      const response = await fetch(`/api/events/interested`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_id: event.id,
+          incrementBy: 1, // Increment by 1
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // setInterestedCount(data.result.interestedCount);
+      } else {
+        setError(data.message || 'Error updating interested count');
+      }
+    } catch (err) {
+      setError('Failed to update interested count');
+    } 
+    // finally {
+    //   setInterestedLoading(false);
+    // }
+  };
+
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,13 +125,13 @@ export default function EventForm({ event }: EventFormProps) {
       const response = await fetch(`/api/events/enroll?email=${email}&event_id=${event.id}`, {
         method: 'GET',
       });
-  
+
       if (response.status === 400) {
         const data = await response.json();
         setError(data.message || 'User is already registered for this event.');
         return;
       }
-  
+
       if (!response.ok) {
         throw new Error('Failed to verify registration status.');
       }
@@ -90,7 +146,7 @@ export default function EventForm({ event }: EventFormProps) {
   };
 
   // Handle OTP verification
-  const sendEnrollmentEmail = async (formData:any) => {
+  const sendEnrollmentEmail = async (formData: any) => {
     try {
       const response = await fetch('/api/events/sendEmail', {
         method: 'POST',
@@ -99,44 +155,44 @@ export default function EventForm({ event }: EventFormProps) {
         },
         body: JSON.stringify(formData),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to send enrollment email.');
       }
-  
+
       const data = await response.json();
       console.log('Enrollment email sent successfully:', data);
       return { success: true, message: 'Enrollment email sent successfully!' };
-    } catch (error:any) {
+    } catch (error: any) {
       console.error('Error sending enrollment email:', error);
       return { success: false, message: error.message };
     }
   };
-  
+
   const handleVerifyOtp = async () => {
     setIsVerifying(true);
     setError('');
     setSuccess('');
-  
+
     const isValid = verifyOtp(inputOtp, generatedOtp);
-  
+
     if (isValid) {
       setSuccess('OTP verified successfully! Enrollment complete.');
       setIsModalOpen(false);
       console.log('Form Data:', formData);
-      
+
       // Call your enroll API
       const response = await fetch('/api/events/enroll', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({...formData, event_id: event.id}),
+        body: JSON.stringify({ ...formData, event_id: event.id }),
       });
-  
+
       if (response.ok) {
         setSuccess('Successfully enrolled! Sending confirmation email...');
-        
+
         // Call the send email API after successful enrollment
         const emailResponse = await sendEnrollmentEmail({
           ...formData,
@@ -144,24 +200,24 @@ export default function EventForm({ event }: EventFormProps) {
           email: formData.email,
           name: formData.name,
           date: event.date,
-          eventName:event.title,
-          time:"3:pm",
+          eventName: event.title,
+          time: "3:pm",
           link: "https://decodingml.substack.com/", // Assuming your event object contains this data
         });
-  
+
         if (emailResponse.success) {
           setSuccess(emailResponse.message);
         } else {
           setError(emailResponse.message);
         }
-  
+
       } else {
         setError('Failed to enroll. Please try again.');
       }
     } else {
       setError('Invalid OTP. Please try again.');
     }
-  
+
     setIsVerifying(false);
   };
 
@@ -251,39 +307,43 @@ export default function EventForm({ event }: EventFormProps) {
               <button type="submit">Enroll Now</button>
             </form>
             <div className={styles.msgCont}>
-            {error && <p className={styles.errorMessage}>{error}</p>}
-            {success && <p className={styles.successMessage}>{success}</p>}
+              {error && <p className={styles.errorMessage}>{error}</p>}
+              {success && <p className={styles.successMessage}>{success}</p>}
             </div>
 
             {/* OTP Verification Modal */}
             <OTPModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
               <div className={styles.otpModal}>
-              <h2>Verify OTP</h2>
-              <p>An OTP has been sent to your email. Please enter it below:</p>
-              <input
-                type="text"
-                placeholder="Enter OTP"
-                value={inputOtp}
-                onChange={(e) => setInputOtp(e.target.value)}
-                required
-              />
-              <div className={styles.modalActions}>
-                <button onClick={handleVerifyOtp} disabled={isVerifying}>
-                  {isVerifying ? 'Verifying...' : 'Verify'}
-                </button>
-                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-              </div>
-              {error && <p className="error-message">{error}</p>}
+                <h2>Verify OTP</h2>
+                <p>An OTP has been sent to your email. Please enter it below:</p>
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={inputOtp}
+                  onChange={(e) => setInputOtp(e.target.value)}
+                  required
+                />
+                <div className={styles.modalActions}>
+                  <button onClick={handleVerifyOtp} disabled={isVerifying}>
+                    {isVerifying ? 'Verifying...' : 'Verify'}
+                  </button>
+                  <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+                </div>
+                {error && <p className="error-message">{error}</p>}
               </div>
             </OTPModal>
 
             <div className={styles.InterestedContainer}>
               <div className={styles.Interested}>
-                <button onClick={handleInterestClick}><div><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <button onClick={incrementInterestedCount} disabled={interestedLoading || !event.id}><div><svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M21.7151 10.0776C21.7151 9.59009 21.5215 9.12256 21.1768 8.77785C20.8321 8.43314 20.3645 8.23949 19.877 8.23949H14.0687L14.951 4.03944C14.9693 3.94753 14.9785 3.84644 14.9785 3.74534C14.9785 3.36853 14.8223 3.0193 14.5741 2.77115L13.6 1.80615L7.55262 7.85349C7.21257 8.19353 7.01038 8.65306 7.01038 9.15854V18.349C7.01038 18.8365 7.20404 19.304 7.54875 19.6487C7.89346 19.9935 8.36098 20.1871 8.84848 20.1871H17.1199C17.8827 20.1871 18.5352 19.7276 18.811 19.0659L21.5865 12.5866C21.6692 12.3752 21.7151 12.1546 21.7151 11.9157V10.0776ZM1.49609 20.1871H5.17228V9.15854H1.49609V20.1871Z" fill="black" />
                 </svg>
                 </div></button>
-                <p>{event.interested} are interested</p>
+                {interestedLoading ? (
+                  <p>... are interested</p>
+                ) : (
+                  <p>{interestedCount} are interested</p>
+                )}
               </div>
             </div>
             <div className={styles.EventContainer}>

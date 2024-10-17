@@ -79,31 +79,86 @@ export const trendingList2 = [
 
 type Product = {
   title: string;
+  subtitle:string;
   description: string;
   miniTitle: string;  // Mini heading after hovering
   icon: string;  // You will provide the icons here
+  link:string
 };
 
 export const productData: Product[] = [
   {
-    title: 'The AI voice agent',
+    title: 'Toingg',
+    subtitle:'The AI voice agent',
     description: 'Unlock the full potential of AI voice communications with Toingg’s customizable AI voice calling agents.',
     miniTitle: 'AI Agent',
     icon: products1, // Dummy icon
+    link: "/products/web-scrapper"
   },
   {
     title: 'Web Scraping',
+    subtitle:'The AI voice agent',
     description: 'Where work happens',
     miniTitle: 'Scraping Tool',
     icon: products2, // Dummy icon
+    link: "/products/ai-scrapper"
   },
   {
     title: 'Email Sender',
+    subtitle:'The AI voice agent',
     description: 'Automatic Email Delivery, Simplified',
     miniTitle: 'Email Tool',
     icon: products3, // Dummy icon
+    link: "/products/custom-scrapper"
   },
 ];
+
+export const productDetailsData = [
+  {
+    id: 'web-scrapper',
+    title: 'Explore Your Web Scraping Assistant',
+    subtitle: 'Effortless Data Collection, Powerful Solutions',
+    description: `Unlock the full potential of web scraping with ScrapeIt's customizable scraping agents.
+                  Our platform empowers developers and businesses to automate data extraction from any website.
+                  Build complex, tailored scraping solutions using Python, JavaScript, and our upcoming scraping SDK.
+                  Easily integrate endpoints and actions to scrape and transform web data into actionable insights.
+                  Start today with a free trial—no upfront costs, just instant access to advanced scraping tools.`,
+    images: ['/images/frame3.png', '/images/frame6.png', '/images/frame5.png'],
+    features: [
+      { title: 'Easy Setup', description: 'Get started with minimal setup, using intuitive interfaces.' },
+      { title: 'Data Transformation', description: 'Transform scraped data into structured formats like CSV or JSON.' },
+      { title: 'Customizable Workflows', description: 'Build complex workflows using our SDK to automate repetitive tasks.' }
+    ]
+  },
+  {
+    id: 'ai-scrapper',
+    title: 'AI Powered Scraper',
+    subtitle: 'The Future of Automated Data Collection',
+    description: `Our AI-powered scrapers adapt to any website's structure, ensuring consistent data extraction.
+                  Easily set up your scraping rules and let AI handle the complexity.
+                  Perfect for large-scale scraping operations.`,
+    images: ['/images/frame3.png', '/images/frame6.png', '/images/frame5.png'],
+    features: [
+      { title: 'AI Adaptation', description: 'Automatically adjust to website changes without manual intervention.' },
+      { title: 'Scalability', description: 'Handle large-scale data extraction effortlessly.' },
+      { title: 'Real-Time Scraping', description: 'Get real-time data updates with our high-speed scrapers.' }
+    ]
+  },
+  {
+    id: 'custom-scrapper',
+    title: 'Custom Scraper SDK',
+    subtitle: 'Build Your Own Scrapers',
+    description: `Take full control with our customizable scraping SDK. Build your own scrapers tailored to your specific needs.
+                  Perfect for developers who want to integrate scraping into their existing projects.`,
+    images: ['/images/frame3.png', '/images/frame6.png', '/images/frame5.png'],
+    features: [
+      { title: 'SDK Integration', description: 'Easily integrate with existing projects and workflows.' },
+      { title: 'Custom Scripts', description: 'Write custom scraping scripts to handle unique challenges.' },
+      { title: 'Flexible', description: 'Highly flexible and adaptable for various use cases.' }
+    ]
+  }
+]
+
 
 export const segmentList = [
   {
