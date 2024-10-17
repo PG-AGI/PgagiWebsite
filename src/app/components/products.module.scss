@@ -1,161 +1,178 @@
-.products {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 1rem;
-    padding: 2vw; // Adding padding to make space responsive
-    flex-wrap: wrap; // Allow cards to wrap on smaller screens
-  }
-  
-  .card {
-    position: relative;
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 2vw;
-    width: 26vw;  // Responsive width based on viewport
-    height: 70vh;  // Responsive height based on viewport
-    box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  
-    h2 {
-      font-size: 2rem;
-      margin-top: 1rem;
-      color: #000;
-      z-index: 10;
-    }
-  
-    h3 {
-      font-size: 1.25rem;
-      color: #ffffff;
-      z-index: 10;
-    }
-  
-    p {
-      margin-top: 1rem;
-      font-size: 1rem;
-      color: white;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-  
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-  
-  .icon {
-    width: 100%;
-    font-size: 3rem;
-    text-align: left;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    transition: transform 0.5s ease;
-    position: absolute;
-    bottom: 20%; // Use percentage to make the icon's position responsive
-    left: 5%; // Add some responsive positioning
-    right: 5%;
-  
-    h3 {
-      display: none;
-    }
-  }
-  
-  .card.hovered .icon {
-    justify-content: center;
-    align-items: center;
+.main{
+  >h1 {
+    font-size: 48px;
+    font-weight: 500;
+    color: #caccff;
+    margin-bottom: 48px;
+    background: #FFF;
+    -webkit-background-clip: text;
+    background-clip: text;
     text-align: center;
-    position: relative;
-    padding-right: 2vw;
-    bottom: 0;
-    h2 {
-      display: none;
-    }
-  
-    h3 {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
+    color: transparent;
   }
-.card.hovered .viewButton{
-    background-color: white;
-    color: #000;
 }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  .viewButton {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 0.8rem 1.6rem;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.products {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1rem;
+  padding: 2vw; // Adding padding to make space responsive
+  flex-wrap: wrap; // Allow cards to wrap on smaller screens
+}
+
+.card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2vw;
+  width: 26vw;  // Responsive width based on viewport
+  height: 70vh;  // Responsive height based on viewport
+  box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  h2 {
+    font-size: 2rem;
+    margin-top: 1rem;
+    color: #000;
     z-index: 10;
-    
-    &:hover {
-      background-color: #333;
-    }
   }
-  
-  .circle {
-    position: absolute;
-    width: 20vw; // Responsive circle size
-    height: 20vw;
-    background-color: #6a0dad;
-    border-radius: 50%;
-    top: -5vw;
-    right: -10vw;
-    transition: all 0.5s ease;
-    z-index: 1;
+  h4{
+    color: #000;
+    font-size: 1.2rem;
   }
-  
-  .card.hovered .circle {
-    width: 40vw; // Increase circle size by 150% with vw
-    height: 40vw;
-    top: 60%;
-    right: 50%;
-    transform: translate(50%, -50%);
+  h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    z-index: 10;
   }
-  
-  .show {
-    opacity: 1 !important; // Display description on hover
+
+  p {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: white;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
-  
-  .hide {
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.icon {
+  width: 100%;
+  font-size: 3rem;
+  text-align: left;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.5s ease;
+  position: absolute;
+  bottom: 20%; // Use percentage to make the icon's position responsive
+  left: 5%; // Add some responsive positioning
+  right: 5%;
+
+  h3 {
+    display: none;
+  }
+}
+
+.card.hovered .icon {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding-right: 2vw;
+  bottom: 0;
+  h2 {
+    display: none;
+  }
+
+  h3 {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+}
+.card.hovered .viewButton{
+  background-color: white;
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
   }
-  
-
-  @media (max-width: 480px) {
-    .card {
-      width: 90vw; // Even larger for mobile screens
-      height: 60vh;
-    }
-  
-    .circle {
-      width: 40vw;
-      height: 40vw;
-    }
-  
-    .card.hovered .circle {
-      width: 80vw;
-      height: 80vw;
-    }
+  to {
+    opacity: 1;
   }
+}
+.productLink{
+  z-index: 10;
+.viewButton {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 10;
   
+  &:hover {
+    background-color: #333;
+  }
+}
+}
+
+.circle {
+  position: absolute;
+  width: 20vw; // Responsive circle size
+  height: 20vw;
+  background-color: #6a0dad;
+  border-radius: 50%;
+  top: -5vw;
+  right: -10vw;
+  transition: all 0.5s ease;
+  z-index: 1;
+}
+
+.card.hovered .circle {
+  width: 40vw; // Increase circle size by 150% with vw
+  height: 40vw;
+  top: 60%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.show {
+  opacity: 1 !important; // Display description on hover
+}
+
+.hide {
+  opacity: 0;
+}
+
+
+@media (max-width: 480px) {
+  .card {
+    width: 90vw; // Even larger for mobile screens
+    height: 60vh;
+  }
+
+  .circle {
+    width: 40vw;
+    height: 40vw;
+  }
+
+  .card.hovered .circle {
+    width: 80vw;
+    height: 80vw;
+  }
+}
