@@ -190,6 +190,24 @@ export const segmentList = [
   }
 ]
 
+export const Product_Pages_Content = [
+  {
+    id: "product-list",
+    title: "Product Listing Generator",
+    description: "Generate listings for your products with ease using our tool.",
+    apiUrl: "https://pgagi-product-list-and-faq-400911582288.asia-south1.run.app/generate_product_description/",
+    buttonText: "Generate Product Listing ✨",
+  },
+  {
+    id: "product-faq",
+    title: "Product FAQ Generator",
+    description: "Create Frequently Asked Questions (FAQs) for your products.",
+    apiUrl: "https://pgagi-product-list-and-faq-400911582288.asia-south1.run.app/generate_product_faq/",
+    buttonText: "Generate FAQ ✨",
+  },
+];
+
+
 export const links = [
   'Blogs',
   'News',

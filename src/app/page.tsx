@@ -57,7 +57,7 @@ export default function Home() {
 			<Partners />
 			<Products/>
 			<Trending />
-			<Webinars/>
+			{/* <Webinars/> */}
 			<section className={styles.segmentSection}>
 				<div className={styles.lottieWindow}>
 					<Lottie className={styles.blob} src="/blob.lottie" />
