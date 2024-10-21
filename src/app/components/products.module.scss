@@ -1,5 +1,5 @@
-.main{
-  >h1 {
+.main {
+  > h1 {
     font-size: 48px;
     font-weight: 500;
     color: #caccff;
@@ -11,12 +11,25 @@
     color: transparent;
   }
 }
+
 .products {
   display: flex;
   justify-content: space-evenly;
   gap: 1rem;
-  padding: 2vw; // Adding padding to make space responsive
-  flex-wrap: wrap; // Allow cards to wrap on smaller screens
+  padding: 2vw 5vw;
+  flex-wrap: wrap; // Allow cards to wrap on larger screens
+
+  @media (max-width: 768px) {
+    margin-bottom: 20vh;
+    flex-wrap: nowrap; // Prevent wrapping on smaller screens
+    overflow-x: auto;  // Enable horizontal scrolling
+    scroll-behavior: smooth;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  @media (max-width: 480px) {
+    margin-bottom: 10vh;
+  }
 }
 
 .card {
@@ -24,24 +37,27 @@
   background-color: #fff;
   border-radius: 12px;
   padding: 2vw;
-  width: 26vw;  // Responsive width based on viewport
-  height: 70vh;  // Responsive height based on viewport
+  width: 22vw;  // Responsive width based on viewport
+  height: 60vh;  // Responsive height based on viewport
   box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   h2 {
     font-size: 2rem;
     margin-top: 1rem;
     color: #000;
     z-index: 10;
   }
-  h4{
+
+  h4 {
     color: #000;
     font-size: 1.2rem;
   }
+
   h3 {
     font-size: 1.5rem;
     color: #ffffff;
@@ -60,6 +76,18 @@
   &:hover {
     transform: scale(1.05);
   }
+
+  @media (max-width: 768px) {
+    width: 70vw; // Make the cards wider for mobile
+    height: 50vh;
+    flex-shrink: 0; // Prevent shrinking while scrolling
+    margin-right: 10vw;
+  }
+
+  @media (max-width: 480px) {
+    width: 60vw;
+    height: 40vh;
+  }
 }
 
 .icon {
@@ -72,12 +100,16 @@
   align-items: flex-start;
   transition: transform 0.5s ease;
   position: absolute;
-  bottom: 20%; // Use percentage to make the icon's position responsive
-  left: 5%; // Add some responsive positioning
+  bottom: 20%; // Original icon position
+  left: 5%; 
   right: 5%;
 
   h3 {
     display: none;
+  }
+
+  @media (max-width: 768px) {
+    bottom: 15%; // Adjusted for mobile
   }
 }
 
@@ -88,6 +120,7 @@
   position: relative;
   padding-right: 2vw;
   bottom: 0;
+  
   h2 {
     display: none;
   }
@@ -97,38 +130,33 @@
     animation: fadeIn 0.3s ease;
   }
 }
-.card.hovered .viewButton{
-  background-color: white;
-  color: #000;
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.productLink{
+.productLink {
   z-index: 10;
-.viewButton {
-  width: 100%;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.6rem;
-  font-weight: 700;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  z-index: 10;
-  
-  &:hover {
-    background-color: #333;
+
+  .viewButton {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.6rem;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #333;
+    }
   }
-}
+
+  @media (max-width: 768px) {
+    .viewButton {
+      padding: 0.6rem 1.4rem;
+      font-size: 0.9rem;
+    }
+  }
 }
 
 .circle {
@@ -141,14 +169,31 @@
   right: -10vw;
   transition: all 0.5s ease;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    width: 50vw;
+    height: 50vw;
+  }
+
+  @media (max-width: 480px) {
+    width: 40vw;
+    height: 40vw;
+    top: -5vh;
+    right: -10vh;
+  }
 }
 
 .card.hovered .circle {
-  width: 40vw; // Increase circle size by 150% with vw
-  height: 40vw;
+  width: 35vw;
+  height: 35vw;
   top: 60%;
   right: 50%;
   transform: translate(50%, -50%);
+
+  @media (max-width: 768px) {
+    width: 70vw;
+    height: 70vw;
+  }
 }
 
 .show {
@@ -159,20 +204,28 @@
   opacity: 0;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 @media (max-width: 480px) {
   .card {
-    width: 90vw; // Even larger for mobile screens
-    height: 60vh;
+    width: 70vw;
+    height: 50vh;
   }
 
   .circle {
-    width: 40vw;
-    height: 40vw;
+    width: 25vh;
+    height: 25vh;
   }
 
   .card.hovered .circle {
-    width: 80vw;
-    height: 80vw;
+    width: 50vh;
+    height: 50vh;
   }
 }

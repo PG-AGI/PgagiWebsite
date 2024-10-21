@@ -26,6 +26,9 @@ $background-color: #fff;
   }
   .button {
     position: relative;
+    background-color: white;
+    border: none;
+    cursor: pointer;
     z-index: 0;
     width: 240px;
     height: 56px;

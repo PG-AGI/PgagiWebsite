@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
 import { productDetailsData } from '../../../utils/constants' // Adjusted relative path
 import Link from 'next/link'
+import ProdPopup from '../prodPopup'
 
 type Product = {
   id: string;
@@ -21,6 +22,7 @@ type Product = {
 }
 
 export default function ProductDetails({ params }: { params: { id: string } }) {
+  const [showPopup, setShowPopup] = useState(false)
   const [product, setProduct] = useState<Product | null>(null)
   useEffect(() => {
     if (params.id) {
@@ -28,6 +30,16 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
       setProduct(selectedProduct)
     }
   }, [params.id])
+  const handleTryForFreeClick = () => {
+    if (params.id === 'custom-scrapper') {
+      setShowPopup(true);
+    }
+  }
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  }
+
 
   if (!product) return <p>Loading...</p>
 
@@ -38,6 +50,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                 <button className={styles.backButton}>{'<'}  Go back</button>
               </Link>
       </header>
+      {showPopup && <ProdPopup onClose={handleClosePopup} />}
 
       <main className={styles.main}>
         <h1 className={styles.title}>{product.title}</h1>
@@ -45,13 +58,13 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
 
         <p className={styles.description}>{product.description}</p>
         <div className={styles.btnContainer}>
-          <a href="#" className={`${styles.button} ${styles.typeC}`}>
+          <button className={`${styles.button} ${styles.typeC}` } onClick={handleTryForFreeClick}>
             <div className={styles.button__line}></div>
             <div className={styles.button__line}></div>
             <span className={styles.button__text}>Try for Free</span>
             <div className={styles.button__drow1}></div>
             <div className={styles.button__drow2}></div>
-          </a>
+          </button>
         </div>
 
         <div className={styles.purpleSection}>
@@ -67,7 +80,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                   ))}
                 </Carousel>
               </div>
-              <button className={styles.tryButton}>Try for Free!</button>
+              <button className={styles.tryButton} onClick={handleTryForFreeClick}>Try for Free!</button>
             </div>
           </div>
 
