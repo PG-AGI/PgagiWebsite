@@ -107,7 +107,9 @@
   h3 {
     display: none;
   }
-
+  @media (max-width: 480px) {
+    bottom: 1%; // Adjusted for mobile
+  }
   @media (max-width: 768px) {
     bottom: 15%; // Adjusted for mobile
   }
@@ -225,7 +227,7 @@
   }
 
   .card.hovered .circle {
-    width: 50vh;
-    height: 50vh;
+    width: 60vh;
+    height: 60vh;
   }
 }

@@ -93,7 +93,7 @@ export const productData: Product[] = [
     description: 'Unlock the full potential of AI voice communications with Toingg’s customizable AI voice calling agents.',
     miniTitle: 'AI Agent',
     icon: products1, // Dummy icon
-    link: "/products/web-scrapper"
+    link: "https://www.toingg.com/"
   },
   {
     title: 'Web Scraping',

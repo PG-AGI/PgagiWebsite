@@ -348,7 +348,8 @@
 
     .trendingItem {
       display: flex;
-      min-width: 200px;
+      min-width: 65vw;
+      height: 24vh;
       background-color: white;
       border-radius: 10px;
       overflow: hidden;
