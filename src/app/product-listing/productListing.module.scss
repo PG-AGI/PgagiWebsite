@@ -170,7 +170,7 @@
       background-color: #f9f9f9;
       white-space: pre-wrap;
       overflow: auto;
-      h1{
+      h1,h2,h3,h4,h5,h6{
         color: #000;
       }
       img {
@@ -210,7 +210,7 @@
         margin-left: 1.5rem;
         list-style-position: outside;
         margin-bottom: 0.5rem;
-        margin-top: -4rem; /* Applying negative margin to reduce the gap */
+        margin-top: -1rem; /* Applying negative margin to reduce the gap */
       }
   
       li {

@@ -113,7 +113,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
   return (
     <div className={styles.mainContainer}>
       <div className={styles.goBackContainer}>
-        <a href="#" className={styles.goBack}>{'< Go Back'}</a>
+        <a href="/products/custom-scrapper" className={styles.goBack}>{'< Go Back'}</a>
       </div>
   
       <div className={styles.contentContainer}>
