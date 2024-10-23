@@ -4,13 +4,13 @@ import styles from '../productListing.module.scss';
 import { Product_Pages_Content } from '../../../utils/constants';
 import ReactMarkdown from 'react-markdown';
 import { ClientJS } from 'clientjs';
-import { useAuth } from '@clerk/nextjs';  // Clerk's hook for authentication
-import { SignIn } from '@clerk/nextjs';
+import { useAuth } from '@/contexts/AuthContext';
+import GoogleSignInButton from '../../components/googleSignInButton';
 
 export default function Product_Listing_Faq_Page({ params }: { params: { id: string } }) {
-
+  const { user } = useAuth();
   const pageContent = Product_Pages_Content.find(page => page.id === params.id);
-  const { isSignedIn } = useAuth();  // Clerk's hook to check if the user is signed in
+  // const { isSignedIn } = useAuth();  // Clerk's hook to check if the user is signed in
 
   // Ensure the page exists before rendering
   if (!pageContent) {
@@ -24,6 +24,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
   const [error, setError] = useState('');
   const [showSignIn, setShowSignIn] = useState(false);
   const [fingerprint, setFingerprint] = useState('');
+  const [freeTrialEnded, setFreeTrialEnded] = useState(false); // New state for free trial status
 
   // Fetch fingerprint on page load
   useEffect(() => {
@@ -32,11 +33,12 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
     setFingerprint(fingerprint);
   }, []);
   useEffect(() => {
-    if (isSignedIn) {
+    if (user) {
       setShowSignIn(false);  // Automatically hide sign-in and background when signed in
+      setError('');
     }
-    console.log(isSignedIn)
-  }, [isSignedIn]);
+    console.log(user)
+  }, [user]);
 
   const checkUserStatus = async () => {
     try {
@@ -45,25 +47,24 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fingerprint, userId: params.id })
+        body: JSON.stringify({ fingerprint, userId: params.id }),
       });
 
       const data = await response.json();
-      if (response.ok && data.usedBefore) {
-        // If the fingerprint is found, check if the user is authenticated
-        if (!isSignedIn) {
-          setError('You need to sign in to make another request.');
-          setShowSignIn(true);  // Show Clerk sign-in pop-up if not authenticated
-          return false;
-        } else {
-          return true;  // If authenticated, allow the user to proceed
-        }
-      } else {
-        // If the fingerprint is not found, allow the user to proceed
-        return true;
+
+      if (response.ok && data.freeTrialEnded) {
+        // Show the popup if the free trial has ended
+        setFreeTrialEnded(true);
+        return false;
+      } else if (response.ok && data.usedBefore && !user) {
+        // Show sign-in popup if the user has used the request before but not signed in
+        setError('You need to sign in to make another request.');
+        setShowSignIn(true);
+        return false;
       }
+
+      return true;
     } catch (error: any) {
-      console.error('Error checking user status:', error);
       setError('Failed to check user status.');
       return false;
     }
@@ -115,13 +116,13 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
       <div className={styles.goBackContainer}>
         <a href="/products/custom-scrapper" className={styles.goBack}>{'< Go Back'}</a>
       </div>
-  
+
       <div className={styles.contentContainer}>
         <div className={styles.description}>
           <h1>{pageContent.title}</h1>
           <p>{pageContent.description}</p>
         </div>
-  
+
         <div className={styles.form}>
           <input
             type="text"
@@ -144,13 +145,13 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
           </div>
         </div>
       </div>
-  
+
       {error && (
         <div className={styles.errorContainer}>
           <p className={styles.errorMessage}>{error}</p>
         </div>
       )}
-  
+
       <div className={styles.resultContainer}>
         <h2>Generated Output</h2>
         <div className={styles.markdownContainer}>
@@ -163,16 +164,41 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
           )}
         </div>
       </div>
-  
+
+      {freeTrialEnded && (
+        <>
+          <div className={styles.blurBackground}></div>
+          <div className={styles.popupContainer}>
+            <h2>Free Trial Ended</h2>
+            <p>Your free trial has ended. Please purchase to continue using the product.</p>
+            <a href="/pricing" className={styles.pricingLink}>
+              <button className={styles.button}>Buy Now</button>
+            </a>
+          </div>
+        </>
+      )}
+
       {showSignIn && (
         <>
           <div className={styles.blurBackground}></div>
+          {/* <div className={styles.signInContainer}>
+          <h2>Sign In</h2>
+          <p>Please sign in to continue.</p>
+            <GoogleSignInButton/>
+          </div> */}
           <div className={styles.signInContainer}>
-            <SignIn routing='hash' />
+            <h2 className={styles.signInHeading}>Sign In to Use the Product</h2>
+            <p className={styles.signInDescription}>Please sign in to continue and access exclusive features</p>
+
+            {/* Google Sign-In Button */}
+            <div className={styles.googleButtonContainer}>
+              <GoogleSignInButton />
+            </div>
           </div>
+          <div className={styles.blurBackground}></div>
         </>
       )}
     </div>
   );
-  
+
 }
