@@ -251,16 +251,123 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000;  // Ensure it's on top of other elements
-  
-    // Styling the background
-    // Semi-transparent background for the sign-in form
-    padding: 20px;
-    border: none;
-  
-    // Sizing
-    width: 100%;
+    z-index: 1000; // Ensure it's on top of other elements
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 90%;
     max-width: 400px;
+    text-align: center;
+  }
+  
+  .signInHeading {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .signInDescription {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .googleButtonContainer {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .orSeparator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #777;
+  
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #ddd;
+      margin: 0 10px;
+    }
+  }
+  
+  .popupContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 10vh 10vw;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    text-align: center;
+  }
+  
+  .popupContainer h2 {
+    margin-bottom: 10px;
+    color: #000;
+    font-size: 24px;
+  }
+  
+  .popupContainer p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #000;
+  }
+  
+  .popupContainer .pricingLink {
+    text-decoration: none;
+  }
+  
+  .popupContainer .button {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .popupContainer .button:hover {
+    background-color: #005bb5;
+  }
+
+  .signInForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputField {
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .signInButton {
+    background-color: #0070f3;
+    color: #fff;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #005bb5;
+    }
   }
   
   .blurBackground {
