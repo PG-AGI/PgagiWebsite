@@ -8,6 +8,7 @@ import { ArrowLeft } from 'lucide-react'
 import { productDetailsData } from '../../../utils/constants' // Adjusted relative path
 import Link from 'next/link'
 import ProdPopup from '../prodPopup'
+import BookCallModal from '@/app/components/base/bookCallModela'
 
 type Product = {
   id: string;
@@ -18,13 +19,22 @@ type Product = {
   features: {
     title: string;
     description: string;
-    image:string
+    image: string
   }[];
 }
 
 export default function ProductDetails({ params }: { params: { id: string } }) {
   const [showPopup, setShowPopup] = useState(false)
   const [product, setProduct] = useState<Product | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleBookCall = () => {
+      setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+      setIsModalOpen(false);
+  };
   useEffect(() => {
     if (params.id) {
       const selectedProduct = productDetailsData.find((item) => item.id === params.id) || null;
@@ -47,9 +57,9 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-      <Link href="/#products">
-                <button className={styles.backButton}>{'<'}  Go back</button>
-              </Link>
+        <Link href="/#products">
+          <button className={styles.backButton}>{'<'}  Go back</button>
+        </Link>
       </header>
       {showPopup && <ProdPopup onClose={handleClosePopup} />}
 
@@ -59,7 +69,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
 
         <p className={styles.description}>{product.description}</p>
         <div className={styles.btnContainer}>
-          <button className={`${styles.button} ${styles.typeC}` } onClick={handleTryForFreeClick}>
+          <button className={`${styles.button} ${styles.typeC}`} onClick={handleTryForFreeClick}>
             <div className={styles.button__line}></div>
             <div className={styles.button__line}></div>
             <span className={styles.button__text}>Try for Free</span>
@@ -93,7 +103,12 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
           </div>
 
           <div className={styles.rightwrapper}>
-            <div className={styles.purpleShapeRight}></div>
+            <div className={styles.purpleShapeRight}>
+              <p>Want to see it in Action</p>
+              <button className={styles.tryButton} onClick={handleBookCall}>
+                Book a Demo
+              </button>
+            </div>
           </div>
         </div>
 
@@ -109,7 +124,9 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
               </div>
             ))}
           </div>
+          <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </section>
+        
       </main>
     </div>
   )
