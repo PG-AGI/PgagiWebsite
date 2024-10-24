@@ -1,11 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react';
 import styles from '../productListing.module.scss';
-import { Product_Pages_Content } from '../../../utils/constants';
+import { Product_Pages_Content } from '../../../../utils/constants';
 import ReactMarkdown from 'react-markdown';
 import { ClientJS } from 'clientjs';
 import { useAuth } from '@/contexts/AuthContext';
-import GoogleSignInButton from '../../components/googleSignInButton';
+import GoogleSignInButton from '../../../components/googleSignInButton';
 
 export default function Product_Listing_Faq_Page({ params }: { params: { id: string } }) {
   const { user } = useAuth();
@@ -114,7 +114,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
   return (
     <div className={styles.mainContainer}>
       <div className={styles.goBackContainer}>
-        <a href="/products/custom-scrapper" className={styles.goBack}>{'< Go Back'}</a>
+        <a href="/productDetails/seo-list" className={styles.goBack}>{'< Go Back'}</a>
       </div>
 
       <div className={styles.contentContainer}>

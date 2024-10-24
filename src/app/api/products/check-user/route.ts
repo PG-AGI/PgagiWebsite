@@ -6,7 +6,7 @@ const isOlderThan7Days = (date: Date): boolean => {
   const now = new Date();
   const difference = now.getTime() - new Date(date).getTime();
   return difference > 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
-  //return difference >  1000;
+  // return difference >  1000;
 };
 
 export async function POST(req: Request) {

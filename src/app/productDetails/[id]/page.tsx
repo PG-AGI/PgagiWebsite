@@ -18,6 +18,7 @@ type Product = {
   features: {
     title: string;
     description: string;
+    image:string
   }[];
 }
 
@@ -31,7 +32,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
     }
   }, [params.id])
   const handleTryForFreeClick = () => {
-    if (params.id === 'custom-scrapper') {
+    if (params.id === 'seo-list') {
       setShowPopup(true);
     }
   }
@@ -74,7 +75,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                 <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true} showStatus={false}>
                   {product.images.map((image, index) => (
                     <div key={index}>
-                      <Image src={image} alt={`carousel-image-${index}`} width={400} height={300} />
+                      <Image src={image} alt={`carousel-image-${index}`} width={500} height={300} />
 
                     </div>
                   ))}
@@ -101,7 +102,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
           <div className={styles.featuresList}>
             {product.features.map((feature, index) => (
               <div key={index} className={styles.featureItem}>
-                <Image src="/images/img1.png" alt={`Feature ${feature.title}`} width={100} height={100} />
+                <Image src={feature.image} alt={`Feature ${feature.title}`} width={100} height={100} />
                 <p>
                   {feature.title}: {feature.description}
                 </p>
