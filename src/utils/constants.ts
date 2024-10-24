@@ -90,46 +90,30 @@ export const productData: Product[] = [
   {
     title: 'Toingg',
     subtitle:'The AI voice agent',
-    description: 'Unlock the full potential of AI voice communications with Toingg’s customizable AI voice calling agents.',
-    miniTitle: 'AI Agent',
+    description: 'Unlock the power of AI-driven voice communications with our customizable AI voice agents. Streamline interactions, automate processes, and boost customer engagement in real-time.',
+    miniTitle: 'Toingg',
     icon: products1, // Dummy icon
     link: "https://www.toingg.com/"
   },
   {
-    title: 'Web Scraping',
-    subtitle:'The AI voice agent',
-    description: 'Where work happens',
-    miniTitle: 'Scraping Tool',
+    title: 'Web Scrapper',
+    subtitle:'A web scrapper',
+    description: 'Automate data extraction with precision using our AI-based web scraping tool. Ideal for collecting valuable insights from the web to fuel your business decisions.',
+    miniTitle: 'Web Scrapper',
     icon: products2, // Dummy icon
-    link: "/products/ai-scrapper"
+    link: "/productDetails/ai-scrapper"
   },
   {
-    title: 'Email Sender',
-    subtitle:'The AI voice agent',
-    description: 'Automatic Email Delivery, Simplified',
-    miniTitle: 'Email Tool',
+    title: 'SEOList AI',
+    subtitle:'AI-Enhanced, SEO-Ready Product Listings Generator',
+    description: 'Efficiently manage your email campaigns with AI-powered automation. Send personalized, high-converting emails without the manual effort.',
+    miniTitle: 'SEOList AI',
     icon: products3, // Dummy icon
-    link: "/products/custom-scrapper"
+    link: "/productDetails/seo-list"
   },
 ];
 
 export const productDetailsData = [
-  {
-    id: 'web-scrapper',
-    title: 'Explore Your Web Scraping Assistant',
-    subtitle: 'Effortless Data Collection, Powerful Solutions',
-    description: `Unlock the full potential of web scraping with ScrapeIt's customizable scraping agents.
-                  Our platform empowers developers and businesses to automate data extraction from any website.
-                  Build complex, tailored scraping solutions using Python, JavaScript, and our upcoming scraping SDK.
-                  Easily integrate endpoints and actions to scrape and transform web data into actionable insights.
-                  Start today with a free trial—no upfront costs, just instant access to advanced scraping tools.`,
-    images: ['/images/frame3.png', '/images/frame6.png', '/images/frame5.png'],
-    features: [
-      { title: 'Easy Setup', description: 'Get started with minimal setup, using intuitive interfaces.' },
-      { title: 'Data Transformation', description: 'Transform scraped data into structured formats like CSV or JSON.' },
-      { title: 'Customizable Workflows', description: 'Build complex workflows using our SDK to automate repetitive tasks.' }
-    ]
-  },
   {
     id: 'ai-scrapper',
     title: 'AI Powered Scraper',
@@ -139,22 +123,25 @@ export const productDetailsData = [
                   Perfect for large-scale scraping operations.`,
     images: ['/images/frame3.png', '/images/frame6.png', '/images/frame5.png'],
     features: [
-      { title: 'AI Adaptation', description: 'Automatically adjust to website changes without manual intervention.' },
-      { title: 'Scalability', description: 'Handle large-scale data extraction effortlessly.' },
-      { title: 'Real-Time Scraping', description: 'Get real-time data updates with our high-speed scrapers.' }
+      { title: 'Smart SEO Integration', description: 'Automatically optimized product listings that rank better on search engines.',image: products2 },
+      { title: 'Instant FAQ Generation', description: 'Generate helpful FAQs that enhance customer experience.' ,image: products2},
+      { title: 'Tailored Automation', description: 'Customize listings and FAQs based on your specific product needs.', image: products2},
+      { title: 'User-Friendly', description: 'No coding skills needed. Just input your product info, and the AI handles the rest.', image: products2},
+      { title: 'Try for Free!', description: 'Give our tool a spin and see how automation can transform your workflow.' ,image: products2}
     ]
   },
   {
-    id: 'custom-scrapper',
-    title: 'Custom Scraper SDK',
-    subtitle: 'Build Your Own Scrapers',
-    description: `Take full control with our customizable scraping SDK. Build your own scrapers tailored to your specific needs.
-                  Perfect for developers who want to integrate scraping into their existing projects.`,
-    images: ['/images/frame3.png', '/images/frame6.png', '/images/frame5.png'],
+    id: 'seo-list',
+    title: 'SEOList AI',
+    subtitle: 'AI-Enhanced, SEO-Ready Product Listings Generator',
+    description: `Create high-converting product listings or comprehensive FAQs effortlessly with our AI-powered generator. Whether you're an e-commerce business looking to boost SEO or a developer aiming to automate product descriptions, our tool is designed to simplify your workflow. Tailor it to your specific needs and see how easy automation can be. Want to see it in action? [Book a demo now] and discover the future of product content creation!`,
+    images: ['/images/seoListAI/1.png', '/images/seoListAI/2.png','/images/seoListAI/3.png'],
     features: [
-      { title: 'SDK Integration', description: 'Easily integrate with existing projects and workflows.' },
-      { title: 'Custom Scripts', description: 'Write custom scraping scripts to handle unique challenges.' },
-      { title: 'Flexible', description: 'Highly flexible and adaptable for various use cases.' }
+      { title: 'Smart SEO Integration', description: 'Automatically optimized product listings that rank better on search engines.',image: 'https://img.icons8.com/ios/100/laptop-metrics--v1.png' },
+      { title: 'Instant FAQ Generation', description: 'Generate helpful FAQs that enhance customer experience.' ,image: 'https://img.icons8.com/ios/100/faq.png'},
+      { title: 'Tailored Automation', description: 'Customize listings and FAQs based on your specific product needs.', image: 'https://img.icons8.com/ios/100/settings-3--v1.png'},
+      { title: 'User-Friendly', description: 'No coding skills needed. Just input your product info, and the AI handles the rest.', image: 'https://img.icons8.com/dotty/80/user.png'},
+      { title: 'Try for Free!', description: 'Give our tool a spin and see how automation can transform your workflow.' ,image: 'https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/60/external-free-sales-vitaliy-gorbachev-lineal-vitaly-gorbachev.png'}
     ]
   }
 ]

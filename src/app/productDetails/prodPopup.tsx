@@ -15,15 +15,15 @@ const ProdPopup: React.FC<PopupProps> = ({ onClose }) => {
           {/* First Container */}
           <div className={styles.Prodcontainer}>
             <h3>Product Listing Generator</h3>
-            <p>This plan offers you the best value to kickstart your journey.</p>
-            <a href="/product-listing/product-list" className={styles.popupButton}>Try Now</a>
+            <p>Effortlessly create compelling, SEO-optimized product listings to enhance visibility and boost sales. Get started now with the best value!</p>
+            <a href="/products/seoList/product-list" className={styles.popupButton}>Try Now</a>
           </div>
 
           {/* Second Container */}
           <div className={styles.Prodcontainer}>
             <h3>Product FAQ Generator</h3>
-            <p>Take your experience to the next level with this premium plan.</p>
-            <a href="/product-listing/product-faq" className={styles.popupButton}>Try Now</a>
+            <p>Enhance customer support with intelligently generated FAQs tailored to your products. Take your product experience to the next level with automation.</p>
+            <a href="/products/seoList/product-faq" className={styles.popupButton}>Try Now</a>
           </div>
         </div>
 
