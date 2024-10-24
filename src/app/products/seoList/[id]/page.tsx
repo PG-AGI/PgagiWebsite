@@ -8,15 +8,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import GoogleSignInButton from '../../../components/googleSignInButton';
 
 export default function Product_Listing_Faq_Page({ params }: { params: { id: string } }) {
-  const { user } = useAuth();
-  const pageContent = Product_Pages_Content.find(page => page.id === params.id);
-  // const { isSignedIn } = useAuth();  // Clerk's hook to check if the user is signed in
-
-  // Ensure the page exists before rendering
-  if (!pageContent) {
-    return <div>Page not found</div>;
-  }
-
   const [productName, setProductName] = useState('');
   const [productFeature, setProductFeature] = useState('');
   const [productDescription, setProductDescription] = useState('');
@@ -25,7 +16,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
   const [showSignIn, setShowSignIn] = useState(false);
   const [fingerprint, setFingerprint] = useState('');
   const [freeTrialEnded, setFreeTrialEnded] = useState(false); // New state for free trial status
-
+  const { user } = useAuth();
   // Fetch fingerprint on page load
   useEffect(() => {
     const client = new ClientJS();
@@ -39,6 +30,16 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
     }
     console.log(user)
   }, [user]);
+
+  
+  const pageContent = Product_Pages_Content.find(page => page.id === params.id);
+  // const { isSignedIn } = useAuth();  // Clerk's hook to check if the user is signed in
+
+  // Ensure the page exists before rendering
+  if (!pageContent) {
+    return <div>Page not found</div>;
+  }
+
 
   const checkUserStatus = async () => {
     try {
