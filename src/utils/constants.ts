@@ -100,7 +100,7 @@ export const productData: Product[] = [
     subtitle:'A web scrapper',
     description: 'Automate data extraction with precision using our AI-based web scraping tool. Ideal for collecting valuable insights from the web to fuel your business decisions.',
     miniTitle: 'Web Scrapper',
-    icon: products2, // Dummy icon
+    icon: 'https://img.icons8.com/ios-filled/100/lock.png', // Dummy icon
     link: "/productDetails/ai-scrapper"
   },
   {
@@ -108,7 +108,7 @@ export const productData: Product[] = [
     subtitle:'AI-Enhanced, SEO-Ready Product Listings Generator',
     description: 'Efficiently manage your email campaigns with AI-powered automation. Send personalized, high-converting emails without the manual effort.',
     miniTitle: 'SEOList AI',
-    icon: products3, // Dummy icon
+    icon: products2, // Dummy icon
     link: "/productDetails/seo-list"
   },
 ];
@@ -134,7 +134,7 @@ export const productDetailsData = [
     id: 'seo-list',
     title: 'SEOList AI',
     subtitle: 'AI-Enhanced, SEO-Ready Product Listings Generator',
-    description: `Create high-converting product listings or comprehensive FAQs effortlessly with our AI-powered generator. Whether you're an e-commerce business looking to boost SEO or a developer aiming to automate product descriptions, our tool is designed to simplify your workflow. Tailor it to your specific needs and see how easy automation can be. Want to see it in action? [Book a demo now] and discover the future of product content creation!`,
+    description: `Create high-converting product listings or comprehensive FAQs effortlessly with our AI-powered generator. Whether you're an e-commerce business looking to boost SEO or a developer aiming to automate product descriptions, our tool is designed to simplify your workflow. Tailor it to your specific needs and see how easy automation can be.`,
     images: ['/images/seoListAI/1.png', '/images/seoListAI/2.png','/images/seoListAI/3.png'],
     features: [
       { title: 'Smart SEO Integration', description: 'Automatically optimized product listings that rank better on search engines.',image: 'https://img.icons8.com/ios/100/laptop-metrics--v1.png' },
