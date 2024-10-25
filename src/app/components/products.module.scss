@@ -86,7 +86,10 @@
 
   @media (max-width: 480px) {
     width: 60vw;
-    height: 40vh;
+    height: 50vh;
+    p{
+      font-size: .9rem;
+    }
   }
 }
 
@@ -218,16 +221,40 @@
 @media (max-width: 480px) {
   .card {
     width: 70vw;
-    height: 50vh;
+    height: auto; /* Allows height to grow if content overflows */
+    min-height: 50vh; /* Minimum height for consistency */
+    padding-bottom: 1rem; /* Adds extra space if content overflows */
+    overflow: hidden; /* Ensures content visibility */
   }
-
   .circle {
     width: 25vh;
     height: 25vh;
+    z-index: 1;
   }
 
   .card.hovered .circle {
     width: 60vh;
     height: 60vh;
+  }
+  .p {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 768px) {
+  .products {
+    margin-bottom: 20vh;
+    flex-wrap: nowrap; // Prevent wrapping on smaller screens
+    overflow-x: auto;  // Enable horizontal scrolling
+    scroll-behavior: smooth;
+    gap: 0.5rem;
+    padding: 1rem;
+
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .products::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
 }

@@ -96,6 +96,14 @@ export const productData: Product[] = [
     link: "https://www.toingg.com/"
   },
   {
+    title: 'SEO Listing AI',
+    subtitle:'AI-Enhanced, SEO-Ready Product Listings Generator',
+    description: 'Efficiently manage your email campaigns with AI-powered automation. Send personalized, high-converting emails without the manual effort.',
+    miniTitle: 'SEO Listing AI',
+    icon: products2, // Dummy icon
+    link: "/productDetails/seo-list"
+  },
+  {
     title: 'Web Scrapper',
     subtitle:'A web scrapper',
     description: 'Automate data extraction with precision using our AI-based web scraping tool. Ideal for collecting valuable insights from the web to fuel your business decisions.',
@@ -103,14 +111,7 @@ export const productData: Product[] = [
     icon: 'https://img.icons8.com/ios-filled/100/lock.png', // Dummy icon
     link: "/productDetails/ai-scrapper"
   },
-  {
-    title: 'SEOList AI',
-    subtitle:'AI-Enhanced, SEO-Ready Product Listings Generator',
-    description: 'Efficiently manage your email campaigns with AI-powered automation. Send personalized, high-converting emails without the manual effort.',
-    miniTitle: 'SEOList AI',
-    icon: products2, // Dummy icon
-    link: "/productDetails/seo-list"
-  },
+
 ];
 
 export const productDetailsData = [
@@ -132,10 +133,10 @@ export const productDetailsData = [
   },
   {
     id: 'seo-list',
-    title: 'SEOList AI',
+    title: 'SEO Listing AI',
     subtitle: 'AI-Enhanced, SEO-Ready Product Listings Generator',
     description: `Create high-converting product listings or comprehensive FAQs effortlessly with our AI-powered generator. Whether you're an e-commerce business looking to boost SEO or a developer aiming to automate product descriptions, our tool is designed to simplify your workflow. Tailor it to your specific needs and see how easy automation can be.`,
-    images: ['/images/seoListAI/1.png', '/images/seoListAI/2.png','/images/seoListAI/3.png'],
+    images: ['/images/seo_list1.png', '/images/seo_list2.png','/images/seo_list3.png'],
     features: [
       { title: 'Smart SEO Integration', description: 'Automatically optimized product listings that rank better on search engines.',image: 'https://img.icons8.com/ios/100/laptop-metrics--v1.png' },
       { title: 'Instant FAQ Generation', description: 'Generate helpful FAQs that enhance customer experience.' ,image: 'https://img.icons8.com/ios/100/faq.png'},
@@ -578,4 +579,3 @@ export const whyChoose =[
     "description" : "Our successful projects and satisfied clients are a testament to our ability to deliver high-quality AI solutions that drive real business results.",
   },
 ]
-
