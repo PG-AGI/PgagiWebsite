@@ -5,7 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"
 import styles from '../productDetails.module.scss' // Adjusted relative path
 import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
-import { productDetailsData } from '../../../utils/constants' // Adjusted relative path
+import { productDetailsData } from '@/utils/constants' // Adjusted relative path
 import Link from 'next/link'
 import ProdPopup from '../prodPopup'
 import BookCallModal from '@/app/components/base/bookCallModela'
@@ -96,7 +96,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
           </div>
 
           <div className={styles.trySection}>
-            <h2 className={styles.tryTitle}>Let{'&apos;'}s give it a try!</h2>
+            <h2 className={styles.tryTitle}>{"Let's give it a try!"}</h2>
             <p className={styles.tryDescription}>
               {product.description}
             </p>
@@ -104,7 +104,10 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
 
           <div className={styles.rightwrapper}>
             <div className={styles.purpleShapeRight}>
-              <p>Want to see it in Action</p>
+              <div className={styles.bookText}>
+              <p>Want to integrate it in your project</p>
+              <p> Make it yours now</p>
+              </div>
               <button className={styles.tryButton} onClick={handleBookCall}>
                 Book a Demo
               </button>

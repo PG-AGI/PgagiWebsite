@@ -337,17 +337,22 @@ $background-color: #fff;
   height: 60%;
   background-color: $primary-color;
   border-radius: 50% 0 0 0;
+  padding: 0 2vw;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+.bookText{
+  text-align: center;
+}
 .carouselContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .carouselWrapper {
@@ -363,6 +368,7 @@ $background-color: #fff;
   max-height: 60%;
   // Ensure the container doesn't crop the image
   img {
+    color: black;
     max-width: 100%;
     max-height: 100%;  // Ensures the image does not overflow the container
     object-fit: contain;  // Prevents the image from being cropped
@@ -483,9 +489,12 @@ $background-color: #fff;
   }
 
   .purpleShapeRight {
-    display: none;
+    padding: 10vh 0;
   }
-
+.rightwrapper{
+  position: relative;
+  width: 100%;
+}
   
 
   .carouselWrapper {

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import styles from '../productListing.module.scss';
-import { Product_Pages_Content } from '../../../../utils/constants';
+import { Product_Pages_Content } from '@/utils/constants';
 import ReactMarkdown from 'react-markdown';
 import { ClientJS } from 'clientjs';
 import { useAuth } from '@/contexts/AuthContext';
@@ -182,11 +182,6 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
       {showSignIn && (
         <>
           <div className={styles.blurBackground}></div>
-          {/* <div className={styles.signInContainer}>
-          <h2>Sign In</h2>
-          <p>Please sign in to continue.</p>
-            <GoogleSignInButton/>
-          </div> */}
           <div className={styles.signInContainer}>
             <h2 className={styles.signInHeading}>Sign In to Use the Product</h2>
             <p className={styles.signInDescription}>Please sign in to continue and access exclusive features</p>
