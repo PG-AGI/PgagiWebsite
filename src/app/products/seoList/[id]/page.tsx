@@ -39,7 +39,9 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
   if (!pageContent) {
     return <div>Page not found</div>;
   }
-
+  const onClose=()=>{
+    setShowSignIn(false);
+  }
 
   const checkUserStatus = async () => {
     try {
@@ -183,6 +185,12 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
         <>
           <div className={styles.blurBackground}></div>
           <div className={styles.signInContainer}>
+          <button onClick={onClose} className={styles.closeButton}>
+        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.881 22.881L8.11914 8.11914M22.881 8.11914L8.11914 22.881" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+        </button>
             <h2 className={styles.signInHeading}>Sign In to Use the Product</h2>
             <p className={styles.signInDescription}>Please sign in to continue and access exclusive features</p>
 

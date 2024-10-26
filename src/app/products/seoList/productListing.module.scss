@@ -12,6 +12,22 @@
             min-width: 100vw;
           }
   }
+  .closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    @media(max-width:480px){
+      top: 4rem;
+    }
+  }
+  
+  .closeButton img {
+    width: 20px;
+    height: 20px;
+  }
   
   .errorMessage{
     color: red;
