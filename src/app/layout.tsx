@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.scss";
-import { ClerkProvider } from '@clerk/nextjs';
-
+import { AuthProvider } from "@/contexts/AuthContext";
 
 import { inter } from "../utils/fontHelper";
 
@@ -19,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <AuthProvider>
     <html lang="en" className={inter.variable}>
       <head>
         {/* Google Tag Manager */}
@@ -61,6 +60,6 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }
