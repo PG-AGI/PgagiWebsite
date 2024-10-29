@@ -19,15 +19,20 @@ const Products: React.FC = () => {
           onMouseLeave={() => setHoverIndex(null)}
         >
            <div className={styles.icon}>
-            <Image src={product.icon} alt={product.title} width={150} height={150} /> {/* Use Next.js Image */}
-            {hoverIndex === index ? <h3>{product.miniTitle}</h3> : (
+            <Image src={product.icon} alt={product.title} width={120} height={120} /> {/* Use Next.js Image */}
+            {hoverIndex === index ?
+            <div>
+             <h3>{product.miniTitle}</h3> 
+             <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p>
+             </div>: (
               <div>
                 <h2>{product.title}</h2>
                 <h4>{product.subtitle}</h4>
+               
               </div>
               )}
           </div>
-          <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p>
+          {/* <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p> */}
           <a className={styles.productLink} href={product.link}>
       <button
         className={styles.viewButton}

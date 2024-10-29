@@ -14,6 +14,9 @@ import { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
 import Webinars from "./components/Webinars";
 import Products from "./components/products";
+import LatestTrends from './components/LatestTrends';
+import TrendingOld from "./components/trending_old";
+
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 
@@ -56,7 +59,8 @@ export default function Home() {
 			<Landing />
 			<Partners />
 			<Products/>
-			<Trending />
+			{/* <Trending /> */}
+			<TrendingOld/>
 			{/* <Webinars/> */}
 			<section className={styles.segmentSection}>
 				<div className={styles.lottieWindow}>

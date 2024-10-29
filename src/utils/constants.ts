@@ -4,31 +4,48 @@ import youtube from '../app/assets/social/youtube.png'
 import x from '../app/assets/social/x.png'
 import case_study from '../app/assets/trending_cards/case_study2.png';
 import ai_news from '../app/assets/trending_cards/ai_news2.png';
-import news from '../app/assets/trending_cards/news2.png';
-import case1 from '../app/assets/trending_cards/case1.svg';
-import case2 from '../app/assets/trending_cards/case2.svg';
-import case3 from '../app/assets/trending_cards/case3.svg';
-import case4 from '../app/assets/trending_cards/case4.svg';
 import news1 from '../app/assets/trending_cards/news1.svg';
 import news2 from '../app/assets/trending_cards/news2.svg';
 import news3 from '../app/assets/trending_cards/news3.svg';
 import news4 from '../app/assets/trending_cards/news4.svg';
 import news5 from '../app/assets/trending_cards/news5.svg';
+import case_1 from '../app/assets/trending_cards/case_1.png';
+import case_2 from '../app/assets/trending_cards/case_2.png';
+import case_3 from '../app/assets/trending_cards/case_3.png';
+import case_4 from '../app/assets/trending_cards/case_4.png';
+import case_5 from '../app/assets/trending_cards/case_5.png';
+import case_6 from '../app/assets/trending_cards/case_6.png';
+import case_8 from '../app/assets/trending_cards/case_8.png';
+import case_7 from '../app/assets/trending_cards/case_7.png';
+import trend_1 from '../app/assets/trending_cards/trend_1.png';
+import trend_2 from '../app/assets/trending_cards/trend_2.png';
+import trend_3 from '../app/assets/trending_cards/trend_3.png';
 import blogs from '../app/assets/trending_cards/blogs2.png';
 import blog1 from '../app/assets/trending_cards/blog1.svg';
 import blog2 from '../app/assets/trending_cards/blog2.svg';
 import blog3 from '../app/assets/trending_cards/blog3.svg';
 import blog4 from '../app/assets/trending_cards/blog4.svg';
+import blog_5 from '../app/assets/trending_cards/blog_5.png';
+import blog_6 from '../app/assets/trending_cards/blog_6.png';
+import blog_7 from '../app/assets/trending_cards/blog_7.png';
+import blog_8 from '../app/assets/trending_cards/blog_8.png';
 import ais from '../app/assets/partners/ais3.png';
 import hx from '../app/assets/partners/hx.png';
 import social from '../app/assets/partners/social27.png';
 import ciek from '../app/assets/partners/ciek2.png';
 import aixl from '../app/assets/partners/aixl2.png';
 import topSection from '../app/assets/topSection.png';
+import trend1 from '../app/assets/trending_cards/image.png';
+import trend2 from '../app/assets/trending_cards/image_2.png';
+import trend3 from '../app/assets/trending_cards/image_3.png';
+import trend4 from '../app/assets/trending_cards/image_4.png';
 import { StaticImageData } from 'next/image';
 import products1 from '../app/assets/products/products1.svg'
 import products2 from '../app/assets/products/products2.svg'
 import products3 from '../app/assets/products/products3.svg'
+import products1_white from '../app/assets/products/products1_white.svg'
+import products2_white from '../app/assets/products/products2_white.svg'
+import products3_white from '../app/assets/products/products3_white.svg'
 
 export const trendingList = [
   {
@@ -76,14 +93,33 @@ export const trendingList2 = [
     "image": '/images/trending6.png'
   },
 ];
-
+export const trendingListOld = [
+  {
+    "title": "Case Studies",
+    "description": "Explore Our Success Stories",
+    "brief": "Discover how businesses across various industries have leveraged our solutions to overcome challenges and drive success.",
+    "image": trend_1
+  },
+  {
+    "title": "Blogs",
+    "description": "Insights and Expertise",
+    "brief": "Stay updated with the latest industry insights, expert opinions, and trends through our regularly updated blog section.",
+    "image": trend_2
+  },
+  {
+    "title": "AI News",
+    "description": "Latest Developments in AI",
+    "brief": "Get the latest updates on advancements in artificial intelligence, innovations, and key industry developments.",
+    "image": trend_3
+  },
+];
 type Product = {
   title: string;
   subtitle:string;
   description: string;
   miniTitle: string;  // Mini heading after hovering
   icon: string;  // You will provide the icons here
-  link:string
+  link:string;
 };
 
 export const productData: Product[] = [
@@ -108,7 +144,7 @@ export const productData: Product[] = [
     subtitle:'A web scrapper',
     description: 'Automate data extraction with precision using our AI-based web scraping tool. Ideal for collecting valuable insights from the web to fuel your business decisions.',
     miniTitle: 'Web Scrapper',
-    icon: 'https://img.icons8.com/ios-filled/100/lock.png', // Dummy icon
+    icon: products3, // Dummy icon
     link: "/productDetails/ai-scrapper"
   },
 
@@ -332,7 +368,7 @@ export const blogContent = [
     "description": "Community Dataset: Dataset is better together",
     "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
     "slug": "community-datasets",
-    "image":blog2
+    "image":blog_5
 
   },
   {
@@ -340,7 +376,7 @@ export const blogContent = [
     "description": "Revolutionizing Hiring with A.I",
     "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
     "slug": "hiring",
-    "image":blog3
+    "image":trend_3
 
   },
   {
@@ -348,7 +384,7 @@ export const blogContent = [
     "description": "Introduction to Matryoshka Embedding Models",
     "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
     "slug": "matrayoshka",
-    "image":blog4
+    "image":blog_8
 
   },
   {
@@ -356,7 +392,7 @@ export const blogContent = [
     "description": "StarCoder: A State-of-the-Art LLM for Code",
     "brief":"Discover Explore the intricacies of prompt engineering and prompt tuning in AI, uncovering how these NLP techniques refine language model interactions for superior outcomes.",
     "slug": "starcoder",
-    "image":blog1
+    "image":case_5
 
   },
   
@@ -367,85 +403,85 @@ export const caseStudyContent = [
     "title": "Case study",
     "description": "Revolutionizing Recruitment with AI", 
     "slug": "hiring"   ,
-    "image":case1
+    "image":case_7
   },
   {
     "title": "Case study",
     "description": "TutorGPT: Smart AI for Smarter Learning",
     "slug": "tutorgpt",
-    "image":case2
+    "image":case_2
   },
   {
     "title": "Case study",
     "description": "MultiAgent Trading: Smart AI for Crypto Trading",
     "slug": "multiagent",
-    "image":case3
+    "image":case_3
   },
   {
     "title": "Case study",
     "description": "Advance NBA Betting Application",
     "slug": "nbabetting",
-    "image":case4
+    "image":case_4
   },
   {
     "title": "Case study",
     "description": "Telemetry Data Analytics for iRacing Optimization",
     "slug": "telemetry",
-    "image":case1 
+    "image":case_5 
   },
   {
     "title": "Case study",
     "description": "Voice Assistant ChatBot -Shopify",
     "slug": "shopifychatbot",
-    "image":case2 
+    "image":case_6 
   },
   {
     "title": "Case study",
     "description": "Multi-Label Text Classification with BERT-Large",
     "slug": "multilabel",
-    "image":case3 
+    "image":case_7 
   },
   {
     "title": "Case study",
     "description": "Innovative Healthcare Marketplace with AI/ML Technology",
     "slug": "healthcare",
-    "image":case4 
+    "image":case_8
   },
   {
     "title": "Case study",
     "description": "AI Chatbot for Legal Assistance",
     "slug": "legalassistant",
-    "image":case1 
+    "image":case_2
   },
   {
     "title": "Case study",
     "description": "Realistic AI Model for Digital Influencers",
     "slug": "digitalinfluencer",
-    "image":case2 
+    "image":case_3
   },
   {
     "title": "Case study",
     "description": "AI Interviewer Using Mistral 7b Architecture",
     "slug": "mistral7b",
-    "image":case3 
+    "image":case_4 
   },
   {
     "title": "Case study",
     "description": "Custom MT5 Indicator Development for Enhanced Binary Options Trading",
     "slug": "mt5indicator",
-    "image":case4 
+    "image":case_5 
   },
   {
     "title": "Case study",
     "description": "Automated Trading Agent for cTrader to MT5 Integration",
     "slug": "tradingagent",
-    "image":case1 
+    "image":case_6
   },
   {
     "title": "Case study",
     "description": "Toingg: Revolutionary AI Calling Agent",
     "slug": "toingg",
-    "image":case2 
+    "image":case_7
   },
   
   // {

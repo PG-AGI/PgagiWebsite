@@ -9,13 +9,7 @@ import { SignIn } from '@clerk/nextjs';
 
 export default function Product_Listing_Faq_Page({ params }: { params: { id: string } }) {
 
-  const pageContent = Product_Pages_Content.find(page => page.id === params.id);
-  const { isSignedIn } = useAuth();  // Clerk's hook to check if the user is signed in
 
-  // Ensure the page exists before rendering
-  if (!pageContent) {
-    return <div>Page not found</div>;
-  }
 
   const [productName, setProductName] = useState('');
   const [productFeature, setProductFeature] = useState('');
@@ -31,12 +25,20 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
     const fingerprint: any = client.getFingerprint();
     setFingerprint(fingerprint);
   }, []);
+  const pageContent = Product_Pages_Content.find(page => page.id === params.id);
+  const { isSignedIn } = useAuth();
   useEffect(() => {
     if (isSignedIn) {
       setShowSignIn(false);  // Automatically hide sign-in and background when signed in
     }
     console.log(isSignedIn)
   }, [isSignedIn]);
+  // Clerk's hook to check if the user is signed in
+
+  // Ensure the page exists before rendering
+  if (!pageContent) {
+    return <div>Page not found</div>;
+  }
 
   const checkUserStatus = async () => {
     try {

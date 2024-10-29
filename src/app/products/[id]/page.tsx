@@ -85,7 +85,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
           </div>
 
           <div className={styles.trySection}>
-            <h2 className={styles.tryTitle}>Let's give it a try!</h2>
+            <h2 className={styles.tryTitle}>{"Let's give it a try!"}</h2>
             <p className={styles.tryDescription}>
               {product.description}
             </p>
