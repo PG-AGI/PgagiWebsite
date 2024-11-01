@@ -44,7 +44,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 18%;
+        padding: 0 5vw;
+        gap: 10vw;
         img {
             width: auto;
             height: 50px;
@@ -86,8 +87,8 @@
         }
 
         .partnerList {
-            gap: 100%;
-            width: 5%;
+            gap: 10vw;
+            padding: 0 5vw;
             align-items: center;
             justify-content: center;
             display: flex;
