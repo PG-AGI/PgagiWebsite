@@ -1,0 +1,314 @@
+/* WebScrapingPage.module.scss */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  gap: 20px;
+  //padding: 20px;
+}
+
+.header {
+  background-color: #6a1b9a;
+  color: white;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 0 0 50% 50%;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.inputRow {
+  display: flex;
+  gap: 15px;
+  width: 80%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.inputWrapper {
+  position: relative;
+  flex: 4.7;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  padding-right: 45px; 
+  padding-left: 12px;
+  border: 2px solid #6a1b9a;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #000; 
+  transition: border-color 0.3s;
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.input:focus {
+  border-color: #4a148c;
+}
+
+.arrowButton {
+  position: absolute;
+  right: 8px;
+  background-color: #6a1b9a;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.arrowIcon {
+  color: #ffffff; /* Changed from #6a1b9a to white for better contrast */
+  font-size: 24px;
+  transition: color 0.3s;
+  //fill: #6a1b9a;
+}
+
+.arrowButton:hover .arrowIcon {
+  color: #e1bee7; /* Light purple on hover for better visibility */
+}
+
+.dropdownWrapper {
+  flex: 3;
+}
+
+.mainContent {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1200px;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Left Section */
+.leftSection {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.scrapedContentContainer {
+  background-color: #f5e6ff;
+  border: 2px solid #6a1b9a;
+  border-radius: 12px;
+  padding: 20px;
+  height: 350px;
+  overflow-y: auto;
+}
+
+.scrapedContentTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #6a1b9a;
+}
+
+.scrapedContent {
+  height: 100%;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  color: #000; /* Ensures text is black for better readability */
+}
+
+.placeholder {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+}
+
+.downloadButtonWrapper {
+  text-align: center;
+}
+
+.downloadButton {
+  background-color: black;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.downloadButton:hover {
+  background-color: #333; /* Darker shade on hover */
+}
+
+/* Loader Styles */
+.loader {
+  border: 4px solid rgba(106, 27, 154, 0.1); /* Light purple border */
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border-left-color: #6a1b9a; /* Purple loader */
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Right Section */
+.rightSection {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.firstBox {
+  width: 100%;
+  text-align: center;
+  background-color: #6a1b9a;
+  border-radius: 60px 0 60px 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.premiumTitle {
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #ffffff;
+}
+
+.crownIcon {
+  color: gold;
+  font-size: 1.4rem;
+  margin: auto;
+  fill: gold;
+}
+
+.secondBox {
+  text-align: center;
+  color: #6a1b9a;
+}
+
+.premiumText {
+  font-size: 16px;
+  font-weight: 500;
+  color:  #6a1b9a;
+  text-align: left;
+}
+
+.thirdBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: #6a1b9a;
+  border-radius: 0 60px 0 60px;
+  padding: 30px 20px;
+  width: 100%;
+}
+
+.userPurposeWrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f5e6ff;
+  border-radius: 24px;
+  padding: 12px 16px;
+  width: 100%;
+  gap: 8px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.purposeIcon {
+  color: #6a1b9a;
+  font-size: 1.4rem; 
+  fill: #6a1b9a;
+}
+
+.userPurposeInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px; /* Increased text size */
+  color: #6a1b9a;
+  padding: 2px 4px;
+}
+
+.crownIconSmall {
+  //color: gold;
+  font-size: 1.2rem;
+  fill: gold;
+}
+
+.scrapeButton {
+  background-color: white;
+  color: #000000;
+  padding: 14px 28px; /* Adjusted padding for a balanced look */
+  border-radius: 24px;
+  border: 2px solid black; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.scrape {
+  color: black;
+}
+
+.scrapeIcon {
+  fill: gold;
+}
+
+.scrapeButton:hover {
+  background-color: #e0c3fc;
+  color: #4a148c;
+}
+
+.downArrowWrapper {
+  margin-top: 10px;
+}
+
+.downArrowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.downArrowIcon {
+  font-size: 2rem;
+  color: #6a1b9a;
+}

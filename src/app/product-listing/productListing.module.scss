@@ -1,3 +1,16 @@
+// .mainContainer {
+//     min-height: 100vh;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     padding: 2rem;
+//     min-width: 100vh;
+//     background-color: #fefefe;
+//     @media (max-width: 768px) {
+//       padding: 1rem;
+//       min-width: 100vw;
+//     }
+//   }
   .mainContainer {
     background-image: url('/images/pl-bg.png');
     background-size: contain; /* Ensures the image covers the entire container */
@@ -11,22 +24,6 @@
             padding: 1rem;
             min-width: 100vw;
           }
-  }
-  .closeButton {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    @media(max-width:480px){
-      top: 4rem;
-    }
-  }
-  
-  .closeButton img {
-    width: 20px;
-    height: 20px;
   }
   
   .errorMessage{
@@ -151,43 +148,31 @@
     margin-top: 2rem;
     text-align: left;
     padding: 0 4.5rem;
-  
-    @media (max-width: 480px) {
-      padding: 0 1rem; // Reduce side padding on mobile for better content fit
+    @media(max-width:480px){
+      padding: 0;
     }
-  
     h2 {
       font-size: 2rem;
       margin-bottom: 1.2rem;
       color: #000;
       display: inline-block;
-  
-      @media (max-width: 480px) {
-        font-size: 1.5rem; // Adjust font size for mobile
-      }
     }
   
     .markdownContainer {
       font-size: 1.3rem;
       line-height: 1.6;
       color: #34495e;
+    
       font-family: 'Poppins', sans-serif;
       padding: 2rem;
-      border: 1px solid #000000;
+      border: 1px solid #ddd;
       border-radius: 8px;
-      background-color: #ffffff;
+      background-color: #f9f9f9;
       white-space: pre-wrap;
       overflow: auto;
-  
-      @media (max-width: 480px) {
-        font-size: 1rem; // Smaller font size for better readability on mobile
-        padding: 1rem; // Reduce padding on mobile
-      }
-  
-      h1, h2, h3, h4, h5, h6 {
+      h1,h2,h3,h4,h5,h6{
         color: #000;
       }
-  
       img {
         max-width: 100%;
         height: auto;
@@ -196,10 +181,6 @@
         border-radius: 8px;
         background: #f5f5f5;
         padding: 1rem;
-  
-        @media (max-width: 480px) {
-          padding: 0.5rem; // Less padding for images on mobile
-        }
       }
   
       p {
@@ -216,21 +197,12 @@
           margin: 20px auto;
           border-bottom: 1px solid #ddd;
         }
-  
-        @media (max-width: 480px) {
-          margin-bottom: 0.5rem;
-          padding-bottom: 0.25rem;
-        }
       }
   
       strong {
         font-weight: bold;
         color: black;
         margin-top: 1%;
-  
-        @media (max-width: 480px) {
-          font-size: 1.1rem; // Slightly smaller bold text
-        }
       }
   
       ul, ol {
@@ -238,27 +210,17 @@
         margin-left: 1.5rem;
         list-style-position: outside;
         margin-bottom: 0.5rem;
-        margin-top: -1rem;
-  
-        @media (max-width: 480px) {
-          margin-left: 1rem; // Adjust list margin on mobile
-        }
+        margin-top: -1rem; /* Applying negative margin to reduce the gap */
       }
   
       li {
         margin-bottom: 0.25rem;
         line-height: 1.4;
         color: #000;
-  
-        @media (max-width: 480px) {
-          line-height: 1.3; // Tighter line spacing on mobile
-        }
       }
-  
-      li strong {
+      li strong{
         margin-top: 0;
       }
-  
       li::marker {
         color: #34495e;
       }
@@ -279,10 +241,6 @@
   
       ol {
         padding-left: 1rem;
-  
-        @media (max-width: 480px) {
-          padding-left: 0.8rem; // Adjust ordered list padding on mobile
-        }
       }
     }
   }
@@ -293,123 +251,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000; // Ensure it's on top of other elements
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    z-index: 1000;  // Ensure it's on top of other elements
+  
+    // Styling the background
+    // Semi-transparent background for the sign-in form
+    padding: 20px;
+    border: none;
+  
+    // Sizing
+    width: 100%;
     max-width: 400px;
-    text-align: center;
-  }
-  
-  .signInHeading {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .signInDescription {
-    font-size: 1rem;
-    margin-bottom: 20px;
-    color: #555;
-  }
-  
-  .googleButtonContainer {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .orSeparator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    color: #777;
-  
-    &::before,
-    &::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #ddd;
-      margin: 0 10px;
-    }
-  }
-  
-  .popupContainer {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 10vh 10vw;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
-    text-align: center;
-  }
-  
-  .popupContainer h2 {
-    margin-bottom: 10px;
-    color: #000;
-    font-size: 24px;
-  }
-  
-  .popupContainer p {
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #000;
-  }
-  
-  .popupContainer .pricingLink {
-    text-decoration: none;
-  }
-  
-  .popupContainer .button {
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-  
-  .popupContainer .button:hover {
-    background-color: #005bb5;
-  }
-
-  .signInForm {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .inputField {
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .signInButton {
-    background-color: #0070f3;
-    color: #fff;
-    padding: 12px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  
-    &:hover {
-      background-color: #005bb5;
-    }
   }
   
   .blurBackground {
