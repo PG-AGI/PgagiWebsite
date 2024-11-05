@@ -35,12 +35,20 @@
 
 .card {
   position: relative;
-  background-color: #fff;
+  border-radius: 20px;
+  border: 1px solid ;
+  border-image-source: linear-gradient(113.19deg, rgba(225, 0, 0, 0.09) -0.58%, rgba(162, 43, 43, 0.09) 71.21%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 8px 40px rgba(0, 0, 0, 0.15);
+
+  background-color: #6464641a;
+  // box-shadow: 0 4px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(3px);
   border-radius: 12px;
   padding: 2vw;
   width: 22vw;  // Responsive width based on viewport
   height: 60vh;  // Responsive height based on viewport
-  box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 20px 40px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
   overflow: hidden;
   display: flex;
@@ -48,25 +56,28 @@
   justify-content: space-between;
 
   h2 {
-    font-size: 2rem;
-    margin-top: 1rem;
-    color: #000;
+    font-size: 1.5rem;
+    margin-top: -0.1rem;
+    color: #ffffff;
     z-index: 10;
   }
 
   h4 {
-    color: #000;
+    color: #ffffff;
+    font-weight: 400;
     font-size: 1.2rem;
+    margin-top: -0.2;
   }
 
   h3 {
+    margin-top: -0.2rem;
     font-size: 1.5rem;
     color: #ffffff;
     z-index: 10;
   }
 
   p {
-    margin-top: 1rem;
+    // margin-top: 1rem;
     font-size: 1rem;
     color: white;
     z-index: 10;
@@ -75,7 +86,8 @@
   }
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.07);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 30px 60px rgba(0, 0, 0, 0.4);
   }
 
   @media (max-width: 768px) {
@@ -107,7 +119,9 @@
   bottom: 20%; // Original icon position
   left: 5%; 
   right: 5%;
-
+  img{
+    filter: invert(100%) brightness(2);
+  }
   h3 {
     display: none;
   }
@@ -129,9 +143,7 @@
   right: 0;
   bottom: 0%;
   margin-top: 15%;
-  img{
-    filter: invert(100%) brightness(2);
-  }
+  margin-bottom: 20vh;
   h2 {
     display: none;
   }
@@ -149,8 +161,8 @@
   bottom: 5%;
   .viewButton {
     width: 100%;
-    background-color: #000;
-    color: #fff;
+    background-color: #ffffff;
+    color: #000000;
     border: none;
     padding: 0.8rem 1.6rem;
     font-weight: 700;
@@ -176,7 +188,7 @@
   position: absolute;
   width: 20vw; // Responsive circle size
   height: 20vw;
-  background-color: #6a0dad;
+  background: radial-gradient(circle farthest-corner at center center, #580989 0%, #00000000 70%);
   border-radius: 50%;
   top: -5vw;
   right: -10vw;
@@ -229,7 +241,7 @@
 
 @media (max-width: 480px) {
   .card {
-    width: 70vw;
+    min-width: 70vw;
     height: auto; /* Allows height to grow if content overflows */
     min-height: 50vh; /* Minimum height for consistency */
     padding-bottom: 1rem; /* Adds extra space if content overflows */
@@ -239,6 +251,9 @@
     width: 25vh;
     height: 25vh;
     z-index: 1;
+  }
+  .productLink{
+    width: 95%;
   }
 
   .card.hovered .circle {
