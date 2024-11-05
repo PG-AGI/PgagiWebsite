@@ -1,16 +1,52 @@
-'use client'
+// WebScrapingPage.tsx
+
+'use client';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Download, Crown, Pencil, ChevronDown, ChevronRight, Loader2 } from 'lucide-react';
 import styles from './WebScrapingPage.module.scss';
 import Dropdown from './Dropdown';
+import NormalScrapedContent from './NormalScrapedContent';
+import GPTScrapedContent from './GPTScrapedContent';
+
+interface NormalScrapedContentType {
+  [key: string]: string;
+}
+
+interface SubTopic {
+  subheading: string;
+  content: string;
+}
+
+interface StructuredContent {
+  heading: string;
+  content: string;
+  subtopics: SubTopic[];
+}
+
+interface GPTScrapedContentType {
+  [key: string]: {
+    title: string;
+    url: string;
+    summary: string;
+    structured_content: StructuredContent[];
+    key_concepts: string[];
+    important_facts: string[];
+  };
+}
+
+type ScrapedContent = NormalScrapedContentType | GPTScrapedContentType;
 
 const WebScrapingPage: React.FC = () => {
-  const [scrapedContent, setScrapedContent] = useState<string | null>(null);
+  const [scrapedContent, setScrapedContent] = useState<ScrapedContent | null>(null);
   const [link, setLink] = useState<string>('');
   const [subpages, setSubpages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // New States
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [userPurpose, setUserPurpose] = useState<string>('');
 
   const handleSubmit = async () => {
     if (!link) {
@@ -45,7 +81,8 @@ const WebScrapingPage: React.FC = () => {
     }
   };
 
-  const handleScrape = async (selectedItems: string[]) => {
+  // Existing Scrape Function for Normal Scraping
+  const handleScrape = async () => {
     if (selectedItems.length === 0) {
       setError('Please select at least one subpage to scrape.');
       return;
@@ -70,7 +107,7 @@ const WebScrapingPage: React.FC = () => {
       );
 
       if (response.data) {
-        setScrapedContent(JSON.stringify(response.data, null, 2));
+        setScrapedContent(response.data);
       } else {
         setError('No data received from server.');
       }
@@ -80,6 +117,61 @@ const WebScrapingPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // New Scrape Function for Premium Scraping with GPT
+  const handleScrapeWithGPT = async () => {
+    if (selectedItems.length === 0) {
+      setError('Please select at least one subpage to scrape.');
+      return;
+    }
+
+    if (!userPurpose.trim()) {
+      setError('Please enter a purpose for scraping.');
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    setScrapedContent(null);
+
+    try {
+      const params = new URLSearchParams();
+      selectedItems.forEach(url => params.append('urls', url));
+      params.append('user_prompt', userPurpose.trim());
+
+      const response = await axios.post(
+        `https://webscrape-94302186616.us-central1.run.app/scrape_selected_pages_with_gpt?${params.toString()}`,
+        null,
+        {
+          headers: {
+            'Accept': 'application/json',
+          },
+        }
+      );
+
+      if (response.data) {
+        setScrapedContent(response.data);
+      } else {
+        setError('No data received from server.');
+      }
+    } catch (err) {
+      setError('Failed to scrape selected pages with GPT. Please try again.');
+      console.error('API call error:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!scrapedContent) return;
+
+    const element = document.createElement("a");
+    const file = new Blob([JSON.stringify(scrapedContent, null, 2)], { type: 'application/json' });
+    element.href = URL.createObjectURL(file);
+    element.download = "scraped_content.json";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
   };
 
   return (
@@ -121,6 +213,8 @@ const WebScrapingPage: React.FC = () => {
           <Dropdown
             title="Select the pages to scrape"
             items={subpages}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
             onScrape={handleScrape}
           />
         </div>
@@ -134,7 +228,14 @@ const WebScrapingPage: React.FC = () => {
             <h2 className={styles.scrapedContentTitle}>Scraped Content</h2>
             <div className={styles.scrapedContent}>
               {scrapedContent ? (
-                <pre>{scrapedContent}</pre>
+                typeof Object.values(scrapedContent)[0] === 'string' ? (
+                  <NormalScrapedContent content={scrapedContent as NormalScrapedContentType} />
+                ) : (
+                  Object.keys(scrapedContent).map((url, index) => {
+                    const content = (scrapedContent as GPTScrapedContentType)[url];
+                    return <GPTScrapedContent key={index} content={content} />;
+                  })
+                )
               ) : (
                 <p className={styles.placeholder}>
                   The scraped content will be displayed here.
@@ -144,7 +245,7 @@ const WebScrapingPage: React.FC = () => {
           </div>
 
           <div className={styles.downloadButtonWrapper}>
-            <button className={styles.downloadButton}>
+            <button className={styles.downloadButton} onClick={handleDownload} disabled={!scrapedContent}>
               <span>Download output</span>
               <Download className={styles.downloadIcon} />
             </button>
@@ -170,13 +271,19 @@ const WebScrapingPage: React.FC = () => {
               <Pencil className={styles.purposeIcon} />
               <input
                 type="text"
+                value={userPurpose}
+                onChange={(e) => setUserPurpose(e.target.value)}
                 placeholder="User Purpose"
                 className={styles.userPurposeInput}
               />
               <Crown className={styles.crownIconSmall} />
             </div>
 
-            <button className={styles.scrapeButton} onClick={() => handleScrape([])}>
+            <button 
+              className={styles.scrapeButton} 
+              onClick={handleScrapeWithGPT}
+              disabled={isLoading || selectedItems.length === 0 || !userPurpose.trim()}
+            >
               <span className={styles.scrape}>Scrape</span>
               <Crown className={styles.scrapeIcon} />
             </button>

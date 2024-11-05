@@ -115,7 +115,9 @@
   border-radius: 12px;
   padding: 20px;
   height: 350px;
-  overflow-y: auto;
+  overflow-y: hidden;
+  width: 100%;
+  box-sizing: border-box; 
 }
 
 .scrapedContentTitle {
@@ -132,12 +134,66 @@
   border-radius: 8px;
   padding: 10px;
   color: #000; /* Ensures text is black for better readability */
+
+  /* Ensuring all child elements inherit the correct color */
+  * {
+    color: inherit;
+  }
 }
 
 .placeholder {
   color: #999;
   font-style: italic;
   text-align: center;
+}
+
+/* New Styles for Structured Display */
+.scrapedItem {
+  margin-bottom: 10px;
+}
+
+.details {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fafafa;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  color: #6a1b9a;
+  outline: none;
+
+  /* Preventing default list-style */
+  list-style: none;
+}
+
+.summary:hover {
+  color: #4a148c;
+}
+
+.url {
+  flex: 1;
+}
+
+.chevronIcon {
+  transition: transform 0.3s ease;
+}
+
+details[open] .chevronIcon {
+  transform: rotate(180deg);
+}
+
+.content {
+  margin-top: 10px;
+  color: #333;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Ensures text wraps within the container */
 }
 
 .downloadButtonWrapper {
@@ -154,13 +210,23 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: background-color 0.3s;
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 }
 
-.downloadButton:hover {
+.downloadButton:hover:not(:disabled) {
   background-color: #333; /* Darker shade on hover */
 }
 
 /* Loader Styles */
+.loaderIcon {
+  color: #ffffff; /* Ensure loader is visible */
+}
+
 .loader {
   border: 4px solid rgba(106, 27, 154, 0.1); /* Light purple border */
   width: 24px;
@@ -221,7 +287,7 @@
 .premiumText {
   font-size: 16px;
   font-weight: 500;
-  color:  #6a1b9a;
+  color: #6a1b9a;
   text-align: left;
 }
 
@@ -311,4 +377,145 @@
 .downArrowIcon {
   font-size: 2rem;
   color: #6a1b9a;
+}
+
+/* Responsive Styles */
+
+/* Tablet View */
+@media (max-width: 1024px) {
+  .mainContent {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rightSection {
+    width: 80%;
+  }
+
+  .leftSection, .rightSection {
+    width: 100%;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .inputRow {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .inputWrapper, .dropdownWrapper {
+    width: 100%;
+  }
+
+  .mainContent {
+    width: 90%;
+    gap: 20px;
+  }
+
+  .leftSection, .rightSection {
+    width: 100%;
+  }
+
+  .scrapedContentContainer {
+    height: 300px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .premiumTitle {
+    font-size: 20px;
+  }
+
+  .premiumText {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .userPurposeWrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .userPurposeInput {
+    width: 100%;
+  }
+
+  .scrapeButton {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  .downloadButton {
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  .downArrowIcon {
+    font-size: 1.5rem;
+  }
+}
+
+/* Small Mobile View */
+@media (max-width: 480px) {
+  .header {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    gap: 5px;
+  }
+
+  .input {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .arrowIcon {
+    font-size: 20px;
+  }
+
+  .scrapedContentContainer {
+    height: 250px;
+  }
+
+  .scrapedContentTitle {
+    font-size: 16px;
+  }
+
+  .summary {
+    font-size: 14px;
+  }
+
+  .content {
+    font-size: 14px;
+  }
+
+  .premiumTitle {
+    font-size: 18px;
+  }
+
+  .premiumText {
+    font-size: 13px;
+  }
+
+  .userPurposeInput {
+    font-size: 14px;
+  }
+
+  .scrapeButton {
+    padding: 10px 16px;
+    gap: 6px;
+  }
+
+  .downloadButton {
+    padding: 8px 16px;
+  }
+
+  .downArrowIcon {
+    font-size: 1.2rem;
+  }
 }
