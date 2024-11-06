@@ -6,6 +6,8 @@ import ReactMarkdown from 'react-markdown';
 import { ClientJS } from 'clientjs';
 import { useAuth } from '@/contexts/AuthContext';
 import GoogleSignInButton from '../../../components/googleSignInButton';
+import GlareBackground from '../../../../../pgagi-website-blog-page/src/app/components/GlareBackground';
+import Footer from '../../../../../pgagi-website-blog-page/src/app/components/Footer2';
 
 export default function Product_Listing_Faq_Page({ params }: { params: { id: string } }) {
   const [productName, setProductName] = useState('');
@@ -202,6 +204,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
           <div className={styles.blurBackground}></div>
         </>
       )}
+      <GlareBackground/>
     </div>
   );
 

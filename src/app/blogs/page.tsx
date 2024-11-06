@@ -83,19 +83,33 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
     };
   }, []);
 
+  // const scroll = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right') => {
+  //   if (ref.current) {
+  //     const scrollAmount = ref.current.clientWidth * 0.8;
+  //     const newScrollPosition = direction === 'right' 
+  //       ? ref.current.scrollLeft + scrollAmount
+  //       : ref.current.scrollLeft - scrollAmount;
+      
+  //     ref.current.scrollTo({
+  //       left: newScrollPosition,
+  //       behavior: 'smooth'
+  //     });
+  //   }
+  // };
   const scroll = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right') => {
     if (ref.current) {
-      const scrollAmount = ref.current.clientWidth * 0.8;
-      const newScrollPosition = direction === 'right' 
+      const scrollAmount = ref.current.clientWidth * (window.innerWidth < 768 ? 0.8 : 0.8); // Adjust scroll distance for mobile view
+      const newScrollPosition = direction === 'right'
         ? ref.current.scrollLeft + scrollAmount
         : ref.current.scrollLeft - scrollAmount;
-      
+  
       ref.current.scrollTo({
         left: newScrollPosition,
         behavior: 'smooth'
       });
     }
   };
+  
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();

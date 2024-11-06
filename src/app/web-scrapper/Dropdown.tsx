@@ -2,18 +2,19 @@
 
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, ChevronUp, X, Loader2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import styles from './Dropdown.module.scss';
 
 interface DropdownProps {
   title: string;
   items: string[];
-  onScrape: (selected: string[]) => void; // Updated to accept selected items
+  selectedItems: string[];
+  setSelectedItems: (selected: string[]) => void;
+  onScrape: () => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ title, items, onScrape }) => {
+const Dropdown: React.FC<DropdownProps> = ({ title, items, selectedItems, setSelectedItems, onScrape }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -31,10 +32,14 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onScrape }) => {
   }, []);
 
   useEffect(() => {
+    // Update selectAll based on selectedItems
+    setSelectAll(selectedItems.length === items.length && items.length > 0);
+  }, [selectedItems, items]);
+
+  useEffect(() => {
     // Reset selection when items change
     setSelectedItems([]);
-    setSelectAll(false);
-  }, [items]);
+  }, [items, setSelectedItems]);
 
   const toggleSelectAllItems = () => {
     if (selectAll) {
@@ -48,18 +53,14 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onScrape }) => {
   const toggleItemSelection = (item: string) => {
     if (selectedItems.includes(item)) {
       setSelectedItems(selectedItems.filter((i) => i !== item));
-      setSelectAll(false);
     } else {
       const newSelectedItems = [...selectedItems, item];
       setSelectedItems(newSelectedItems);
-      if (newSelectedItems.length === items.length) {
-        setSelectAll(true);
-      }
     }
   };
 
   const handleScrapeClick = () => {
-    onScrape(selectedItems);
+    onScrape();
     setIsOpen(false); // Optionally close dropdown after scraping
   };
 
@@ -84,7 +85,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onScrape }) => {
             <button 
               className={styles.scrapeButton} 
               onClick={handleScrapeClick}
-              disabled={selectedItems.length === 0} 
+              disabled={selectedItems.length === 0}
             >
               Scrape
             </button>
