@@ -319,7 +319,7 @@ $background-color: #fff;
   position: relative;
   display: flex;
   align-items: center;
-  height: 60vh;
+  height: 65vh;
   width: 100%;
   overflow: hidden;
 }
@@ -335,6 +335,7 @@ $background-color: #fff;
   display: flex;
   border-radius: 0 50% 0 0;
   z-index: 1;
+  padding-top: 3vh;
   padding-right: 5%;
 }
 .rightwrapper{
