@@ -205,7 +205,6 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
         </>
       )}
       <GlareBackground/>
-      {/* <Footer/> */}
     </div>
   );
 

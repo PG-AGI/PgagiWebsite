@@ -55,7 +55,7 @@ $background-color: #fff;
     position: absolute;
     height: 3px;
     border-radius: 2px;
-    background: white;
+    background: #F677F4;
     transition: all 0.5s ease;
   }
   .button::before {
@@ -93,7 +93,21 @@ $background-color: #fff;
     height: 100%;
     box-sizing: border-box;
     border-radius: 300px;
-    border: solid 4px white;
+    background: linear-gradient(93.52deg, #8836F1 19.24%, #F677F4 55.39%, #FFFFFF 95.75%);
+    padding: 4px; /* Thickness of the gradient border */
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  .button__line:nth-child(1)::before {
+    border: 3px solid linear-gradient(93.52deg, #8836F1 19.24%, #F677F4 55.39%, #FFFFFF 95.75%);
+    
+    ;
   }
   .button__line:nth-child(1),
   .button__line:nth-child(1)::before {
@@ -184,7 +198,7 @@ $background-color: #fff;
   .button__drow2,
   .button__drow2::before,
   .button__drow2::after {
-    background: #3b0b51;
+    background: #F677F4;
   }
   .button:hover .button__drow1 {
     animation: drow1 ease-in 0.06s;
@@ -449,8 +463,9 @@ $background-color: #fff;
 
 .featuresList {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly; /* Distributes items evenly, including spacing */
   flex-wrap: wrap;
+  gap: 1rem; /* Adds consistent spacing between items */
 }
 
 .featureItem {
@@ -465,15 +480,14 @@ $background-color: #fff;
   transition: transform 0.3s ease;
 
   &:hover {
-    transform: scale(1.05);  // Slight zoom on hover
+    transform: scale(1.05); /* Slight zoom on hover */
   }
 
   img {
     margin-bottom: 1rem;
     margin-right: 1vw;
     max-height: 80px;
-    max-width: 80px;  // Image size adjustment to match the provided image
-    // border:solid $primary-color;
+    max-width: 80px; /* Image size adjustment */
     filter: invert(100%) brightness(2);
     border-radius: 10px;
   }
