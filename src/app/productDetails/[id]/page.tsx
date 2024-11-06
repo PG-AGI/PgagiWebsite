@@ -9,6 +9,8 @@ import { productDetailsData } from '@/utils/constants' // Adjusted relative path
 import Link from 'next/link'
 import ProdPopup from '../prodPopup'
 import BookCallModal from '@/app/components/base/bookCallModela'
+import GlareBackground from '../../../../pgagi-website-blog-page/src/app/components/GlareBackground'
+import Footer from '@/app/components/Footer'
 
 type Product = {
   id: string;
@@ -55,7 +57,9 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
   if (!product) return <p>Loading...</p>
 
   return (
+    <>
     <div className={styles.container}>
+      <GlareBackground/>
       <header className={styles.header}>
         <Link href="/#products">
           <button className={styles.backButton}>{'<'}  Go back</button>
@@ -131,6 +135,9 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
         </section>
         
       </main>
+      <Footer/>
     </div>
+
+    </>
   )
 }

@@ -6,6 +6,8 @@ import ReactMarkdown from 'react-markdown';
 import { ClientJS } from 'clientjs';
 import { useAuth } from '@clerk/nextjs';  // Clerk's hook for authentication
 import { SignIn } from '@clerk/nextjs';
+import GlareBackground from "../../components/base/GlareBackground";
+import Footer from '@/app/components/Footer';
 
 export default function Product_Listing_Faq_Page({ params }: { params: { id: string } }) {
 
@@ -113,7 +115,9 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
   };
 
   return (
+    <>
     <div className={styles.mainContainer}>
+      <GlareBackground />
       <div className={styles.goBackContainer}>
         <a href="/products/custom-scrapper" className={styles.goBack}>{'< Go Back'}</a>
       </div>
@@ -147,7 +151,10 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
         </div>
       </div>
   
-      {error && (
+      
+    </div>
+    <Footer/>
+    {error && (
         <div className={styles.errorContainer}>
           <p className={styles.errorMessage}>{error}</p>
         </div>
@@ -174,7 +181,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
           </div>
         </>
       )}
-    </div>
+    </>
   );
   
 }
