@@ -26,7 +26,7 @@
   padding: 2rem;
   border-radius: 12px;
   max-width: 55%;
-  min-height: 55vh;
+  height: auto;
   width: 100%;
   z-index: 100;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
@@ -61,9 +61,13 @@
   padding: 1.5rem;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0 1rem;
   text-align: left;
-  border: 1px solid #f0f0f0;
+  min-height: 30vh;
+  // border: 1px solid #f0f0f0;
   z-index: 100;
   @media(max-width:480px){
     margin-top: 5vh;
@@ -71,7 +75,7 @@
 }
 
 .Prodcontainer h3 {
-  font-size: 1.2rem;
+  font-size: 20px;
   font-weight: 700;
   color: #000000;
   margin-bottom: 0.5rem;
@@ -79,7 +83,7 @@
 }
 
 .Prodcontainer p {
-  font-size: 1rem;
+  font-size: 16px;
   color: #000000;
   margin-bottom: 1rem;
 }

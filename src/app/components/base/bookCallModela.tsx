@@ -1,5 +1,6 @@
 import React from 'react';
 import BookCalendly from './bookACall';
+import styles from './bookCalendy.module.scss'
 
 interface BookCallModalProps {
   isOpen: boolean;
@@ -10,7 +11,7 @@ const BookCallModal: React.FC<BookCallModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal">
+    <div className={styles.base}>
       <div className="modal-content">
         <span className="close-button" onClick={onClose}>
           &times;

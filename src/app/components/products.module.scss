@@ -64,8 +64,10 @@
 
   h4 {
     color: #ffffff;
-    font-weight: 400;
-    font-size: 1.2rem;
+    font-size: 18px;
+    font-weight: 700;
+    // font-weight: 400;
+    // font-size: 1.2rem;
     margin-top: -0.2;
   }
 
@@ -78,7 +80,8 @@
 
   p {
     // margin-top: 1rem;
-    font-size: 1rem;
+    font-size: 15px;
+    font-weight: 600;
     color: white;
     z-index: 10;
     opacity: 0;
@@ -107,7 +110,7 @@
 }
 
 .icon {
-  width: 90%;
+  width:  90%;
   font-size: 3rem;
   text-align: left;
   z-index: 10;
@@ -143,7 +146,7 @@
   right: 0;
   bottom: 0%;
   margin-top: 15%;
-  margin-bottom: 20vh;
+  // margin-bottom: 20vh;
   h2 {
     display: none;
   }
@@ -244,9 +247,13 @@
     min-width: 70vw;
     height: auto; /* Allows height to grow if content overflows */
     min-height: 50vh; /* Minimum height for consistency */
-    padding-bottom: 1rem; /* Adds extra space if content overflows */
+    // spadding-bottom: 1rem; /* Adds extra space if content overflows */
     overflow: hidden; /* Ensures content visibility */
   }
+  
+.card.hovered .icon {
+  margin-bottom: 8vh;
+}
   .circle {
     width: 25vh;
     height: 25vh;

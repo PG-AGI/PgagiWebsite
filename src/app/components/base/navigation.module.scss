@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   transition: all 0.2s ease-out;
 
   &.scrolled {
@@ -120,7 +120,60 @@
         &:hover .dropdown {
           display: flex;
         }
+      }
+    }
 
+    .contact {
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: #18181800;
+      border: 2px solid #3237c0;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease-out;
+      color: #fff;
+
+      &:hover {
+        background: linear-gradient(90deg, #050caf 0%, #070a5d 100%);
+        transform: scale(1.1);
+      }
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 21px;
+      cursor: pointer;
+
+      span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #fff;
+        transition: all 0.3s ease-in-out;
+      }
+
+      &.open {
+        span {
+          &:first-child {
+            transform: translateY(9px) rotate(45deg);
+          }
+
+          &:nth-child(2) {
+            opacity: 0;
+          }
+
+          &:last-child {
+            transform: translateY(-9px) rotate(-45deg);
+          }
+        }
+      }
+    }
+  }
+}
         .dropdown {
           position: absolute;
           left: -1%;
@@ -128,6 +181,7 @@
           height: 500px;
           display: none;
           padding-top: 55px;
+          z-index: 10000001; /* Ensure it's higher than .calendly */
 
           .content {
             position: relative;
@@ -213,61 +267,6 @@
             }
           }
         }
-      }
-    }
-
-    .contact {
-      padding: 10px 20px;
-      border-radius: 12px;
-      background: #18181800;
-      border: 2px solid #3237c0;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease-out;
-      color: #fff;
-
-      &:hover {
-        background: linear-gradient(90deg, #050caf 0%, #070a5d 100%);
-        transform: scale(1.1);
-      }
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 25px;
-      height: 21px;
-      cursor: pointer;
-
-      span {
-        display: block;
-        width: 100%;
-        height: 3px;
-        background-color: #fff;
-        transition: all 0.3s ease-in-out;
-      }
-
-      &.open {
-        span {
-          &:first-child {
-            transform: translateY(9px) rotate(45deg);
-          }
-
-          &:nth-child(2) {
-            opacity: 0;
-          }
-
-          &:last-child {
-            transform: translateY(-9px) rotate(-45deg);
-          }
-        }
-      }
-    }
-  }
-}
-
 @media (max-width: 1000px) {
   .navigation {
     .nav {
