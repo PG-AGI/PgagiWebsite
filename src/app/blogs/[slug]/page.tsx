@@ -3,16 +3,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { remark } from "remark";
-import html from "remark-html";
 import Image from "next/image";
-import Head from "next/head";
 import Navigation from "../../components/base/Navigation";
+import html from 'remark-html'
 import styles from "./blog.module.scss";
 import Footer from "../../components/Footer";
 import GlareBackground from "../../components/base/GlareBackground";
 import { ClipLoader } from "react-spinners";
 import { motion } from "framer-motion"; // Import framer-motion
-
+import Head from "next/head";
 // Import the image directly from your assets
 import caseFrame from "../../assets/case.png"; // Use your own image or placeholder
 
@@ -61,12 +60,13 @@ const BlogPage = () => {
   return (
     <>
       <GlareBackground />
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
+      {/* <Head>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+</Head> */}
+
       <div>
         <Navigation />
       </div>

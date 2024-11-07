@@ -109,7 +109,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
           <div className={styles.rightwrapper}>
             <div className={styles.purpleShapeRight}>
               <div className={styles.bookText}>
-              <p>Want to integrate it in your project</p>
+              <p>Want to integrate it in your project?</p>
               <p> Make it yours now</p>
               </div>
               <button className={styles.tryButton} onClick={handleBookCall}>

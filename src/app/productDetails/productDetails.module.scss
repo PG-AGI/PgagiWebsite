@@ -330,7 +330,7 @@ $background-color: #fff;
   width: 40%;
   height: 100%;
   // background-color: $primary-color;
-  background: linear-gradient(127.29deg, #F13684 -8.42%, #6B0381 36.87%, #2C0041 100%);
+  background: linear-gradient(180deg, #9100A7 0%, #2C0041 100%);
 
   display: flex;
   border-radius: 0 50% 0 0;
@@ -353,6 +353,7 @@ $background-color: #fff;
   background: linear-gradient(180deg, #9100A7 0%, #2C0041 100%);
   border-radius: 50% 0 0 0;
   padding: 0 2vw;
+  padding-top: 4vh;
   z-index: 1;
   display: flex;
   align-items: center;

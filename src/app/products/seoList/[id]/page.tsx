@@ -33,7 +33,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
     console.log(user)
   }, [user]);
 
-  
+
   const pageContent = Product_Pages_Content.find(page => page.id === params.id);
   // const { isSignedIn } = useAuth();  // Clerk's hook to check if the user is signed in
 
@@ -41,8 +41,11 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
   if (!pageContent) {
     return <div>Page not found</div>;
   }
-  const onClose=()=>{
+  const onClose = () => {
     setShowSignIn(false);
+  }
+  const onCloseTrial = () => {
+    setFreeTrialEnded(false);
   }
 
   const checkUserStatus = async () => {
@@ -174,6 +177,12 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
         <>
           <div className={styles.blurBackground}></div>
           <div className={styles.popupContainer}>
+            <button onClick={onCloseTrial} className={styles.closeButton}>
+              <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.881 22.881L8.11914 8.11914M22.881 8.11914L8.11914 22.881" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+
+            </button>
             <h2>Free Trial Ended</h2>
             <p>Your free trial has ended. Please purchase to continue using the product.</p>
             <a href="/pricing" className={styles.pricingLink}>
@@ -187,12 +196,12 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
         <>
           <div className={styles.blurBackground}></div>
           <div className={styles.signInContainer}>
-          <button onClick={onClose} className={styles.closeButton}>
-        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.881 22.881L8.11914 8.11914M22.881 8.11914L8.11914 22.881" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+            <button onClick={onClose} className={styles.closeButton}>
+              <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.881 22.881L8.11914 8.11914M22.881 8.11914L8.11914 22.881" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
 
-        </button>
+            </button>
             <h2 className={styles.signInHeading}>Sign In to Use the Product</h2>
             <p className={styles.signInDescription}>Please sign in to continue and access exclusive features</p>
 
@@ -204,7 +213,7 @@ export default function Product_Listing_Faq_Page({ params }: { params: { id: str
           <div className={styles.blurBackground}></div>
         </>
       )}
-      <GlareBackground/>
+      <GlareBackground />
     </div>
   );
 
