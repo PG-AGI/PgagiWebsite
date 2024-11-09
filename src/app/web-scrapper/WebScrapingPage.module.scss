@@ -1,17 +1,21 @@
 /* WebScrapingPage.module.scss */
 
 .container {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f5f5f5;
+  // background-color: #f5f5f5;
+  left: 0;
+  top: 0;
+  width: 100%;
   min-height: 100vh;
   gap: 20px;
   //padding: 20px;
 }
 
 .header {
-  background-color: #6a1b9a;
+  background: linear-gradient(91.67deg, #F13684 11.98%, #6B0381 50.33%, #2C0041 92.73%);
   color: white;
   width: 100%;
   padding: 20px;
@@ -38,7 +42,8 @@
 
 .inputWrapper {
   position: relative;
-  flex: 4.7;
+  // flex: 4.7;
+  width: 80%;
   display: flex;
   align-items: center;
 }
@@ -46,13 +51,13 @@
 .input {
   width: 100%;
   height: 48px;
-  padding-right: 45px; 
+  padding-right: 45px;
   padding-left: 12px;
   border: 2px solid #6a1b9a;
   border-radius: 8px;
   font-size: 16px;
-  background-color: #fff;
-  color: #000; 
+  background-color: #00000000;
+  color: #000;
   transition: border-color 0.3s;
 }
 
@@ -65,38 +70,44 @@
 }
 
 .arrowButton {
-  position: absolute;
   right: 8px;
-  background-color: #6a1b9a;
+  background-color: #ffffff;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  border-radius: 50%;
+  color: #000;
+  padding: 0 5vw;
+  font-size: 16px;
+  border-radius: 10px;
+  z-index: 1;
+  /* Ensure stacking order */
+
+  /* Gradient border effect */
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(90deg, #FFFFFF 0%, #F13684 100%) border-box;
+  border: 3px solid transparent;
 }
 
-.arrowIcon {
-  color: #ffffff; /* Changed from #6a1b9a to white for better contrast */
-  font-size: 24px;
-  transition: color 0.3s;
-  //fill: #6a1b9a;
-}
 
 .arrowButton:hover .arrowIcon {
-  color: #e1bee7; /* Light purple on hover for better visibility */
+  color: #e1bee7;
+  /* Light purple on hover for better visibility */
 }
 
 .dropdownWrapper {
-  flex: 3;
+  min-width: 25vw;
+  flex: 5;
 }
 
 .mainContent {
   display: flex;
-  justify-content: space-between;
-  width: 80%;
-  max-width: 1200px;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 80vw;
   gap: 30px;
   margin-top: 20px;
 }
@@ -107,17 +118,19 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .scrapedContentContainer {
-  background-color: #f5e6ff;
+  background: linear-gradient(180deg, #E8B5FF 0%, #FCFAFD 100%);
   border: 2px solid #6a1b9a;
   border-radius: 12px;
   padding: 20px;
   height: 350px;
   overflow-y: hidden;
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .scrapedContentTitle {
@@ -133,7 +146,8 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  color: #000; /* Ensures text is black for better readability */
+  color: #000;
+  /* Ensures text is black for better readability */
 
   /* Ensuring all child elements inherit the correct color */
   * {
@@ -168,6 +182,7 @@
   font-size: 16px;
   color: #6a1b9a;
   outline: none;
+  
 
   /* Preventing default list-style */
   list-style: none;
@@ -193,7 +208,9 @@ details[open] .chevronIcon {
   margin-top: 10px;
   color: #333;
   line-height: 1.6;
-  white-space: pre-wrap; /* Ensures text wraps within the container */
+  white-space: pre-wrap;
+  
+  /* Ensures text wraps within the container */
 }
 
 .downloadButtonWrapper {
@@ -211,6 +228,8 @@ details[open] .chevronIcon {
   justify-content: center;
   gap: 8px;
   transition: background-color 0.3s;
+  position: relative;
+  z-index: 0;
 
   &:disabled {
     background-color: #ccc;
@@ -218,21 +237,26 @@ details[open] .chevronIcon {
   }
 }
 
+
 .downloadButton:hover:not(:disabled) {
-  background-color: #333; /* Darker shade on hover */
+  background-color: #333;
+  /* Darker shade on hover */
 }
 
 /* Loader Styles */
 .loaderIcon {
-  color: #ffffff; /* Ensure loader is visible */
+  color: #ffffff;
+  /* Ensure loader is visible */
 }
 
 .loader {
-  border: 4px solid rgba(106, 27, 154, 0.1); /* Light purple border */
+  border: 4px solid rgba(106, 27, 154, 0.1);
+  /* Light purple border */
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border-left-color: #6a1b9a; /* Purple loader */
+  border-left-color: #6a1b9a;
+  /* Purple loader */
   animation: spin 1s linear infinite;
   margin: auto;
 }
@@ -250,6 +274,7 @@ details[open] .chevronIcon {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  justify-content: center;
 }
 
 .firstBox {
@@ -296,28 +321,62 @@ details[open] .chevronIcon {
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  background-color: #6a1b9a;
-  border-radius: 0 60px 0 60px;
+  background: linear-gradient(260.08deg, #000000 27.68%, #2C0041 74.84%);
+  border-radius: 0 65px 0 65px;
   padding: 30px 20px;
   width: 100%;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+  }
 }
 
 .userPurposeWrapper {
   display: flex;
   align-items: center;
-  background-color: #f5e6ff;
-  border-radius: 24px;
+  background: transparent;
+  border-radius: 16px;
   padding: 12px 16px;
   width: 100%;
   gap: 8px;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 0px 7.9px 1px #FFDD55;
+
+  /* Gradient border effect */
+  position: relative;
+  z-index: 0;
+
+  /* Pseudo-element for gradient border */
 }
 
+.userPurposeWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  padding: 3px;
+  /* Thickness of the gradient border */
+  background: linear-gradient(90.67deg, #FAC405 2.65%, #FFFFFF 98.98%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+
 .purposeIcon {
-  color: #6a1b9a;
-  font-size: 1.4rem; 
-  fill: #6a1b9a;
+  color: #FEEAA4;
+  font-size: 1.4rem;
+  border-color: #FEEAA4;
+  fill: #FEEAA4;
 }
 
 .userPurposeInput {
@@ -325,23 +384,25 @@ details[open] .chevronIcon {
   border: none;
   outline: none;
   background-color: transparent;
-  font-size: 16px; /* Increased text size */
-  color: #6a1b9a;
+  font-size: 16px;
+  /* Increased text size */
+  color: #FEEAA4;
   padding: 2px 4px;
+  z-index: 1;
 }
 
 .crownIconSmall {
   //color: gold;
   font-size: 1.2rem;
   fill: gold;
+  border: none;
 }
 
 .scrapeButton {
   background-color: white;
   color: #000000;
-  padding: 14px 28px; /* Adjusted padding for a balanced look */
-  border-radius: 24px;
-  border: 2px solid black; 
+  padding: 14px 50px;
+  /* Adjusted padding for a balanced look */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -349,6 +410,14 @@ details[open] .chevronIcon {
   gap: 8px;
   font-weight: bold;
   transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 10px;
+  z-index: 1;
+  /* Ensure stacking order */
+
+  /* Gradient border effect */
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(90deg, #FFFFFF 0%, #F13684 100%) border-box;
+  border: 3px solid transparent;
 }
 
 .scrape {
@@ -392,7 +461,8 @@ details[open] .chevronIcon {
     width: 80%;
   }
 
-  .leftSection, .rightSection {
+  .leftSection,
+  .rightSection {
     width: 100%;
   }
 }
@@ -404,7 +474,8 @@ details[open] .chevronIcon {
     width: 90%;
   }
 
-  .inputWrapper, .dropdownWrapper {
+  .inputWrapper,
+  .dropdownWrapper {
     width: 100%;
   }
 
@@ -413,7 +484,8 @@ details[open] .chevronIcon {
     gap: 20px;
   }
 
-  .leftSection, .rightSection {
+  .leftSection,
+  .rightSection {
     width: 100%;
   }
 
