@@ -1,5 +1,3 @@
-// Dropdown.tsx
-
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronUp, X } from 'lucide-react';
@@ -10,10 +8,9 @@ interface DropdownProps {
   items: string[];
   selectedItems: string[];
   setSelectedItems: (selected: string[]) => void;
-  onScrape: () => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ title, items, selectedItems, setSelectedItems, onScrape }) => {
+const Dropdown: React.FC<DropdownProps> = ({ title, items, selectedItems, setSelectedItems }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -59,11 +56,6 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, selectedItems, setSel
     }
   };
 
-  const handleScrapeClick = () => {
-    onScrape();
-    setIsOpen(false); // Optionally close dropdown after scraping
-  };
-
   return (
     <div className={styles.dropdownWrapper} ref={dropdownRef}>
       <div className={styles.dropdownButton} onClick={toggleDropdown}>
@@ -82,13 +74,6 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, selectedItems, setSel
               />
               <span>Select All</span>
             </div>
-            <button 
-              className={styles.scrapeButton} 
-              onClick={handleScrapeClick}
-              disabled={selectedItems.length === 0}
-            >
-              Scrape
-            </button>
             <X
               className={styles.closeIcon}
               onClick={() => setIsOpen(false)}
