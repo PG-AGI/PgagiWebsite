@@ -36,9 +36,9 @@ const Products: React.FC = () => {
           <a className={styles.productLink} href={product.link}>
       <button
         className={styles.viewButton}
-        disabled={product.title === 'Web Scrapper'} // Disable for "Web Scrapper"
+       // Disable for "Web Scrapper"
       >
-        {product.title === 'Web Scrapper' ? 'Coming Soon' : 'View »'} {/* Conditionally render text */}
+        View »
       </button>
     </a>
           <div className={styles.circle}></div>

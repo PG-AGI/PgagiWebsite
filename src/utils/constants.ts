@@ -145,7 +145,7 @@ export const productData: Product[] = [
     description: 'Automate data extraction with precision using our AI-based web scraping tool. Ideal for collecting valuable insights from the web to fuel your business decisions.',
     miniTitle: 'Web Scrapper',
     icon: products3, // Dummy icon
-    link: "/productDetails/ai-scrapper"
+    link: "/web-scrapper"
   },
 
 ];

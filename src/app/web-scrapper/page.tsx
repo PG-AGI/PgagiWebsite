@@ -1,14 +1,23 @@
+// 'use client' directive for Next.js
 'use client';
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Download, Crown, Pencil, ChevronDown, ChevronRight } from 'lucide-react';
+import { Download, Crown, Pencil, ChevronDown } from 'lucide-react';
 import styles from './WebScrapingPage.module.scss';
 import Dropdown from './Dropdown';
 import NormalScrapedContent from './NormalScrapedContent';
 import GPTScrapedContent from './GPTScrapedContent';
 import GlareBackground from '../components/base/GlareBackground';
+import CustomLoader from '../components/CustomLoader';
 
-import CustomLoader from '../components/CustomLoader'; // Import the CustomLoader component
+// Import authentication context and components
+import { useAuth } from '@/contexts/AuthContext';
+import GoogleSignInButton from '../components/googleSignInButton';
+
+// Import react-toastify components and styles
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface NormalScrapedContentType {
   [key: string]: string;
@@ -44,21 +53,29 @@ const WebScrapingPage: React.FC = () => {
   const [subpages, setSubpages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isScraping, setIsScraping] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  
+
   // New States
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [userPurpose, setUserPurpose] = useState<string>('');
 
+  // Authentication States
+  const [showSignIn, setShowSignIn] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      setShowSignIn(false); // Hide sign-in popup when user is authenticated
+      toast.success('Successfully signed in!');
+    }
+  }, [user]);
+
   const handleSubmit = async () => {
-    if (!link) {
-      console.log('Please enter a valid link');
-      setError('Please enter a valid link');
+    if (!link.trim()) {
+      toast.error('Please enter a valid link.');
       return;
     }
 
     setIsSubmitting(true);
-    setError(null);
     setSubpages([]);
     setScrapedContent(null);
 
@@ -71,27 +88,32 @@ const WebScrapingPage: React.FC = () => {
       if (response.data && Array.isArray(response.data)) {
         setSubpages(response.data);
         console.log('Subpages fetched:', response.data);
+        toast.success('Subpages fetched successfully!');
       } else {
-        setError('Invalid response from server');
+        toast.error('Invalid response from server.');
         console.error('Invalid response structure:', response.data);
       }
     } catch (err) {
-      setError('Failed to fetch subpages. Please try again.');
+      toast.error('Failed to fetch subpages. Please try again.');
       console.error('API call error:', err);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Combined Scrape Function
   const handleScrape = async () => {
-    if (selectedItems.length === 0 && !link) {
-      setError('Please enter a valid link or select subpages to scrape.');
+    if (userPurpose.trim() && !user) {
+      toast.warn('You need to sign in to use this feature.');
+      setShowSignIn(true);
+      return;
+    }
+
+    if (selectedItems.length === 0 && !link.trim()) {
+      toast.error('Please enter a valid link or select subpages to scrape.');
       return;
     }
 
     setIsScraping(true);
-    setError(null);
     setScrapedContent(null);
 
     try {
@@ -127,7 +149,6 @@ const WebScrapingPage: React.FC = () => {
           );
         }
       } else {
-
         const data = { url: link };
         const config = {
           headers: {
@@ -157,11 +178,12 @@ const WebScrapingPage: React.FC = () => {
 
       if (response.data) {
         setScrapedContent(response.data);
+        toast.success('Scraping completed successfully!');
       } else {
-        setError('No data received from server.');
+        toast.error('No data received from server.');
       }
     } catch (err) {
-      setError('Failed to scrape pages. Please try again.');
+      toast.error('Failed to scrape pages. Please try again.');
       console.error('API call error:', err);
     } finally {
       setIsScraping(false);
@@ -169,7 +191,10 @@ const WebScrapingPage: React.FC = () => {
   };
 
   const handleDownload = () => {
-    if (!scrapedContent) return;
+    if (!scrapedContent) {
+      toast.error('No content to download.');
+      return;
+    }
 
     const element = document.createElement("a");
     const file = new Blob([JSON.stringify(scrapedContent, null, 2)], { type: 'application/json' });
@@ -177,11 +202,30 @@ const WebScrapingPage: React.FC = () => {
     element.download = "scraped_content.json";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
+    toast.success('Download started!');
+  };
+
+  const onClose = () => {
+    setShowSignIn(false);
   };
 
   return (
     <>
-      <GlareBackground/>
+      {/* Toast Container for react-toastify */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
+      <GlareBackground />
       <div className={styles.container}>
         <header className={styles.header}>
           <h1 className={styles.title}>
@@ -212,7 +256,7 @@ const WebScrapingPage: React.FC = () => {
             aria-busy={isSubmitting}
           >
             {isSubmitting ? (
-              <CustomLoader /> // Use the custom loader here
+              <CustomLoader />
             ) : (
               <>Submit</>
             )}
@@ -225,11 +269,8 @@ const WebScrapingPage: React.FC = () => {
             items={subpages}
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
-            // Removed onScrape prop
           />
         </div>
-
-        {error && <p className={styles.error}>{error}</p>}
 
         <div className={styles.mainContent}>
           <div className={styles.leftSection}>
@@ -262,21 +303,8 @@ const WebScrapingPage: React.FC = () => {
           </div>
 
           <div className={styles.rightSection}>
-            {/* <div className={styles.firstBox}>
-              <Crown className={styles.crownIcon} /> 
-              <h2 className={styles.premiumTitle}>
-                Unlock a World of Premium Privileges
-              </h2>
-            </div> */}
-
-            {/* <div className={styles.secondBox}>
-              <p className={styles.premiumText}>
-                Start Your 7-Day Free Trial Today!
-              </p>
-            </div> */}
-
             <div className={styles.thirdBox}>
-              <h1> {'AI ......(Tagline/Heading)......'}</h1>
+              <h1>{'Scraped Data, Elevated by AI Magic'}</h1>
               <div className={styles.userPurposeWrapper}>
                 <Pencil className={styles.purposeIcon} />
                 <input
@@ -289,13 +317,13 @@ const WebScrapingPage: React.FC = () => {
                 <Crown className={styles.crownIconSmall} />
               </div>
 
-              <button 
-                className={styles.scrapeButton} 
+              <button
+                className={styles.scrapeButton}
                 onClick={handleScrape}
                 disabled={isScraping || (selectedItems.length === 0 && !link.trim())}
               >
                 {isScraping ? (
-                  <CustomLoader /> // Use the custom loader here
+                  <CustomLoader />
                 ) : (
                   <span className={styles.scrape}>Scrape</span>
                 )}
@@ -310,6 +338,27 @@ const WebScrapingPage: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Sign-In Popup */}
+      {showSignIn && (
+        <>
+          <div className={styles.blurBackground}></div>
+          <div className={styles.signInContainer}>
+            <button onClick={onClose} className={styles.closeButton}>
+              <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.881 22.881L8.11914 8.11914M22.881 8.11914L8.11914 22.881" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <h2 className={styles.signInHeading}>Sign In to Use the Product</h2>
+            <p className={styles.signInDescription}>Please sign in to continue and access exclusive features</p>
+
+            {/* Google Sign-In Button */}
+            <div className={styles.googleButtonContainer}>
+              <GoogleSignInButton />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
