@@ -582,3 +582,60 @@ details[open] .chevronIcon {
     font-size: 1.2rem;
   }
 }
+.blurBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);  // Apply the blur effect
+  z-index: 999;  // Ensure it's behind the sign-in form but above the rest of the content
+  background-color: rgba(0, 0, 0, 0.4);  // Optional dark overlay for the blur
+}
+
+.signInContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; // Ensure it's on top of other elements
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.signInHeading {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.signInDescription {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.googleButtonContainer {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorMessage {
+  color: red;
+}
