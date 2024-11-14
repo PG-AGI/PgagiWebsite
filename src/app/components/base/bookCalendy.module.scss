@@ -40,7 +40,11 @@
       font-size: 30px;
       color: rgb(255, 255, 255);
       cursor: pointer;
-      z-index: 1011;
+      z-index: 100001 !important;
+      @media(max-width:786px){
+        color: rgb(0, 0, 0);
+        font-size: 50px;
+      }
     }
 
     .widget {
@@ -80,29 +84,36 @@
       color: gray;
       padding: 2px;
       cursor: pointer;
-      z-index: 1011;
+      z-index: 10011;
     }
   }
 }
 
 @media (max-width: 768px) {
-  .calendly .window {
+  .calendly {
     width: 98%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    .closeButton {
-      position: absolute;
-      top: 10;
-      right: 10;
-      background: none;
-      border: none;
-      font-size: 50px;
-      color: gray;
-      padding: 2px;
-      cursor: pointer;
-      z-index: 1011;
-    }
+    z-index: 1;
+    // .window{
+    //   position: relative;
+    //   height: 90%;
+    //   // z-index: 1000;
+    // }
+    
   }
+  // .closeButton {
+  //   position: absolute;
+  //   top: 10;
+  //   right: 10;
+  //   background: none;
+  //   border: none;
+  //   font-size: 50px;
+  //   color: rgb(255, 0, 0);
+  //   padding: 2px;
+  //   cursor: pointer;
+  //   z-index: 10000 !important;
+  // }
 }
