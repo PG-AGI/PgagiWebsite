@@ -259,11 +259,11 @@ const WebScrapingPage: React.FC = () => {
               <CustomLoader />
             ) : (
               <>Submit</>
+              <>Submit</>
             )}
           </button>
-        </div>
-
-        <div className={styles.dropdownWrapper}>
+      </div>
+      <div className={styles.dropdownWrapper}>
           <Dropdown
             title="Select the pages to scrape"
             items={subpages}
