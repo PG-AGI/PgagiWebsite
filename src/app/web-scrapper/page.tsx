@@ -1,4 +1,4 @@
-// 'use client' directive for Next.js
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -11,7 +11,6 @@ import GPTScrapedContent from './GPTScrapedContent';
 import GlareBackground from '../components/base/GlareBackground';
 import CustomLoader from '../components/CustomLoader';
 
-// Import authentication context and components
 import { useAuth } from '@/contexts/AuthContext';
 import GoogleSignInButton from '../components/googleSignInButton';
 
@@ -259,11 +258,11 @@ const WebScrapingPage: React.FC = () => {
               <CustomLoader />
             ) : (
               <>Submit</>
-              <>Submit</>
             )}
           </button>
-      </div>
-      <div className={styles.dropdownWrapper}>
+        </div>
+
+        <div className={styles.dropdownWrapper}>
           <Dropdown
             title="Select the pages to scrape"
             items={subpages}
@@ -330,12 +329,6 @@ const WebScrapingPage: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
-
-        <div className={styles.downArrowWrapper}>
-          <button className={styles.downArrowButton} aria-label="Scroll">
-            <ChevronDown className={styles.downArrowIcon} />
-          </button>
         </div>
       </div>
 
