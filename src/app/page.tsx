@@ -13,7 +13,7 @@ import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
 import Webinars from "./components/Webinars";
-import Products from "./components/products";
+import Products from "./components/productsCards";
 import LatestTrends from './components/LatestTrends';
 import TrendingOld from "./components/trending_old";
 

@@ -34,11 +34,11 @@ const Products: React.FC = () => {
           </div>
           {/* <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p> */}
           <a className={styles.productLink} href={product.link}>
-      <button
+          <button
         className={styles.viewButton}
-       // Disable for "Web Scrapper"
+        disabled={product.title === 'Web Scrapper'} // Disable for "Web Scrapper"
       >
-        View »
+        {product.title === 'Web Scrapper' ? 'Coming Soon' : 'View »'} {/* Conditionally render text */}
       </button>
     </a>
           <div className={styles.circle}></div>

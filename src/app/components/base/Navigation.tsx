@@ -22,7 +22,7 @@ export default function Navigation() {
   >(null);
   const BLOGS = "/blogs";
   const ABOUT = "/aboutUs";
-  const TOKEN_CALCULATOR = "/token-calculator";
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -115,9 +115,7 @@ export default function Navigation() {
                   <Link href={ABOUT} className={styles.mobileMenuItem}>
                     Who We Are
                   </Link>
-                  <Link href={TOKEN_CALCULATOR} className={styles.mobileMenuItem}>
-                    LLM Token Calculator
-                  </Link>
+
                 </div>
               )}
 
@@ -252,9 +250,6 @@ export default function Navigation() {
               </Link>
               <Link href="/aboutUs" className={styles.link}>
                 Who We Are
-              </Link>
-              <Link href={TOKEN_CALCULATOR} className={styles.link}>
-                LLM Token Calculator
               </Link>
             </>
           )}
