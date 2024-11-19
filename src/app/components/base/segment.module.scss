@@ -69,6 +69,8 @@
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 3vw;
+                text-align: center;
 
                 h1 {
                     font-size: 48px;
@@ -200,7 +202,7 @@
                         font-size: 16px;
                          font-weight: 400;
                         min-width: 350px;
-                       
+        
 
                     }                   
                 }
@@ -237,20 +239,20 @@
     }
 }
 
-@media (max-width:478px){
-    .segment{
-        width: 95vw;
-        height: 50vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-right: 5px;
+// @media (max-width:478px){
+//     .segment{
+//         width: 95vw;
+//         height: 50vh;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         padding-right: 5px;
         
-        .container{
-            padding: 50px;
-            p{
+//         // .container{
+//         //     padding: 50px;
+//         //     p{
                 
-            }            
-        }
-    }
-}
+//         //     }            
+//         // }
+//     }
+// }

@@ -201,12 +201,13 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
           variants={sectionVariants}
           viewport={{ once: true, amount: 0.2 }}
         >
-          <button className={styles.learnMore} onClick={handleBlogsClick}>
+          <h2>Blogs</h2>
+          {/* <button className={styles.learnMore} onClick={handleBlogsClick}>
             <span className={styles.circle}>
               <span className={`${styles.icon} ${styles.arrow}`}></span>
             </span>
             <span className={styles.buttonText}>Blogs</span>
-          </button>
+          </button> */}
           <div className={styles.listContainer}>
             {scrollStates.blog.canScrollLeft && (
               <button 

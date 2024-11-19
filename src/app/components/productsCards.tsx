@@ -19,10 +19,13 @@ const Products: React.FC = () => {
           onMouseLeave={() => setHoverIndex(null)}
         >
            <div className={styles.icon}>
+            <div className={styles.iconContainer}>
             <Image src={product.icon} alt={product.title} width={120} height={120} /> {/* Use Next.js Image */}
+            <h3>{product.miniTitle}</h3> 
+            </div>
             {hoverIndex === index ?
             <div>
-             <h3>{product.miniTitle}</h3> 
+             
              <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p>
              </div>: (
               <div>

@@ -39,7 +39,6 @@
   border: 1px solid ;
   border-image-source: linear-gradient(113.19deg, rgba(225, 0, 0, 0.09) -0.58%, rgba(162, 43, 43, 0.09) 71.21%);
   // box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 8px 40px rgba(0, 0, 0, 0.15);
-
   background-color: #6464641a;
   // box-shadow: 0 4px 40px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -80,8 +79,8 @@
 
   p {
     // margin-top: 1rem;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 2vh;
+    font-weight: 500;
     color: white;
     z-index: 10;
     opacity: 0;
@@ -146,7 +145,8 @@
   right: 0;
   bottom: 0%;
   margin-top: 15%;
-  // margin-bottom: 20vh;
+  height: 100%;
+  margin-bottom: 15%;
   h2 {
     display: none;
   }
@@ -156,7 +156,9 @@
     animation: fadeIn 0.3s ease;
   }
 }
-
+.iconContainer{
+  // border: solid red;
+}
 .productLink {
   z-index: 10;
   position: absolute;
