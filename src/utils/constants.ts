@@ -46,7 +46,7 @@ import products3 from '../app/assets/products/products3.svg'
 import products1_white from '../app/assets/products/products1_white.svg'
 import products2_white from '../app/assets/products/products2_white.svg'
 import products3_white from '../app/assets/products/products3_white.svg'
-
+import products4 from '../app/assets/products/products4.png'
 export const trendingList = [
   {
     "title": "CASE STUDY",
@@ -144,7 +144,7 @@ export const productData: Product[] = [
     subtitle:'A web scrapper',
     description: 'Automate data extraction with precision using our AI-based web scraping tool. Ideal for collecting valuable insights from the web to fuel your business decisions.',
     miniTitle: 'Web Scrapper',
-    icon: products3, // Dummy icon
+    icon: products4, 
     link: "/web-scrapper"
   },
 
