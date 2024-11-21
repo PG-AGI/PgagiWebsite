@@ -5,22 +5,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-color: #f5f5f5;
   left: 0;
   top: 0;
   width: 100%;
-  min-height: 100vh;
+  /* Removed min-height to prevent unnecessary height expansion */
+  /* min-height: 100vh; */
   gap: 20px;
-  //padding: 20px;
+  justify-content: flex-start; /* Align content to the top */
 }
 
 .header {
   background: linear-gradient(91.67deg, #F13684 11.98%, #6B0381 50.33%, #2C0041 92.73%);
   color: white;
   width: 100%;
-  padding: 20px;
   text-align: center;
   border-radius: 0 0 50% 50%;
+  height: 8rem;
 }
 
 .title {
@@ -29,20 +29,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 }
 
 .inputRow {
   display: flex;
   gap: 15px;
-  width: 80%;
-  max-width: 1200px;
+  width: 50%;
   margin-top: 20px;
 }
 
 .inputWrapper {
   position: relative;
-  // flex: 4.7;
   width: 80%;
   display: flex;
   align-items: center;
@@ -56,7 +53,7 @@
   border: 2px solid #6a1b9a;
   border-radius: 8px;
   font-size: 16px;
-  background-color: #00000000;
+  background-color: transparent;
   color: white;
   transition: border-color 0.3s;
 }
@@ -82,7 +79,6 @@
   font-size: 16px;
   border-radius: 10px;
   z-index: 1;
-  /* Ensure stacking order */
 
   /* Gradient border effect */
   background: linear-gradient(#ffffff, #ffffff) padding-box,
@@ -90,29 +86,145 @@
   border: 3px solid transparent;
 }
 
-
 .arrowButton:hover .arrowIcon {
   color: #e1bee7;
-  /* Light purple on hover for better visibility */
 }
 
 .dropdownWrapper {
-  min-width: 25vw;
+  min-width: 50vw;
   flex: 5;
 }
 
 .mainContent {
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start; /* Align content to the top */
   width: 100%;
   max-width: 80vw;
   gap: 30px;
   margin-top: 20px;
 }
 
-/* Left Section */
+.rightSection {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.thirdBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background: linear-gradient(91.67deg, #F13684 11.98%, #6B0381 50.33%, #2C0041 92.73%);
+  border-radius: 0 65px 0 65px;
+  padding: 30px 20px;
+  width: 100%;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+  }
+}
+
+.userPurposeWrapper {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border-radius: 16px;
+  padding: 12px 16px;
+  width: 80%;
+  gap: 8px;
+  box-shadow: 0px 0px 5px 1px #FFD966;
+  position: relative;
+  z-index: 0;
+}
+
+.userPurposeWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  padding: 3px;
+  background: linear-gradient(90.67deg, #FAC405 2.65%, #FFFFFF 98.98%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.purposeIcon {
+  color: #FEEAA4;
+  font-size: 1.4rem;
+  fill: #FEEAA4;
+}
+
+.userPurposeInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px;
+  color: #FEEAA4;
+  padding: 2px 4px;
+  z-index: 1;
+  
+}
+.userPurposeInput::placeholder {
+  color: #FEEAA4; 
+}
+.crownIconSmall {
+  font-size: 1.2rem;
+  fill: gold;
+  border: none;
+}
+
+.scrapeButton {
+  background-color: white;
+  color: #000000;
+  padding: 14px 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 10px;
+  z-index: 1;
+
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(90deg, #FFFFFF 0%, #F13684 100%) border-box;
+  border: 3px solid transparent;
+}
+
+.scrape {
+  color: black;
+}
+
+.scrapeIcon {
+  fill: gold;
+}
+
+.scrapeButton:hover {
+  background-color: #e0c3fc;
+  color: #4a148c;
+}
+
+/* Left Section (Scraped Content Section) */
 .leftSection {
   width: 80%;
   display: flex;
@@ -147,9 +259,6 @@
   border-radius: 8px;
   padding: 10px;
   color: #000;
-  /* Ensures text is black for better readability */
-
-  /* Ensuring all child elements inherit the correct color */
   * {
     color: inherit;
   }
@@ -231,16 +340,15 @@ details[open] .chevronIcon {
   position: relative;
   z-index: 0;
 
+  margin-bottom: 1rem;
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
 }
 
-
 .downloadButton:hover:not(:disabled) {
   background-color: #333;
-  /* Darker shade on hover */
 }
 
 .loader {
@@ -256,187 +364,6 @@ details[open] .chevronIcon {
   to {
     transform: rotate(360deg);
   }
-}
-
-/* Right Section */
-.rightSection {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-}
-
-.firstBox {
-  width: 100%;
-  text-align: center;
-  background-color: #6a1b9a;
-  border-radius: 60px 0 60px 0;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-.premiumTitle {
-  font-size: 22px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #ffffff;
-}
-
-.crownIcon {
-  color: gold;
-  font-size: 1.4rem;
-  margin: auto;
-  fill: gold;
-}
-
-.secondBox {
-  text-align: center;
-  color: #6a1b9a;
-}
-
-.premiumText {
-  font-size: 16px;
-  font-weight: 500;
-  color: #6a1b9a;
-  text-align: left;
-}
-
-.thirdBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  background: linear-gradient(260.08deg, #000000 27.68%, #2C0041 74.84%);
-  border-radius: 0 65px 0 65px;
-  padding: 30px 20px;
-  width: 100%;
-
-  h1 {
-    font-size: 28px;
-    font-weight: 700;
-  }
-}
-
-.userPurposeWrapper {
-  display: flex;
-  align-items: center;
-  background: transparent;
-  border-radius: 16px;
-  padding: 12px 16px;
-  width: 100%;
-  gap: 8px;
-  box-shadow: 0px 0px 7.9px 1px #FFDD55;
-
-  /* Gradient border effect */
-  position: relative;
-  z-index: 0;
-
-  /* Pseudo-element for gradient border */
-}
-
-.userPurposeWrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  padding: 3px;
-  /* Thickness of the gradient border */
-  background: linear-gradient(90.67deg, #FAC405 2.65%, #FFFFFF 98.98%);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  z-index: -1;
-}
-
-
-.purposeIcon {
-  color: #FEEAA4;
-  font-size: 1.4rem;
-  border-color: #FEEAA4;
-  fill: #FEEAA4;
-}
-
-.userPurposeInput {
-  flex: 1;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  font-size: 16px;
-  /* Increased text size */
-  color: #FEEAA4;
-  padding: 2px 4px;
-  z-index: 1;
-}
-
-.crownIconSmall {
-  //color: gold;
-  font-size: 1.2rem;
-  fill: gold;
-  border: none;
-}
-
-.scrapeButton {
-  background-color: white;
-  color: #000000;
-  padding: 14px 50px;
-  /* Adjusted padding for a balanced look */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 10px;
-  z-index: 1;
-  /* Ensure stacking order */
-
-  /* Gradient border effect */
-  background: linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(90deg, #FFFFFF 0%, #F13684 100%) border-box;
-  border: 3px solid transparent;
-}
-
-.scrape {
-  color: black;
-}
-
-.scrapeIcon {
-  fill: gold;
-}
-
-.scrapeButton:hover {
-  background-color: #e0c3fc;
-  color: #4a148c;
-}
-
-.downArrowWrapper {
-  margin-top: 10px;
-}
-
-.downArrowButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.downArrowIcon {
-  font-size: 2rem;
-  color: #6a1b9a;
 }
 
 /* Responsive Styles */
@@ -488,15 +415,6 @@ details[open] .chevronIcon {
     font-size: 1.5rem;
   }
 
-  .premiumTitle {
-    font-size: 20px;
-  }
-
-  .premiumText {
-    font-size: 14px;
-    text-align: center;
-  }
-
   .userPurposeWrapper {
     flex-direction: column;
     align-items: stretch;
@@ -514,10 +432,6 @@ details[open] .chevronIcon {
   .downloadButton {
     width: 100%;
     padding: 10px 20px;
-  }
-
-  .downArrowIcon {
-    font-size: 1.5rem;
   }
 }
 
@@ -537,32 +451,12 @@ details[open] .chevronIcon {
     font-size: 14px;
   }
 
-  .arrowIcon {
-    font-size: 20px;
-  }
-
   .scrapedContentContainer {
     height: 250px;
   }
 
   .scrapedContentTitle {
     font-size: 16px;
-  }
-
-  .summary {
-    font-size: 14px;
-  }
-
-  .content {
-    font-size: 14px;
-  }
-
-  .premiumTitle {
-    font-size: 18px;
-  }
-
-  .premiumText {
-    font-size: 13px;
   }
 
   .userPurposeInput {
@@ -577,20 +471,17 @@ details[open] .chevronIcon {
   .downloadButton {
     padding: 8px 16px;
   }
-
-  .downArrowIcon {
-    font-size: 1.2rem;
-  }
 }
+
 .blurBackground {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(8px);  // Apply the blur effect
-  z-index: 999;  // Ensure it's behind the sign-in form but above the rest of the content
-  background-color: rgba(0, 0, 0, 0.4);  // Optional dark overlay for the blur
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .signInContainer {
@@ -598,7 +489,7 @@ details[open] .chevronIcon {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000; // Ensure it's on top of other elements
+  z-index: 1000;
   background-color: #fff;
   border-radius: 10px;
   padding: 30px;
