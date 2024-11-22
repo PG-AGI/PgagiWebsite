@@ -1,9 +1,8 @@
-
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Download, Crown, Pencil, ChevronDown } from 'lucide-react';
+import { Download, Crown, Pencil } from 'lucide-react';
 import styles from './WebScrapingPage.module.scss';
 import Dropdown from './Dropdown';
 import NormalScrapedContent from './NormalScrapedContent';
@@ -61,12 +60,22 @@ const WebScrapingPage: React.FC = () => {
   const [showSignIn, setShowSignIn] = useState(false);
   const { user } = useAuth();
 
+  // Reference for the scraped content container
+  const scrapedContentRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (user) {
       setShowSignIn(false); // Hide sign-in popup when user is authenticated
       toast.success('Successfully signed in!');
     }
   }, [user]);
+
+  // Scroll to scraped content when it changes
+  useEffect(() => {
+    if (scrapedContent && scrapedContentRef.current) {
+      scrapedContentRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [scrapedContent]);
 
   const handleSubmit = async () => {
     if (!link.trim()) {
@@ -233,7 +242,7 @@ const WebScrapingPage: React.FC = () => {
                 {/* SVG Path */}
               </svg>
             </span>{' '}
-            Web Scraping
+            Web Scraper
           </h1>
         </header>
 
@@ -272,35 +281,6 @@ const WebScrapingPage: React.FC = () => {
         </div>
 
         <div className={styles.mainContent}>
-          <div className={styles.leftSection}>
-            <div className={styles.scrapedContentContainer}>
-              <h2 className={styles.scrapedContentTitle}>Scraped Content</h2>
-              <div className={styles.scrapedContent}>
-                {scrapedContent ? (
-                  typeof Object.values(scrapedContent)[0] === 'string' ? (
-                    <NormalScrapedContent content={scrapedContent as NormalScrapedContentType} />
-                  ) : (
-                    Object.keys(scrapedContent).map((url, index) => {
-                      const content = (scrapedContent as GPTScrapedContentType)[url];
-                      return <GPTScrapedContent key={index} content={content} />;
-                    })
-                  )
-                ) : (
-                  <p className={styles.placeholder}>
-                    The scraped content will be displayed here.
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.downloadButtonWrapper}>
-              <button className={styles.downloadButton} onClick={handleDownload} disabled={!scrapedContent}>
-                <span>Download output</span>
-                <Download className={styles.downloadIcon} />
-              </button>
-            </div>
-          </div>
-
           <div className={styles.rightSection}>
             <div className={styles.thirdBox}>
               <h1>{'Scraped Data, Elevated by AI Magic'}</h1>
@@ -315,20 +295,45 @@ const WebScrapingPage: React.FC = () => {
                 />
                 <Crown className={styles.crownIconSmall} />
               </div>
-
-              <button
-                className={styles.scrapeButton}
-                onClick={handleScrape}
-                disabled={isScraping || (selectedItems.length === 0 && !link.trim())}
-              >
-                {isScraping ? (
-                  <CustomLoader />
-                ) : (
-                  <span className={styles.scrape}>Scrape</span>
-                )}
-              </button>
             </div>
+            <button
+              className={styles.scrapeButton}
+              onClick={handleScrape}
+              disabled={isScraping || (selectedItems.length === 0 && !link.trim())}
+            >
+              {isScraping ? (
+                <CustomLoader />
+              ) : (
+                <span className={styles.scrape}>Scrape</span>
+              )}
+            </button>
           </div>
+
+          {/* Conditionally render the scraped content section */}
+          {scrapedContent && (
+            <div className={styles.leftSection} ref={scrapedContentRef}>
+              <div className={styles.scrapedContentContainer}>
+                <h2 className={styles.scrapedContentTitle}>Scraped Content</h2>
+                <div className={styles.scrapedContent}>
+                  {typeof Object.values(scrapedContent)[0] === 'string' ? (
+                    <NormalScrapedContent content={scrapedContent as NormalScrapedContentType} />
+                  ) : (
+                    Object.keys(scrapedContent).map((url, index) => {
+                      const content = (scrapedContent as GPTScrapedContentType)[url];
+                      return <GPTScrapedContent key={index} content={content} />;
+                    })
+                  )}
+                </div>
+              </div>
+
+              <div className={styles.downloadButtonWrapper}>
+                <button className={styles.downloadButton} onClick={handleDownload} disabled={!scrapedContent}>
+                  <span>Download output</span>
+                  <Download className={styles.downloadIcon} />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
