@@ -384,7 +384,7 @@
       .logo {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        // align-items: flex-start;
         margin: 0;
       }
 
@@ -511,11 +511,11 @@
 }
 
 
-@media (max-width: 420px) {
+@media (max-width: 450px) {
   .navigation {
     .logo {
       margin-top: 60px;
-      margin-left: 20px;
+       margin-left: 20px;
 
       img {
         height: 40px;
@@ -524,8 +524,8 @@
 
       p {
         font-size: 9px;
-        margin-top: -3px;
-        margin-left: 3px;
+        // margin-top: -3px;
+        // margin-left: 3px;
       }
     }
 

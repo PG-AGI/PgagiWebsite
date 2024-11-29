@@ -236,7 +236,6 @@ export const links = [
   'Blogs',
   'News',
   'Case Study'
-  
 ]
 
 export const services = [
