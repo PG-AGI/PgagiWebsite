@@ -1,0 +1,131 @@
+.values-section {
+    padding: 5rem 0;
+    /* Vertical spacing */
+    /* Subtle gradient background */
+    color: #ffffff;
+    /* Default text color */
+}
+
+.values-container {
+    max-width: 75%;
+    /* max-w-7xl */
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    /* Increased padding for better spacing */
+}
+
+.values-heading-container {
+    text-align: center;
+    margin-bottom: 3rem;
+    /* mb-16 */
+}
+
+.values-heading {
+    font-size: 2rem;
+    /* Larger font size for the heading */
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    /* Subtle shadow for better visibility */
+}
+
+.values-description {
+    color: #9ca3af;
+    max-width: 45rem;
+    /* Slightly wider description */
+    margin: 0 auto;
+    font-size: 1rem;
+    /* Slightly larger font size for readability */
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 columns for medium screens */
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(5, 1fr);
+        /* 5 columns for large screens */
+    }
+}
+
+.values-card {
+    text-align: center;
+    padding: 2rem;
+    /* Increased padding for better spacing */
+    border: 1px solid #202a3b;
+    /* Default border */
+    border-radius: 1rem;
+    /* Slightly rounded corners */
+    background: #121022;
+    /* Subtle card background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Add subtle shadow for depth */
+    transition: all 0.2s ease-in-out;
+    /* Smooth transition for hover effects */
+    cursor: pointer;
+
+    &:hover {
+        border-color: #0000ff;
+        /* Blue border on hover */
+        transform: translateY(-10px);
+        /* Lift card slightly on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        /* Enhanced shadow on hover */
+    }
+}
+
+.values-icon {
+    width: 4rem;
+    /* Slightly larger icon size */
+    height: 4rem;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0000ff;
+    /* Blue icon color */
+    background: rgba(0, 0, 255, 0.1);
+    /* Add subtle blue background */
+    border-radius: 50%;
+    /* Round icon background */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+        background: #0000ff;
+        /* Darker blue on hover */
+        transform: scale(1.1);
+        /* Slightly enlarge icon on hover */
+    }
+}
+
+.values-title {
+    font-size: 1rem;
+    /* Slightly larger font size for title */
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #ffffff;
+}
+
+.values-text {
+    color: #9ca3af;
+    /* Gray text for description */
+    font-size: 0.8rem;
+    /* Maintain good readability */
+    line-height: 1.6;
+    /* Improve readability with better spacing */
+}
+
+@media (hover: hover) {
+    .values-card:hover .values-icon {
+        transform: scale(1.2);
+        background: #0000ff;
+        /* Additional hover scaling for icon */
+    }
+}

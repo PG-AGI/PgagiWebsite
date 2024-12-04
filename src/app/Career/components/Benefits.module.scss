@@ -1,0 +1,111 @@
+.benefits-section {
+    padding: 5rem 0 15rem 0;
+    /* py-20 */
+    /* Gradient background */
+    color: #ffffff;
+    /* Default text color */
+}
+
+.benefits-container {
+    max-width: 75%;
+    /* max-w-7xl */
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    /* px-4 */
+}
+
+.benefits-heading {
+    font-size: 2rem;
+    /* text-3xl */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+    /* mb-12 */
+    color: #9ca3af;
+    /* Subtle gray */
+    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+    /* Text glow for better readability */
+}
+
+.benefits-grid {
+    display: grid;
+    gap: 1.5rem;
+    /* gap-6 */
+    grid-template-columns: repeat(1, 1fr);
+    /* Single column on small screens */
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        /* Two columns for medium screens */
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+        /* Three columns for large screens */
+    }
+}
+
+.benefits-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* gap-4 */
+    background: rgba(255, 255, 255, 0.05);
+    /* Slightly transparent background */
+    padding: 1.5rem;
+    /* p-6 */
+    border-radius: 1rem;
+    /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Subtle border */
+    backdrop-filter: blur(10px);
+    /* Blur for frosted glass effect */
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        /* Slightly brighter on hover */
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+        /* Subtle shadow */
+    }
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    /* w-12 */
+    height: 3rem;
+    /* h-12 */
+    border-radius: 0.5rem;
+    /* Rounded */
+    background: rgba(59, 130, 246, 0.2);
+    /* Blue background */
+    color: rgba(147, 197, 253, 1);
+    /* Blue text */
+    font-size: 1.5rem;
+    /* Icon size */
+}
+
+.card-details {
+    flex: 1;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    /* text-xl */
+    font-weight: 600;
+    /* Semi-bold */
+    margin-bottom: 0.5rem;
+    /* mb-1 */
+    color: #ffffff;
+    /* White text */
+}
+
+.card-description {
+    font-size: 1rem;
+    /* text-base */
+    color: #9ca3af;
+    /* Subtle gray */
+}
