@@ -1,4 +1,4 @@
-import { Job } from '../../../utils/job';
+import Job  from '../../../utils/job';
 
 export const jobs: Job[] = [
   {

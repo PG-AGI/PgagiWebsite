@@ -10,7 +10,6 @@ import Footer from "../components/Footer";
 
 const HomePage = () => {
   const positionsRef = useRef<HTMLDivElement>(null); // Ref for the Positions section
-
   const handleScrollToPositions = () => {
     positionsRef.current?.scrollIntoView({ behavior: "smooth" }); // Scroll smoothly to the Positions section
   };

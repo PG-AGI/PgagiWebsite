@@ -8,7 +8,6 @@ interface JobApplicationFormProps {
   jobTitle: string;
   onSubmit: (formData: FormData) => void;
 }
-
 interface FormData {
   firstName: string;
   lastName: string;
@@ -19,7 +18,6 @@ interface FormData {
   resume: File | null;
   coverLetter: string;
 }
-
 export const JobApplicationForm = ({
   jobTitle,
   onSubmit,
@@ -34,7 +32,8 @@ export const JobApplicationForm = ({
     resume: null,
     coverLetter: "",
   });
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -48,9 +47,52 @@ export const JobApplicationForm = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    setIsSubmitting(true);
+    setError(null);
+    const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*$/;
+    if (formData.linkedIn && !linkedInRegex.test(formData.linkedIn)) {
+      setError('Please enter a valid LinkedIn URL.');
+      setIsSubmitting(false);
+      return;
+    }
+    // Create FormData for file upload
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('jobTitle', jobTitle);
+    formDataToSubmit.append('firstName', formData.firstName);
+    formDataToSubmit.append('lastName', formData.lastName);
+    formDataToSubmit.append('email', formData.email);
+    formDataToSubmit.append('phone', formData.phone || '');
+    formDataToSubmit.append('linkedIn', formData.linkedIn || '');
+    formDataToSubmit.append('portfolio', formData.portfolio || '');
+    formDataToSubmit.append('coverLetter', formData.coverLetter || '');
+
+    // Append resume file
+    if (formData.resume) {
+      formDataToSubmit.append('resume', formData.resume);
+    }
+
+    try {
+      const response = await fetch('/api/careers/apply', {
+        method: 'POST',
+        body: formDataToSubmit,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to submit application');
+      }
+
+      // Optional: Show success message or redirect
+      alert('Application submitted successfully!');
+      // router.push('/careers'); // Redirect after successful submission
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -109,10 +151,14 @@ export const JobApplicationForm = ({
             id="phone"
             name="phone"
             required
+            pattern="[0-9]{10}" /* Accepts exactly 10 numeric digits */
             value={formData.phone}
             onChange={handleInputChange}
             className={styles["input"]}
+            placeholder="Enter your phone number"
+            title="Phone number must be exactly 10 digits."
           />
+
         </div>
 
         <div className={styles["input-group"]}>
@@ -165,11 +211,13 @@ export const JobApplicationForm = ({
           />
         </div>
       </div>
+      <span className={styles["error"]}>{error}</span>
 
       <div className={styles["button-container"]}>
-        <button type="submit" className={styles["submit-button"]}>
+
+        <button type="submit" className={styles["submit-button"]} disabled={isSubmitting}>
           <Send className={styles["icon"]} />
-          Submit Application
+          {isSubmitting ? 'Submitting...' : 'Submit Application'}
         </button>
       </div>
     </form>

@@ -1,10 +1,34 @@
 import { useRouter } from 'next/navigation';
 import styles from './Positions.module.scss';
-import { jobs } from '../data/jobs';
+import Job from '@/utils/job';
+import {useEffect,useState} from "react";
 
 export const Positions = () => {
   const router = useRouter();
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        const response = await fetch('/api/careers/postings');
+        console.log(response)
+        if (!response.ok) {
+          throw new Error('Failed to fetch jobs');
+        }
+        
+        const data: Job[] = await response.json();
+        setJobs(data);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        setIsLoading(false);
+      }
+    }
 
+    fetchJobs();
+    console.log(jobs)
+  }, [jobs]);
   return (
     <section className={styles['positions-section']}>
       <div className={styles['positions-container']}>

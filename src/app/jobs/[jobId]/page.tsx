@@ -1,21 +1,67 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState,useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { jobs } from "../../Career/data/jobs"; // Adjust path to jobs data
+import Job from "@/utils/job";
 import { JobApplicationForm } from "../components/JobApplicationForm";
 import styles from "./JobDetailsPage.module.scss";
 
 const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
   const [showForm, setShowForm] = useState(false);
+  const [job, setJob] = useState<Job | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLDivElement>(null); // Reference to the form section
   const router = useRouter();
   const { jobId } = params; // Get the jobId from params
 
-  const job = jobs.find((j) => j.id === jobId);
+  useEffect(() => {
+    async function fetchJobDetails() {
+      try {
+        // Fetch all jobs from the API route
+        const response = await fetch('/api/careers/postings');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch job postings');
+        }
+        
+        const jobs: Job[] = await response.json();
+        
+        // Find the specific job by ID
+        const foundJob = jobs.find((j) => j.id === jobId);
+        console.log(foundJob)
+        if (!foundJob) {
+          throw new Error('Job not found');
+        }
+        
+        setJob(foundJob);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        setIsLoading(false);
+      }
+    }
 
-  if (!job) {
+    if (jobId) {
+      fetchJobDetails();
+    }
+  }, [jobId]);
+
+  const handleApplicationSubmit = (formData: any) => {
+    console.log("Application submitted:", formData);
+    alert("Application submitted successfully!");
+    setShowForm(false);
+  };
+
+  const handleScrollToForm = () => {
+    setShowForm(true);
+    formRef.current?.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the form
+  };
+  if (isLoading) {
+    return <div className={styles["loading"]}>Loading job details...</div>;
+  }
+  if (error || !job) {
     return (
       <div className={styles["not-found"]}>
         <p>Job not found</p>
@@ -28,18 +74,6 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
       </div>
     );
   }
-
-  const handleApplicationSubmit = (formData: any) => {
-    console.log("Application submitted:", formData);
-    alert("Application submitted successfully!");
-    setShowForm(false);
-  };
-
-  const handleScrollToForm = () => {
-    setShowForm(true);
-    formRef.current?.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the form
-  };
-
   return (
     <div className={styles["job-details-container"]}>
       <div className={styles["content-container"]}>
@@ -100,7 +134,7 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
         >
           {showForm && (
             <JobApplicationForm
-              jobTitle={job.title}
+              jobTitle={job.id}
               onSubmit={handleApplicationSubmit}
             />
           )}
