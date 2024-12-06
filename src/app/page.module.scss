@@ -10,11 +10,13 @@
       flex-direction: column;
       align-items: center;
       padding-top: 50vh;
+      position: relative;
+      // min-height: 720vh;
   
       .lottieWindow {
-        position: sticky;
-        top: 50%;
-        translate: 0 -50%;
+        position: absolute; /* Allow movement within the container */
+        top: 50%; /* Initial top position */
+        translate: 0 -50%; /* Center vertically */
         width: 80vw;
         height: 70vh;
         overflow: hidden;
@@ -89,6 +91,7 @@
       flex-direction: column;
       align-items: center;
       padding-top: 50vh;
+      min-height: 510vh;
   
       .lottieWindow {
         position: sticky;
