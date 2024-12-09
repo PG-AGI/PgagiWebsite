@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import styles from "./trending_old.module.scss";
 import { trendingListOld } from "@/utils/constants";
 import { useRouter } from "next/navigation";
@@ -57,7 +55,7 @@ export default function TrendingOld() {
             </div>
             <Image
               className={styles.imgTag}
-              src={item.image.src}
+              src={item.image}
               alt={item.title}
               layout="fill"
               objectFit="cover"
@@ -90,7 +88,7 @@ export default function TrendingOld() {
           </div>
           <Image
             className={styles.imgTag}
-            src={trend4.src}
+            src= "https://i.postimg.cc/g0zdPDbP/8e632215-bb9b-421e-ba4c-9e91340fa676.jpg"
             alt="Success Stories"
             fill 
             style={{ objectFit: "cover" }}
