@@ -42,14 +42,17 @@ export default function Footer() {
           </div>
           <div className={styles.list}>
             <h6>Resources</h6>
-            {links.map((link, i) => (
+            {/* {links.map((link, i) => (
               <span key={i}>{link}</span>
-            ))}
+            ))} */}
+            <a href="/blogs"><span>Blogs</span></a>
+            <a href="/blogs"><span>News</span></a>
+            <a href="/blogs"><span>Case Study</span></a>
           </div>
           <div className={styles.company}>
             <h6>Company</h6>
             <span>
-              <a href="https://pgagi.in/aboutus">About Us</a>
+              <a href="https://pgagi.in/aboutUs">About Us</a>
               <a href="https://x.com/PGAGI123?t=hAoqjn4ffAoYXjIp9yt-ug&s=09">Twitter</a>
               <a href="https://www.instagram.com/pgagi_ltd/">Instagram</a>
               <a href="https://www.linkedin.com/company/pg-agi/">LinkedIn</a>

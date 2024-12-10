@@ -1,7 +1,7 @@
 // GPTScrapedContent.tsx
 
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
+import {FaChevronDown} from 'react-icons/fa';
 import styles from './WebScrapingPage.module.scss';
 
 interface SubTopic {
@@ -32,7 +32,7 @@ const GPTScrapedContent: React.FC<GPTScrapedContentProps> = ({ content }) => {
       <details className={styles.details}>
         <summary className={styles.summary}>
           <span className={styles.url}>{content.title || content.url}</span>
-          <ChevronDown className={styles.chevronIcon} />
+          <FaChevronDown className={styles.chevronIcon} />
         </summary>
         <div className={styles.content}>
           <h3>Summary</h3>

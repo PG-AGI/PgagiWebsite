@@ -1,7 +1,8 @@
 // NormalScrapedContent.tsx
 
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
+//import { ChevronDown } from 'lucide-react';
+import {FaChevronDown} from 'react-icons/fa';
 import styles from './WebScrapingPage.module.scss';
 
 interface NormalScrapedContentProps {
@@ -16,7 +17,7 @@ const NormalScrapedContent: React.FC<NormalScrapedContentProps> = ({ content }) 
           <details className={styles.details}>
             <summary className={styles.summary}>
               <span className={styles.url}>{url}</span>
-              <ChevronDown className={styles.chevronIcon} />
+              <FaChevronDown className={styles.chevronIcon} />
             </summary>
             <div className={styles.content}>
               <p>{content[url]}</p>

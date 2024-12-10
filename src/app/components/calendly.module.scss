@@ -77,6 +77,22 @@
         }
     }
 }
+.call{
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 5px 5px 0px rgba(0,0,0,0.25);
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+
+    &:hover{                
+        background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
+        transform: scale(1.1);
+    }
+}
 
 @media (max-width: 1600px) and (max-height: 900px) {
     .calendly {

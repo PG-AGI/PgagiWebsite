@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Download, Crown, Pencil } from 'lucide-react';
+//import { Download, Crown, Pencil } from 'lucide-react';
+import { FaDownload, FaCrown, FaPencilAlt } from 'react-icons/fa';
 import styles from './WebScrapingPage.module.scss';
 import Dropdown from './Dropdown';
 import NormalScrapedContent from './NormalScrapedContent';
@@ -285,7 +286,7 @@ const WebScrapingPage: React.FC = () => {
             <div className={styles.thirdBox}>
               <h1>{'Scraped Data, Elevated by AI Magic'}</h1>
               <div className={styles.userPurposeWrapper}>
-                <Pencil className={styles.purposeIcon} />
+                <FaPencilAlt className={styles.purposeIcon} />
                 <input
                   type="text"
                   value={userPurpose}
@@ -293,7 +294,7 @@ const WebScrapingPage: React.FC = () => {
                   placeholder="User Purpose"
                   className={styles.userPurposeInput}
                 />
-                <Crown className={styles.crownIconSmall} />
+                <FaCrown className={styles.crownIconSmall} />
               </div>
             </div>
             <button
@@ -329,7 +330,7 @@ const WebScrapingPage: React.FC = () => {
               <div className={styles.downloadButtonWrapper}>
                 <button className={styles.downloadButton} onClick={handleDownload} disabled={!scrapedContent}>
                   <span>Download output</span>
-                  <Download className={styles.downloadIcon} />
+                  <FaDownload className={styles.downloadIcon} />
                 </button>
               </div>
             </div>
