@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import styles from "./trending.module.scss";
 import { trendingList, trendingList2 } from "@/utils/constants";
 import { useRouter } from "next/navigation";

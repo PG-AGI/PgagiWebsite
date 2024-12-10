@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useDraggable } from "react-use-draggable-scroll";
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+//import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import GlareBackground from '../components/base/GlareBackground';
 import Navigation from '../components/base/Navigation';
 import Footer from '../components/Footer';
@@ -167,7 +168,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 className={`${styles.navigationButtons} ${styles.prev}`}
                 onClick={() => scroll(caseRef, 'left')}
               >
-                <ChevronLeft size={24} color="white" />
+                <FaChevronLeft size={24} color="white" />
               </button>
             )}
             <div className={styles.caseStudyList} ref={caseRef} {...caseEvents}>
@@ -187,7 +188,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 className={`${styles.navigationButtons} ${styles.next}`}
                 onClick={() => scroll(caseRef, 'right')}
               >
-                <ChevronRight size={24} color="white" />
+                <FaChevronRight size={24} color="white" />
               </button>
             )}
           </div>
@@ -214,7 +215,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 className={`${styles.navigationButtons} ${styles.prev}`}
                 onClick={() => scroll(blogRef, 'left')}
               >
-                <ChevronLeft size={24} color="white" />
+                <FaChevronLeft size={24} color="white" />
               </button>
             )}
             <div className={styles.blogList} ref={blogRef} {...blogEvents}>
@@ -234,7 +235,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 className={`${styles.navigationButtons} ${styles.next}`}
                 onClick={() => scroll(blogRef, 'right')}
               >
-                <ChevronRight size={24} color="white" />
+                <FaChevronRight size={24} color="white" />
               </button>
             )}
           </div>
@@ -255,7 +256,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 className={`${styles.navigationButtons} ${styles.prev}`}
                 onClick={() => scroll(newsRef, 'left')}
               >
-                <ChevronLeft size={24} color="white" />
+                <FaChevronLeft size={24} color="white" />
               </button>
             )}
             <div className={styles.newsList} ref={newsRef} {...newsEvents}>
@@ -273,7 +274,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 className={`${styles.navigationButtons} ${styles.next}`}
                 onClick={() => scroll(newsRef, 'right')}
               >
-                <ChevronRight size={24} color="white" />
+                <FaChevronRight size={24} color="white" />
               </button>
             )}
           </div>

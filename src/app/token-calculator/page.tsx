@@ -4,7 +4,8 @@ import GlareBackground from "@/app/components/base/GlareBackground";
 import Navigation from "@/app/components/base/Navigation";
 import styles from "./TokenCalculator.module.scss";
 import Footer from "../components/Footer";
-import { ArrowLeftToLine } from "lucide-react";
+//import { ArrowLeftToLine } from "lucide-react";
+import { FaArrowLeft } from 'react-icons/fa'; 
 import ErrorMessage from "@/app/components/ErrorMessage"; // Import the ErrorMessage component
 
 const TokenCalculator = () => {
@@ -168,7 +169,7 @@ const TokenCalculator = () => {
               className={styles.closeButton}
               onClick={() => setShowCostResult(false)}
             >
-              <ArrowLeftToLine />
+              <FaArrowLeft />
             </button>
             <h2>Total Cost</h2>
             <p>${totalCost}</p>

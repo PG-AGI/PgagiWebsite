@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, ChevronUp, X } from 'lucide-react';
+//import { ChevronDown, ChevronUp, X } from 'lucide-react';
+import { FaChevronDown, FaChevronUp, FaTimes } from 'react-icons/fa'; 
 import styles from './Dropdown.module.scss';
 
 interface DropdownProps {
@@ -60,7 +61,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, selectedItems, setSel
     <div className={styles.dropdownWrapper} ref={dropdownRef}>
       <div className={styles.dropdownButton} onClick={toggleDropdown}>
         <span>{title}</span>
-        {isOpen ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} />}
+        {isOpen ? <FaChevronUp className={styles.chevronIcon} /> : <FaChevronDown className={styles.chevronIcon} />}
       </div>
 
       {isOpen && (
@@ -74,7 +75,7 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, selectedItems, setSel
               />
               <span>Select All</span>
             </div>
-            <X
+            <FaTimes
               className={styles.closeIcon}
               onClick={() => setIsOpen(false)}
             />

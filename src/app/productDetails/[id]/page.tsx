@@ -4,7 +4,7 @@ import { Carousel } from 'react-responsive-carousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import styles from '../productDetails.module.scss' // Adjusted relative path
 import Image from 'next/image'
-import { ArrowLeft } from 'lucide-react'
+//import { ArrowLeft } from 'lucide-react'
 import { productDetailsData } from '@/utils/constants' // Adjusted relative path
 import Link from 'next/link'
 import ProdPopup from '../prodPopup'
