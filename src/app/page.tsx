@@ -12,7 +12,9 @@ import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
 import TrendingOld from "./components/trending_old";
-
+import { AnimatedTestimonialsDemo } from "./components/TestemonialsDemo";
+import TestimonialCarousel from "./components/InfiniteTestimonial";
+import TestimonialGrid from "./components/TestimonialGrid";
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 	const lottieWindowRef = useRef<HTMLDivElement>(null)
@@ -37,8 +39,6 @@ export default function Home() {
 			const scrollY = (scroll - offset) / windowHeight;
 			const percent = (scrollY - Math.floor(scrollY)) * 100;
 			let pos;
-
-			// Check if scroll is within the extended segment section
 			if (scroll >= offset && scroll <= offset + segmentSectionHeight - windowHeight) {
 				if (scrollY <= 1) {
 					pos = 50 - percent / 2;
@@ -50,7 +50,6 @@ export default function Home() {
 				blob.style.top = '50%';
 				blob.style.left = `${Math.min(pos, 120)}%`;
 			} 
-			// Stop the blob at 120% when scrolling past the section
 			else if (scroll > offset + segmentSectionHeight - windowHeight) {
 				blob.style.left = '120%';
 			}
@@ -68,6 +67,7 @@ export default function Home() {
 			<Navigation />
 			<Landing />
 			<Partners />
+			<TestimonialCarousel />
 			<TrendingOld/>
 			<section className={styles.segmentSection}>
 				<div ref={lottieWindowRef} className={styles.lottieWindow}>
