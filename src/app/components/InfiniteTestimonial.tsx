@@ -11,7 +11,6 @@ interface Testimonial {
   projectName: string;
 }
 
-// Mapping of country names to their respective flag image URLs
 const flagImages: { [key: string]: string } = {
   USA: 'https://flagcdn.com/us.svg',
   UK: 'https://flagcdn.com/gb.svg',
@@ -94,7 +93,6 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialCarousel: React.FC = () => {
-  // Duplicate testimonials for the infinite loop effect
   const infiniteTestimonials = [
     ...testimonials,
     ...testimonials,
@@ -141,24 +139,27 @@ const TestimonialCarousel: React.FC = () => {
               whileHover={{ scale: 1.05 }}
             >
               <div className={styles.testimonialContent}>
-                {/* Project Name as Heading */}
                 <h3 className={styles.projectName}>{testimonial.projectName}</h3>
-                {/* Divider Line */}
                 <div className={styles.divider}></div>
                 <blockquote className={styles.testimonialQuote}>
                   {testimonial.quote}
-                  
                 </blockquote>
-                {/* Footer Section with Company Name, Person Name, and Country Flag */}
                 <div className={styles.quoteFooter}>
-                    - <span className={styles.footerText}>{testimonial.company}, {testimonial.name}</span>
+                  -{' '}
+                  <span className={styles.footerText}>
+                    {testimonial.company && testimonial.name
+                      ? `${testimonial.company}, ${testimonial.name}`
+                      : testimonial.company || testimonial.name}
+                  </span>
+                  {testimonial.country && (
                     <img
                       className={styles.countryFlag}
                       src={flagImages[testimonial.country]}
                       alt={`${testimonial.country} flag`}
                       loading="lazy"
                     />
-                  </div>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}
