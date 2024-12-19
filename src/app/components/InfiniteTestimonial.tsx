@@ -63,7 +63,7 @@ const testimonials: Testimonial[] = [
   {
     name: 'Nicholas ',
     company: '',
-    country: 'CANADA',
+    country: 'Canada',
     quote:
       "The team were very research oriented, worked over hours to get it done. Excellent work and sure will work together again.",
     projectName: 'Binary Options Trading Indicator on MT4/MT5',
@@ -93,14 +93,7 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialCarousel: React.FC = () => {
-  const infiniteTestimonials = [
-    ...testimonials,
-    ...testimonials,
-    ...testimonials,
-    ...testimonials,
-    ...testimonials,
-    ...testimonials,
-  ];
+  const infiniteTestimonials = Array.from({ length: 5 }, () => testimonials).flat();
 
   const controls = useAnimation();
 
