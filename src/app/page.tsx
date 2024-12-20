@@ -12,9 +12,7 @@ import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
 import TrendingOld from "./components/trending_old";
-import { AnimatedTestimonialsDemo } from "./components/TestemonialsDemo";
 import TestimonialCarousel from "./components/InfiniteTestimonial";
-import TestimonialGrid from "./components/TestimonialGrid";
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 	const lottieWindowRef = useRef<HTMLDivElement>(null)
