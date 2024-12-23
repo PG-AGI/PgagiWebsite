@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useDraggable } from "react-use-draggable-scroll";
-//import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import GlareBackground from '../components/base/GlareBackground';
 import Navigation from '../components/base/Navigation';
@@ -15,7 +14,14 @@ import { caseStudyContent, topContent, blogContent, newsContent } from '@/utils/
 import bg from '../assets/background.png';
 import BookCallModal from '../components/base/bookCallModela';
 import { useRouter } from 'next/navigation';
+import Skeleton from 'react-loading-skeleton'; 
+import 'react-loading-skeleton/dist/skeleton.css';
 
+type CaseStudy = {
+  id: string;
+  title: string;
+  coverImage: string;
+};
 export default function BlogPage() {
   const topRef = useRef<HTMLDivElement>(null);
   const caseRef = useRef<HTMLDivElement>(null);
@@ -113,6 +119,9 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
   
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
+  const [loadingCaseStudies, setLoadingCaseStudies] = useState<boolean>(false);
+  const [errorCaseStudies, setErrorCaseStudies] = useState<string>('');
   const router = useRouter();
 
   const handleBookCall = () => setIsModalOpen(true);
@@ -123,7 +132,29 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
+  // Fetch case studies from the API
+  useEffect(() => {
+    const fetchCaseStudies = async () => {
+      setLoadingCaseStudies(true);
+      setErrorCaseStudies('');
+      try {
+        const response = await fetch('/api/case-studies');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: CaseStudy[] = await response.json();
+        setCaseStudies(data);
+      } catch (error: any) {
+        setErrorCaseStudies(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingCaseStudies(false);
+      }
+    };
 
+    fetchCaseStudies();
+  }, []);
+
+  const skeletonCount = 4;
   return (
     <div className={styles.main}>
       <Link href="/" />
@@ -172,16 +203,41 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
               </button>
             )}
             <div className={styles.caseStudyList} ref={caseRef} {...caseEvents}>
-              {caseStudyContent.map((item, i) => (
-                <Link href={`/case-studies/${item.slug}`} key={i}>
-                  <div className={styles.caseItem}>
-                    <div className={styles.content}>
-                      <p>{item.description}</p>
+            {loadingCaseStudies ? (
+  Array.from({ length: skeletonCount }).map((_, index) => (
+    <div className={styles.caseItem} key={index}>
+      <div className={styles.skeletonImage} />
+      <div className={styles.skeletonText}>
+        <div className={styles.skeletonLine} />
+        <div className={styles.skeletonLineShort} />
+      </div>
+    </div>
+  ))
+) : errorCaseStudies ? (
+  <p className={styles.error}>{errorCaseStudies}</p>
+) : caseStudies.length === 0 ? (
+  <p>No case studies found.</p>
+)  : (
+                caseStudies.map((cs) => (
+                  <Link href={`/case-study/${cs.id}`} key={cs.id}>
+                    <div className={styles.caseItem}>
+                      <div className={styles.content}>
+                        <h3>{cs.title}</h3>
+                      </div>
+                      <div className={styles.imageWrapper}>
+                        <Image 
+                          className={styles.imgTag} 
+                          src={cs.coverImage} 
+                          alt={cs.title} 
+                          layout="fill" 
+                          objectFit="cover" 
+                          priority
+                        />
+                      </div>
                     </div>
-                    <Image className={styles.imgTag} src={item.image.src} alt={item.title} layout="fill" objectFit="cover" />
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))
+              )}
             </div>
             {scrollStates.case.canScrollRight && (
               <button 
