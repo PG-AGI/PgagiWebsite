@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+.testimonialSection {
+  padding: 4rem 2rem;
+  //background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+
+  .sectionTitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: whitesmoke;
+    margin-bottom: 2.5rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 60px;
+      height: 4px;
+      background: #4a90e2;
+      display: block;
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+  }
+
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .testimonialCard {
+    background: transparent;
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(74, 144, 226, 0.2) 0%, transparent 70%);
+      z-index: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover:before {
+      opacity: 1;
+    }
+
+    .cardContent {
+      position: relative;
+      z-index: 1;
+    }
+
+    .profileImage {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #4a90e2;
+      margin: 0 auto 1rem;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .company {
+      font-size: 0.95rem;
+      color: #777;
+      margin-bottom: 0.5rem;
+    }
+
+    .countryFlag {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .quote {
+      font-style: italic;
+      font-size: 1rem;
+      color: #555;
+      position: relative;
+      padding-left: 1rem;
+      border-left: 4px solid #4a90e2;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonialSection {
+    padding: 3rem 1rem;
+
+    .sectionTitle {
+      font-size: 1.75rem;
+    }
+
+    .testimonialCard {
+      padding: 1.5rem 1rem;
+
+      .profileImage {
+        width: 70px;
+        height: 70px;
+      }
+
+      .name {
+        font-size: 1.1rem;
+      }
+
+      .company {
+        font-size: 0.9rem;
+      }
+
+      .quote {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
