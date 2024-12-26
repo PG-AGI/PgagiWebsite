@@ -32,3 +32,4 @@ AND to run it:-
 ```bash
 docker run -p 3000:3000 pgagi_website
 ```
+now build it
