@@ -150,8 +150,6 @@ const TestimonialCarousel: React.FC = () => {
       <div
         className={styles.carouselContainer}
         ref={containerRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
       >
         <motion.div className={styles.testimonialTrack} style={{ x: xValue }}>
           {infiniteTestimonials.map((testimonial, index) => (
@@ -159,8 +157,10 @@ const TestimonialCarousel: React.FC = () => {
               key={index}
               className={styles.testimonialCard}
               whileHover={{ scale: 1.05 }}
+             
             >
-              <div className={styles.testimonialContent}>
+              <div className={styles.testimonialContent}  onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}>
                 <h3 className={styles.projectName}>{testimonial.projectName}</h3>
                 <div className={styles.divider}></div>
                 <blockquote className={styles.testimonialQuote}>

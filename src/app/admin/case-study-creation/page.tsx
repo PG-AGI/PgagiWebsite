@@ -516,12 +516,12 @@ const CreateCaseStudy = () => {
       modules={{
         toolbar: [
           [{ header: [1, 2, false] }],
-          ['bold', 'italic', 'underline'],
+          ['bold', 'italic', 'underline', 'link'],
           [{ list: 'ordered' }, { list: 'bullet' }],
           ['clean'],
         ],
       }}
-      formats={['header', 'bold', 'italic', 'underline', 'list', 'bullet']}
+      formats={['header', 'bold', 'italic', 'underline', 'list', 'bullet', 'link', 'clean', 'code-block']}
     />
   )}
 />
