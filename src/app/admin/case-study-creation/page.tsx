@@ -5,8 +5,8 @@ import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form
 import dynamic from 'next/dynamic';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './Admin.module.scss';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+// import { useSession } from 'next-auth/react';
+// import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -97,13 +97,13 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 };
 
 const CreateCaseStudy = () => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  // const { data: session, status } = useSession();
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (status === 'loading') return;
-    if (!session) router.push('/auth/signin');
-  }, [session, status, router]);
+  // useEffect(() => {
+  //   if (status === 'loading') return;
+  //   if (!session) router.push('/auth/signin');
+  // }, [session, status, router]);
 
   const [activeTab, setActiveTab] = useState<'create' | 'view'>('create');
   const [isEditing, setIsEditing] = useState<boolean>(false);
