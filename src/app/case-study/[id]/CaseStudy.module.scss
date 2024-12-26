@@ -293,6 +293,32 @@ $code-border: #333333;
     &:last-child {
       margin-bottom: 0;
     }
+    a {
+      color: $purple-light; /* Sets the link color to purple-light */
+      text-decoration: underline; /* Underlines the link text */
+      position: relative; /* Establishes a positioning context for pseudo-elements */
+      transition: all 0.3s ease; /* Smooth transition for hover effects */
+      animation: glowing 2s infinite; /* Applies the glowing animation */
+
+      /* Optional: Make sure links open in a new tab */
+      target: '_blank';
+      
+      &:hover {
+        color: lighten($purple-light, 10%); /* Slightly lighten the link color on hover */
+        text-decoration: none; /* Removes underline on hover */
+        animation: none; /* Stops the glowing animation on hover */
+
+        /* Enhance the glow effect on hover */
+        text-shadow: 0 0 10px lighten($purple-light, 20%), 0 0 20px lighten($purple-light, 30%);
+      }
+    }
+    u{
+      color: $purple-light; /* Sets the link color to purple-light */
+      text-decoration: underline; /* Underlines the link text */
+      position: relative; /* Establishes a positioning context for pseudo-elements */
+      transition: all 0.3s ease; /* Smooth transition for hover effects */
+    }
+    
   }
 
   // Updated styles for additional content types

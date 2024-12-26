@@ -288,14 +288,15 @@ const CaseStudy = () => {
                         );
                       case 'quote':
                         return (
-                          <blockquote key={index} className={styles.quote}>
-                            {block.content}
-                          </blockquote>
+                          <blockquote
+                            key={index}
+                            className={styles.quote}
+                            dangerouslySetInnerHTML={{ __html: block.content }}
+                          ></blockquote>
                         );
                       case 'highlight':
                         return (
-                          <div key={index} className={styles.highlight}>
-                            {block.content}
+                          <div key={index} className={styles.highlight} dangerouslySetInnerHTML={{ __html: block.content }}>
                           </div>
                         );
                       case 'code':

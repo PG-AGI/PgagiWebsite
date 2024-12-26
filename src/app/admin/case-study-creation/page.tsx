@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './Admin.module.scss';
@@ -15,7 +15,7 @@ import 'react-quill/dist/quill.snow.css';
 type ContentBlock = {
   id: string;
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video';
-  content?: string;
+  content?: string; 
   src?: string;
   alt?: string;
   caption?: string;
@@ -132,7 +132,7 @@ const CreateCaseStudy = () => {
             {
               id: uuidv4(),
               type: 'paragraph',
-              content: '',
+              content: '', 
             },
           ],
         },
@@ -159,9 +159,42 @@ const CreateCaseStudy = () => {
   const [detailsError, setDetailsError] = useState<string>('');
 
   const onSubmit = async (data: FormValues) => {
+    const sanitizedData: FormValues = {
+      ...data,
+      sections: data.sections
+        .filter(section => section.title.trim() !== '' || section.content.length > 0)
+        .map(section => ({
+          ...section,
+          content: section.content.map(block => ({
+            ...block,
+            content: block.content ? block.content.trim() : '', 
+            src: block.src ? block.src.trim() : '',
+            alt: block.alt ? block.alt.trim() : '',
+            caption: block.caption ? block.caption.trim() : '',
+            title: block.title ? block.title.trim() : '',
+          })).filter(block => {
+            if (!block.type) return false;
+            switch (block.type) {
+              case 'paragraph':
+              case 'quote':
+              case 'highlight':
+              case 'code':
+                return block.content !== '';
+              case 'image':
+                return block.src && block.alt && /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(block.src);
+              case 'video':
+                return block.src && /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src);
+              default:
+                return false;
+            }
+          }),
+        }))
+        .filter(section => section.content.length > 0),
+    };
+
     try {
       if (isEditing && editingCaseStudyId) {
-        const response = await axios.put(`/api/case-studies/${editingCaseStudyId}`, data);
+        const response = await axios.put(`/api/case-studies/${editingCaseStudyId}`, sanitizedData);
         if (response.status === 200) {
           alert('Case Study updated successfully!');
           reset();
@@ -172,7 +205,7 @@ const CreateCaseStudy = () => {
           alert(`Error: ${response.data.message}`);
         }
       } else {
-        const response = await axios.post('/api/case-studies', data);
+        const response = await axios.post('/api/case-studies', sanitizedData);
         if (response.status === 201 || response.status === 200) {
           alert('Case Study created successfully!');
           console.log('New Case Study ID:', response.data.id);
@@ -296,6 +329,10 @@ const CreateCaseStudy = () => {
       alert(error.response?.data?.message || 'An unexpected error occurred while deleting the case study.');
     }
   };
+    const getNestedError = (errors: FieldErrors<FormValues>, sectionIndex: number, blockIndex: number, field: keyof ContentBlock) => {
+      const fieldError = errors.sections?.[sectionIndex]?.content?.[blockIndex]?.[field];
+      return typeof fieldError === 'object' && fieldError !== null ? fieldError.message : undefined;
+    };
 
   return (
     <div className={styles.container}>
@@ -440,11 +477,13 @@ const CreateCaseStudy = () => {
                               <div className={styles.formGroup}>
                                 <label>Type:</label>
                                 <select
-                                  {...register(`sections.${sectionIndex}.content.${blockIndex}.type` as const, { required: 'Content Block Type is required' })}
+                                  {...register(`sections.${sectionIndex}.content.${blockIndex}.type` as const, {
+                                    required: 'Content Block Type is required',
+                                  })}
                                   className={styles.select}
+                                  defaultValue={block.type || 'paragraph'}
                                   required
                                 >
-                                  <option value="">Select Type</option>
                                   <option value="paragraph">Paragraph</option>
                                   <option value="quote">Quote</option>
                                   <option value="highlight">Highlight</option>
@@ -452,44 +491,44 @@ const CreateCaseStudy = () => {
                                   <option value="image">Image</option>
                                   <option value="video">Video</option>
                                 </select>
+                                {getNestedError(errors, sectionIndex, blockIndex, 'type') && (
+                                  <span className={styles.error}>
+                                    {getNestedError(errors, sectionIndex, blockIndex, 'type')}
+                                  </span>
+                                )}
                               </div>
 
-                              {['paragraph', 'quote', 'highlight', 'code'].includes(block.type) ? (
+                              {/* Conditional Rendering Based on Type */}
+                              {['paragraph', 'quote', 'highlight', 'code'].includes(block.type || '') ? (
                                 <div className={styles.formGroup}>
                                   <label>Content:</label>
                                   <Controller
-                                    control={control}
-                                    name={`sections.${sectionIndex}.content.${blockIndex}.content` as const}
-                                    rules={{
-                                      required: 'Content is required',
-                                    }}
-                                    render={({ field }) => (
-                                      <ReactQuill
-                                        theme="snow"
-                                        value={field.value || ''}
-                                        onChange={field.onChange}
-                                        modules={{
-                                          toolbar: [
-                                            [{ header: [1, 2, false] }],
-                                            ['bold', 'italic', 'underline'],
-                                            [{ list: 'ordered' }, { list: 'bullet' }],
-                                            ['clean'],
-                                          ],
-                                        }}
-                                        formats={[
-                                          'header',
-                                          'bold',
-                                          'italic',
-                                          'underline',
-                                          'list',
-                                          'bullet',
-                                        ]}
-                                      />
-                                    )}
-                                  />
-                                  {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.content && (
+  control={control}
+  name={`sections.${sectionIndex}.content.${blockIndex}.content`}
+  rules={{
+    required: 'Content is required',
+  }}
+  render={({ field }) => (
+    <ReactQuill
+      theme="snow"
+      value={typeof field.value === 'string' ? field.value : ''}
+      onChange={field.onChange}
+      modules={{
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline', 'link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['clean'],
+        ],
+      }}
+      formats={['header', 'bold', 'italic', 'underline', 'list', 'bullet', 'link', 'clean', 'code-block']}
+    />
+  )}
+/>
+
+                                  {getNestedError(errors, sectionIndex, blockIndex, 'content') && (
                                     <span className={styles.error}>
-                                      {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.content?.message}
+                                      {getNestedError(errors, sectionIndex, blockIndex, 'content')}
                                     </span>
                                   )}
                                 </div>
@@ -509,9 +548,9 @@ const CreateCaseStudy = () => {
                                       placeholder="Paste image link from PostImage (https://postimages.org/)"
                                       required
                                     />
-                                    {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.src && (
+                                    {getNestedError(errors, sectionIndex, blockIndex, 'src') && (
                                       <span className={styles.error}>
-                                        {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.src?.message}
+                                        {getNestedError(errors, sectionIndex, blockIndex, 'src')}
                                       </span>
                                     )}
                                   </div>
@@ -524,9 +563,9 @@ const CreateCaseStudy = () => {
                                       placeholder="Enter image alt text"
                                       required
                                     />
-                                    {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.alt && (
+                                    {getNestedError(errors, sectionIndex, blockIndex, 'alt') && (
                                       <span className={styles.error}>
-                                        {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.alt?.message}
+                                        {getNestedError(errors, sectionIndex, blockIndex, 'alt')}
                                       </span>
                                     )}
                                   </div>
@@ -556,9 +595,9 @@ const CreateCaseStudy = () => {
                                       placeholder="Paste YouTube embed link (https://www.youtube.com/embed/...)"
                                       required
                                     />
-                                    {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.src && (
+                                    {getNestedError(errors, sectionIndex, blockIndex, 'src') && (
                                       <span className={styles.error}>
-                                        {errors.sections?.[sectionIndex]?.content?.[blockIndex]?.src?.message}
+                                        {getNestedError(errors, sectionIndex, blockIndex, 'src')}
                                       </span>
                                     )}
                                   </div>
@@ -592,8 +631,8 @@ const CreateCaseStudy = () => {
                                 ...(field.value || []),
                                 {
                                   id: uuidv4(),
-                                  type: 'paragraph',
-                                  content: '',
+                                  type: 'paragraph', // Default type to 'paragraph'
+                                  content: '', // Initialize as empty string
                                 },
                               ]);
                             }}
