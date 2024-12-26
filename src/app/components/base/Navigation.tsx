@@ -42,6 +42,7 @@ export default function Navigation() {
   };
 
   const handleCloseModal = () => {
+    console.log("Closing modal...");
     setIsModalOpen(false);
   };
 
