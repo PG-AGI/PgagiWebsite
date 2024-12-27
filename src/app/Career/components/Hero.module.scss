@@ -1,0 +1,84 @@
+.header {
+    position: relative;
+    padding-top: 1rem;
+}
+
+.content {
+    position: relative;
+    z-index: 10;
+    max-width: 7xl;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    text-align: center;
+}
+
+.subheading {
+    color: #60a5fa;
+    /* blue-400 */
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.heading {
+    font-size: 3rem;
+    /* Adjust for responsiveness */
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #a855f7, #6b21a8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.description {
+    font-size: 1rem;
+    color: #d1d5db;
+    /* gray-300 */
+    max-width: 48rem;
+    margin: 0 auto 2rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.primaryButton {
+    background-color: #6b21a8;
+    /* blue-600 */
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.primaryButton:hover {
+    background-color: #1e3a8a;
+    /* blue-700 */
+}
+
+.secondaryButton {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    transition: background-color 0.3s;
+}
+
+.secondaryButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.background {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+}

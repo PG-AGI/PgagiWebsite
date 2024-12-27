@@ -799,3 +799,91 @@ $red-color: #ef4444;
     height: auto;
   }
 }
+.filterContainer {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filterSelect {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  
+}
+
+.filterSelect option {
+  background-color: black;
+  color: white;
+}
+.dynamicField {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  input {
+    flex: 1;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+
+    &:focus {
+      outline: none;
+      border-color: $purple-primary;
+      box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.5);
+    }
+  }
+
+  .removeButton {
+    background: none;
+    border: none;
+    color: $red-color;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.25rem;
+
+    &:hover {
+      text-decoration: underline;
+      background-color: rgba(255, 0, 0, 0.1);
+    }
+
+    &:active {
+      background-color: rgba(255, 0, 0, 0.2);
+    }
+  }
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background-color: $purple-primary;
+  color: $text-primary;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  width: 10rem;
+
+  &:hover {
+    background-color: darken($purple-primary, 10%);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: lighten($purple-primary, 10%);
+    transform: translateY(0);
+  }
+}
+
+.error {
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
