@@ -1,21 +1,26 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/utils/mongodb'; // Adjust the path to your MongoDB client
-// import  Job  from '@/utils/Job'; // Adjust the path to your Job interface
+import clientPromise from '@/utils/mongodb'; 
+
+interface Job {
+  id: string;
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  description: string;
+  responsibilities: string[];
+  requirements: string[];
+  applicationUrl: string;
+}
 
 export async function GET() {
   try {
-    // Get the MongoDB client
     const client = await clientPromise;
-    
-    // Select the database and collection
-    const database = client.db('jobPosting'); // Replace with your actual database name
+    const database = client.db('jobPosting');
     const jobsCollection = database.collection('Postings');
-    
-    // Fetch all jobs
     const jobs = await jobsCollection.find({}).toArray();
-    
-    // Convert MongoDB documents to Job interface
-    const formattedJobs = jobs.map(job => ({
+
+    const formattedJobs: Job[] = jobs.map(job => ({
       id: job.id,
       title: job.title,
       department: job.department,
@@ -26,14 +31,82 @@ export async function GET() {
       requirements: job.requirements,
       applicationUrl: job.applicationUrl
     }));
-    
-    // Return the jobs
+
     return NextResponse.json(formattedJobs, { status: 200 });
   } catch (error) {
     const err = error as Error;
     console.error('Error fetching jobs:', err.message, err.stack);
     return NextResponse.json(
       { message: 'Failed to fetch job postings', error: err.message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+
+    const {
+      id,
+      title,
+      department,
+      location,
+      type,
+      description,
+      responsibilities,
+      requirements,
+      applicationUrl
+    } = body;
+
+    if (
+      !id ||
+      !title ||
+      !department ||
+      !location ||
+      !type ||
+      !description ||
+      !Array.isArray(responsibilities) ||
+      !Array.isArray(requirements) ||
+      !applicationUrl
+    ) {
+      return NextResponse.json(
+        { message: 'Invalid job posting data' },
+        { status: 400 }
+      );
+    }
+
+    const client = await clientPromise;
+    const database = client.db('jobPosting');
+    const jobsCollection = database.collection('Postings');
+
+    const newJob: Job = {
+      id,
+      title,
+      department,
+      location,
+      type,
+      description,
+      responsibilities,
+      requirements,
+      applicationUrl
+    };
+
+    const result = await jobsCollection.insertOne(newJob);
+
+    if (result.acknowledged) {
+      return NextResponse.json(
+        { message: 'Job posting created successfully', job: newJob },
+        { status: 201 }
+      );
+    } else {
+      throw new Error('Failed to insert the job posting');
+    }
+  } catch (error) {
+    const err = error as Error;
+    console.error('Error creating job posting:', err.message, err.stack);
+    return NextResponse.json(
+      { message: 'Failed to create job posting', error: err.message },
       { status: 500 }
     );
   }

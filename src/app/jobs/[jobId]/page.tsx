@@ -1,6 +1,6 @@
 "use client";
 
-import { useState,useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Job from "@/utils/job";
@@ -58,6 +58,13 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
     setShowForm(true);
     formRef.current?.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the form
   };
+
+  const handleViewAssignment = () => {
+    if (job?.applicationUrl) {
+      window.open(job.applicationUrl, "_blank");
+    }
+  };
+
   if (isLoading) {
     return <div className={styles["loading"]}>Loading job details...</div>;
   }
@@ -105,7 +112,7 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
             </button>
           </div>
 
-          <p className={styles["description"]}>{job.description}</p>
+          <p className={styles["description"]} dangerouslySetInnerHTML={{ __html: job.description }}></p>
 
           <div className={styles["sections"]}>
             <div>
@@ -125,6 +132,18 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
                 ))}
               </ul>
             </div>
+
+            {/* New Assignment Button */}
+            {job.applicationUrl && (
+              <div className={styles["assignment-section"]}>
+                <button
+                  onClick={handleViewAssignment}
+                  className={styles["assignment-button"]}
+                >
+                  View Assignment
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

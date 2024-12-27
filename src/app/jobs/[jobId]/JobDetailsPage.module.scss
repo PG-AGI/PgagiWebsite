@@ -20,7 +20,7 @@
 .back-button {
     display: inline-flex;
     align-items: center;
-    color: #2563eb;
+    color: #6b21a8;
     /* Blue color */
     font-weight: 500;
     cursor: pointer;
@@ -90,8 +90,8 @@
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid #2563eb;
-    color: #2563eb;
+    border: 1px solid #6b21a8;
+    color: #6b21a8;
     background: rgba(37, 99, 235, 0.1);
     /* Subtle background */
     border-radius: 9999px;
@@ -156,7 +156,7 @@
 
 /* Apply button */
 .apply-button {
-    background: #2563eb;
+    background: #6b21a8;
     /* Bright blue */
     color: #ffffff;
     padding: 0.75rem 2rem;
@@ -185,5 +185,36 @@
         &:hover {
             text-decoration: underline;
         }
+    }
+}
+/* Existing styles above */
+
+/* Assignment section */
+.assignment-section {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+/* Assignment button */
+.assignment-button {
+    background: #6b21a8;
+    color: #ffffff;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+    &:hover {
+        background: #059669;
+        /* Darker green on hover */
+        transform: translateY(-3px);
+        /* Slight lift */
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5);
     }
 }

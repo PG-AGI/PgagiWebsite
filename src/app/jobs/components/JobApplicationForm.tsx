@@ -8,6 +8,7 @@ interface JobApplicationFormProps {
   jobTitle: string;
   onSubmit: (formData: FormData) => void;
 }
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -17,7 +18,15 @@ interface FormData {
   portfolio: string;
   resume: File | null;
   coverLetter: string;
+  projectDocUrl: string;
+  projectDocFile: File | null;
+  demoVideoUrl: string;
+  demoVideoFile: File | null;
+  codeBaseUrl: string;
+  codeBaseFile: File | null;
+  hostedLink: string;
 }
+
 export const JobApplicationForm = ({
   jobTitle,
   onSubmit,
@@ -31,9 +40,17 @@ export const JobApplicationForm = ({
     portfolio: "",
     resume: null,
     coverLetter: "",
+    projectDocUrl: "",
+    projectDocFile: null,
+    demoVideoUrl: "",
+    demoVideoFile: null,
+    codeBaseUrl: "",
+    codeBaseFile: null,
+    hostedLink: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -42,8 +59,9 @@ export const JobApplicationForm = ({
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, resume: e.target.files![0] }));
+    const { name, files } = e.target;
+    if (files && files[0]) {
+      setFormData((prev) => ({ ...prev, [name]: files[0] }));
     }
   };
 
@@ -51,45 +69,79 @@ export const JobApplicationForm = ({
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+
+    // Validation
     const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*$/;
     if (formData.linkedIn && !linkedInRegex.test(formData.linkedIn)) {
-      setError('Please enter a valid LinkedIn URL.');
+      setError("Please enter a valid LinkedIn URL.");
       setIsSubmitting(false);
       return;
     }
+
+    // Ensure at least one option is provided for each assignment field
+    if (
+      (!formData.projectDocUrl && !formData.projectDocFile) ||
+      (!formData.demoVideoUrl && !formData.demoVideoFile) ||
+      (!formData.codeBaseUrl && !formData.codeBaseFile)
+    ) {
+      setError(
+        "Please provide at least one option for Project Document, Demo Video, and Code Base."
+      );
+      setIsSubmitting(false);
+      return;
+    }
+
     // Create FormData for file upload
     const formDataToSubmit = new FormData();
-    formDataToSubmit.append('jobTitle', jobTitle);
-    formDataToSubmit.append('firstName', formData.firstName);
-    formDataToSubmit.append('lastName', formData.lastName);
-    formDataToSubmit.append('email', formData.email);
-    formDataToSubmit.append('phone', formData.phone || '');
-    formDataToSubmit.append('linkedIn', formData.linkedIn || '');
-    formDataToSubmit.append('portfolio', formData.portfolio || '');
-    formDataToSubmit.append('coverLetter', formData.coverLetter || '');
+    formDataToSubmit.append("jobTitle", jobTitle);
+    formDataToSubmit.append("firstName", formData.firstName);
+    formDataToSubmit.append("lastName", formData.lastName);
+    formDataToSubmit.append("email", formData.email);
+    formDataToSubmit.append("phone", formData.phone || "");
+    formDataToSubmit.append("linkedIn", formData.linkedIn || "");
+    formDataToSubmit.append("portfolio", formData.portfolio || "");
+    formDataToSubmit.append("coverLetter", formData.coverLetter || "");
+    formDataToSubmit.append("projectDocUrl", formData.projectDocUrl || "");
+    if (formData.projectDocFile) {
+      formDataToSubmit.append("projectDocFile", formData.projectDocFile);
+    }
+    formDataToSubmit.append("demoVideoUrl", formData.demoVideoUrl || "");
+    if (formData.demoVideoFile) {
+      formDataToSubmit.append("demoVideoFile", formData.demoVideoFile);
+    }
+    formDataToSubmit.append("codeBaseUrl", formData.codeBaseUrl || "");
+    if (formData.codeBaseFile) {
+      formDataToSubmit.append("codeBaseFile", formData.codeBaseFile);
+    }
+    formDataToSubmit.append("hostedLink", formData.hostedLink || "");
 
     // Append resume file
     if (formData.resume) {
-      formDataToSubmit.append('resume', formData.resume);
+      formDataToSubmit.append("resume", formData.resume);
     }
 
     try {
-      const response = await fetch('/api/careers/apply', {
-        method: 'POST',
+      const response = await fetch("/api/careers/apply", {
+        method: "POST",
         body: formDataToSubmit,
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || 'Failed to submit application');
+        throw new Error(result.message || "Failed to submit application");
       }
 
       // Optional: Show success message or redirect
-      alert('Application submitted successfully!');
-      // router.push('/careers'); // Redirect after successful submission
+    alert("Application submitted successfully!");
+    // router.push('/careers'); // Uncomment if you want to redirect
+    onSubmit(formData); // Notify parent component
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An unknown error occurred while submitting the application."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -105,6 +157,7 @@ export const JobApplicationForm = ({
       </div>
 
       <div className={styles["grid"]}>
+        {/* Personal Information Fields */}
         <div className={styles["input-group"]}>
           <label htmlFor="firstName">First Name *</label>
           <input
@@ -158,7 +211,6 @@ export const JobApplicationForm = ({
             placeholder="Enter your phone number"
             title="Phone number must be exactly 10 digits."
           />
-
         </div>
 
         <div className={styles["input-group"]}>
@@ -170,6 +222,7 @@ export const JobApplicationForm = ({
             value={formData.linkedIn}
             onChange={handleInputChange}
             className={styles["input"]}
+            placeholder="https://www.linkedin.com/in/yourprofile"
           />
         </div>
 
@@ -182,9 +235,110 @@ export const JobApplicationForm = ({
             value={formData.portfolio}
             onChange={handleInputChange}
             className={styles["input"]}
+            placeholder="https://yourportfolio.com or https://github.com/yourrepo"
           />
         </div>
 
+        {/* Submitting Assignment Section */}
+        <div className={styles["assignment-section"]}>
+          <h3 className={styles["section-subtitle"]}>Submitting Assignment *</h3>
+
+          {/* Project Document */}
+          <div className={styles["input-group"]}>
+            <label htmlFor="projectDocUrl">
+              Doc Explaining the Project (Paste URL)
+            </label>
+            <input
+              type="url"
+              id="projectDocUrl"
+              name="projectDocUrl"
+              value={formData.projectDocUrl}
+              onChange={handleInputChange}
+              className={styles["input"]}
+              placeholder="https://docs.google.com/document/yourdoc"
+            />
+          </div>
+
+          <div className={styles["input-group"]}>
+            <label htmlFor="projectDocFile">Or Upload Doc</label>
+            <input
+              type="file"
+              id="projectDocFile"
+              name="projectDocFile"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              className={styles["input"]}
+            />
+          </div>
+
+          {/* Demo Video */}
+          <div className={styles["input-group"]}>
+            <label htmlFor="demoVideoUrl">Demo Video (Paste Link)</label>
+            <input
+              type="url"
+              id="demoVideoUrl"
+              name="demoVideoUrl"
+              value={formData.demoVideoUrl}
+              onChange={handleInputChange}
+              className={styles["input"]}
+              placeholder="https://youtu.be/yourvideo"
+            />
+          </div>
+
+          <div className={styles["input-group"]}>
+            <label htmlFor="demoVideoFile">Or Upload Demo Video</label>
+            <input
+              type="file"
+              id="demoVideoFile"
+              name="demoVideoFile"
+              accept="video/*"
+              onChange={handleFileChange}
+              className={styles["input"]}
+            />
+          </div>
+
+          {/* Code Base */}
+          <div className={styles["input-group"]}>
+            <label htmlFor="codeBaseUrl">Code Base (Paste GitHub Repo)</label>
+            <input
+              type="url"
+              id="codeBaseUrl"
+              name="codeBaseUrl"
+              value={formData.codeBaseUrl}
+              onChange={handleInputChange}
+              className={styles["input"]}
+              placeholder="https://github.com/yourrepo"
+            />
+          </div>
+
+          <div className={styles["input-group"]}>
+            <label htmlFor="codeBaseFile">Or Upload Code Base (Zip)</label>
+            <input
+              type="file"
+              id="codeBaseFile"
+              name="codeBaseFile"
+              accept=".zip"
+              onChange={handleFileChange}
+              className={styles["input"]}
+            />
+          </div>
+
+          {/* Hosted Link (Optional) */}
+          <div className={styles["input-group"]}>
+            <label htmlFor="hostedLink">Hosted Link (Optional)</label>
+            <input
+              type="url"
+              id="hostedLink"
+              name="hostedLink"
+              value={formData.hostedLink}
+              onChange={handleInputChange}
+              className={styles["input"]}
+              placeholder="https://yourproject.com"
+            />
+          </div>
+        </div>
+
+        {/* Resume and Cover Letter Fields */}
         <div className={styles["input-group"]}>
           <label htmlFor="resume">Resume/CV *</label>
           <input
@@ -211,13 +365,17 @@ export const JobApplicationForm = ({
           />
         </div>
       </div>
-      <span className={styles["error"]}>{error}</span>
+
+      {error && <span className={styles["error"]}>{error}</span>}
 
       <div className={styles["button-container"]}>
-
-        <button type="submit" className={styles["submit-button"]} disabled={isSubmitting}>
+        <button
+          type="submit"
+          className={styles["submit-button"]}
+          disabled={isSubmitting}
+        >
           <Send className={styles["icon"]} />
-          {isSubmitting ? 'Submitting...' : 'Submit Application'}
+          {isSubmitting ? "Submitting..." : "Submit Application"}
         </button>
       </div>
     </form>
