@@ -99,18 +99,24 @@ const TestimonialCarousel: React.FC = () => {
   const infiniteTestimonials = Array.from({ length: 5 }, () => testimonials).flat();
   const xValue = useMotionValue(0);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const animationRef = React.useRef<ReturnType<typeof animate> | null>(null);
+
   const [scrollWidth, setScrollWidth] = React.useState(0);
 
   const startAnimation = React.useCallback(
     (fromX: number) => {
+      if (animationRef.current) {
+        animationRef.current.stop();
+      }
+
       const distance = -scrollWidth;
-      const currentOffset = fromX;
+      const currentOffset = fromX; 
       const remaining = distance - currentOffset;
       const totalDistance = distance;
       const baseDuration = 60;
       const duration = baseDuration * Math.abs(remaining / totalDistance);
 
-      animate(xValue, distance, {
+      animationRef.current = animate(xValue, distance, {
         duration: Math.max(duration, 0.1),
         ease: "linear",
         onComplete: () => {
@@ -136,7 +142,10 @@ const TestimonialCarousel: React.FC = () => {
   }, [scrollWidth, startAnimation, xValue]);
 
   const handleMouseEnter = () => {
-    xValue.stop();
+    if (animationRef.current) {
+      animationRef.current.stop();
+      animationRef.current = null;
+    }
   };
 
   const handleMouseLeave = () => {
@@ -147,20 +156,19 @@ const TestimonialCarousel: React.FC = () => {
   return (
     <div className={styles.carouselSection}>
       <h2 className={styles.sectionHeading}>What Our Clients Say</h2>
-      <div
-        className={styles.carouselContainer}
-        ref={containerRef}
-      >
+      <div className={styles.carouselContainer} ref={containerRef}>
         <motion.div className={styles.testimonialTrack} style={{ x: xValue }}>
           {infiniteTestimonials.map((testimonial, index) => (
             <motion.div
               key={index}
               className={styles.testimonialCard}
               whileHover={{ scale: 1.05 }}
-             
             >
-              <div className={styles.testimonialContent}  onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}>
+              <div
+                className={styles.testimonialContent}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
                 <h3 className={styles.projectName}>{testimonial.projectName}</h3>
                 <div className={styles.divider}></div>
                 <blockquote className={styles.testimonialQuote}>
