@@ -1,0 +1,192 @@
+/* Form container */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    /* Increased vertical spacing */
+    background: rgba(255, 255, 255, 0.05);
+    /* Subtle transparency */
+    backdrop-filter: blur(10px);
+    /* Soft blur effect */
+    padding: 2.5rem;
+    /* Generous padding for better spacing */
+    border-radius: 1rem;
+    /* Smooth rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Light border for subtle definition */
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.02);
+        /* Slight zoom on hover for interactivity */
+    }
+}
+.error{
+    color: red;
+    margin-bottom: 5vh;
+}
+/* Header styles */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    /* mb-8 */
+}
+
+.form-title {
+    font-size: 1.75rem;
+    /* Slightly larger heading */
+    font-weight: bold;
+    color: #ffffff;
+    /* Bright white text */
+    margin-bottom: 0.75rem;
+    /* mb-3 */
+}
+
+.form-description {
+    font-size: 1rem;
+    /* Base text size */
+    color: #d1d5db;
+    /* Subtle gray text */
+}
+
+/* Grid layout for inputs */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    /* Single column on small screens */
+    gap: 1.5rem;
+    /* Spacing between input groups */
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        /* Two-column layout for medium screens */
+    }
+}
+
+/* Input group */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    /* Space between label and input */
+    transition: all 0.3s ease;
+
+    &:focus-within label {
+        color: #2563eb;
+        /* Highlight label on focus */
+    }
+
+    label {
+        font-size: 0.875rem;
+        /* Small but readable label */
+        font-weight: 600;
+        /* Bold for emphasis */
+        color: #9ca3af;
+        /* Subtle gray */
+        transition: color 0.3s ease-in-out;
+    }
+
+    .input,
+    .textarea {
+        width: 100%;
+        /* Full width */
+        padding: 0.75rem 1rem;
+        /* Generous padding */
+        border-radius: 0.5rem;
+        /* Rounded corners */
+        background: rgba(0, 0, 0, 0.2);
+        /* Slightly darker input field */
+        border: 1px solid #374151;
+        /* Subtle gray border */
+        color: #ffffff;
+        /* White text */
+        font-size: 1rem;
+        /* Standard font size */
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+            border-color: #2563eb;
+            /* Blue border on focus */
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+            /* Subtle focus ring */
+        }
+    }
+
+    .textarea {
+        resize: vertical;
+        /* Resizable */
+        height: 8rem;
+        /* Larger height for better usability */
+    }
+
+    .input[type="file"] {
+        padding: 0.5rem 1rem;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+
+        &::file-selector-button {
+            margin-right: 1rem;
+            /* Space between button and label */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            /* Smooth corners */
+            background: #2563eb;
+            /* Bright blue */
+            color: #ffffff;
+            /* White text */
+            font-size: 0.875rem;
+            /* Small but clear */
+            font-weight: 600;
+            /* Medium weight */
+            transition: background-color 0.3s ease-in-out;
+
+            &:hover {
+                background: #1e40af;
+                /* Darker blue on hover */
+            }
+        }
+    }
+}
+
+/* Submit button */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+    /* Spacing above button */
+
+    .submit-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 2rem;
+        /* Larger button for better accessibility */
+        background: #2563eb;
+        /* Bright blue */
+        color: #ffffff;
+        /* White text */
+        border-radius: 0.75rem;
+        /* Slightly more rounded */
+        font-size: 1rem;
+        /* Standard size */
+        font-weight: 600;
+        /* Medium bold */
+        transition: all 0.3s ease-in-out;
+
+        .icon {
+            width: 1.5rem;
+            /* Larger icon */
+            height: 1.5rem;
+            margin-right: 0.5rem;
+            /* Space between icon and text */
+        }
+
+        &:hover {
+            background: #1d4ed8;
+            /* Darker blue on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+    }
+}
