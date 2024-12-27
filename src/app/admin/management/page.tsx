@@ -909,8 +909,6 @@ import dynamic from 'next/dynamic';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './Admin.module.scss';
 import axios from 'axios';
-
-// Import the separate Modal and JobPostingsManagement components
 import Modal from '../components/Modal';
 import JobPostingsManagement from '../components/JobPostingsManagement';
 

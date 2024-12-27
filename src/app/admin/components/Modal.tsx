@@ -1,7 +1,7 @@
 // Modal.tsx
 
 import React from 'react';
-import styles from '../case-study-creation/Admin.module.scss';
+import styles from '../management/Admin.module.scss';
 
 type ModalProps = {
   isOpen: boolean;

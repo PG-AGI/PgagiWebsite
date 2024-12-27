@@ -7,7 +7,7 @@ import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form
 import { v4 as uuidv4 } from 'uuid';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
-import styles from '../case-study-creation/Admin.module.scss';
+import styles from '../management/Admin.module.scss';
 import Modal from './Modal';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
