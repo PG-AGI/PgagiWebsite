@@ -1,3 +1,5 @@
+// JobDetailsPage.tsx
+
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -61,11 +63,7 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
     formRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleViewAssignment = () => {
-    if (job?.applicationUrl) {
-      window.open(job.applicationUrl, "_blank");
-    }
-  };
+  // Removed handleViewAssignment since it's no longer needed
 
   if (isLoading) {
     return <SkeletonLoader />;
@@ -105,7 +103,7 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
                 <span className={styles["tag-location"]}>{job.location}</span>
                 <span className={styles["tag-type"]}>{job.type}</span>
                 <span className={`${styles.tag} ${styles["tag-openings"]}`}>
-                      {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
+                  {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
                 </span>
               </div>
             </div>
@@ -145,25 +143,20 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
                   >
                     Apply Now
                   </button>
-                  {showForm && (
-                    <button
-                      onClick={handleViewAssignment}
-                      className={styles["assignment-button"]}
-                    >
-                      View Assignment
-                    </button>
-                  )}
+                  {/* Removed the View Assignment button from here */}
                 </div>
               </div>
             )}
           </div>
         </div>
 
-        <div
-          ref={formRef} 
-        >
+        <div ref={formRef}>
           {showForm && (
-            <JobApplicationForm jobTitle={job.title} onSubmit={handleApplicationSubmit} />
+            <JobApplicationForm
+              jobTitle={job.title}
+              onSubmit={handleApplicationSubmit}
+              applicationUrl={job.applicationUrl} // Passed applicationUrl as a prop
+            />
           )}
         </div>
       </div>

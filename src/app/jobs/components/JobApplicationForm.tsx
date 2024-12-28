@@ -9,6 +9,7 @@ import styles from "./JobApplicationForm.module.scss";
 interface JobApplicationFormProps {
   jobTitle: string;
   onSubmit: (formData: FormData) => void;
+  applicationUrl: string; // Added applicationUrl to props
 }
 
 interface FormData {
@@ -32,6 +33,7 @@ interface FormData {
 export const JobApplicationForm = ({
   jobTitle,
   onSubmit,
+  applicationUrl, // Destructure applicationUrl
 }: JobApplicationFormProps) => {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -149,13 +151,26 @@ export const JobApplicationForm = ({
     }
   };
 
+  const handleViewAssignment = () => {
+    window.open(applicationUrl, "_blank");
+  };
+
   return (
     <form onSubmit={handleSubmit} className={styles["form"]}>
       <div className={styles["header"]}>
         <h2 className={styles["form-title"]}>Apply for {jobTitle}</h2>
         <p className={`${styles["form-description"]} ${styles["form-note"]}`}>
-          Please complete the assignment below before filling out the rest of the form.
+          To apply, please complete the assignment first and then fill out the application form.
         </p>
+      </div>
+      <div className={styles["view-assignment-container"]}>
+        <button
+          type="button"
+          onClick={handleViewAssignment}
+          className={styles["view-assignment-button"]}
+        >
+          View Assignment
+        </button>
       </div>
 
       <div className={styles["grid"]}>
@@ -378,6 +393,7 @@ export const JobApplicationForm = ({
       </div>
 
       {error && <span className={styles["error"]}>{error}</span>}
+
 
       <div className={styles["button-container"]}>
         <button
