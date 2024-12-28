@@ -1,48 +1,39 @@
+// /app/auth/signin/page.tsx
+
 'use client';
 
-import { signIn } from 'next-auth/react';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './Signin.module.scss';
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from './SignIn.module.scss'; 
 
-const SignInPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+const SignIn = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError(null);
+    const res = await signIn("credentials", {
+      redirect: false,
+      username,
+      password,
+    });
 
-    try {
-      const res = await signIn('credentials', {
-        redirect: false,
-        username,
-        password,
-        callbackUrl: '/admin/case-study-creation',
-      });
-
-      if (res?.error) {
-        setError('Invalid username or password');
-      } else if (res?.ok) {
-        router.push(res.url || '/admin/case-study-creation');
-      }
-    } catch (err) {
-      console.error('Sign in error:', err);
-      setError('Something went wrong. Please try again.');
-    } finally {
-      setIsLoading(false);
+    if (res?.error) {
+      setError("Invalid username or password");
+    } else {
+      router.push("/admin/management"); 
     }
   };
 
   return (
     <div className={styles.container}>
+     
+      <h1 >Sign In</h1>
+     
       <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>Sign In</h2>
-        {error && <div className={styles.error}>{error}</div>}
         <div className={styles.formGroup}>
           <label htmlFor="username">Username:</label>
           <input
@@ -51,8 +42,7 @@ const SignInPage = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            disabled={isLoading}
-            placeholder="Enter your username"
+            className={styles.input}
           />
         </div>
         <div className={styles.formGroup}>
@@ -63,16 +53,16 @@ const SignInPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            disabled={isLoading}
-            placeholder="Enter your password"
+            className={styles.input}
           />
         </div>
-        <button type="submit" className={styles.submitButton} disabled={isLoading}>
-          {isLoading ? 'Signing in...' : 'Sign In'}
+        {error && <p className={styles.error}>{error}</p>}
+        <button type="submit" className={styles.submitButton}>
+          Sign In
         </button>
       </form>
     </div>
   );
 };
 
-export default SignInPage;
+export default SignIn;

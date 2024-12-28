@@ -10,7 +10,7 @@ import GlareBackground from '../components/base/GlareBackground';
 import Navigation from '../components/base/Navigation';
 import Footer from '../components/Footer';
 import styles from './blogs.module.scss';
-import { caseStudyContent, topContent, blogContent, newsContent } from '@/utils/constants';
+import { topContent, blogContent, newsContent } from '@/utils/constants';
 import bg from '../assets/background.png';
 import BookCallModal from '../components/base/bookCallModela';
 import { useRouter } from 'next/navigation';

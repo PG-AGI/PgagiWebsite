@@ -1,22 +1,33 @@
 import styles from './Hero.module.scss';
 
-export const Hero = ({ onScrollToPositions }: { onScrollToPositions: () => void }) => {
+export const Hero = ({
+  onScrollToPositions,
+  onScrollToBenefits, 
+}: {
+  onScrollToPositions: () => void;
+  onScrollToBenefits: () => void;
+}) => {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
-        <p className={styles.subheading}>Join Our Team</p>
-        <h1 className={styles.heading}>Shape the Future of AI Innovation</h1>
-        <p className={styles.description}>
-          {"Be part of a team that's pushing the boundaries of AI technology and transforming businesses through advanced near AGI solutions."}
-        </p>
+      <p className={styles.subheading}>Be the Architect of AI Transformation</p>
+       <h1 className={styles.heading}> Join our pioneering team at the forefront <br /> of AGI evolution. </h1>
+       <p className={styles.description}>
+         We are shaping a future where AI is a fundamental and positive force for businesses, societies, and the planet.
+       </p>
         <div className={styles.buttons}>
           <button
             className={styles.primaryButton}
-            onClick={onScrollToPositions} // Trigger the scroll action
+            onClick={onScrollToPositions} 
           >
             View Positions
           </button>
-          <button className={styles.secondaryButton}>Learn More</button>
+          <button
+            className={styles.secondaryButton}
+            onClick={onScrollToBenefits} 
+          >
+            Learn More
+          </button>
         </div>
       </div>
       <div className={styles.background} />

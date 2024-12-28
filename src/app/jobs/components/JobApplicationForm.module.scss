@@ -1,188 +1,112 @@
 
+
 .form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    /* Increased vertical spacing */
     background: rgba(255, 255, 255, 0.05);
-    /* Subtle transparency */
     backdrop-filter: blur(10px);
-    /* Soft blur effect */
     padding: 2.5rem;
-    /* Generous padding for better spacing */
     border-radius: 1rem;
-    /* Smooth rounded corners */
     border: 1px solid rgba(255, 255, 255, 0.1);
-    /* Light border for subtle definition */
     transition: transform 0.3s ease-in-out;
+    margin-top: -2rem;
 
     &:hover {
-        transform: scale(1.02);
-        /* Slight zoom on hover for interactivity */
+      transform: scale(1.02);
     }
 }
 
-/* Error message styling */
 .error {
-    color: #f87171; /* Tailwind's red-400 */
+    color: #f87171;
     font-size: 0.875rem;
     text-align: center;
     margin-bottom: 1rem;
 }
 
-/* Header styles */
 .header {
     text-align: center;
     margin-bottom: 2rem;
-    /* mb-8 */
 }
 
 .form-title {
     font-size: 1.75rem;
-    /* Slightly larger heading */
     font-weight: bold;
     color: #ffffff;
-    /* Bright white text */
     margin-bottom: 0.75rem;
-    /* mb-3 */
 }
 
 .form-description {
     font-size: 1rem;
-    /* Base text size */
     color: #d1d5db;
-    /* Subtle gray text */
-}
+  }
+  
+  .form-note {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #6b21a8; 
+    padding: 0.5rem;
+    font-style: italic;
+    width: 75%;
+    margin: 0 auto;
+   
+  }
 
-/* Grid layout for inputs */
 .grid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    /* Single column on small screens */
     gap: 1.5rem;
-    /* Spacing between input groups */
 
     @media (min-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-        /* Two-column layout for medium screens */
+      grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Input group */
 .input-group {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    /* Space between label and input */
     transition: all 0.3s ease;
 
     &:focus-within label {
-        color: #6b21a8;
-        /* Highlight label on focus */
+      color: #6b21a8;
     }
 
     label {
-        font-size: 0.875rem;
-        /* Small but readable label */
-        font-weight: 600;
-        /* Bold for emphasis */
-        color: #9ca3af;
-        /* Subtle gray */
-        transition: color 0.3s ease-in-out;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #9ca3af;
+      transition: color 0.3s ease-in-out;
     }
 
     .input,
     .textarea {
-        width: 100%;
-        /* Full width */
-        padding: 0.75rem 1rem;
-        /* Generous padding */
-        border-radius: 0.5rem;
-        /* Rounded corners */
-        background: rgba(0, 0, 0, 0.2);
-        /* Slightly darker input field */
-        border: 1px solid #374151;
-        /* Subtle gray border */
-        color: #ffffff;
-        /* White text */
-        font-size: 1rem;
-        /* Standard font size */
-        transition: all 0.3s ease-in-out;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid #374151;
+      color: #ffffff;
+      font-size: 1rem;
+      transition: all 0.3s ease-in-out;
 
-        &:focus {
-            border-color: #6b21a8;
-            /* Blue border on focus */
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
-            /* Subtle focus ring */
-        }
+      &:focus {
+        border-color: #6b21a8;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+      }
     }
 
     .textarea {
-        resize: vertical;
-        /* Resizable */
-        height: 8rem;
-        /* Larger height for better usability */
+      resize: vertical;
+      height: 8rem;
     }
 
-    /* File input styling */
     input[type="file"] {
-        padding: 0.5rem 1rem;
-        border: none;
-        color: #ffffff;
-        cursor: pointer;
+      padding: 0.5rem 1rem;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
 
-        &::file-selector-button {
-            margin-right: 1rem;
-            /* Space between button and label */
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            /* Smooth corners */
-            background: #6b21a8;
-            /* Bright blue */
-            color: #ffffff;
-            /* White text */
-            font-size: 0.875rem;
-            /* Small but clear */
-            font-weight: 600;
-            /* Medium weight */
-            transition: background-color 0.3s ease-in-out;
-
-            &:hover {
-                background: #a855f7;
-                /* Darker blue on hover */
-            }
-        }
-    }
-}
-
-/* Assignment section */
-.assignment-section {
-    grid-column: 1 / -1; /* Span full width */
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    /* Subtle contrast */
-    border-radius: 0.75rem;
-    /* Rounded corners */
-    /* Optional: Add a border or shadow for distinction */
-}
-
-.section-subtitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-/* Ensure that file inputs within assignment section are styled consistently */
-.assignment-section .input-group input[type="file"] {
-    padding: 0.5rem 1rem;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-
-    &::file-selector-button {
+      &::file-selector-button {
         margin-right: 1rem;
         padding: 0.5rem 1rem;
         border-radius: 0.5rem;
@@ -193,70 +117,159 @@
         transition: background-color 0.3s ease-in-out;
 
         &:hover {
-            background: #1e40af;
+          background: #a855f7;
         }
+      }
     }
 }
 
-/* Submit button */
+.assignment-section {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+}
+
+.assignment-subsection {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+}
+
+.project-document {
+    label {
+      text-align: left;
+      font-size: 0.8rem;
+    }
+
+    .input,
+    .textarea {
+      text-align: left;
+      font-size: 0.9rem;
+    }
+}
+
+.input-group {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.subsection-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.section-subtitle{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.assignment-section .input-group input[type="file"] {
+    padding: 0.5rem 1rem;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+
+    &::file-selector-button {
+      margin-right: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background: #6b21a8;
+      color: #ffffff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease-in-out;
+
+      &:hover {
+        background: #a855f7;
+      }
+    }
+}
+
 .button-container {
     display: flex;
     justify-content: center;
     margin-top: 2.5rem;
-    /* Spacing above button */
 
     .submit-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.75rem 2rem;
-        /* Larger button for better accessibility */
-        background: #6b21a8;
-        /* Bright blue */
-        color: #ffffff;
-        /* White text */
-        border-radius: 0.75rem;
-        /* Slightly more rounded */
-        font-size: 1rem;
-        /* Standard size */
-        font-weight: 600;
-        /* Medium bold */
-        transition: all 0.3s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 2rem;
+      background: #6b21a8;
+      color: #ffffff;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
 
-        .icon {
-            width: 1.5rem;
-            /* Larger icon */
-            height: 1.5rem;
-            margin-right: 0.5rem;
-            /* Space between icon and text */
-        }
+      .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.5rem;
+      }
 
-        &:hover {
-            background: #6b21a8;
-            /* Darker blue on hover */
-            transform: translateY(-3px);
-            /* Slight lift effect */
-        }
+      &:hover {
+        background: #a855f7;
+        transform: translateY(-3px);
+      }
 
-        &:disabled {
-            background: #93c5fd; /* Tailwind's blue-300 */
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
+      &:disabled {
+        background: #93c5fd;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
     }
 }
+.view-assignment-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -2rem;
+  }
 
-/* Responsive adjustments */
+  .view-assignment-button {
+    background: #6b21a8;
+    color: #ffffff;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  
+    &:hover {
+      background: #a855f7; /* Lighter blue on hover */
+      transform: translateY(-2px);
+    }
+  
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
+    }
+  }
+
 @media (max-width: 767px) {
     .grid {
-        grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
     }
 
     .assignment-section {
-        padding: 1rem;
+      padding: 1rem;
     }
 
     .submit-button {
-        width: 100%;
+      width: 100%;
     }
 }

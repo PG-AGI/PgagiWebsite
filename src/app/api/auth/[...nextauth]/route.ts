@@ -1,70 +1,49 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
 
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      id: string;
-      name?: string | null;
-      email?: string | null;
-    };
-  }
 
-  interface User {
-    id: string;
-    name?: string | null;
-    email?: string | null;
-  }
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+
+const adminUsername = process.env.ADMIN_USERNAME;
+const adminPassword = process.env.ADMIN_PASSWORD;
+
+if (!adminUsername || !adminPassword || !process.env.NEXTAUTH_SECRET) {
+  throw new Error("Missing environment variables for authentication");
 }
 
-const authOptions: NextAuthOptions = {
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text", placeholder: "admin" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        const { username, password } = credentials as { username: string; password: string };
+      async authorize(credentials, req) {
+       
+        if (!credentials) return null;
 
-        const validUsername = process.env.AUTH_USERNAME;
-        const validPassword = process.env.AUTH_PASSWORD;
+        const { username, password } = credentials;
 
-        if (username === validUsername && password === validPassword) {
-          return { id: '1', name: 'Swapnendu Banerjee', email: 'swapnendu@pgagi.in' };
+      
+        if (username === adminUsername && password === adminPassword) {
+         
+          return { id: "1", name: "Admin" };
         }
 
+     
         return null;
       },
     }),
   ],
   session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/auth/signin',
-    error: '/auth/signin', 
+    strategy: "jwt",
+    maxAge: 1 * 60 * 60, 
   },
   secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.email = user.email;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id as string;
-        session.user.email = token.email as string;
-      }
-      return session;
-    },
+  pages: {
+    signIn: "/auth/signin", 
   },
-};
-
-const handler = NextAuth(authOptions);
+});
 
 export { handler as GET, handler as POST };

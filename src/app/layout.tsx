@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
+import Providers from "@/contexts/providers";
 
 import { inter } from "../utils/fontHelper";
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
+      <Providers>  
     <html lang="en" className={inter.variable}>
       <head>
         {/* Google Tag Manager */}
@@ -60,6 +62,7 @@ export default function RootLayout({
         {children}
       </body>
     </html>
+    </Providers>
     </AuthProvider>
   );
 }

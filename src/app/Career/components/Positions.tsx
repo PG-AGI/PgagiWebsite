@@ -88,6 +88,9 @@ export const Positions = () => {
                     <span className={`${styles.tag} ${styles["tag-type"]}`}>
                       {job.type}
                     </span>
+                    <span className={`${styles.tag} ${styles["tag-openings"]}`}>
+                      {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
+                    </span>
                   </div>
                 </div>
                 <button

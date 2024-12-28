@@ -1,3 +1,5 @@
+// JobDetailsPage.tsx
+
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -6,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import Job from "@/utils/job";
 import { JobApplicationForm } from "../components/JobApplicationForm";
 import styles from "./JobDetailsPage.module.scss";
+import SkeletonLoader from "../components/SkeletonLoader";
 
 const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
   const [showForm, setShowForm] = useState(false);
@@ -19,26 +22,27 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
   useEffect(() => {
     async function fetchJobDetails() {
       try {
-        // Fetch all jobs from the API route
-        const response = await fetch('/api/careers/postings');
-        
+        const response = await fetch("/api/careers/postings");
+
         if (!response.ok) {
-          throw new Error('Failed to fetch job postings');
+          throw new Error("Failed to fetch job postings");
         }
-        
+
         const jobs: Job[] = await response.json();
-        
+
         // Find the specific job by ID
         const foundJob = jobs.find((j) => j.id === jobId);
-        console.log(foundJob)
+        console.log(foundJob);
         if (!foundJob) {
-          throw new Error('Job not found');
+          throw new Error("Job not found");
         }
-        
+
         setJob(foundJob);
         setIsLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
         setIsLoading(false);
       }
     }
@@ -54,19 +58,15 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
     setShowForm(false);
   };
 
-  const handleScrollToForm = () => {
+  const handleApplyNow = () => {
     setShowForm(true);
-    formRef.current?.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the form
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleViewAssignment = () => {
-    if (job?.applicationUrl) {
-      window.open(job.applicationUrl, "_blank");
-    }
-  };
+  // Removed handleViewAssignment since it's no longer needed
 
   if (isLoading) {
-    return <div className={styles["loading"]}>Loading job details...</div>;
+    return <SkeletonLoader />;
   }
   if (error || !job) {
     return (
@@ -102,21 +102,23 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
                 </span>
                 <span className={styles["tag-location"]}>{job.location}</span>
                 <span className={styles["tag-type"]}>{job.type}</span>
+                <span className={`${styles.tag} ${styles["tag-openings"]}`}>
+                  {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
+                </span>
               </div>
             </div>
-            <button
-              onClick={handleScrollToForm}
-              className={styles["apply-button"]}
-            >
-              Apply Now
-            </button>
           </div>
 
-          <p className={styles["description"]} dangerouslySetInnerHTML={{ __html: job.description }}></p>
+          <p
+            className={styles["description"]}
+            dangerouslySetInnerHTML={{ __html: job.description }}
+          ></p>
 
           <div className={styles["sections"]}>
             <div>
-              <h2 className={styles["section-title"]}>Key Responsibilities</h2>
+              <h2 className={styles["section-title"]}>
+                Key Responsibilities
+              </h2>
               <ul className={styles["list"]}>
                 {job.responsibilities.map((item, index) => (
                   <li key={index}>{item}</li>
@@ -132,29 +134,28 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
                 ))}
               </ul>
             </div>
-
-            {/* New Assignment Button */}
             {job.applicationUrl && (
               <div className={styles["assignment-section"]}>
-                <button
-                  onClick={handleViewAssignment}
-                  className={styles["assignment-button"]}
-                >
-                  View Assignment
-                </button>
+                <div className={styles["buttons-container"]}>
+                  <button
+                    onClick={handleApplyNow}
+                    className={styles["apply-button"]}
+                  >
+                    Apply Now
+                  </button>
+                  {/* Removed the View Assignment button from here */}
+                </div>
               </div>
             )}
           </div>
         </div>
 
-        <div
-          ref={formRef} // Attach the ref to the form container
-          className={styles["form-container"]}
-        >
+        <div ref={formRef}>
           {showForm && (
             <JobApplicationForm
-              jobTitle={job.id}
+              jobTitle={job.title}
               onSubmit={handleApplicationSubmit}
+              applicationUrl={job.applicationUrl} // Passed applicationUrl as a prop
             />
           )}
         </div>

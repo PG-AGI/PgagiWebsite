@@ -10,6 +10,7 @@ interface Job {
   description: string;
   responsibilities: string[];
   requirements: string[];
+  numberOfOpenings: number;
   applicationUrl: string;
 }
 
@@ -39,6 +40,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       description: job.description,
       responsibilities: job.responsibilities,
       requirements: job.requirements,
+      numberOfOpenings: job.numberOfOpenings,
       applicationUrl: job.applicationUrl
     };
 
@@ -67,6 +69,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       description,
       responsibilities,
       requirements,
+      numberOfOpenings,
       applicationUrl
     } = body;
 
@@ -78,6 +81,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       !description ||
       !Array.isArray(responsibilities) ||
       !Array.isArray(requirements) ||
+      numberOfOpenings == null || 
       !applicationUrl
     ) {
       return NextResponse.json(
@@ -85,6 +89,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         { status: 400 }
       );
     }
+    
 
     const client = await clientPromise;
     const database = client.db('jobPosting');
@@ -101,6 +106,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
           description: description.trim(),
           responsibilities: responsibilities.map((resp: string) => resp.trim()).filter((resp: string) => resp !== ''),
           requirements: requirements.map((req: string) => req.trim()).filter((req: string) => req !== ''),
+          numberOfOpenings: numberOfOpenings,
           applicationUrl: applicationUrl.trim()
         }
       }

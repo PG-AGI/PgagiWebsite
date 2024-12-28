@@ -10,6 +10,7 @@ interface Job {
   description: string;
   responsibilities: string[];
   requirements: string[];
+  numberOfOpenings: number;
   applicationUrl: string;
 }
 
@@ -29,6 +30,7 @@ export async function GET() {
       description: job.description,
       responsibilities: job.responsibilities,
       requirements: job.requirements,
+      numberOfOpenings: job.numberOfOpenings,
       applicationUrl: job.applicationUrl
     }));
 
@@ -56,6 +58,7 @@ export async function POST(request: Request) {
       description,
       responsibilities,
       requirements,
+      numberOfOpenings,
       applicationUrl
     } = body;
 
@@ -68,6 +71,7 @@ export async function POST(request: Request) {
       !description ||
       !Array.isArray(responsibilities) ||
       !Array.isArray(requirements) ||
+      numberOfOpenings == null || 
       !applicationUrl
     ) {
       return NextResponse.json(
@@ -75,6 +79,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    
 
     const client = await clientPromise;
     const database = client.db('jobPosting');
@@ -89,7 +94,8 @@ export async function POST(request: Request) {
       description,
       responsibilities,
       requirements,
-      applicationUrl
+      applicationUrl,
+      numberOfOpenings
     };
 
     const result = await jobsCollection.insertOne(newJob);

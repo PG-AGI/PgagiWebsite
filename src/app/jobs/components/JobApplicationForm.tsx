@@ -1,3 +1,5 @@
+// JobApplicationForm.tsx
+
 "use client";
 
 import React, { useState } from "react";
@@ -7,6 +9,7 @@ import styles from "./JobApplicationForm.module.scss";
 interface JobApplicationFormProps {
   jobTitle: string;
   onSubmit: (formData: FormData) => void;
+  applicationUrl: string; // Added applicationUrl to props
 }
 
 interface FormData {
@@ -30,6 +33,7 @@ interface FormData {
 export const JobApplicationForm = ({
   jobTitle,
   onSubmit,
+  applicationUrl, // Destructure applicationUrl
 }: JobApplicationFormProps) => {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -133,9 +137,9 @@ export const JobApplicationForm = ({
       }
 
       // Optional: Show success message or redirect
-    alert("Application submitted successfully!");
-    // router.push('/careers'); // Uncomment if you want to redirect
-    onSubmit(formData); // Notify parent component
+      alert("Application submitted successfully!");
+      // router.push('/careers'); // Uncomment if you want to redirect
+      onSubmit(formData); // Notify parent component
     } catch (err) {
       setError(
         err instanceof Error
@@ -147,13 +151,26 @@ export const JobApplicationForm = ({
     }
   };
 
+  const handleViewAssignment = () => {
+    window.open(applicationUrl, "_blank");
+  };
+
   return (
     <form onSubmit={handleSubmit} className={styles["form"]}>
       <div className={styles["header"]}>
         <h2 className={styles["form-title"]}>Apply for {jobTitle}</h2>
-        <p className={styles["form-description"]}>
-          Please fill out the form below to apply for this position.
+        <p className={`${styles["form-description"]} ${styles["form-note"]}`}>
+          To apply, please complete the assignment first and then fill out the application form.
         </p>
+      </div>
+      <div className={styles["view-assignment-container"]}>
+        <button
+          type="button"
+          onClick={handleViewAssignment}
+          className={styles["view-assignment-button"]}
+        >
+          View Assignment
+        </button>
       </div>
 
       <div className={styles["grid"]}>
@@ -243,84 +260,93 @@ export const JobApplicationForm = ({
         <div className={styles["assignment-section"]}>
           <h3 className={styles["section-subtitle"]}>Submitting Assignment *</h3>
 
-          {/* Project Document */}
-          <div className={styles["input-group"]}>
-            <label htmlFor="projectDocUrl">
-              Doc Explaining the Project (Paste URL)
-            </label>
-            <input
-              type="url"
-              id="projectDocUrl"
-              name="projectDocUrl"
-              value={formData.projectDocUrl}
-              onChange={handleInputChange}
-              className={styles["input"]}
-              placeholder="https://docs.google.com/document/yourdoc"
-            />
+          {/* Project Document Subsection */}
+          <div className={`${styles["assignment-subsection"]} ${styles["project-document"]}`}>
+            <h4 className={styles["subsection-title"]}>Project Document</h4>
+            <div className={styles["input-group"]}>
+              <label htmlFor="projectDocUrl">
+                Doc Explaining the Project (Paste URL)
+              </label>
+              <input
+                type="url"
+                id="projectDocUrl"
+                name="projectDocUrl"
+                value={formData.projectDocUrl}
+                onChange={handleInputChange}
+                className={styles["input"]}
+                placeholder="https://docs.google.com/document/yourdoc"
+              />
+            </div>
+
+            <div className={styles["input-group"]}>
+              <label htmlFor="projectDocFile">Or Upload Doc</label>
+              <input
+                type="file"
+                id="projectDocFile"
+                name="projectDocFile"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                className={styles["input"]}
+              />
+            </div>
           </div>
 
-          <div className={styles["input-group"]}>
-            <label htmlFor="projectDocFile">Or Upload Doc</label>
-            <input
-              type="file"
-              id="projectDocFile"
-              name="projectDocFile"
-              accept=".pdf,.doc,.docx"
-              onChange={handleFileChange}
-              className={styles["input"]}
-            />
+          {/* Demo Video Subsection */}
+          <div className={styles["assignment-subsection"]}>
+            <h4 className={styles["subsection-title"]}>Demo Video</h4>
+            <div className={styles["input-group"]}>
+              <label htmlFor="demoVideoUrl">Demo Video (Paste Link)</label>
+              <input
+                type="url"
+                id="demoVideoUrl"
+                name="demoVideoUrl"
+                value={formData.demoVideoUrl}
+                onChange={handleInputChange}
+                className={styles["input"]}
+                placeholder="https://youtu.be/yourvideo"
+              />
+            </div>
+
+            <div className={styles["input-group"]}>
+              <label htmlFor="demoVideoFile">Or Upload Demo Video</label>
+              <input
+                type="file"
+                id="demoVideoFile"
+                name="demoVideoFile"
+                accept="video/*"
+                onChange={handleFileChange}
+                className={styles["input"]}
+              />
+            </div>
           </div>
 
-          {/* Demo Video */}
-          <div className={styles["input-group"]}>
-            <label htmlFor="demoVideoUrl">Demo Video (Paste Link)</label>
-            <input
-              type="url"
-              id="demoVideoUrl"
-              name="demoVideoUrl"
-              value={formData.demoVideoUrl}
-              onChange={handleInputChange}
-              className={styles["input"]}
-              placeholder="https://youtu.be/yourvideo"
-            />
-          </div>
+          {/* Code Base Subsection */}
+          <div className={styles["assignment-subsection"]}>
+            <h4 className={styles["subsection-title"]}>Code Base</h4>
+            <div className={styles["input-group"]}>
+              <label htmlFor="codeBaseUrl">Code Base (Paste GitHub Repo)</label>
+              <input
+                type="url"
+                id="codeBaseUrl"
+                name="codeBaseUrl"
+                value={formData.codeBaseUrl}
+                onChange={handleInputChange}
+                className={styles["input"]}
+                placeholder="https://github.com/yourrepo"
+              />
+            </div>
 
-          <div className={styles["input-group"]}>
-            <label htmlFor="demoVideoFile">Or Upload Demo Video</label>
-            <input
-              type="file"
-              id="demoVideoFile"
-              name="demoVideoFile"
-              accept="video/*"
-              onChange={handleFileChange}
-              className={styles["input"]}
-            />
-          </div>
-
-          {/* Code Base */}
-          <div className={styles["input-group"]}>
-            <label htmlFor="codeBaseUrl">Code Base (Paste GitHub Repo)</label>
-            <input
-              type="url"
-              id="codeBaseUrl"
-              name="codeBaseUrl"
-              value={formData.codeBaseUrl}
-              onChange={handleInputChange}
-              className={styles["input"]}
-              placeholder="https://github.com/yourrepo"
-            />
-          </div>
-
-          <div className={styles["input-group"]}>
-            <label htmlFor="codeBaseFile">Or Upload Code Base (Zip)</label>
-            <input
-              type="file"
-              id="codeBaseFile"
-              name="codeBaseFile"
-              accept=".zip"
-              onChange={handleFileChange}
-              className={styles["input"]}
-            />
+            <div className={styles["input-group"]}>
+              <label htmlFor="codeBaseFile">Or Upload Code Base (Zip)</label>
+              <input
+                type="file"
+                id="codeBaseFile"
+                name="codeBaseFile"
+                accept=".zip"
+                onChange={handleFileChange}
+                className={styles["input"]}
+              />
+            </div>
           </div>
 
           {/* Hosted Link (Optional) */}
@@ -367,6 +393,7 @@ export const JobApplicationForm = ({
       </div>
 
       {error && <span className={styles["error"]}>{error}</span>}
+
 
       <div className={styles["button-container"]}>
         <button

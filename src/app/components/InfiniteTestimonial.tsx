@@ -93,10 +93,26 @@ const testimonials: Testimonial[] = [
       "It was great working with the team, very thoughtful guys will work with PGAGI again.",
     projectName: "AI Hypnosis Agent",
   },
+  {
+    name: "Sybestian",
+    company: "",
+    country: "USA",
+    quote:
+      "Great working with the team, they are very research oriented and also responsive at the same time. ",
+    projectName: "Airtable + AI ChatGPT Integration for Social Media Caption and Scheduling",
+  },
+  {
+    name: "Subrotom21",
+    company: "",
+    country: "USA",
+    quote:
+      "They are very professional, flexible, and fast. Highly recommend working with them.",
+    projectName: "RAG implementation for smart contact code",
+  },
 ];
 
 const TestimonialCarousel: React.FC = () => {
-  const infiniteTestimonials = Array.from({ length: 5 }, () => testimonials).flat();
+  const infiniteTestimonials = Array.from({ length: 10 }, () => testimonials).flat();
   const xValue = useMotionValue(0);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const animationRef = React.useRef<ReturnType<typeof animate> | null>(null);
@@ -113,7 +129,7 @@ const TestimonialCarousel: React.FC = () => {
       const currentOffset = fromX; 
       const remaining = distance - currentOffset;
       const totalDistance = distance;
-      const baseDuration = 60;
+      const baseDuration = 300;
       const duration = baseDuration * Math.abs(remaining / totalDistance);
 
       animationRef.current = animate(xValue, distance, {

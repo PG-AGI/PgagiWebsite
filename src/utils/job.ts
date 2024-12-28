@@ -7,5 +7,6 @@ export default interface Job {
   description: string;
   responsibilities: string[];
   requirements: string[];
+  numberOfOpenings: number;
   applicationUrl: string;
 }
