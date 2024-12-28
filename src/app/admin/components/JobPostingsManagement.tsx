@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form';
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
@@ -22,6 +22,7 @@ interface Job {
   description: string;
   responsibilities: string[];
   requirements: string[];
+  numberOfOpenings: number; // Added field
   applicationUrl: string;
 }
 
@@ -33,6 +34,7 @@ type FormValues = {
   description: string;
   responsibilities: { id: string; value: string }[];
   requirements: { id: string; value: string }[];
+  numberOfOpenings: number; // Added field
   applicationUrl: string;
 };
 
@@ -60,6 +62,7 @@ const JobPostingsManagement = () => {
       description: '',
       responsibilities: [{ id: uuidv4(), value: '' }],
       requirements: [{ id: uuidv4(), value: '' }],
+      numberOfOpenings: 1, // Set a default value
       applicationUrl: '',
     },
   });
@@ -108,8 +111,13 @@ const JobPostingsManagement = () => {
       location: data.location.trim(),
       type: data.type.trim(),
       description: data.description.trim(),
-      responsibilities: data.responsibilities.map((resp) => resp.value.trim()).filter((resp) => resp !== ''),
-      requirements: data.requirements.map((req) => req.value.trim()).filter((req) => req !== ''),
+      responsibilities: data.responsibilities
+        .map((resp) => resp.value.trim())
+        .filter((resp) => resp !== ''),
+      requirements: data.requirements
+        .map((req) => req.value.trim())
+        .filter((req) => req !== ''),
+      numberOfOpenings: data.numberOfOpenings, // Include numberOfOpenings
       applicationUrl: data.applicationUrl.trim(),
     };
 
@@ -150,6 +158,7 @@ const JobPostingsManagement = () => {
       description: job.description,
       responsibilities: job.responsibilities.map((resp) => ({ id: uuidv4(), value: resp })),
       requirements: job.requirements.map((req) => ({ id: uuidv4(), value: req })),
+      numberOfOpenings: job.numberOfOpenings, // Populate numberOfOpenings
       applicationUrl: job.applicationUrl,
     });
     setIsEditing(true);
@@ -246,6 +255,32 @@ const JobPostingsManagement = () => {
           {errors.type && <span className={styles.error}>{errors.type.message}</span>}
         </div>
 
+        {/* Number of Openings */}
+        <div className={styles.formGroup}>
+          <label htmlFor="numberOfOpenings">Number of Openings:</label>
+          <input
+            type="number"
+            id="numberOfOpenings"
+            {...register('numberOfOpenings', {
+              required: 'Number of openings is required',
+              min: {
+                value: 0,
+                message: 'Number of openings cannot be negative',
+              },
+              valueAsNumber: true, // Ensures the value is treated as a number
+              validate: {
+                isInteger: (value) =>
+                  Number.isInteger(value) || 'Number of openings must be an integer',
+              },
+            })}
+            placeholder="Enter number of openings"
+            required
+          />
+          {errors.numberOfOpenings && (
+            <span className={styles.error}>{errors.numberOfOpenings.message}</span>
+          )}
+        </div>
+
         {/* Description */}
         <div className={styles.formGroup}>
           <label htmlFor="description">Description:</label>
@@ -287,7 +322,8 @@ const JobPostingsManagement = () => {
               <button type="button" onClick={() => removeResponsibility(index)} className={styles.removeButton}>
                 Remove
               </button>
-              {/* {errors.responsibilities?.[index]?.value && (
+              {/* Uncomment below if you want to display errors for responsibilities
+              {errors.responsibilities?.[index]?.value && (
                 <span className={styles.error}>{errors.responsibilities[index].value?.message}</span>
               )} */}
             </div>
@@ -311,7 +347,8 @@ const JobPostingsManagement = () => {
               <button type="button" onClick={() => removeRequirement(index)} className={styles.removeButton}>
                 Remove
               </button>
-              {/* {errors.requirements?.[index]?.value && (
+              {/* Uncomment below if you want to display errors for requirements
+              {errors.requirements?.[index]?.value && (
                 <span className={styles.error}>{errors.requirements[index].value?.message}</span>
               )} */}
             </div>
@@ -337,7 +374,7 @@ const JobPostingsManagement = () => {
             placeholder="Enter application URL"
             required
           />
-          {/* {errors.applicationUrl && <span className={styles.error}>{errors.applicationUrl.message}</span>} */}
+          {errors.applicationUrl && <span className={styles.error}>{errors.applicationUrl.message}</span>}
         </div>
 
         {/* Submit and Reset Buttons */}
@@ -377,6 +414,7 @@ const JobPostingsManagement = () => {
               <th>Department</th>
               <th>Location</th>
               <th>Type</th>
+              <th>Openings</th> {/* Added column for numberOfOpenings */}
               <th>Actions</th>
             </tr>
           </thead>
@@ -387,6 +425,7 @@ const JobPostingsManagement = () => {
                 <td>{job.department}</td>
                 <td>{job.location}</td>
                 <td>{job.type}</td>
+                <td>{job.numberOfOpenings}</td> {/* Display numberOfOpenings */}
                 <td>
                   <button onClick={() => handleViewDetails(job)} className={styles.viewButton}>
                     View
@@ -412,6 +451,7 @@ const JobPostingsManagement = () => {
             <p><strong>Department:</strong> {selectedJob.department}</p>
             <p><strong>Location:</strong> {selectedJob.location}</p>
             <p><strong>Type:</strong> {selectedJob.type}</p>
+            <p><strong>Number of Openings:</strong> {selectedJob.numberOfOpenings}</p> {/* Display numberOfOpenings */}
             <div className={styles.description}>
               <strong>Description:</strong>
               <div dangerouslySetInnerHTML={{ __html: selectedJob.description }}></div>

@@ -72,7 +72,7 @@
     cursor: pointer;
 
     &:hover {
-        border-color: #0000ff;
+        border-color: #6b21a8;
         /* Blue border on hover */
         transform: translateY(-10px);
         /* Lift card slightly on hover */
@@ -89,7 +89,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0000ff;
+    color: #6b21a8;
     /* Blue icon color */
     background: rgba(0, 0, 255, 0.1);
     /* Add subtle blue background */
@@ -98,7 +98,7 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
 
     &:hover {
-        background: #0000ff;
+        background: #6b21a8;
         /* Darker blue on hover */
         transform: scale(1.1);
         /* Slightly enlarge icon on hover */
@@ -125,7 +125,7 @@
 @media (hover: hover) {
     .values-card:hover .values-icon {
         transform: scale(1.2);
-        background: #0000ff;
+        background: #6b21a8;
         /* Additional hover scaling for icon */
     }
 }

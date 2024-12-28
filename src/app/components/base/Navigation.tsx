@@ -117,7 +117,7 @@ export default function Navigation() {
                     Who We Are
                   </Link>
                   <Link href="/Career" className={styles.mobileMenuItem}>
-                    Career
+                    Careers
                   </Link>
 
                 </div>
@@ -256,7 +256,7 @@ export default function Navigation() {
                 Who We Are
               </Link>
               <Link href="/Career" className={styles.link}>
-                Career
+                Careers
               </Link>
             </>
           )}
