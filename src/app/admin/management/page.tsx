@@ -25,9 +25,14 @@ const AdminPage = () => {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>Admin Panel</h1>
-        <button onClick={() => signOut({ callbackUrl: '/auth/signin' })} className={styles.signOutButton}>
-          Sign Out
-        </button>
+       <button 
+  onClick={() => signOut({ 
+    callbackUrl: `${window.location.origin}/auth/signin`
+  })} 
+  className={styles.signOutButton}
+>
+  Sign Out
+</button>
       </header>
       <AdminPanel />
     </div>
