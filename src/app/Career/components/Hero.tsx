@@ -13,7 +13,7 @@ export const Hero = ({
       <p className={styles.subheading}>Be the Architect of AI Transformation</p>
        <h1 className={styles.heading}> Join our pioneering team at the forefront <br /> of AGI evolution. </h1>
        <p className={styles.description}>
-         {" Develop near-AGI solutions that inspire innovation and drive business transformation worldwide."}
+         We are shaping a future where AI is a fundamental and positive force for businesses, societies, and the planet.
        </p>
         <div className={styles.buttons}>
           <button
