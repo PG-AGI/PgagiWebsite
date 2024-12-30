@@ -3,11 +3,11 @@ import styles from './Values.module.scss';
 import { Brain, Users, Shield, Star, Heart } from 'lucide-react';
 
 const values = [
-  { icon: <Brain />, title: 'Innovation', description: "Pushing the boundaries of what's possible with AI" },
-  { icon: <Users />, title: 'Collaboration', description: 'Working together to achieve extraordinary results' },
-  { icon: <Shield />, title: 'Integrity', description: 'Upholding the highest standards in everything we do' },
-  { icon: <Star />, title: 'Excellence', description: 'Committed to delivering exceptional quality' },
-  { icon: <Heart />, title: 'Impact', description: 'Making a real difference in the world through AI' },
+  { icon: <Brain />, title: 'Innovation', description: "We do not just work with AI; we innovate to redefine its potential." },
+  { icon: <Users />, title: 'Collaboration', description: 'Working together to make impossible AI solutions, a reality.' },
+  { icon: <Shield />, title: 'Integrity', description: 'We take pride in raising the bar and delivering top-notch results every time.' },
+  { icon: <Star />, title: 'Excellence', description: 'Excellence, quality, and precision are at the heart of what we do.' },
+  { icon: <Heart />, title: 'Impact', description: 'Leveraging AI to drive an impactful, positive change in this world.' },
 ];
 
 export const Values = () => {
@@ -17,7 +17,7 @@ export const Values = () => {
         <div className={styles['values-heading-container']}>
           <h2 className={styles['values-heading']}>Our Values</h2>
           <p className={styles['values-description']}>
-            At PGAGI, our values shape everything we do and guide us in our mission to transform the future.
+          At PGAGI, we value innovation, AGI advancement, integrity, scalability, collaboration, continuous learning.
           </p>
         </div>
         <div className={styles['values-grid']}>

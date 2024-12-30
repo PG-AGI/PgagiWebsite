@@ -183,7 +183,6 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
             <div key={i} className={`${styles.dot} ${currentIndex === i ? styles.active : ''}`} />
           ))}
         </div>
-
         <motion.section
           className={styles.caseSection}
           id="case-studies"
@@ -195,56 +194,59 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
           <h2>Case Studies</h2>
           <div className={styles.listContainer}>
             {scrollStates.case.canScrollLeft && (
-              <button 
-                className={`${styles.navigationButtons} ${styles.prev}`}
-                onClick={() => scroll(caseRef, 'left')}
+              <button
+          className={`${styles.navigationButtons} ${styles.prev}`}
+          onClick={() => scroll(caseRef, 'left')}
               >
-                <FaChevronLeft size={24} color="white" />
+          <FaChevronLeft size={24} color="white" />
               </button>
             )}
             <div className={styles.caseStudyList} ref={caseRef} {...caseEvents}>
-            {loadingCaseStudies ? (
-  Array.from({ length: skeletonCount }).map((_, index) => (
-    <div className={styles.caseItem} key={index}>
-      <div className={styles.skeletonImage} />
-      <div className={styles.skeletonText}>
-        <div className={styles.skeletonLine} />
-        <div className={styles.skeletonLineShort} />
-      </div>
-    </div>
-  ))
-) : errorCaseStudies ? (
-  <p className={styles.error}>{errorCaseStudies}</p>
-) : caseStudies.length === 0 ? (
-  <p>No case studies found.</p>
-)  : (
-                caseStudies.map((cs) => (
-                  <Link href={`/case-study/${cs.id}`} key={cs.id}>
-                    <div className={styles.caseItem}>
-                      <div className={styles.content}>
-                        <h3>{cs.title}</h3>
-                      </div>
-                      <div className={styles.imageWrapper}>
-                        <Image 
-                          className={styles.imgTag} 
-                          src={cs.coverImage} 
-                          alt={cs.title} 
-                          layout="fill" 
-                          objectFit="cover" 
-                          priority
-                        />
-                      </div>
-                    </div>
-                  </Link>
-                ))
+              {loadingCaseStudies ? (
+          Array.from({ length: skeletonCount }).map((_, index) => (
+            <div className={styles.caseItem} key={index}>
+              <div className={styles.skeletonImage} />
+              <div className={styles.skeletonText}>
+                <div className={styles.skeletonLine} />
+                <div className={styles.skeletonLineShort} />
+              </div>
+            </div>
+          ))
+              ) : errorCaseStudies ? (
+          <p className={styles.error}>{errorCaseStudies}</p>
+              ) : caseStudies.length === 0 ? (
+          <p>No case studies found.</p>
+              ) : (
+          caseStudies
+            .slice(0)
+            .reverse()
+            .map(cs => (
+              <Link href={`/case-study/${cs.id}`} key={cs.id}>
+                <div className={styles.caseItem}>
+            <div className={styles.content}>
+              <h3>{cs.title}</h3>
+            </div>
+            <div className={styles.imageWrapper}>
+              <Image
+                className={styles.imgTag}
+                src={cs.coverImage}
+                alt={cs.title}
+                layout="fill"
+                objectFit="cover"
+                priority
+              />
+            </div>
+                </div>
+              </Link>
+            ))
               )}
             </div>
             {scrollStates.case.canScrollRight && (
-              <button 
-                className={`${styles.navigationButtons} ${styles.next}`}
-                onClick={() => scroll(caseRef, 'right')}
+              <button
+          className={`${styles.navigationButtons} ${styles.next}`}
+          onClick={() => scroll(caseRef, 'right')}
               >
-                <FaChevronRight size={24} color="white" />
+          <FaChevronRight size={24} color="white" />
               </button>
             )}
           </div>

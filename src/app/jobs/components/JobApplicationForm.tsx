@@ -9,7 +9,7 @@ import styles from "./JobApplicationForm.module.scss";
 interface JobApplicationFormProps {
   jobTitle: string;
   onSubmit: (formData: FormData) => void;
-  applicationUrl: string; // Added applicationUrl to props
+  applicationUrl: string; 
 }
 
 interface FormData {
@@ -303,7 +303,7 @@ export const JobApplicationForm = ({
                 value={formData.demoVideoUrl}
                 onChange={handleInputChange}
                 className={styles["input"]}
-                placeholder="https://youtu.be/yourvideo"
+                placeholder="https://www.loom.com/share/1234567890abcdef1234567890abcdef"
               />
             </div>
 

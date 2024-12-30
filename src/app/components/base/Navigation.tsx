@@ -202,7 +202,6 @@ export default function Navigation() {
             </>
           ) : (
             <>
-              {/* Desktop view */}
               <div
                 className={styles.whatWeDo}
                 onMouseEnter={() => setWhatWeDo("solutions")}

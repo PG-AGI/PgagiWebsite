@@ -182,7 +182,7 @@
           height: 500px;
           display: none;
           padding-top: 55px;
-          z-index: 10000001; /* Ensure it's higher than .calendly */
+          z-index: 10000; /* Ensure it's higher than .calendly */
 
           .content {
             position: relative;
@@ -202,6 +202,8 @@
               background: #1c3352;
               filter: blur(89px);
               opacity: 0.6;
+              pointer-events: none;
+              
             }
 
             .menu {

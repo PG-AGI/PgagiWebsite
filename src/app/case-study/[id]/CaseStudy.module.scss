@@ -1,4 +1,3 @@
-
 $background-dark: black;
 $text-primary: #ffffff;
 $text-secondary: #a8a8b3;
@@ -15,6 +14,7 @@ $highlight-bg: rgba(255, 255, 255, 0.1);
 $code-bg: #1e1e1e;
 $code-color: #d4d4d4;
 $code-border: #333333;
+
 @mixin hover-transition {
   transition: all 0.2s ease-in-out;
 
@@ -29,7 +29,6 @@ $code-border: #333333;
   border: 2px solid rgba(255, 255, 255, 0.05);
 }
 
-
 .container {
   min-height: 100vh;
   background-color: $background-dark;
@@ -42,7 +41,7 @@ $code-border: #333333;
   padding: $spacing-unit * 2;
 }
 
-// Header styles
+/* Header styles */
 .header {
   margin-bottom: $spacing-unit * 3;
   padding: $spacing-unit * 2;
@@ -110,22 +109,98 @@ $code-border: #333333;
   color: $purple-light;
 }
 
-// Content layout
+/* Content layout */
 .content {
   display: grid;
   grid-template-columns: 250px 1fr;
   gap: $spacing-unit * 3;
 }
 
+/* ─────────────────────────────────────────────────── */
+/* SIDEBAR                                            */
+/* ─────────────────────────────────────────────────── */
+
+/* Sidebar container */
 .sidebar {
   position: sticky;
   top: $spacing-unit * 2;
-  height: fit-content;
+  /* Adjust to fit your layout; ensures the sidebar is fixed within the viewport */
+  height: calc(100vh - #{$spacing-unit * 2});
+  display: flex;
+  flex-direction: column;
+  @include glass-effect;
   padding: $spacing-unit * 1.5;
   border-radius: 1rem;
-  @include glass-effect;
 }
 
+/* Sidebar Header (Always Visible) */
+.sidebarHeader {
+  flex-shrink: 0; /* Prevent shrinking */
+  margin-bottom: $spacing-unit;
+}
+
+/* Scrollable Navigation (Middle) */
+.navScroll {
+  flex: 1; /* Takes up remaining vertical space */
+  overflow-y: auto;
+
+  /* Hide scrollbar (optional) */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  scrollbar-width: none; /* For Firefox */
+}
+
+/* Sidebar Footer (Always Visible) */
+.sidebarFooter {
+  flex-shrink: 0; /* Prevent shrinking */
+  padding-top: $spacing-unit * 1.5;
+  border-top: 1px solid rgba($text-secondary, 0.2);
+
+  h3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $purple-light;
+    margin-bottom: $spacing-unit;
+  }
+
+  .socialLinks {
+    display: flex;
+    gap: $spacing-unit;
+
+    .socialButton,
+    .copyButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 0.5rem;
+      color: $text-secondary;
+      cursor: pointer;
+      @include hover-transition;
+
+      &:hover {
+        color: $purple-light;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+/* Navigation Heading inside sidebar */
 .navigationHeading {
   font-size: 1rem;
   font-weight: 600;
@@ -133,6 +208,7 @@ $code-border: #333333;
   margin-bottom: 0.5rem;
 }
 
+/* Navigation list inside .navScroll */
 .navigation {
   list-style: none;
   padding: 0;
@@ -144,6 +220,7 @@ $code-border: #333333;
   }
 }
 
+/* Navigation button styles */
 .navButton {
   width: 100%;
   text-align: left;
@@ -153,10 +230,9 @@ $code-border: #333333;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: $text-secondary;
   font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
 
   &::before {
     content: '';
@@ -193,62 +269,9 @@ $code-border: #333333;
   }
 }
 
-.social {
-  padding-top: $spacing-unit * 1.5;
-  border-top: 1px solid rgba($text-secondary, 0.2);
-
-  h3 {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: $purple-light;
-    margin-bottom: $spacing-unit;
-  }
-}
-
-.socialLinks {
-  display: flex;
-  gap: $spacing-unit;
-
-  a, .copyButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 0.5rem;
-    color: $text-secondary;
-    cursor: pointer;
-    @include hover-transition;
-
-    &:hover {
-      color: $purple-light;
-      background: rgba(255, 255, 255, 0.12);
-    }
-  }
-
-  a {
-    text-decoration: none;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  .copyButton {
-    border: none;
-    background: none;
-    padding: 0;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-}
-
-// Article content
+/* ─────────────────────────────────────────────────── */
+/* ARTICLE CONTENT                                    */
+/* ─────────────────────────────────────────────────── */
 .article {
   color: $text-secondary;
   scroll-margin-top: $spacing-unit * 2;
@@ -308,8 +331,8 @@ $code-border: #333333;
         color: lighten($purple-light, 10%);
         text-decoration: none;
         animation: none;
-        text-shadow: 
-          0 0 15px lighten($purple-light, 20%), 
+        text-shadow:
+          0 0 15px lighten($purple-light, 20%),
           0 0 25px lighten($purple-light, 30%);
       }
     }
@@ -399,7 +422,7 @@ $code-border: #333333;
   }
 }
 
-// Responsive styles
+/* Responsive styles */
 @media (max-width: 768px) {
   .content {
     grid-template-columns: 1fr;
@@ -409,6 +432,7 @@ $code-border: #333333;
     position: relative;
     top: 0;
     margin-bottom: $spacing-unit * 2;
+    height: auto; /* For small screens, let sidebar size naturally */
   }
 
   .header {
@@ -429,3 +453,113 @@ $code-border: #333333;
     }
   }
 }
+
+/* Skeleton loader classes (if you use them) */
+.skeletonHeader, .skeletonSidebar, .skeletonArticle {
+  @include glass-effect;
+  border-radius: 1rem;
+}
+
+.skeleton {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.skeletonLine {
+  width: 100%;
+  height: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.skeletonLineShort {
+  width: 50%;
+  height: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.skeletonTitle {
+  width: 70%;
+  height: 2rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-bottom: $spacing-unit;
+  border-radius: 0.5rem;
+}
+
+.skeletonCircle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.skeletonButton {
+  width: 100%;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.error {
+  color: red;
+  font-size: 1.5rem;
+  margin-bottom: $spacing-unit;
+}
+
+.backButton {
+  cursor: pointer;
+  background: $purple-primary;
+  color: $text-primary;
+  border: none;
+  padding: $spacing-unit $spacing-unit * 2;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+
+  &:hover {
+    background: $purple-light;
+  }
+}
+.scrollToTopButton {
+  position: fixed;
+  bottom: $spacing-unit * 2;
+  right: $spacing-unit * 2;
+  width: $spacing-unit * 3;
+  height: $spacing-unit * 3;
+  border: none;
+  border-radius: 50%;
+  background: $purple-primary;
+  color: $text-primary;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  animation: bounce 2s infinite;
+ 
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+ 
+  &:hover {
+    background: $purple-light;
+    transform: scale(1.1);
+  }
+ 
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+ }
