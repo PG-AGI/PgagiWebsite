@@ -302,6 +302,7 @@ export const JobApplicationForm = ({
                 onChange={handleInputChange}
                 className={styles["input"]}
                 placeholder="https://www.loom.com/share/1234567890abcdef1234567890abcdef"
+                placeholder="https://www.loom.com/share/1234567890abcdef1234567890abcdef"
               />
             </div>
 
