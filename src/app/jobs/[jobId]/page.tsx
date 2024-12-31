@@ -154,8 +154,9 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
           {showForm && (
             <JobApplicationForm
               jobTitle={job.title}
+              jobId={job.id}
               onSubmit={handleApplicationSubmit}
-              applicationUrl={job.applicationUrl} // Passed applicationUrl as a prop
+              applicationUrl={job.applicationUrl}
             />
           )}
         </div>

@@ -8,11 +8,13 @@ import styles from "./JobApplicationForm.module.scss";
 
 interface JobApplicationFormProps {
   jobTitle: string;
-  onSubmit: (formData: FormData) => void;
+  jobId: string;
+  onSubmit: (formData: any) => void;
   applicationUrl: string; 
 }
 
 interface FormData {
+  jobId: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -32,10 +34,12 @@ interface FormData {
 
 export const JobApplicationForm = ({
   jobTitle,
+  jobId,
   onSubmit,
-  applicationUrl, // Destructure applicationUrl
+  applicationUrl, 
 }: JobApplicationFormProps) => {
   const [formData, setFormData] = useState<FormData>({
+    jobId, 
     firstName: "",
     lastName: "",
     email: "",
@@ -73,8 +77,6 @@ export const JobApplicationForm = ({
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-
-    // Validation
     const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*$/;
     if (formData.linkedIn && !linkedInRegex.test(formData.linkedIn)) {
       setError("Please enter a valid LinkedIn URL.");
@@ -82,7 +84,6 @@ export const JobApplicationForm = ({
       return;
     }
 
-    // Ensure at least one option is provided for each assignment field
     if (
       (!formData.projectDocUrl && !formData.projectDocFile) ||
       (!formData.demoVideoUrl && !formData.demoVideoFile) ||
@@ -95,8 +96,8 @@ export const JobApplicationForm = ({
       return;
     }
 
-    // Create FormData for file upload
     const formDataToSubmit = new FormData();
+    formDataToSubmit.append("jobId", formData.jobId); 
     formDataToSubmit.append("jobTitle", jobTitle);
     formDataToSubmit.append("firstName", formData.firstName);
     formDataToSubmit.append("lastName", formData.lastName);
@@ -119,7 +120,7 @@ export const JobApplicationForm = ({
     }
     formDataToSubmit.append("hostedLink", formData.hostedLink || "");
 
-    // Append resume file
+  
     if (formData.resume) {
       formDataToSubmit.append("resume", formData.resume);
     }
@@ -135,11 +136,8 @@ export const JobApplicationForm = ({
       if (!response.ok) {
         throw new Error(result.message || "Failed to submit application");
       }
-
-      // Optional: Show success message or redirect
       alert("Application submitted successfully!");
-      // router.push('/careers'); // Uncomment if you want to redirect
-      onSubmit(formData); // Notify parent component
+      onSubmit(formData); 
     } catch (err) {
       setError(
         err instanceof Error
@@ -393,7 +391,6 @@ export const JobApplicationForm = ({
       </div>
 
       {error && <span className={styles["error"]}>{error}</span>}
-
 
       <div className={styles["button-container"]}>
         <button
