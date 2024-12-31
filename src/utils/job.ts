@@ -9,4 +9,5 @@ export default interface Job {
   requirements: string[];
   numberOfOpenings: number;
   applicationUrl: string;
+  status: 'active' | 'inactive';
 }

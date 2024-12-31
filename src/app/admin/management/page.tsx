@@ -24,7 +24,6 @@ const AdminPage = () => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1>Admin Panel</h1>
        <button 
   onClick={() => signOut({ 
     callbackUrl: `${window.location.origin}/auth/signin`

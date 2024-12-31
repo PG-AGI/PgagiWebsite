@@ -1,37 +1,37 @@
 import React from 'react';
 import styles from './Benefits.module.scss';
-import { Laptop, Brain, Heart, Globe, BookOpen, Clock } from 'lucide-react';
+import { Laptop, Brain, Globe, BookOpen,  Landmark, HandCoins } from 'lucide-react';
 
 const benefits = [
   {
     icon: <Globe />,
     title: 'Remote-First',
-    description: 'Work from anywhere in the world with our distributed team',
+    description: 'Join our global team and experience flexibility that fits your lifestyle.',
   },
   {
     icon: <Brain />,
     title: 'Learning Budget',
-    description: 'Annual budget for courses, conferences, and skill development',
+    description: 'Upskill with an annual budget for courses, conferences, and skill-building.',
   },
   {
-    icon: <Heart />,
-    title: 'Health Insurance',
-    description: 'Comprehensive health coverage for you and your family',
+    icon: <Landmark />,
+    title: 'Competitive Pay',
+    description: 'Enjoy a competitive base salary plus performance-driven bonuses.',
   },
   {
     icon: <BookOpen />,
     title: 'Research Time',
-    description: 'Dedicated time for exploring new AI technologies',
+    description: 'Stay ahead with dedicated time to explore the latest AI technologies and trends.',
   },
   {
     icon: <Laptop />,
     title: 'Latest Tech',
-    description: 'Access to cutting-edge AI tools and technologies',
+    description: 'Get hands-on experience with advanced AI tools and technologies.',
   },
   {
-    icon: <Clock />,
-    title: 'Flexible Hours',
-    description: "Work when you're most productive",
+    icon: <HandCoins />,
+    title: 'ESOPs',
+    description: "We reward your hard work with a share in the company's success for unlimited growth.",
   },
 ];
 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb'; 
 
+
 interface Job {
   id: string;
   title: string;
@@ -12,6 +13,7 @@ interface Job {
   requirements: string[];
   numberOfOpenings: number;
   applicationUrl: string;
+  status: 'active' | 'inactive'; 
 }
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
@@ -41,7 +43,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
       responsibilities: job.responsibilities,
       requirements: job.requirements,
       numberOfOpenings: job.numberOfOpenings,
-      applicationUrl: job.applicationUrl
+      applicationUrl: job.applicationUrl,
+      status: job.status,
+
     };
 
     return NextResponse.json(formattedJob, { status: 200 });
@@ -54,6 +58,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
     );
   }
 }
+
+// src\app\api\careers\postings\[id]\route.ts
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   const { id } = params;
@@ -70,7 +76,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       responsibilities,
       requirements,
       numberOfOpenings,
-      applicationUrl
+      applicationUrl,
+      status // Optional field
     } = body;
 
     if (
@@ -89,26 +96,39 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         { status: 400 }
       );
     }
-    
+
+    // Validate status if provided
+    if (status && !['active', 'inactive'].includes(status)) {
+      return NextResponse.json(
+        { message: 'Invalid status value' },
+        { status: 400 }
+      );
+    }
 
     const client = await clientPromise;
     const database = client.db('jobPosting');
     const jobsCollection = database.collection('Postings');
 
+    const updateFields: Partial<Job> = {
+      title: title.trim(),
+      department: department.trim(),
+      location: location.trim(),
+      type: type.trim(),
+      description: description.trim(),
+      responsibilities: responsibilities.map((resp: string) => resp.trim()).filter((resp: string) => resp !== ''),
+      requirements: requirements.map((req: string) => req.trim()).filter((req: string) => req !== ''),
+      numberOfOpenings: numberOfOpenings,
+      applicationUrl: applicationUrl.trim()
+    };
+    
+    if (status) {
+      updateFields.status = status;
+    }
+
     const updateResult = await jobsCollection.updateOne(
       { id },
       {
-        $set: {
-          title: title.trim(),
-          department: department.trim(),
-          location: location.trim(),
-          type: type.trim(),
-          description: description.trim(),
-          responsibilities: responsibilities.map((resp: string) => resp.trim()).filter((resp: string) => resp !== ''),
-          requirements: requirements.map((req: string) => req.trim()).filter((req: string) => req !== ''),
-          numberOfOpenings: numberOfOpenings,
-          applicationUrl: applicationUrl.trim()
-        }
+        $set: updateFields
       }
     );
 
@@ -148,24 +168,35 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     const database = client.db('jobPosting');
     const jobsCollection = database.collection('Postings');
 
-    const deleteResult = await jobsCollection.deleteOne({ id });
+    // Update the job's status to 'inactive' instead of deleting
+    const updateResult = await jobsCollection.updateOne(
+      { id },
+      { $set: { status: 'inactive' } }
+    );
 
-    if (deleteResult.deletedCount === 0) {
+    if (updateResult.matchedCount === 0) {
       return NextResponse.json(
         { message: 'Job posting not found' },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(
-      { message: 'Job posting deleted successfully' },
-      { status: 200 }
-    );
+    if (updateResult.modifiedCount === 1) {
+      return NextResponse.json(
+        { message: 'Job posting marked as inactive successfully' },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { message: 'No changes made to the job posting' },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     const err = error as Error;
-    console.error('Error deleting job posting:', err.message, err.stack);
+    console.error('Error marking job posting as inactive:', err.message, err.stack);
     return NextResponse.json(
-      { message: 'Failed to delete job posting', error: err.message },
+      { message: 'Failed to mark job posting as inactive', error: err.message },
       { status: 500 }
     );
   }

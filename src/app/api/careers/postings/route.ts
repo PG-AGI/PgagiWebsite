@@ -12,14 +12,21 @@ interface Job {
   requirements: string[];
   numberOfOpenings: number;
   applicationUrl: string;
+  status: 'active' | 'inactive'; 
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const client = await clientPromise;
     const database = client.db('jobPosting');
     const jobsCollection = database.collection('Postings');
-    const jobs = await jobsCollection.find({}).toArray();
+
+    // Parse query parameters
+    const url = new URL(request.url);
+    const status = url.searchParams.get('status') || 'active'; // Default to 'active'
+
+    // Fetch jobs based on status
+    const jobs = await jobsCollection.find({ status }).toArray();
 
     const formattedJobs: Job[] = jobs.map(job => ({
       id: job.id,
@@ -31,7 +38,8 @@ export async function GET() {
       responsibilities: job.responsibilities,
       requirements: job.requirements,
       numberOfOpenings: job.numberOfOpenings,
-      applicationUrl: job.applicationUrl
+      applicationUrl: job.applicationUrl,
+      status: job.status 
     }));
 
     return NextResponse.json(formattedJobs, { status: 200 });
@@ -79,7 +87,6 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
 
     const client = await clientPromise;
     const database = client.db('jobPosting');
@@ -95,7 +102,8 @@ export async function POST(request: Request) {
       responsibilities,
       requirements,
       applicationUrl,
-      numberOfOpenings
+      numberOfOpenings,
+      status: 'active'
     };
 
     const result = await jobsCollection.insertOne(newJob);
