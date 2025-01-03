@@ -1,13 +1,14 @@
+
+
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb';
 import { Binary } from 'mongodb';
 
 export async function POST(req: Request) {
   try {
-    // Create a FormData object to handle multipart/form-data
     const formData = await req.formData();
-
-    // Extract form fields
+    const jobId = formData.get('jobId') as string;
+    const jobTitle = formData.get('jobTitle') as string;
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
     const email = formData.get('email') as string;
@@ -15,30 +16,38 @@ export async function POST(req: Request) {
     const linkedIn = formData.get('linkedIn') as string;
     const portfolio = formData.get('portfolio') as string;
     const coverLetter = formData.get('coverLetter') as string;
-    const jobTitle = formData.get('jobTitle') as string;
-
-    // Handle file upload
+    const projectDocUrl = formData.get('projectDocUrl') as string;
+    const demoVideoUrl = formData.get('demoVideoUrl') as string;
+    const codeBaseUrl = formData.get('codeBaseUrl') as string;
+    const hostedLink = formData.get('hostedLink') as string;
     const resumeFile = formData.get('resume') as File;
-    
-    // Validate required fields
-    if (!firstName || !lastName || !email || !resumeFile) {
+    const projectDocFile = formData.get('projectDocFile') as File;
+    const demoVideoFile = formData.get('demoVideoFile') as File;
+    const codeBaseFile = formData.get('codeBaseFile') as File;
+
+    if (!jobId || !jobTitle || !firstName || !lastName || !email || !resumeFile) {
       return NextResponse.json(
         { message: 'Missing required fields' }, 
         { status: 400 }
       );
     }
 
-    // Read file as Uint8Array
-    const resumeBuffer = await resumeFile.arrayBuffer();
-    const resumeUint8Array = new Uint8Array(resumeBuffer);
+    const fileToBinary = async (file: File | null) => {
+      if (!file) return null;
+      const buffer = await file.arrayBuffer();
+      return new Binary(new Uint8Array(buffer));
+    };
+    const resumeBinary = await fileToBinary(resumeFile);
+    const projectDocBinary = await fileToBinary(projectDocFile);
+    const demoVideoBinary = await fileToBinary(demoVideoFile);
+    const codeBaseBinary = await fileToBinary(codeBaseFile);
 
-    // Get MongoDB client
     const client = await clientPromise;
-    const database = client.db('jobPosting'); // Replace with your database name
+    const database = client.db('jobPosting'); 
     const applicantsCollection = database.collection('Applicants');
 
-    // Prepare applicant data
-    const applicantData = {
+    const applicantData: any = {
+      jobId,
       jobTitle,
       firstName,
       lastName,
@@ -50,12 +59,39 @@ export async function POST(req: Request) {
       resume: {
         filename: resumeFile.name,
         contentType: resumeFile.type,
-        data: resumeUint8Array
+        data: resumeBinary
       },
-      applicationDate: new Date()
+      applicationDate: new Date(),
+
+      assignments: {
+        projectDocument: {
+          url: projectDocUrl || '',
+          file: projectDocBinary ? {
+            filename: projectDocFile.name,
+            contentType: projectDocFile.type,
+            data: projectDocBinary
+          } : null
+        },
+        demoVideo: {
+          url: demoVideoUrl || '',
+          file: demoVideoBinary ? {
+            filename: demoVideoFile.name,
+            contentType: demoVideoFile.type,
+            data: demoVideoBinary
+          } : null
+        },
+        codeBase: {
+          url: codeBaseUrl || '',
+          file: codeBaseBinary ? {
+            filename: codeBaseFile.name,
+            contentType: codeBaseFile.type,
+            data: codeBaseBinary
+          } : null
+        },
+        hostedLink: hostedLink || ''
+      }
     };
 
-    // Insert applicant data
     const result = await applicantsCollection.insertOne(applicantData);
 
     return NextResponse.json(
