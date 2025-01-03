@@ -1196,10 +1196,8 @@ const AdminPanel = () => {
     try {
       const response = await axios.get(`${endpoint}/${content.id}`);
       const data: ContentDetails = response.data;
-
-      // Construct new form values from fetched data
       const formData: FormValues = {
-        contentType: data.contentType, // Make sure this is set to keep the same content type
+        contentType: data.contentType, 
         coverImage: data.coverImage || '',
         title: data.title || '',
         publishDate: data.publishDate || '',
@@ -1220,8 +1218,6 @@ const AdminPanel = () => {
           })),
         })),
       };
-
-      // Reset the form with the existing data
       reset(formData);
       setIsEditing(true);
       setEditingContentId(content.id);
