@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 import Calendly from "./components/Calendly";
 import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
-import { motion } from 'framer-motion';
+//import { motion } from 'framer-motion';
 import TrendingOld from "./components/trending_old";
 import TestimonialCarousel from "./components/InfiniteTestimonial";
 export default function Home() {
@@ -29,8 +29,6 @@ export default function Home() {
 			const blob = document.querySelector(`.${styles.blob}`) as HTMLDivElement;
 
 			if (!blob) return;
-
-			// Calculate the total height of the segment section, extended to 120%
 			const segmentSectionHeight = segmentRef.current.scrollHeight * 2;
 			const windowHeight = window.innerHeight;
 
