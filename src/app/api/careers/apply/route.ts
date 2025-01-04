@@ -1,8 +1,6 @@
-
-
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb';
-import { Binary } from 'mongodb';
+import { Binary, ObjectId } from 'mongodb';
 
 export async function POST(req: Request) {
   try {
@@ -24,14 +22,12 @@ export async function POST(req: Request) {
     const projectDocFile = formData.get('projectDocFile') as File;
     const demoVideoFile = formData.get('demoVideoFile') as File;
     const codeBaseFile = formData.get('codeBaseFile') as File;
-
     if (!jobId || !jobTitle || !firstName || !lastName || !email || !resumeFile) {
       return NextResponse.json(
         { message: 'Missing required fields' }, 
         { status: 400 }
       );
     }
-
     const fileToBinary = async (file: File | null) => {
       if (!file) return null;
       const buffer = await file.arrayBuffer();
@@ -41,29 +37,36 @@ export async function POST(req: Request) {
     const projectDocBinary = await fileToBinary(projectDocFile);
     const demoVideoBinary = await fileToBinary(demoVideoFile);
     const codeBaseBinary = await fileToBinary(codeBaseFile);
-
+    const applicantId = new ObjectId();
     const client = await clientPromise;
-    const database = client.db('jobPosting'); 
-    const applicantsCollection = database.collection('Applicants');
+    const session = client.startSession();
 
-    const applicantData: any = {
-      jobId,
-      jobTitle,
-      firstName,
-      lastName,
-      email,
-      phone: phone || '',
-      linkedIn: linkedIn || '',
-      portfolio: portfolio || '',
-      coverLetter: coverLetter || '',
-      resume: {
-        filename: resumeFile.name,
-        contentType: resumeFile.type,
-        data: resumeBinary
-      },
-      applicationDate: new Date(),
+    try {
+      session.startTransaction();
+      const jobPostingDb = client.db('jobPosting');
+      const applicantsCollection = jobPostingDb.collection('Applicants');
 
-      assignments: {
+      const applicantData = {
+        _id: applicantId,
+        jobId,
+        jobTitle,
+        firstName,
+        lastName,
+        email,
+        phone: phone || '',
+        linkedIn: linkedIn || '',
+        portfolio: portfolio || '',
+        coverLetter: coverLetter || '',
+        applicationDate: new Date(),
+      };
+
+      await applicantsCollection.insertOne(applicantData, { session });
+
+      const applicationDetailsDb = client.db('jobPosting');
+      const assignmentsCollection = applicationDetailsDb.collection('Assignments');
+
+      const assignmentsData = {
+        _id: applicantId,
         projectDocument: {
           url: projectDocUrl || '',
           file: projectDocBinary ? {
@@ -89,18 +92,36 @@ export async function POST(req: Request) {
           } : null
         },
         hostedLink: hostedLink || ''
-      }
-    };
+      };
 
-    const result = await applicantsCollection.insertOne(applicantData);
+      await assignmentsCollection.insertOne(assignmentsData, { session });
+      const resumesCollection = applicationDetailsDb.collection('Resumes');
 
-    return NextResponse.json(
-      { 
-        message: 'Application submitted successfully', 
-        applicantId: result.insertedId 
-      }, 
-      { status: 201 }
-    );
+      const resumeData = {
+        _id: applicantId,
+        filename: resumeFile.name,
+        contentType: resumeFile.type,
+        data: resumeBinary,
+        uploadedAt: new Date()
+      };
+
+      await resumesCollection.insertOne(resumeData, { session });
+      await session.commitTransaction();
+      session.endSession();
+
+      return NextResponse.json(
+        { 
+          message: 'Application submitted successfully', 
+          applicantId: applicantId.toHexString() 
+        }, 
+        { status: 201 }
+      );
+    } catch (transactionError) {
+      await session.abortTransaction();
+      session.endSession();
+      throw transactionError;
+    }
+
   } catch (error) {
     const err = error as Error;
     console.error('Error submitting application:', err.message, err.stack);
