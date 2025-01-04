@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
@@ -22,6 +23,7 @@ type CaseStudy = {
   title: string;
   coverImage: string;
 };
+
 export default function BlogPage() {
   const topRef = useRef<HTMLDivElement>(null);
   const caseRef = useRef<HTMLDivElement>(null);
@@ -30,8 +32,8 @@ export default function BlogPage() {
 
   // Setup draggable scroll hooks
   const { events: caseEvents } = useDraggable(caseRef as React.MutableRefObject<HTMLElement>);
-const { events: blogEvents } = useDraggable(blogRef as React.MutableRefObject<HTMLElement>);
-const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HTMLElement>);
+  const { events: blogEvents } = useDraggable(blogRef as React.MutableRefObject<HTMLElement>);
+  const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HTMLElement>);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scrollStates, setScrollStates] = useState({
@@ -90,33 +92,19 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
     };
   }, []);
 
-  // const scroll = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right') => {
-  //   if (ref.current) {
-  //     const scrollAmount = ref.current.clientWidth * 0.8;
-  //     const newScrollPosition = direction === 'right' 
-  //       ? ref.current.scrollLeft + scrollAmount
-  //       : ref.current.scrollLeft - scrollAmount;
-      
-  //     ref.current.scrollTo({
-  //       left: newScrollPosition,
-  //       behavior: 'smooth'
-  //     });
-  //   }
-  // };
   const scroll = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right') => {
     if (ref.current) {
-      const scrollAmount = ref.current.clientWidth * (window.innerWidth < 768 ? 0.8 : 0.8); // Adjust scroll distance for mobile view
+      const scrollAmount = ref.current.clientWidth * 0.8; // Adjust scroll distance as needed
       const newScrollPosition = direction === 'right'
         ? ref.current.scrollLeft + scrollAmount
         : ref.current.scrollLeft - scrollAmount;
-  
+
       ref.current.scrollTo({
         left: newScrollPosition,
         behavior: 'smooth'
       });
     }
   };
-  
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
@@ -132,6 +120,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
+
   // Fetch case studies from the API
   useEffect(() => {
     const fetchCaseStudies = async () => {
@@ -155,6 +144,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
   }, []);
 
   const skeletonCount = 4;
+
   return (
     <div className={styles.main}>
       <Link href="/" />
@@ -183,6 +173,8 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
             <div key={i} className={`${styles.dot} ${currentIndex === i ? styles.active : ''}`} />
           ))}
         </div>
+
+        {/* Case Studies Section */}
         <motion.section
           className={styles.caseSection}
           id="case-studies"
@@ -193,65 +185,69 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
         >
           <h2>Case Studies</h2>
           <div className={styles.listContainer}>
-            {scrollStates.case.canScrollLeft && (
-              <button
-          className={`${styles.navigationButtons} ${styles.prev}`}
-          onClick={() => scroll(caseRef, 'left')}
-              >
-          <FaChevronLeft size={24} color="white" />
-              </button>
-            )}
             <div className={styles.caseStudyList} ref={caseRef} {...caseEvents}>
               {loadingCaseStudies ? (
-          Array.from({ length: skeletonCount }).map((_, index) => (
-            <div className={styles.caseItem} key={index}>
-              <div className={styles.skeletonImage} />
-              <div className={styles.skeletonText}>
-                <div className={styles.skeletonLine} />
-                <div className={styles.skeletonLineShort} />
-              </div>
-            </div>
-          ))
+                Array.from({ length: skeletonCount }).map((_, index) => (
+                  <div className={styles.caseItem} key={index}>
+                    <div className={styles.skeletonImage} />
+                    <div className={styles.skeletonText}>
+                      <div className={styles.skeletonLine} />
+                      <div className={styles.skeletonLineShort} />
+                    </div>
+                  </div>
+                ))
               ) : errorCaseStudies ? (
-          <p className={styles.error}>{errorCaseStudies}</p>
+                <p className={styles.error}>{errorCaseStudies}</p>
               ) : caseStudies.length === 0 ? (
-          <p>No case studies found.</p>
+                <p>No case studies found.</p>
               ) : (
-          caseStudies
-            .slice(0)
-            .reverse()
-            .map(cs => (
-              <Link href={`/case-study/${cs.id}`} key={cs.id}>
-                <div className={styles.caseItem}>
-            <div className={styles.content}>
-              <h3>{cs.title}</h3>
-            </div>
-            <div className={styles.imageWrapper}>
-              <Image
-                className={styles.imgTag}
-                src={cs.coverImage}
-                alt={cs.title}
-                layout="fill"
-                objectFit="cover"
-                priority
-              />
-            </div>
-                </div>
-              </Link>
-            ))
+                caseStudies
+                  .slice(0)
+                  .reverse()
+                  .map(cs => (
+                    <Link href={`/case-study/${cs.id}`} key={cs.id}>
+                      <div className={styles.caseItem}>
+                        <div className={styles.content}>
+                          <h3>{cs.title}</h3>
+                        </div>
+                        <div className={styles.imageWrapper}>
+                          <Image
+                            className={styles.imgTag}
+                            src={cs.coverImage}
+                            alt={cs.title}
+                            layout="fill"
+                            objectFit="cover"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    </Link>
+                  ))
               )}
             </div>
-            {scrollStates.case.canScrollRight && (
-              <button
-          className={`${styles.navigationButtons} ${styles.next}`}
-          onClick={() => scroll(caseRef, 'right')}
-              >
-          <FaChevronRight size={24} color="white" />
-              </button>
-            )}
+          </div>
+          {/* Navigation Arrows Below the List */}
+          <div className={styles.navigationArrows}>
+            <button
+              className={styles.navButton}
+              onClick={() => scroll(caseRef, 'left')}
+              disabled={!scrollStates.case.canScrollLeft}
+              aria-label="Scroll Left"
+            >
+              <FaChevronLeft size={24} />
+            </button>
+            <button
+              className={styles.navButton}
+              onClick={() => scroll(caseRef, 'right')}
+              disabled={!scrollStates.case.canScrollRight}
+              aria-label="Scroll Right"
+            >
+              <FaChevronRight size={24} />
+            </button>
           </div>
         </motion.section>
 
+        {/* Blogs Section */}
         <motion.section
           className={styles.blogSection}
           id="blogs"
@@ -261,21 +257,7 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
           viewport={{ once: true, amount: 0.2 }}
         >
           <h2>Blogs</h2>
-          {/* <button className={styles.learnMore} onClick={handleBlogsClick}>
-            <span className={styles.circle}>
-              <span className={`${styles.icon} ${styles.arrow}`}></span>
-            </span>
-            <span className={styles.buttonText}>Blogs</span>
-          </button> */}
           <div className={styles.listContainer}>
-            {scrollStates.blog.canScrollLeft && (
-              <button 
-                className={`${styles.navigationButtons} ${styles.prev}`}
-                onClick={() => scroll(blogRef, 'left')}
-              >
-                <FaChevronLeft size={24} color="white" />
-              </button>
-            )}
             <div className={styles.blogList} ref={blogRef} {...blogEvents}>
               {blogContent.map((item, i) => (
                 <Link href={`/blogs/${item.slug}`} key={i}>
@@ -288,17 +270,29 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 </Link>
               ))}
             </div>
-            {scrollStates.blog.canScrollRight && (
-              <button 
-                className={`${styles.navigationButtons} ${styles.next}`}
-                onClick={() => scroll(blogRef, 'right')}
-              >
-                <FaChevronRight size={24} color="white" />
-              </button>
-            )}
+          </div>
+          {/* Navigation Arrows Below the List */}
+          <div className={styles.navigationArrows}>
+            <button
+              className={styles.navButton}
+              onClick={() => scroll(blogRef, 'left')}
+              disabled={!scrollStates.blog.canScrollLeft}
+              aria-label="Scroll Left"
+            >
+              <FaChevronLeft size={24} />
+            </button>
+            <button
+              className={styles.navButton}
+              onClick={() => scroll(blogRef, 'right')}
+              disabled={!scrollStates.blog.canScrollRight}
+              aria-label="Scroll Right"
+            >
+              <FaChevronRight size={24} />
+            </button>
           </div>
         </motion.section>
 
+        {/* AI News Section */}
         <motion.section
           className={styles.newsSection}
           id='ainews'
@@ -309,14 +303,6 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
         >
           <h2>AI News</h2>
           <div className={styles.listContainer}>
-            {scrollStates.news.canScrollLeft && (
-              <button 
-                className={`${styles.navigationButtons} ${styles.prev}`}
-                onClick={() => scroll(newsRef, 'left')}
-              >
-                <FaChevronLeft size={24} color="white" />
-              </button>
-            )}
             <div className={styles.newsList} ref={newsRef} {...newsEvents}>
               {newsContent.map((item, i) => (
                 <div key={i} className={styles.newsItem}>
@@ -327,17 +313,29 @@ const { events: newsEvents } = useDraggable(newsRef as React.MutableRefObject<HT
                 </div>
               ))}
             </div>
-            {scrollStates.news.canScrollRight && (
-              <button 
-                className={`${styles.navigationButtons} ${styles.next}`}
-                onClick={() => scroll(newsRef, 'right')}
-              >
-                <FaChevronRight size={24} color="white" />
-              </button>
-            )}
+          </div>
+          {/* Navigation Arrows Below the List */}
+          <div className={styles.navigationArrows}>
+            <button
+              className={styles.navButton}
+              onClick={() => scroll(newsRef, 'left')}
+              disabled={!scrollStates.news.canScrollLeft}
+              aria-label="Scroll Left"
+            >
+              <FaChevronLeft size={24} />
+            </button>
+            <button
+              className={styles.navButton}
+              onClick={() => scroll(newsRef, 'right')}
+              disabled={!scrollStates.news.canScrollRight}
+              aria-label="Scroll Right"
+            >
+              <FaChevronRight size={24} />
+            </button>
           </div>
         </motion.section>
 
+        {/* Featured Section */}
         <motion.section
           className={styles.featured}
           initial="hidden"
