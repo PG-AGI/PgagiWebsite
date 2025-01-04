@@ -912,7 +912,6 @@ import axios from 'axios';
 import Modal from '../components/Modal';
 import JobPostingsManagement from '../components/JobPostingsManagement';
 
-
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 
@@ -986,7 +985,7 @@ const AdminPanel = () => {
   const [contentDetails, setContentDetails] = useState<ContentDetails | null>(null);
   const [detailsLoading, setDetailsLoading] = useState<boolean>(false);
   const [detailsError, setDetailsError] = useState<string>('');
-  const [filterType, setFilterType] = useState<'all' | 'caseStudy' | 'blog'>('all'); // New filter state
+  const [filterType, setFilterType] = useState<'all' | 'caseStudy' | 'blog'>('all');
 
   const {
     register,
@@ -1059,9 +1058,16 @@ const AdminPanel = () => {
                 case 'code':
                   return block.content !== '';
                 case 'image':
-                  return block.src && block.alt && /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(block.src);
+                  return (
+                    block.src &&
+                    block.alt &&
+                    /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(block.src)
+                  );
                 case 'video':
-                  return block.src && /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src);
+                  return (
+                    block.src &&
+                    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src)
+                  );
                 default:
                   return false;
               }
@@ -1072,8 +1078,14 @@ const AdminPanel = () => {
 
     const endpoint = data.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
     const successMessage = data.contentType === 'caseStudy' ? 'Case Study' : 'Blog';
-    const updateMessage = data.contentType === 'caseStudy' ? 'Case Study updated successfully!' : 'Blog updated successfully!';
-    const createMessage = data.contentType === 'caseStudy' ? 'Case Study created successfully!' : 'Blog created successfully!';
+    const updateMessage =
+      data.contentType === 'caseStudy'
+        ? 'Case Study updated successfully!'
+        : 'Blog updated successfully!';
+    const createMessage =
+      data.contentType === 'caseStudy'
+        ? 'Case Study created successfully!'
+        : 'Blog created successfully!';
 
     try {
       if (isEditing && editingContentId) {
@@ -1185,7 +1197,7 @@ const AdminPanel = () => {
       const response = await axios.get(`${endpoint}/${content.id}`);
       const data: ContentDetails = response.data;
       const formData: FormValues = {
-        contentType: data.contentType, // Ensure this is set
+        contentType: data.contentType, 
         coverImage: data.coverImage || '',
         title: data.title || '',
         publishDate: data.publishDate || '',
@@ -1212,12 +1224,19 @@ const AdminPanel = () => {
       setActiveTab('create');
     } catch (error: any) {
       console.error('Error fetching content details:', error);
-      alert(error.response?.data?.message || 'An unexpected error occurred while fetching content details.');
+      alert(
+        error.response?.data?.message ||
+          'An unexpected error occurred while fetching content details.'
+      );
     }
   };
 
   const handleDelete = async (content: ContentSummary) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete this ${content.contentType === 'caseStudy' ? 'Case Study' : 'Blog'}?`);
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete this ${
+        content.contentType === 'caseStudy' ? 'Case Study' : 'Blog'
+      }?`
+    );
     if (!confirmDelete) return;
 
     const endpoint = content.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
@@ -1225,20 +1244,41 @@ const AdminPanel = () => {
     try {
       const response = await axios.delete(`${endpoint}/${content.id}`);
       if (response.status === 200 || response.status === 204) {
-        alert(`${content.contentType === 'caseStudy' ? 'Case Study' : 'Blog'} deleted successfully!`);
+        alert(
+          `${
+            content.contentType === 'caseStudy' ? 'Case Study' : 'Blog'
+          } deleted successfully!`
+        );
         fetchContents();
       } else {
         alert(`Error: ${response.data.message}`);
       }
     } catch (error: any) {
-      console.error(`Error deleting ${content.contentType === 'caseStudy' ? 'case study' : 'blog'}:`, error);
-      alert(error.response?.data?.message || `An unexpected error occurred while deleting the ${content.contentType === 'caseStudy' ? 'case study' : 'blog'}.`);
+      console.error(
+        `Error deleting ${
+          content.contentType === 'caseStudy' ? 'case study' : 'blog'
+        }:`,
+        error
+      );
+      alert(
+        error.response?.data?.message ||
+          `An unexpected error occurred while deleting the ${
+            content.contentType === 'caseStudy' ? 'case study' : 'blog'
+          }.`
+      );
     }
   };
 
-  const getNestedError = (errors: FieldErrors<FormValues>, sectionIndex: number, blockIndex: number, field: keyof ContentBlock) => {
+  const getNestedError = (
+    errors: FieldErrors<FormValues>,
+    sectionIndex: number,
+    blockIndex: number,
+    field: keyof ContentBlock
+  ) => {
     const fieldError = errors.sections?.[sectionIndex]?.content?.[blockIndex]?.[field];
-    return typeof fieldError === 'object' && fieldError !== null ? fieldError.message : undefined;
+    return typeof fieldError === 'object' && fieldError !== null
+      ? fieldError.message
+      : undefined;
   };
 
   return (
@@ -1277,13 +1317,14 @@ const AdminPanel = () => {
                   id="contentType"
                   {...register('contentType', { required: 'Content Type is required' })}
                   required
-                  disabled={isEditing} // Optional: Disable during edit to prevent changing type
                 >
-                  <option value="">Select Content Type</option>
+                  {!isEditing && <option value="">Select Content Type</option>}
                   <option value="caseStudy">Case Study</option>
                   <option value="blog">Blog</option>
                 </select>
-                {errors.contentType && <span className={styles.error}>{errors.contentType.message}</span>}
+                {errors.contentType && (
+                  <span className={styles.error}>{errors.contentType.message}</span>
+                )}
               </div>
 
               {/* Cover Image URL */}
@@ -1296,7 +1337,9 @@ const AdminPanel = () => {
                   placeholder="Paste image link from PostImage (https://postimages.org/)"
                   required
                 />
-                {errors.coverImage && <span className={styles.error}>{errors.coverImage.message}</span>}
+                {errors.coverImage && (
+                  <span className={styles.error}>{errors.coverImage.message}</span>
+                )}
               </div>
 
               {/* Title */}
@@ -1309,7 +1352,9 @@ const AdminPanel = () => {
                   placeholder="Enter title"
                   required
                 />
-                {errors.title && <span className={styles.error}>{errors.title.message}</span>}
+                {errors.title && (
+                  <span className={styles.error}>{errors.title.message}</span>
+                )}
               </div>
 
               {/* Publish Date */}
@@ -1321,7 +1366,9 @@ const AdminPanel = () => {
                   {...register('publishDate', { required: 'Publish Date is required' })}
                   required
                 />
-                {errors.publishDate && <span className={styles.error}>{errors.publishDate.message}</span>}
+                {errors.publishDate && (
+                  <span className={styles.error}>{errors.publishDate.message}</span>
+                )}
               </div>
 
               {/* Read Time */}
@@ -1334,7 +1381,9 @@ const AdminPanel = () => {
                   placeholder="e.g., 8 min read"
                   required
                 />
-                {errors.readTime && <span className={styles.error}>{errors.readTime.message}</span>}
+                {errors.readTime && (
+                  <span className={styles.error}>{errors.readTime.message}</span>
+                )}
               </div>
 
               {/* Author Name */}
@@ -1347,7 +1396,9 @@ const AdminPanel = () => {
                   placeholder="Enter author's name"
                   required
                 />
-                {errors.authorName && <span className={styles.error}>{errors.authorName.message}</span>}
+                {errors.authorName && (
+                  <span className={styles.error}>{errors.authorName.message}</span>
+                )}
               </div>
 
               {/* Author Role */}
@@ -1360,7 +1411,9 @@ const AdminPanel = () => {
                   placeholder="Enter author's role"
                   required
                 />
-                {errors.authorRole && <span className={styles.error}>{errors.authorRole.message}</span>}
+                {errors.authorRole && (
+                  <span className={styles.error}>{errors.authorRole.message}</span>
+                )}
               </div>
 
               {/* Sections */}
@@ -1382,12 +1435,16 @@ const AdminPanel = () => {
                       <label>Section Title:</label>
                       <input
                         type="text"
-                        {...register(`sections.${sectionIndex}.title` as const, { required: 'Section Title is required' })}
+                        {...register(`sections.${sectionIndex}.title` as const, {
+                          required: 'Section Title is required',
+                        })}
                         placeholder="Enter section title"
                         required
                       />
                       {errors.sections?.[sectionIndex]?.title && (
-                        <span className={styles.error}>{errors.sections?.[sectionIndex]?.title?.message}</span>
+                        <span className={styles.error}>
+                          {errors.sections?.[sectionIndex]?.title?.message}
+                        </span>
                       )}
                     </div>
 
@@ -1416,9 +1473,12 @@ const AdminPanel = () => {
                               <div className={styles.formGroup}>
                                 <label>Type:</label>
                                 <select
-                                  {...register(`sections.${sectionIndex}.content.${blockIndex}.type` as const, {
-                                    required: 'Content Block Type is required',
-                                  })}
+                                  {...register(
+                                    `sections.${sectionIndex}.content.${blockIndex}.type` as const,
+                                    {
+                                      required: 'Content Block Type is required',
+                                    }
+                                  )}
                                   className={styles.select}
                                   defaultValue={block.type || 'paragraph'}
                                   required
@@ -1438,7 +1498,9 @@ const AdminPanel = () => {
                               </div>
 
                               {/* Conditional Rendering Based on Type */}
-                              {['paragraph', 'quote', 'highlight', 'code'].includes(block.type || '') ? (
+                              {['paragraph', 'quote', 'highlight', 'code'].includes(
+                                block.type || ''
+                              ) ? (
                                 <div className={styles.formGroup}>
                                   <label>Content:</label>
                                   <Controller
@@ -1460,7 +1522,17 @@ const AdminPanel = () => {
                                             ['clean'],
                                           ],
                                         }}
-                                        formats={['header', 'bold', 'italic', 'underline', 'list', 'bullet', 'link', 'clean', 'code-block']}
+                                        formats={[
+                                          'header',
+                                          'bold',
+                                          'italic',
+                                          'underline',
+                                          'list',
+                                          'bullet',
+                                          'link',
+                                          'clean',
+                                          'code-block',
+                                        ]}
                                       />
                                     )}
                                   />
@@ -1476,13 +1548,16 @@ const AdminPanel = () => {
                                     <label>Image URL:</label>
                                     <input
                                       type="url"
-                                      {...register(`sections.${sectionIndex}.content.${blockIndex}.src` as const, {
-                                        required: 'Image URL is required',
-                                        pattern: {
-                                          value: /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/,
-                                          message: 'Enter a valid image URL',
-                                        },
-                                      })}
+                                      {...register(
+                                        `sections.${sectionIndex}.content.${blockIndex}.src` as const,
+                                        {
+                                          required: 'Image URL is required',
+                                          pattern: {
+                                            value: /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/,
+                                            message: 'Enter a valid image URL',
+                                          },
+                                        }
+                                      )}
                                       placeholder="Paste image link from PostImage (https://postimages.org/)"
                                       required
                                     />
@@ -1497,7 +1572,10 @@ const AdminPanel = () => {
                                     <label>Image Alt Text:</label>
                                     <input
                                       type="text"
-                                      {...register(`sections.${sectionIndex}.content.${blockIndex}.alt` as const, { required: 'Alt Text is required' })}
+                                      {...register(
+                                        `sections.${sectionIndex}.content.${blockIndex}.alt` as const,
+                                        { required: 'Alt Text is required' }
+                                      )}
                                       placeholder="Enter image alt text"
                                       required
                                     />
@@ -1512,7 +1590,9 @@ const AdminPanel = () => {
                                     <label>Image Caption (Optional):</label>
                                     <input
                                       type="text"
-                                      {...register(`sections.${sectionIndex}.content.${blockIndex}.caption` as const)}
+                                      {...register(
+                                        `sections.${sectionIndex}.content.${blockIndex}.caption` as const
+                                      )}
                                       placeholder="Enter image caption"
                                     />
                                   </div>
@@ -1523,13 +1603,17 @@ const AdminPanel = () => {
                                     <label>Video URL (YouTube Embed Link):</label>
                                     <input
                                       type="url"
-                                      {...register(`sections.${sectionIndex}.content.${blockIndex}.src` as const, {
-                                        required: 'Video URL is required',
-                                        pattern: {
-                                          value: /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/,
-                                          message: 'Enter a valid YouTube URL',
-                                        },
-                                      })}
+                                      {...register(
+                                        `sections.${sectionIndex}.content.${blockIndex}.src` as const,
+                                        {
+                                          required: 'Video URL is required',
+                                          pattern: {
+                                            value:
+                                              /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/,
+                                            message: 'Enter a valid YouTube URL',
+                                          },
+                                        }
+                                      )}
                                       placeholder="Paste YouTube embed link (https://www.youtube.com/embed/...)"
                                       required
                                     />
@@ -1544,7 +1628,9 @@ const AdminPanel = () => {
                                     <label>Video Title (Optional):</label>
                                     <input
                                       type="text"
-                                      {...register(`sections.${sectionIndex}.content.${blockIndex}.title` as const)}
+                                      {...register(
+                                        `sections.${sectionIndex}.content.${blockIndex}.title` as const
+                                      )}
                                       placeholder="Enter video title"
                                     />
                                   </div>
@@ -1553,7 +1639,9 @@ const AdminPanel = () => {
                                     <label>Video Caption (Optional):</label>
                                     <input
                                       type="text"
-                                      {...register(`sections.${sectionIndex}.content.${blockIndex}.caption` as const)}
+                                      {...register(
+                                        `sections.${sectionIndex}.content.${blockIndex}.caption` as const
+                                      )}
                                       placeholder="Enter video caption"
                                     />
                                   </div>
@@ -1584,7 +1672,13 @@ const AdminPanel = () => {
 
                     <button
                       type="button"
-                      onClick={() => appendSection({ id: uuidv4(), title: '', content: [] })}
+                      onClick={() =>
+                        appendSection({
+                          id: uuidv4(),
+                          title: '',
+                          content: [],
+                        })
+                      }
                       className={styles.addButton}
                     >
                       Add Section
@@ -1636,8 +1730,14 @@ const AdminPanel = () => {
                 </div>
                 <div className={styles.author}>
                   <span>By</span>
-                  <span className={styles.authorName}>{watchAllFields.authorName || 'Author Name'}</span>
-                  <span className={styles.authorRole}>{watchAllFields.authorRole ? `(${watchAllFields.authorRole})` : '(Author Role)'}</span>
+                  <span className={styles.authorName}>
+                    {watchAllFields.authorName || 'Author Name'}
+                  </span>
+                  <span className={styles.authorRole}>
+                    {watchAllFields.authorRole
+                      ? `(${watchAllFields.authorRole})`
+                      : '(Author Role)'}
+                  </span>
                 </div>
                 {watchAllFields.sections?.map((section, sectionIndex) => (
                   <div key={section.id} className={styles.section}>
@@ -1648,7 +1748,9 @@ const AdminPanel = () => {
                           return (
                             <p
                               key={block.id}
-                              dangerouslySetInnerHTML={{ __html: block.content || 'Sample paragraph content.' }}
+                              dangerouslySetInnerHTML={{
+                                __html: block.content || 'Sample paragraph content.',
+                              }}
                             ></p>
                           );
                         case 'quote':
@@ -1672,8 +1774,14 @@ const AdminPanel = () => {
                         case 'image':
                           return (
                             <figure key={block.id} className={styles.imageBlock}>
-                              <img src={block.src || 'https://via.placeholder.com/600x400'} alt={block.alt || 'Image'} className={styles.image} />
-                              {block.caption && <figcaption className={styles.caption}>{block.caption}</figcaption>}
+                              <img
+                                src={block.src || 'https://via.placeholder.com/600x400'}
+                                alt={block.alt || 'Image'}
+                                className={styles.image}
+                              />
+                              {block.caption && (
+                                <figcaption className={styles.caption}>{block.caption}</figcaption>
+                              )}
                             </figure>
                           );
                         case 'video':
@@ -1687,7 +1795,9 @@ const AdminPanel = () => {
                                 allowFullScreen
                                 className={styles.video}
                               ></iframe>
-                              {block.caption && <div className={styles.caption}>{block.caption}</div>}
+                              {block.caption && (
+                                <div className={styles.caption}>{block.caption}</div>
+                              )}
                             </div>
                           );
                         default:
@@ -1750,22 +1860,13 @@ const AdminPanel = () => {
                         <td>{cs.id}</td>
                         <td>{cs.contentType === 'caseStudy' ? 'Case Study' : 'Blog'}</td>
                         <td>
-                          <button
-                            onClick={() => handleViewDetails(cs)}
-                            className={styles.viewButton}
-                          >
+                          <button onClick={() => handleViewDetails(cs)} className={styles.viewButton}>
                             View Details
                           </button>
-                          <button
-                            onClick={() => handleEdit(cs)}
-                            className={styles.editButton}
-                          >
+                          <button onClick={() => handleEdit(cs)} className={styles.editButton}>
                             Edit
                           </button>
-                          <button
-                            onClick={() => handleDelete(cs)}
-                            className={styles.deleteButton}
-                          >
+                          <button onClick={() => handleDelete(cs)} className={styles.deleteButton}>
                             Delete
                           </button>
                         </td>
@@ -1777,9 +1878,7 @@ const AdminPanel = () => {
           </div>
         )}
 
-        {activeTab === 'jobs' && (
-          <JobPostingsManagement />
-        )}
+        {activeTab === 'jobs' && <JobPostingsManagement />}
       </div>
 
       {/* Modal for Viewing Details */}
@@ -1791,7 +1890,11 @@ const AdminPanel = () => {
         ) : contentDetails ? (
           <div className={styles.modalContentInner}>
             <h2>{contentDetails.title}</h2>
-            <img src={contentDetails.coverImage} alt={contentDetails.title} className={styles.coverImage} />
+            <img
+              src={contentDetails.coverImage}
+              alt={contentDetails.title}
+              className={styles.coverImage}
+            />
             <div className={styles.metadata}>
               <span>Publish Date: {contentDetails.publishDate}</span>
               <span>•</span>
@@ -1811,7 +1914,9 @@ const AdminPanel = () => {
                       return (
                         <p
                           key={blockIndex}
-                          dangerouslySetInnerHTML={{ __html: block.content || 'Sample paragraph content.' }}
+                          dangerouslySetInnerHTML={{
+                            __html: block.content || 'Sample paragraph content.',
+                          }}
                         ></p>
                       );
                     case 'quote':
@@ -1835,8 +1940,14 @@ const AdminPanel = () => {
                     case 'image':
                       return (
                         <figure key={blockIndex} className={styles.imageBlock}>
-                          <img src={block.src || 'https://via.placeholder.com/600x400'} alt={block.alt || 'Image'} className={styles.image} />
-                          {block.caption && <figcaption className={styles.caption}>{block.caption}</figcaption>}
+                          <img
+                            src={block.src || 'https://via.placeholder.com/600x400'}
+                            alt={block.alt || 'Image'}
+                            className={styles.image}
+                          />
+                          {block.caption && (
+                            <figcaption className={styles.caption}>{block.caption}</figcaption>
+                          )}
                         </figure>
                       );
                     case 'video':
@@ -1850,7 +1961,9 @@ const AdminPanel = () => {
                             allowFullScreen
                             className={styles.video}
                           ></iframe>
-                          {block.caption && <div className={styles.caption}>{block.caption}</div>}
+                          {block.caption && (
+                            <div className={styles.caption}>{block.caption}</div>
+                          )}
                         </div>
                       );
                     default:
