@@ -93,6 +93,7 @@ export async function POST(req: Request) {
         },
         hostedLink: hostedLink || ''
       };
+      {/**Merged with main */}
 
       await assignmentsCollection.insertOne(assignmentsData, { session });
       const resumesCollection = applicationDetailsDb.collection('Resumes');
