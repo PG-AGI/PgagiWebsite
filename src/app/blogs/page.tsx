@@ -143,6 +143,7 @@ export default function BlogPage() {
 
     fetchCaseStudies();
   }, []);
+  
   useEffect(() => {
     // Ensure the scroll state is updated after content is loaded
     const checkInitialScrollState = () => {
