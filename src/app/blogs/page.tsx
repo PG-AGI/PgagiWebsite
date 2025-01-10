@@ -69,6 +69,7 @@ export default function BlogPage() {
       return () => topList.removeEventListener('scroll', handleScroll);
     }
   }, []);
+  
 
   useEffect(() => {
     // Initial scroll check
@@ -142,6 +143,26 @@ export default function BlogPage() {
 
     fetchCaseStudies();
   }, []);
+  useEffect(() => {
+    // Ensure the scroll state is updated after content is loaded
+    const checkInitialScrollState = () => {
+      checkScroll(caseRef, 'case');
+      checkScroll(blogRef, 'blog');
+      checkScroll(newsRef, 'news');
+    };
+  
+    // Trigger scroll check after content is rendered and data is fetched
+    if (caseStudies.length > 0) {
+      // For case studies, ensure the content is fully rendered
+      setTimeout(() => {
+        checkInitialScrollState();
+      }, 500);  // A slight delay to ensure content is loaded
+    } else {
+      // For skeletons or empty data
+      checkInitialScrollState();
+    }
+  }, [caseStudies]);  // Only re-run when `caseStudies` is updated (i.e., after fetching)
+  
 
   const skeletonCount = 4;
 
