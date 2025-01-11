@@ -112,10 +112,10 @@ export default function Navigation() {
         <Image src={logo} alt='Logo' width={60} height={60} />
         <p>PG-AGI</p>
       </Link>
-      <div
+      <div style={{backgroundColor: 'yellow'}}
         className={clsx(styles.nav, !navbarVisible && styles.navHidden, isMenuOpen && styles.open)}
       >       
-        <div className={styles.links}>
+        <div className={styles.links} >
           <div className={styles.whatWeDo}>
             <a>What we do</a>
             <div className={styles.dropdown}>

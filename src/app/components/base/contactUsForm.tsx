@@ -51,7 +51,7 @@ const ContactUsForm: React.FC<ContactUsFormProps> = ({ onClose }) => {
   };
 
   return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+    <div className={styles.modalOverlay}>
       <div className={styles.modal} onClick={handleModalClick}>
         <button
           className={styles.closeButton}
