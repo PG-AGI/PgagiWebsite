@@ -8,19 +8,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: auto; // Prevent overflow
+  overflow: auto;
 }
 
 .modal {
   background: #030352;
   padding: 20px !important;
   border-radius: 8px;
-  max-width: 500px; // Use percentage to make it responsive
-  max-height: 80vh; // Ensure modal height doesn't exceed viewport height
+  max-width: 500px; 
+  max-height: 80vh; 
   position: relative;
   text-align: center;
-  margin-top: 10px; // Adjust for centering
-  overflow: auto; // Allow scrolling if content exceeds modal height
+  margin-top: 10px; 
+  overflow: auto; 
   margin-top: 100px;
 
   .closeButton {
@@ -61,9 +61,9 @@
       border-radius: 10px;
       box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.356);
       resize: vertical;
-      width: 100%; // Ensure full width, but within the parent constraints
-      max-width: 500px; // Max width to prevent overflow
-      min-width: 250px; // Minimum width for small devices
+      width: 100%; 
+      max-width: 500px; 
+      min-width: 250px; 
       color: white !important;
       transition: background-color 5000s ease-in-out 0s;
 
@@ -141,15 +141,15 @@
 @media (max-width: 768px) {
   .modal {
     padding: 5px;
-    max-width: 80%; // Further adjust modal width for smaller screens
+    max-width: 80%; 
     form {
       input,
       textarea {
-        min-width: 150px; // Adjust input width further for small screens
+        min-width: 150px; 
       }
 
       textarea {
-        min-height: 100px; // Adjust text area height
+        min-height: 100px; 
       }
     }
   }
