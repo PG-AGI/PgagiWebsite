@@ -9,12 +9,17 @@
   justify-content: center;
   align-items: center;
   overflow: auto;
+  overflow: auto;
 }
 
 .modal {
   background: #030352;
   padding: 20px !important;
+  background: #030352;
+  padding: 20px !important;
   border-radius: 8px;
+  max-width: 500px; 
+  max-height: 80vh; 
   max-width: 500px; 
   max-height: 80vh; 
   position: relative;
@@ -38,6 +43,7 @@
     font-weight: 600;
   }
 
+
   .bottom {
     margin-top: -20px;
     font-size: 25px;
@@ -54,12 +60,19 @@
     textarea {
       background-color: transparent !important;
       margin-top: 10px;
+      background-color: transparent !important;
+      margin-top: 10px;
       padding: 10px;
       font-size: 16px;
+      border: 2px solid #3237c0;
       border: 2px solid #3237c0;
       border-radius: 10px;
       box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.356);
       resize: vertical;
+      width: 100%; 
+      max-width: 500px; 
+      min-width: 250px; 
+      color: white !important;
       width: 100%; 
       max-width: 500px; 
       min-width: 250px; 
@@ -94,12 +107,15 @@
       }
     }
 
+
     textarea {
       height: fit-content;
       min-height: 200px;
     }
 
     button {
+      margin-top: 16px;
+      padding: 15px 20px;
       margin-top: 16px;
       padding: 15px 20px;
       font-size: 20px;
@@ -111,6 +127,7 @@
       cursor: pointer;
       border: 2px solid #3237c0;
 
+
       &:hover {
         background-color: #18181800;
         transform: scale(1.1);
@@ -120,9 +137,11 @@
 }
 
 // Media Queries for responsiveness
+// Media Queries for responsiveness
 @media (max-width: 1600px) and (max-height: 900px) {
   .modal {
     padding: 10px;
+    max-width: 80%; // Adjust modal width
     max-width: 80%; // Adjust modal width
     form {
       input,
@@ -130,7 +149,11 @@
         min-width: 200px; // Adjust input width
       }
 
+        min-width: 200px; // Adjust input width
+      }
+
       textarea {
+        min-height: 100px; // Adjust text area height
         min-height: 100px; // Adjust text area height
       }
     }
@@ -141,13 +164,18 @@
   .modal {
     padding: 5px;
     max-width: 80%; 
+    max-width: 80%; 
     form {
       input,
       textarea {
         min-width: 150px; 
       }
 
+        min-width: 150px; 
+      }
+
       textarea {
+        min-height: 100px; 
         min-height: 100px; 
       }
     }
