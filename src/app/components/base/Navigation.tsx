@@ -204,10 +204,16 @@ export default function Navigation() {
             <>
               <div
                 className={styles.whatWeDo}
-                onMouseEnter={() => setWhatWeDo("solutions")}
-                onMouseLeave={() => setWhatWeDo(null)}
+                onMouseEnter={() => {
+                  console.log('Mouse entered');
+                  setWhatWeDo("solutions")
+                }}
+                onMouseLeave={() => {
+                  console.log('Mouse leaved');
+                  setWhatWeDo(null)
+                }}
               >
-                <span className={styles.whatwedospan}>What we do</span>
+                <span className={styles.whatwedospan} >What we do</span>
                 <div className={styles.dropdown}>
                   <div className={styles.content}>
                     <span className={styles.background} />
