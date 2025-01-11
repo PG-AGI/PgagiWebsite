@@ -8,19 +8,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: auto; // Prevent overflow
 }
 
 .modal {
-  background: rgba(3, 3, 82, 1);
-  padding: 20px;
+  background: #030352;
+  padding: 20px !important;
   border-radius: 8px;
-  max-width: 500px;
-  max-height: 800px;
-  width: 100%;
-  height: 70%;
+  max-width: 500px; // Use percentage to make it responsive
+  max-height: 80vh; // Ensure modal height doesn't exceed viewport height
   position: relative;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 10px; // Adjust for centering
+  overflow: auto; // Allow scrolling if content exceeds modal height
+  margin-top: 100px;
+
   .closeButton {
     position: absolute;
     top: 10px;
@@ -36,6 +38,7 @@
     font-size: 25px;
     font-weight: 600;
   }
+
   .bottom {
     margin-top: -20px;
     font-size: 25px;
@@ -47,23 +50,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    label {
-      margin-top: 10px;
-    }
 
     input,
     textarea {
-      margin-top: 25px;
+      background-color: transparent !important;
+      margin-top: 10px;
       padding: 10px;
       font-size: 16px;
-      border: 1px solid #cccccc00;
+      border: 2px solid #3237c0;
       border-radius: 10px;
-      background: white;
       box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.356);
       resize: vertical;
-      width: fit-content;
-      min-width: 400px;
-      color: rgba(0, 0, 0, 0.6) !important;
+      width: 100%; // Ensure full width, but within the parent constraints
+      max-width: 500px; // Max width to prevent overflow
+      min-width: 250px; // Minimum width for small devices
+      color: white !important;
       transition: background-color 5000s ease-in-out 0s;
 
       &:-webkit-autofill,
@@ -93,17 +94,15 @@
         box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
       }
     }
+
     textarea {
       height: fit-content;
       min-height: 200px;
     }
 
     button {
-      margin-top: 35px;
-      padding-top: 15px;
-      padding-bottom: 15px;
-      padding-left: 20px;
-      padding-right: 20px;
+      margin-top: 16px;
+      padding: 15px 20px;
       font-size: 20px;
       font-weight: 900;
       border: none;
@@ -112,6 +111,7 @@
       border-radius: 10px;
       cursor: pointer;
       border: 2px solid #3237c0;
+
       &:hover {
         background-color: #18181800;
         transform: scale(1.1);
@@ -120,64 +120,19 @@
   }
 }
 
+// Media Queries for responsiveness
 @media (max-width: 1600px) and (max-height: 900px) {
   .modal {
     padding: 10px;
-    border-radius: 8px;
-    max-width: 300px;
-    max-height: 900px;
-    height: 70%;
+    max-width: 80%; // Adjust modal width
     form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       input,
       textarea {
-        margin-top: 25px;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #cccccc00;
-        border-radius: 10px;
-        background: #d9d9d957;
-        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.356);
-        resize: vertical;
-        width: fit-content;
-        min-width: 200px;
-        color: fieldtext !important;
-        transition: background-color 5000s ease-in-out 0s;
-
-        &:-webkit-autofill,
-        &:-webkit-autofill:hover,
-        &:-webkit-autofill:focus,
-        &:-webkit-autofill:active {
-          appearance: menulist-button;
-          background: #d9d9d957 !important;
-          color: fieldtext !important;
-          box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
-        }
-
-        &:-moz-autofill,
-        &:-moz-autofill:hover,
-        &:-moz-autofill:focus,
-        &:-moz-autofill:active {
-          appearance: menulist-button;
-          background: #d9d9d957 !important;
-          color: fieldtext !important;
-          box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
-        }
-
-        &:-internal-autofill-selected {
-          appearance: menulist-button;
-          background: #d9d9d957 !important;
-          color: fieldtext !important;
-          box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
-        }
+        min-width: 200px; // Adjust input width
       }
+
       textarea {
-        width: 240px;
-        height: fit-content;
-        min-height: 100px;
+        min-height: 100px; // Adjust text area height
       }
     }
   }
@@ -186,62 +141,15 @@
 @media (max-width: 768px) {
   .modal {
     padding: 5px;
-    border-radius: 8px;
-    max-width: 300px;
-    max-height: 900px;
-    height: 75%;
-    z-index: 1;
+    max-width: 80%; // Further adjust modal width for smaller screens
     form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       input,
       textarea {
-        margin-top: 25px;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #cccccc00;
-        border-radius: 10px;
-        background: #d9d9d957;
-        box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.356);
-        resize: vertical;
-        width: fit-content;
-        min-width: 200px;
-        color: fieldtext !important;
-        transition: background-color 5000s ease-in-out 0s;
-
-        &:-webkit-autofill,
-        &:-webkit-autofill:hover,
-        &:-webkit-autofill:focus,
-        &:-webkit-autofill:active {
-          appearance: menulist-button;
-          background: #d9d9d957 !important;
-          color: fieldtext !important;
-          box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
-        }
-
-        &:-moz-autofill,
-        &:-moz-autofill:hover,
-        &:-moz-autofill:focus,
-        &:-moz-autofill:active {
-          appearance: menulist-button;
-          background: #d9d9d957 !important;
-          color: fieldtext !important;
-          box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
-        }
-
-        &:-internal-autofill-selected {
-          appearance: menulist-button;
-          background: #d9d9d957 !important;
-          color: fieldtext !important;
-          box-shadow: 0 0 0px 1000px #d9d9d957 inset !important;
-        }
+        min-width: 150px; // Adjust input width further for small screens
       }
+
       textarea {
-        width: 240px;
-        height: fit-content;
-        min-height: 100px;
+        min-height: 100px; // Adjust text area height
       }
     }
   }
