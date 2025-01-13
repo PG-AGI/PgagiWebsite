@@ -19,9 +19,8 @@
   max-height: 80vh; 
   position: relative;
   text-align: center;
-  margin-top: 10px; 
-  overflow: auto; 
-  margin-top: 100px;
+  overflow: auto;
+  margin-top: 60px;
 
   .closeButton {
     position: absolute;
@@ -124,15 +123,15 @@
 @media (max-width: 1600px) and (max-height: 900px) {
   .modal {
     padding: 10px;
-    max-width: 80%; // Adjust modal width
+    max-width: 80%;
     form {
       input,
       textarea {
-        min-width: 200px; // Adjust input width
+        min-width: 200px;
       }
 
       textarea {
-        min-height: 100px; // Adjust text area height
+        min-height: 100px;
       }
     }
   }
