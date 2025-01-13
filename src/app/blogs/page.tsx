@@ -230,7 +230,7 @@ export default function BlogPage() {
                     <Link href={`/case-study/${cs.id}`} key={cs.id}>
                       <div className={styles.caseItem}>
                         <div className={styles.content}>
-                          <h3>{cs.title}</h3>
+                          <p>{cs.title}</p>
                         </div>
                         <div className={styles.imageWrapper}>
                           <Image
