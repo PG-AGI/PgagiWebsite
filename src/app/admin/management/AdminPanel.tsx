@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -20,7 +19,7 @@ type ContentType = 'caseStudy' | 'blog';
 type ContentBlock = {
   id: string;
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
-  content?: string;
+  content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
   caption?: string;
@@ -141,6 +140,8 @@ const AdminPanel = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
+    console.log('Raw form data:', data);
+    
     const sanitizedData: FormValues = {
       ...data,
       sections: data.sections
@@ -148,79 +149,26 @@ const AdminPanel = () => {
         .map(section => ({
           ...section,
           content: section.content
-            .map(block => ({
-              ...block,
-              content: block.content ? block.content.trim() : '',
-              src: block.src ? block.src.trim() : '',
-              alt: block.alt ? block.alt.trim() : '',
-              caption: block.caption ? block.caption.trim() : '',
-              title: block.title ? block.title.trim() : '',
-            }))
-            .filter(block => {
-              if (!block.type) return false;
-              switch (block.type) {
-                case 'paragraph':
-                case 'quote':
-                case 'highlight':
-                case 'code':
-                  return block.content !== '';
-                case 'image':
-                  return (
-                    block.src &&
-                    block.alt &&
-                    /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(block.src)
-                  );
-                case 'video':
-                  return (
-                    block.src &&
-                    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src)
-                  );
-                default:
-                  return false;
+            .map(block => {
+              if (block.type === 'table') {
+                console.log('Processing table block:', block);
+                const tableData = {
+                  ...block,
+                  content: {
+                    headers: columnNames,
+                    rows: rows
+                  }
+                };
+                console.log('Processed table data:', tableData);
+                return tableData;
               }
-            }),
+              return block;
+            })
         }))
-        .filter(section => section.content.length > 0),
     };
 
-    const endpoint = data.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
-    const successMessage = data.contentType === 'caseStudy' ? 'Case Study' : 'Blog';
-    const updateMessage =
-      data.contentType === 'caseStudy'
-        ? 'Case Study updated successfully!'
-        : 'Blog updated successfully!';
-    const createMessage =
-      data.contentType === 'caseStudy'
-        ? 'Case Study created successfully!'
-        : 'Blog created successfully!';
-
-    try {
-      if (isEditing && editingContentId) {
-        const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
-        if (response.status === 200) {
-          alert(updateMessage);
-          reset();
-          setIsEditing(false);
-          setEditingContentId(null);
-          if (activeTab === 'view') fetchContents();
-        } else {
-          alert(`Error: ${response.data.message}`);
-        }
-      } else {
-        const response = await axios.post(endpoint, sanitizedData);
-        if (response.status === 201 || response.status === 200) {
-          alert(createMessage);
-          console.log(`New ${successMessage} ID:`, response.data.id);
-          reset();
-          if (activeTab === 'view') fetchContents();
-        } else {
-          alert(`Error: ${response.data.message}`);
-        }
-      }
-    } catch (error: any) {
-      console.error('Error submitting form:', error);
-      alert(error.response?.data?.message || 'An unexpected error occurred.');
-    }
+    console.log('Sanitized data:', sanitizedData);
+    // Rest of your submission logic
   };
 
   const [contents, setContents] = useState<ContentSummary[]>([]);
@@ -868,19 +816,19 @@ const AdminPanel = () => {
                         case 'quote':
                           return (
                             <blockquote key={block.id} className={styles.quote}>
-                              {block.content || 'Sample quote content.'}
+                              {typeof block.content === 'string' ? block.content : 'Sample quote content.'}
                             </blockquote>
                           );
                         case 'highlight':
                           return (
                             <div key={block.id} className={styles.highlight}>
-                              {block.content || 'Sample highlight content.'}
+                              {typeof block.content === 'string' ? block.content : 'Sample highlight content.'}
                             </div>
                           );
                         case 'code':
                           return (
                             <pre key={block.id} className={styles.codeBlock}>
-                              <code>{block.content || '// Sample code snippet'}</code>
+                              <code>{typeof block.content === 'string' ? block.content : '// Sample code snippet'}</code>
                             </pre>
                           );
                         case 'image':

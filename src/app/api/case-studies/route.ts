@@ -7,8 +7,8 @@ import { ObjectId } from 'mongodb';
 
 // Define the shape of the incoming data
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video';
-  content?: string;
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
   caption?: string;
@@ -109,6 +109,31 @@ export async function POST(request: NextRequest) {
             if (!youtubeEmbedRegex.test(block.src)) {
               return NextResponse.json(
                 { message: `Video block ${blockIndex + 1} in section ${sectionIndex + 1} requires a valid YouTube embed URL.` },
+                { status: 400 }
+              );
+            }
+            break;
+          case 'table':
+            if (!block.content || 
+                typeof block.content !== 'object' || 
+                !Array.isArray((block.content as any).headers) || 
+                !Array.isArray((block.content as any).rows)) {
+              console.log('Table validation failed:', block.content);
+              return NextResponse.json(
+                { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid headers and rows.` },
+                { status: 400 }
+              );
+            }
+            // Validate that all rows have the same length as headers
+            const headers = (block.content as { headers: string[] }).headers;
+            const rows = (block.content as { rows: string[][] }).rows;
+            if (rows.some(row => row.length !== headers.length)) {
+              console.log('Table row length mismatch:', {
+                headers: headers.length,
+                rows: rows.map(r => r.length)
+              });
+              return NextResponse.json(
+                { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
                 { status: 400 }
               );
             }
