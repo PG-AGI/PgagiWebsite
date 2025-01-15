@@ -62,7 +62,7 @@ const ContactUsForm: React.FC<ContactUsFormProps> = ({ onClose }) => {
         </button>
         <h2 className={styles.top}>We Will Get In</h2>
         <h2 className={styles.bottom}>Touch Soon!</h2>
-        {error && <p className={styles.error}>{error}</p>}
+        <p className={error? styles.error: styles.hideError}>{error ? error : 'no error'}</p>
         {success && <p className={styles.success}>{success}</p>}
         <form onSubmit={handleSubmit}>
           <input

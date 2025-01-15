@@ -19,7 +19,7 @@
     .trendingList {
         width: 90%;
         display: flex;
-        gap: 0.938rem;
+        gap: 36px;
         padding: 36px 0;
         scroll-behavior: smooth;
         overflow-x: auto;
@@ -34,9 +34,9 @@
 
         .trendingItem {
             position: relative;
-            min-width: 20vw;
-            height: 55vh;
-            border-radius: 0.5rem;
+            min-width: 345px;
+            height: 65vh;
+            border-radius: 16px;
             overflow: hidden;
             padding: 48px 24px;
             background: cover;
