@@ -136,6 +136,7 @@ const CaseStudy = () => {
       currentUrl
     )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
+  console.log('139 data to render on ui', caseStudy);
 
   if (loading) {
     return (
@@ -306,65 +307,10 @@ const CaseStudy = () => {
                     switch (block.type) {
                       case 'paragraph':
                         return (
-                          // <p
-                          //   key={index}
-                          //   dangerouslySetInnerHTML={{ __html: block.content }}
-                          // ></p>
-                          <table className={tableStyles.dynamicTable}>
-                          <thead>
-                            <tr>
-                              {/* Render column headers */}
-                              {/* {columnNames.map((heading, colIndex) => (
-                                <th key={colIndex} className={tableStyles.cell}>
-                                  {heading}
-                                </th>
-                              ))} */}
-                              <th  className={tableStyles.heading}>Heading 1</th>
-                              <th className={tableStyles.heading}>Heading 2</th>
-                              <th className={tableStyles.heading}>Heading 3</th>
-                              <th className={tableStyles.heading}>Heading 3</th>
-                              <th className={tableStyles.heading}>Heading 3</th>
-                              <th className={tableStyles.heading}>Heading 3</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {/* Render rows and cells */}
-                            {/* {rows.map((row, rowIndex) => ( */}
-                              {/* <tr key={rowIndex}> */}
-                                {/* {row.map((cell, colIndex) => ( */}
-                                  {/* <td key={colIndex} className={tableStyles.cell}> */}
-                                    {/* {cell} Simply display the value */}
-                                  {/* </td> */}
-                                {/* ))} */}
-                              {/* </tr> */}
-                            {/* ))} */}
-                            <tr>
-                            <td className={tableStyles.cell}>data 1</td>
-                              <td className={tableStyles.cell}>data 2</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                            </tr>
-                            <tr>
-                              <td className={tableStyles.cell}>data 1</td>
-                              <td className={tableStyles.cell}>data 2</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                            </tr>
-                            <tr>
-                              <td className={tableStyles.cell}>data 1</td>
-                              <td className={tableStyles.cell}>data 2</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              <td className={tableStyles.cell}>data 3</td>
-                              
-                            </tr>
-                          </tbody>
-                        </table>
+                          <p
+                            key={index}
+                            dangerouslySetInnerHTML={{ __html: block.content }}
+                          ></p>
                         );
                       case 'quote':
                         return (
@@ -429,46 +375,27 @@ const CaseStudy = () => {
                         <table className={tableStyles.dynamicTable}>
                           <thead>
                             <tr>
-                              {/* Render column headers */}
-                              {/* {columnNames.map((heading, colIndex) => (
+                              {block.content.headers.map((heading, colIndex) => (
                                 <th key={colIndex} className={tableStyles.cell}>
                                   {heading}
                                 </th>
-                              ))} */}
-                              <th>Heading 1</th>
-                              <th>Heading 2</th>
-                              <th>Heading 3</th>
+                              ))} 
                             </tr>
                           </thead>
                           <tbody>
                             {/* Render rows and cells */}
-                            {/* {rows.map((row, rowIndex) => ( */}
-                              {/* <tr key={rowIndex}> */}
-                                {/* {row.map((cell, colIndex) => ( */}
-                                  {/* <td key={colIndex} className={tableStyles.cell}> */}
-                                    {/* {cell} Simply display the value */}
-                                  {/* </td> */}
-                                {/* ))} */}
-                              {/* </tr> */}
-                            {/* ))} */}
-                            <tr>
-                              <td>data 1</td>
-                              <td>data 2</td>
-                              <td>data 3</td>
-                            </tr>
-                            <tr>
-                              <td>data 1</td>
-                              <td>data 2</td>
-                              <td>data 3</td>
-                            </tr>
-                            <tr>
-                              <td>data 1</td>
-                              <td>data 2</td>
-                              <td>data 3</td>
-                            </tr>
+                            {block.content.rows.map((row, rowIndex) => (
+                              <tr key={rowIndex}>
+                                {row.map((cell, colIndex) => ( 
+                                   <td key={colIndex} className={tableStyles.cell}>
+                                    {cell} 
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
-                      )
+                      );
                       default:
                         return null;
                     }
