@@ -2,13 +2,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: auto;
+  overflow: hidden !important;
 }
 
 .modal {
@@ -20,7 +20,7 @@
   width: 100%; 
   position: relative;
   text-align: center;
-  overflow: auto;
+  overflow: hidden;
   margin-top: 60px;
 
   .closeButton {
@@ -47,6 +47,9 @@
   .error{
     color: red;
     font-size: 14px;
+  }
+  .hideError{
+    visibility: hidden;
   }
   form {
     display: flex;
