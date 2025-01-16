@@ -5,7 +5,6 @@ import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form
 import dynamic from 'next/dynamic';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './Admin.module.scss';
-import tableStyles from './DynamicTable.module.css'
 import axios from 'axios';
 import Modal from '../components/Modal';
 import JobPostingsManagement from '../components/JobPostingsManagement';
@@ -140,8 +139,6 @@ const AdminPanel = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
-    console.log('Raw form data:', data);
-    
     const sanitizedData: FormValues = {
       ...data,
       sections: data.sections
@@ -150,26 +147,93 @@ const AdminPanel = () => {
           ...section,
           content: section.content
             .map(block => {
+              let updatedContent = block.content ? block.content : '';
+  
+              // Check if the block is a table, and if so, structure the content differently
               if (block.type === 'table') {
-                console.log('Processing table block:', block);
-                const tableData = {
-                  ...block,
-                  content: {
-                    headers: columnNames,
-                    rows: rows
-                  }
-                };
-                console.log('Processed table data:', tableData);
-                return tableData;
+                updatedContent = { headers: columnNames, rows: rows };
+              } else {
+                updatedContent = block.content ? block.content : '';
               }
-              return block;
+  
+              return {
+                ...block,
+                content: updatedContent,
+                src: block.src ? block.src.trim() : '',
+                alt: block.alt ? block.alt.trim() : '',
+                caption: block.caption ? block.caption.trim() : '',
+                title: block.title ? block.title.trim() : '',
+              };
             })
+            .filter(block => {
+              if (!block.type) return false;
+              switch (block.type) {
+                case 'paragraph':
+                case 'quote':
+                case 'highlight':
+                case 'code':
+                  return block.content !== '';
+                case 'image':
+                  return (
+                    block.src &&
+                    block.alt &&
+                    /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(block.src)
+                  );
+                case 'video':
+                  return (
+                    block.src &&
+                    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src)
+                  );
+                case 'table': 
+                  return true;
+                default:
+                  return false;
+              }
+            }),
         }))
+        .filter(section => section.content.length > 0),
     };
-
-    console.log('Sanitized data:', sanitizedData);
-    // Rest of your submission logic
+  
+    const endpoint = data.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
+    const successMessage = data.contentType === 'caseStudy' ? 'Case Study' : 'Blog';
+    const updateMessage =
+      data.contentType === 'caseStudy'
+        ? 'Case Study updated successfully!'
+        : 'Blog updated successfully!';
+    const createMessage =
+      data.contentType === 'caseStudy'
+        ? 'Case Study created successfully!'
+        : 'Blog created successfully!';
+  
+    try {
+      if (isEditing && editingContentId) {
+        const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
+        if (response.status === 200) {
+          alert(updateMessage);
+          reset();
+          setIsEditing(false);
+          setEditingContentId(null);
+          if (activeTab === 'view') fetchContents();
+        } else {
+          alert(`Error: ${response.data.message}`);
+        }
+      } else {
+        const response = await axios.post(endpoint, sanitizedData);
+        if (response.status === 201 || response.status === 200) {
+          alert(createMessage);
+          console.log(`New ${successMessage} ID:`, response.data.id);
+          reset();
+          if (activeTab === 'view') fetchContents();
+        } else {
+          alert(`Error: ${response.data.message}`);
+        }
+      }
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      alert(error.response?.data?.message || 'An unexpected error occurred.');
+    }
   };
+  
 
   const [contents, setContents] = useState<ContentSummary[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -863,12 +927,12 @@ const AdminPanel = () => {
                         // add case to preview table data.
                         case 'table':
                           return (
-                            <table className={tableStyles.dynamicTable}>
+                            <table className={styles.dynamicTable}>
                               <thead>
                                 <tr>
                                   {/* Render column headers */}
                                   {columnNames.map((heading, colIndex) => (
-                                    <th key={colIndex} className={tableStyles.cell}>
+                                    <th key={colIndex} className={styles.heading}>
                                       {heading}
                                     </th>
                                   ))}
@@ -879,7 +943,7 @@ const AdminPanel = () => {
                                 {rows.map((row, rowIndex) => (
                                   <tr key={rowIndex}>
                                     {row.map((cell, colIndex) => (
-                                      <td key={colIndex} className={tableStyles.cell}>
+                                      <td key={colIndex} className={styles.cell}>
                                         {cell} {/* Simply display the value */}
                                       </td>
                                     ))}

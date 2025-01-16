@@ -191,7 +191,6 @@ $code-border: #333333;
 
 .social {
   padding-top: $spacing-unit * 1.5;
-  border-top: 1px solid rgba($text-secondary, 0.2);
 
   h3 {
     font-size: 0.875rem;
@@ -488,4 +487,39 @@ $code-border: #333333;
   &:hover {
     background-color: $purple-dark;
   }
+}
+.dynamicTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.cell {
+  border-bottom: 1px solid #444;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+
+.heading {
+  border-top: 1px solid #444;
+  border-bottom: 1px solid #444;
+  padding: 12px;
+  text-align: center;
+  color: #9333ea;
+  font-size: 16px;
+  font-weight: bold;
+  background: #333;
+}
+
+.flexWrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

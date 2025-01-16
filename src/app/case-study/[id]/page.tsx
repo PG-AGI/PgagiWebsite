@@ -10,7 +10,6 @@ import { FaSquareXTwitter } from 'react-icons/fa6';
 import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
 import axios from 'axios';
-import tableStyles from  '../../admin/management/DynamicTable.module.css';
 
 type CaseStudy = {
   id: string;
@@ -67,7 +66,7 @@ const CaseStudy = () => {
       } catch (err: any) {
         setError(
           err.response?.data?.message ||
-            `Error: ${err.response?.status} ${err.response?.statusText}`
+          `Error: ${err.response?.status} ${err.response?.statusText}`
         );
       } finally {
         setLoading(false);
@@ -140,7 +139,7 @@ const CaseStudy = () => {
 
   if (loading) {
     return (
-<>
+      <>
         <Navigation />
         <div className={styles.container}>
           <main className={styles.main}>
@@ -248,12 +247,11 @@ const CaseStudy = () => {
                             section.title.toLowerCase().replace(/\s+/g, '-')
                           )
                         }
-                        className={`${styles.navButton} ${
-                          activeSection ===
-                          section.title.toLowerCase().replace(/\s+/g, '-')
+                        className={`${styles.navButton} ${activeSection ===
+                            section.title.toLowerCase().replace(/\s+/g, '-')
                             ? styles.active
                             : ''
-                        }`}
+                          }`}
                       >
                         {section.title}
                       </button>
@@ -369,33 +367,33 @@ const CaseStudy = () => {
                             )}
                           </div>
                         );
-                        // create a case which shows data in table form
-                      case 'table': 
-                      return (
-                        <table className={tableStyles.dynamicTable}>
-                          <thead>
-                            <tr>
-                              {block.content.headers.map((heading, colIndex) => (
-                                <th key={colIndex} className={tableStyles.cell}>
-                                  {heading}
-                                </th>
-                              ))} 
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {/* Render rows and cells */}
-                            {block.content.rows.map((row, rowIndex) => (
-                              <tr key={rowIndex}>
-                                {row.map((cell, colIndex) => ( 
-                                   <td key={colIndex} className={tableStyles.cell}>
-                                    {cell} 
-                                  </td>
+                      // create a case which shows data in table form
+                      case 'table':
+                        return (
+                          <table className={styles.dynamicTable}>
+                            <thead>
+                              <tr>
+                                {block.content.headers.map((heading, colIndex) => (
+                                  <th key={colIndex} className={styles.heading}>
+                                    {heading}
+                                  </th>
                                 ))}
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      );
+                            </thead>
+                            <tbody>
+                              {/* Render rows and cells */}
+                              {block.content.rows.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {row.map((cell, colIndex) => (
+                                    <td key={colIndex} className={styles.cell}>
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        );
                       default:
                         return null;
                     }

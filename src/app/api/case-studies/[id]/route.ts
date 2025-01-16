@@ -7,8 +7,8 @@ import { ObjectId } from 'mongodb';
 
 // Define the shape of the incoming data for PUT requests
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video';
-  content?: string;
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
   caption?: string;
@@ -133,6 +133,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           case 'quote':
           case 'highlight':
           case 'code':
+          case 'table':
             if (!block.content) {
               return NextResponse.json(
                 { message: `Content block ${blockIndex + 1} in section ${sectionIndex + 1} is missing content.` },

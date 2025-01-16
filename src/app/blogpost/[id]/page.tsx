@@ -35,7 +35,8 @@ type ContentBlock =
   | { type: 'highlight'; content: string }
   | { type: 'code'; content: string }
   | { type: 'image'; src: string; alt: string; caption?: string }
-  | { type: 'video'; src: string; title?: string; caption?: string };
+  | { type: 'video'; src: string; title?: string; caption?: string }
+  | { type: 'table'; content: { headers: string[]; rows: string[][] } };
 
 const BlogPost = () => {
   const router = useRouter();
@@ -214,39 +215,13 @@ const BlogPost = () => {
               <span className={styles.readTime}>{blogPost.readTime}</span>
             </div>
             <h1 className={styles.title}>{blogPost.title}</h1>
-            <div className={styles.authorInfo}>
-  <span className={styles.authorName}>{blogPost.author.name}</span>
-  <span className={styles.separator}>|</span>
-  <span className={styles.authorDesignation}>{blogPost.author.role}</span>
-</div>
-
-          </header>
-
-          <div className={styles.content}>
-            <aside className={styles.sidebar}>
-              <nav>
-                <h3 className={styles.navigationHeading}>Summary</h3>
-                <ul className={styles.navigation}>
-                  {blogPost.sections.map((section) => (
-                    <li key={section.title}>
-                      <button
-                        onClick={() =>
-                          scrollToSection(section.title.toLowerCase().replace(/\s+/g, '-'))
-                        }
-                        className={`${styles.navButton} ${
-                          activeSection === section.title.toLowerCase().replace(/\s+/g, '-')
-                            ? styles.active
-                            : ''
-                        }`}
-                      >
-                        {section.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className={styles.social}>
-                  <h3>Share this blog post</h3>
+            <div className={styles.flexWrapper}>
+              <div className={styles.authorInfo}>
+                <span className={styles.authorName}>{blogPost.author.name}</span>
+                <span className={styles.separator}>|</span>
+                <span className={styles.authorDesignation}>{blogPost.author.role}</span>
+              </div>
+              <div className={styles.social}>
                   <div className={styles.socialLinks}>
                     <a
                       href={shareUrls.linkedin}
@@ -275,6 +250,32 @@ const BlogPost = () => {
                     </button>
                   </div>
                 </div>
+            </div>
+
+          </header>
+
+          <div className={styles.content}>
+            <aside className={styles.sidebar}>
+              <nav>
+                <h3 className={styles.navigationHeading}>Summary</h3>
+                <ul className={styles.navigation}>
+                  {blogPost.sections.map((section) => (
+                    <li key={section.title}>
+                      <button
+                        onClick={() =>
+                          scrollToSection(section.title.toLowerCase().replace(/\s+/g, '-'))
+                        }
+                        className={`${styles.navButton} ${activeSection === section.title.toLowerCase().replace(/\s+/g, '-')
+                            ? styles.active
+                            : ''
+                          }`}
+                      >
+                        {section.title}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+
               </nav>
             </aside>
 
@@ -341,6 +342,32 @@ const BlogPost = () => {
                               <div className={styles.caption}>{block.caption}</div>
                             )}
                           </div>
+                        );
+                      case 'table':
+                        return (
+                          <table className={styles.dynamicTable}>
+                            <thead>
+                              <tr>
+                                {block.content.headers.map((heading, colIndex) => (
+                                  <th key={colIndex} className={styles.heading}>
+                                    {heading}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {/* Render rows and cells */}
+                              {block.content.rows.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {row.map((cell, colIndex) => (
+                                    <td key={colIndex} className={styles.cell}>
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
                         );
                       default:
                         return null;

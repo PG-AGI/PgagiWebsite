@@ -6,22 +6,22 @@ type Row = string[];  // Each row is an array of strings (table cells)
 type TableData = Row[];  // Table is an array of rows
 
 interface DynamicTableProps {
-    rows: TableData;
-    setRows: React.Dispatch<React.SetStateAction<TableData>>;
-    columns: number;
-    setColumns: React.Dispatch<React.SetStateAction<number>>;
-    columnNames: string[];
-    setColumnNames: React.Dispatch<React.SetStateAction<string[]>>;
-  }
-  
-  const DynamicTable: React.FC<DynamicTableProps> = ({
-    rows,
-    setRows,
-    columns,
-    setColumns,
-    columnNames,
-    setColumnNames,
-  }) => {
+  rows: TableData;
+  setRows: React.Dispatch<React.SetStateAction<TableData>>;
+  columns: number;
+  setColumns: React.Dispatch<React.SetStateAction<number>>;
+  columnNames: string[];
+  setColumnNames: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const DynamicTable: React.FC<DynamicTableProps> = ({
+  rows,
+  setRows,
+  columns,
+  setColumns,
+  columnNames,
+  setColumnNames,
+}) => {
 
   const addRow = () => {
     const newRows: TableData = [...rows, Array(columns).fill('')];
@@ -32,7 +32,7 @@ interface DynamicTableProps {
     const newRows: TableData = rows.map((row) => [...row, '']);
     setRows(newRows);
     setColumns(columns + 1);
-    setColumnNames([...columnNames, '']); 
+    setColumnNames([...columnNames, '']);
   };
 
   const handleInputChange = (
@@ -43,8 +43,8 @@ interface DynamicTableProps {
     const newRows: TableData = rows.map((row, rIndex) =>
       rIndex === rowIndex
         ? row.map((col, cIndex) =>
-            cIndex === colIndex ? e.target.value : col
-          )
+          cIndex === colIndex ? e.target.value : col
+        )
         : row
     );
     setRows(newRows);
@@ -80,21 +80,23 @@ interface DynamicTableProps {
           <tr>
             {Array.from({ length: columns }).map((_, colIndex) => (
               <th key={colIndex} className={styles.cell}>
-                <input
-                  type="text"
-                  value={columnNames[colIndex] || ''}
-                  onChange={(e) => handleColumnNameChange(e, colIndex)}
-                  placeholder={`Column ${colIndex + 1}`}
-                  className={styles.columnNameInput}
-                />
-                {columns > 1 && (
-                  <button
-                    onClick={() => removeColumn(colIndex)}
-                    className={styles.removeBtn}
-                  >
-                    -
-                  </button>
-                )}
+                <div className={styles.flexWrapper}>
+                  <input
+                    type="text"
+                    value={columnNames[colIndex] || ''}
+                    onChange={(e) => handleColumnNameChange(e, colIndex)}
+                    placeholder={`Column ${colIndex + 1}`}
+                    className={styles.columnNameInput}
+                  />
+                  {columns > 1 && (
+                    <button
+                      onClick={() => removeColumn(colIndex)}
+                      className={styles.removeBtn}
+                    >
+                      -
+                    </button>
+                  )}
+                </div>
               </th>
             ))}
           </tr>
@@ -126,8 +128,8 @@ interface DynamicTableProps {
         </tbody>
       </table>
       <div className={styles.buttons}>
-        <button onClick={addRow} className={styles.button}>Add Row</button>
-        <button onClick={addColumn} className={styles.button}>Add Column</button>
+        <div onClick={addRow} className={styles.button}>Add Row</div>
+        <div onClick={addColumn} className={styles.button}>Add Column</div>
       </div>
     </div>
   );
