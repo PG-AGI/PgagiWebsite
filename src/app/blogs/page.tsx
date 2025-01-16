@@ -23,6 +23,16 @@ type CaseStudy = {
   title: string;
   coverImage: string;
 };
+type Blog = {
+  id: string;
+  title: string;
+  coverImage: string;
+};
+type News = {
+  id: string;
+  title: string;
+  coverImage: string;
+};
 
 export default function BlogPage() {
   const topRef = useRef<HTMLDivElement>(null);
@@ -111,6 +121,12 @@ export default function BlogPage() {
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
   const [loadingCaseStudies, setLoadingCaseStudies] = useState<boolean>(false);
   const [errorCaseStudies, setErrorCaseStudies] = useState<string>('');
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loadingBlogs, setLoadingBlogs] = useState<boolean>(false);
+  const [errorBlogs, setErrorBlogs] = useState<string>('');
+  const [news, setNews] = useState<News[]>([]);
+  const [loadingNews, setLoadingNews] = useState<boolean>(false);
+  const [errorNews, setErrorNews] = useState<string>('');
   const router = useRouter();
 
   const handleBookCall = () => setIsModalOpen(true);
@@ -141,11 +157,48 @@ export default function BlogPage() {
       }
     };
 
+    const fetchBlogs = async () => {
+      setLoadingBlogs(true);
+      setErrorBlogs('');
+      try {
+        const response = await fetch('/api/blogs');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: Blog[] = await response.json();
+        setBlogs(data);
+      } catch (error: any) {
+        setErrorBlogs(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingBlogs(false);
+      }
+    }
+    const fetchNews = async () => {
+      setLoadingNews(true);
+      setErrorNews('');
+      try {
+        const response = await fetch('/api/ainews');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: News[] = await response.json();
+        setNews(data);
+      } catch (error: any) {
+        setErrorNews(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingNews(false);
+      }
+    }
+
+
+    fetchBlogs();
     fetchCaseStudies();
+    fetchNews(); 
+
   }, []);
   
   useEffect(() => {
-    // Ensure the scroll state is updated after content is loaded
+
     const checkInitialScrollState = () => {
       checkScroll(caseRef, 'case');
       checkScroll(blogRef, 'blog');
@@ -281,16 +334,45 @@ export default function BlogPage() {
           <h2>Blogs</h2>
           <div className={styles.listContainer}>
             <div className={styles.blogList} ref={blogRef} {...blogEvents}>
-              {blogContent.map((item, i) => (
-                <Link href={`/blogs/${item.slug}`} key={i}>
-                  <div className={styles.blogItem}>
-                    <div className={styles.content}>
-                      <p>{item.description}</p>
+              {loadingBlogs ? (
+                Array.from({ length: skeletonCount }).map((_, index) => (
+                  <div className={styles.blogItem} key={index}>
+                    <div className={styles.skeletonImage} />
+                    <div className={styles.skeletonText}>
+                      <div className={styles.skeletonLine} />
+                      <div className={styles.skeletonLineShort} />
                     </div>
-                    <Image className={styles.imgTag} src={item.image.src} alt={item.title} layout="fill" objectFit="cover" />
                   </div>
-                </Link>
-              ))}
+                ))
+              ) : errorBlogs ? (
+                <p className={styles.error}>{errorBlogs}</p>
+              ) : blogs.length === 0 ? (
+                <p>No blogs found.</p>
+              ) : (
+                blogs
+                  .slice(0)
+                  .reverse()
+                  .map(blog => (
+                    <Link href={`/blogpost/${blog.id}`} key={blog.id}>
+                      <div className={styles.blogItem}>
+                        <div className={styles.content}>
+                          <p>{blog.title}</p>
+                        </div>
+                        <div className={styles.imageWrapper}>
+                          <Image
+                            className={styles.imgTag}
+                            src={blog.coverImage}
+                            alt={blog.title}
+                            layout="fill"
+                            objectFit="cover"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+              )}
+
             </div>
           </div>
           {/* Navigation Arrows Below the List */}
@@ -326,17 +408,46 @@ export default function BlogPage() {
           <h2>AI News</h2>
           <div className={styles.listContainer}>
             <div className={styles.newsList} ref={newsRef} {...newsEvents}>
-              {newsContent.map((item, i) => (
-                <div key={i} className={styles.newsItem}>
-                  <div className={styles.content}>
-                    <p>{item.description}</p>
+              {loadingNews ? (
+                Array.from({ length: skeletonCount }).map((_, index) => (
+                  <div className={styles.newsItem} key={index}>
+                    <div className={styles.skeletonImage} />
+                    <div className={styles.skeletonText}>
+                      <div className={styles.skeletonLine} />
+                      <div className={styles.skeletonLineShort} />
+                    </div>
                   </div>
-                  <Image className={styles.imgTag} src={item.image.src} alt={item.title} layout="fill" objectFit="cover" />
-                </div>
-              ))}
+                ))
+              ) : errorNews ? (
+                <p className={styles.error}>{errorNews}</p>
+              ) : news.length === 0 ? (
+                <p>No news found.</p>
+              ) : (
+                news
+                  .slice(0)
+                  .reverse()
+                  .map(n => (
+                    <Link href={`/ainews/${n.id}`} key={n.id}>
+                      <div className={styles.newsItem}>
+                        <div className={styles.content}>
+                          <p>{n.title}</p>
+                        </div>
+                        <div className={styles.imageWrapper}>
+                          <Image
+                            className={styles.imgTag}
+                            src={n.coverImage}
+                            alt={n.title}
+                            layout="fill"
+                            objectFit="cover"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+              )}
             </div>
           </div>
-          {/* Navigation Arrows Below the List */}
           <div className={styles.navigationArrows}>
             <button
               className={styles.navButton}

@@ -1,36 +1,35 @@
-
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
-import { Blog } from '@/interfaces/blog';
+import { AINews } from '@/interfaces/ainews';
+
+interface ContentBlock {
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  content?: string | { headers: string[]; rows: string[][] };
+  src?: string;
+  alt?: string;
+  caption?: string;
+  title?: string;
+}
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
-
   if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
+    return NextResponse.json({ message: 'Invalid AINEWS ID' }, { status: 400 });
   }
 
   try {
     const client = await clientPromise;
     const db = client.db();
-    const collection = db.collection('blogs');
+    const collection = db.collection('ainews');
+    const ainews = await collection.findOne({ _id: new ObjectId(id) });
 
-    const blog = await collection.findOne({ _id: new ObjectId(id) });
-
-    if (!blog) {
-      return NextResponse.json(
-        { message: 'Blog Not Found' },
-        { status: 404 }
-      );
+    if (!ainews) {
+      return NextResponse.json({ message: 'AINEWS Not Found' }, { status: 404 });
     }
 
-    const { _id, ...rest } = blog;
+    const { _id, ...rest } = ainews;
     const response = {
       id: _id.toString(),
       ...rest,
@@ -38,22 +37,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
-    console.error('Error fetching blog:', error);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error('Error fetching AINEWS:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
-
   if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
+    return NextResponse.json({ message: 'Invalid AINEWS ID' }, { status: 400 });
   }
 
   try {
@@ -68,10 +60,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       !data.authorRole ||
       !Array.isArray(data.sections)
     ) {
-      return NextResponse.json(
-        { message: 'Missing required fields' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
     for (const [sectionIndex, section] of data.sections.entries()) {
@@ -99,14 +88,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           case 'quote':
           case 'highlight':
           case 'code':
-          case 'table': // Add 'table' here
+          case 'table':
             if (!block.content) {
               return NextResponse.json(
                 { message: `Content block ${blockIndex + 1} in section ${sectionIndex + 1} is missing content.` },
                 { status: 400 }
               );
             }
-            // Optional: Further validate 'table' content structure
             if (block.type === 'table') {
               if (
                 typeof block.content !== 'object' ||
@@ -115,6 +103,18 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
               ) {
                 return NextResponse.json(
                   { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} has invalid content structure.` },
+                  { status: 400 }
+                );
+              }
+              const headers = (block.content as { headers: string[] }).headers;
+              const rows = (block.content as { rows: string[][] }).rows;
+              if (rows.some(row => row.length !== headers.length)) {
+                console.log('Table row length mismatch:', {
+                  headers: headers.length,
+                  rows: rows.map(r => r.length)
+                });
+                return NextResponse.json(
+                  { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
                   { status: 400 }
                 );
               }
@@ -159,7 +159,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
     }
 
-    const updatedBlog: Partial<Blog> = {
+    const updatedAinews: Partial<AINews> = {
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,
@@ -184,66 +184,44 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const client = await clientPromise;
     const db = client.db();
-    const collection = db.collection('blogs');
+    const collection = db.collection('ainews');
 
     const result = await collection.updateOne(
       { _id: new ObjectId(id) },
-      { $set: updatedBlog }
+      { $set: updatedAinews }
     );
 
     if (result.matchedCount === 0) {
-      return NextResponse.json(
-        { message: 'Blog Not Found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: 'AINEWS Not Found' }, { status: 404 });
     }
 
-    return NextResponse.json(
-      { message: 'Blog Updated Successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'AINEWS Updated Successfully' }, { status: 200 });
   } catch (error) {
-    console.error('Error updating blog:', error);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error('Error updating AINEWS:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
-
   if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
+    return NextResponse.json({ message: 'Invalid AINEWS ID' }, { status: 400 });
   }
 
   try {
     const client = await clientPromise;
     const db = client.db();
-    const collection = db.collection('blogs');
+    const collection = db.collection('ainews');
 
     const result = await collection.deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { message: 'Blog Not Found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: 'AINEWS Not Found' }, { status: 404 });
     }
 
-    return NextResponse.json(
-      { message: 'Blog Deleted Successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'AINEWS Deleted Successfully' }, { status: 200 });
   } catch (error) {
-    console.error('Error deleting blog:', error);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error('Error deleting AINEWS:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }

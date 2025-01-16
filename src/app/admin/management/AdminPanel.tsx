@@ -13,7 +13,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import DynamicTable from './DynamicTable';
 
-type ContentType = 'caseStudy' | 'blog';
+type ContentType = 'caseStudy' | 'blog' | 'ainews';
 
 type ContentBlock = {
   id: string;
@@ -62,8 +62,8 @@ type ContentDetails = {
   sections: {
     title: string;
     content: {
-      type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video';
-      content?: string;
+      type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+      content?: string | { headers: string[]; rows: string[][] };
       src?: string;
       alt?: string;
       caption?: string;
@@ -86,7 +86,7 @@ const AdminPanel = () => {
   const [contentDetails, setContentDetails] = useState<ContentDetails | null>(null);
   const [detailsLoading, setDetailsLoading] = useState<boolean>(false);
   const [detailsError, setDetailsError] = useState<string>('');
-  const [filterType, setFilterType] = useState<'all' | 'caseStudy' | 'blog'>('all');
+  const [filterType, setFilterType] = useState<'all' | 'caseStudy' | 'blog' | 'ainews'>('all'); // Added 'ainews'
   // dynamic table hooks
     const [rows, setRows] = useState<TableData>([['']]);  
     const [columns, setColumns] = useState<number>(1); 
@@ -148,14 +148,14 @@ const AdminPanel = () => {
           content: section.content
             .map(block => {
               let updatedContent = block.content ? block.content : '';
-  
+
               // Check if the block is a table, and if so, structure the content differently
               if (block.type === 'table') {
                 updatedContent = { headers: columnNames, rows: rows };
               } else {
                 updatedContent = block.content ? block.content : '';
               }
-  
+
               return {
                 ...block,
                 content: updatedContent,
@@ -184,7 +184,7 @@ const AdminPanel = () => {
                     block.src &&
                     /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src)
                   );
-                case 'table': 
+                case 'table':
                   return true;
                 default:
                   return false;
@@ -193,23 +193,35 @@ const AdminPanel = () => {
         }))
         .filter(section => section.content.length > 0),
     };
-  
-    const endpoint = data.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
-    const successMessage = data.contentType === 'caseStudy' ? 'Case Study' : 'Blog';
-    const updateMessage =
-      data.contentType === 'caseStudy'
-        ? 'Case Study updated successfully!'
-        : 'Blog updated successfully!';
-    const createMessage =
-      data.contentType === 'caseStudy'
-        ? 'Case Study created successfully!'
-        : 'Blog created successfully!';
-  
+
+    const endpointMap: Record<ContentType, string> = {
+      caseStudy: '/api/case-studies',
+      blog: '/api/blogs',
+      ainews: '/api/ainews', // Added AINEWS endpoint
+    };
+
+    const endpoint = endpointMap[data.contentType];
+    const successMessageMap: Record<ContentType, string> = {
+      caseStudy: 'Case Study',
+      blog: 'Blog',
+      ainews: 'AINEWS',
+    };
+    const updateMessageMap: Record<ContentType, string> = {
+      caseStudy: 'Case Study updated successfully!',
+      blog: 'Blog updated successfully!',
+      ainews: 'AINEWS updated successfully!',
+    };
+    const createMessageMap: Record<ContentType, string> = {
+      caseStudy: 'Case Study created successfully!',
+      blog: 'Blog created successfully!',
+      ainews: 'AINEWS created successfully!',
+    };
+
     try {
       if (isEditing && editingContentId) {
         const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
         if (response.status === 200) {
-          alert(updateMessage);
+          alert(updateMessageMap[data.contentType]);
           reset();
           setIsEditing(false);
           setEditingContentId(null);
@@ -220,8 +232,8 @@ const AdminPanel = () => {
       } else {
         const response = await axios.post(endpoint, sanitizedData);
         if (response.status === 201 || response.status === 200) {
-          alert(createMessage);
-          console.log(`New ${successMessage} ID:`, response.data.id);
+          alert(createMessageMap[data.contentType]);
+          console.log(`New ${successMessageMap[data.contentType]} ID:`, response.data.id);
           reset();
           if (activeTab === 'view') fetchContents();
         } else {
@@ -243,9 +255,10 @@ const AdminPanel = () => {
     setLoading(true);
     setError('');
     try {
-      const [caseStudiesResponse, blogsResponse] = await Promise.all([
+      const [caseStudiesResponse, blogsResponse, ainewsResponse] = await Promise.all([
         axios.get('/api/case-studies'),
         axios.get('/api/blogs'),
+        axios.get('/api/ainews'), // Fetch AINEWS
       ]);
 
       const caseStudies: ContentSummary[] = caseStudiesResponse.data.map((cs: any) => ({
@@ -262,7 +275,14 @@ const AdminPanel = () => {
         contentType: 'blog',
       }));
 
-      setContents([...caseStudies, ...blogs]);
+      const ainews: ContentSummary[] = ainewsResponse.data.map((news: any) => ({
+        id: news.id,
+        title: news.title,
+        coverImage: news.coverImage,
+        contentType: 'ainews',
+      }));
+
+      setContents([...caseStudies, ...blogs, ...ainews]);
     } catch (err: any) {
       console.error('Error fetching contents:', err);
       setError(err.response?.data?.message || 'An unexpected error occurred.');
@@ -282,7 +302,12 @@ const AdminPanel = () => {
       setDetailsLoading(true);
       setDetailsError('');
       try {
-        const endpoint = contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
+        const endpointMap: Record<ContentType, string> = {
+          caseStudy: '/api/case-studies',
+          blog: '/api/blogs',
+          ainews: '/api/ainews',
+        };
+        const endpoint = endpointMap[contentType];
         const response = await axios.get(`${endpoint}/${id}`);
         setContentDetails(response.data);
       } catch (err: any) {
@@ -311,10 +336,19 @@ const AdminPanel = () => {
   };
 
   const handleEdit = async (content: ContentSummary) => {
-    const endpoint = content.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
+    
+    const endpointMap: Record<ContentType, string> = {
+      caseStudy: '/api/case-studies',
+      blog: '/api/blogs',
+      ainews: '/api/ainews',
+    };
+
+    const endpoint = endpointMap[content.contentType];
     try {
       const response = await axios.get(`${endpoint}/${content.id}`);
+  
       const data: ContentDetails = response.data;
+      console.log('Fetched Content Details:', data);
       const formData: FormValues = {
         contentType: data.contentType,
         coverImage: data.coverImage || '',
@@ -329,7 +363,7 @@ const AdminPanel = () => {
           content: section.content.map((block) => ({
             id: uuidv4(),
             type: block.type || 'paragraph',
-            content: block.content || '',
+            content: block.type === 'table' ? block.content : (block.content || ''),
             src: block.src || '',
             alt: block.alt || '',
             caption: block.caption || '',
@@ -352,19 +386,23 @@ const AdminPanel = () => {
 
   const handleDelete = async (content: ContentSummary) => {
     const confirmDelete = window.confirm(
-      `Are you sure you want to delete this ${content.contentType === 'caseStudy' ? 'Case Study' : 'Blog'
-      }?`
+      `Are you sure you want to delete this ${content.contentType === 'caseStudy' ? 'Case Study' : content.contentType === 'blog' ? 'Blog' : 'AINEWS'}?`
     );
     if (!confirmDelete) return;
 
-    const endpoint = content.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
+    const endpointMap: Record<ContentType, string> = {
+      caseStudy: '/api/case-studies',
+      blog: '/api/blogs',
+      ainews: '/api/ainews',
+    };
+
+    const endpoint = endpointMap[content.contentType];
 
     try {
       const response = await axios.delete(`${endpoint}/${content.id}`);
       if (response.status === 200 || response.status === 204) {
         alert(
-          `${content.contentType === 'caseStudy' ? 'Case Study' : 'Blog'
-          } deleted successfully!`
+          `${content.contentType === 'caseStudy' ? 'Case Study' : content.contentType === 'blog' ? 'Blog' : 'AINEWS'} deleted successfully!`
         );
         fetchContents();
       } else {
@@ -372,14 +410,12 @@ const AdminPanel = () => {
       }
     } catch (error: any) {
       console.error(
-        `Error deleting ${content.contentType === 'caseStudy' ? 'case study' : 'blog'
-        }:`,
+        `Error deleting ${content.contentType === 'caseStudy' ? 'case study' : content.contentType === 'blog' ? 'blog' : 'AINEWS'}:`,
         error
       );
       alert(
         error.response?.data?.message ||
-        `An unexpected error occurred while deleting the ${content.contentType === 'caseStudy' ? 'case study' : 'blog'
-        }.`
+        `An unexpected error occurred while deleting the ${content.contentType === 'caseStudy' ? 'case study' : content.contentType === 'blog' ? 'blog' : 'AINEWS'}.`
       );
     }
   };
@@ -432,10 +468,12 @@ const AdminPanel = () => {
                   id="contentType"
                   {...register('contentType', { required: 'Content Type is required' })}
                   required
+                
                 >
                   {!isEditing && <option value="">Select Content Type</option>}
                   <option value="caseStudy">Case Study</option>
                   <option value="blog">Blog</option>
+                  <option value="ainews">AINEWS</option> {/* Added AINEWS */}
                 </select>
                 {errors.contentType && (
                   <span className={styles.error}>{errors.contentType.message}</span>
@@ -873,7 +911,7 @@ const AdminPanel = () => {
                             <p
                               key={block.id}
                               dangerouslySetInnerHTML={{
-                                __html: block.content || 'Sample paragraph content.',
+                                __html: typeof block.content === 'string' ? block.content : 'Sample paragraph content.',
                               }}
                             ></p>
                           );
@@ -924,31 +962,40 @@ const AdminPanel = () => {
                               )}
                             </div>
                           );
-                        // add case to preview table data.
                         case 'table':
                           return (
-                            <table className={styles.dynamicTable}>
+                            <table className={styles.dynamicTable} key={block.id}>
                               <thead>
                                 <tr>
                                   {/* Render column headers */}
-                                  {columnNames.map((heading, colIndex) => (
-                                    <th key={colIndex} className={styles.heading}>
-                                      {heading}
-                                    </th>
-                                  ))}
+                                  {block.content && typeof block.content !== 'string' && 'headers' in block.content ? (
+                                    block.content.headers.map((heading, colIndex) => (
+                                      <th key={colIndex} className={styles.heading}>
+                                        {heading}
+                                      </th>
+                                    ))
+                                  ) : (
+                                    <th>No Headers</th>
+                                  )}
                                 </tr>
                               </thead>
                               <tbody>
                                 {/* Render rows and cells */}
-                                {rows.map((row, rowIndex) => (
-                                  <tr key={rowIndex}>
-                                    {row.map((cell, colIndex) => (
-                                      <td key={colIndex} className={styles.cell}>
-                                        {cell} {/* Simply display the value */}
-                                      </td>
-                                    ))}
+                                {block.content && typeof block.content !== 'string' && 'rows' in block.content ? (
+                                  block.content.rows.map((row, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                      {row.map((cell, colIndex) => (
+                                        <td key={colIndex} className={styles.cell}>
+                                          {cell} {/* Simply display the value */}
+                                        </td>
+                                      ))}
+                                    </tr>
+                                  ))
+                                ) : (
+                                  <tr>
+                                    <td>No Rows</td>
                                   </tr>
-                                ))}
+                                )}
                               </tbody>
                             </table>
                           )
@@ -971,12 +1018,13 @@ const AdminPanel = () => {
               <select
                 id="filterType"
                 value={filterType}
-                onChange={(e) => setFilterType(e.target.value as 'all' | 'caseStudy' | 'blog')}
+                onChange={(e) => setFilterType(e.target.value as 'all' | 'caseStudy' | 'blog' | 'ainews')}
                 className={styles.filterSelect}
               >
                 <option value="all">All</option>
                 <option value="caseStudy">Case Studies</option>
                 <option value="blog">Blogs</option>
+                <option value="ainews">AINEWS</option> {/* Added AINEWS */}
               </select>
             </div>
 
@@ -1010,7 +1058,7 @@ const AdminPanel = () => {
                         </td>
                         <td>{cs.title}</td>
                         <td>{cs.id}</td>
-                        <td>{cs.contentType === 'caseStudy' ? 'Case Study' : 'Blog'}</td>
+                        <td>{cs.contentType === 'caseStudy' ? 'Case Study' : cs.contentType === 'blog' ? 'Blog' : 'AINEWS'}</td>
                         <td>
                           <button onClick={() => handleViewDetails(cs)} className={styles.viewButton}>
                             View Details
@@ -1067,26 +1115,26 @@ const AdminPanel = () => {
                         <p
                           key={blockIndex}
                           dangerouslySetInnerHTML={{
-                            __html: block.content || 'Sample paragraph content.',
+                            __html: typeof block.content === 'string' ? block.content : 'Sample paragraph content.',
                           }}
                         ></p>
                       );
                     case 'quote':
                       return (
                         <blockquote key={blockIndex} className={styles.quote}>
-                          {block.content || 'Sample quote content.'}
+                          {typeof block.content === 'string' ? block.content : 'Sample quote content.'}
                         </blockquote>
                       );
                     case 'highlight':
                       return (
                         <div key={blockIndex} className={styles.highlight}>
-                          {block.content || 'Sample highlight content.'}
+                          {typeof block.content === 'string' ? block.content : 'Sample highlight content.'}
                         </div>
                       );
                     case 'code':
                       return (
                         <pre key={blockIndex} className={styles.codeBlock}>
-                          <code>{block.content || '// Sample code snippet'}</code>
+                          <code>{typeof block.content === 'string' ? block.content : '// Sample code snippet'}</code>
                         </pre>
                       );
                     case 'image':
@@ -1118,6 +1166,43 @@ const AdminPanel = () => {
                           )}
                         </div>
                       );
+                    case 'table':
+                      return (
+                        <table className={styles.dynamicTable} key={blockIndex}>
+                          <thead>
+                            <tr>
+                              {/* Render column headers */}
+                              {block.content && typeof block.content !== 'string' && 'headers' in block.content ?(
+                                block.content.headers.map((heading, colIndex) => (
+                                  <th key={colIndex} className={styles.heading}>
+                                    {heading}
+                                  </th>
+                                ))
+                              ) : (
+                                <th>No Headers</th>
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* Render rows and cells */}
+                            {block.content && typeof block.content !== 'string' && 'rows' in block.content ? (
+                              block.content.rows.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {row.map((cell, colIndex) => (
+                                    <td key={colIndex} className={styles.cell}>
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td>No Rows</td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      )
                     default:
                       return null;
                   }
@@ -1134,4 +1219,3 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
-

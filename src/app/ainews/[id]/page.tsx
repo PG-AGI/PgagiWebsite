@@ -60,7 +60,7 @@ const Ainews = () => {
       setLoading(true);
       setError('');
       try {
-        const response = await axios.get(`/api/blogs/${id}`);
+        const response = await axios.get(`/api/ainews/${id}`);
         const data: AinewsType = response.data;
         setAiNews(data);
       } catch (err: any) {
@@ -216,11 +216,11 @@ const Ainews = () => {
             </div>
             <h1 className={styles.title}>{aiNews.title}</h1>
             <div className={styles.flexWrapper}>
-              <div className={styles.authorInfo}>
+              {/* <div className={styles.authorInfo}>
                 <span className={styles.authorName}>{aiNews.author.name}</span>
                 <span className={styles.separator}>|</span>
                 <span className={styles.authorDesignation}>{aiNews.author.role}</span>
-              </div>
+              </div> */}
               <div className={styles.social}>
                   <div className={styles.socialLinks}>
                     <a

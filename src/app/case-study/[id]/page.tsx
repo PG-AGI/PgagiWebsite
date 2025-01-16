@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import styles from './CaseStudy.module.scss';
-import { Link2, ArrowUp } from 'lucide-react'; // <-- Import ArrowUp
+import { Link2, ArrowUp } from 'lucide-react'; 
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { FaLinkedin } from 'react-icons/fa';
