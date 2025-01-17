@@ -17,8 +17,8 @@ type ContentType = 'caseStudy' | 'blog';
 
 type ContentBlock = {
   id: string;
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
-  content?: string | { headers: string[]; rows: string[][] };
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
+  content?: string | { headers: string[]; rows: string[][] } | {heading: string; text: string};
   src?: string;
   alt?: string;
   caption?: string;
@@ -62,8 +62,8 @@ type ContentDetails = {
   sections: {
     title: string;
     content: {
-      type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video';
-      content?: string;
+      type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
+      content?: string | { headers: string[]; rows: string[][] } | {heading: string; text: string};
       src?: string;
       alt?: string;
       caption?: string;
@@ -88,9 +88,9 @@ const AdminPanel = () => {
   const [detailsError, setDetailsError] = useState<string>('');
   const [filterType, setFilterType] = useState<'all' | 'caseStudy' | 'blog'>('all');
   // dynamic table hooks
-    const [rows, setRows] = useState<TableData>([['']]);  
-    const [columns, setColumns] = useState<number>(1); 
-    const [columnNames, setColumnNames] = useState<string[]>(['']); 
+  const [rows, setRows] = useState<TableData>([['']]);
+  const [columns, setColumns] = useState<number>(1);
+  const [columnNames, setColumnNames] = useState<string[]>(['']);
 
   const {
     register,
@@ -148,14 +148,14 @@ const AdminPanel = () => {
           content: section.content
             .map(block => {
               let updatedContent = block.content ? block.content : '';
-  
+
               // Check if the block is a table, and if so, structure the content differently
               if (block.type === 'table') {
                 updatedContent = { headers: columnNames, rows: rows };
               } else {
                 updatedContent = block.content ? block.content : '';
               }
-  
+
               return {
                 ...block,
                 content: updatedContent,
@@ -184,7 +184,7 @@ const AdminPanel = () => {
                     block.src &&
                     /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src)
                   );
-                case 'table': 
+                case 'table':
                   return true;
                 default:
                   return false;
@@ -193,7 +193,7 @@ const AdminPanel = () => {
         }))
         .filter(section => section.content.length > 0),
     };
-  
+
     const endpoint = data.contentType === 'caseStudy' ? '/api/case-studies' : '/api/blogs';
     const successMessage = data.contentType === 'caseStudy' ? 'Case Study' : 'Blog';
     const updateMessage =
@@ -204,7 +204,7 @@ const AdminPanel = () => {
       data.contentType === 'caseStudy'
         ? 'Case Study created successfully!'
         : 'Blog created successfully!';
-  
+
     try {
       if (isEditing && editingContentId) {
         const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
@@ -233,7 +233,7 @@ const AdminPanel = () => {
       alert(error.response?.data?.message || 'An unexpected error occurred.');
     }
   };
-  
+
 
   const [contents, setContents] = useState<ContentSummary[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -762,15 +762,17 @@ const AdminPanel = () => {
                                     />
                                   </div>
                                 </>
-                              ) : block.type === 'table' ? 
-                              <DynamicTable
-                                rows={rows}
-                                setRows={setRows}
-                                columns={columns}
-                                setColumns={setColumns}
-                                columnNames={columnNames}
-                                setColumnNames={setColumnNames}
-                              /> : null}
+                              ) : block.type === 'table' ?
+                                (
+                                  <DynamicTable
+                                        rows={rows}
+                                        setRows={setRows}
+                                        columns={columns}
+                                        setColumns={setColumns}
+                                        columnNames={columnNames}
+                                        setColumnNames={setColumnNames}
+                                    />
+                                ) : block.type === 'box' ? ( <></>): null}
                             </div>
                           ))}
 
@@ -1074,19 +1076,19 @@ const AdminPanel = () => {
                     case 'quote':
                       return (
                         <blockquote key={blockIndex} className={styles.quote}>
-                          {block.content || 'Sample quote content.'}
+                          {typeof block.content === 'string' ? block.content : 'Sample quote content.'}
                         </blockquote>
                       );
                     case 'highlight':
                       return (
                         <div key={blockIndex} className={styles.highlight}>
-                          {block.content || 'Sample highlight content.'}
+                          {typeof block.content === 'string' ? block.content : 'Sample highlight content.'}
                         </div>
                       );
                     case 'code':
                       return (
                         <pre key={blockIndex} className={styles.codeBlock}>
-                          <code>{block.content || '// Sample code snippet'}</code>
+                          <code>{typeof block.content === 'string' ? block.content : '// Sample code snippet'}</code>
                         </pre>
                       );
                     case 'image':
@@ -1117,6 +1119,33 @@ const AdminPanel = () => {
                             <div className={styles.caption}>{block.caption}</div>
                           )}
                         </div>
+                      );
+                    case 'table':
+                      return (
+                        <table className={styles.dynamicTable}>
+                          <thead>
+                            <tr>
+                              {/* Render column headers */}
+                              {columnNames.map((heading, colIndex) => (
+                                <th key={colIndex} className={styles.heading}>
+                                  {heading}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* Render rows and cells */}
+                            {rows.map((row, rowIndex) => (
+                              <tr key={rowIndex}>
+                                {row.map((cell, colIndex) => (
+                                  <td key={colIndex} className={styles.cell}>
+                                    {cell} {/* Simply display the value */}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       );
                     default:
                       return null;

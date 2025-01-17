@@ -98,22 +98,19 @@ export const trendingListOld = [
     "title": "Case Studies",
     "description": "Explore Our Success Stories",
     "brief": "Discover how businesses across various industries have leveraged our solutions to overcome challenges and drive success.",
-    // "image": 'https://i.postimg.cc/nLykDdFy/Download-free-image-of-Fluid-art-background-backgrounds-abstract-painting-by-Napas-about-skin-shad.jpg'
-    "image": 'http://localhost:3000/_next/static/media/news1.84c6d73e.svg'
+    "image": 'https://i.postimg.cc/nLykDdFy/Download-free-image-of-Fluid-art-background-backgrounds-abstract-painting-by-Napas-about-skin-shad.jpg'
   },
   {
     "title": "Blogs",
     "description": "Insights and Expertise",
     "brief": "Stay updated with the latest industry insights, expert opinions, and trends through our regularly updated blog section.",
-    // "image": 'https://i.postimg.cc/0ydx343f/point-design-purple.jpg'
-    "image": '	http://localhost:3000/_next/static/media/news2.e6321a65.svg'
+    "image": 'https://i.postimg.cc/0ydx343f/point-design-purple.jpg'
   },
   {
     "title": "AI News",
     "description": "Latest Developments in AI",
     "brief": "Get the latest updates on advancements in artificial intelligence, innovations, and key industry developments.",
-    // "image": 'https://i.postimg.cc/Gm1dXRMt/79344e43-4f61-4eee-8a29-06e5bc5ead72.jpg'
-    "image": '	http://localhost:3000/_next/static/media/news4.28b388fb.svg'
+    "image": 'https://i.postimg.cc/Gm1dXRMt/79344e43-4f61-4eee-8a29-06e5bc5ead72.jpg'
   },
 ];
 type Product = {

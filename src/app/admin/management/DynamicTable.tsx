@@ -1,6 +1,6 @@
 'use client';
 import { useState, ChangeEvent } from 'react';
-import styles from './DynamicTable.module.css'; // Importing the CSS Module
+import styles from './DynamicTable.module.scss'; // Importing the SCSS Module
 
 type Row = string[];  // Each row is an array of strings (table cells)
 type TableData = Row[];  // Table is an array of rows
@@ -43,8 +43,8 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
     const newRows: TableData = rows.map((row, rIndex) =>
       rIndex === rowIndex
         ? row.map((col, cIndex) =>
-          cIndex === colIndex ? e.target.value : col
-        )
+            cIndex === colIndex ? e.target.value : col
+          )
         : row
     );
     setRows(newRows);
@@ -86,7 +86,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                     value={columnNames[colIndex] || ''}
                     onChange={(e) => handleColumnNameChange(e, colIndex)}
                     placeholder={`Column ${colIndex + 1}`}
-                    className={styles.columnNameInput}
+                    className={styles.columnNameInput} // Updated class name
                   />
                   {columns > 1 && (
                     <button
@@ -109,7 +109,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                   <textarea
                     value={cell}
                     onChange={(e) => handleInputChange(e, rowIndex, colIndex)}
-                    className={styles.textareaCell}
+                    className={styles.textareaCell} // Updated class name
                     rows={3}
                     placeholder={`Enter text...`}
                   />
