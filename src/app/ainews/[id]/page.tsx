@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import styles from './BlogPost.module.scss';
+import styles from './Ainews.module.scss';
 import { Link2 } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
 import axios from 'axios';
 
-type BlogPostType = {
+type AinewsType = {
   id: string;
   coverImage: string;
   title: string;
@@ -38,12 +38,12 @@ type ContentBlock =
   | { type: 'video'; src: string; title?: string; caption?: string }
   | { type: 'table'; content: { headers: string[]; rows: string[][] } };
 
-const BlogPost = () => {
+const Ainews = () => {
   const router = useRouter();
   const params = useParams();
   const id = params.id;
 
-  const [blogPost, setBlogPost] = useState<BlogPostType | null>(null);
+  const [aiNews, setAiNews] = useState<AinewsType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -56,13 +56,13 @@ const BlogPost = () => {
       return;
     }
 
-    const fetchBlogPost = async () => {
+    const fetchAinews = async () => {
       setLoading(true);
       setError('');
       try {
-        const response = await axios.get(`/api/blogs/${id}`);
-        const data: BlogPostType = response.data;
-        setBlogPost(data);
+        const response = await axios.get(`/api/ainews/${id}`);
+        const data: AinewsType = response.data;
+        setAiNews(data);
       } catch (err: any) {
         setError(err.response?.data?.message || `Error: ${err.response?.status} ${err.response?.statusText}`);
       } finally {
@@ -70,13 +70,13 @@ const BlogPost = () => {
       }
     };
 
-    fetchBlogPost();
+    fetchAinews();
   }, [id]);
 
   useEffect(() => {
-    if (!blogPost) return;
+    if (!aiNews) return;
 
-    sectionRefs.current = blogPost.sections.map(
+    sectionRefs.current = aiNews.sections.map(
       (section) => document.getElementById(section.title.toLowerCase().replace(/\s+/g, '-'))
     );
 
@@ -91,7 +91,7 @@ const BlogPost = () => {
           const sectionBottom = sectionTop + section.offsetHeight;
 
           if (pageTop >= sectionTop && pageTop < sectionBottom) {
-            setActiveSection(blogPost.sections[i].title.toLowerCase().replace(/\s+/g, '-'));
+            setActiveSection(aiNews.sections[i].title.toLowerCase().replace(/\s+/g, '-'));
             break;
           }
         }
@@ -100,7 +100,7 @@ const BlogPost = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [blogPost]);
+  }, [aiNews]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -120,10 +120,10 @@ const BlogPost = () => {
   const shareUrls = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
       currentUrl
-    )}&title=${encodeURIComponent(blogPost?.title || '')}`,
+    )}&title=${encodeURIComponent(aiNews?.title || '')}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       currentUrl
-    )}&text=${encodeURIComponent(blogPost?.title || '')}`,
+    )}&text=${encodeURIComponent(aiNews?.title || '')}`,
   };
 
   if (loading) {
@@ -199,7 +199,7 @@ const BlogPost = () => {
     );
   }
 
-  if (!blogPost) {
+  if (!aiNews) {
     return null;
   }
 
@@ -210,17 +210,17 @@ const BlogPost = () => {
         <main className={styles.main}>
           <header className={styles.header}>
             <div className={styles.metadata}>
-              <span className={styles.publishDate}>{blogPost.publishDate}</span>
+              <span className={styles.publishDate}>{aiNews.publishDate}</span>
               <span className={styles.glowDot}></span>
-              <span className={styles.readTime}>{blogPost.readTime}</span>
+              <span className={styles.readTime}>{aiNews.readTime}</span>
             </div>
-            <h1 className={styles.title}>{blogPost.title}</h1>
+            <h1 className={styles.title}>{aiNews.title}</h1>
             <div className={styles.flexWrapper}>
-              <div className={styles.authorInfo}>
-                <span className={styles.authorName}>{blogPost.author.name}</span>
+              {/* <div className={styles.authorInfo}>
+                <span className={styles.authorName}>{aiNews.author.name}</span>
                 <span className={styles.separator}>|</span>
-                <span className={styles.authorDesignation}>{blogPost.author.role}</span>
-              </div>
+                <span className={styles.authorDesignation}>{aiNews.author.role}</span>
+              </div> */}
               <div className={styles.social}>
                   <div className={styles.socialLinks}>
                     <a
@@ -259,7 +259,7 @@ const BlogPost = () => {
               <nav>
                 <h3 className={styles.navigationHeading}>Summary</h3>
                 <ul className={styles.navigation}>
-                  {blogPost.sections.map((section) => (
+                  {aiNews.sections.map((section) => (
                     <li key={section.title}>
                       <button
                         onClick={() =>
@@ -280,7 +280,7 @@ const BlogPost = () => {
             </aside>
 
             <article className={styles.article}>
-              {blogPost.sections.map((section) => (
+              {aiNews.sections.map((section) => (
                 <section
                   key={section.title}
                   id={section.title.toLowerCase().replace(/\s+/g, '-')}
@@ -384,4 +384,4 @@ const BlogPost = () => {
   );
 };
 
-export default BlogPost;
+export default Ainews;

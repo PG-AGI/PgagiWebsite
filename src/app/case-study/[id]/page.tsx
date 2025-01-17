@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import styles from './CaseStudy.module.scss';
-import { Link2, ArrowUp } from 'lucide-react'; // <-- Import ArrowUp
+import { Link2, ArrowUp } from 'lucide-react'; 
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { FaLinkedin } from 'react-icons/fa';
@@ -35,7 +35,8 @@ type ContentBlock =
   | { type: 'highlight'; content: string }
   | { type: 'code'; content: string }
   | { type: 'image'; src: string; alt: string; caption?: string }
-  | { type: 'video'; src: string; title?: string; caption?: string };
+  | { type: 'video'; src: string; title?: string; caption?: string }
+  | { type: 'table'; content: { headers: string[]; rows: string[][] } };
 
 const CaseStudy = () => {
   const router = useRouter();
@@ -65,7 +66,7 @@ const CaseStudy = () => {
       } catch (err: any) {
         setError(
           err.response?.data?.message ||
-            `Error: ${err.response?.status} ${err.response?.statusText}`
+          `Error: ${err.response?.status} ${err.response?.statusText}`
         );
       } finally {
         setLoading(false);
@@ -134,10 +135,11 @@ const CaseStudy = () => {
       currentUrl
     )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
+  console.log('139 data to render on ui', caseStudy);
 
   if (loading) {
     return (
-<>
+      <>
         <Navigation />
         <div className={styles.container}>
           <main className={styles.main}>
@@ -245,12 +247,11 @@ const CaseStudy = () => {
                             section.title.toLowerCase().replace(/\s+/g, '-')
                           )
                         }
-                        className={`${styles.navButton} ${
-                          activeSection ===
-                          section.title.toLowerCase().replace(/\s+/g, '-')
+                        className={`${styles.navButton} ${activeSection ===
+                            section.title.toLowerCase().replace(/\s+/g, '-')
                             ? styles.active
                             : ''
-                        }`}
+                          }`}
                       >
                         {section.title}
                       </button>
@@ -365,6 +366,33 @@ const CaseStudy = () => {
                               </div>
                             )}
                           </div>
+                        );
+                      // create a case which shows data in table form
+                      case 'table':
+                        return (
+                          <table className={styles.dynamicTable}>
+                            <thead>
+                              <tr>
+                                {block.content.headers.map((heading, colIndex) => (
+                                  <th key={colIndex} className={styles.heading}>
+                                    {heading}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {/* Render rows and cells */}
+                              {block.content.rows.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {row.map((cell, colIndex) => (
+                                    <td key={colIndex} className={styles.cell}>
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
                         );
                       default:
                         return null;

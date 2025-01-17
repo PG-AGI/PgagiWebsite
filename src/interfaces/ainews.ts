@@ -1,20 +1,19 @@
 
-
-export interface BlogContentBlock {
-    type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video'| 'table';
+export interface AINewsContentBlock {
+    type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
     content?: string | { headers: string[]; rows: string[][] };
     src?: string;
     alt?: string;
     caption?: string;
-    title?: string; 
+    title?: string;
   }
   
-  export interface BlogSection {
+  export interface AINewsSection {
     title: string;
-    content: BlogContentBlock[];
+    content: AINewsContentBlock[];
   }
   
-  export interface Blog {
+  export interface AINews {
     coverImage: string;
     title: string;
     publishDate: string;
@@ -23,7 +22,7 @@ export interface BlogContentBlock {
       name: string;
       role: string;
     };
-    sections: BlogSection[];
+    sections: AINewsSection[];
     createdAt: Date;
     updatedAt: Date;
   }

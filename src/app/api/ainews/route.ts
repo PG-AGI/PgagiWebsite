@@ -1,44 +1,22 @@
-// app/api/case-studies/route.ts
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import clientPromise from '@/utils/mongodb'; // Adjust the path based on your project structure
-import { ObjectId } from 'mongodb';
+import clientPromise from '@/utils/mongodb';
+import { AINews } from '@/interfaces/ainews';
 
-// Define the shape of the incoming data
 interface ContentBlock {
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
   caption?: string;
-  title?: string; // For video title
-}
-
-interface Section {
-  title: string;
-  content: ContentBlock[];
-}
-
-interface CaseStudy {
-  coverImage: string;
-  title: string;
-  publishDate: string;
-  readTime: string;
-  author: {
-    name: string;
-    role: string;
-  };
-  sections: Section[];
-  createdAt: Date;
-  updatedAt: Date;
+  title?: string;
 }
 
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
-    // Basic validation
     if (
       !data.coverImage ||
       !data.title ||
@@ -54,7 +32,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Further validation: Validate each section and content blocks
     for (const [sectionIndex, section] of data.sections.entries()) {
       if (!section.title) {
         return NextResponse.json(
@@ -75,7 +52,6 @@ export async function POST(request: NextRequest) {
             { status: 400 }
           );
         }
-        // Additional validations based on block type
         switch (block.type) {
           case 'paragraph':
           case 'quote':
@@ -95,7 +71,13 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
               );
             }
-            // Optional: Validate image URL format
+            const imageUrlPattern = /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/;
+            if (!imageUrlPattern.test(block.src)) {
+              return NextResponse.json(
+                { message: `Image block ${blockIndex + 1} in section ${sectionIndex + 1} requires a valid image URL.` },
+                { status: 400 }
+              );
+            }
             break;
           case 'video':
             if (!block.src) {
@@ -104,7 +86,6 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
               );
             }
-            // Optional: Validate YouTube embed URL format
             const youtubeEmbedRegex = /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/;
             if (!youtubeEmbedRegex.test(block.src)) {
               return NextResponse.json(
@@ -114,17 +95,18 @@ export async function POST(request: NextRequest) {
             }
             break;
           case 'table':
-            if (!block.content || 
-                typeof block.content !== 'object' || 
-                !Array.isArray((block.content as any).headers) || 
-                !Array.isArray((block.content as any).rows)) {
+            if (
+              !block.content ||
+              typeof block.content !== 'object' ||
+              !Array.isArray((block.content as any).headers) ||
+              !Array.isArray((block.content as any).rows)
+            ) {
               console.log('Table validation failed:', block.content);
               return NextResponse.json(
                 { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid headers and rows.` },
                 { status: 400 }
               );
             }
-            // Validate that all rows have the same length as headers
             const headers = (block.content as { headers: string[] }).headers;
             const rows = (block.content as { rows: string[][] }).rows;
             if (rows.some(row => row.length !== headers.length)) {
@@ -147,8 +129,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Prepare the case study object
-    const caseStudy: CaseStudy = {
+    const ainews: AINews = {
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,
@@ -172,21 +153,18 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date(),
     };
 
-    // Connect to MongoDB
     const client = await clientPromise;
-    const db = client.db(); // Use the default DB specified in your MongoClient
-    const collection = db.collection('caseStudies');
+    const db = client.db();
+    const collection = db.collection('ainews');
 
-    // Insert the case study into the collection
-    const result = await collection.insertOne(caseStudy);
+    const result = await collection.insertOne(ainews);
 
-    // Return the inserted case study's ID
     return NextResponse.json(
-      { message: 'Case Study created successfully', id: result.insertedId },
+      { message: 'AINEWS created successfully', id: result.insertedId },
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error creating case study:', error);
+    console.error('Error creating AINEWS:', error);
     return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 }
@@ -196,24 +174,23 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    // Connect to MongoDB
     const client = await clientPromise;
-    const db = client.db(); // Use the default DB specified in your MongoClient
-    const collection = db.collection('caseStudies');
+    const db = client.db();
+    const collection = db.collection('ainews');
 
-    // Fetch all case studies with only id, title, and coverImage
-    const caseStudies = await collection.find({}, { projection: { title: 1, coverImage: 1 } }).toArray();
+    const ainewsList = await collection
+      .find({}, { projection: { title: 1, coverImage: 1 } })
+      .toArray();
 
-    // Map the results to include the id as a string
-    const response = caseStudies.map((caseStudy) => ({
-      id: caseStudy._id.toString(),
-      title: caseStudy.title,
-      coverImage: caseStudy.coverImage,
+    const response = ainewsList.map((ainews) => ({
+      id: ainews._id.toString(),
+      title: ainews.title,
+      coverImage: ainews.coverImage,
     }));
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
-    console.error('Error fetching case studies:', error);
+    console.error('Error fetching AINEWS:', error);
     return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 }

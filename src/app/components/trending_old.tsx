@@ -88,7 +88,7 @@ export default function TrendingOld() {
           </div>
           <Image
             className={styles.imgTag}
-            src= "https://i.postimg.cc/g0zdPDbP/8e632215-bb9b-421e-ba4c-9e91340fa676.jpg"
+            src= "http://localhost:3000/_next/static/media/news3.4a24df0c.svg"
             alt="Success Stories"
             fill 
             style={{ objectFit: "cover" }}
