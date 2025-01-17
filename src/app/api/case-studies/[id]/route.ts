@@ -12,7 +12,7 @@ interface ContentBlock {
   src?: string;
   alt?: string;
   caption?: string;
-  title?: string; // For video title
+  title?: string; 
 }
 
 interface Section {
@@ -34,7 +34,6 @@ interface CaseStudy {
   updatedAt: Date;
 }
 
-// Existing GET Handler: Fetch a single case study by ID
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 

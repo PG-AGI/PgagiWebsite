@@ -1,61 +1,19 @@
 
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb';
-import { ObjectId } from 'mongodb';
-import { Blog } from '@/interfaces/blog';
+import { AINews } from '@/interfaces/ainews';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
-  }
-
-  try {
-    const client = await clientPromise;
-    const db = client.db();
-    const collection = db.collection('blogs');
-
-    const blog = await collection.findOne({ _id: new ObjectId(id) });
-
-    if (!blog) {
-      return NextResponse.json(
-        { message: 'Blog Not Found' },
-        { status: 404 }
-      );
-    }
-
-    const { _id, ...rest } = blog;
-    const response = {
-      id: _id.toString(),
-      ...rest,
-    };
-
-    return NextResponse.json(response, { status: 200 });
-  } catch (error) {
-    console.error('Error fetching blog:', error);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
-  }
+interface ContentBlock {
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  content?: string | { headers: string[]; rows: string[][] };
+  src?: string;
+  alt?: string;
+  caption?: string;
+  title?: string;
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
-  }
-
+export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
@@ -99,25 +57,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           case 'quote':
           case 'highlight':
           case 'code':
-          case 'table': // Add 'table' here
             if (!block.content) {
               return NextResponse.json(
                 { message: `Content block ${blockIndex + 1} in section ${sectionIndex + 1} is missing content.` },
                 { status: 400 }
               );
-            }
-            // Optional: Further validate 'table' content structure
-            if (block.type === 'table') {
-              if (
-                typeof block.content !== 'object' ||
-                !Array.isArray(block.content.headers) ||
-                !Array.isArray(block.content.rows)
-              ) {
-                return NextResponse.json(
-                  { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} has invalid content structure.` },
-                  { status: 400 }
-                );
-              }
             }
             break;
           case 'image':
@@ -150,6 +94,32 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
               );
             }
             break;
+          case 'table':
+            if (
+              !block.content ||
+              typeof block.content !== 'object' ||
+              !Array.isArray((block.content as any).headers) ||
+              !Array.isArray((block.content as any).rows)
+            ) {
+              console.log('Table validation failed:', block.content);
+              return NextResponse.json(
+                { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid headers and rows.` },
+                { status: 400 }
+              );
+            }
+            const headers = (block.content as { headers: string[] }).headers;
+            const rows = (block.content as { rows: string[][] }).rows;
+            if (rows.some(row => row.length !== headers.length)) {
+              console.log('Table row length mismatch:', {
+                headers: headers.length,
+                rows: rows.map(r => r.length)
+              });
+              return NextResponse.json(
+                { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
+                { status: 400 }
+              );
+            }
+            break;
           default:
             return NextResponse.json(
               { message: `Invalid content block type '${block.type}' in section ${sectionIndex + 1}.` },
@@ -159,7 +129,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
     }
 
-    const updatedBlog: Partial<Blog> = {
+    const ainews: AINews = {
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,
@@ -179,31 +149,22 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           title: block.title || '',
         })),
       })),
+      createdAt: new Date(),
       updatedAt: new Date(),
     };
 
     const client = await clientPromise;
     const db = client.db();
-    const collection = db.collection('blogs');
+    const collection = db.collection('ainews');
 
-    const result = await collection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: updatedBlog }
-    );
-
-    if (result.matchedCount === 0) {
-      return NextResponse.json(
-        { message: 'Blog Not Found' },
-        { status: 404 }
-      );
-    }
+    const result = await collection.insertOne(ainews);
 
     return NextResponse.json(
-      { message: 'Blog Updated Successfully' },
-      { status: 200 }
+      { message: 'AINEWS created successfully', id: result.insertedId },
+      { status: 201 }
     );
   } catch (error) {
-    console.error('Error updating blog:', error);
+    console.error('Error creating AINEWS:', error);
     return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 }
@@ -211,36 +172,25 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
-  }
-
+export async function GET(request: NextRequest) {
   try {
     const client = await clientPromise;
     const db = client.db();
-    const collection = db.collection('blogs');
+    const collection = db.collection('ainews');
 
-    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+    const ainewsList = await collection
+      .find({}, { projection: { title: 1, coverImage: 1 } })
+      .toArray();
 
-    if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { message: 'Blog Not Found' },
-        { status: 404 }
-      );
-    }
+    const response = ainewsList.map((ainews) => ({
+      id: ainews._id.toString(),
+      title: ainews.title,
+      coverImage: ainews.coverImage,
+    }));
 
-    return NextResponse.json(
-      { message: 'Blog Deleted Successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json(response, { status: 200 });
   } catch (error) {
-    console.error('Error deleting blog:', error);
+    console.error('Error fetching AINEWS:', error);
     return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 }
