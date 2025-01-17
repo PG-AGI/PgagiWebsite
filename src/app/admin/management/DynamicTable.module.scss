@@ -1,0 +1,86 @@
+
+$primary-color: #9333ea;
+$danger-color: red;
+$success-color: green;
+$dark-bg: #222;
+$light-border: #ddd;
+$border-radius: 5px;
+$cell-padding: 10px;
+
+.dynamicTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+
+  .cell {
+    border: 1px solid $light-border;
+    padding: $cell-padding;
+    text-align: center;
+  }
+
+  .heading {
+    border: 1px solid $light-border;
+    padding: $cell-padding;
+    text-align: center;
+    color: $primary-color;
+  }
+
+  .inputCell {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #444;
+    background-color: $dark-bg;
+    color: #fff;
+  }
+
+  .removeBtn {
+    background-color: $danger-color;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+
+  // .buttons {
+  //   margin-top: 20px;
+  //   display: flex;
+
+  //   .button {
+  //     padding: 10px 20px;
+  //     margin: 0 10px;
+  //     cursor: pointer;
+  //     background-color: green;
+  //     border: none;
+  //     outline: none;
+  //     // border-radius: $border-radius;
+
+  //     &:hover {
+  //       background-color: darken($success-color, 10%);
+  //     }
+  //   }
+  // }
+
+  .flexWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.buttons {
+  margin-top: 20px;
+  display: flex;
+}
+
+.button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  background-color: green;
+  border: none;
+  outline: none;
+}
+.button:hover{
+  background-color: darken($success-color, 10%);
+}

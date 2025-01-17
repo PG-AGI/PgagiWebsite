@@ -17,8 +17,8 @@ type ContentType = 'caseStudy' | 'blog' | 'ainews';
 
 type ContentBlock = {
   id: string;
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
-  content?: string | { headers: string[]; rows: string[][] };
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
+  content?: string | { headers: string[]; rows: string[][] } | {heading: string; text: string};
   src?: string;
   alt?: string;
   caption?: string;
@@ -88,9 +88,9 @@ const AdminPanel = () => {
   const [detailsError, setDetailsError] = useState<string>('');
   const [filterType, setFilterType] = useState<'all' | 'caseStudy' | 'blog' | 'ainews'>('all'); // Added 'ainews'
   // dynamic table hooks
-    const [rows, setRows] = useState<TableData>([['']]);  
-    const [columns, setColumns] = useState<number>(1); 
-    const [columnNames, setColumnNames] = useState<string[]>(['']); 
+  const [rows, setRows] = useState<TableData>([['']]);
+  const [columns, setColumns] = useState<number>(1);
+  const [columnNames, setColumnNames] = useState<string[]>(['']);
 
   const {
     register,
@@ -245,7 +245,7 @@ const AdminPanel = () => {
       alert(error.response?.data?.message || 'An unexpected error occurred.');
     }
   };
-  
+
 
   const [contents, setContents] = useState<ContentSummary[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -800,15 +800,17 @@ const AdminPanel = () => {
                                     />
                                   </div>
                                 </>
-                              ) : block.type === 'table' ? 
-                              <DynamicTable
-                                rows={rows}
-                                setRows={setRows}
-                                columns={columns}
-                                setColumns={setColumns}
-                                columnNames={columnNames}
-                                setColumnNames={setColumnNames}
-                              /> : null}
+                              ) : block.type === 'table' ?
+                                (
+                                  <DynamicTable
+                                        rows={rows}
+                                        setRows={setRows}
+                                        columns={columns}
+                                        setColumns={setColumns}
+                                        columnNames={columnNames}
+                                        setColumnNames={setColumnNames}
+                                    />
+                                ) : block.type === 'box' ? ( <></>): null}
                             </div>
                           ))}
 
