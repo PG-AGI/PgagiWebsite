@@ -220,44 +220,39 @@ $red-color: #ef4444;
       }
     }
 
-    .addButton {
-      padding: 0.5rem 1rem;
-      background-color: $purple-primary;
+    .btn {
+      padding: 0.75rem 1.5rem;
+      background-color: $green-glow; // Use green-glow uniformly or change as desired
       color: $text-primary;
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
       font-weight: 600;
-
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      display: inline-block;
+    
       &:hover {
-        background-color: darken($purple-primary, 10%);
+        background-color: darken($green-glow, 10%);
       }
-
+    
       &:active {
-        background-color: lighten($purple-primary, 10%);
+        background-color: lighten($green-glow, 10%);
       }
+    }
+    .buttonGroup {
+      display: flex;
+      gap: 1rem; 
+      margin-top: 1rem;
+    }
+    .addButton,
+    .insertButton {
+      @extend .btn;
     }
   }
-
-  .addButton {
-    padding: 0.5rem 1rem;
-    background-color: $purple-primary;
-    color: $text-primary;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 0.5rem;
-    font-weight: 600;
-
-    &:hover {
-      background-color: darken($purple-primary, 10%);
-    }
-
-    &:active {
-      background-color: lighten($purple-primary, 10%);
-    }
+  .buttonGroup {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 }
 
