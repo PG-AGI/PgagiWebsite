@@ -60,4 +60,7 @@ export type ContentDetails = {
 };
 
 export type Row = string[]; 
-export type TableData = Row[]; 
+export interface TableData {
+    headers: string[];
+    rows: string[][];
+  }

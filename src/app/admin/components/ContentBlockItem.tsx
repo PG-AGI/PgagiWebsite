@@ -1,12 +1,18 @@
-
 'use client';
 
 import React from 'react';
-import { useWatch, Controller, UseFormRegister, Control, FieldErrors } from 'react-hook-form';
+import {
+  useWatch,
+  Controller,
+  UseFormRegister,
+  Control,
+  FieldErrors,
+} from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import styles from '../management/Admin.module.scss';
 import { ContentBlock, FormValues } from '@/utils/type';
-import DynamicTable from '../management/DynamicTable';
+import TableEditor from './TableEditor';
+import { TableData } from '@/utils/type';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
@@ -35,6 +41,7 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
   block,
   blockIndex,
   removeBlock,
+  // The following props may be removed if no longer used for table state.
   rows,
   setRows,
   columns,
@@ -42,11 +49,27 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
   columnNames,
   setColumnNames,
 }) => {
+  // Watch the type of the content block.
   const blockType = useWatch({
     control,
     name: `sections.${sectionIndex}.content.${blockIndex}.type`,
     defaultValue: block.type || 'paragraph',
   });
+
+  // A helper function to ensure we pass a valid TableData value
+  const getTableValue = (value: any): TableData => {
+    if (
+      value &&
+      typeof value === 'object' &&
+      'headers' in value &&
+      'rows' in value &&
+      Array.isArray(value.headers) &&
+      Array.isArray(value.rows)
+    ) {
+      return value as TableData;
+    }
+    return { headers: [''], rows: [['']] };
+  };
 
   return (
     <div className={styles.contentBlock}>
@@ -70,11 +93,12 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
               <option value="image">Image</option>
               <option value="video">Video</option>
               <option value="table">Table</option>
+              <option value="box">Box</option>
             </select>
           )}
         />
-
       </div>
+
       {['paragraph', 'quote', 'highlight', 'code'].includes(blockType) ? (
         <div className={styles.formGroup}>
           <label>Content:</label>
@@ -109,15 +133,6 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
               />
             )}
           />
-          {errors.sections &&
-            errors.sections[sectionIndex] &&
-            errors.sections[sectionIndex].content &&
-            errors.sections[sectionIndex].content[blockIndex] &&
-            errors.sections[sectionIndex].content[blockIndex].content && (
-              <span className={styles.error}>
-                {errors.sections[sectionIndex].content[blockIndex].content?.message}
-              </span>
-            )}
         </div>
       ) : blockType === 'image' ? (
         <>
@@ -191,16 +206,64 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
           </div>
         </>
       ) : blockType === 'table' ? (
-        <DynamicTable
-          rows={rows}
-          setRows={setRows}
-          columns={columns}
-          setColumns={setColumns}
-          columnNames={columnNames}
-          setColumnNames={setColumnNames}
-        />
+        <div className={styles.formGroup}>
+          <label>Table Data:</label>
+          <Controller
+            control={control}
+            name={`sections.${sectionIndex}.content.${blockIndex}.content`}
+            defaultValue={{ headers: [''], rows: [['']] }}
+            render={({ field: { onChange, value } }) => (
+              <TableEditor value={getTableValue(value)} onChange={onChange} />
+            )}
+          />
+        </div>
       ) : blockType === 'box' ? (
         <>
+          <div className={styles.formGroup}>
+            <label>Box Heading:</label>
+            <input
+              type="text"
+              {...register(`sections.${sectionIndex}.content.${blockIndex}.content.heading`, {
+                required: 'Box heading is required',
+              })}
+              placeholder="Enter box heading"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Box Text:</label>
+            <Controller
+              control={control}
+              name={`sections.${sectionIndex}.content.${blockIndex}.content.text`}
+              rules={{ required: 'Box text is required' }}
+              render={({ field }) => (
+                <ReactQuill
+                  theme="snow"
+                  value={typeof field.value === 'string' ? field.value : ''}
+                  onChange={field.onChange}
+                  modules={{
+                    toolbar: [
+                      [{ header: [1, 2, false] }],
+                      ['bold', 'italic', 'underline', 'link'],
+                      [{ list: 'ordered' }, { list: 'bullet' }],
+                      ['clean'],
+                    ],
+                  }}
+                  formats={[
+                    'header',
+                    'bold',
+                    'italic',
+                    'underline',
+                    'list',
+                    'bullet',
+                    'link',
+                    'clean',
+                    'code-block',
+                  ]}
+                />
+              )}
+            />
+          </div>
         </>
       ) : null}
     </div>

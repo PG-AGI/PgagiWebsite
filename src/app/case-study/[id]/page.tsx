@@ -127,15 +127,26 @@ const CaseStudy = () => {
   };
 
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
-
+  const generateCaseStudyUrl = () => {
+    if (!caseStudy) return currentUrl;
+    const formattedTitle = caseStudy.title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-') 
+      .trim();
+    return `${currentUrl}/case-studies/${caseStudy.id}/${formattedTitle}`;
+  };
+  
+  const caseStudyUrl = generateCaseStudyUrl();
   const shareUrls = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-      currentUrl
+      caseStudyUrl
     )}&title=${encodeURIComponent(caseStudy?.title || '')}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      currentUrl
+      caseStudyUrl
     )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
+  
   console.log('139 data to render on ui', caseStudy);
 
   if (loading) {
@@ -368,7 +379,6 @@ const CaseStudy = () => {
                             )}
                           </div>
                         );
-                      // create a case which shows data in table form
                       case 'table':
                         return (
                           <table className={styles.dynamicTable}>
