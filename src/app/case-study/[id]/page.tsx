@@ -36,7 +36,8 @@ type ContentBlock =
   | { type: 'code'; content: string }
   | { type: 'image'; src: string; alt: string; caption?: string }
   | { type: 'video'; src: string; title?: string; caption?: string }
-  | { type: 'table'; content: { headers: string[]; rows: string[][] } };
+  | { type: 'table'; content: { headers: string[]; rows: string[][] } }
+  | { type: 'box'; content: { heading: string; text: string } };
 
 const CaseStudy = () => {
   const router = useRouter();
@@ -394,6 +395,13 @@ const CaseStudy = () => {
                             </tbody>
                           </table>
                         );
+                      case 'box' : 
+                        return (
+                          <div className={styles.box}>
+                            <h3 className={styles.boxHeading}>{block.content.heading}</h3>
+                            <p>{block.content.text}</p>
+                          </div>
+                        )
                       default:
                         return null;
                     }
