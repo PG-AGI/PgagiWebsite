@@ -16,7 +16,6 @@ interface TableEditorProps {
 const defaultTableData: TableData = { headers: ['Header 1'], rows: [['Cell 1']] };
 
 const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
-  // Use the incoming value (or default) to initialize local state.
   const initialData =
     value &&
     typeof value === 'object' &&
@@ -28,8 +27,6 @@ const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
   const [headers, setHeaders] = useState<string[]>(initialData.headers);
   const [rows, setRows] = useState<string[][]>(initialData.rows);
   const [columns, setColumns] = useState<number>(initialData.headers.length);
-
-  // Update internal state if external value changes.
   useEffect(() => {
     setHeaders(initialData.headers);
     setRows(initialData.rows);
@@ -100,7 +97,6 @@ const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
       <table className={styles.tableEditorTable}>
         <thead>
           <tr>
-            {/* Blank cell for row deletion button */}
             <th className={styles.tableEditorTh}></th>
             {headers.map((header, index) => (
               <th key={index} className={styles.tableEditorTh}>

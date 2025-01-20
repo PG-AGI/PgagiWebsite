@@ -36,14 +36,11 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
   blockIndex,
   removeBlock,
 }) => {
-  // Watch the content block type.
   const blockType = useWatch({
     control,
     name: `sections.${sectionIndex}.content.${blockIndex}.type`,
     defaultValue: block.type || 'paragraph',
   });
-
-  // Helper to ensure a valid table value structure.
   const getTableValue = (value: any): TableData => {
     if (
       value &&
@@ -55,7 +52,6 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
     ) {
       return value as TableData;
     }
-    // Use default values with placeholders for testing.
     return { headers: ['Header 1'], rows: [['Cell 1']] };
   };
 

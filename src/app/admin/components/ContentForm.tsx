@@ -82,7 +82,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
           ...section,
           content: section.content
             .map((block) => {
-              // For table blocks we rely on the value stored already. For others, trim strings, etc.
               let updatedContent = block.content ?? '';
               if (block.type === 'paragraph' || block.type === 'quote' || block.type === 'highlight' || block.type === 'code') {
                 updatedContent = typeof block.content === 'string' ? block.content.trim() : '';
