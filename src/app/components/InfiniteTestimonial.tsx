@@ -2,6 +2,7 @@
 import React from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
 import styles from "./TestimonialCarousel.module.scss";
+import Image from "next/image";
 
 interface Testimonial {
   name: string;
@@ -198,12 +199,14 @@ const TestimonialCarousel: React.FC = () => {
                       : testimonial.company || testimonial.name}
                   </span>
                   {testimonial.country && (
-                    <img
-                      className={styles.countryFlag}
-                      src={flagImages[testimonial.country]}
-                      alt={`${testimonial.country} flag`}
-                      loading="lazy"
-                    />
+                    <Image
+  className={styles.countryFlag}
+  src={flagImages[testimonial.country]}
+  alt={`${testimonial.country} flag`}
+  width={18}    // Fixed width based on your CSS
+  height={18}   // Adjust based on your flag's intrinsic aspect ratio
+  loading="lazy"
+/>
                   )}
                 </div>
               </div>

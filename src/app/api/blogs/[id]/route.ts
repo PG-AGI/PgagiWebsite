@@ -99,7 +99,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           case 'quote':
           case 'highlight':
           case 'code':
-          case 'table': // Add 'table' here
+          case 'table':
             if (!block.content) {
               return NextResponse.json(
                 { message: `Content block ${blockIndex + 1} in section ${sectionIndex + 1} is missing content.` },
