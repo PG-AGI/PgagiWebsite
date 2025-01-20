@@ -1,354 +1,61 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form';
-import dynamic from 'next/dynamic';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
 import styles from './Admin.module.scss';
-import axios from 'axios';
+import ContentForm from '../components/ContentForm';
+import ContentList from '../components/ContentList';
 import Modal from '../components/Modal';
 import JobPostingsManagement from '../components/JobPostingsManagement';
+import { ContentSummary, ContentDetails, FormValues, ContentType } from '@/utils/type';
+import axios from 'axios';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-import 'react-quill/dist/quill.snow.css';
-import DynamicTable from './DynamicTable';
-
-type ContentType = 'caseStudy' | 'blog' | 'ainews';
-
-type ContentBlock = {
-  id: string;
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
-  content?: string | { headers: string[]; rows: string[][] };
-  src?: string;
-  alt?: string;
-  caption?: string;
-  title?: string;
-};
-
-type Section = {
-  id: string;
-  title: string;
-  content: ContentBlock[];
-};
-
-type FormValues = {
-  contentType: ContentType;
-  coverImage: string;
-  title: string;
-  publishDate: string;
-  readTime: string;
-  authorName: string;
-  authorRole: string;
-  sections: Section[];
-};
-
-type ContentSummary = {
-  id: string;
-  title: string;
-  coverImage: string;
-  contentType: ContentType;
-};
-
-type ContentDetails = {
-  id: string;
-  coverImage: string;
-  title: string;
-  publishDate: string;
-  readTime: string;
-  author: {
-    name: string;
-    role: string;
-  };
-  sections: {
-    title: string;
-    content: {
-      type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
-      content?: string | { headers: string[]; rows: string[][] };
-      src?: string;
-      alt?: string;
-      caption?: string;
-      title?: string;
-    }[];
-  }[];
-  createdAt: string;
-  updatedAt: string;
-  contentType: ContentType;
-};
-type Row = string[];  // Each row is an array of strings (table cells)
-type TableData = Row[];  // Table is an array of rows
-
-
-const AdminPanel = () => {
+const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'create' | 'view' | 'jobs'>('create');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editingContentId, setEditingContentId] = useState<string | null>(null);
+  const [initialValues, setInitialValues] = useState<FormValues | undefined>(undefined);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedContent, setSelectedContent] = useState<ContentSummary | null>(null);
   const [contentDetails, setContentDetails] = useState<ContentDetails | null>(null);
   const [detailsLoading, setDetailsLoading] = useState<boolean>(false);
   const [detailsError, setDetailsError] = useState<string>('');
-  const [filterType, setFilterType] = useState<'all' | 'caseStudy' | 'blog' | 'ainews'>('all'); // Added 'ainews'
-  // dynamic table hooks
-    const [rows, setRows] = useState<TableData>([['']]);  
-    const [columns, setColumns] = useState<number>(1); 
-    const [columnNames, setColumnNames] = useState<string[]>(['']); 
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<FormValues>({
-    defaultValues: {
-      contentType: 'caseStudy',
-      coverImage: '',
-      title: '',
-      publishDate: '',
-      readTime: '',
-      authorName: '',
-      authorRole: '',
-      sections: [
-        {
-          id: uuidv4(),
-          title: '',
-          content: [
-            {
-              id: uuidv4(),
-              type: 'paragraph',
-              content: '',
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const {
-    fields: sectionFields,
-    append: appendSection,
-    remove: removeSection,
-  } = useFieldArray({
-    control,
-    name: 'sections',
-  });
-
-  const [showPreview, setShowPreview] = useState(false);
-  const watchAllFields = watch();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const onSubmit = async (data: FormValues) => {
-    const sanitizedData: FormValues = {
-      ...data,
-      sections: data.sections
-        .filter(section => section.title.trim() !== '' || section.content.length > 0)
-        .map(section => ({
-          ...section,
-          content: section.content
-            .map(block => {
-              let updatedContent = block.content ? block.content : '';
-
-              // Check if the block is a table, and if so, structure the content differently
-              if (block.type === 'table') {
-                updatedContent = { headers: columnNames, rows: rows };
-              } else {
-                updatedContent = block.content ? block.content : '';
-              }
-
-              return {
-                ...block,
-                content: updatedContent,
-                src: block.src ? block.src.trim() : '',
-                alt: block.alt ? block.alt.trim() : '',
-                caption: block.caption ? block.caption.trim() : '',
-                title: block.title ? block.title.trim() : '',
-              };
-            })
-            .filter(block => {
-              if (!block.type) return false;
-              switch (block.type) {
-                case 'paragraph':
-                case 'quote':
-                case 'highlight':
-                case 'code':
-                  return block.content !== '';
-                case 'image':
-                  return (
-                    block.src &&
-                    block.alt &&
-                    /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(block.src)
-                  );
-                case 'video':
-                  return (
-                    block.src &&
-                    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src)
-                  );
-                case 'table':
-                  return true;
-                default:
-                  return false;
-              }
-            }),
-        }))
-        .filter(section => section.content.length > 0),
-    };
-
-    const endpointMap: Record<ContentType, string> = {
-      caseStudy: '/api/case-studies',
-      blog: '/api/blogs',
-      ainews: '/api/ainews', // Added AINEWS endpoint
-    };
-
-    const endpoint = endpointMap[data.contentType];
-    const successMessageMap: Record<ContentType, string> = {
-      caseStudy: 'Case Study',
-      blog: 'Blog',
-      ainews: 'AINEWS',
-    };
-    const updateMessageMap: Record<ContentType, string> = {
-      caseStudy: 'Case Study updated successfully!',
-      blog: 'Blog updated successfully!',
-      ainews: 'AINEWS updated successfully!',
-    };
-    const createMessageMap: Record<ContentType, string> = {
-      caseStudy: 'Case Study created successfully!',
-      blog: 'Blog created successfully!',
-      ainews: 'AINEWS created successfully!',
-    };
-
-    try {
-      if (isEditing && editingContentId) {
-        const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
-        if (response.status === 200) {
-          alert(updateMessageMap[data.contentType]);
-          reset();
-          setIsEditing(false);
-          setEditingContentId(null);
-          if (activeTab === 'view') fetchContents();
-        } else {
-          alert(`Error: ${response.data.message}`);
-        }
-      } else {
-        const response = await axios.post(endpoint, sanitizedData);
-        if (response.status === 201 || response.status === 200) {
-          alert(createMessageMap[data.contentType]);
-          console.log(`New ${successMessageMap[data.contentType]} ID:`, response.data.id);
-          reset();
-          if (activeTab === 'view') fetchContents();
-        } else {
-          alert(`Error: ${response.data.message}`);
-        }
-      }
-    } catch (error: any) {
-      console.error('Error submitting form:', error);
-      alert(error.response?.data?.message || 'An unexpected error occurred.');
-    }
-  };
-  
-
-  const [contents, setContents] = useState<ContentSummary[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
-
-  const fetchContents = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const [caseStudiesResponse, blogsResponse, ainewsResponse] = await Promise.all([
-        axios.get('/api/case-studies'),
-        axios.get('/api/blogs'),
-        axios.get('/api/ainews'), // Fetch AINEWS
-      ]);
-
-      const caseStudies: ContentSummary[] = caseStudiesResponse.data.map((cs: any) => ({
-        id: cs.id,
-        title: cs.title,
-        coverImage: cs.coverImage,
-        contentType: 'caseStudy',
-      }));
-
-      const blogs: ContentSummary[] = blogsResponse.data.map((blog: any) => ({
-        id: blog.id,
-        title: blog.title,
-        coverImage: blog.coverImage,
-        contentType: 'blog',
-      }));
-
-      const ainews: ContentSummary[] = ainewsResponse.data.map((news: any) => ({
-        id: news.id,
-        title: news.title,
-        coverImage: news.coverImage,
-        contentType: 'ainews',
-      }));
-
-      setContents([...caseStudies, ...blogs, ...ainews]);
-    } catch (err: any) {
-      console.error('Error fetching contents:', err);
-      setError(err.response?.data?.message || 'An unexpected error occurred.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (activeTab === 'view') {
-      fetchContents();
-    }
-  }, [activeTab]);
-
-  useEffect(() => {
-    const fetchContentDetails = async (id: string, contentType: ContentType) => {
-      setDetailsLoading(true);
-      setDetailsError('');
-      try {
-        const endpointMap: Record<ContentType, string> = {
-          caseStudy: '/api/case-studies',
-          blog: '/api/blogs',
-          ainews: '/api/ainews',
-        };
-        const endpoint = endpointMap[contentType];
-        const response = await axios.get(`${endpoint}/${id}`);
-        setContentDetails(response.data);
-      } catch (err: any) {
-        console.error(`Error fetching ${contentType} details:`, err);
-        setDetailsError(err.response?.data?.message || `Failed to fetch ${contentType} details.`);
-      } finally {
-        setDetailsLoading(false);
-      }
-    };
-
-    if (selectedContent) {
-      fetchContentDetails(selectedContent.id, selectedContent.contentType);
-    }
-  }, [selectedContent]);
-
-  const handleViewDetails = (content: ContentSummary) => {
-    setSelectedContent(content);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedContent(null);
-    setContentDetails(null);
+  const fetchContentDetails = async (id: string, contentType: ContentType) => {
+    setDetailsLoading(true);
     setDetailsError('');
+    try {
+      const endpointMap: Record<ContentType, string> = {
+        caseStudy: '/api/case-studies',
+        blog: '/api/blogs',
+        ainews: '/api/ainews',
+      };
+      const endpoint = endpointMap[contentType];
+      const res = await axios.get(`${endpoint}/${id}`);
+      setContentDetails(res.data);
+    } catch (error: any) {
+      console.error('Error fetching content details:', error);
+      setDetailsError(error.response?.data?.message || 'Failed to fetch details.');
+    } finally {
+      setDetailsLoading(false);
+    }
+  };
+
+  const handleView = (content: ContentSummary) => {
+    setSelectedContent(content);
+    setModalOpen(true);
+    fetchContentDetails(content.id, content.contentType);
   };
 
   const handleEdit = async (content: ContentSummary) => {
-    
     const endpointMap: Record<ContentType, string> = {
       caseStudy: '/api/case-studies',
       blog: '/api/blogs',
       ainews: '/api/ainews',
     };
-
     const endpoint = endpointMap[content.contentType];
     try {
-      const response = await axios.get(`${endpoint}/${content.id}`);
-  
-      const data: ContentDetails = response.data;
-      console.log('Fetched Content Details:', data);
+      const res = await axios.get(`${endpoint}/${content.id}`);
+      const data: ContentDetails = res.data;
       const formData: FormValues = {
         contentType: data.contentType,
         coverImage: data.coverImage || '',
@@ -358,12 +65,12 @@ const AdminPanel = () => {
         authorName: data.author.name || '',
         authorRole: data.author.role || '',
         sections: data.sections.map((section) => ({
-          id: uuidv4(),
+          id: section.title + Math.random().toString(), // Generate new id
           title: section.title || '',
           content: section.content.map((block) => ({
-            id: uuidv4(),
+            id: block.title + Math.random().toString(),
             type: block.type || 'paragraph',
-            content: block.type === 'table' ? block.content : (block.content || ''),
+            content: block.type === 'table' ? block.content : block.content || '',
             src: block.src || '',
             alt: block.alt || '',
             caption: block.caption || '',
@@ -371,22 +78,25 @@ const AdminPanel = () => {
           })),
         })),
       };
-      reset(formData);
+      setInitialValues(formData);
       setIsEditing(true);
       setEditingContentId(content.id);
       setActiveTab('create');
     } catch (error: any) {
-      console.error('Error fetching content details:', error);
-      alert(
-        error.response?.data?.message ||
-        'An unexpected error occurred while fetching content details.'
-      );
+      console.error('Error fetching content for edit:', error);
+      alert(error.response?.data?.message || 'Error fetching content details.');
     }
   };
 
   const handleDelete = async (content: ContentSummary) => {
     const confirmDelete = window.confirm(
-      `Are you sure you want to delete this ${content.contentType === 'caseStudy' ? 'Case Study' : content.contentType === 'blog' ? 'Blog' : 'AINEWS'}?`
+      `Are you sure you want to delete this ${
+        content.contentType === 'caseStudy'
+          ? 'Case Study'
+          : content.contentType === 'blog'
+          ? 'Blog'
+          : 'AINEWS'
+      }?`
     );
     if (!confirmDelete) return;
 
@@ -395,47 +105,45 @@ const AdminPanel = () => {
       blog: '/api/blogs',
       ainews: '/api/ainews',
     };
-
     const endpoint = endpointMap[content.contentType];
-
     try {
-      const response = await axios.delete(`${endpoint}/${content.id}`);
-      if (response.status === 200 || response.status === 204) {
+      const res = await axios.delete(`${endpoint}/${content.id}`);
+      if (res.status === 200 || res.status === 204) {
         alert(
-          `${content.contentType === 'caseStudy' ? 'Case Study' : content.contentType === 'blog' ? 'Blog' : 'AINEWS'} deleted successfully!`
+          `${
+            content.contentType === 'caseStudy'
+              ? 'Case Study'
+              : content.contentType === 'blog'
+              ? 'Blog'
+              : 'AINEWS'
+          } deleted successfully!`
         );
-        fetchContents();
       } else {
-        alert(`Error: ${response.data.message}`);
+        alert(`Error: ${res.data.message}`);
       }
     } catch (error: any) {
-      console.error(
-        `Error deleting ${content.contentType === 'caseStudy' ? 'case study' : content.contentType === 'blog' ? 'blog' : 'AINEWS'}:`,
-        error
-      );
-      alert(
-        error.response?.data?.message ||
-        `An unexpected error occurred while deleting the ${content.contentType === 'caseStudy' ? 'case study' : content.contentType === 'blog' ? 'blog' : 'AINEWS'}.`
-      );
+      console.error('Error deleting content:', error);
+      alert(error.response?.data?.message || 'Error deleting content.');
     }
   };
 
-  const getNestedError = (
-    errors: FieldErrors<FormValues>,
-    sectionIndex: number,
-    blockIndex: number,
-    field: keyof ContentBlock
-  ) => {
-    const fieldError = errors.sections?.[sectionIndex]?.content?.[blockIndex]?.[field];
-    return typeof fieldError === 'object' && fieldError !== null
-      ? fieldError.message
-      : undefined;
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedContent(null);
+    setContentDetails(null);
+    setDetailsError('');
+  };
+
+  const handleAfterSubmit = () => {
+
+    setIsEditing(false);
+    setEditingContentId(null);
+    setInitialValues(undefined);
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>{isEditing ? 'Edit Content' : 'Admin Panel'}</h1>
-
+    <div className={styles.adminPanel}>
+      <h1>{isEditing ? 'Edit Content' : 'Admin Panel'}</h1>
       <div className={styles.tabs}>
         <button
           className={`${styles.tab} ${activeTab === 'create' ? styles.active : ''}`}
@@ -459,630 +167,20 @@ const AdminPanel = () => {
 
       <div className={styles.tabContent}>
         {activeTab === 'create' && (
-          <>
-            <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-              {/* Content Type Selector */}
-              <div className={styles.formGroup}>
-                <label htmlFor="contentType">Content Type:</label>
-                <select
-                  id="contentType"
-                  {...register('contentType', { required: 'Content Type is required' })}
-                  required
-                
-                >
-                  {!isEditing && <option value="">Select Content Type</option>}
-                  <option value="caseStudy">Case Study</option>
-                  <option value="blog">Blog</option>
-                  <option value="ainews">AINEWS</option> {/* Added AINEWS */}
-                </select>
-                {errors.contentType && (
-                  <span className={styles.error}>{errors.contentType.message}</span>
-                )}
-              </div>
-
-              {/* Cover Image URL */}
-              <div className={styles.formGroup}>
-                <label htmlFor="coverImage">Cover Image URL:</label>
-                <input
-                  type="url"
-                  id="coverImage"
-                  {...register('coverImage', { required: 'Cover Image URL is required' })}
-                  placeholder="Paste image link from PostImage (https://postimages.org/)"
-                  required
-                />
-                {errors.coverImage && (
-                  <span className={styles.error}>{errors.coverImage.message}</span>
-                )}
-              </div>
-
-              {/* Title */}
-              <div className={styles.formGroup}>
-                <label htmlFor="title">Title:</label>
-                <input
-                  type="text"
-                  id="title"
-                  {...register('title', { required: 'Title is required' })}
-                  placeholder="Enter title"
-                  required
-                />
-                {errors.title && (
-                  <span className={styles.error}>{errors.title.message}</span>
-                )}
-              </div>
-
-              {/* Publish Date */}
-              <div className={styles.formGroup}>
-                <label htmlFor="publishDate">Publish Date:</label>
-                <input
-                  type="date"
-                  id="publishDate"
-                  {...register('publishDate', { required: 'Publish Date is required' })}
-                  required
-                />
-                {errors.publishDate && (
-                  <span className={styles.error}>{errors.publishDate.message}</span>
-                )}
-              </div>
-
-              {/* Read Time */}
-              <div className={styles.formGroup}>
-                <label htmlFor="readTime">Read Time:</label>
-                <input
-                  type="text"
-                  id="readTime"
-                  {...register('readTime', { required: 'Read Time is required' })}
-                  placeholder="e.g., 8 min read"
-                  required
-                />
-                {errors.readTime && (
-                  <span className={styles.error}>{errors.readTime.message}</span>
-                )}
-              </div>
-
-              {/* Author Name */}
-              <div className={styles.formGroup}>
-                <label htmlFor="authorName">Author Name:</label>
-                <input
-                  type="text"
-                  id="authorName"
-                  {...register('authorName', { required: 'Author Name is required' })}
-                  placeholder="Enter author's name"
-                  required
-                />
-                {errors.authorName && (
-                  <span className={styles.error}>{errors.authorName.message}</span>
-                )}
-              </div>
-
-              {/* Author Role */}
-              <div className={styles.formGroup}>
-                <label htmlFor="authorRole">Author Role:</label>
-                <input
-                  type="text"
-                  id="authorRole"
-                  {...register('authorRole', { required: 'Author Role is required' })}
-                  placeholder="Enter author's role"
-                  required
-                />
-                {errors.authorRole && (
-                  <span className={styles.error}>{errors.authorRole.message}</span>
-                )}
-              </div>
-
-              {/* Sections */}
-              <div className={styles.formGroup}>
-                <label>Sections:</label>
-                {sectionFields.map((section, sectionIndex) => (
-                  <div key={section.id} className={styles.section}>
-                    <h3>Section {sectionIndex + 1}</h3>
-                    <button
-                      type="button"
-                      onClick={() => removeSection(sectionIndex)}
-                      className={styles.removeButton}
-                    >
-                      Remove Section
-                    </button>
-
-                    {/* Section Title */}
-                    <div className={styles.formGroup}>
-                      <label>Section Title:</label>
-                      <input
-                        type="text"
-                        {...register(`sections.${sectionIndex}.title` as const, {
-                          required: 'Section Title is required',
-                        })}
-                        placeholder="Enter section title"
-                        required
-                      />
-                      {errors.sections?.[sectionIndex]?.title && (
-                        <span className={styles.error}>
-                          {errors.sections?.[sectionIndex]?.title?.message}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Content Blocks */}
-                    <Controller
-                      control={control}
-                      name={`sections.${sectionIndex}.content` as const}
-                      render={({ field }) => (
-                        <div className={styles.contentBlocks}>
-                          {field.value?.map((block: ContentBlock, blockIndex: number) => (
-                            <div key={block.id} className={styles.contentBlock}>
-                              <h4>Content Block {blockIndex + 1}</h4>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const updatedContent = [...(field.value || [])];
-                                  updatedContent.splice(blockIndex, 1);
-                                  field.onChange(updatedContent);
-                                }}
-                                className={styles.removeButton}
-                              >
-                                Remove Block
-                              </button>
-
-                              {/* Block Type */}
-                              <div className={styles.formGroup}>
-                                <label>Type:</label>
-                                <select
-                                  {...register(
-                                    `sections.${sectionIndex}.content.${blockIndex}.type` as const,
-                                    {
-                                      required: 'Content Block Type is required',
-                                    }
-                                  )}
-                                  className={styles.select}
-                                  defaultValue={block.type || 'paragraph'}
-                                  required
-                                >
-                                  <option value="paragraph">Paragraph</option>
-                                  <option value="quote">Quote</option>
-                                  <option value="highlight">Highlight</option>
-                                  <option value="code">Code</option>
-                                  <option value="image">Image</option>
-                                  <option value="video">Video</option>
-                                  <option value="table">Table</option>
-                                </select>
-                                {getNestedError(errors, sectionIndex, blockIndex, 'type') && (
-                                  <span className={styles.error}>
-                                    {getNestedError(errors, sectionIndex, blockIndex, 'type')}
-                                  </span>
-                                )}
-                              </div>
-
-                              {/* Conditional Rendering Based on Type */}
-                              {['paragraph', 'quote', 'highlight', 'code'].includes(
-                                block.type || ''
-                              ) ? (
-                                <div className={styles.formGroup}>
-                                  <label>Content:</label>
-                                  <Controller
-                                    control={control}
-                                    name={`sections.${sectionIndex}.content.${blockIndex}.content`}
-                                    rules={{
-                                      required: 'Content is required',
-                                    }}
-                                    render={({ field }) => (
-                                      <ReactQuill
-                                        theme="snow"
-                                        value={typeof field.value === 'string' ? field.value : ''}
-                                        onChange={field.onChange}
-                                        modules={{
-                                          toolbar: [
-                                            [{ header: [1, 2, false] }],
-                                            ['bold', 'italic', 'underline', 'link'],
-                                            [{ list: 'ordered' }, { list: 'bullet' }],
-                                            ['clean'],
-                                          ],
-                                        }}
-                                        formats={[
-                                          'header',
-                                          'bold',
-                                          'italic',
-                                          'underline',
-                                          'list',
-                                          'bullet',
-                                          'link',
-                                          'clean',
-                                          'code-block',
-                                        ]}
-                                      />
-                                    )}
-                                  />
-                                  {getNestedError(errors, sectionIndex, blockIndex, 'content') && (
-                                    <span className={styles.error}>
-                                      {getNestedError(errors, sectionIndex, blockIndex, 'content')}
-                                    </span>
-                                  )}
-                                </div>
-                              ) : block.type === 'image' ? (
-                                <>
-                                  <div className={styles.formGroup}>
-                                    <label>Image URL:</label>
-                                    <input
-                                      type="url"
-                                      {...register(
-                                        `sections.${sectionIndex}.content.${blockIndex}.src` as const,
-                                        {
-                                          required: 'Image URL is required',
-                                          pattern: {
-                                            value: /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/,
-                                            message: 'Enter a valid image URL',
-                                          },
-                                        }
-                                      )}
-                                      placeholder="Paste image link from PostImage (https://postimages.org/)"
-                                      required
-                                    />
-                                    {getNestedError(errors, sectionIndex, blockIndex, 'src') && (
-                                      <span className={styles.error}>
-                                        {getNestedError(errors, sectionIndex, blockIndex, 'src')}
-                                      </span>
-                                    )}
-                                  </div>
-
-                                  <div className={styles.formGroup}>
-                                    <label>Image Alt Text:</label>
-                                    <input
-                                      type="text"
-                                      {...register(
-                                        `sections.${sectionIndex}.content.${blockIndex}.alt` as const,
-                                        { required: 'Alt Text is required' }
-                                      )}
-                                      placeholder="Enter image alt text"
-                                      required
-                                    />
-                                    {getNestedError(errors, sectionIndex, blockIndex, 'alt') && (
-                                      <span className={styles.error}>
-                                        {getNestedError(errors, sectionIndex, blockIndex, 'alt')}
-                                      </span>
-                                    )}
-                                  </div>
-
-                                  <div className={styles.formGroup}>
-                                    <label>Image Caption (Optional):</label>
-                                    <input
-                                      type="text"
-                                      {...register(
-                                        `sections.${sectionIndex}.content.${blockIndex}.caption` as const
-                                      )}
-                                      placeholder="Enter image caption"
-                                    />
-                                  </div>
-                                </>
-                              ) : block.type === 'video' ? (
-                                <>
-                                  <div className={styles.formGroup}>
-                                    <label>Video URL (YouTube Embed Link):</label>
-                                    <input
-                                      type="url"
-                                      {...register(
-                                        `sections.${sectionIndex}.content.${blockIndex}.src` as const,
-                                        {
-                                          required: 'Video URL is required',
-                                          pattern: {
-                                            value:
-                                              /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/,
-                                            message: 'Enter a valid YouTube URL',
-                                          },
-                                        }
-                                      )}
-                                      placeholder="Paste YouTube embed link (https://www.youtube.com/embed/...)"
-                                      required
-                                    />
-                                    {getNestedError(errors, sectionIndex, blockIndex, 'src') && (
-                                      <span className={styles.error}>
-                                        {getNestedError(errors, sectionIndex, blockIndex, 'src')}
-                                      </span>
-                                    )}
-                                  </div>
-
-                                  <div className={styles.formGroup}>
-                                    <label>Video Title (Optional):</label>
-                                    <input
-                                      type="text"
-                                      {...register(
-                                        `sections.${sectionIndex}.content.${blockIndex}.title` as const
-                                      )}
-                                      placeholder="Enter video title"
-                                    />
-                                  </div>
-
-                                  <div className={styles.formGroup}>
-                                    <label>Video Caption (Optional):</label>
-                                    <input
-                                      type="text"
-                                      {...register(
-                                        `sections.${sectionIndex}.content.${blockIndex}.caption` as const
-                                      )}
-                                      placeholder="Enter video caption"
-                                    />
-                                  </div>
-                                </>
-                              ) : block.type === 'table' ? 
-                              <DynamicTable
-                                rows={rows}
-                                setRows={setRows}
-                                columns={columns}
-                                setColumns={setColumns}
-                                columnNames={columnNames}
-                                setColumnNames={setColumnNames}
-                              /> : null}
-                            </div>
-                          ))}
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              field.onChange([
-                                ...(field.value || []),
-                                {
-                                  id: uuidv4(),
-                                  type: 'paragraph',
-                                  content: '',
-                                },
-                              ]);
-                            }}
-                            className={styles.addButton}
-                          >
-                            Add Content Block
-                          </button>
-                        </div>
-                      )}
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        appendSection({
-                          id: uuidv4(),
-                          title: '',
-                          content: [],
-                        })
-                      }
-                      className={styles.addButton}
-                    >
-                      Add Section
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              {/* Preview Toggle */}
-              <div className={styles.formGroup}>
-                <button
-                  type="button"
-                  onClick={() => setShowPreview(!showPreview)}
-                  className={styles.previewButton}
-                >
-                  {showPreview ? 'Hide Preview' : 'Show Preview'}
-                </button>
-              </div>
-
-              {/* Submit and Cancel Buttons */}
-              <div className={styles.formGroup}>
-                <button type="submit" className={styles.submitButton}>
-                  {isEditing ? 'Update Content' : 'Create Content'}
-                </button>
-                {isEditing && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      reset();
-                      setIsEditing(false);
-                      setEditingContentId(null);
-                    }}
-                    className={styles.cancelButton}
-                  >
-                    Cancel Edit
-                  </button>
-                )}
-              </div>
-            </form>
-
-            {/* Preview Section */}
-            {showPreview && (
-              <div className={styles.preview}>
-                <h1>{watchAllFields.title || 'Sample Title'}</h1>
-                <div className={styles.metadata}>
-                  <span>{watchAllFields.publishDate || 'Publish Date'}</span>
-                  <span className={styles.glowDot}></span>
-                  <span>{watchAllFields.readTime || 'Read Time'}</span>
-                </div>
-                <div className={styles.author}>
-                  <span>By</span>
-                  <span className={styles.authorName}>
-                    {watchAllFields.authorName || 'Author Name'}
-                  </span>
-                  <span className={styles.authorRole}>
-                    {watchAllFields.authorRole
-                      ? `(${watchAllFields.authorRole})`
-                      : '(Author Role)'}
-                  </span>
-                </div>
-                {watchAllFields.sections?.map((section, sectionIndex) => (
-                  <div key={section.id} className={styles.section}>
-                    <h2>{section.title || `Section ${sectionIndex + 1}`}</h2>
-                    {section.content?.map((block, blockIndex) => {
-                      switch (block.type) {
-                        case 'paragraph':
-                          return (
-                            <p
-                              key={block.id}
-                              dangerouslySetInnerHTML={{
-                                __html: typeof block.content === 'string' ? block.content : 'Sample paragraph content.',
-                              }}
-                            ></p>
-                          );
-                        case 'quote':
-                          return (
-                            <blockquote key={block.id} className={styles.quote}>
-                              {typeof block.content === 'string' ? block.content : 'Sample quote content.'}
-                            </blockquote>
-                          );
-                        case 'highlight':
-                          return (
-                            <div key={block.id} className={styles.highlight}>
-                              {typeof block.content === 'string' ? block.content : 'Sample highlight content.'}
-                            </div>
-                          );
-                        case 'code':
-                          return (
-                            <pre key={block.id} className={styles.codeBlock}>
-                              <code>{typeof block.content === 'string' ? block.content : '// Sample code snippet'}</code>
-                            </pre>
-                          );
-                        case 'image':
-                          return (
-                            <figure key={block.id} className={styles.imageBlock}>
-                              <img
-                                src={block.src || 'https://via.placeholder.com/600x400'}
-                                alt={block.alt || 'Image'}
-                                className={styles.image}
-                              />
-                              {block.caption && (
-                                <figcaption className={styles.caption}>{block.caption}</figcaption>
-                              )}
-                            </figure>
-                          );
-                        case 'video':
-                          return (
-                            <div key={block.id} className={styles.videoBlock}>
-                              <iframe
-                                src={block.src || 'https://www.youtube.com/embed/dQw4w9WgXcQ'}
-                                title={block.title || 'Video'}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                className={styles.video}
-                              ></iframe>
-                              {block.caption && (
-                                <div className={styles.caption}>{block.caption}</div>
-                              )}
-                            </div>
-                          );
-                        case 'table':
-                          return (
-                            <table className={styles.dynamicTable} key={block.id}>
-                              <thead>
-                                <tr>
-                                  {/* Render column headers */}
-                                  {block.content && typeof block.content !== 'string' && 'headers' in block.content ? (
-                                    block.content.headers.map((heading, colIndex) => (
-                                      <th key={colIndex} className={styles.heading}>
-                                        {heading}
-                                      </th>
-                                    ))
-                                  ) : (
-                                    <th>No Headers</th>
-                                  )}
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {/* Render rows and cells */}
-                                {block.content && typeof block.content !== 'string' && 'rows' in block.content ? (
-                                  block.content.rows.map((row, rowIndex) => (
-                                    <tr key={rowIndex}>
-                                      {row.map((cell, colIndex) => (
-                                        <td key={colIndex} className={styles.cell}>
-                                          {cell} {/* Simply display the value */}
-                                        </td>
-                                      ))}
-                                    </tr>
-                                  ))
-                                ) : (
-                                  <tr>
-                                    <td>No Rows</td>
-                                  </tr>
-                                )}
-                              </tbody>
-                            </table>
-                          )
-                        default:
-                          return null;
-                      }
-                    })}
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
+          <ContentForm
+            isEditing={isEditing}
+            editingContentId={editingContentId}
+            initialValues={initialValues}
+            onAfterSubmit={handleAfterSubmit}
+          />
         )}
-
         {activeTab === 'view' && (
-          <div className={styles.viewContainer}>
-            <h2>Existing Contents</h2>
-            <div className={styles.filterContainer}>
-              <label htmlFor="filterType">Filter by Type:</label>
-              <select
-                id="filterType"
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value as 'all' | 'caseStudy' | 'blog' | 'ainews')}
-                className={styles.filterSelect}
-              >
-                <option value="all">All</option>
-                <option value="caseStudy">Case Studies</option>
-                <option value="blog">Blogs</option>
-                <option value="ainews">AINEWS</option> {/* Added AINEWS */}
-              </select>
-            </div>
-
-            {loading ? (
-              <p>Loading...</p>
-            ) : error ? (
-              <p className={styles.error}>{error}</p>
-            ) : contents.length === 0 ? (
-              <p>No contents found.</p>
-            ) : (
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Cover Image</th>
-                    <th>Title</th>
-                    <th>ID</th>
-                    <th>Type</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contents
-                    .filter((cs) => {
-                      if (filterType === 'all') return true;
-                      return cs.contentType === filterType;
-                    })
-                    .map((cs) => (
-                      <tr key={cs.id}>
-                        <td>
-                          <img src={cs.coverImage} alt={cs.title} className={styles.coverImage} />
-                        </td>
-                        <td>{cs.title}</td>
-                        <td>{cs.id}</td>
-                        <td>{cs.contentType === 'caseStudy' ? 'Case Study' : cs.contentType === 'blog' ? 'Blog' : 'AINEWS'}</td>
-                        <td>
-                          <button onClick={() => handleViewDetails(cs)} className={styles.viewButton}>
-                            View Details
-                          </button>
-                          <button onClick={() => handleEdit(cs)} className={styles.editButton}>
-                            Edit
-                          </button>
-                          <button onClick={() => handleDelete(cs)} className={styles.deleteButton}>
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+          <ContentList onEdit={handleEdit} onView={handleView} onDelete={handleDelete} />
         )}
-
         {activeTab === 'jobs' && <JobPostingsManagement />}
       </div>
 
-      {/* Modal for Viewing Details */}
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <Modal isOpen={modalOpen} onClose={closeModal}>
         {detailsLoading ? (
           <p>Loading...</p>
         ) : detailsError ? (

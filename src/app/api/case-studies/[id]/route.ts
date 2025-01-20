@@ -2,12 +2,11 @@
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import clientPromise from '@/utils/mongodb'; // Adjust the path based on your project structure
+import clientPromise from '@/utils/mongodb'; 
 import { ObjectId } from 'mongodb';
 
-// Define the shape of the incoming data for PUT requests
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
@@ -74,11 +73,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-// PUT Handler: Update an existing case study by ID
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
-  // Validate ObjectId
   if (!ObjectId.isValid(id)) {
     return NextResponse.json(
       { message: 'Invalid Case Study ID' },
@@ -89,7 +86,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   try {
     const data = await request.json();
 
-    // Basic validation
     if (
       !data.coverImage ||
       !data.title ||
@@ -105,7 +101,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       );
     }
 
-    // Further validation: Validate each section and content blocks
     for (const [sectionIndex, section] of data.sections.entries()) {
       if (!section.title) {
         return NextResponse.json(
@@ -140,6 +135,17 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
               );
             }
             break;
+            case 'box':
+              if (!block.content || 
+                  typeof block.content !== 'object' || 
+                  !block.content.heading || 
+                  !block.content.text) {
+                return NextResponse.json(
+                  { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires heading and text.` },
+                  { status: 400 }
+                );
+              }
+              break;
           case 'image':
             if (!block.src || !block.alt) {
               return NextResponse.json(
@@ -147,7 +153,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 { status: 400 }
               );
             }
-            // Optional: Validate image URL format
+   
             const imageUrlPattern = /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/;
             if (!imageUrlPattern.test(block.src)) {
               return NextResponse.json(
@@ -181,7 +187,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
     }
 
-    // Prepare the updated case study object
+
     const updatedCaseStudy: Partial<CaseStudy> = {
       coverImage: data.coverImage,
       title: data.title,
@@ -205,12 +211,9 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       updatedAt: new Date(),
     };
 
-    // Connect to MongoDB
     const client = await clientPromise;
     const db = client.db();
     const collection = db.collection('caseStudies');
-
-    // Update the case study in the collection
     const result = await collection.updateOne(
       { _id: new ObjectId(id) },
       { $set: updatedCaseStudy }
@@ -236,7 +239,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-// DELETE Handler: Remove a case study by ID
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 

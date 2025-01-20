@@ -2,17 +2,17 @@
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import clientPromise from '@/utils/mongodb'; // Adjust the path based on your project structure
+import clientPromise from '@/utils/mongodb'; 
 import { ObjectId } from 'mongodb';
 
-// Define the shape of the incoming data
+
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table'| 'box';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
   caption?: string;
-  title?: string; // For video title
+  title?: string; 
 }
 
 interface Section {
@@ -37,8 +37,6 @@ interface CaseStudy {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
-
-    // Basic validation
     if (
       !data.coverImage ||
       !data.title ||
@@ -53,8 +51,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Further validation: Validate each section and content blocks
     for (const [sectionIndex, section] of data.sections.entries()) {
       if (!section.title) {
         return NextResponse.json(
@@ -75,7 +71,6 @@ export async function POST(request: NextRequest) {
             { status: 400 }
           );
         }
-        // Additional validations based on block type
         switch (block.type) {
           case 'paragraph':
           case 'quote':
@@ -95,7 +90,6 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
               );
             }
-            // Optional: Validate image URL format
             break;
           case 'video':
             if (!block.src) {
@@ -104,7 +98,6 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
               );
             }
-            // Optional: Validate YouTube embed URL format
             const youtubeEmbedRegex = /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/;
             if (!youtubeEmbedRegex.test(block.src)) {
               return NextResponse.json(
@@ -118,22 +111,27 @@ export async function POST(request: NextRequest) {
                 typeof block.content !== 'object' || 
                 !Array.isArray((block.content as any).headers) || 
                 !Array.isArray((block.content as any).rows)) {
-              console.log('Table validation failed:', block.content);
               return NextResponse.json(
                 { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid headers and rows.` },
                 { status: 400 }
               );
             }
-            // Validate that all rows have the same length as headers
             const headers = (block.content as { headers: string[] }).headers;
             const rows = (block.content as { rows: string[][] }).rows;
             if (rows.some(row => row.length !== headers.length)) {
-              console.log('Table row length mismatch:', {
-                headers: headers.length,
-                rows: rows.map(r => r.length)
-              });
               return NextResponse.json(
                 { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
+                { status: 400 }
+              );
+            }
+            break;
+          case 'box':
+            if (!block.content || 
+                typeof block.content !== 'object' || 
+                !block.content.heading || 
+                !block.content.text) {
+              return NextResponse.json(
+                { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires heading and text.` },
                 { status: 400 }
               );
             }
@@ -194,17 +192,13 @@ export async function POST(request: NextRequest) {
   }
 }
 
+
 export async function GET(request: NextRequest) {
   try {
-    // Connect to MongoDB
     const client = await clientPromise;
-    const db = client.db(); // Use the default DB specified in your MongoClient
+    const db = client.db();
     const collection = db.collection('caseStudies');
-
-    // Fetch all case studies with only id, title, and coverImage
     const caseStudies = await collection.find({}, { projection: { title: 1, coverImage: 1 } }).toArray();
-
-    // Map the results to include the id as a string
     const response = caseStudies.map((caseStudy) => ({
       id: caseStudy._id.toString(),
       title: caseStudy.title,

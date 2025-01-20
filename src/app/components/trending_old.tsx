@@ -4,7 +4,11 @@ import styles from "./trending_old.module.scss";
 import { trendingListOld } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import trend4 from '../../app/assets/trending_cards/trend_4.png';
-
+import news1 from '@/app/assets/trending_cards/news1.svg';
+import news2 from '@/app/assets/trending_cards/news2.svg';
+import news3 from '@/app/assets/trending_cards/news3.svg';
+import news4 from '@/app/assets/trending_cards/news4.svg';
+import news5 from '@/app/assets/trending_cards/news5.svg';
 export default function TrendingOld() {
   const router = useRouter();
 
@@ -88,7 +92,7 @@ export default function TrendingOld() {
           </div>
           <Image
             className={styles.imgTag}
-            src= "https://i.postimg.cc/DwHJtcXp/Search.jpg"
+            src= {news4}
             alt="Success Stories"
             fill 
             style={{ objectFit: "cover" }}

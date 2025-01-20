@@ -99,21 +99,21 @@ export const trendingListOld = [
     "description": "Explore Our Success Stories",
     "brief": "Discover how businesses across various industries have leveraged our solutions to overcome challenges and drive success.",
     // "image": 'https://i.postimg.cc/nLykDdFy/Download-free-image-of-Fluid-art-background-backgrounds-abstract-painting-by-Napas-about-skin-shad.jpg'
-    "image": 'https://i.postimg.cc/Dw84jN8b/1bebe292-3bed-4ac7-b6cb-0d56fc772b66.jpg'
+    "image": '/images/news5.svg'
   },
   {
     "title": "Blogs",
     "description": "Insights and Expertise",
     "brief": "Stay updated with the latest industry insights, expert opinions, and trends through our regularly updated blog section.",
     // "image": 'https://i.postimg.cc/0ydx343f/point-design-purple.jpg'
-    "image": '	https://i.postimg.cc/DzGJFbQv/dda6a290-c6b6-42e3-84d5-f139a49544de.jpg'
+    "image": '/images/news2.svg'
   },
   {
     "title": "AI News",
     "description": "Latest Developments in AI",
     "brief": "Get the latest updates on advancements in artificial intelligence, innovations, and key industry developments.",
     // "image": 'https://i.postimg.cc/Gm1dXRMt/79344e43-4f61-4eee-8a29-06e5bc5ead72.jpg'
-    "image": '	https://i.postimg.cc/wvdtBTFh/f699859f-2045-4029-85cd-426cd238cd4a.jpg'
+    "image": '/images/news3.svg'
   },
 ];
 type Product = {

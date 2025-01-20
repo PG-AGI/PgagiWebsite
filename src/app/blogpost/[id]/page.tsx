@@ -115,14 +115,33 @@ const BlogPost = () => {
     alert('Link copied to clipboard!');
   };
 
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
-
+  const currentUrl = typeof window !== 'undefined' ? window.location.origin : ''; 
+  const generateBlogPostUrl = () => {
+    if (!blogPost) return currentUrl;
+  
+    const formattedTitle = blogPost.title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-') 
+      .trim();
+  
+    const formattedAuthorName = blogPost.author.name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '') 
+      .replace(/\s+/g, '-')
+      .trim();
+  
+    return `${currentUrl}/blogs/${blogPost.id}/${formattedAuthorName}/${formattedTitle}`;
+  };
+  
+  const blogPostUrl = generateBlogPostUrl();
+  
   const shareUrls = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-      currentUrl
+      blogPostUrl
     )}&title=${encodeURIComponent(blogPost?.title || '')}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      currentUrl
+      blogPostUrl
     )}&text=${encodeURIComponent(blogPost?.title || '')}`,
   };
 

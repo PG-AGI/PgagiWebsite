@@ -1,9 +1,10 @@
 'use client';
-import { useState, ChangeEvent } from 'react';
-import styles from './DynamicTable.module.css'; // Importing the CSS Module
 
-type Row = string[];  // Each row is an array of strings (table cells)
-type TableData = Row[];  // Table is an array of rows
+import { useState, ChangeEvent } from 'react';
+import styles from './DynamicTable.module.scss';
+
+type Row = string[]; 
+type TableData = Row[];
 
 interface DynamicTableProps {
   rows: TableData;
@@ -22,7 +23,6 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
   columnNames,
   setColumnNames,
 }) => {
-
   const addRow = () => {
     const newRows: TableData = [...rows, Array(columns).fill('')];
     setRows(newRows);
@@ -35,17 +35,9 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
     setColumnNames([...columnNames, '']);
   };
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLTextAreaElement>,
-    rowIndex: number,
-    colIndex: number
-  ) => {
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>, rowIndex: number, colIndex: number) => {
     const newRows: TableData = rows.map((row, rIndex) =>
-      rIndex === rowIndex
-        ? row.map((col, cIndex) =>
-          cIndex === colIndex ? e.target.value : col
-        )
-        : row
+      rIndex === rowIndex ? row.map((cell, cIndex) => (cIndex === colIndex ? e.target.value : cell)) : row
     );
     setRows(newRows);
   };
@@ -62,14 +54,10 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
   };
 
   const removeColumn = (index: number) => {
-    const newRows: TableData = rows.map((row) =>
-      row.filter((_, colIndex) => colIndex !== index)
-    );
+    const newRows: TableData = rows.map((row) => row.filter((_, colIndex) => colIndex !== index));
     setRows(newRows);
-
     const newColumnNames = columnNames.filter((_, colIndex) => colIndex !== index);
     setColumnNames(newColumnNames);
-
     setColumns(columns - 1);
   };
 
@@ -89,10 +77,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                     className={styles.columnNameInput}
                   />
                   {columns > 1 && (
-                    <button
-                      onClick={() => removeColumn(colIndex)}
-                      className={styles.removeBtn}
-                    >
+                    <button onClick={() => removeColumn(colIndex)} className={styles.removeBtn}>
                       -
                     </button>
                   )}
@@ -111,15 +96,12 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                     onChange={(e) => handleInputChange(e, rowIndex, colIndex)}
                     className={styles.textareaCell}
                     rows={3}
-                    placeholder={`Enter text...`}
+                    placeholder="Enter text..."
                   />
                 </td>
               ))}
               <td>
-                <button
-                  onClick={() => removeRow(rowIndex)}
-                  className={styles.removeBtn}
-                >
+                <button onClick={() => removeRow(rowIndex)} className={styles.removeBtn}>
                   -
                 </button>
               </td>
@@ -128,8 +110,12 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
         </tbody>
       </table>
       <div className={styles.buttons}>
-        <div onClick={addRow} className={styles.button}>Add Row</div>
-        <div onClick={addColumn} className={styles.button}>Add Column</div>
+        <div onClick={addRow} className={styles.button}>
+          Add Row
+        </div>
+        <div onClick={addColumn} className={styles.button}>
+          Add Column
+        </div>
       </div>
     </div>
   );
