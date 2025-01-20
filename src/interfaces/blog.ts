@@ -23,6 +23,10 @@ export interface BlogContentBlock {
       name: string;
       role: string;
     };
+    tldr: {
+      heading: '',
+      text: ''
+    }
     sections: BlogSection[];
     createdAt: Date;
     updatedAt: Date;

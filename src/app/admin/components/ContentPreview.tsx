@@ -25,12 +25,18 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({ data }) => {
           {data.authorRole ? `(${data.authorRole})` : '(Author Role)'}
         </span>
       </div>
+      <div className={styles.header}>
+        <div >
+          <h3 className={styles.boxHeading}>{data.tldr?.heading}</h3>
+          <p>{data.tldr?.text}</p>
+        </div>
+      </div>
       {data.sections?.map((section, sIndex) => (
         <div key={section.id} className={styles.section}>
           <h2>{section.title || `Section ${sIndex + 1}`}</h2>
           {section.content?.map((block: ContentBlock) => {
             // Debugging: log table block content
-            if(block.type === 'table'){
+            if (block.type === 'table') {
               console.log("Preview table block:", block.content);
             }
             switch (block.type) {
@@ -144,6 +150,25 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({ data }) => {
                         )}
                       </tbody>
                     </table>
+                  );
+                } else {
+                  return null;
+                }
+              }
+              case 'box': {
+                if (
+                  block.content &&
+                  typeof block.content !== 'string' &&
+                  'heading' in block.content &&
+                  'text' in block.content
+                ) {
+                  const values = block.content as { heading: string; text: string };
+
+                  return (
+                    <div className={styles.box}>
+                      <h3 className={styles.boxHeading}>{values.heading}</h3>
+                      <p>{values.text}</p>
+                    </div>
                   );
                 } else {
                   return null;

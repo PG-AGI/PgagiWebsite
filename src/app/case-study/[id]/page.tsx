@@ -1,15 +1,18 @@
 'use client';
 
+import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
-import styles from './CaseStudy.module.scss';
-import { Link2, ArrowUp } from 'lucide-react'; 
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
+import axios from 'axios';
+import { Link2, ArrowUp } from 'lucide-react'; 
 import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
+
 import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
-import axios from 'axios';
+
+import styles from './CaseStudy.module.scss';
 
 type CaseStudy = {
   id: string;
@@ -64,6 +67,7 @@ const CaseStudy = () => {
         const response = await axios.get(`/api/case-studies/${id}`);
         const data: CaseStudy = response.data;
         setCaseStudy(data);
+        console.log('case study data is here', data);
       } catch (err: any) {
         setError(
           err.response?.data?.message ||
@@ -116,7 +120,7 @@ const CaseStudy = () => {
     }
   };
 
-  // New helper function for scroll-to-top
+  // Scroll-to-top
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -126,18 +130,23 @@ const CaseStudy = () => {
     alert('Link copied to clipboard!');
   };
 
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const currentUrl =
+    typeof window !== 'undefined' ? window.location.origin : '';
+
+  // Optional: build a more "friendly" share URL (with slug)
   const generateCaseStudyUrl = () => {
     if (!caseStudy) return currentUrl;
     const formattedTitle = caseStudy.title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-') 
+      .replace(/\s+/g, '-')
       .trim();
+    // e.g., https://yoursite.com/case-studies/:id/title-here
     return `${currentUrl}/case-studies/${caseStudy.id}/${formattedTitle}`;
   };
-  
+
   const caseStudyUrl = generateCaseStudyUrl();
+
   const shareUrls = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
       caseStudyUrl
@@ -146,8 +155,6 @@ const CaseStudy = () => {
       caseStudyUrl
     )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
-  
-  console.log('139 data to render on ui', caseStudy);
 
   if (loading) {
     return (
@@ -155,6 +162,7 @@ const CaseStudy = () => {
         <Navigation />
         <div className={styles.container}>
           <main className={styles.main}>
+            {/* Loading Skeleton */}
             <header className={`${styles.header} ${styles.skeletonHeader}`}>
               <div className={`${styles.metadata} ${styles.skeleton}`}>
                 <div className={styles.skeletonLine}></div>
@@ -177,7 +185,9 @@ const CaseStudy = () => {
                   <ul className={styles.navigation}>
                     {Array.from({ length: 5 }).map((_, index) => (
                       <li key={index}>
-                        <button className={`${styles.navButton} ${styles.skeletonButton}`}></button>
+                        <button
+                          className={`${styles.navButton} ${styles.skeletonButton}`}
+                        ></button>
                       </li>
                     ))}
                   </ul>
@@ -186,7 +196,10 @@ const CaseStudy = () => {
                     <h3></h3>
                     <div className={styles.socialLinks}>
                       {Array.from({ length: 3 }).map((_, index) => (
-                        <div key={index} className={`${styles.socialButton} ${styles.skeletonCircle}`}></div>
+                        <div
+                          key={index}
+                          className={`${styles.socialButton} ${styles.skeletonCircle}`}
+                        ></div>
                       ))}
                     </div>
                   </div>
@@ -228,6 +241,36 @@ const CaseStudy = () => {
 
   return (
     <>
+      <Head>
+
+        <title>{caseStudy.title}</title>
+        <meta name="description" content={`Read about ${caseStudy.title}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={caseStudy.title} />
+        <meta
+          property="og:description"
+          content={`Insightful case study on "${caseStudy.title}".`}
+        />
+        <meta
+          property="og:url"
+          content={caseStudyUrl}
+        />
+        <meta
+          property="og:image"
+          content={caseStudy.coverImage || `${currentUrl}/fallback-image.jpg`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={caseStudy.title} />
+        <meta
+          name="twitter:description"
+          content={`Discover how we tackled "${caseStudy.title}".`}
+        />
+        <meta
+          name="twitter:image"
+          content={caseStudy.coverImage || `${currentUrl}/fallback-image.jpg`}
+        />
+      </Head>
+
       <Navigation />
       <div className={styles.container}>
         <main className={styles.main}>
@@ -241,14 +284,10 @@ const CaseStudy = () => {
           </header>
 
           <div className={styles.content}>
-            {/* Updated Sidebar Structure */}
             <aside className={styles.sidebar}>
-              {/* Sidebar Header (Always Visible) */}
               <div className={styles.sidebarHeader}>
                 <h3 className={styles.navigationHeading}>Summary</h3>
               </div>
-
-              {/* Scrollable Navigation */}
               <div className={styles.navScroll}>
                 <ul className={styles.navigation}>
                   {caseStudy.sections.map((section) => (
@@ -259,11 +298,12 @@ const CaseStudy = () => {
                             section.title.toLowerCase().replace(/\s+/g, '-')
                           )
                         }
-                        className={`${styles.navButton} ${activeSection ===
-                            section.title.toLowerCase().replace(/\s+/g, '-')
+                        className={`${styles.navButton} ${
+                          activeSection ===
+                          section.title.toLowerCase().replace(/\s+/g, '-')
                             ? styles.active
                             : ''
-                          }`}
+                        }`}
                       >
                         {section.title}
                       </button>
@@ -272,7 +312,7 @@ const CaseStudy = () => {
                 </ul>
               </div>
 
-              {/* Sidebar Footer (Always Visible) */}
+      
               <div className={styles.sidebarFooter}>
                 <h3>Share this case study</h3>
                 <div className={styles.socialLinks}>
@@ -381,7 +421,10 @@ const CaseStudy = () => {
                         );
                       case 'table':
                         return (
-                          <table className={styles.dynamicTable}>
+                          <table
+                            key={index}
+                            className={styles.dynamicTable}
+                          >
                             <thead>
                               <tr>
                                 {block.content.headers.map((heading, colIndex) => (
@@ -392,7 +435,6 @@ const CaseStudy = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {/* Render rows and cells */}
                               {block.content.rows.map((row, rowIndex) => (
                                 <tr key={rowIndex}>
                                   {row.map((cell, colIndex) => (
@@ -405,13 +447,19 @@ const CaseStudy = () => {
                             </tbody>
                           </table>
                         );
-                      case 'box' : 
+                      case 'box':
                         return (
-                          <div className={styles.box}>
-                            <h3 className={styles.boxHeading}>{block.content.heading}</h3>
-                            <p>{block.content.text}</p>
+                          <div key={index} className={styles.box}>
+                            <h3 className={styles.boxHeading}>
+                              {block.content.heading}
+                            </h3>
+                            <p
+                              dangerouslySetInnerHTML={{
+                                __html: block.content.text,
+                              }}
+                            ></p>
                           </div>
-                        )
+                        );
                       default:
                         return null;
                     }

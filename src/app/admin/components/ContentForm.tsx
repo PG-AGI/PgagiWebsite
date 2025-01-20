@@ -54,6 +54,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
       readTime: '',
       authorName: '',
       authorRole: '',
+      tldr: { heading: '', text: '' },
       sections: [
         {
           id: uuidv4(),
@@ -116,6 +117,8 @@ const ContentForm: React.FC<ContentFormProps> = ({
                   );
                 case 'table':
                   return true;
+                case 'box':
+                  return true;
                 default:
                   return false;
               }
@@ -123,7 +126,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
         }))
         .filter((section) => section.content.length > 0),
     };
-
     const endpointMap: Record<ContentType, string> = {
       caseStudy: '/api/case-studies',
       blog: '/api/blogs',
@@ -166,7 +168,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
       alert(error.response?.data?.message || 'An unexpected error occurred.');
     }
   };
-
   return (
     <div className={styles.contentForm}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -267,7 +268,58 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <span className={styles.error}>{errors.authorRole.message}</span>
           )}
         </div>
-
+        {watch('contentType') === 'blog' ? (
+          <>
+          <label>TL; DR (60-second blog summary)</label>
+            <div className={styles.section}>
+              <div className={styles.formGroup}>
+                <label>TLDR Heading:</label>
+                <input
+                  type="text"
+                  {...register(`tldr.heading`, {
+                    required: 'TLDR heading is required',
+                  })}
+                  placeholder="Enter tldr heading"
+                  required
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>TLDR Text:</label>
+                <Controller
+                  control={control}
+                  name={`tldr.text`}
+                  rules={{ required: 'TLDR text is required' }}
+                  render={({ field }) => (
+                    <ReactQuill
+                      theme="snow"
+                      value={typeof field.value === 'string' ? field.value : ''}
+                      onChange={field.onChange}
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, false] }],
+                          ['bold', 'italic', 'underline', 'link'],
+                          [{ list: 'ordered' }, { list: 'bullet' }],
+                          ['clean'],
+                        ],
+                      }}
+                      formats={[
+                        'header',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'list',
+                        'bullet',
+                        'link',
+                        'clean',
+                        'code-block',
+                      ]}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+          </>
+        ) : null}
         <div className={styles.sections}>
           <label>Sections:</label>
           {sectionFields.map((section, sectionIndex) => (

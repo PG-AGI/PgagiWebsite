@@ -3,8 +3,8 @@
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import styles from "./AnimatedTestimonials.module.scss"; // Adjust the path if necessary
+import { useCallback, useEffect, useState } from "react";
+import styles from "./AnimatedTestimonials.module.scss";
 
 type Testimonial = {
   quote: string;
@@ -15,16 +15,16 @@ type Testimonial = {
 
 export const AnimatedTestimonials = ({
   testimonials,
-  autoplay = false, // Set default to false
+  autoplay = false,
 }: {
   testimonials: Testimonial[];
   autoplay?: boolean;
 }) => {
   const [active, setActive] = useState(0);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setActive((prev) => (prev + 1) % testimonials.length);
-  };
+  }, [testimonials.length]);
 
   const handlePrev = () => {
     setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -44,7 +44,6 @@ export const AnimatedTestimonials = ({
   return (
     <div className={styles.container}>
       <div className={styles.grid}>
-        {/* Image Section */}
         <div className={styles.imageContainer}>
           <AnimatePresence>
             {testimonials.map((testimonial, index) => (
@@ -89,7 +88,6 @@ export const AnimatedTestimonials = ({
           </AnimatePresence>
         </div>
 
-        {/* Content Section */}
         <div className={styles.content}>
           <motion.div
             key={active}
@@ -138,8 +136,6 @@ export const AnimatedTestimonials = ({
               ))}
             </motion.p>
           </motion.div>
-
-          {/* Navigation Buttons */}
           <div className={styles.buttons}>
             <button onClick={handlePrev} className={styles.button} aria-label="Previous Testimonial">
               <IconArrowLeft className={styles.iconLeft} />

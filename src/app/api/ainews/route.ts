@@ -5,7 +5,7 @@ import clientPromise from '@/utils/mongodb';
 import { AINews } from '@/interfaces/ainews';
 
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
@@ -16,7 +16,7 @@ interface ContentBlock {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
-
+    console.log('api call data is here', data)
     if (
       !data.coverImage ||
       !data.title ||
@@ -116,6 +116,18 @@ export async function POST(request: NextRequest) {
               });
               return NextResponse.json(
                 { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
+                { status: 400 }
+              );
+            }
+            break;
+          case 'box':
+            if (!block.content ||
+              typeof block.content !== 'object' ||
+              !block.content.heading ||
+              !block.content.text) {
+              console.log('Table validation failed:', block.content);
+              return NextResponse.json(
+                { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid heading and text.` },
                 { status: 400 }
               );
             }
