@@ -25,12 +25,6 @@ interface ContentBlockItemProps {
   block: ContentBlock;
   blockIndex: number;
   removeBlock: () => void;
-  rows: any;
-  setRows: React.Dispatch<React.SetStateAction<any>>;
-  columns: number;
-  setColumns: React.Dispatch<React.SetStateAction<number>>;
-  columnNames: string[];
-  setColumnNames: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
@@ -41,22 +35,15 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
   block,
   blockIndex,
   removeBlock,
-  // The following props may be removed if no longer used for table state.
-  rows,
-  setRows,
-  columns,
-  setColumns,
-  columnNames,
-  setColumnNames,
 }) => {
-  // Watch the type of the content block.
+  // Watch the content block type.
   const blockType = useWatch({
     control,
     name: `sections.${sectionIndex}.content.${blockIndex}.type`,
     defaultValue: block.type || 'paragraph',
   });
 
-  // A helper function to ensure we pass a valid TableData value
+  // Helper to ensure a valid table value structure.
   const getTableValue = (value: any): TableData => {
     if (
       value &&
@@ -68,7 +55,8 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
     ) {
       return value as TableData;
     }
-    return { headers: [''], rows: [['']] };
+    // Use default values with placeholders for testing.
+    return { headers: ['Header 1'], rows: [['Cell 1']] };
   };
 
   return (
@@ -211,7 +199,7 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
           <Controller
             control={control}
             name={`sections.${sectionIndex}.content.${blockIndex}.content`}
-            defaultValue={{ headers: [''], rows: [['']] }}
+            defaultValue={{ headers: ['Header 1'], rows: [['Cell 1']] }}
             render={({ field: { onChange, value } }) => (
               <TableEditor value={getTableValue(value)} onChange={onChange} />
             )}

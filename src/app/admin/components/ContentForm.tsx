@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,13 +13,6 @@ import ContentBlockItem from './ContentBlockItem';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 
-interface ContentFormProps {
-  isEditing: boolean;
-  editingContentId: string | null;
-  onAfterSubmit: () => void;
-  initialValues?: FormValues;
-}
-
 const defaultSection: Section = {
   id: uuidv4(),
   title: '',
@@ -31,6 +24,13 @@ const defaultSection: Section = {
     },
   ],
 };
+
+interface ContentFormProps {
+  isEditing: boolean;
+  editingContentId: string | null;
+  onAfterSubmit: () => void;
+  initialValues?: FormValues;
+}
 
 const ContentForm: React.FC<ContentFormProps> = ({
   isEditing,
@@ -69,24 +69,11 @@ const ContentForm: React.FC<ContentFormProps> = ({
     name: 'sections',
   });
 
-  const [rows, setRows] = useState<any>([['']]);
-  const [columns, setColumns] = useState<number>(1);
-  const [columnNames, setColumnNames] = useState<string[]>(['']);
-
-  const [showPreview, setShowPreview] = useState(false);
+  const [showPreview, setShowPreview] = React.useState(false);
   const watchAllFields = watch();
 
-  const getNestedError = (
-    errors: FieldErrors<FormValues>,
-    sectionIndex: number,
-    blockIndex: number,
-    field: keyof ContentBlock
-  ) => {
-    const fieldError = errors.sections?.[sectionIndex]?.content?.[blockIndex]?.[field];
-    return typeof fieldError === 'object' && fieldError !== null ? fieldError.message : undefined;
-  };
-
   const onSubmit = async (data: FormValues) => {
+    // No need to override table blocks here because each table block is managed by its own Controller.
     const sanitizedData: FormValues = {
       ...data,
       sections: data.sections
@@ -95,9 +82,10 @@ const ContentForm: React.FC<ContentFormProps> = ({
           ...section,
           content: section.content
             .map((block) => {
+              // For table blocks we rely on the value stored already. For others, trim strings, etc.
               let updatedContent = block.content ?? '';
-              if (block.type === 'table') {
-                updatedContent = { headers: columnNames, rows: rows };
+              if (block.type === 'paragraph' || block.type === 'quote' || block.type === 'highlight' || block.type === 'code') {
+                updatedContent = typeof block.content === 'string' ? block.content.trim() : '';
               }
               return {
                 ...block,
@@ -323,12 +311,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
                           updated.splice(blockIndex, 1);
                           field.onChange(updated);
                         }}
-                        rows={rows}
-                        setRows={setRows}
-                        columns={columns}
-                        setColumns={setColumns}
-                        columnNames={columnNames}
-                        setColumnNames={setColumnNames}
                       />
                     ))}
                     <div className={styles.buttonGroup}>

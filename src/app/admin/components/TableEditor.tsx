@@ -13,10 +13,10 @@ interface TableEditorProps {
   onChange: (data: TableData) => void;
 }
 
-const defaultTableData: TableData = { headers: [''], rows: [['']] };
+const defaultTableData: TableData = { headers: ['Header 1'], rows: [['Cell 1']] };
 
 const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
-  // Validate provided value
+  // Use the incoming value (or default) to initialize local state.
   const initialData =
     value &&
     typeof value === 'object' &&
@@ -25,51 +25,65 @@ const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
       ? value
       : defaultTableData;
 
-  const [headers, setHeaders] = useState<string[]>(initialData.headers.length ? initialData.headers : ['']);
-  const [rows, setRows] = useState<string[][]>(initialData.rows.length ? initialData.rows : [['']]);
-  const [columns, setColumns] = useState<number>(initialData.headers.length ? initialData.headers.length : 1);
+  const [headers, setHeaders] = useState<string[]>(initialData.headers);
+  const [rows, setRows] = useState<string[][]>(initialData.rows);
+  const [columns, setColumns] = useState<number>(initialData.headers.length);
 
-  // Update parent on change
+  // Update internal state if external value changes.
   useEffect(() => {
-    onChange({ headers, rows });
-  }, [headers, rows, onChange]);
+    setHeaders(initialData.headers);
+    setRows(initialData.rows);
+    setColumns(initialData.headers.length);
+  }, [initialData.headers, initialData.rows]);
 
   const addRow = () => {
-    setRows(prev => [...prev, new Array(columns).fill('')]);
+    const newRows = [...rows, new Array(columns).fill('')];
+    setRows(newRows);
+    onChange({ headers, rows: newRows });
   };
 
   const addColumn = () => {
-    setColumns(prev => prev + 1);
-    setHeaders(prev => [...prev, '']);
-    setRows(prev => prev.map(row => [...row, '']));
+    const newColumns = columns + 1;
+    const newHeaders = [...headers, `Header ${newColumns}`];
+    const newRows = rows.map((row) => [...row, '']);
+    setColumns(newColumns);
+    setHeaders(newHeaders);
+    setRows(newRows);
+    onChange({ headers: newHeaders, rows: newRows });
   };
 
   const handleHeaderChange = (index: number, newValue: string) => {
-    setHeaders(prev => prev.map((h, i) => (i === index ? newValue : h)));
+    const newHeaders = headers.map((h, i) => (i === index ? newValue : h));
+    setHeaders(newHeaders);
+    onChange({ headers: newHeaders, rows });
   };
 
   const handleCellChange = (rowIndex: number, colIndex: number, newValue: string) => {
-    setRows(prev =>
-      prev.map((row, rIndex) =>
-        rIndex === rowIndex
-          ? row.map((cell, cIndex) => (cIndex === colIndex ? newValue : cell))
-          : row
-      )
+    const newRows = rows.map((row, rIndex) =>
+      rIndex === rowIndex
+        ? row.map((cell, cIndex) => (cIndex === colIndex ? newValue : cell))
+        : row
     );
+    setRows(newRows);
+    onChange({ headers, rows: newRows });
   };
 
-  // Delete a column given its index (only if more than one column)
   const deleteColumn = (colIndex: number) => {
-    if (columns <= 1) return; // Prevent deleting last column
-    setHeaders(prev => prev.filter((_, i) => i !== colIndex));
-    setRows(prev => prev.map(row => row.filter((_, i) => i !== colIndex)));
-    setColumns(prev => prev - 1);
+    if (columns <= 1) return;
+    const newHeaders = headers.filter((_, i) => i !== colIndex);
+    const newRows = rows.map((row) => row.filter((_, i) => i !== colIndex));
+    const newColumns = columns - 1;
+    setHeaders(newHeaders);
+    setRows(newRows);
+    setColumns(newColumns);
+    onChange({ headers: newHeaders, rows: newRows });
   };
 
-  // Delete a row given its index (only if more than one row)
   const deleteRow = (rowIndex: number) => {
-    if (rows.length <= 1) return; // Prevent deleting last row
-    setRows(prev => prev.filter((_, i) => i !== rowIndex));
+    if (rows.length <= 1) return;
+    const newRows = rows.filter((_, i) => i !== rowIndex);
+    setRows(newRows);
+    onChange({ headers, rows: newRows });
   };
 
   return (
@@ -86,7 +100,7 @@ const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
       <table className={styles.tableEditorTable}>
         <thead>
           <tr>
-            {/* Render a blank header cell for the row delete button column */}
+            {/* Blank cell for row deletion button */}
             <th className={styles.tableEditorTh}></th>
             {headers.map((header, index) => (
               <th key={index} className={styles.tableEditorTh}>
@@ -116,7 +130,6 @@ const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
         <tbody>
           {rows.map((row, rIndex) => (
             <tr key={rIndex}>
-              {/* Delete row button column */}
               <td className={styles.tableEditorTd}>
                 {rows.length > 1 && (
                   <button
