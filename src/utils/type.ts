@@ -16,6 +16,10 @@ export type ContentBlock = {
     title: string;
     content: ContentBlock[];
   };
+  interface tldrType{
+    heading: string,
+    text: string
+  }
   export type FormValues = {
     contentType: ContentType;
     coverImage: string;
@@ -24,6 +28,7 @@ export type ContentBlock = {
     readTime: string;
     authorName: string;
     authorRole: string;
+    tldr: tldrType;
     sections: Section[];
   };
 export type ContentSummary = {
@@ -43,6 +48,10 @@ export type ContentDetails = {
     name: string;
     role: string;
   };
+  tldr: {
+    heading: '',
+    text: ''
+  }
   sections: {
     title: string;
     content: {

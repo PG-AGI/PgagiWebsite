@@ -21,6 +21,10 @@ type BlogPostType = {
     name: string;
     role: string;
   };
+  tldr: {
+    heading: string,
+    text: ''
+  },
   sections: {
     title: string;
     content: ContentBlock[];
@@ -36,7 +40,8 @@ type ContentBlock =
   | { type: 'code'; content: string }
   | { type: 'image'; src: string; alt: string; caption?: string }
   | { type: 'video'; src: string; title?: string; caption?: string }
-  | { type: 'table'; content: { headers: string[]; rows: string[][] } };
+  | { type: 'table'; content: { headers: string[]; rows: string[][] } }
+  | { type: 'box'; content: { heading: string; text: string } };
 
 const BlogPost = () => {
   const router = useRouter();
@@ -63,6 +68,7 @@ const BlogPost = () => {
         const response = await axios.get(`/api/blogs/${id}`);
         const data: BlogPostType = response.data;
         setBlogPost(data);
+        console.log('Finding tldr section is here', data)
       } catch (err: any) {
         setError(err.response?.data?.message || `Error: ${err.response?.status} ${err.response?.statusText}`);
       } finally {
@@ -115,27 +121,27 @@ const BlogPost = () => {
     alert('Link copied to clipboard!');
   };
 
-  const currentUrl = typeof window !== 'undefined' ? window.location.origin : ''; 
+  const currentUrl = typeof window !== 'undefined' ? window.location.origin : '';
   const generateBlogPostUrl = () => {
     if (!blogPost) return currentUrl;
-  
+
     const formattedTitle = blogPost.title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-') 
-      .trim();
-  
-    const formattedAuthorName = blogPost.author.name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '') 
       .replace(/\s+/g, '-')
       .trim();
-  
+
+    const formattedAuthorName = blogPost.author.name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .trim();
+
     return `${currentUrl}/blogs/${blogPost.id}/${formattedAuthorName}/${formattedTitle}`;
   };
-  
+
   const blogPostUrl = generateBlogPostUrl();
-  
+
   const shareUrls = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
       blogPostUrl
@@ -241,38 +247,53 @@ const BlogPost = () => {
                 <span className={styles.authorDesignation}>{blogPost.author.role}</span>
               </div>
               <div className={styles.social}>
-                  <div className={styles.socialLinks}>
-                    <a
-                      href={shareUrls.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Share on LinkedIn"
-                      className={styles.socialButton}
-                    >
-                      <FaLinkedin />
-                    </a>
-                    <a
-                      href={shareUrls.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Share on Twitter"
-                      className={styles.socialButton}
-                    >
-                      <FaSquareXTwitter />
-                    </a>
-                    <button
-                      onClick={handleCopyLink}
-                      className={styles.copyButton}
-                      aria-label="Copy Link"
-                    >
-                      <Link2 />
-                    </button>
-                  </div>
+                <div className={styles.socialLinks}>
+                  <a
+                    href={shareUrls.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on LinkedIn"
+                    className={styles.socialButton}
+                  >
+                    <FaLinkedin />
+                  </a>
+                  <a
+                    href={shareUrls.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on Twitter"
+                    className={styles.socialButton}
+                  >
+                    <FaSquareXTwitter />
+                  </a>
+                  <button
+                    onClick={handleCopyLink}
+                    className={styles.copyButton}
+                    aria-label="Copy Link"
+                  >
+                    <Link2 />
+                  </button>
                 </div>
+              </div>
             </div>
 
           </header>
-
+          {
+            blogPost.tldr &&
+            <div className={styles.header}>
+              <div className={styles.flexWrapper}>
+                <h2>TL; DR (60-second blog summary)</h2>
+                <div className={styles.metadata}>
+                  <span className={styles.glowDot}></span>
+                  <span className={styles.readTime}>60 seconds</span>
+                </div>
+              </div>
+              <div >
+                <h3 className={styles.boxHeading}>{blogPost.tldr?.heading}</h3>
+                <p>{blogPost.tldr?.text}</p>
+              </div>
+            </div>
+          }
           <div className={styles.content}>
             <aside className={styles.sidebar}>
               <nav>
@@ -285,8 +306,8 @@ const BlogPost = () => {
                           scrollToSection(section.title.toLowerCase().replace(/\s+/g, '-'))
                         }
                         className={`${styles.navButton} ${activeSection === section.title.toLowerCase().replace(/\s+/g, '-')
-                            ? styles.active
-                            : ''
+                          ? styles.active
+                          : ''
                           }`}
                       >
                         {section.title}
@@ -388,6 +409,13 @@ const BlogPost = () => {
                             </tbody>
                           </table>
                         );
+                      case 'box':
+                        return (
+                          <div className={styles.box}>
+                            <h3 className={styles.boxHeading}>{block.content.heading}</h3>
+                            <p>{block.content.text}</p>
+                          </div>
+                        )
                       default:
                         return null;
                     }

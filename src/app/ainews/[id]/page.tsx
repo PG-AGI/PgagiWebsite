@@ -36,7 +36,8 @@ type ContentBlock =
   | { type: 'code'; content: string }
   | { type: 'image'; src: string; alt: string; caption?: string }
   | { type: 'video'; src: string; title?: string; caption?: string }
-  | { type: 'table'; content: { headers: string[]; rows: string[][] } };
+  | { type: 'table'; content: { headers: string[]; rows: string[][] } }
+  | { type: 'box'; content: { heading: string; text: string } };
 
 const Ainews = () => {
   const router = useRouter();
@@ -222,34 +223,34 @@ const Ainews = () => {
                 <span className={styles.authorDesignation}>{aiNews.author.role}</span>
               </div> */}
               <div className={styles.social}>
-                  <div className={styles.socialLinks}>
-                    <a
-                      href={shareUrls.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Share on LinkedIn"
-                      className={styles.socialButton}
-                    >
-                      <FaLinkedin />
-                    </a>
-                    <a
-                      href={shareUrls.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Share on Twitter"
-                      className={styles.socialButton}
-                    >
-                      <FaSquareXTwitter />
-                    </a>
-                    <button
-                      onClick={handleCopyLink}
-                      className={styles.copyButton}
-                      aria-label="Copy Link"
-                    >
-                      <Link2 />
-                    </button>
-                  </div>
+                <div className={styles.socialLinks}>
+                  <a
+                    href={shareUrls.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on LinkedIn"
+                    className={styles.socialButton}
+                  >
+                    <FaLinkedin />
+                  </a>
+                  <a
+                    href={shareUrls.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on Twitter"
+                    className={styles.socialButton}
+                  >
+                    <FaSquareXTwitter />
+                  </a>
+                  <button
+                    onClick={handleCopyLink}
+                    className={styles.copyButton}
+                    aria-label="Copy Link"
+                  >
+                    <Link2 />
+                  </button>
                 </div>
+              </div>
             </div>
 
           </header>
@@ -266,8 +267,8 @@ const Ainews = () => {
                           scrollToSection(section.title.toLowerCase().replace(/\s+/g, '-'))
                         }
                         className={`${styles.navButton} ${activeSection === section.title.toLowerCase().replace(/\s+/g, '-')
-                            ? styles.active
-                            : ''
+                          ? styles.active
+                          : ''
                           }`}
                       >
                         {section.title}
@@ -369,6 +370,13 @@ const Ainews = () => {
                             </tbody>
                           </table>
                         );
+                      case 'box':
+                        return (
+                          <div className={styles.box}>
+                            <h3 className={styles.boxHeading}>{block.content.heading}</h3>
+                            <p>{block.content.text}</p>
+                          </div>
+                        )
                       default:
                         return null;
                     }

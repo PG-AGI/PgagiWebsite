@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 import { Blog } from '@/interfaces/blog';
 
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
@@ -111,6 +111,18 @@ export async function POST(request: NextRequest) {
               );
             }
             break;
+            case 'box':
+            if (!block.content || 
+                typeof block.content !== 'object' || 
+                !block.content.heading || 
+                !block.content.text ) {
+              console.log('Table validation failed:', block.content);
+              return NextResponse.json(
+                { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid heading and text.` },
+                { status: 400 }
+              );
+            }
+            break;
           default:
             return NextResponse.json(
               { message: `Invalid content block type '${block.type}' in section ${sectionIndex + 1}.` },
@@ -128,6 +140,10 @@ export async function POST(request: NextRequest) {
       author: {
         name: data.authorName,
         role: data.authorRole,
+      },
+      tldr: {
+        heading: data.tldr.heading,
+        text: data.tldr.text
       },
       sections: data.sections.map((section: any) => ({
         title: section.title,
