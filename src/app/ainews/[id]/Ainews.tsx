@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import styles from './Ainews.module.scss';
-import { Link2 } from 'lucide-react';
+import { ArrowUp, Link2 } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { FaLinkedin } from 'react-icons/fa';
@@ -139,6 +139,9 @@ const Ainews = () => {
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       ainewsUrl
     )}&text=${encodeURIComponent(aiNews?.title || '')}`,
+  };
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (loading) {
@@ -461,6 +464,13 @@ const Ainews = () => {
             </article>
           </div>
         </main>
+        <button
+          className={styles.scrollToTopButton}
+          onClick={handleScrollToTop}
+          aria-label="Scroll to Top"
+        >
+          <ArrowUp />
+        </button>
       </div>
       <Footer />
     </>
