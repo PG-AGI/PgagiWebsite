@@ -6,9 +6,6 @@ export default function CaseStudyPage() {
     <CaseStudy />
   )
 }
-
-// Note: Please don't remove the file structure for BlogPost, CaseStudy or Ainews
-// because this generateMetadata() method requires a Server Side Component.
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const id = params.id as string;
   try {
@@ -18,15 +15,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     const metaKeywords = metaData.keywords;
     const metaAuthor = metaData.author;
     const appTitle = metaData.title;
-
-      // const metaDescription = "AI-powered business solutions for your company";
-      // const metaKeywords = "AI, business, solutions, technology, innovation";
-      // const metaAuthor = "AI-powered business solutions for your company";
-      // const appTitle = "AI-powered business solutions for your company";
     return {
       title: appTitle,
       description: metaDescription,
-      // Add additional meta tags
       metadataBase: new URL("https://pgagi.in"),
       robots: {
         index: true,
@@ -36,7 +27,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         title: appTitle,
       },
       applicationName: appTitle,
-      keywords: metaKeywords.split(", "), // Convert the string to an array
+      keywords: metaKeywords.split(", "),
       author: metaAuthor,
     };
   }catch(error){
@@ -45,7 +36,3 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 }
 
-  // const metaDescription = "AI-powered business solutions for your company";
-  // const metaKeywords = "AI, business, solutions, technology, innovation";
-  // const metaAuthor = "AI-powered business solutions for your company";
-  // const appTitle = "AI-powered business solutions for your company";
