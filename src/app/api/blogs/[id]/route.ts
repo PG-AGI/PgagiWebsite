@@ -46,7 +46,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   if (!ObjectId.isValid(id)) {
@@ -74,6 +77,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       );
     }
 
+    if (!data.tldr || !data.tldr.heading || !data.tldr.text) {
+      return NextResponse.json(
+        { message: 'Missing required TL;DR information (heading and text).' },
+        { status: 400 }
+      );
+    }
     for (const [sectionIndex, section] of data.sections.entries()) {
       if (!section.title) {
         return NextResponse.json(
@@ -98,29 +107,58 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
           case 'paragraph':
           case 'quote':
           case 'highlight':
-          case 'code':
-          case 'table':
+          case 'code': {
             if (!block.content) {
               return NextResponse.json(
                 { message: `Content block ${blockIndex + 1} in section ${sectionIndex + 1} is missing content.` },
                 { status: 400 }
               );
             }
-            // Optional: Further validate 'table' content structure
-            if (block.type === 'table') {
-              if (
-                typeof block.content !== 'object' ||
-                !Array.isArray(block.content.headers) ||
-                !Array.isArray(block.content.rows)
-              ) {
-                return NextResponse.json(
-                  { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} has invalid content structure.` },
-                  { status: 400 }
-                );
-              }
+            break;
+          }
+          case 'table': {
+            if (
+              !block.content || 
+              typeof block.content !== 'object' || 
+              !Array.isArray(block.content.headers) || 
+              !Array.isArray(block.content.rows)
+            ) {
+              console.log('Table validation failed:', block.content);
+              return NextResponse.json(
+                { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid headers and rows.` },
+                { status: 400 }
+              );
+            }
+            const headers = block.content.headers as string[];
+            const rows = block.content.rows as string[][];
+            if (rows.some(row => row.length !== headers.length)) {
+              console.log('Table row length mismatch:', {
+                headers: headers.length,
+                rows: rows.map(r => r.length)
+              });
+              return NextResponse.json(
+                { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
+                { status: 400 }
+              );
             }
             break;
-          case 'image':
+          }
+          case 'box': {
+            if (
+              !block.content || 
+              typeof block.content !== 'object' || 
+              !block.content.heading || 
+              !block.content.text
+            ) {
+              console.log('Box validation failed:', block.content);
+              return NextResponse.json(
+                { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid heading and text.` },
+                { status: 400 }
+              );
+            }
+            break;
+          }
+          case 'image': {
             if (!block.src || !block.alt) {
               return NextResponse.json(
                 { message: `Image block ${blockIndex + 1} in section ${sectionIndex + 1} requires src and alt.` },
@@ -135,7 +173,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
               );
             }
             break;
-          case 'video':
+          }
+          case 'video': {
             if (!block.src) {
               return NextResponse.json(
                 { message: `Video block ${blockIndex + 1} in section ${sectionIndex + 1} requires src.` },
@@ -150,6 +189,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
               );
             }
             break;
+          }
           default:
             return NextResponse.json(
               { message: `Invalid content block type '${block.type}' in section ${sectionIndex + 1}.` },
@@ -158,7 +198,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         }
       }
     }
-
     const updatedBlog: Partial<Blog> = {
       coverImage: data.coverImage,
       title: data.title,
@@ -167,6 +206,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       author: {
         name: data.authorName,
         role: data.authorRole,
+      },
+      tldr: {
+        heading: data.tldr.heading,
+        text: data.tldr.text,
       },
       sections: data.sections.map((section: any) => ({
         title: section.title,
@@ -210,6 +253,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     );
   }
 }
+
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
