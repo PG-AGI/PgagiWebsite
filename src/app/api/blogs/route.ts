@@ -6,7 +6,6 @@ import { Blog } from '@/interfaces/blog';
 
 interface ContentBlock {
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
@@ -84,33 +83,6 @@ export async function PUT(
             }
             break;
           }
-          case 'table': {
-            if (
-              !block.content || 
-              typeof block.content !== 'object' || 
-              !Array.isArray(block.content.headers) || 
-              !Array.isArray(block.content.rows)
-            ) {
-              console.log('Table validation failed:', block.content);
-              return NextResponse.json(
-                { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid headers and rows.` },
-                { status: 400 }
-              );
-            }
-            const headers = block.content.headers as string[];
-            const rows = block.content.rows as string[][];
-            if (rows.some(row => row.length !== headers.length)) {
-              console.log('Table row length mismatch:', {
-                headers: headers.length,
-                rows: rows.map(r => r.length)
-              });
-              return NextResponse.json(
-                { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
-                { status: 400 }
-              );
-            }
-            break;
-          }
           case 'box': {
             if (
               !block.content || 
@@ -157,7 +129,8 @@ export async function PUT(
               );
             }
             break;
-          case 'table':
+          }
+          case 'table': {
             if (!block.content || 
                 typeof block.content !== 'object' || 
                 !Array.isArray((block.content as any).headers) || 
@@ -182,24 +155,14 @@ export async function PUT(
               );
             }
             break;
-            case 'box':
-            if (!block.content || 
-                typeof block.content !== 'object' || 
-                !block.content.heading || 
-                !block.content.text ) {
-              console.log('Table validation failed:', block.content);
-              return NextResponse.json(
-                { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid heading and text.` },
-                { status: 400 }
-              );
-            }
-            break;
+          }
           default:
             return NextResponse.json(
               { message: `Invalid content block type '${block.type}' in section ${sectionIndex + 1}.` },
               { status: 400 }
             );
         }
+        
       }
     }
     const updatedBlog: Partial<Blog> = {
