@@ -52,6 +52,10 @@ export type ContentDetails = {
     name: string;
     role: string;
   };
+  metaDescription: string;
+  metaKeywords: string;
+  metaAuthor: string;
+  metaTitle: string;
   tldr: {
     heading: '',
     text: ''
