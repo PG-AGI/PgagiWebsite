@@ -22,6 +22,10 @@ export interface AINewsContentBlock {
       name: string;
       role: string;
     };
+    metaDescription: string,
+    metaKeywords: string,
+    metaAuthor: string,
+    metaTitle: string,
     sections: AINewsSection[];
     createdAt: Date;
     updatedAt: Date;

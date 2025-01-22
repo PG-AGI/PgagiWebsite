@@ -28,6 +28,10 @@ export type ContentBlock = {
     readTime: string;
     authorName: string;
     authorRole: string;
+    metaDescription: string,
+    metaKeywords: string,
+    metaAuthor: string,
+    metaTitle: string,
     tldr: tldrType;
     sections: Section[];
   };

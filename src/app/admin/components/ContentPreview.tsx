@@ -26,11 +26,22 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({ data }) => {
         </span>
       </div>
       <div className={styles.header}>
+        <h1>Metadata for SEO</h1>
+        <h3 className={styles.boxHeading}>Meta Title</h3>
+        <p>{data.metaTitle}</p>
+        <h3 className={styles.boxHeading}>Meta Description</h3>
+        <p>{data.metaDescription}</p>
+        <h3 className={styles.boxHeading}>Meta Keywords</h3>
+        <p>{data.metaKeywords}</p>
+        <h3 className={styles.boxHeading}>Meta Author</h3>
+        <p>{data.metaAuthor}</p>
+      </div>
+      {data.tldr && <div className={styles.header}>
         <div >
           <h3 className={styles.boxHeading}>{data.tldr?.heading}</h3>
           <p>{data.tldr?.text}</p>
         </div>
-      </div>
+      </div>}
       {data.sections?.map((section, sIndex) => (
         <div key={section.id} className={styles.section}>
           <h2>{section.title || `Section ${sIndex + 1}`}</h2>
