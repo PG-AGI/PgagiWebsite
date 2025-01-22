@@ -67,7 +67,6 @@ const CaseStudy = () => {
         const response = await axios.get(`/api/case-studies/${id}`);
         const data: CaseStudy = response.data;
         setCaseStudy(data);
-        console.log('case study data is here', data);
       } catch (err: any) {
         setError(
           err.response?.data?.message ||

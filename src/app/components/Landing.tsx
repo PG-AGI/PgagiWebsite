@@ -18,7 +18,7 @@ export default function Landing() {
     };
     const handleExpand = () => {
         
-            router.push("/blogs#case-studies");
+            router.push("/whatwethink#case-studies");
     }
     useEffect(() => {
         const hash = window.location.hash;

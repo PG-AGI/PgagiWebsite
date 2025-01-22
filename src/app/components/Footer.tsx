@@ -45,9 +45,9 @@ export default function Footer() {
             {/* {links.map((link, i) => (
               <span key={i}>{link}</span>
             ))} */}
-            <Link href="/blogs#blogs"><span>Blogs</span></Link>            
-            <Link href="/blogs#ainews"><span>News</span></Link>
-            <Link href="/blogs#case-studies"><span>Case Study</span></Link>
+            <Link href="/whatwethink#blogs"><span>Blogs</span></Link>            
+            <Link href="/whatwethink#ainews"><span>News</span></Link>
+            <Link href="/whatwethink#case-studies"><span>Case Study</span></Link>
           </div>
           <div className={styles.company}>
             <h6>Company</h6>
