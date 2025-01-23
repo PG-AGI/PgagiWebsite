@@ -131,6 +131,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         .filter((section) => section.content.length > 0),
     };
     console.log('form data is here', sanitizedData);
+    console.log('form data is here', sanitizedData);
     const endpointMap: Record<ContentType, string> = {
       caseStudy: '/api/case-studies',
       blog: '/api/blogs',
@@ -326,6 +327,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         </div>
         {watch('contentType') === 'blog' ? (
           <>
+            <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <div className={styles.section}>
               <div className={styles.formGroup}>

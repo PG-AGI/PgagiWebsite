@@ -51,6 +51,10 @@ export async function POST(request: NextRequest) {
       !data.readTime ||
       !data.authorName ||
       !data.authorRole ||
+      !data.metaDescription ||
+      !data.metaKeywords ||
+      !data.metaAuthor ||
+      !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
       return NextResponse.json(
