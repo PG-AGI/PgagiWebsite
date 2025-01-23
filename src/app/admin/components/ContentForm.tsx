@@ -273,65 +273,57 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <span className={styles.error}>{errors.authorRole.message}</span>
           )}
         </div>
-        <>
-          {!isEditing && <>
-            <label>Metadata for SEO</label>
-            <div className={styles.section}>
-              <div className={styles.formGroup}>
-                <label htmlFor="metaTitle">Meta Title</label>
-                <input
-                  type="text"
-                  id="metaTitle"
-                  {...register('metaTitle', { required: 'Meta Title is required' })}
-                  placeholder="Enter meta title"
-                  required
-                />
-                {errors.metaTitle && (
-                  <span className={styles.error}>{errors.metaTitle.message}</span>
-                )}
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="metaDescription">Meta Description</label>
-                <input
-                  type="text"
-                  id="metaDescription"
-                  {...register('metaDescription', { required: 'Metadescritpion is required' })}
-                  placeholder="Enter Meta Description..."
-                  required
-                />
-                {errors.metaDescription && (
-                  <span className={styles.error}>{errors.metaDescription.message}</span>
-                )}
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="metaKeywords">Meta Keywords</label>
-                <input
-                  type="text"
-                  id="metaKeywords"
-                  {...register('metaKeywords', { required: 'Metakeywords is required' })}
-                  placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
-                  required
-                />
-                {errors.metaKeywords && (
-                  <span className={styles.error}>{errors.metaKeywords.message}</span>
-                )}
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="metaAuthor">Meta Author</label>
-                <input
-                  type="text"
-                  id="metaAuthor"
-                  {...register('metaAuthor', { required: 'Meta Author is required' })}
-                  placeholder="Enter meta author"
-                  required
-                />
-                {errors.metaAuthor && (
-                  <span className={styles.error}>{errors.metaAuthor.message}</span>
-                )}
-              </div>
-            </div>
-          </>}
-        </>
+        <label>Metadata for SEO</label>
+        <div className={styles.section}>
+          <div className={styles.formGroup}>
+            <label htmlFor="metaTitle">Meta Title</label>
+            <input
+              type="text"
+              id="metaTitle"
+              {...register('metaTitle')}
+              placeholder="Enter meta title"
+            />
+            {errors.metaTitle && (
+              <span className={styles.error}>{errors.metaTitle.message}</span>
+            )}
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="metaDescription">Meta Description</label>
+            <input
+              type="text"
+              id="metaDescription"
+              {...register('metaDescription')}
+              placeholder="Enter Meta Description..."
+            />
+            {errors.metaDescription && (
+              <span className={styles.error}>{errors.metaDescription.message}</span>
+            )}
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="metaKeywords">Meta Keywords</label>
+            <input
+              type="text"
+              id="metaKeywords"
+              {...register('metaKeywords')}
+              placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
+            />
+            {errors.metaKeywords && (
+              <span className={styles.error}>{errors.metaKeywords.message}</span>
+            )}
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="metaAuthor">Meta Author</label>
+            <input
+              type="text"
+              id="metaAuthor"
+              {...register('metaAuthor')}
+              placeholder="Enter meta author"
+            />
+            {errors.metaAuthor && (
+              <span className={styles.error}>{errors.metaAuthor.message}</span>
+            )}
+          </div>
+        </div>
         {watch('contentType') === 'blog' ? (
           <>
             <label>TL; DR (60-second blog summary)</label>

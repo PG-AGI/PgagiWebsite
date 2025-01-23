@@ -15,6 +15,7 @@ export interface BlogContentBlock {
   }
   
   export interface Blog {
+    contentType: string;
     coverImage: string;
     title: string;
     publishDate: string;
