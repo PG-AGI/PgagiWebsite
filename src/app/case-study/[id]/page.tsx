@@ -19,7 +19,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     return {
       title: appTitle,
       description: metaDescription,
-      // Add additional meta tags
       robots: {
         index: true,
         follow: true,
@@ -28,7 +27,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         title: appTitle,
       },
       applicationName: appTitle,
-      keywords: metaKeywords.split(/[\s,]+/), // Convert the string to an array
+      keywords: metaKeywords.split(/[\s,]+/), 
       author: metaAuthor,
     };
   }catch(error){
