@@ -12,13 +12,13 @@ export default function Trending() {
   const handleExpand = (title: string) => {
     switch (title) {
       case "Case Studies":
-        router.push("/blogs#case-studies");
+        router.push("/whatwethink#case-studies");
         break;
       case "Blogs":
-        router.push("/blogs#blogs");
+        router.push("/whatwethink#blogs");
         break;
       case "AI News":
-        router.push("/blogs#ainews");
+        router.push("/whatwethink#ainews");
         break;
       default:
         console.error("URL is not defined");

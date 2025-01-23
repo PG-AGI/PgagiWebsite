@@ -1,4 +1,5 @@
 // app/api/case-studies/route.ts
+// https://pgagi.in/api/case-studies/[id]
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
@@ -29,6 +30,10 @@ interface CaseStudy {
     name: string;
     role: string;
   };
+  metaDescription: string,
+  metaKeywords: string,
+  metaAuthor: string,
+  metaTitle: string,
   sections: Section[];
   createdAt: Date;
   updatedAt: Date;
@@ -44,6 +49,10 @@ export async function POST(request: NextRequest) {
       !data.readTime ||
       !data.authorName ||
       !data.authorRole ||
+      !data.metaDescription ||
+      !data.metaKeywords ||
+      !data.metaAuthor ||
+      !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
       return NextResponse.json(
@@ -155,6 +164,10 @@ export async function POST(request: NextRequest) {
         name: data.authorName,
         role: data.authorRole,
       },
+      metaDescription: data.metaDescription,
+      metaKeywords: data.metaKeywords,
+      metaAuthor: data.metaAuthor,
+      metaTitle: data.metaTitle,
       sections: data.sections.map((section: any) => ({
         title: section.title,
         content: section.content.map((block: any) => ({

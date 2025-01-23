@@ -64,6 +64,10 @@ const AdminPanel: React.FC = () => {
         readTime: data.readTime || '',
         authorName: data.author.name || '',
         authorRole: data.author.role || '',
+        metaDescription: data.metaDescription || '',
+        metaKeywords: data.metaKeywords || '',
+        metaAuthor: data.metaAuthor || '',
+        metaTitle: data.metaTitle || '',
         tldr: data.tldr,
         sections: data.sections.map((section) => ({
           id: section.title + Math.random().toString(), // Generate new id

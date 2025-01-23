@@ -20,7 +20,7 @@ export default function Navigation() {
   const [mobileMenuSection, setMobileMenuSection] = useState<
     null | "main" | "whatWeDo" | "solutions" | "industries" | "caseStudy"
   >(null);
-  const BLOGS = "/blogs";
+  const BLOGS = "/whatwethink";
   const ABOUT = "/aboutUs";
 
 
@@ -254,7 +254,7 @@ export default function Navigation() {
               </div>
 
               {/* Desktop links for What We Think and Who We Are */}
-              <Link href="/blogs" className={styles.link}>
+              <Link href="/whatwethink" className={styles.link}>
                 What we think
               </Link>
               <Link href="/aboutUs" className={styles.link}>

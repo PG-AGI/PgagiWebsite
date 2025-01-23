@@ -560,3 +560,37 @@ $spacing-unit: 1rem;
   justify-content: space-between;
   align-items: center;
 }
+.scrollToTopButton {
+  position: fixed;
+  bottom: $spacing-unit * 2;
+  right: $spacing-unit * 2;
+  width: $spacing-unit * 3;
+  height: $spacing-unit * 3;
+  border: none;
+  border-radius: 50%;
+  background: $purple-primary;
+  color: $text-primary;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  animation: bounce 2s infinite;
+ 
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+ 
+  &:hover {
+    background: $purple-light;
+    transform: scale(1.1);
+  }
+ 
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+ }
