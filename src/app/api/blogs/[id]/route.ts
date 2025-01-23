@@ -69,10 +69,6 @@ export async function PUT(
       !data.readTime ||
       !data.authorName ||
       !data.authorRole ||
-      !data.metaDescription ||
-      !data.metaKeywords ||
-      !data.metaAuthor ||
-      !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
       return NextResponse.json(
@@ -211,10 +207,6 @@ export async function PUT(
         name: data.authorName,
         role: data.authorRole,
       },
-      metaDescription: data.metaDescription,
-      metaKeywords: data.metaKeywords,
-      metaAuthor: data.metaAuthor,
-      metaTitle: data.metaTitle,
       tldr: {
         heading: data.tldr.heading,
         text: data.tldr.text,

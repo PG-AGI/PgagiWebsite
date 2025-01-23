@@ -32,7 +32,13 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       },
       applicationName: appTitle,
       keywords: metaKeywords.split(/[\s,]+/), // Convert the string to an array
-      author: metaAuthor,
+      // author: metaAuthor,
+      meta: [
+        {
+          name: "author",
+          content: metaAuthor,
+        },
+      ],
     };
   }catch(error){
     return {}

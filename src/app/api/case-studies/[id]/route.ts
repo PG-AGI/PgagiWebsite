@@ -28,10 +28,6 @@ interface CaseStudy {
     name: string;
     role: string;
   };
-  metaDescription: string,
-  metaKeywords: string,
-  metaAuthor: string,
-  metaTitle: string,
   sections: Section[];
   createdAt: Date;
   updatedAt: Date;
@@ -205,10 +201,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         name: data.authorName,
         role: data.authorRole,
       },
-      metaDescription: data.metaDescription,
-      metaKeywords: data.metaKeywords,
-      metaAuthor: data.metaAuthor,
-      metaTitle: data.metaTitle,
       sections: data.sections.map((section: any) => ({
         title: section.title,
         content: section.content.map((block: any) => ({

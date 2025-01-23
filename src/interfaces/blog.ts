@@ -19,14 +19,14 @@ export interface BlogContentBlock {
     title: string;
     publishDate: string;
     readTime: string;
+    metaDescription: string;
+    metaKeywords: string;
+    metaAuthor: string;
+    metaTitle: string;
     author: {
       name: string;
       role: string;
     };
-    metaDescription: string,
-    metaKeywords: string,
-    metaAuthor: string,
-    metaTitle: string,
     tldr: {
       heading: '',
       text: ''

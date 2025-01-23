@@ -61,6 +61,7 @@ const Ainews = () => {
       try {
         const response = await axios.get(`/api/ainews/${id}`);
         const data: AinewsType = response.data;
+        console.log('ai news data is here', data);
         setAiNews(data);
       } catch (err: any) {
         setError(
