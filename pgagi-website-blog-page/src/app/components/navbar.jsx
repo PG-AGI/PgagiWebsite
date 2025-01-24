@@ -290,7 +290,13 @@ export default function Navbar() {
                                         </li>
                                     </ul>
                                 </div>
-                                <img src="https://adamfard.com/static/ux-design-agency-4-f773052c59837895521f19104191f67b.jpg" alt="Design Stream Subscription" className="w-full h-auto mb-4" style={{ maxHeight: 'calc(100% - 100px)' }} />
+                                <Image
+                                src="https://adamfard.com/static/ux-design-agency-4-f773052c59837895521f19104191f67b.jpg" 
+                                alt="Design Stream Subscription" 
+                                className="w-full h-auto mb-4" 
+                                style={{ maxHeight: 'calc(100% - 100px)' }} 
+                                layout='fill'
+                                objectFit='cover'/>
                             </div>
                             <div className="absolute h-full w-px bg-gray-200 top-0 right-0"></div> {/* Vertical Line */}
                         </div>
@@ -314,7 +320,13 @@ export default function Navbar() {
 
 </p>
                                 </div>
-                                <img src="https://adamfard.com/static/ux-review-report-b4e2fc39a551aedd6130fd9020550e6b.png" alt="Solution 4 Image" className="w-full h-auto mb-4" style={{ maxHeight: 'calc(100% - 100px)' }} />
+                                <Image 
+                                src="https://adamfard.com/static/ux-review-report-b4e2fc39a551aedd6130fd9020550e6b.png" 
+                                alt="Solution 4 Image" 
+                                className="w-full h-auto mb-4" 
+                                style={{ maxHeight: 'calc(100% - 100px)' }} 
+                                layout='fill'
+                                objectFit='cover'/>
                             </div>
                             
                         </div>

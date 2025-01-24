@@ -30,6 +30,7 @@ interface ContentFormProps {
   editingContentId: string | null;
   onAfterSubmit: () => void;
   initialValues?: FormValues;
+  setActiveTabToView: () => void;
 }
 
 const ContentForm: React.FC<ContentFormProps> = ({
@@ -37,6 +38,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
   editingContentId,
   onAfterSubmit,
   initialValues,
+  setActiveTabToView
 }) => {
   const {
     register,
@@ -180,7 +182,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
     }
   };
   const handleReset = () => {
-    reset({
+    const defaultValues: FormValues = {
       contentType: 'caseStudy',
       coverImage: '',
       title: '',
@@ -200,8 +202,11 @@ const ContentForm: React.FC<ContentFormProps> = ({
           content: [{ id: uuidv4(), type: 'paragraph', content: '' }],
         },
       ],
-    }); // Reset to default values
+    };
+  
+    reset(defaultValues); // Always reset to default values
   };
+  
   return (
     <div className={styles.contentForm}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -501,13 +506,18 @@ const ContentForm: React.FC<ContentFormProps> = ({
           </button>
         </div>
         <div className={styles.formGroup}>
-          <button type="submit" className={styles.submitButton}>
+          <button type="submit" className={styles.submitButton} disabled={isLoading}>
             {isLoading ? 'Loading...' : isEditing ? 'Update Content' : 'Create Content'}
           </button>
           {isEditing && (
             <button
               type="button"
-              onClick={handleReset}
+              onClick={()=>{
+                reset();
+                onAfterSubmit();
+                setActiveTabToView();
+                
+              }}
               className={styles.cancelButton}
             >
               Cancel Edit

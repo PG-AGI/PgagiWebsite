@@ -2,6 +2,7 @@
 import React from 'react';
 import styles from '../management/Admin.module.scss';
 import { FormValues, ContentBlock } from '@/utils/type';
+import Image from 'next/image';
 
 interface ContentPreviewProps {
   data: FormValues;
@@ -92,11 +93,17 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({ data }) => {
               case 'image':
                 return (
                   <figure key={block.id} className={styles.imageBlock}>
-                    <img
+                    {/* <img
                       src={block.src || 'https://via.placeholder.com/600x400'}
                       alt={block.alt || 'Image'}
                       className={styles.image}
-                    />
+                    /> */}
+                    <Image
+                    src={block.src || 'https://via.placeholder.com/600x400'}
+                    alt={block.alt || 'Image'}
+                    width={100}
+                    height={50}
+                    className={styles.image} />
                     {block.caption && (
                       <figcaption className={styles.caption}>
                         {block.caption}

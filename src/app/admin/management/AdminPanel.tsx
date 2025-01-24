@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 import JobPostingsManagement from '../components/JobPostingsManagement';
 import { ContentSummary, ContentDetails, FormValues, ContentType } from '@/utils/type';
 import axios from 'axios';
+import Image from 'next/image';
 
 const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'create' | 'view' | 'jobs'>('create');
@@ -95,10 +96,9 @@ const AdminPanel: React.FC = () => {
 
   const handleDelete = async (content: ContentSummary) => {
     const confirmDelete = window.confirm(
-      `Are you sure you want to delete this ${
-        content.contentType === 'caseStudy'
-          ? 'Case Study'
-          : content.contentType === 'blog'
+      `Are you sure you want to delete this ${content.contentType === 'caseStudy'
+        ? 'Case Study'
+        : content.contentType === 'blog'
           ? 'Blog'
           : 'AINEWS'
       }?`
@@ -115,10 +115,9 @@ const AdminPanel: React.FC = () => {
       const res = await axios.delete(`${endpoint}/${content.id}`);
       if (res.status === 200 || res.status === 204) {
         alert(
-          `${
-            content.contentType === 'caseStudy'
-              ? 'Case Study'
-              : content.contentType === 'blog'
+          `${content.contentType === 'caseStudy'
+            ? 'Case Study'
+            : content.contentType === 'blog'
               ? 'Blog'
               : 'AINEWS'
           } deleted successfully!`
@@ -177,6 +176,7 @@ const AdminPanel: React.FC = () => {
             editingContentId={editingContentId}
             initialValues={initialValues}
             onAfterSubmit={handleAfterSubmit}
+            setActiveTabToView={()=> { setActiveTab('view')}}
           />
         )}
         {activeTab === 'view' && (
@@ -193,11 +193,17 @@ const AdminPanel: React.FC = () => {
         ) : contentDetails ? (
           <div className={styles.modalContentInner}>
             <h2>{contentDetails.title}</h2>
-            <img
+            {/* <img
               src={contentDetails.coverImage}
               alt={contentDetails.title}
               className={styles.coverImage}
-            />
+            /> */}
+            <Image
+              src={contentDetails.coverImage}
+              alt={contentDetails.title}
+              width={100}
+              height={50}
+              className={styles.coverImage} />
             <div className={styles.metadata}>
               <span>Publish Date: {contentDetails.publishDate}</span>
               <span>•</span>
@@ -243,11 +249,18 @@ const AdminPanel: React.FC = () => {
                     case 'image':
                       return (
                         <figure key={blockIndex} className={styles.imageBlock}>
-                          <img
+                          {/* <img
                             src={block.src || 'https://via.placeholder.com/600x400'}
                             alt={block.alt || 'Image'}
                             className={styles.image}
-                          />
+                          /> */}
+                          <Image
+                            src={block.src || 'https://via.placeholder.com/600x400'}
+                            alt={block.alt || 'Image'}
+                            className={styles.image}
+                            width={100}
+                            height={50}
+                            />
                           {block.caption && (
                             <figcaption className={styles.caption}>{block.caption}</figcaption>
                           )}
@@ -275,7 +288,7 @@ const AdminPanel: React.FC = () => {
                           <thead>
                             <tr>
                               {/* Render column headers */}
-                              {block.content && typeof block.content !== 'string' && 'headers' in block.content ?(
+                              {block.content && typeof block.content !== 'string' && 'headers' in block.content ? (
                                 block.content.headers.map((heading, colIndex) => (
                                   <th key={colIndex} className={styles.heading}>
                                     {heading}

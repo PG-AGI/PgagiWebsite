@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const LatestNewsSlider = ({ latestPosts }) => {
   return (
@@ -10,10 +11,12 @@ const LatestNewsSlider = ({ latestPosts }) => {
           className="relative w-full h-60 bg-gray-900  rounded-3xl transition-transform transform "
           >    
             
-              <img
+              <Image
                 src={post.thumbnail}
                 alt={post.title}
                 className="object-cover w-full h-60 rounded-3xl mb-2  opacity-30"
+                layout='fill'
+                objectFit='cover'
               />
               <div className="absolute bottom-0 left-0 right-0 text-white p-4">
                 <h3 className="text-lg font-semibold mb-2">{post.title}</h3>

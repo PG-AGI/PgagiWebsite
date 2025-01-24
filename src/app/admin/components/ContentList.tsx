@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../management/Admin.module.scss';
 import { ContentSummary, ContentType } from '@/utils/type';
+import Image from 'next/image';
 
 interface ContentListProps {
   onEdit: (content: ContentSummary) => void;
@@ -104,7 +105,13 @@ const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) =
             {filteredContents.map((cs) => (
               <tr key={cs.id}>
                 <td>
-                  <img src={cs.coverImage} alt={cs.title} className={styles.coverImage} />
+                  {/* <img src={cs.coverImage} alt={cs.title} className={styles.coverImage} /> */}
+                  <Image
+                    src={cs.coverImage}
+                    alt={cs.title}
+                    width={100}
+                    height={50}
+                    className={styles.coverImage} />
                 </td>
                 <td>{cs.title}</td>
                 <td>{cs.id}</td>
@@ -112,8 +119,8 @@ const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) =
                   {cs.contentType === 'caseStudy'
                     ? 'Case Study'
                     : cs.contentType === 'blog'
-                    ? 'Blog'
-                    : 'AINEWS'}
+                      ? 'Blog'
+                      : 'AINEWS'}
                 </td>
                 <td>
                   <button onClick={() => onView(cs)} className={styles.viewButton}>
