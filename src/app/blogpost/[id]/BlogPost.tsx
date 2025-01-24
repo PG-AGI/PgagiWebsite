@@ -66,6 +66,7 @@ const BlogPost = () => {
         const response = await axios.get(`/api/blogs/${id}`);
         const data: BlogPostType = response.data;
         setBlogPost(data);
+        console.log('blog data is here', data)
       } catch (err: any) {
         setError(
           err.response?.data?.message ||

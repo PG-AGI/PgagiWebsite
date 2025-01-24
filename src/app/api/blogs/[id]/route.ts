@@ -61,6 +61,7 @@ export async function PUT(
     const data = await request.json();
 
     if (
+      !data.contentType ||
       !data.coverImage ||
       !data.title ||
       !data.publishDate ||
@@ -197,6 +198,7 @@ export async function PUT(
       }
     }
     const updatedBlog: Partial<Blog> = {
+      contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,

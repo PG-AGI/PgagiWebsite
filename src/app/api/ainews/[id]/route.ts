@@ -52,6 +52,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const data = await request.json();
 
     if (
+      !data.contentType ||
       !data.coverImage ||
       !data.title ||
       !data.publishDate ||
@@ -164,6 +165,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const updatedAinews: Partial<AINews> = {
+      contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,
