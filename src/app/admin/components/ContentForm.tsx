@@ -315,6 +315,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               type="text"
               id="metaTitle"
               {...register('metaTitle')}
+              {...register('metaTitle')}
               placeholder="Enter meta title"
             />
             {errors.metaTitle && (
@@ -326,6 +327,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <input
               type="text"
               id="metaDescription"
+              {...register('metaDescription')}
               {...register('metaDescription')}
               placeholder="Enter Meta Description..."
             />
@@ -339,6 +341,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               type="text"
               id="metaKeywords"
               {...register('metaKeywords')}
+              {...register('metaKeywords')}
               placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
             />
             {errors.metaKeywords && (
@@ -351,6 +354,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               type="text"
               id="metaAuthor"
               {...register('metaAuthor')}
+              {...register('metaAuthor')}
               placeholder="Enter meta author"
             />
             {errors.metaAuthor && (
@@ -360,6 +364,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         </div>
         {watch('contentType') === 'blog' ? (
           <>
+            <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <div className={styles.section}>
