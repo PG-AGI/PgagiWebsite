@@ -131,6 +131,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         .filter((section) => section.content.length > 0),
     };
     console.log('form data is here', sanitizedData);
+    console.log('form data is here', sanitizedData);
     const endpointMap: Record<ContentType, string> = {
       caseStudy: '/api/case-studies',
       blog: '/api/blogs',
@@ -280,9 +281,8 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <input
               type="text"
               id="metaTitle"
-              {...register('metaTitle', { required: 'Meta Title is required' })}
+              {...register('metaTitle')}
               placeholder="Enter meta title"
-              required
             />
             {errors.metaTitle && (
               <span className={styles.error}>{errors.metaTitle.message}</span>
@@ -293,9 +293,8 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <input
               type="text"
               id="metaDescription"
-              {...register('metaDescription', { required: 'Metadescritpion is required' })}
+              {...register('metaDescription')}
               placeholder="Enter Meta Description..."
-              required
             />
             {errors.metaDescription && (
               <span className={styles.error}>{errors.metaDescription.message}</span>
@@ -306,9 +305,8 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <input
               type="text"
               id="metaKeywords"
-              {...register('metaKeywords', { required: 'Metakeywords is required' })}
+              {...register('metaKeywords')}
               placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
-              required
             />
             {errors.metaKeywords && (
               <span className={styles.error}>{errors.metaKeywords.message}</span>
@@ -319,9 +317,8 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <input
               type="text"
               id="metaAuthor"
-              {...register('metaAuthor', { required: 'Meta Author is required' })}
+              {...register('metaAuthor')}
               placeholder="Enter meta author"
-              required
             />
             {errors.metaAuthor && (
               <span className={styles.error}>{errors.metaAuthor.message}</span>
@@ -330,6 +327,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         </div>
         {watch('contentType') === 'blog' ? (
           <>
+            <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <div className={styles.section}>
               <div className={styles.formGroup}>

@@ -67,7 +67,7 @@
     cursor: pointer;
     transition: opacity 0.1s ease-in-out, visibility 0s 0.3s;
     will-change: transform, opacity;
-    z-index: 2000;
+    z-index: 1900;
 
     &.navHidden {
       opacity: 0;

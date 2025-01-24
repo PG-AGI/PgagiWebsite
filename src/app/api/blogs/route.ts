@@ -17,16 +17,13 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     if (
+      !data.contentType ||
       !data.coverImage ||
       !data.title ||
       !data.publishDate ||
       !data.readTime ||
       !data.authorName ||
       !data.authorRole ||
-      !data.metaDescription ||
-      !data.metaKeywords ||
-      !data.metaAuthor ||
-      !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
       return NextResponse.json(
@@ -137,6 +134,7 @@ export async function POST(request: NextRequest) {
     }
 
     const blog: Blog = {
+      contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,

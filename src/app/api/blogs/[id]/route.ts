@@ -1,5 +1,3 @@
-
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb';
@@ -63,16 +61,13 @@ export async function PUT(
     const data = await request.json();
 
     if (
+      !data.contentType ||
       !data.coverImage ||
       !data.title ||
       !data.publishDate ||
       !data.readTime ||
       !data.authorName ||
       !data.authorRole ||
-      !data.metaDescription ||
-      !data.metaKeywords ||
-      !data.metaAuthor ||
-      !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
       return NextResponse.json(
@@ -203,6 +198,7 @@ export async function PUT(
       }
     }
     const updatedBlog: Partial<Blog> = {
+      contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,
@@ -211,10 +207,6 @@ export async function PUT(
         name: data.authorName,
         role: data.authorRole,
       },
-      metaDescription: data.metaDescription,
-      metaKeywords: data.metaKeywords,
-      metaAuthor: data.metaAuthor,
-      metaTitle: data.metaTitle,
       tldr: {
         heading: data.tldr.heading,
         text: data.tldr.text,

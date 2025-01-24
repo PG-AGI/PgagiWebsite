@@ -22,6 +22,7 @@ interface Section {
 }
 
 interface CaseStudy {
+  contentType: string;
   coverImage: string;
   title: string;
   publishDate: string;
@@ -43,6 +44,7 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     if (
+      !data.contentType ||
       !data.coverImage ||
       !data.title ||
       !data.publishDate ||
@@ -156,6 +158,7 @@ export async function POST(request: NextRequest) {
 
     // Prepare the case study object
     const caseStudy: CaseStudy = {
+      contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,

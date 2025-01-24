@@ -32,15 +32,16 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       },
       applicationName: appTitle,
       keywords: metaKeywords.split(/[\s,]+/), // Convert the string to an array
-      author: metaAuthor,
+      // author: metaAuthor,
+      meta: [
+        {
+          name: "author",
+          content: metaAuthor,
+        },
+      ],
     };
   }catch(error){
     return {}
   }
 
 }
-
-  // const metaDescription = "AI-powered business solutions for your company";
-  // const metaKeywords = "AI, business, solutions, technology, innovation";
-  // const metaAuthor = "AI-powered business solutions for your company";
-  // const appTitle = "AI-powered business solutions for your company";

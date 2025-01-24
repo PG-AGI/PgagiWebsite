@@ -67,6 +67,7 @@ const CaseStudy = () => {
         const response = await axios.get(`/api/case-studies/${id}`);
         const data: CaseStudy = response.data;
         setCaseStudy(data);
+        console.log('case study data is here', data);
       } catch (err: any) {
         setError(
           err.response?.data?.message ||
@@ -79,46 +80,82 @@ const CaseStudy = () => {
 
     fetchCaseStudy();
   }, [id]);
-
   useEffect(() => {
     if (!caseStudy) return;
-
+  
     sectionRefs.current = caseStudy.sections.map((section) =>
       document.getElementById(section.title.toLowerCase().replace(/\s+/g, '-'))
     );
-
+  
     const handleScroll = () => {
-      const pageTop = window.pageYOffset;
+      // Use scrollY instead of pageYOffset
+      const pageTop = window.scrollY; 
       const sections = sectionRefs.current;
-
+  
       for (let i = 0; i < sections.length; i++) {
         const section = sections[i];
         if (section) {
           const sectionTop = section.offsetTop - 100;
           const sectionBottom = sectionTop + section.offsetHeight;
-
+  
           if (pageTop >= sectionTop && pageTop < sectionBottom) {
-            setActiveSection(
-              caseStudy.sections[i].title.toLowerCase().replace(/\s+/g, '-')
-            );
+            const activeSectionId = caseStudy.sections[i].title.toLowerCase().replace(/\s+/g, '-');
+            setActiveSection(activeSectionId);
+  
+            // Scroll the corresponding `li` into view
+            const activeListItem = document.querySelector(`li[data-section="${activeSectionId}"]`) as HTMLElement;
+            if (activeListItem) {
+              const sidebar = activeListItem.closest('.sidebar') as HTMLElement; // Ensure sidebar is scrollable
+              if (sidebar && sidebar.scrollHeight > sidebar.clientHeight) {
+                const listItemTop = activeListItem.offsetTop;
+                const listItemBottom = listItemTop + activeListItem.offsetHeight;
+  
+                // Scroll `li` into view if it is outside the visible range
+                if (
+                  listItemTop < sidebar.scrollTop || // Above visible area
+                  listItemBottom > sidebar.scrollTop + sidebar.clientHeight // Below visible area
+                ) {
+                  sidebar.scrollTo({
+                    top: listItemTop - sidebar.clientHeight / 2, // Scroll to bring `li` to the center
+                    behavior: 'smooth',
+                  });
+                }
+              }
+            }
             break;
           }
         }
       }
     };
-
+  
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [caseStudy]);
-
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       setActiveSection(sectionId);
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  
+      // Ensure the corresponding `li` is also brought into view
+      const activeListItem = document.querySelector(`li[data-section="${sectionId}"]`) as HTMLElement;
+      if (activeListItem) {
+        const sidebar = activeListItem.closest('.sidebar') as HTMLElement;
+        if (sidebar) {
+          // Directly use `scrollIntoView` for the `li` item
+          activeListItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center', // Centers the `li` in the sidebar
+          });
+        }
+      }
     }
   };
-
+  
+  
+  
+  
   // Scroll-to-top
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

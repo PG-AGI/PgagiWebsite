@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
     console.log('api call data is here', data)
     if (
+      !data.contentType ||
       !data.coverImage ||
       !data.title ||
       !data.publishDate ||
@@ -146,6 +147,7 @@ export async function POST(request: NextRequest) {
     }
 
     const ainews: AINews = {
+      contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
       publishDate: data.publishDate,

@@ -15,5 +15,5 @@ const axiosInstance = axios.create({
 
 export async function getMetaTags(details: contentType) {
     const response = await axiosInstance.get(`/${details.contentType}/${details.pageId}`);
-    return response.data; // Returns { title, description, imageUrl, etc. }
+    return response.data; 
 }
