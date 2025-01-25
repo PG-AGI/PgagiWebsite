@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, useFieldArray, Controller, FieldErrors } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +12,7 @@ import ContentBlockItem from './ContentBlockItem';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
+import { generateSlug } from '@/services/generateSlugService';
 
 const defaultSection: Section = {
   id: uuidv4(),
@@ -30,6 +31,7 @@ interface ContentFormProps {
   editingContentId: string | null;
   onAfterSubmit: () => void;
   initialValues?: FormValues;
+  setActiveTabToView: () => void;
 }
 
 const ContentForm: React.FC<ContentFormProps> = ({
@@ -37,6 +39,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
   editingContentId,
   onAfterSubmit,
   initialValues,
+  setActiveTabToView
 }) => {
   const {
     register,
@@ -47,6 +50,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: initialValues || {
+      slug: '',
       contentType: 'caseStudy',
       coverImage: '',
       title: '',
@@ -76,11 +80,14 @@ const ContentForm: React.FC<ContentFormProps> = ({
 
   const [showPreview, setShowPreview] = React.useState(false);
   const watchAllFields = watch();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = async (data: FormValues) => {
     // No need to override table blocks here because each table block is managed by its own Controller.
+    setIsLoading(true);
     const sanitizedData: FormValues = {
       ...data,
+      slug: generateSlug(data.title),
       sections: data.sections
         .filter((section) => section.title.trim() !== '' || section.content.length > 0)
         .map((section) => ({
@@ -130,8 +137,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
         }))
         .filter((section) => section.content.length > 0),
     };
-    console.log('form data is here', sanitizedData);
-    console.log('form data is here', sanitizedData);
     const endpointMap: Record<ContentType, string> = {
       caseStudy: '/api/case-studies',
       blog: '/api/blogs',
@@ -154,7 +159,9 @@ const ContentForm: React.FC<ContentFormProps> = ({
         const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
         if (response.status === 200) {
           alert(updateMessageMap[data.contentType]);
-          reset();
+          // reset();
+          handleReset();
+          setIsLoading(false);
           onAfterSubmit();
         } else {
           alert(`Error: ${response.data.message}`);
@@ -163,17 +170,47 @@ const ContentForm: React.FC<ContentFormProps> = ({
         const response = await axios.post(endpoint, sanitizedData);
         if (response.status === 201 || response.status === 200) {
           alert(createMessageMap[data.contentType]);
-          reset();
+          // reset();
+          handleReset();
+          setIsLoading(false);
           onAfterSubmit();
         } else {
           alert(`Error: ${response.data.message}`);
         }
       }
     } catch (error: any) {
+      setIsLoading(false);
       console.error('Error submitting form:', error);
       alert(error.response?.data?.message || 'An unexpected error occurred.');
     }
   };
+  const handleReset = () => {
+    const defaultValues: FormValues = {
+      slug: '',
+      contentType: 'caseStudy',
+      coverImage: '',
+      title: '',
+      publishDate: '',
+      readTime: '',
+      authorName: '',
+      authorRole: '',
+      metaDescription: '',
+      metaKeywords: '',
+      metaAuthor: '',
+      metaTitle: '',
+      tldr: { heading: '', text: '' },
+      sections: [
+        {
+          id: uuidv4(),
+          title: '',
+          content: [{ id: uuidv4(), type: 'paragraph', content: '' }],
+        },
+      ],
+    };
+  
+    reset(defaultValues); // Always reset to default values
+  };
+  
   return (
     <div className={styles.contentForm}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -282,6 +319,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               type="text"
               id="metaTitle"
               {...register('metaTitle')}
+              {...register('metaTitle')}
               placeholder="Enter meta title"
             />
             {errors.metaTitle && (
@@ -293,6 +331,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <input
               type="text"
               id="metaDescription"
+              {...register('metaDescription')}
               {...register('metaDescription')}
               placeholder="Enter Meta Description..."
             />
@@ -306,6 +345,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               type="text"
               id="metaKeywords"
               {...register('metaKeywords')}
+              {...register('metaKeywords')}
               placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
             />
             {errors.metaKeywords && (
@@ -318,6 +358,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               type="text"
               id="metaAuthor"
               {...register('metaAuthor')}
+              {...register('metaAuthor')}
               placeholder="Enter meta author"
             />
             {errors.metaAuthor && (
@@ -327,6 +368,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         </div>
         {watch('contentType') === 'blog' ? (
           <>
+            <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <div className={styles.section}>
@@ -473,14 +515,17 @@ const ContentForm: React.FC<ContentFormProps> = ({
           </button>
         </div>
         <div className={styles.formGroup}>
-          <button type="submit" className={styles.submitButton}>
-            {isEditing ? 'Update Content' : 'Create Content'}
+          <button type="submit" className={styles.submitButton} disabled={isLoading}>
+            {isLoading ? 'Loading...' : isEditing ? 'Update Content' : 'Create Content'}
           </button>
           {isEditing && (
             <button
               type="button"
-              onClick={() => {
+              onClick={()=>{
                 reset();
+                onAfterSubmit();
+                setActiveTabToView();
+                
               }}
               className={styles.cancelButton}
             >

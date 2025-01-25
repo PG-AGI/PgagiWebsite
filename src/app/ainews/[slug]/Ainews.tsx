@@ -13,7 +13,7 @@ import Footer from '@/app/components/Footer';
 import axios from 'axios';
 
 type AinewsType = {
-  id: string;
+  slug: string;
   coverImage: string;
   title: string;
   publishDate: string;
@@ -43,7 +43,7 @@ type ContentBlock =
 const Ainews = () => {
   const router = useRouter();
   const params = useParams();
-  const id = params.id;
+  const slug = params.slug;
   const [aiNews, setAiNews] = useState<AinewsType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -51,7 +51,7 @@ const Ainews = () => {
   const [activeSection, setActiveSection] = useState<string>('overview');
 
   useEffect(() => {
-    if (!id) {
+    if (!slug) {
       setError('No blog post ID provided.');
       return;
     }
@@ -59,7 +59,7 @@ const Ainews = () => {
       setLoading(true);
       setError('');
       try {
-        const response = await axios.get(`/api/ainews/${id}`);
+        const response = await axios.get(`/api/ainews/${slug}`);
         const data: AinewsType = response.data;
         setAiNews(data);
         console.log('ainews post data is here', data);
@@ -73,7 +73,7 @@ const Ainews = () => {
       }
     };
     fetchAinews();
-  }, [id]);
+  }, [slug]);
 
   useEffect(() => {
     if (!aiNews) return;
@@ -128,7 +128,7 @@ const Ainews = () => {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .trim();
-    return `${currentUrl}/ainews/${aiNews.id}/${formattedAuthorName}/${formattedTitle}`;
+    return `${currentUrl}/ainews/${aiNews.slug}/${formattedAuthorName}/${formattedTitle}`;
   };
 
   const ainewsUrl = generateAinewsUrl();

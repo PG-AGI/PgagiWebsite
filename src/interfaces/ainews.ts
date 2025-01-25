@@ -14,6 +14,7 @@ export interface AINewsContentBlock {
   }
   
   export interface AINews {
+    slug: string;
     contentType: string;
     coverImage: string;
     title: string;

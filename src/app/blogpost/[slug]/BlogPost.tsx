@@ -13,7 +13,7 @@ import Footer from '@/app/components/Footer';
 import axios from 'axios';
 
 type BlogPostType = {
-  id: string;
+  slug: string;
   coverImage: string;
   title: string;
   publishDate: string;
@@ -47,7 +47,7 @@ type ContentBlock =
 const BlogPost = () => {
   const router = useRouter();
   const params = useParams();
-  const id = params.id;
+  const slug = params.slug;
   const [blogPost, setBlogPost] = useState<BlogPostType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -55,7 +55,7 @@ const BlogPost = () => {
   const [activeSection, setActiveSection] = useState<string>('overview');
 
   useEffect(() => {
-    if (!id) {
+    if (!slug) {
       setError('No blog post ID provided.');
       return;
     }
@@ -63,7 +63,7 @@ const BlogPost = () => {
       setLoading(true);
       setError('');
       try {
-        const response = await axios.get(`/api/blogs/${id}`);
+        const response = await axios.get(`/api/blogs/${slug}`);
         const data: BlogPostType = response.data;
         setBlogPost(data);
         console.log('blog data is here', data)
@@ -77,7 +77,7 @@ const BlogPost = () => {
       }
     };
     fetchBlogPost();
-  }, [id]);
+  }, [slug]);
 
   useEffect(() => {
     if (!blogPost) return;
@@ -132,7 +132,7 @@ const BlogPost = () => {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .trim();
-    return `${currentUrl}/blogs/${blogPost.id}/${formattedAuthorName}/${formattedTitle}`;
+    return `${currentUrl}/blogs/${blogPost.slug}/${formattedAuthorName}/${formattedTitle}`;
   };
 
   const blogPostUrl = generateBlogPostUrl();

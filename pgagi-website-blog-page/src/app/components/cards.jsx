@@ -52,57 +52,63 @@ const ServicesData = [
 ];
 
 const Services = () => {
-    return (
-      <>
-        <span id="services"></span>
-        <div className="py-10 relative ">
-          <div className="container mx-auto w-3/5">
+  return (
+    <>
+      <span id="services"></span>
+      <div className="py-10 relative ">
+        <div className="container mx-auto w-3/5">
           <div className="mb-auto text-center max-w-[400px] mx-auto    ">
-          <h1 className="text-2xl lg:text-4xl mb-5 font-bold text-black dark:text-black whitespace-nowrap md:text-center flex justify-center items-center">
-  Here&apos;s how we make <br /> products grow
-</h1>
+            <h1 className="text-2xl lg:text-4xl mb-5 font-bold text-black dark:text-black whitespace-nowrap md:text-center flex justify-center items-center">
+              Here&apos;s how we make <br /> products grow
+            </h1>
 
-  <p className="text-sm text-black mb-5 dark:text-gray-400 hidden md:block">
-    Our AI design process
-  </p>
-</div>
+            <p className="text-sm text-black mb-5 dark:text-gray-400 hidden md:block">
+              Our AI design process
+            </p>
+          </div>
 
 
 
-            <div className="relative mt-2">
-              <div className="absolute -inset-5 rounded-full bg-blue-500/20 blur-xl"></div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 place-items-center">
-                {ServicesData.map((service) => (
-                  <button
-                    key={service.id}
-                    data-aos="zoom-in"
-                    data-aos-duration="300"
-                    className="rounded-2xl mb-5 bg-white relative shadow-xl duration-high group h-[320px] transition-transform hover:-translate-y-2 flex flex-col justify-between"
-                  >
-                    <div className="mt-5 h-[240px] w-[240px] flex items-center justify-center overflow-hidden mx-auto">
-                      <img
+          <div className="relative mt-2">
+            <div className="absolute -inset-5 rounded-full bg-blue-500/20 blur-xl"></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 place-items-center">
+              {ServicesData.map((service) => (
+                <button
+                  key={service.id}
+                  data-aos="zoom-in"
+                  data-aos-duration="300"
+                  className="rounded-2xl mb-5 bg-white relative shadow-xl duration-high group h-[320px] transition-transform hover:-translate-y-2 flex flex-col justify-between"
+                >
+                  <div className="mt-5 h-[240px] w-[240px] flex items-center justify-center overflow-hidden mx-auto">
+                    {/* <img
                         src={service.img}
                         alt=""
                         className="max-h-full max-w-full transform group-hover:scale-105 duration-300"
-                      />
+                      /> */}
+                    <Image
+                      src={service.img}
+                      alt=""
+                      className="max-h-full max-w-full transform group-hover:scale-105 duration-300"
+                      layout="fill"
+                      objectFit="cover" />
+                  </div>
+                  <div className="p-5 text-center flex flex-col justify-between flex-grow">
+                    <div>
+                      <span className="mt-1 text-sm font-bold text-blue-500 mb-1">{service.span}</span>
+                      <h1 className="text-xl font-bold mb-1">{service.name}</h1>
                     </div>
-                    <div className="p-5 text-center flex flex-col justify-between flex-grow">
-                      <div>
-                        <span className="mt-1 text-sm font-bold text-blue-500 mb-1">{service.span}</span>
-                        <h1 className="text-xl font-bold mb-1">{service.name}</h1>
-                      </div>
-                      <p className="text-gray-500 text-sm mt-1">
-                        {service.description}
-                      </p>
-                    </div>
-                  </button>
-                ))}
-              </div>
+                    <p className="text-gray-500 text-sm mt-1">
+                      {service.description}
+                    </p>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 };
 
 export default Services;

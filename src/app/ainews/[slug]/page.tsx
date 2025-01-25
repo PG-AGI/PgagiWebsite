@@ -9,10 +9,10 @@ export default function BlogPostPage() {
 
 // Note: Please don't remove the file structure for BlogPost, CaseStudy or Ainews
 // because this generateMetadata() method requires a Server Side Component.
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const id = params.id as string;
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const slug = params.slug as string;
   try {
-    const metaData = await getMetaTags({ contentType: 'ainews', pageId: id });
+    const metaData = await getMetaTags({ contentType: 'ainews', pageId: slug });
 
     const metaDescription = metaData.metaDescription;
     const metaKeywords = metaData.metaKeywords;

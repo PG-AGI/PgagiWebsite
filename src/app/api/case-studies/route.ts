@@ -22,6 +22,7 @@ interface Section {
 }
 
 interface CaseStudy {
+  slug: string;
   contentType: string;
   coverImage: string;
   title: string;
@@ -51,10 +52,6 @@ export async function POST(request: NextRequest) {
       !data.readTime ||
       !data.authorName ||
       !data.authorRole ||
-      !data.metaDescription ||
-      !data.metaKeywords ||
-      !data.metaAuthor ||
-      !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
       return NextResponse.json(
@@ -158,6 +155,7 @@ export async function POST(request: NextRequest) {
 
     // Prepare the case study object
     const caseStudy: CaseStudy = {
+      slug: data.slug,
       contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
@@ -214,9 +212,9 @@ export async function GET(request: NextRequest) {
     const client = await clientPromise;
     const db = client.db();
     const collection = db.collection('caseStudies');
-    const caseStudies = await collection.find({}, { projection: { title: 1, coverImage: 1 } }).toArray();
+    const caseStudies = await collection.find({}, { projection: { slug: 1, title: 1, coverImage: 1 } }).toArray();
     const response = caseStudies.map((caseStudy) => ({
-      id: caseStudy._id.toString(),
+      slug: caseStudy.slug,
       title: caseStudy.title,
       coverImage: caseStudy.coverImage,
     }));

@@ -147,6 +147,7 @@ export async function POST(request: NextRequest) {
     }
 
     const ainews: AINews = {
+      slug: data.slug,
       contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
@@ -201,15 +202,15 @@ export async function GET(request: NextRequest) {
     const collection = db.collection('ainews');
 
     const ainewsList = await collection
-      .find({}, { projection: { title: 1, coverImage: 1 } })
+      .find({}, { projection: {slug: 1, title: 1, coverImage: 1 } })
       .toArray();
 
     const response = ainewsList.map((ainews) => ({
-      id: ainews._id.toString(),
+      slug: ainews.slug,
       title: ainews.title,
       coverImage: ainews.coverImage,
     }));
-
+    //console.log('response api', response);
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error('Error fetching AINEWS:', error);
