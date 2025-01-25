@@ -4,14 +4,11 @@ import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
 import { Blog } from '@/interfaces/blog';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+  const { slug } = params;
 
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
+  if (!slug) {
+    return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
   }
 
   try {
@@ -19,7 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const db = client.db();
     const collection = db.collection('blogs');
 
-    const blog = await collection.findOne({ _id: new ObjectId(id) });
+    const blog = await collection.findOne({slug: slug});
 
     if (!blog) {
       return NextResponse.json(
@@ -46,15 +43,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { slug: string } }
 ) {
-  const { id } = params;
+  const { slug } = params;
 
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
+  if (!slug) {
+    return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
   }
 
   try {
@@ -198,6 +192,7 @@ export async function PUT(
       }
     }
     const updatedBlog: Partial<Blog> = {
+      slug: data.slug,
       contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
@@ -230,7 +225,7 @@ export async function PUT(
     const collection = db.collection('blogs');
 
     const result = await collection.updateOne(
-      { _id: new ObjectId(id) },
+      { slug: slug },
       { $set: updatedBlog }
     );
 
@@ -255,14 +250,11 @@ export async function PUT(
 }
 
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
+  const { slug } = params;
 
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Blog ID' },
-      { status: 400 }
-    );
+  if (!slug) {
+    return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
   }
 
   try {
@@ -270,7 +262,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     const db = client.db();
     const collection = db.collection('blogs');
 
-    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+    const result = await collection.deleteOne({ slug: slug });
 
     if (result.deletedCount === 0) {
       return NextResponse.json(

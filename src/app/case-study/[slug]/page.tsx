@@ -6,10 +6,10 @@ export default function CaseStudyPage() {
     <CaseStudy />
   )
 }
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const id = params.id as string;
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const slug = params.slug as string;
   try {
-    const metaData = await getMetaTags({ contentType: 'case-studies', pageId: id });
+    const metaData = await getMetaTags({ contentType: 'case-studies', pageId: slug });
 
     const metaDescription = metaData.metaDescription;
     const metaKeywords = metaData.metaKeywords;

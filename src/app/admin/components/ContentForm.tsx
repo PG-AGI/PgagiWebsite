@@ -12,6 +12,7 @@ import ContentBlockItem from './ContentBlockItem';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
+import { generateSlug } from '@/services/generateSlugService';
 
 const defaultSection: Section = {
   id: uuidv4(),
@@ -49,6 +50,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: initialValues || {
+      slug: '',
       contentType: 'caseStudy',
       coverImage: '',
       title: '',
@@ -85,6 +87,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
     setIsLoading(true);
     const sanitizedData: FormValues = {
       ...data,
+      slug: generateSlug(data.title),
       sections: data.sections
         .filter((section) => section.title.trim() !== '' || section.content.length > 0)
         .map((section) => ({
@@ -183,6 +186,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
   };
   const handleReset = () => {
     const defaultValues: FormValues = {
+      slug: '',
       contentType: 'caseStudy',
       coverImage: '',
       title: '',

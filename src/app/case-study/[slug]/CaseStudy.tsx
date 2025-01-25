@@ -15,7 +15,7 @@ import Footer from '@/app/components/Footer';
 import styles from './CaseStudy.module.scss';
 
 type CaseStudy = {
-  id: string;
+  slug: string;
   coverImage: string;
   title: string;
   publishDate: string;
@@ -45,7 +45,7 @@ type ContentBlock =
 const CaseStudy = () => {
   const router = useRouter();
   const params = useParams();
-  const id = params.id;
+  const slug = params.slug;
 
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,8 +55,8 @@ const CaseStudy = () => {
   const [activeSection, setActiveSection] = useState<string>('overview');
 
   useEffect(() => {
-    if (!id) {
-      setError('No case study ID provided.');
+    if (!slug) {
+      setError('No case study slug provided.');
       return;
     }
 
@@ -64,7 +64,7 @@ const CaseStudy = () => {
       setLoading(true);
       setError('');
       try {
-        const response = await axios.get(`/api/case-studies/${id}`);
+        const response = await axios.get(`/api/case-studies/${slug}`);
         const data: CaseStudy = response.data;
         setCaseStudy(data);
         console.log('case study data is here', data);
@@ -79,7 +79,7 @@ const CaseStudy = () => {
     };
 
     fetchCaseStudy();
-  }, [id]);
+  }, [slug]);
   useEffect(() => {
     if (!caseStudy) return;
   
@@ -178,7 +178,7 @@ const CaseStudy = () => {
       .replace(/\s+/g, '-')
       .trim();
     // e.g., https://yoursite.com/case-studies/:id/title-here
-    return `${currentUrl}/case-studies/${caseStudy.id}/${formattedTitle}`;
+    return `${currentUrl}/case-studies/${caseStudy.slug}/${formattedTitle}`;
   };
 
   const caseStudyUrl = generateCaseStudyUrl();

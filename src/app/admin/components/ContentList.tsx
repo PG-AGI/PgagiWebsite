@@ -28,21 +28,20 @@ const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) =
         axios.get('/api/blogs'),
         axios.get('/api/ainews'),
       ]);
-
       const caseStudies: ContentSummary[] = csRes.data.map((cs: any) => ({
-        id: cs.id,
+        slug: cs.slug,
         title: cs.title,
         coverImage: cs.coverImage,
         contentType: 'caseStudy',
       }));
       const blogs: ContentSummary[] = blogsRes.data.map((blog: any) => ({
-        id: blog.id,
+        slug: blog.slug,
         title: blog.title,
         coverImage: blog.coverImage,
         contentType: 'blog',
       }));
       const ainews: ContentSummary[] = ainewsRes.data.map((news: any) => ({
-        id: news.id,
+        slug: news.slug,
         title: news.title,
         coverImage: news.coverImage,
         contentType: 'ainews',
@@ -103,7 +102,7 @@ const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) =
           </thead>
           <tbody>
             {filteredContents.map((cs) => (
-              <tr key={cs.id}>
+              <tr key={cs.slug}>
                 <td>
                   {/* <img src={cs.coverImage} alt={cs.title} className={styles.coverImage} /> */}
                   <Image
@@ -114,7 +113,7 @@ const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) =
                     className={styles.coverImage} />
                 </td>
                 <td>{cs.title}</td>
-                <td>{cs.id}</td>
+                <td>{cs.slug}</td>
                 <td>
                   {cs.contentType === 'caseStudy'
                     ? 'Case Study'

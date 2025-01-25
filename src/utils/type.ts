@@ -21,6 +21,7 @@ export type ContentBlock = {
     text: string
   }
   export type FormValues = {
+    slug: string;
     contentType: ContentType;
     coverImage: string;
     title: string;
@@ -37,13 +38,14 @@ export type ContentBlock = {
   };
 export type ContentSummary = {
   id: string;
+  slug: string;
   title: string;
   coverImage: string;
   contentType: ContentType;
 };
 
 export type ContentDetails = {
-  id: string;
+  slug: string;
   coverImage: string;
   title: string;
   publishDate: string;

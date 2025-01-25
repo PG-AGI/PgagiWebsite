@@ -7,10 +7,10 @@ export default function BlogPostPage() {
   )
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const id = params.id as string;
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const slug = params.slug as string;
   try {
-    const metaData = await getMetaTags({ contentType: 'blogs', pageId: id });
+    const metaData = await getMetaTags({ contentType: 'blogs', pageId: slug });
 
     const metaDescription = metaData.metaDescription;
     const metaKeywords = metaData.metaKeywords;

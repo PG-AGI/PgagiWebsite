@@ -21,7 +21,7 @@ const AdminPanel: React.FC = () => {
   const [detailsLoading, setDetailsLoading] = useState<boolean>(false);
   const [detailsError, setDetailsError] = useState<string>('');
 
-  const fetchContentDetails = async (id: string, contentType: ContentType) => {
+  const fetchContentDetails = async (slug: string, contentType: ContentType) => {
     setDetailsLoading(true);
     setDetailsError('');
     try {
@@ -31,7 +31,7 @@ const AdminPanel: React.FC = () => {
         ainews: '/api/ainews',
       };
       const endpoint = endpointMap[contentType];
-      const res = await axios.get(`${endpoint}/${id}`);
+      const res = await axios.get(`${endpoint}/${slug}`);
       setContentDetails(res.data);
     } catch (error: any) {
       console.error('Error fetching content details:', error);
@@ -44,7 +44,7 @@ const AdminPanel: React.FC = () => {
   const handleView = (content: ContentSummary) => {
     setSelectedContent(content);
     setModalOpen(true);
-    fetchContentDetails(content.id, content.contentType);
+    fetchContentDetails(content.slug, content.contentType);
   };
 
   const handleEdit = async (content: ContentSummary) => {
@@ -55,9 +55,11 @@ const AdminPanel: React.FC = () => {
     };
     const endpoint = endpointMap[content.contentType];
     try {
-      const res = await axios.get(`${endpoint}/${content.id}`);
+      console.log('onLicking edit button', content)
+      const res = await axios.get(`${endpoint}/${content.slug}`);
       const data: ContentDetails = res.data;
       const formData: FormValues = {
+        slug: data.slug || '',
         contentType: data.contentType,
         coverImage: data.coverImage || '',
         title: data.title || '',
@@ -86,7 +88,7 @@ const AdminPanel: React.FC = () => {
       };
       setInitialValues(formData);
       setIsEditing(true);
-      setEditingContentId(content.id);
+      setEditingContentId(content.slug);
       setActiveTab('create');
     } catch (error: any) {
       console.error('Error fetching content for edit:', error);
@@ -112,7 +114,7 @@ const AdminPanel: React.FC = () => {
     };
     const endpoint = endpointMap[content.contentType];
     try {
-      const res = await axios.delete(`${endpoint}/${content.id}`);
+      const res = await axios.delete(`${endpoint}/${content.slug}`);
       if (res.status === 200 || res.status === 204) {
         alert(
           `${content.contentType === 'caseStudy'

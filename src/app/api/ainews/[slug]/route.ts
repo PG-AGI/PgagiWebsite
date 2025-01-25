@@ -1,68 +1,35 @@
-// app/api/case-studies/[id]/route.ts
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import clientPromise from '@/utils/mongodb'; 
+import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
+import { AINews } from '@/interfaces/ainews';
 
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
   caption?: string;
-  title?: string; 
+  title?: string;
 }
 
-interface Section {
-  title: string;
-  content: ContentBlock[];
-}
-
-interface CaseStudy {
-  contentType: string;
-  coverImage: string;
-  title: string;
-  publishDate: string;
-  readTime: string;
-  author: {
-    name: string;
-    role: string;
-  };
-  metaDescription: string,
-  metaKeywords: string,
-  metaAuthor: string,
-  metaTitle: string,
-  sections: Section[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Case Study ID' },
-      { status: 400 }
-    );
+export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+  const { slug } = params;
+  if (!slug) {
+    return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
   }
-
+  
   try {
     const client = await clientPromise;
-    const db = client.db(); 
-    const collection = db.collection('caseStudies');
+    const db = client.db();
+    const collection = db.collection('ainews');
+    const ainews = await collection.findOne({ slug: slug });
 
-    const caseStudy = await collection.findOne({ _id: new ObjectId(id) });
-
-    if (!caseStudy) {
-      return NextResponse.json(
-        { message: 'Case Study Not Found' },
-        { status: 404 }
-      );
+    if (!ainews) {
+      return NextResponse.json({ message: 'AINEWS Not Found' }, { status: 404 });
     }
 
-    const { _id, ...rest } = caseStudy;
+    const { _id, ...rest } = ainews;
     const response = {
       id: _id.toString(),
       ...rest,
@@ -70,22 +37,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
-    console.error('Error fetching case study:', error);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error('Error fetching AINEWS:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Case Study ID' },
-      { status: 400 }
-    );
+export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
+  const { slug } = params;
+  if (!slug) {
+    return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
   }
 
   try {
@@ -105,10 +65,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
-      return NextResponse.json(
-        { message: 'Missing required fields' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
     for (const [sectionIndex, section] of data.sections.entries()) {
@@ -131,7 +88,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
             { status: 400 }
           );
         }
-        // Additional validations based on block type
         switch (block.type) {
           case 'paragraph':
           case 'quote':
@@ -144,18 +100,31 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 { status: 400 }
               );
             }
-            break;
-            case 'box':
-              if (!block.content || 
-                  typeof block.content !== 'object' || 
-                  !block.content.heading || 
-                  !block.content.text) {
+            if (block.type === 'table') {
+              if (
+                typeof block.content !== 'object' ||
+                !Array.isArray(block.content.headers) ||
+                !Array.isArray(block.content.rows)
+              ) {
                 return NextResponse.json(
-                  { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires heading and text.` },
+                  { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} has invalid content structure.` },
                   { status: 400 }
                 );
               }
-              break;
+              const headers = (block.content as { headers: string[] }).headers;
+              const rows = (block.content as { rows: string[][] }).rows;
+              if (rows.some(row => row.length !== headers.length)) {
+                console.log('Table row length mismatch:', {
+                  headers: headers.length,
+                  rows: rows.map(r => r.length)
+                });
+                return NextResponse.json(
+                  { message: `All rows in table block ${blockIndex + 1} must have the same number of columns as headers.` },
+                  { status: 400 }
+                );
+              }
+            }
+            break;
           case 'image':
             if (!block.src || !block.alt) {
               return NextResponse.json(
@@ -163,7 +132,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 { status: 400 }
               );
             }
-   
             const imageUrlPattern = /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/;
             if (!imageUrlPattern.test(block.src)) {
               return NextResponse.json(
@@ -179,7 +147,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 { status: 400 }
               );
             }
-            // Optional: Validate YouTube embed URL format
             const youtubeEmbedRegex = /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/;
             if (!youtubeEmbedRegex.test(block.src)) {
               return NextResponse.json(
@@ -197,8 +164,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
     }
 
-
-    const updatedCaseStudy: Partial<CaseStudy> = {
+    const updatedAinews: Partial<AINews> = {
+      slug: data.slug,
       contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
@@ -228,67 +195,43 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const client = await clientPromise;
     const db = client.db();
-    const collection = db.collection('caseStudies');
-    const result = await collection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: updatedCaseStudy }
-    );
+    const collection = db.collection('ainews');
 
+    const result = await collection.updateOne(
+      { slug: slug },
+      { $set: updatedAinews }
+    );
     if (result.matchedCount === 0) {
-      return NextResponse.json(
-        { message: 'Case Study Not Found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: 'AINEWS Not Found' }, { status: 404 });
     }
 
-    return NextResponse.json(
-      { message: 'Case Study Updated Successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'AINEWS Updated Successfully' }, { status: 200 });
   } catch (error) {
-    console.error('Error updating case study:', error);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error('Error updating AINEWS:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  // Validate ObjectId
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { message: 'Invalid Case Study ID' },
-      { status: 400 }
-    );
+export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
+  const { slug } = params;
+  if (!slug) {
+    return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
   }
 
   try {
     const client = await clientPromise;
     const db = client.db();
-    const collection = db.collection('caseStudies');
+    const collection = db.collection('ainews');
 
-    // Delete the case study
-    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+    const result = await collection.deleteOne({ slug: slug });
 
     if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { message: 'Case Study Not Found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: 'AINEWS Not Found' }, { status: 404 });
     }
 
-    return NextResponse.json(
-      { message: 'Case Study Deleted Successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'AINEWS Deleted Successfully' }, { status: 200 });
   } catch (error) {
-    console.error('Error deleting case study:', error);
-    return NextResponse.json(
-      { message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error('Error deleting AINEWS:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }

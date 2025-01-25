@@ -17,6 +17,7 @@ import BookCallModal from '../components/base/bookCallModela';
 import { useRouter } from 'next/navigation';
 import Skeleton from 'react-loading-skeleton'; 
 import 'react-loading-skeleton/dist/skeleton.css';
+import { generateSlug } from '@/services/generateSlugService';
 
 type CaseStudy = {
   id: string;
@@ -280,7 +281,7 @@ export default function BlogPage() {
                   .slice(0)
                   .reverse()
                   .map(cs => (
-                    <Link href={`/case-study/${cs.id}`} key={cs.id}>
+                    <Link href={`/case-study/${generateSlug(cs.title)}`} key={generateSlug(cs.title)}>
                       <div className={styles.caseItem}>
                         <div className={styles.content}>
                           <p>{cs.title}</p>
@@ -353,7 +354,7 @@ export default function BlogPage() {
                   .slice(0)
                   .reverse()
                   .map(blog => (
-                    <Link href={`/blogpost/${blog.id}`} key={blog.id}>
+                    <Link href={`/blogpost/${generateSlug(blog.title)}`} key={generateSlug(blog.title)}>
                       <div className={styles.blogItem}>
                         <div className={styles.content}>
                           <p>{blog.title}</p>
@@ -427,7 +428,7 @@ export default function BlogPage() {
                   .slice(0)
                   .reverse()
                   .map(n => (
-                    <Link href={`/ainews/${n.id}`} key={n.id}>
+                    <Link href={`/ainews/${generateSlug(n.title)}`} key={generateSlug(n.title)}>
                       <div className={styles.newsItem}>
                         <div className={styles.content}>
                           <p>{n.title}</p>

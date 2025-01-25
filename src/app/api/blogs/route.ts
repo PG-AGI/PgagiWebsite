@@ -134,6 +134,7 @@ export async function POST(request: NextRequest) {
     }
 
     const blog: Blog = {
+      slug: data.slug,
       contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
@@ -191,10 +192,10 @@ export async function GET(request: NextRequest) {
     const db = client.db();
     const collection = db.collection('blogs');
 
-    const blogs = await collection.find({}, { projection: { title: 1, coverImage: 1 } }).toArray();
+    const blogs = await collection.find({}, { projection: { slug: 1, title: 1, coverImage: 1 } }).toArray();
 
     const response = blogs.map((blog) => ({
-      id: blog._id.toString(),
+      slug: blog.slug,
       title: blog.title,
       coverImage: blog.coverImage,
     }));
