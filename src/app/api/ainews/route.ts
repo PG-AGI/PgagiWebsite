@@ -210,7 +210,7 @@ export async function GET(request: NextRequest) {
       title: ainews.title,
       coverImage: ainews.coverImage,
     }));
-    console.log('response api', response);
+    //console.log('response api', response);
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error('Error fetching AINEWS:', error);
