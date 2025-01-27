@@ -10,7 +10,7 @@ import Image from 'next/image';
 interface ContentListProps {
   onEdit: (content: ContentSummary) => void;
   onView: (content: ContentSummary) => void;
-  onDelete: (content: ContentSummary) => void;
+  onDelete: (content: ContentSummary, func:()=> void) => void;
 }
 
 const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) => {
@@ -59,7 +59,10 @@ const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) =
   useEffect(() => {
     fetchContents();
   }, []);
-
+  // handlign delete
+  const handleDelete = (cs: ContentSummary)=>{
+    onDelete(cs, fetchContents);
+  }
   const filteredContents = contents.filter((cs) => {
     if (filterType === 'all') return true;
     return cs.contentType === filterType;
@@ -128,7 +131,7 @@ const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) =
                   <button onClick={() => onEdit(cs)} className={styles.editButton}>
                     Edit
                   </button>
-                  <button onClick={() => onDelete(cs)} className={styles.deleteButton}>
+                  <button onClick={()=>{handleDelete(cs)}} className={styles.deleteButton}>
                     Delete
                   </button>
                 </td>

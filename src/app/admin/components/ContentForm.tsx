@@ -159,7 +159,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
         const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
         if (response.status === 200) {
           alert(updateMessageMap[data.contentType]);
-          // reset();
           handleReset();
           setIsLoading(false);
           onAfterSubmit();
@@ -170,7 +169,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
         const response = await axios.post(endpoint, sanitizedData);
         if (response.status === 201 || response.status === 200) {
           alert(createMessageMap[data.contentType]);
-          // reset();
           handleReset();
           setIsLoading(false);
           onAfterSubmit();
@@ -210,7 +208,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
   
     reset(defaultValues); // Always reset to default values
   };
-  
+  console.log(watch('sections'))
   return (
     <div className={styles.contentForm}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -262,6 +260,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
           <input
             type="date"
             id="publishDate"
+            onFocus={(e) => e.target.showPicker && e.target.showPicker()}
             {...register('publishDate', { required: 'Publish Date is required' })}
             required
           />
@@ -457,6 +456,11 @@ const ContentForm: React.FC<ContentFormProps> = ({
                         sectionIndex={sectionIndex}
                         block={block}
                         blockIndex={blockIndex}
+                        onUpdateBlock={(updatedBlock) => {
+                          const updatedBlocks = [...(field.value || [])];
+                          updatedBlocks[blockIndex] = updatedBlock;
+                          field.onChange(updatedBlocks);
+                        }}
                         removeBlock={() => {
                           const updated = [...(field.value || [])];
                           updated.splice(blockIndex, 1);
