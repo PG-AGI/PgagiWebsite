@@ -85,6 +85,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
   const onSubmit = async (data: FormValues) => {
     // No need to override table blocks here because each table block is managed by its own Controller.
     setIsLoading(true);
+    setIsLoading(true);
     const sanitizedData: FormValues = {
       ...data,
       slug: generateSlug(data.title),
@@ -159,7 +160,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
         const response = await axios.put(`${endpoint}/${editingContentId}`, sanitizedData);
         if (response.status === 200) {
           alert(updateMessageMap[data.contentType]);
-          // reset();
           handleReset();
           setIsLoading(false);
           onAfterSubmit();
@@ -170,7 +170,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
         const response = await axios.post(endpoint, sanitizedData);
         if (response.status === 201 || response.status === 200) {
           alert(createMessageMap[data.contentType]);
-          // reset();
           handleReset();
           setIsLoading(false);
           onAfterSubmit();
@@ -179,6 +178,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         }
       }
     } catch (error: any) {
+      setIsLoading(false);
       setIsLoading(false);
       console.error('Error submitting form:', error);
       alert(error.response?.data?.message || 'An unexpected error occurred.');
@@ -210,7 +210,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
   
     reset(defaultValues); // Always reset to default values
   };
-  
   return (
     <div className={styles.contentForm}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -262,6 +261,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
           <input
             type="date"
             id="publishDate"
+            onFocus={(e) => e.target.showPicker && e.target.showPicker()}
             {...register('publishDate', { required: 'Publish Date is required' })}
             required
           />
@@ -320,6 +320,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               id="metaTitle"
               {...register('metaTitle')}
               {...register('metaTitle')}
+              {...register('metaTitle')}
               placeholder="Enter meta title"
             />
             {errors.metaTitle && (
@@ -331,6 +332,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <input
               type="text"
               id="metaDescription"
+              {...register('metaDescription')}
               {...register('metaDescription')}
               {...register('metaDescription')}
               placeholder="Enter Meta Description..."
@@ -346,6 +348,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               id="metaKeywords"
               {...register('metaKeywords')}
               {...register('metaKeywords')}
+              {...register('metaKeywords')}
               placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
             />
             {errors.metaKeywords && (
@@ -359,6 +362,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
               id="metaAuthor"
               {...register('metaAuthor')}
               {...register('metaAuthor')}
+              {...register('metaAuthor')}
               placeholder="Enter meta author"
             />
             {errors.metaAuthor && (
@@ -368,6 +372,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         </div>
         {watch('contentType') === 'blog' ? (
           <>
+            <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
             <label>TL; DR (60-second blog summary)</label>
@@ -457,6 +462,11 @@ const ContentForm: React.FC<ContentFormProps> = ({
                         sectionIndex={sectionIndex}
                         block={block}
                         blockIndex={blockIndex}
+                        onUpdateBlock={(updatedBlock) => {
+                          const updatedBlocks = [...(field.value || [])];
+                          updatedBlocks[blockIndex] = updatedBlock;
+                          field.onChange(updatedBlocks);
+                        }}
                         removeBlock={() => {
                           const updated = [...(field.value || [])];
                           updated.splice(blockIndex, 1);

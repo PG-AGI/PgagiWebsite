@@ -96,7 +96,7 @@ const AdminPanel: React.FC = () => {
     }
   };
 
-  const handleDelete = async (content: ContentSummary) => {
+  const handleDelete = async (content: ContentSummary, fetchContents: ()=> void) => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete this ${content.contentType === 'caseStudy'
         ? 'Case Study'
@@ -124,6 +124,7 @@ const AdminPanel: React.FC = () => {
               : 'AINEWS'
           } deleted successfully!`
         );
+        fetchContents();
       } else {
         alert(`Error: ${res.data.message}`);
       }

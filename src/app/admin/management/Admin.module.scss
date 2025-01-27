@@ -107,6 +107,9 @@ $red-color: #ef4444;
       box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.5);
     }
   }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0; /* Hides the default icon */
+  }
 
   select {
     color: white;
