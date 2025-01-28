@@ -297,7 +297,7 @@ export const JobApplicationForm = ({
                 />
               </div>
 
-              <div className={styles["input-group"]}>
+              {/* <div className={styles["input-group"]}>
                 <label htmlFor="projectDocFile">Or Upload Doc</label>
                 <input
                   type="file"
@@ -307,11 +307,10 @@ export const JobApplicationForm = ({
                   onChange={handleFileChange}
                   className={styles["input"]}
                 />
-              </div>
+              </div> */}
             </div>
 
-            {/* Demo Video Subsection */}
-            <div className={styles["assignment-subsection"]}>
+            {/* <div className={styles["assignment-subsection"]}>
               <h4 className={styles["subsection-title"]}>Demo Video</h4>
               <div className={styles["input-group"]}>
                 <label htmlFor="demoVideoUrl">Demo Video (Paste Link)</label>
@@ -339,7 +338,6 @@ export const JobApplicationForm = ({
               </div>
             </div>
 
-            {/* Code Base Subsection */}
             <div className={styles["assignment-subsection"]}>
               <h4 className={styles["subsection-title"]}>Code Base</h4>
               <div className={styles["input-group"]}>
@@ -368,7 +366,6 @@ export const JobApplicationForm = ({
               </div>
             </div>
 
-            {/* Hosted Link (Optional) */}
             <div className={styles["input-group"]}>
               <label htmlFor="hostedLink">Hosted Link (Optional)</label>
               <input
@@ -380,7 +377,7 @@ export const JobApplicationForm = ({
                 className={styles["input"]}
                 placeholder="https://yourproject.com"
               />
-            </div>
+            </div> */}
           </div>
 
           {/* Resume and Cover Letter Fields */}
