@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
 
 import { inter } from "../utils/fontHelper";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "PGAGI",
@@ -73,7 +74,9 @@ export default function RootLayout({
                 style={{ display: "none", visibility: "hidden" }}
               ></iframe>
             </noscript>
-            {children}
+            <ThemeProvider attribute="class" defaultTheme="light">
+              {children}
+            </ThemeProvider>
           </body>
         </html>
       </Providers>

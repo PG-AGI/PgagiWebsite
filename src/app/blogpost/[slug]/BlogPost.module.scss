@@ -1,580 +1,99 @@
-// .container {
-//   background-color: #fff;
-//   color: rgb(28, 28, 28) !important;
-//   display: flex;
-//   overflow: visible;
-//   min-height: 100vh;
-
-//   * {
-//     color: inherit !important;
-//     margin: 0;
-//     padding: 0;
-//     box-sizing: border-box;
-//     font-size: 1.2rem;
-//   }
-
-//   .leftAside {
-//     width: 20%;
-//     padding: 1rem 4rem;
-//     display: flex;
-//     justify-content: center;
-//     font-size: 1rem;
-//     align-self: flex-start;
-//     position: sticky;
-//     top: 0px;
-
-//     ul {
-//       width: 100%;
-//       padding: 0;
-//       margin: 0;
-
-//       li {
-//         width: 100%;
-//         border-bottom: 1px solid #ddd;
-//         padding: 1rem 0;
-//         font-size: 1rem;
-//         list-style-type: none;
-//         word-spacing: 4px;
-
-//         &:hover {
-//           cursor: pointer;
-//           text-decoration: underline;
-//         }
-
-//         &.active {
-//           text-decoration: underline;
-//         }
-//       }
-//     }
-
-//     .stickyDiv {
-//       .allArticles {
-//         border-top: 1px solid #ddd;
-//         border-bottom: 1px solid #ddd;
-//         padding: 1rem 0;
-//         width: 100%;
-//         margin: 1rem 0;
-//         display: flex;
-//         align-items: center;
-
-//         h1 {
-//           margin-left: 10px;
-//           font-weight: 400;
-//           &:hover {
-//             cursor: pointer;
-//             text-decoration: underline;
-
-//           }
-//         }
-//       }
-
-//       .index {
-//         width: 100%;
-//         border-bottom: 1px solid #ddd;
-//         padding: 1.6rem 0;
-//         letter-spacing: 1px;
-//       }
-//     }
-//   }
-
-//   .articleContainer {
-//     width: 60%;
-//     padding: 1rem 4rem;
-//     border-right: 1px solid #ddd;
-//     border-left: 1px solid #ddd;
-//     letter-spacing: 0.5px;
-//     font-weight: 300;
-//     .tldr{
-//       margin: 1rem 1.2rem;
-//       ul li{
-//         margin: 1rem 0 1rem 1.2rem;
-//       }
-//     }
-//     .metadata {
-//       display: flex;
-//       justify-content: space-between;
-//       padding: 0px 20px;
-
-//       p {
-//         color: rgb(193, 193, 193) !important;
-//         font-size: 18px;
-//         font-weight: 500;
-//         margin: 20px 0px;
-
-//         span {
-//           color: rgb(85, 85, 85) !important;
-//           font-size: 18px;
-//           font-weight: 500;
-//         }
-//       }
-//     }
-//     .shortDescription{
-//       padding: 20px 20px;
-//       font-weight: 400;
-//       color: rgb(150, 150, 150) !important;
-//     }
-//     .heading {
-//       padding: 0px 20px;
-//       font-size: 4.5rem;
-//       font-weight: 400;
-//       letter-spacing: 0.5px;
-//     }
-
-//     section {
-//       padding: 20px;
-
-//       .sectionHeading {
-//         font-size: 36px !important;
-//         font-weight: 500;
-//       }
-
-//       .quote {
-//         font-style: italic;
-//         border-left: 1px solid #ddd;
-//         padding-left: 10px;
-//         margin: 10px 0;
-//         font-size: 1rem;
-//         line-height: 1.6;
-//       }
-
-//       .highlight {
-//         padding: 10px;
-//         border-radius: 0.5rem;
-//         margin: 10px 0;
-//         font-weight: 400;
-//       }
-
-//       .codeBlock {
-//         padding: 10px;
-//         overflow-x: auto;
-//         margin: 10px 0;
-
-//         code {
-//           // font-family: 'Courier New', Courier, monospace;
-//           white-space: pre-wrap;
-//         }
-//       }
-
-//       .paragraph {
-
-//         /* Target strong tags (e.g., for bold text) inside p */
-//         p strong {
-//           display: inline-block;
-//           margin-top: 1rem;
-//           font-weight: 450;
-//           color: #333;
-//         }
-//         ul li{
-//           margin: 1rem 0 1rem 2rem;
-//           strong{
-//             font-weight: 500 !important;
-//           }
-//         }
-//       }
-
-//       .imageBlock {
-//         border: 1px solid #ddd;
-//         padding: 20px;
-//       }
-
-//       .videoBlock {
-//         border: 1px solid #ddd;
-//         padding: 20px;
-//       }
-
-//       // table
-//       .dynamicTable {
-//         width: 100%;
-//         border-collapse: collapse;
-//         margin-bottom: 20px;
-//         background: #f9f9f9;
-//         /* Light background for better contrast with white */
-//         border-radius: 8px;
-//         overflow: hidden;
-//         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-//         /* Softer shadow for lighter theme */
-//       }
-
-//       .cell {
-//         border-bottom: 1px solid #ddd;
-//         /* Light gray border for subtle separation */
-//         padding: 12px;
-//         text-align: left;
-//         font-size: 14px;
-//         transition: background-color 0.3s ease;
-//         color: #333;
-//         /* Dark text for readability */
-//       }
-
-//       .heading {
-//         border-top: 1px solid #ddd;
-//         border-bottom: 2px solid #ccc;
-//         /* Slightly thicker bottom border for emphasis */
-//         padding: 12px;
-//         text-align: center;
-//         color: #1e293b;
-//         /* Dark blue-gray for heading text */
-//         font-size: 16px;
-//         font-weight: bold;
-//         background: #e5e5e5;
-//         /* Light gray background for heading */
-//       }
-
-//       // box 
-//       .box {
-//         width: 100%;
-//         border: 1px solid #ddd;
-//         /* Lighter border for white background */
-//         border-radius: 10px;
-//         padding: 1rem;
-//         margin: 1.5rem 0;
-//         background-color: #f9f9f9;
-//         /* Light background for better distinction */
-
-//         .boxHeading {
-//           text-align: center;
-//           color: #1e40af;
-//           /* Darker blue for heading text */
-//           font-size: 24px;
-//           font-weight: bold;
-//           /* Add emphasis to the heading */
-//         }
-//       }
-//     }
-//   }
-
-//   .rightAside {
-//     width: 20%;
-//     padding: 40px;
-//     overflow: hidden;
-//     display: flex;
-//     justify-content: center;
-//     font-size: 16px;
-//     align-self: flex-start;
-//     position: sticky;
-//     top: 0px;
-
-//     .stickyDiv {
-//       .heading {
-//         font-weight: 600;
-//         border-bottom: 1px solid #ddd;
-//         width: 100%;
-//         padding: 20px 5px;
-//       }
-
-//       .shareElement {
-//         display: flex;
-//         align-items: center;
-//         border-bottom: 1px solid #ddd;
-//         width: 100%;
-//         padding: 20px 5px;
-
-//         p {
-//           margin-left: 10px;
-//         }
-
-//         &:hover {
-//           cursor: pointer;
-//           text-decoration: underline;
-//         }
-//       }
-
-//     }
-
-//   }
-// }
-
-
-// .errorContainer {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100vh;
-// }
-
-// .error {
-//   color: red;
-//   font-size: 1.5rem;
-//   margin-bottom: 10px;
-// }
-
-// @media (max-width: 900px) {
-
-//   .container {
-//     background-color: #fff;
-//     color: rgb(28, 28, 28) !important;
-//     display: flex;
-//     overflow: visible;
-//     min-height: 100vh;
-//     flex-direction: column;
-
-//     * {
-//       color: inherit !important;
-//       margin: 0;
-//       padding: 0;
-//       box-sizing: border-box;
-//       font-size: 1.2rem;
-//     }
-
-//     .leftAside {
-//       width: 100%;
-//       padding: 1rem 3rem;
-//       display: flex;
-//       justify-content: center;
-//       font-size: 1rem;
-//       position: relative;
-
-//       ul {
-//         width: 100%;
-//         padding: 0;
-//         margin: 0;
-
-//         li {
-//           width: 100%;
-//           border-bottom: 1px solid #ddd;
-//           padding: 1rem 0;
-//           font-size: 1rem;
-//           list-style-type: none;
-//           word-spacing: 4px;
-
-//           &:hover {
-//             cursor: pointer;
-//             text-decoration: underline;
-//           }
-
-//           &.active {
-//             text-decoration: underline;
-//           }
-//         }
-//       }
-
-//       .stickyDiv {
-//         .allArticles {
-//           border-top: 1px solid #ddd;
-//           border-bottom: 1px solid #ddd;
-//           padding: 1rem 0;
-//           width: 100%;
-//           margin: 1rem 0;
-//           display: flex;
-//           align-items: center;
-
-//           h1 {
-//             margin-left: 10px;
-//             font-weight: 400;
-//             &:hover {
-//               cursor: pointer;
-//               text-decoration: underline;
-
-//             }
-//           }
-//         }
-
-//         .index {
-//           width: 100%;
-//           border-bottom: 1px solid #ddd;
-//           padding: 1.6rem 0;
-//           letter-spacing: 1px;
-//         }
-//       }
-//     }
-
-//     .articleContainer {
-//       width: 100%;
-//       padding: 1rem 4rem;
-//       border-right: 1px solid #ddd;
-//       border-left: 1px solid #ddd;
-//       letter-spacing: 0.5px;
-//       font-weight: 300;
-//       .metadata {
-//         display: flex;
-//         justify-content: space-between;
-//         padding: 0px 20px;
-
-//         p {
-//           color: rgb(193, 193, 193) !important;
-//           font-size: 18px;
-//           font-weight: 500;
-//           margin: 20px 0px;
-
-//           span {
-//             color: rgb(85, 85, 85) !important;
-//             font-size: 18px;
-//             font-weight: 500;
-//           }
-//         }
-//       }
-//       .shortDescription{
-//         padding: 20px 20px;
-//         font-weight: 400;
-//         color: rgb(150, 150, 150) !important;
-//       }
-//       .heading {
-//         padding: 0px 20px;
-//         font-size: 4.5rem;
-//         font-weight: 400;
-//         letter-spacing: 0.5px;
-//       }
-
-//       section {
-//         padding: 20px;
-
-//         .sectionHeading {
-//           font-size: 36px !important;
-//           font-weight: 500;
-//         }
-
-//         .quote {
-//           font-style: italic;
-//           border-left: 1px solid #ddd;
-//           padding-left: 10px;
-//           margin: 10px 0;
-//           font-size: 1rem;
-//           line-height: 1.6;
-//         }
-
-//         .highlight {
-//           padding: 10px;
-//           border-radius: 0.5rem;
-//           margin: 10px 0;
-//           font-weight: 400;
-//         }
-
-//         .codeBlock {
-//           padding: 10px;
-//           overflow-x: auto;
-//           margin: 10px 0;
-
-//           code {
-//             // font-family: 'Courier New', Courier, monospace;
-//             white-space: pre-wrap;
-//           }
-//         }
-
-//         .paragraph {
-
-//           /* Target strong tags (e.g., for bold text) inside p */
-//           p strong {
-//             display: inline-block;
-//             margin-top: 1rem;
-//             font-weight: 450;
-//             color: #333;
-//           }
-
-//         }
-
-//         .imageBlock {
-//           border: 1px solid #ddd;
-//           padding: 20px;
-//         }
-
-//         .videoBlock {
-//           border: 1px solid #ddd;
-//           padding: 20px;
-//         }
-
-//         // table
-//         .dynamicTable {
-//           width: 100%;
-//           border-collapse: collapse;
-//           margin-bottom: 20px;
-//           background: #f9f9f9;
-//           /* Light background for better contrast with white */
-//           border-radius: 8px;
-//           overflow: hidden;
-//           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-//           /* Softer shadow for lighter theme */
-//         }
-
-//         .cell {
-//           border-bottom: 1px solid #ddd;
-//           /* Light gray border for subtle separation */
-//           padding: 12px;
-//           text-align: left;
-//           font-size: 14px;
-//           transition: background-color 0.3s ease;
-//           color: #333;
-//           /* Dark text for readability */
-//         }
-
-//         .heading {
-//           border-top: 1px solid #ddd;
-//           border-bottom: 2px solid #ccc;
-//           /* Slightly thicker bottom border for emphasis */
-//           padding: 12px;
-//           text-align: center;
-//           color: #1e293b;
-//           /* Dark blue-gray for heading text */
-//           font-size: 16px;
-//           font-weight: bold;
-//           background: #e5e5e5;
-//           /* Light gray background for heading */
-//         }
-
-//         // box 
-//         .box {
-//           width: 100%;
-//           text-align: center;
-//           border: 1px solid #ddd;
-//           /* Lighter border for white background */
-//           border-radius: 10px;
-//           padding: 12px;
-//           margin-bottom: 1.5rem;
-//           background-color: #f9f9f9;
-//           /* Light background for better distinction */
-
-//           .boxHeading {
-//             color: #1e40af;
-//             /* Darker blue for heading text */
-//             font-size: 24px;
-//             font-weight: bold;
-//             /* Add emphasis to the heading */
-//           }
-//         }
-//       }
-//     }
-
-//     .rightAside {
-//       width: 100%;
-//       padding: 40px;
-//       overflow: hidden;
-//       display: flex;
-//       justify-content: center;
-//       font-size: 16px;
-
-//       .stickyDiv {
-//         .heading {
-//           font-weight: 600;
-//           border-bottom: 1px solid #ddd;
-//           width: 100%;
-//           padding: 20px 5px;
-//         }
-
-//         .shareElement {
-//           display: flex;
-//           align-items: center;
-//           border-bottom: 1px solid #ddd;
-//           width: 100%;
-//           padding: 20px 5px;
-
-//           p {
-//             margin-left: 10px;
-//           }
-
-//           &:hover {
-//             cursor: pointer;
-//             text-decoration: underline;
-//           }
-//         }
-
-//       }
-
-//     }
-//   }
-// }
 
 $green-glow: #118B50;
 $purple-light: #a855f7;
+
+.skeletonPage {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  height: 100vh;
+  background-color: #ffffff; /* White background for page */
+}
+
+.skeleton {
+  background-color: #e0e0e0; /* Light gray background for skeleton */
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left Sidebar (Indexes) */
+.skeletonLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Ensures spacing between skeleton elements */
+  height: 100%; /* Ensures full height */
+  padding: 10px; /* Adds padding for better spacing inside the section */
+  background-color: #f9f9f9; /* Optional: Add background color to make it visible */
+  
+  .skeletonTitle {
+    width: 80%;
+    height: 20px;
+    margin-bottom: 10px; /* Optional: Adds space between skeletons */
+  }
+
+  .skeletonText {
+    width: 100%;
+    height: 15px;
+    margin-bottom: 10px; /* Optional: Adds space between skeletons */
+  }
+}
+
+/* Main Content (Articles) */
+.skeletonMain {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%; /* Ensure it takes full height */
+  
+  .skeletonArticleTitle {
+    width: 90%;
+    height: 25px;
+  }
+
+  .skeletonArticleText {
+    width: 100%;
+    height: 18px;
+  }
+
+  .skeletonImage {
+    width: 100%;
+    height: 200px;
+    background-color: #ccc; /* Gray background for image skeleton */
+  }
+}
+
+/* Right Sidebar (Share Buttons) */
+.skeletonRight {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%; /* Ensure it takes full height */
+  
+  .skeletonButton {
+    width: 80%;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #ccc; /* Light gray for buttons */
+  }
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%; /* To create the shimmering effect */
+  animation: shimmer 1.5s infinite linear;
+}
 
 .container {
   background-color: #fff;

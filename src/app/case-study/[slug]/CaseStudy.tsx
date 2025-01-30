@@ -209,14 +209,38 @@ const CaseStudy = () => {
     draggable: true,
     touchMove: true,
     nextArrow: <div className="customNextArrow"><FontAwesomeIcon icon={faChevronLeft} size='2x' /></div>,  // Custom next arrow
-    prevArrow: <div className="customPrevArrow"><FontAwesomeIcon icon={faChevronRight} size='2x'  /></div>,
+    prevArrow: <div className="customPrevArrow"><FontAwesomeIcon icon={faChevronRight} size='2x' /></div>,
   };
 
   if (loading) {
     return (
       <>
         <Navigation />
-        <p>Loading...</p>
+        <div className={styles.skeletonPage}>
+          {/* Left Sidebar (Indexes) */}
+          <div className={styles.skeletonLeft}>
+            <div className={styles.skeletonTitle}></div>
+            <div className={styles.skeletonText}></div>
+            <div className={styles.skeletonText}></div>
+            <div className={styles.skeletonText}></div>
+          </div>
+
+          {/* Main Content (Articles) */}
+          <div className={styles.skeletonMain}>
+            <div className={styles.skeletonArticleTitle}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonImage}></div>
+          </div>
+
+          {/* Right Sidebar (Share Buttons) */}
+          <div className={styles.skeletonRight}>
+            <div className={styles.skeletonButton}></div>
+            <div className={styles.skeletonButton}></div>
+            <div className={styles.skeletonButton}></div>
+          </div>
+        </div>
         <Footer />
       </>
     );
@@ -453,10 +477,10 @@ const CaseStudy = () => {
           <h1>More Articles</h1>
           <div>
             <div onClick={() => sliderRef.current?.slickPrev()}>
-            <FontAwesomeIcon icon={faChevronLeft} size='2x' />
+              <FontAwesomeIcon icon={faChevronLeft} size='2x' />
             </div>
             <div onClick={() => sliderRef.current?.slickNext()}>
-            <FontAwesomeIcon icon={faChevronRight} size='2x'/>
+              <FontAwesomeIcon icon={faChevronRight} size='2x' />
             </div>
           </div>
 

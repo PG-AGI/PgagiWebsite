@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { whatWeDoLinks } from "@/utils/constants";
 import ContactUsForm from "./contactUsForm";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation() {
   const [navbarVisible] = useState(true);

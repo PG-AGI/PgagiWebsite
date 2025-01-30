@@ -9,8 +9,10 @@
   align-items: center;
   z-index: 900;
   transition: all 0.2s ease-out;
+  background-color: inherit !important;
   &.scrolled {
     background: rgba(0, 0, 0, 0.611);
+    // background: inherit;
   }
 
   .banner {

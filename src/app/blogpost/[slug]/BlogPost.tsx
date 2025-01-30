@@ -210,7 +210,35 @@ const BlogPost = () => {
 
   if (loading) {
     return (
-      <p>Loading...</p>
+      <>
+      <Navigation />
+      <div className={styles.skeletonPage}>
+        {/* Left Sidebar (Indexes) */}
+        <div className={styles.skeletonLeft}>
+          <div className={styles.skeletonTitle}></div>
+          <div className={styles.skeletonText}></div>
+          <div className={styles.skeletonText}></div>
+          <div className={styles.skeletonText}></div>
+        </div>
+
+        {/* Main Content (Articles) */}
+        <div className={styles.skeletonMain}>
+          <div className={styles.skeletonArticleTitle}></div>
+          <div className={styles.skeletonArticleText}></div>
+          <div className={styles.skeletonArticleText}></div>
+          <div className={styles.skeletonArticleText}></div>
+          <div className={styles.skeletonImage}></div>
+        </div>
+
+        {/* Right Sidebar (Share Buttons) */}
+        <div className={styles.skeletonRight}>
+          <div className={styles.skeletonButton}></div>
+          <div className={styles.skeletonButton}></div>
+          <div className={styles.skeletonButton}></div>
+        </div>
+      </div>
+      <Footer />
+    </>
     );
   }
 
