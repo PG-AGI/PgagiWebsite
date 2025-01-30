@@ -524,7 +524,7 @@ $purple-light: #a855f7;
 
   .card {
     width: 300px;
-    background: white;
+    background: inherit;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
     text-align: center;
@@ -537,6 +537,18 @@ $purple-light: #a855f7;
       height: 240px; // Fixed height
       position: relative;
       overflow: hidden;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:hover .cardImage {
+        transform: scaleY(1.2); // Stretching the image inside the fixed container
+      }
+
+      &:hover .cardOverlay {
+        opacity: 1;
+      }
 
       .cardImage {
         width: 100%;
@@ -565,17 +577,6 @@ $purple-light: #a855f7;
       margin: 3rem 1rem;
     }
 
-    &:hover {
-      cursor: pointer;
-    }
-
-    &:hover .cardImage {
-      transform: scaleY(1.2); // Stretching the image inside the fixed container
-    }
-
-    &:hover .cardOverlay {
-      opacity: 1;
-    }
   }
 
 
