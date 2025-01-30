@@ -1,15 +1,39 @@
-/* Light Mode (Default) */
+/* Light theme colors */
+:root {
+  --bg-color-light: #ffffff;
+  --text-color-light: #000000;
+  --button-color-light: #007bff;
+}
+
+/* Dark theme colors */
+[data-theme='dark'] {
+  --bg-color-dark: #1a1a1a;
+  --text-color-dark: #ffffff;
+  --button-color-dark: #007bff;
+}
+
+/* Default styles */
 body {
-  background-color: white;
-  color: black;
+  background-color: var(--bg-color-light); /* Fallback to light background */
+  color: var(--text-color-light);           /* Fallback to light text color */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark Mode */
-html.dark body {
-  background-color: #1a1a1a;
-  color: white;
+/* Dark theme styles */
+[data-theme='dark'] body {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-dark);
 }
+
+/* Example button that changes color based on theme */
+button {
+  background-color: var(--button-color-light);
+}
+
+[data-theme='dark'] button {
+  background-color: var(--button-color-dark);
+}
+
 
 @tailwind base;
 @tailwind components;

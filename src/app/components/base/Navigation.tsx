@@ -271,6 +271,7 @@ export default function Navigation() {
         <button className={styles.contact} onClick={handleContactUs}>
           Contact us
         </button>
+        <ThemeToggle />
         <div
           className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`}
           onClick={toggleMenu}
