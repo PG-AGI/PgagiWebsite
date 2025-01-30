@@ -333,7 +333,7 @@ const CaseStudy = () => {
           <div className={styles.metadata}>
             {/* <p>Author <span>{caseStudy.author.name}</span></p> */}
             <p>Date <span>{caseStudy.publishDate}</span></p>
-            <p>Read-Time <span>{caseStudy.readTime}</span></p>
+            <p>Read-Time <span className={styles.glowDot}></span> <span>{caseStudy.readTime}</span></p>
           </div>
           {caseStudy.sections.map((section) => (
             <section
@@ -505,7 +505,7 @@ const CaseStudy = () => {
                       <div className={styles.cardOverlay}>Read more &rarr;</div>
                     </div>
                   </Link>
-                  <h2 className={styles.cardTitle}>{data.title}</h2>
+                  <h2 className={styles.cardTitle}>{data.title.length > 150 ? `${data.title.substring(0, 150)}...`: data.title }</h2>
                 </div>
               ))}
             </Slider>

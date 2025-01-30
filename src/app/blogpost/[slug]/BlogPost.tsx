@@ -332,7 +332,7 @@ const BlogPost = () => {
             <p>Author <span>{blogPost.author.name}</span></p>
             <div>
               <p>Date <span>{blogPost.publishDate}</span></p>
-              <p>Read-Time <span>{blogPost.readTime}</span></p>
+              <p>Read-Time <span className={styles.glowDot}></span> <span>{blogPost.readTime}</span></p>
             </div>
           </div>
           <div className={styles.tldr}>
@@ -515,7 +515,7 @@ const BlogPost = () => {
                           <div className={styles.cardOverlay}>Read more &rarr;</div>
                         </div>
                       </Link>
-                      <h2 className={styles.cardTitle}>{data.title}</h2>
+                      <h2 className={styles.cardTitle}>{data.title.length > 150 ? `${data.title.substring(0, 150)}...`: data.title }</h2>
                     </div>
                   )
                 })
