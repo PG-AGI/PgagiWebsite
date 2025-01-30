@@ -3,7 +3,7 @@ name: Back-end Build Docker Compose
 on:
   push:
     branches:
-      - main
+      - pre-prod
 jobs:
   build-docker-compose:
     runs-on: self-hosted
@@ -15,7 +15,7 @@ jobs:
 
       # Step 2: Build the services defined in docker-compose.yml
       - name: Build Docker Compose Services
-        run: docker compose -p pgagi-website-deployment up --build -d
+        run: docker compose -p pgagi-website-pre-pod -f docker-compose-prepod.yml up --build -d
 
       # Step 2: Cleaning up docker services
       - name: Build Docker Compose Services
