@@ -495,7 +495,9 @@ const CaseStudy = () => {
                 <div className={styles.card} key={data.slug}>
                   <Link href={`/case-study/${data.slug}`} legacyBehavior>
                     <div className={styles.cardImageContainer}>
-                      <img
+                      <Image
+                        height={500}
+                        width={1000}
                         src={data.coverImage}
                         alt="Card"
                         className={styles.cardImage}

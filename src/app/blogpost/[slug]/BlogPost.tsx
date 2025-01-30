@@ -502,10 +502,12 @@ const BlogPost = () => {
               {
                 blogs.map(data => {
                   return (
-                    <div className={styles.card}>
-                      <Link href={`/blogs/${data.slug}`} key={data.slug} legacyBehavior>
+                    <div className={styles.card} key={data.slug}>
+                      <Link href={`/blogs/${data.slug}`} legacyBehavior>
                         <div className={styles.cardImageContainer}>
-                          <img
+                          <Image
+                            height={500}
+                            width={1000}
                             src={data.coverImage}
                             alt="Card"
                             className={styles.cardImage}
