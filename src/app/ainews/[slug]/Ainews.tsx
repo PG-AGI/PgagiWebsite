@@ -507,7 +507,7 @@ const Ainews = () => {
                           <div className={styles.cardOverlay}>Read more &rarr;</div>
                         </div>
                       </Link>
-                      <h2 className={styles.cardTitle}>{data.title}</h2>
+                      <h2 className={styles.cardTitle}>{data.title.length > 150 ? `${data.title.substring(0, 150)}...`: data.title }</h2>
                     </div>
                   )
                 })

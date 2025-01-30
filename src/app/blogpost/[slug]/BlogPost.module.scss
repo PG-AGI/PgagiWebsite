@@ -124,6 +124,11 @@ $purple-light: #a855f7;
     align-self: flex-start;
     position: sticky;
     top: 0px;
+    ::-webkit-scrollbar {
+      width: 0px; /* Hides the scrollbar button */
+    }
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
 
     ul {
       width: 100%;
@@ -367,16 +372,14 @@ $purple-light: #a855f7;
         border-collapse: collapse;
         margin: 1rem 0;
         background: lighten($purple-light, 33%);
-        ;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
         .cell {
           border-bottom: 1px solid #ddd;
           padding: 1rem 1.5rem;
           text-align: left;
-          font-size: 14px;
+          font-size: 1.1rem;
           transition: background-color 0.3s ease;
           color: #333;
         }
@@ -387,7 +390,7 @@ $purple-light: #a855f7;
           padding: 1rem 1.5rem;
           text-align: left;
           color: #1e293b;
-          font-size: 16px;
+          font-size: 1.1rem;
           font-weight: bold;
           background: lighten($purple-light, 30%);
         }
@@ -396,17 +399,23 @@ $purple-light: #a855f7;
       // box 
       .box {
         width: 100%;
-        text-align: center;
+        text-align: left;
         border: 1px solid #ddd;
         border-radius: 10px;
         padding: 12px;
         margin-bottom: 1.5rem;
         background-color: #f9f9f9;
 
+        p{
+          margin-bottom: 1rem;
+        }
+
         .boxHeading {
-          color: #1e40af;
-          font-size: 24px;
-          font-weight: bold;
+          color: darken($purple-light, 30%) !important;
+          font-size: 1.5rem;
+          font-weight: 500;
+          text-align: center;
+          margin-bottom: 1rem;
         }
       }
     }
@@ -519,14 +528,15 @@ $purple-light: #a855f7;
     box-sizing: border-box;
   }
 
+
   .card {
     width: 300px;
-    background: white;
+    background: inherit;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
     text-align: center;
     transition: transform 0.3s;
-    min-height: 530px;
+    height: 530px;
     border: 1px solid #ddd;
 
     .cardImageContainer {
@@ -534,6 +544,18 @@ $purple-light: #a855f7;
       height: 240px; // Fixed height
       position: relative;
       overflow: hidden;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:hover .cardImage {
+        transform: scaleY(1.2); // Stretching the image inside the fixed container
+      }
+
+      &:hover .cardOverlay {
+        opacity: 1;
+      }
 
       .cardImage {
         width: 100%;
@@ -562,17 +584,6 @@ $purple-light: #a855f7;
       margin: 3rem 1rem;
     }
 
-    &:hover {
-      cursor: pointer;
-    }
-
-    &:hover .cardImage {
-      transform: scaleY(1.2); // Stretching the image inside the fixed container
-    }
-
-    &:hover .cardOverlay {
-      opacity: 1;
-    }
   }
 
 
