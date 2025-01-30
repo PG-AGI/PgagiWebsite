@@ -297,9 +297,12 @@ const CaseStudy = () => {
       <div className={styles.container}>
         <aside className={styles.leftAside}>
           <div className={styles.stickyDiv}>
-            <div className={styles.allArticles}>
+            <div className={styles.allArticles} >
               &larr;
+              <Link href={'/whatwethink'}>
               <h1>Articles</h1>
+              </Link>
+              
             </div>
             <div className={styles.index}>
               <h1>INDEX</h1>

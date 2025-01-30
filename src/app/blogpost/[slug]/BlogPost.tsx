@@ -299,7 +299,8 @@ const BlogPost = () => {
           <div className={styles.stickyDiv}>
             <div className={styles.allArticles}>
               &larr;
-              <h1>Articles</h1>
+              <Link href={'/whatwethink'}>
+              <h1>Articles</h1></Link>
             </div>
             <div className={styles.index}>
               <h1>INDEX</h1>
