@@ -141,6 +141,7 @@ export default function BlogPage() {
 
   // Fetch case studies from the API
   useEffect(() => {
+
     const fetchCaseStudies = async () => {
       setLoadingCaseStudies(true);
       setErrorCaseStudies('');
@@ -157,7 +158,6 @@ export default function BlogPage() {
         setLoadingCaseStudies(false);
       }
     };
-
     const fetchBlogs = async () => {
       setLoadingBlogs(true);
       setErrorBlogs('');
