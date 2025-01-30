@@ -503,7 +503,7 @@ const BlogPost = () => {
                 blogs.map(data => {
                   return (
                     <div className={styles.card} key={data.slug}>
-                      <Link href={`/blogs/${data.slug}`} legacyBehavior>
+                      <Link href={`/blogpost/${data.slug}`} legacyBehavior>
                         <div className={styles.cardImageContainer}>
                           <Image
                             height={500}
