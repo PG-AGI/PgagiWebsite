@@ -69,6 +69,17 @@ const BlogPost = () => {
   const [loadingBlogs, setLoadingBlogs] = useState<boolean>(false);
   const [errorBlogs, setErrorBlogs] = useState<string>('');
   const sliderRef = useRef<Slider | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -186,7 +197,7 @@ const BlogPost = () => {
 
   const blogPostUrl = generateBlogPostUrl();
 
-  const shareUrls = {
+  const shareUrls: Record<'linkedin' | 'twitter', string> = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
       blogPostUrl
     )}&title=${encodeURIComponent(blogPost?.title || '')}`,
@@ -195,10 +206,14 @@ const BlogPost = () => {
     )}&text=${encodeURIComponent(blogPost?.title || '')}`,
   };
 
+  const handleShare = (platform: keyof typeof shareUrls) => {
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
+  };
+
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: isMobile ? 1 : 4,
     slidesToScroll: 1,
     arrows: false,
     swipe: true,
@@ -211,34 +226,34 @@ const BlogPost = () => {
   if (loading) {
     return (
       <>
-      <Navigation />
-      <div className={styles.skeletonPage}>
-        {/* Left Sidebar (Indexes) */}
-        <div className={styles.skeletonLeft}>
-          <div className={styles.skeletonTitle}></div>
-          <div className={styles.skeletonText}></div>
-          <div className={styles.skeletonText}></div>
-          <div className={styles.skeletonText}></div>
-        </div>
+        <Navigation />
+        <div className={styles.skeletonPage}>
+          {/* Left Sidebar (Indexes) */}
+          <div className={styles.skeletonLeft}>
+            <div className={styles.skeletonTitle}></div>
+            <div className={styles.skeletonText}></div>
+            <div className={styles.skeletonText}></div>
+            <div className={styles.skeletonText}></div>
+          </div>
 
-        {/* Main Content (Articles) */}
-        <div className={styles.skeletonMain}>
-          <div className={styles.skeletonArticleTitle}></div>
-          <div className={styles.skeletonArticleText}></div>
-          <div className={styles.skeletonArticleText}></div>
-          <div className={styles.skeletonArticleText}></div>
-          <div className={styles.skeletonImage}></div>
-        </div>
+          {/* Main Content (Articles) */}
+          <div className={styles.skeletonMain}>
+            <div className={styles.skeletonArticleTitle}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonImage}></div>
+          </div>
 
-        {/* Right Sidebar (Share Buttons) */}
-        <div className={styles.skeletonRight}>
-          <div className={styles.skeletonButton}></div>
-          <div className={styles.skeletonButton}></div>
-          <div className={styles.skeletonButton}></div>
+          {/* Right Sidebar (Share Buttons) */}
+          <div className={styles.skeletonRight}>
+            <div className={styles.skeletonButton}></div>
+            <div className={styles.skeletonButton}></div>
+            <div className={styles.skeletonButton}></div>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </>
+        <Footer />
+      </>
     );
   }
 
@@ -295,36 +310,39 @@ const BlogPost = () => {
       </Head>
       <Navigation />
       <div className={styles.container}>
-        <aside className={styles.leftAside}>
-          <div className={styles.stickyDiv}>
-            <div className={styles.allArticles}>
-              &larr;
-              <Link href={'/whatwethink'}>
-              <h1>Articles</h1></Link>
-            </div>
-            <div className={styles.index}>
-              <h1>INDEX</h1>
-            </div>
-            <ul className={styles.navigation}>
-              {blogPost.sections.map((section) => {
-                const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-                return (
-                  <li
-                    key={section.title}
-                    data-section={sectionId}
-                    className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
-                      }`}
-                    onClick={() => scrollToSection(sectionId)}
-                  >
-                    {section.title}
-                  </li>
-                );
-              })}
-            </ul>
+        {
+          !isMobile &&
+          <aside className={styles.leftAside}>
+            <div className={styles.stickyDiv}>
+              <div className={styles.allArticles}>
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1></Link>
+              </div>
+              <div className={styles.index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.navigation}>
+                {blogPost.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                        }`}
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
 
 
-          </div>
-        </aside>
+            </div>
+          </aside>
+        }
         <article className={styles.articleContainer}>
           <h1 className={styles.heading}>{blogPost.title}</h1>
           <p className={styles.shortDescription}>{blogPost.description && blogPost.description}</p>
@@ -332,9 +350,37 @@ const BlogPost = () => {
             <p>Author <span>{blogPost.author.name}</span></p>
             <div>
               <p>Date <span>{blogPost.publishDate}</span></p>
-              <p>Read-Time <span>{blogPost.readTime}</span></p>
+              <p>Read-Time <span className={styles.glowDot}></span> <span>{blogPost.readTime}</span></p>
             </div>
           </div>
+          {
+            isMobile && 
+            <aside className={styles.leftAside}>
+            <div className={styles.stickyDiv}>
+              <div className={styles.index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.navigation}>
+                {blogPost.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                        }`}
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
+  
+  
+            </div>
+          </aside>
+          }
           <div className={styles.tldr}>
             <h2>TL; DR (60-second blog summary)</h2>
             <p
@@ -472,11 +518,11 @@ const BlogPost = () => {
               <Link2 size={'24px'} />
               <p>Copy link</p>
             </div>
-            <div className={styles.shareElement}>
+            <div className={styles.shareElement} onClick={() => handleShare('linkedin')}>
               <FaLinkedin size={'24px'} />
               <p>Post on Linkedin</p>
             </div>
-            <div className={styles.shareElement}>
+            <div className={styles.shareElement} onClick={() => handleShare('twitter')}>
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
@@ -502,20 +548,18 @@ const BlogPost = () => {
               {
                 blogs.map(data => {
                   return (
-                    <div className={styles.card} key={data.slug}>
-                      <Link href={`/blogs/${data.slug}`} legacyBehavior>
-                        <div className={styles.cardImageContainer}>
-                          <Image
-                            height={500}
-                            width={1000}
-                            src={data.coverImage}
-                            alt="Card"
-                            className={styles.cardImage}
-                          />
-                          <div className={styles.cardOverlay}>Read more &rarr;</div>
-                        </div>
-                      </Link>
-                      <h2 className={styles.cardTitle}>{data.title}</h2>
+                    <div className={styles.card} key={data.slug} onClick={() => { router.push(`/blogpost/${data.slug}`) }}>
+                      <div className={styles.cardImageContainer}>
+                        <Image
+                          height={500}
+                          width={1000}
+                          src={data.coverImage}
+                          alt="Card"
+                          className={styles.cardImage}
+                        />
+                        <div className={styles.cardOverlay}>Read more &rarr;</div>
+                      </div>
+                      <h2 className={styles.cardTitle}>{data.title.length > 100 ? `${data.title.substring(0, 100)}...` : data.title}</h2>
                     </div>
                   )
                 })

@@ -71,6 +71,17 @@ const CaseStudy = () => {
   const [errorCaseStudies, setErrorCaseStudies] = useState<string>('');
   const sliderRef = useRef<Slider | null>(null);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   useEffect(() => {
     const fetchCaseStudies = async () => {
@@ -190,7 +201,8 @@ const CaseStudy = () => {
 
   const caseStudyUrl = generateCaseStudyUrl();
 
-  const shareUrls = {
+
+  const shareUrls: Record<'linkedin' | 'twitter', string> = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
       caseStudyUrl
     )}&title=${encodeURIComponent(caseStudy?.title || '')}`,
@@ -199,10 +211,14 @@ const CaseStudy = () => {
     )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
 
+  const handleShare = (platform: keyof typeof shareUrls) => {
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
+  };
+
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: isMobile ? 1 : 4,
     slidesToScroll: 1,
     arrows: false,
     swipe: true,
@@ -295,46 +311,77 @@ const CaseStudy = () => {
 
       <Navigation />
       <div className={styles.container}>
-        <aside className={styles.leftAside}>
-          <div className={styles.stickyDiv}>
-            <div className={styles.allArticles} >
-              &larr;
-              <Link href={'/whatwethink'}>
-              <h1>Articles</h1>
-              </Link>
-              
-            </div>
-            <div className={styles.index}>
-              <h1>INDEX</h1>
-            </div>
-            <ul className={styles.navigation}>
-              {caseStudy.sections.map((section) => {
-                const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-                return (
-                  <li
-                    key={section.title}
-                    data-section={sectionId}
-                    className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
-                      }`}
-                    onClick={() => scrollToSection(sectionId)}
-                  >
-                    {section.title}
-                  </li>
-                );
-              })}
-            </ul>
+        {
+          !isMobile &&
+          <aside className={styles.leftAside}>
+            <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+
+              </div>
+              <div className={styles.index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.navigation}>
+                {caseStudy.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                        }`}
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
 
 
-          </div>
-        </aside>
+            </div>
+          </aside>
+        }
         <article className={styles.articleContainer}>
           <h1 className={styles.heading}>{caseStudy.title}</h1>
           <p className={styles.shortDescription}>{caseStudy.description && caseStudy.description}</p>
           <div className={styles.metadata}>
             {/* <p>Author <span>{caseStudy.author.name}</span></p> */}
             <p>Date <span>{caseStudy.publishDate}</span></p>
-            <p>Read-Time <span>{caseStudy.readTime}</span></p>
+            <p>Read-Time <span className={styles.glowDot}></span> <span>{caseStudy.readTime}</span></p>
           </div>
+          {
+            isMobile &&
+            <aside className={styles.leftAside}>
+              <div className={styles.stickyDiv}>
+                <div className={styles.index}>
+                  <h1>INDEX</h1>
+                </div>
+                <ul className={styles.navigation}>
+                  {caseStudy.sections.map((section) => {
+                    const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                    return (
+                      <li
+                        key={section.title}
+                        data-section={sectionId}
+                        className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                          }`}
+                        onClick={() => scrollToSection(sectionId)}
+                      >
+                        {section.title}
+                      </li>
+                    );
+                  })}
+                </ul>
+
+
+              </div>
+            </aside>
+          }
           {caseStudy.sections.map((section) => (
             <section
               key={section.title}
@@ -464,11 +511,11 @@ const CaseStudy = () => {
               <Link2 size={'24px'} />
               <p>Copy link</p>
             </div>
-            <div className={styles.shareElement}>
+            <div className={styles.shareElement} onClick={() => handleShare('linkedin')}>
               <FaLinkedin size={'24px'} />
               <p>Post on Linkedin</p>
             </div>
-            <div className={styles.shareElement}>
+            <div className={styles.shareElement} onClick={() => handleShare('twitter')}>
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
@@ -489,23 +536,21 @@ const CaseStudy = () => {
 
         </div>
         {loadingCaseStudies ? <p>Loading...</p> : (
-          <div className={styles.scrollContainer}>
+          <div className={styles.scrollContainer} >
             <Slider {...settings} ref={sliderRef}>
               {caseStudies.map(data => (
-                <div className={styles.card} key={data.slug}>
-                  <Link href={`/case-study/${data.slug}`} legacyBehavior>
-                    <div className={styles.cardImageContainer}>
-                      <Image
-                        height={500}
-                        width={1000}
-                        src={data.coverImage}
-                        alt="Card"
-                        className={styles.cardImage}
-                      />
-                      <div className={styles.cardOverlay}>Read more &rarr;</div>
-                    </div>
-                  </Link>
-                  <h2 className={styles.cardTitle}>{data.title}</h2>
+                <div className={styles.card} key={data.slug} onClick={() => { router.push(`/case-study/${data.slug}`) }}>
+                  <div className={styles.cardImageContainer}>
+                    <Image
+                      height={500}
+                      width={1000}
+                      src={data.coverImage}
+                      alt="Card"
+                      className={styles.cardImage}
+                    />
+                    <div className={styles.cardOverlay}>Read more &rarr;</div>
+                  </div>
+                  <h2 className={styles.cardTitle}>{data.title.length > 100 ? `${data.title.substring(0, 100)}...` : data.title}</h2>
                 </div>
               ))}
             </Slider>

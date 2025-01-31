@@ -66,12 +66,22 @@ const Ainews = () => {
   const [loadingNews, setLoadingNews] = useState<boolean>(false);
   const [errorNews, setErrorNews] = useState<string>('');
   const sliderRef = useRef<Slider | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
 
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: isMobile ? 1 : 4,
     slidesToScroll: 1,
     arrows: false,
     swipe: true,
@@ -198,13 +208,17 @@ const Ainews = () => {
 
   const ainewsUrl = generateAinewsUrl();
 
-  const shareUrls = {
+  const shareUrls: Record<'linkedin' | 'twitter', string> = {
     linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
       ainewsUrl
     )}&title=${encodeURIComponent(aiNews?.title || '')}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       ainewsUrl
     )}&text=${encodeURIComponent(aiNews?.title || '')}`,
+  };
+
+  const handleShare = (platform: keyof typeof shareUrls) => {
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
 
 
@@ -295,36 +309,39 @@ const Ainews = () => {
       </Head>
       <Navigation />
       <div className={styles.container}>
-        <aside className={styles.leftAside}>
-          <div className={styles.stickyDiv}>
-            <div className={styles.allArticles}>
-              &larr;
-              <Link href={'/whatwethink'}>
-              <h1>Articles</h1></Link>
-            </div>
-            <div className={styles.index}>
-              <h1>INDEX</h1>
-            </div>
-            <ul className={styles.navigation}>
-              {aiNews.sections.map((section) => {
-                const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-                return (
-                  <li
-                    key={section.title}
-                    data-section={sectionId}
-                    className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
-                      }`}
-                    onClick={() => scrollToSection(sectionId)}
-                  >
-                    {section.title}
-                  </li>
-                );
-              })}
-            </ul>
+        {
+          !isMobile &&
+          <aside className={styles.leftAside}>
+            <div className={styles.stickyDiv}>
+              <div className={styles.allArticles}>
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1></Link>
+              </div>
+              <div className={styles.index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.navigation}>
+                {aiNews.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                        }`}
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
 
 
-          </div>
-        </aside>
+            </div>
+          </aside>
+        }
         <article className={styles.articleContainer}>
           <h1 className={styles.heading}>{aiNews.title}</h1>
           <p className={styles.shortDescription}>{aiNews.description && aiNews.description}</p>
@@ -335,6 +352,34 @@ const Ainews = () => {
               <p>Read-Time <span className={styles.glowDot}></span> <span>{aiNews.readTime}</span></p>
             </div>
           </div>
+          {
+            isMobile &&
+            <aside className={styles.leftAside}>
+              <div className={styles.stickyDiv}>
+                <div className={styles.index}>
+                  <h1>INDEX</h1>
+                </div>
+                <ul className={styles.navigation}>
+                  {aiNews.sections.map((section) => {
+                    const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                    return (
+                      <li
+                        key={section.title}
+                        data-section={sectionId}
+                        className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                          }`}
+                        onClick={() => scrollToSection(sectionId)}
+                      >
+                        {section.title}
+                      </li>
+                    );
+                  })}
+                </ul>
+
+
+              </div>
+            </aside>
+          }
           {aiNews.sections.map((section) => (
             <section
               key={section.title}
@@ -464,11 +509,11 @@ const Ainews = () => {
               <Link2 size={'24px'} />
               <p>Copy link</p>
             </div>
-            <div className={styles.shareElement}>
+            <div className={styles.shareElement} onClick={() => handleShare('linkedin')}>
               <FaLinkedin size={'24px'} />
               <p>Post on Linkedin</p>
             </div>
-            <div className={styles.shareElement}>
+            <div className={styles.shareElement} onClick={() => handleShare('twitter')}>
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
@@ -494,20 +539,18 @@ const Ainews = () => {
               {
                 news.map(data => {
                   return (
-                    <div className={styles.card} key={data.slug}>
-                      <Link href={`/ainews/${data.slug}`}  legacyBehavior>
-                        <div className={styles.cardImageContainer}>
-                          <Image
-                            height={500}
-                            width={1000}
-                            src={data.coverImage}
-                            alt="Card"
-                            className={styles.cardImage}
-                          />
-                          <div className={styles.cardOverlay}>Read more &rarr;</div>
-                        </div>
-                      </Link>
-                      <h2 className={styles.cardTitle}>{data.title}</h2>
+                    <div className={styles.card} key={data.slug} onClick={() => { router.push(`/ainews/${data.slug}`) }}>
+                      <div className={styles.cardImageContainer}>
+                        <Image
+                          height={500}
+                          width={1000}
+                          src={data.coverImage}
+                          alt="Card"
+                          className={styles.cardImage}
+                        />
+                        <div className={styles.cardOverlay}>Read more &rarr;</div>
+                      </div>
+                      <h2 className={styles.cardTitle}>{data.title.length > 150 ? `${data.title.substring(0, 150)}...` : data.title}</h2>
                     </div>
                   )
                 })

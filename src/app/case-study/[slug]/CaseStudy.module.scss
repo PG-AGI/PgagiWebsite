@@ -7,11 +7,13 @@ $purple-light: #a855f7;
   gap: 20px;
   padding: 20px;
   height: 100vh;
-  background-color: #ffffff; /* White background for page */
+  background-color: #ffffff;
+  /* White background for page */
 }
 
 .skeleton {
-  background-color: #e0e0e0; /* Light gray background for skeleton */
+  background-color: #e0e0e0;
+  /* Light gray background for skeleton */
   border-radius: 5px;
   position: relative;
   overflow: hidden;
@@ -21,21 +23,27 @@ $purple-light: #a855f7;
 .skeletonLeft {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Ensures spacing between skeleton elements */
-  height: 100%; /* Ensures full height */
-  padding: 10px; /* Adds padding for better spacing inside the section */
-  background-color: #f9f9f9; /* Optional: Add background color to make it visible */
-  
+  gap: 15px;
+  /* Ensures spacing between skeleton elements */
+  height: 100%;
+  /* Ensures full height */
+  padding: 10px;
+  /* Adds padding for better spacing inside the section */
+  background-color: #f9f9f9;
+  /* Optional: Add background color to make it visible */
+
   .skeletonTitle {
     width: 80%;
     height: 20px;
-    margin-bottom: 10px; /* Optional: Adds space between skeletons */
+    margin-bottom: 10px;
+    /* Optional: Adds space between skeletons */
   }
 
   .skeletonText {
     width: 100%;
     height: 15px;
-    margin-bottom: 10px; /* Optional: Adds space between skeletons */
+    margin-bottom: 10px;
+    /* Optional: Adds space between skeletons */
   }
 }
 
@@ -44,8 +52,9 @@ $purple-light: #a855f7;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  height: 100%; /* Ensure it takes full height */
-  
+  height: 100%;
+  /* Ensure it takes full height */
+
   .skeletonArticleTitle {
     width: 90%;
     height: 25px;
@@ -59,7 +68,8 @@ $purple-light: #a855f7;
   .skeletonImage {
     width: 100%;
     height: 200px;
-    background-color: #ccc; /* Gray background for image skeleton */
+    background-color: #ccc;
+    /* Gray background for image skeleton */
   }
 }
 
@@ -68,13 +78,15 @@ $purple-light: #a855f7;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 100%; /* Ensure it takes full height */
-  
+  height: 100%;
+  /* Ensure it takes full height */
+
   .skeletonButton {
     width: 80%;
     height: 40px;
     border-radius: 8px;
-    background-color: #ccc; /* Light gray for buttons */
+    background-color: #ccc;
+    /* Light gray for buttons */
   }
 }
 
@@ -83,6 +95,7 @@ $purple-light: #a855f7;
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -90,7 +103,8 @@ $purple-light: #a855f7;
 
 .skeleton {
   background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%; /* To create the shimmering effect */
+  background-size: 200% 100%;
+  /* To create the shimmering effect */
   animation: shimmer 1.5s infinite linear;
 }
 
@@ -123,6 +137,18 @@ $purple-light: #a855f7;
     align-self: flex-start;
     position: sticky;
     top: 0px;
+    overflow-y: scroll;
+    height: 100vh;
+
+    ::-webkit-scrollbar {
+      width: 0px;
+      /* Hides the scrollbar button */
+    }
+
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
 
     ul {
       width: 100%;
@@ -150,7 +176,6 @@ $purple-light: #a855f7;
 
     .stickyDiv {
       .allArticles {
-        border-top: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
         padding: 1rem 0;
         width: 100%;
@@ -193,9 +218,9 @@ $purple-light: #a855f7;
 
       p {
         color: rgb(150, 150, 150) !important;
-        font-size: 18px;
+        font-size: 1rem;
         font-weight: 500;
-        margin: 20px 0px;
+        margin: 0 0 1rem 0;
 
         span {
           color: rgb(50, 50, 50) !important;
@@ -224,9 +249,11 @@ $purple-light: #a855f7;
 
     .heading {
       padding: 0px 20px;
-      font-size: 4.5rem;
-      font-weight: 400;
+      font-size: 3.2rem;
+      font-weight: 530;
       letter-spacing: 0.5px;
+      line-height: 4.5rem;
+      margin-top: 1.5rem;
     }
 
     section {
@@ -357,16 +384,15 @@ $purple-light: #a855f7;
         width: 100%;
         border-collapse: collapse;
         margin: 1rem 0;
-        background: lighten($purple-light, 33%);;
+        background: lighten($purple-light, 33%);
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
         .cell {
           border-bottom: 1px solid #ddd;
           padding: 1rem 1.5rem;
           text-align: left;
-          font-size: 14px;
+          font-size: 1.1rem;
           transition: background-color 0.3s ease;
           color: #333;
         }
@@ -377,7 +403,7 @@ $purple-light: #a855f7;
           padding: 1rem 1.5rem;
           text-align: left;
           color: #1e293b;
-          font-size: 16px;
+          font-size: 1.1rem;
           font-weight: bold;
           background: lighten($purple-light, 30%);
         }
@@ -386,17 +412,23 @@ $purple-light: #a855f7;
       // box 
       .box {
         width: 100%;
-        text-align: center;
+        text-align: left;
         border: 1px solid #ddd;
         border-radius: 10px;
         padding: 12px;
         margin-bottom: 1.5rem;
         background-color: #f9f9f9;
 
+        p {
+          margin-bottom: 1rem;
+        }
+
         .boxHeading {
-          color: #1e40af;
-          font-size: 24px;
-          font-weight: bold;
+          color: darken($purple-light, 30%) !important;
+          font-size: 1.5rem;
+          font-weight: 500;
+          text-align: center;
+          margin-bottom: 1rem;
         }
       }
     }
@@ -477,20 +509,23 @@ $purple-light: #a855f7;
   border-bottom: 1px solid #ddd;
   padding: 5rem;
 
-  .arrows{
+  .arrows {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1.2rem;
-    div{
+
+    div {
       display: flex;
       gap: 1rem;
-      div{
-        &:hover{
+
+      div {
+        &:hover {
           cursor: pointer;
         }
       }
     }
   }
+
   h1 {
     font-size: 24px;
     font-weight: 600;
@@ -516,7 +551,7 @@ $purple-light: #a855f7;
     padding: 1.5rem;
     text-align: center;
     transition: transform 0.3s;
-    min-height: 530px;
+    height: 530px;
     border: 1px solid #ddd;
 
     .cardImageContainer {
@@ -546,11 +581,12 @@ $purple-light: #a855f7;
     }
 
     .cardTitle {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: #333;
-      font-weight: 500;
-      margin: 3rem 1rem;
+      font-weight: 600;
+      margin: 2rem 0;
     }
+    
 
     &:hover {
       cursor: pointer;
@@ -563,6 +599,8 @@ $purple-light: #a855f7;
     &:hover .cardOverlay {
       opacity: 1;
     }
+
+
   }
 
 
@@ -589,11 +627,12 @@ $purple-light: #a855f7;
 
     .leftAside {
       width: 100%;
-      padding: 1rem 3rem;
+      padding: 2rem;
       display: flex;
       justify-content: center;
       font-size: 1rem;
       position: relative;
+      height: auto;
 
       ul {
         width: 100%;
@@ -621,7 +660,7 @@ $purple-light: #a855f7;
 
       .stickyDiv {
         .allArticles {
-          border-top: 1px solid #ddd;
+          // border-top: 1px solid #ddd;
           border-bottom: 1px solid #ddd;
           padding: 1rem 0;
           width: 100%;
@@ -649,28 +688,29 @@ $purple-light: #a855f7;
         }
       }
     }
+
     .articleContainer {
       width: 100%;
-      padding: 1rem 4rem;
+      padding: 0 1rem 0 1rem;
       border-right: 1px solid #ddd;
       border-left: 1px solid #ddd;
       letter-spacing: 0.5px;
       font-weight: 300;
-  
       .metadata {
         display: flex;
         justify-content: space-between;
         padding: 0px 20px;
+        flex-direction: column;
   
         p {
           color: rgb(150, 150, 150) !important;
-          font-size: 18px;
+          font-size: 1rem;
           font-weight: 500;
-          margin: 20px 0px;
+          margin: 0 0 1rem 0;
   
           span {
             color: rgb(50, 50, 50) !important;
-            font-size: 18px;
+            font-size: 1rem;
             font-weight: 500;
           }
         }
@@ -694,20 +734,21 @@ $purple-light: #a855f7;
       }
   
       .heading {
-        padding: 0px 20px;
-        font-size: 4.5rem;
-        font-weight: 400;
+        font-size: 2.5rem;
+        font-weight: 530;
         letter-spacing: 0.5px;
+        line-height: 4.5rem;
+        margin-top: 1.5rem;
       }
-  
+
       section {
         padding: 20px;
-  
+
         .sectionHeading {
-          font-size: 36px !important;
+          font-size: 2rem !important;
           font-weight: 500;
         }
-  
+
         .quote {
           font-style: italic;
           border-left: 3px solid darken($purple-light, 30%);
@@ -718,30 +759,30 @@ $purple-light: #a855f7;
           border-radius: 3px;
           background-color: lighten($purple-light, 30%);
         }
-  
+
         .highlight {
           padding: 10px;
           border-radius: 0.5rem;
           margin: 10px 0;
           font-weight: 400;
         }
-  
+
         .codeBlock {
           padding: 10px;
           overflow-x: auto;
           margin: 10px 0;
         }
-  
+
         .paragraph {
           line-height: 2rem;
-  
+
           p {
             margin-bottom: 1.2rem;
-  
+
             strong {
               font-weight: 500;
             }
-  
+
             a {
               color: darken($purple-light, 20%) !important;
               text-decoration: none;
@@ -749,13 +790,13 @@ $purple-light: #a855f7;
               font-weight: 500;
               text-decoration-thickness: 2px !important;
               text-underline-offset: 5px;
-  
+
               &:hover {
                 color: lighten($purple-light, 10%);
                 text-decoration: underline;
               }
             }
-  
+
             u {
               color: $purple-light;
               text-decoration: none;
@@ -763,14 +804,14 @@ $purple-light: #a855f7;
               transition: all 0.3s ease;
             }
           }
-  
+
           ul li {
             margin: 1rem 0 1rem 2rem;
-  
+
             strong {
               font-weight: 500 !important;
             }
-  
+
             a {
               color: darken($purple-light, 20%) !important;
               text-decoration: none;
@@ -778,13 +819,13 @@ $purple-light: #a855f7;
               font-weight: 500;
               text-decoration-thickness: 2px !important;
               text-underline-offset: 5px;
-  
+
               &:hover {
                 color: lighten($purple-light, 10%);
                 text-decoration: underline;
               }
             }
-  
+
             u {
               color: $purple-light;
               text-decoration: none;
@@ -792,14 +833,14 @@ $purple-light: #a855f7;
               transition: all 0.3s ease;
             }
           }
-  
+
           ol li {
             margin-left: 1.2rem;
-  
+
             strong {
               font-weight: 500;
             }
-  
+
             a {
               color: darken($purple-light, 20%) !important;
               text-decoration: none;
@@ -807,13 +848,13 @@ $purple-light: #a855f7;
               font-weight: 500;
               text-decoration-thickness: 2px !important;
               text-underline-offset: 5px;
-  
+
               &:hover {
                 color: lighten($purple-light, 10%);
                 text-decoration: underline;
               }
             }
-  
+
             u {
               color: $purple-light;
               text-decoration: none;
@@ -822,17 +863,18 @@ $purple-light: #a855f7;
             }
           }
         }
-  
+
         // table
         .dynamicTable {
           width: 100%;
           border-collapse: collapse;
           margin: 1rem 0;
-          background: lighten($purple-light, 33%);;
+          background: lighten($purple-light, 33%);
+          ;
           border-radius: 8px;
           overflow: hidden;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  
+
           .cell {
             border-bottom: 1px solid #ddd;
             padding: 1rem 1.5rem;
@@ -841,7 +883,7 @@ $purple-light: #a855f7;
             transition: background-color 0.3s ease;
             color: #333;
           }
-  
+
           .heading {
             border-top: 1px solid #ddd;
             border-bottom: 2px solid #ccc;
@@ -853,7 +895,7 @@ $purple-light: #a855f7;
             background: lighten($purple-light, 30%);
           }
         }
-  
+
         // box 
         .box {
           width: 100%;
@@ -863,7 +905,7 @@ $purple-light: #a855f7;
           padding: 12px;
           margin-bottom: 1.5rem;
           background-color: #f9f9f9;
-  
+
           .boxHeading {
             color: #1e40af;
             font-size: 24px;
@@ -875,13 +917,13 @@ $purple-light: #a855f7;
 
     .rightAside {
       width: 100%;
-      padding: 40px;
       overflow: hidden;
       display: flex;
       justify-content: center;
       font-size: 16px;
 
       .stickyDiv {
+        margin-bottom: 4rem;
         .heading {
           font-weight: 600;
           border-bottom: 1px solid #ddd;
@@ -909,5 +951,109 @@ $purple-light: #a855f7;
       }
 
     }
+  }
+
+  .moreItemsContanier {
+    background-color: #fff;
+    color: rgb(28, 28, 28) !important;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 5rem 2rem;
+  
+    .arrows {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+  
+      div {
+        display: flex;
+        gap: 1rem;
+  
+        div {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+  
+    ::selection {
+      background: black !important;
+      color: white !important; // Ensures the text remains visible
+    }
+  
+    * {
+      color: inherit !important;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    .card {
+      width: 100%;
+      background: inherit;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s;
+      height: 450px;
+      border: 1px solid #ddd;
+  
+      .cardImageContainer {
+        width: 100%;
+        height: 240px; // Fixed height
+        position: relative;
+        overflow: hidden;
+  
+        .cardImage {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; // Ensures image fills the container properly
+          transition: transform 0.3s ease-in-out;
+        }
+  
+        .cardOverlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: white !important;
+          font-size: 1.3rem;
+          font-weight: 500;
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+  
+      .cardTitle {
+        font-size: 1rem;
+        color: #333;
+        font-weight: 600;
+        margin: 2rem 0;
+      }
+      
+  
+      &:hover {
+        cursor: pointer;
+      }
+  
+      &:hover .cardImage {
+        transform: scaleY(1.2); // Stretching the image inside the fixed container
+      }
+  
+      &:hover .cardOverlay {
+        opacity: 1;
+      }
+  
+  
+    }
+  
+  
   }
 }
