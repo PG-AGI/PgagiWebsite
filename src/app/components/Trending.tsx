@@ -39,7 +39,7 @@ export default function Trending() {
   return (
     <>
       <section className={styles.trending}>
-        <h3>{"What's Trending!"}</h3>
+        <h3>What's Trending!</h3>
         <div className={styles.trendingList}>
           {trendingList.map((item, i) => (
             <div

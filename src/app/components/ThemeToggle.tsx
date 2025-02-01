@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const ThemeToggle = (): JSX.Element | null => {
   const { theme, setTheme } = useTheme();
@@ -9,21 +10,22 @@ const ThemeToggle = (): JSX.Element | null => {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
 
-  useEffect(() => {
-    // Update the `data-theme` attribute when theme changes
-    document.documentElement.setAttribute("data-theme", theme || "light");
-  }, [theme]);
+    // If no theme is set, default to "dark"
+    if (!theme) {
+      setTheme("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  }, [theme, setTheme]);
 
-  if (!mounted) return null; // Prevents hydration mismatch in SSR
+  if (!mounted) return null;
 
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="p-2 border rounded-md bg-gray-200 dark:bg-gray-800 dark:text-white"
+      className="rounded-full transition-all text-black dark:text-white border-none outline-none"
     >
-      {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+      {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} />}
     </button>
   );
 };

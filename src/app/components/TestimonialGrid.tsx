@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import styles from './TestimonialGrid.module.scss';
 import Image from 'next/image';
+import '../globals.css';
 
 const flagEmojis: { [key: string]: string } = {
   'USA': '🇺🇸',
@@ -74,15 +75,15 @@ const TestimonialGrid: React.FC = () => {
             whileHover={{ scale: 1.05, boxShadow: '0px 15px 25px rgba(0, 0, 0, 0.2)' }}
           >
             <div className={styles.cardContent}>
-            <Image
-  src={testimonial.image}
-  alt={testimonial.name}
-  className={styles.profileImage}
-  width={80}  
-  height={80} 
-  quality={75} 
-  priority={true} 
-/>
+              <Image
+                src={testimonial.image}
+                alt={testimonial.name}
+                className={styles.profileImage}
+                width={80}
+                height={80}
+                quality={75}
+                priority={true}
+              />
               <h3 className={styles.name}>{testimonial.name}</h3>
               <p className={styles.company}>{testimonial.company}</p>
               <span className={styles.countryFlag}>

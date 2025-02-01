@@ -1,9 +1,9 @@
 .benefits-section {
     padding: 5rem 0 15rem 0;
-    /* py-20 */
-    /* Gradient background */
-    color: #ffffff;
-    /* Default text color */
+    color: var(--text-color-light)
+}
+[dark-theme="dark"] .benefits-section {
+    color: var(--text-color-dark)
 }
 
 .benefits-container {
@@ -21,10 +21,10 @@
     text-align: center;
     margin-bottom: 3rem;
     /* mb-12 */
-    color: #9ca3af;
-    /* Subtle gray */
-    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
-    /* Text glow for better readability */
+    color: var(--text-color-light);
+}
+[data-theme="dark"] .benefits-heading {
+    color: var(--text-color-dark);
 }
 
 .benefits-grid {
@@ -106,6 +106,10 @@
 .card-description {
     font-size: 1rem;
     /* text-base */
-    color: #9ca3af;
+    color: var(--text-color-light)
     /* Subtle gray */
+}
+
+[data-theme="dark"] .card-description{
+    color: var(--text-color-dark);
 }

@@ -28,6 +28,7 @@ body {
 /* Example button that changes color based on theme */
 button {
   background-color: var(--button-color-light);
+  color: var(--text-color-light);
 }
 
 [data-theme='dark'] button {

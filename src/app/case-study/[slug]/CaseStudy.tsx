@@ -19,6 +19,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import '../../globals.css';
+import ThemeToggle from '@/app/components/ThemeToggle';
 
 type caseStudy = {
   slug: string;
@@ -550,7 +552,7 @@ const CaseStudy = () => {
                     />
                     <div className={styles.cardOverlay}>Read more &rarr;</div>
                   </div>
-                  <h2 className={styles.cardTitle}>{data.title.length > 100 ? `${data.title.substring(0, 100)}...` : data.title}</h2>
+                  <h2 className={styles.cardTitle}>{data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}</h2>
                 </div>
               ))}
             </Slider>
@@ -559,6 +561,9 @@ const CaseStudy = () => {
       </div>
 
       <Footer />
+      <div className={styles.toggleButton}>
+        <ThemeToggle />
+      </div>
     </>
   );
 };

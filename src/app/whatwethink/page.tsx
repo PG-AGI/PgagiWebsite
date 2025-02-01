@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import Skeleton from 'react-loading-skeleton'; 
 import 'react-loading-skeleton/dist/skeleton.css';
 import { generateSlug } from '@/services/generateSlugService';
+import '../globals.css';
 
 type CaseStudy = {
   id: string;

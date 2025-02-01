@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Benefits.module.scss';
 import { Laptop, Brain, Globe, BookOpen,  Landmark, HandCoins } from 'lucide-react';
+import '../../globals.css';
 
 const benefits = [
   {
