@@ -129,6 +129,7 @@ const BlogPost = () => {
   }, [slug]);
 
   useEffect(() => {
+    if (isMobile) return;
     const handleScroll = () => {
       if (!blogPost?.sections) return;
 
@@ -168,7 +169,7 @@ const BlogPost = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [blogPost]);
+  }, [blogPost, isMobile]);
 
 
 

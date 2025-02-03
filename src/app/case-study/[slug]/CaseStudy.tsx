@@ -134,6 +134,7 @@ const CaseStudy = () => {
   }, [slug]);
 
 useEffect(() => {
+  if (isMobile) return;
   const handleScroll = () => {
     if (!caseStudy?.sections) return;
 
@@ -174,7 +175,7 @@ useEffect(() => {
   return () => {
     window.removeEventListener('scroll', handleScroll);
   };
-}, [caseStudy]);
+}, [caseStudy, isMobile]);
 
 
 
@@ -578,3 +579,7 @@ useEffect(() => {
 };
 
 export default CaseStudy;
+
+
+
+

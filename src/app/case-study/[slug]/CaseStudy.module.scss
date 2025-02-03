@@ -526,6 +526,7 @@ $purple-light: #a855f7;
       .box {
         color: black !important;
       }
+      
     }
   }
 }
@@ -837,7 +838,7 @@ $purple-light: #a855f7;
           p{
             background-color: lighten($purple-light, 10%);
             width: fit-content;
-            color: white !important;
+            color: black !important;
             padding: 0.8rem 1rem;
             border-radius: 1.2rem;
           }

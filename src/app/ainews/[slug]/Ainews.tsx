@@ -139,6 +139,7 @@ const Ainews = () => {
   }, [slug]);
 
   useEffect(() => {
+    if (isMobile) return;
     const handleScroll = () => {
       if (!aiNews?.sections) return;
 
@@ -178,7 +179,7 @@ const Ainews = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [aiNews]);
+  }, [aiNews, isMobile]);
 
 
 
