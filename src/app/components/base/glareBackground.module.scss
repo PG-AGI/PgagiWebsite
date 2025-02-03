@@ -1,4 +1,4 @@
-[data-theme="dark"] .glareBackground {
+.glareBackground {
     $padding: 100px;
     $duration: 120s;
 
@@ -86,6 +86,10 @@
             transform: translate(0, 0) scale(1);
         }
     }
+}
+
+[data-theme="light"] .glareBackground{
+    display: none;
 }
 
 @media (max-width:478px){

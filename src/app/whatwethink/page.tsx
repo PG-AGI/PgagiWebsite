@@ -81,6 +81,10 @@ export default function BlogPage() {
       return () => topList.removeEventListener('scroll', handleScroll);
     }
   }, []);
+  useEffect(()=>{
+		localStorage.setItem('theme', 'dark');
+		document.documentElement.setAttribute("data-theme", "dark");
+	  }, []);
   
 
   useEffect(() => {

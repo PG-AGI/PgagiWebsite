@@ -20,7 +20,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import '../../globals.css';
-import ThemeToggle from '@/app/components/ThemeToggle';
+import DarkModeToggle from '@/app/components/ThemeToggle';
 
 type caseStudy = {
   slug: string;
@@ -132,40 +132,49 @@ const CaseStudy = () => {
 
     fetchCaseStudy();
   }, [slug]);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!caseStudy?.sections) return;
 
-      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-      let foundActive = null;
+useEffect(() => {
+  const handleScroll = () => {
+    if (!caseStudy?.sections) return;
 
-      caseStudy.sections.forEach((section) => {
-        const sectionElement = document.getElementById(
-          section.title.toLowerCase().replace(/\s+/g, '-')
-        );
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    let foundActive = null;
 
-        if (sectionElement) {
-          const { offsetTop, offsetHeight } = sectionElement;
-          if (
-            scrollPosition >= offsetTop - 50 && // Adjust offset if needed
-            scrollPosition < offsetTop + offsetHeight - 50
-          ) {
-            foundActive = sectionElement.id;
-          }
+    caseStudy.sections.forEach((section) => {
+      const sectionElement = document.getElementById(
+        section.title.toLowerCase().replace(/\s+/g, '-')
+      );
+
+      if (sectionElement) {
+        const { offsetTop, offsetHeight } = sectionElement;
+        if (
+          scrollPosition >= offsetTop - 50 &&
+          scrollPosition < offsetTop + offsetHeight - 50
+        ) {
+          foundActive = sectionElement.id;
         }
-      });
-
-      if (foundActive) {
-        setActiveSection(foundActive);
-        console.log('active section is here', foundActive);
       }
-    };
+    });
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [caseStudy]);
+    if (foundActive) {
+      setActiveSection(foundActive);
+
+      // Ensure the corresponding <li> scrolls into view
+      const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+      if (activeNavItem) {
+        activeNavItem.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+  };
+}, [caseStudy]);
 
 
 
@@ -521,6 +530,9 @@ const CaseStudy = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
+            <div className={styles.toggleButton}>
+              <DarkModeToggle />
+            </div>
           </div>
         </aside>
       </div>
@@ -561,9 +573,6 @@ const CaseStudy = () => {
       </div>
 
       <Footer />
-      <div className={styles.toggleButton}>
-        <ThemeToggle />
-      </div>
     </>
   );
 };

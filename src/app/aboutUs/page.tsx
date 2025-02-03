@@ -11,7 +11,7 @@ import bg from '../assets/topFrame.png';
 import bg2 from '../assets/background.png';
 import box1 from '../assets/box1.png';
 import box2 from '../assets/box2.png';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { whyChoose } from "@/utils/constants";
 import up from '../assets/up.png';
 import down from '../assets/down.png';
@@ -19,6 +19,11 @@ import BookCallModal from "../components/base/bookCallModela";
 
 export default function AboutUs() {
   const topRef = useRef<HTMLDivElement>(null);
+
+  useEffect(()=>{
+    localStorage.setItem('theme', 'dark');
+    document.documentElement.setAttribute("data-theme", "dark");
+  }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

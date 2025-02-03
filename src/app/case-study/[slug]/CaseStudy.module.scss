@@ -281,10 +281,19 @@ $purple-light: #a855f7;
       }
 
       .highlight {
-        padding: 10px;
-        border-radius: 0.5rem;
-        margin: 10px 0;
         font-weight: 400;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+        padding: 0;
+        p{
+          background-color: lighten($purple-light, 10%);
+          width: fit-content;
+          color: white !important;
+          padding: 0.8rem 1rem;
+          border-radius: 1.2rem;
+        }
       }
 
       .codeBlock {
@@ -310,6 +319,7 @@ $purple-light: #a855f7;
             font-weight: 500;
             text-decoration-thickness: 2px !important;
             text-underline-offset: 5px;
+            text-decoration: underline;
 
             &:hover {
               color: lighten($purple-light, 10%);
@@ -339,6 +349,7 @@ $purple-light: #a855f7;
             font-weight: 500;
             text-decoration-thickness: 2px !important;
             text-underline-offset: 5px;
+            text-decoration: underline;
 
             &:hover {
               color: lighten($purple-light, 10%);
@@ -368,6 +379,7 @@ $purple-light: #a855f7;
             font-weight: 500;
             text-decoration-thickness: 2px !important;
             text-underline-offset: 5px;
+            text-decoration: underline;
 
             &:hover {
               color: lighten($purple-light, 10%);
@@ -658,9 +670,7 @@ $purple-light: #a855f7;
 }
 
 .toggleButton{
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  margin-top: 1rem;
 }
 
 @media (max-width: 900px) {
@@ -818,10 +828,19 @@ $purple-light: #a855f7;
         }
 
         .highlight {
-          padding: 10px;
-          border-radius: 0.5rem;
-          margin: 10px 0;
           font-weight: 400;
+          gap: 10px;
+          display: flex;
+          flex-direction: column;
+          margin-top: 1rem;
+          padding: 0;
+          p{
+            background-color: lighten($purple-light, 10%);
+            width: fit-content;
+            color: white !important;
+            padding: 0.8rem 1rem;
+            border-radius: 1.2rem;
+          }
         }
 
         .codeBlock {

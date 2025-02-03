@@ -18,7 +18,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import '../../globals.css';
-import ThemeToggle from '@/app/components/ThemeToggle';
+import DarkModeToggle from '@/app/components/ThemeToggle';
 
 type BlogPostType = {
   slug: string;
@@ -153,7 +153,14 @@ const BlogPost = () => {
 
       if (foundActive) {
         setActiveSection(foundActive);
-        console.log('active section is here', foundActive);
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
       }
     };
 
@@ -356,32 +363,32 @@ const BlogPost = () => {
             </div>
           </div>
           {
-            isMobile && 
+            isMobile &&
             <aside className={styles.leftAside}>
-            <div className={styles.stickyDiv}>
-              <div className={styles.index}>
-                <h1>INDEX</h1>
+              <div className={styles.stickyDiv}>
+                <div className={styles.index}>
+                  <h1>INDEX</h1>
+                </div>
+                <ul className={styles.navigation}>
+                  {blogPost.sections.map((section) => {
+                    const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                    return (
+                      <li
+                        key={section.title}
+                        data-section={sectionId}
+                        className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                          }`}
+                        onClick={() => scrollToSection(sectionId)}
+                      >
+                        {section.title}
+                      </li>
+                    );
+                  })}
+                </ul>
+
+
               </div>
-              <ul className={styles.navigation}>
-                {blogPost.sections.map((section) => {
-                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-                  return (
-                    <li
-                      key={section.title}
-                      data-section={sectionId}
-                      className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
-                        }`}
-                      onClick={() => scrollToSection(sectionId)}
-                    >
-                      {section.title}
-                    </li>
-                  );
-                })}
-              </ul>
-  
-  
-            </div>
-          </aside>
+            </aside>
           }
           <div className={styles.tldr}>
             <h2>TL; DR (60-second blog summary)</h2>
@@ -528,6 +535,9 @@ const BlogPost = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
+            <div className={styles.toggleButton}>
+              <DarkModeToggle />
+            </div>
           </div>
         </aside>
       </div>
@@ -571,7 +581,7 @@ const BlogPost = () => {
       </div>
       <Footer />
       <div className={styles.toggleButton}>
-        <ThemeToggle />
+        <DarkModeToggle />
       </div>
     </>
   );

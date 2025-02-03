@@ -1,33 +1,38 @@
-"use client";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useTheme } from 'next-themes';
+import { Sun, Moon } from "lucide-react";
+import './ThemeToggle.modules.scss';
 
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
-
-const ThemeToggle = (): JSX.Element | null => {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState<boolean>(false);
+export default function DarkModeToggle() {
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-
-    // If no theme is set, default to "dark"
-    if (!theme) {
-      setTheme("dark");
-      document.documentElement.setAttribute("data-theme", "dark");
+    setIsMounted(true);
+    if (resolvedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
     }
-  }, [theme, setTheme]);
+  }, [resolvedTheme]);
 
-  if (!mounted) return null;
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  };
+
+  if (!isMounted) return null;
 
   return (
     <button
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="rounded-full transition-all text-black dark:text-white border-none outline-none"
+      className={`theme-switch-button ${resolvedTheme === 'dark' ? 'dark' : 'light'}`}
+      onClick={toggleTheme}
+      aria-label="Toggle Theme"
     >
-      {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} />}
+      {resolvedTheme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
+      <span className="theme-label">
+        {resolvedTheme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+      </span>
     </button>
   );
-};
-
-export default ThemeToggle;
+}

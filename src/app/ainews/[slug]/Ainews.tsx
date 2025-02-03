@@ -17,7 +17,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import ThemeToggle from '@/app/components/ThemeToggle';
+import DarkModeToggle from '@/app/components/ThemeToggle';
 
 type AinewsType = {
   slug: string;
@@ -163,7 +163,14 @@ const Ainews = () => {
 
       if (foundActive) {
         setActiveSection(foundActive);
-        console.log('active section is here', foundActive);
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
       }
     };
 
@@ -347,11 +354,8 @@ const Ainews = () => {
           <h1 className={styles.heading}>{aiNews.title}</h1>
           <p className={styles.shortDescription}>{aiNews.description && aiNews.description}</p>
           <div className={styles.metadata}>
-            <p>Author <span>{aiNews.author.name}</span></p>
-            <div>
-              <p>Date <span>{aiNews.publishDate}</span></p>
-              <p>Read-Time <span className={styles.glowDot}></span> <span>{aiNews.readTime}</span></p>
-            </div>
+            <p>Date <span>{aiNews.publishDate}</span></p>
+            <p>Read-Time <span className={styles.glowDot}></span> <span>{aiNews.readTime}</span></p>
           </div>
           {
             isMobile &&
@@ -518,6 +522,9 @@ const Ainews = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
+            <div className={styles.toggleButton}>
+              <DarkModeToggle />
+            </div>
           </div>
         </aside>
       </div>
@@ -561,7 +568,7 @@ const Ainews = () => {
       </div>
       <Footer />
       <div className={styles.toggleButton}>
-        <ThemeToggle />
+        <DarkModeToggle />
       </div>
     </>
   );
