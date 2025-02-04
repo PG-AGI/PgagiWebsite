@@ -153,6 +153,9 @@ $purple-light: #a855f7;
         &.active {
           text-decoration: underline;
         }
+
+        // Prevent text selection during scrolling
+        user-select: none;
       }
     }
 
@@ -182,6 +185,9 @@ $purple-light: #a855f7;
         padding: 1.6rem 0;
         letter-spacing: 1px;
       }
+
+      // Prevent scroll chaining
+      overscroll-behavior: contain;
     }
   }
 

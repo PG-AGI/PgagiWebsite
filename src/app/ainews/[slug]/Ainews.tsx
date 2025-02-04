@@ -152,59 +152,74 @@ const Ainews = () => {
 
   useEffect(() => {
     if (isMobile) return;
+    
+    let isScrolling: NodeJS.Timeout;
     const handleScroll = () => {
-      if (!aiNews?.sections) return;
+      // Clear the previous timeout
+      clearTimeout(isScrolling);
 
-      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-      let foundActive = null;
+      // Set a new timeout
+      isScrolling = setTimeout(() => {
+        if (!aiNews?.sections) return;
 
-      aiNews.sections.forEach((section) => {
-        const sectionElement = document.getElementById(
-          section.title.toLowerCase().replace(/\s+/g, '-')
-        );
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+        let foundActive = null;
 
-        if (sectionElement) {
-          const { offsetTop, offsetHeight } = sectionElement;
-          if (
-            scrollPosition >= offsetTop - 50 && // Adjust offset if needed
-            scrollPosition < offsetTop + offsetHeight - 50
-          ) {
-            foundActive = sectionElement.id;
+        aiNews.sections.forEach((section) => {
+          const sectionElement = document.getElementById(
+            section.title.toLowerCase().replace(/\s+/g, '-')
+          );
+
+          if (sectionElement) {
+            const { offsetTop, offsetHeight } = sectionElement;
+            if (
+              scrollPosition >= offsetTop - 50 &&
+              scrollPosition < offsetTop + offsetHeight - 50
+            ) {
+              foundActive = sectionElement.id;
+            }
+          }
+        });
+
+        if (foundActive) {
+          setActiveSection(foundActive);
+          
+          // Only scroll the nav item into view if user isn't actively scrolling
+          const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+          if (activeNavItem && !document.documentElement.classList.contains('scrolling')) {
+            activeNavItem.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest',
+            });
           }
         }
-      });
-
-      if (foundActive) {
-        setActiveSection(foundActive);
-        // Ensure the corresponding <li> scrolls into view
-        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
-        if (activeNavItem) {
-          activeNavItem.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-          });
-        }
-      }
+      }, 150); // Debounce time of 150ms
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      clearTimeout(isScrolling);
     };
   }, [aiNews, isMobile]);
 
-
-
   const scrollToSection = (sectionId: string) => {
+    document.documentElement.classList.add('scrolling');
     const sectionElement = document.getElementById(sectionId);
     if (sectionElement) {
       sectionElement.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
-      setActiveSection(sectionId); // Immediately set active
+      setActiveSection(sectionId);
+      
+      // Remove the scrolling class after animation completes
+      setTimeout(() => {
+        document.documentElement.classList.remove('scrolling');
+      }, 1000);
     }
   };
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     alert('Link copied to clipboard!');
