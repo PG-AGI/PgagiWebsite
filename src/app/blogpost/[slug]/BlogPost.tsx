@@ -235,13 +235,23 @@ const BlogPost = () => {
 
   const blogPostUrl = generateBlogPostUrl();
 
+  const generateLinkedInShareText = () => {
+    if (!blogPost) return '';
+    return `Here's a detailed blog that I found on PG-AGI: "${blogPost.title}". Check it out!`;
+  };
+
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${blogPost?.title || ''}&summary=${blogPost?.description || ''}&source=${window.location.origin}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(blogPost?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(blogPostUrl)}&text=${encodeURIComponent(blogPost?.title || '')}`,
   };
 
   const handleShare = (platform: keyof typeof shareUrls) => {
-    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
+    if (platform === 'linkedin') {
+      const linkedInUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(blogPost?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`;
+      window.open(linkedInUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
+    } else {
+      window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
+    }
   };
 
   const settings = {

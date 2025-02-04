@@ -244,15 +244,21 @@ const Ainews = () => {
 
   const ainewsUrl = generateAinewsUrl();
 
-  const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${aiNews?.title || ''}&summary=${aiNews?.description || ''}&source=${window.location.origin}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(ainewsUrl)}&text=${encodeURIComponent(aiNews?.title || '')}`,
+  const generateLinkedInShareText = () => {
+    if (!aiNews) return '';
+    return `Here's an interesting AI news article that I found on PG-AGI: "${aiNews.title}". Check it out!`;
   };
 
-  const handleShare = (platform: keyof typeof shareUrls) => {
-    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
+  const handleShare = (platform: 'linkedin' | 'twitter') => {
+    if (platform === 'linkedin') {
+      const linkedInUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(aiNews?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`;
+      window.open(linkedInUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
+    } else {
+      // Handle Twitter sharing
+      const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(aiNews?.title || '')}`;
+      window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+    }
   };
-
 
   if (loading) {
     return (
