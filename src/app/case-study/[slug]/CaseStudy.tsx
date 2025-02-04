@@ -237,14 +237,25 @@ const CaseStudy = () => {
 
   const caseStudyUrl = generateCaseStudyUrl();
 
+  const generateLinkedInShareText = () => {
+    if (!caseStudy) return '';
+    return `Here's an insightful case study that I found on PG-AGI: "${caseStudy.title}". Check it out!`;
+  };
 
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${caseStudy?.title || ''}&summary=${caseStudy?.description || ''}&source=${window.location.origin}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(caseStudy?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(caseStudyUrl)}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
   
-  const handleShare = (platform: keyof typeof shareUrls) => {
-    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
+  const handleShare = (platform: 'linkedin' | 'twitter') => {
+    if (platform === 'linkedin') {
+      const linkedInUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(caseStudy?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`;
+      window.open(linkedInUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
+    } else {
+      // Handle Twitter sharing
+      const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(caseStudy?.title || '')}`;
+      window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+    }
   };
   
 
