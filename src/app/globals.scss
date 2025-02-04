@@ -2,16 +2,16 @@
 
 /* Light Mode Defaults */
 :root {
-	--bg-color: #ffffff;
-	--text-color: #000000;
+	--bg-color-light: #121212;
+	--text-color-light: #ffffff;
 	--scrollbar-track: #d1d5db;
 	--scrollbar-thumb: #4b5563;
 }
 
 /* Dark Mode */
 [data-theme="dark"] {
-	--bg-color: #121212;
-	--text-color: #ffffff;
+	--bg-color-dark: #ffffff;
+	--text-color-dark: #000000;
 	--scrollbar-track: #27272a;
 	--scrollbar-thumb: #6b7280;
 }
@@ -21,8 +21,8 @@ html, body {
 	height: 100% !important;
 	padding: 0;
 	margin: 0;
-	background-color: var(--bg-color);
-	color: var(--text-color);
+	background-color: var(--bg-color-light);
+	color: var(--text-color-light);
 	scroll-behavior: smooth;
 	font-family: "Poppins", sans-serif;
 	box-sizing: border-box;
@@ -30,7 +30,7 @@ html, body {
 
 /* Apply Theme to All Elements */
 * {
-	color: var(--text-color);
+	color: var(--text-color-light);
 	box-sizing: border-box;
 	overflow-wrap: break-word;
 }

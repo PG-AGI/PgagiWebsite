@@ -73,6 +73,11 @@ const BlogPost = () => {
   const sliderRef = useRef<Slider | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
+  useEffect(()=>{
+		localStorage.setItem('theme', 'light');
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 900);
@@ -362,11 +367,24 @@ const BlogPost = () => {
               <p>Date <span>{blogPost.publishDate}</span></p>
               <p>Read-Time <span className={styles.glowDot}></span> <span>{blogPost.readTime}</span></p>
             </div>
+            {
+              isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
           {
             isMobile &&
             <aside className={styles.leftAside}>
               <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+
+              </div>
                 <div className={styles.index}>
                   <h1>INDEX</h1>
                 </div>
@@ -536,9 +554,12 @@ const BlogPost = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
-            <div className={styles.toggleButton}>
-              <DarkModeToggle />
-            </div>
+            {
+              !isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
         </aside>
       </div>
@@ -581,9 +602,6 @@ const BlogPost = () => {
         }
       </div>
       <Footer />
-      <div className={styles.toggleButton}>
-        <DarkModeToggle />
-      </div>
     </>
   );
 };

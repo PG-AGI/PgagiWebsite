@@ -5,15 +5,11 @@ import { Sun, Moon } from "lucide-react";
 import './ThemeToggle.modules.scss';
 
 export default function DarkModeToggle() {
-  let { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    if (!theme) {
-      setTheme('light');
-      resolvedTheme = 'light';
-    }
     if (resolvedTheme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
     } else {

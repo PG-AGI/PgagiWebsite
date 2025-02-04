@@ -75,6 +75,11 @@ const CaseStudy = () => {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
+  useEffect(()=>{
+		localStorage.setItem('theme', 'light');
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 900);
@@ -133,49 +138,49 @@ const CaseStudy = () => {
     fetchCaseStudy();
   }, [slug]);
 
-useEffect(() => {
-  if (isMobile) return;
-  const handleScroll = () => {
-    if (!caseStudy?.sections) return;
+  useEffect(() => {
+    if (isMobile) return;
+    const handleScroll = () => {
+      if (!caseStudy?.sections) return;
 
-    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-    let foundActive = null;
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      let foundActive = null;
 
-    caseStudy.sections.forEach((section) => {
-      const sectionElement = document.getElementById(
-        section.title.toLowerCase().replace(/\s+/g, '-')
-      );
+      caseStudy.sections.forEach((section) => {
+        const sectionElement = document.getElementById(
+          section.title.toLowerCase().replace(/\s+/g, '-')
+        );
 
-      if (sectionElement) {
-        const { offsetTop, offsetHeight } = sectionElement;
-        if (
-          scrollPosition >= offsetTop - 50 &&
-          scrollPosition < offsetTop + offsetHeight - 50
-        ) {
-          foundActive = sectionElement.id;
+        if (sectionElement) {
+          const { offsetTop, offsetHeight } = sectionElement;
+          if (
+            scrollPosition >= offsetTop - 50 &&
+            scrollPosition < offsetTop + offsetHeight - 50
+          ) {
+            foundActive = sectionElement.id;
+          }
+        }
+      });
+
+      if (foundActive) {
+        setActiveSection(foundActive);
+
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
         }
       }
-    });
+    };
 
-    if (foundActive) {
-      setActiveSection(foundActive);
-
-      // Ensure the corresponding <li> scrolls into view
-      const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
-      if (activeNavItem) {
-        activeNavItem.scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-        });
-      }
-    }
-  };
-
-  window.addEventListener('scroll', handleScroll);
-  return () => {
-    window.removeEventListener('scroll', handleScroll);
-  };
-}, [caseStudy, isMobile]);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [caseStudy, isMobile]);
 
 
 
@@ -365,11 +370,23 @@ useEffect(() => {
             {/* <p>Author <span>{caseStudy.author.name}</span></p> */}
             <p>Date <span>{caseStudy.publishDate}</span></p>
             <p>Read-Time <span className={styles.glowDot}></span> <span>{caseStudy.readTime}</span></p>
+            {
+              isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
           {
             isMobile &&
             <aside className={styles.leftAside}>
               <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+              </div>
                 <div className={styles.index}>
                   <h1>INDEX</h1>
                 </div>
@@ -531,9 +548,12 @@ useEffect(() => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
-            <div className={styles.toggleButton}>
-              <DarkModeToggle />
-            </div>
+            {
+              !isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
         </aside>
       </div>
