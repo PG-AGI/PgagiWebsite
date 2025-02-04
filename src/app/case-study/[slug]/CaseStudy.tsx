@@ -21,6 +21,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import '../../globals.css';
 import DarkModeToggle from '@/app/components/ThemeToggle';
+import '../../globals.css';
+
 
 type caseStudy = {
   slug: string;
@@ -139,7 +141,9 @@ const CaseStudy = () => {
     fetchCaseStudy();
   }, [slug]);
 
+
   useEffect(() => {
+    if (isMobile) return;
     if (isMobile) return;
     const handleScroll = () => {
       if (!caseStudy?.sections) return;
@@ -155,6 +159,7 @@ const CaseStudy = () => {
         if (sectionElement) {
           const { offsetTop, offsetHeight } = sectionElement;
           if (
+            scrollPosition >= offsetTop - 50 &&
             scrollPosition >= offsetTop - 50 &&
             scrollPosition < offsetTop + offsetHeight - 50
           ) {
@@ -225,9 +230,11 @@ const CaseStudy = () => {
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(caseStudyUrl)}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
   
+  
   const handleShare = (platform: keyof typeof shareUrls) => {
     window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
+  
   
 
   const settings = {
@@ -374,11 +381,23 @@ const CaseStudy = () => {
                 <DarkModeToggle />
               </div>
             }
+            {
+              isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
           {
             isMobile &&
             <aside className={styles.leftAside}>
               <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+              </div>
               <div className={styles.allArticles} >
                 &larr;
                 <Link href={'/whatwethink'}>
@@ -552,6 +571,12 @@ const CaseStudy = () => {
                 <DarkModeToggle />
               </div>
             }
+            {
+              !isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
         </aside>
       </div>
@@ -583,6 +608,7 @@ const CaseStudy = () => {
                     />
                     <div className={styles.cardOverlay}>Read more &rarr;</div>
                   </div>
+                  <h2 className={styles.cardTitle}>{data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}</h2>
                   <h2 className={styles.cardTitle}>{data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}</h2>
                 </div>
               ))}

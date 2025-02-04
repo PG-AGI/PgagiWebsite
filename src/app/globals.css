@@ -20,10 +20,18 @@
   --bg-color: var(--bg-color-light);
   --text-color: var(--text-color-light);
   --button-color: var(--button-color-light);
+
+  /* Override default variables for light mode */
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-light);
+  --button-color: var(--button-color-light);
 }
 
 /* Global styles */
+/* Global styles */
 body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
