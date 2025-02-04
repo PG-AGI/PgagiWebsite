@@ -73,10 +73,17 @@ const BlogPost = () => {
   const sliderRef = useRef<Slider | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
-  useEffect(()=>{
-		localStorage.setItem('theme', 'light');
-		document.documentElement.setAttribute("data-theme", "light");
-	  }, []);
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+      // Set default theme to light if no theme is saved
+      localStorage.setItem('theme', 'light');
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      // Use saved theme preference
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
