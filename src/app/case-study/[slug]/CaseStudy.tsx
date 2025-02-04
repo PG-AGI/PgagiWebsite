@@ -74,11 +74,12 @@ const CaseStudy = () => {
   const sliderRef = useRef<Slider | null>(null);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
-
+  
   useEffect(()=>{
 		localStorage.setItem('theme', 'light');
 		document.documentElement.setAttribute("data-theme", "light");
 	  }, []);
+
 
   useEffect(() => {
     const handleResize = () => {
