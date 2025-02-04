@@ -220,17 +220,14 @@ const CaseStudy = () => {
 
 
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-      caseStudyUrl
-    )}&title=${encodeURIComponent(caseStudy?.title || '')}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      caseStudyUrl
-    )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(caseStudyUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(caseStudyUrl)}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
-
+  
   const handleShare = (platform: keyof typeof shareUrls) => {
     window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
+  
 
   const settings = {
     infinite: false,
