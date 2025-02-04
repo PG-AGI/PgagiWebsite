@@ -74,7 +74,7 @@ const CaseStudy = () => {
   const sliderRef = useRef<Slider | null>(null);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
-  
+
   useEffect(()=>{
 		localStorage.setItem('theme', 'light');
 		document.documentElement.setAttribute("data-theme", "light");
@@ -221,7 +221,7 @@ const CaseStudy = () => {
 
 
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(caseStudyUrl)}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${caseStudy?.title || ''}&summary=${caseStudy?.description || ''}&source=${window.location.origin}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(caseStudyUrl)}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
   

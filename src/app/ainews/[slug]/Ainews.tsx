@@ -223,12 +223,8 @@ const Ainews = () => {
   const ainewsUrl = generateAinewsUrl();
 
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-      ainewsUrl
-    )}&title=${encodeURIComponent(aiNews?.title || '')}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      ainewsUrl
-    )}&text=${encodeURIComponent(aiNews?.title || '')}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${aiNews?.title || ''}&summary=${aiNews?.description || ''}&source=${window.location.origin}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(ainewsUrl)}&text=${encodeURIComponent(aiNews?.title || '')}`,
   };
 
   const handleShare = (platform: keyof typeof shareUrls) => {

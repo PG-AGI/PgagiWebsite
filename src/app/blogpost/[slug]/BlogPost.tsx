@@ -213,12 +213,8 @@ const BlogPost = () => {
   const blogPostUrl = generateBlogPostUrl();
 
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-      blogPostUrl
-    )}&title=${encodeURIComponent(blogPost?.title || '')}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      blogPostUrl
-    )}&text=${encodeURIComponent(blogPost?.title || '')}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${blogPost?.title || ''}&summary=${blogPost?.description || ''}&source=${window.location.origin}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(blogPostUrl)}&text=${encodeURIComponent(blogPost?.title || '')}`,
   };
 
   const handleShare = (platform: keyof typeof shareUrls) => {
