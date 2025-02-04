@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { whatWeDoLinks } from "@/utils/constants";
 import ContactUsForm from "@/app/components/base/contactUsForm";
+import '../globals.css'
 
 // Throttle function to limit the number of times a function is called
 function throttle<T extends (...args: any[]) => void>(fn: T, wait: number) {

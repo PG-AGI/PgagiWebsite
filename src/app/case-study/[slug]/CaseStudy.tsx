@@ -1,11 +1,11 @@
 'use client';
 
 import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, WheelEvent } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';
-import { Link2, ArrowUp } from 'lucide-react'; 
+import { Link2, ArrowUp } from 'lucide-react';
 import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
 
@@ -13,11 +13,26 @@ import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
 
 import styles from './CaseStudy.module.scss';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import '../../globals.css';
+import DarkModeToggle from '@/app/components/ThemeToggle';
+
+type caseStudy = {
+  slug: string;
+  title: string;
+  coverImage: string;
+};
 
 type CaseStudy = {
   slug: string;
   coverImage: string;
   title: string;
+  description: string;
   publishDate: string;
   readTime: string;
   author: {
@@ -52,7 +67,56 @@ const CaseStudy = () => {
   const [error, setError] = useState<string>('');
 
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
-  const [activeSection, setActiveSection] = useState<string>('overview');
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
+  const [loadingCaseStudies, setLoadingCaseStudies] = useState<boolean>(false);
+  const [errorCaseStudies, setErrorCaseStudies] = useState<string>('');
+  const sliderRef = useRef<Slider | null>(null);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+      // Set default theme to light if no theme is saved
+      localStorage.setItem('theme', 'light');
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      // Use saved theme preference
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+  useEffect(() => {
+    const fetchCaseStudies = async () => {
+      setLoadingCaseStudies(true);
+      setErrorCaseStudies('');
+      try {
+        const response = await fetch('/api/case-studies');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: CaseStudy[] = await response.json();
+        const restData = data.filter(item => item.slug != slug)
+        setCaseStudies(restData);
+      } catch (error: any) {
+        setErrorCaseStudies(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingCaseStudies(false);
+      }
+    };
+    fetchCaseStudies()
+  }, [])
 
   useEffect(() => {
     if (!slug) {
@@ -80,85 +144,49 @@ const CaseStudy = () => {
 
     fetchCaseStudy();
   }, [slug]);
+
   useEffect(() => {
-    if (!caseStudy) return;
-  
-    sectionRefs.current = caseStudy.sections.map((section) =>
-      document.getElementById(section.title.toLowerCase().replace(/\s+/g, '-'))
-    );
-  
-    const handleScroll = () => {
-      // Use scrollY instead of pageYOffset
-      const pageTop = window.scrollY; 
-      const sections = sectionRefs.current;
-  
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        if (section) {
-          const sectionTop = section.offsetTop - 100;
-          const sectionBottom = sectionTop + section.offsetHeight;
-  
-          if (pageTop >= sectionTop && pageTop < sectionBottom) {
-            const activeSectionId = caseStudy.sections[i].title.toLowerCase().replace(/\s+/g, '-');
-            setActiveSection(activeSectionId);
-  
-            // Scroll the corresponding `li` into view
-            const activeListItem = document.querySelector(`li[data-section="${activeSectionId}"]`) as HTMLElement;
-            if (activeListItem) {
-              const sidebar = activeListItem.closest('.sidebar') as HTMLElement; // Ensure sidebar is scrollable
-              if (sidebar && sidebar.scrollHeight > sidebar.clientHeight) {
-                const listItemTop = activeListItem.offsetTop;
-                const listItemBottom = listItemTop + activeListItem.offsetHeight;
-  
-                // Scroll `li` into view if it is outside the visible range
-                if (
-                  listItemTop < sidebar.scrollTop || // Above visible area
-                  listItemBottom > sidebar.scrollTop + sidebar.clientHeight // Below visible area
-                ) {
-                  sidebar.scrollTo({
-                    top: listItemTop - sidebar.clientHeight / 2, // Scroll to bring `li` to the center
-                    behavior: 'smooth',
-                  });
-                }
-              }
-            }
-            break;
-          }
-        }
-      }
+    if (isMobile || !caseStudy?.sections) return;
+
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -70% 0px',
+      threshold: 0,
     };
-  
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [caseStudy]);
-  
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      setActiveSection(sectionId);
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  
-      // Ensure the corresponding `li` is also brought into view
-      const activeListItem = document.querySelector(`li[data-section="${sectionId}"]`) as HTMLElement;
-      if (activeListItem) {
-        const sidebar = activeListItem.closest('.sidebar') as HTMLElement;
-        if (sidebar) {
-          // Directly use `scrollIntoView` for the `li` item
-          activeListItem.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center', // Centers the `li` in the sidebar
-          });
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        const sectionId = entry.target.id;
+        if (entry.isIntersecting) {
+          setActiveSection(sectionId);
         }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, options);
+
+    caseStudy.sections.forEach((section) => {
+      const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+      const sectionElement = document.getElementById(sectionId);
+      if (sectionElement) {
+        observer.observe(sectionElement);
       }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [caseStudy, isMobile]);
+
+  const scrollToSection = (sectionId: string) => {
+    const sectionElement = document.getElementById(sectionId);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+      setActiveSection(sectionId);
     }
-  };
-  
-  
-  
-  
-  // Scroll-to-top
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCopyLink = () => {
@@ -183,77 +211,69 @@ const CaseStudy = () => {
 
   const caseStudyUrl = generateCaseStudyUrl();
 
-  const shareUrls = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-      caseStudyUrl
-    )}&title=${encodeURIComponent(caseStudy?.title || '')}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      caseStudyUrl
-    )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
+  const generateLinkedInShareText = () => {
+    if (!caseStudy) return '';
+    return `Here's an insightful case study that I found on PG-AGI: "${caseStudy.title}". Check it out!`;
+  };
+
+  const shareUrls: Record<'linkedin' | 'twitter', string> = {
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(caseStudy?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(caseStudyUrl)}&text=${encodeURIComponent(caseStudy?.title || '')}`,
+  };
+  
+  const handleShare = (platform: 'linkedin' | 'twitter') => {
+    if (platform === 'linkedin') {
+      const linkedInUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(caseStudy?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`;
+      window.open(linkedInUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
+    } else {
+      // Handle Twitter sharing
+      const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(caseStudy?.title || '')}`;
+      window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+  
+
+  const settings = {
+    infinite: false,
+    speed: 500,
+    slidesToShow: isMobile ? 1 : 4,
+    slidesToScroll: 1,
+    arrows: false,
+    swipe: true,
+    draggable: true,
+    touchMove: true,
+    nextArrow: <div className="customNextArrow"><FontAwesomeIcon icon={faChevronLeft} size='2x' /></div>,  // Custom next arrow
+    prevArrow: <div className="customPrevArrow"><FontAwesomeIcon icon={faChevronRight} size='2x' /></div>,
   };
 
   if (loading) {
     return (
       <>
         <Navigation />
-        <div className={styles.container}>
-          <main className={styles.main}>
-            {/* Loading Skeleton */}
-            <header className={`${styles.header} ${styles.skeletonHeader}`}>
-              <div className={`${styles.metadata} ${styles.skeleton}`}>
-                <div className={styles.skeletonLine}></div>
-                <div className={`${styles.glowDot} ${styles.skeletonDot}`}></div>
-                <div className={styles.skeletonLineShort}></div>
-              </div>
-              <h1 className={`${styles.title} ${styles.skeletonTitle}`}></h1>
-              <div className={`${styles.author} ${styles.skeleton}`}>
-                <div className={styles.skeletonCircle}></div>
-                <div className={styles.skeletonLine}></div>
-                <div className={styles.separator}></div>
-                <div className={styles.skeletonLineShort}></div>
-              </div>
-            </header>
+        <div className={styles.skeletonPage}>
+          {/* Left Sidebar (Indexes) */}
+          <div className={styles.skeletonLeft}>
+            <div className={styles.skeletonTitle}></div>
+            <div className={styles.skeletonText}></div>
+            <div className={styles.skeletonText}></div>
+            <div className={styles.skeletonText}></div>
+          </div>
 
-            <div className={styles.content}>
-              <aside className={`${styles.sidebar} ${styles.skeletonSidebar}`}>
-                <nav>
-                  <h3 className={styles.navigationHeading}></h3>
-                  <ul className={styles.navigation}>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <li key={index}>
-                        <button
-                          className={`${styles.navButton} ${styles.skeletonButton}`}
-                        ></button>
-                      </li>
-                    ))}
-                  </ul>
+          {/* Main Content (Articles) */}
+          <div className={styles.skeletonMain}>
+            <div className={styles.skeletonArticleTitle}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonArticleText}></div>
+            <div className={styles.skeletonImage}></div>
+          </div>
 
-                  <div className={styles.social}>
-                    <h3></h3>
-                    <div className={styles.socialLinks}>
-                      {Array.from({ length: 3 }).map((_, index) => (
-                        <div
-                          key={index}
-                          className={`${styles.socialButton} ${styles.skeletonCircle}`}
-                        ></div>
-                      ))}
-                    </div>
-                  </div>
-                </nav>
-              </aside>
-
-              <article className={`${styles.article} ${styles.skeletonArticle}`}>
-                {Array.from({ length: 3 }).map((_, sectionIndex) => (
-                  <section key={sectionIndex} className={styles.section}>
-                    <h2 className={styles.skeletonLine}></h2>
-                    {Array.from({ length: 3 }).map((_, paragraphIndex) => (
-                      <p key={paragraphIndex} className={styles.skeletonLine}></p>
-                    ))}
-                  </section>
-                ))}
-              </article>
-            </div>
-          </main>
+          {/* Right Sidebar (Share Buttons) */}
+          <div className={styles.skeletonRight}>
+            <div className={styles.skeletonButton}></div>
+            <div className={styles.skeletonButton}></div>
+            <div className={styles.skeletonButton}></div>
+          </div>
         </div>
         <Footer />
       </>
@@ -309,211 +329,271 @@ const CaseStudy = () => {
 
       <Navigation />
       <div className={styles.container}>
-        <main className={styles.main}>
-          <header className={styles.header}>
-            <div className={styles.metadata}>
-              <span className={styles.publishDate}>{caseStudy.publishDate}</span>
-              <span className={styles.glowDot}></span>
-              <span className={styles.readTime}>{caseStudy.readTime}</span>
-            </div>
-            <h1 className={styles.title}>{caseStudy.title}</h1>
-          </header>
+        {
+          !isMobile &&
+          <aside className={styles.leftAside}>
+            <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
 
-          <div className={styles.content}>
-            <aside className={styles.sidebar}>
-              <div className={styles.sidebarHeader}>
-                <h3 className={styles.navigationHeading}>Summary</h3>
               </div>
-              <div className={styles.navScroll}>
-                <ul className={styles.navigation}>
-                  {caseStudy.sections.map((section) => (
-                    <li key={section.title}>
-                      <button
-                        onClick={() =>
-                          scrollToSection(
-                            section.title.toLowerCase().replace(/\s+/g, '-')
-                          )
-                        }
-                        className={`${styles.navButton} ${
-                          activeSection ===
-                          section.title.toLowerCase().replace(/\s+/g, '-')
-                            ? styles.active
-                            : ''
+              <div className={styles.index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.navigation}>
+                {caseStudy.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
                         }`}
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
+
+
+            </div>
+          </aside>
+        }
+        <article className={styles.articleContainer}>
+          <h1 className={styles.heading}>{caseStudy.title}</h1>
+          <p className={styles.shortDescription}>{caseStudy.description && caseStudy.description}</p>
+          <div className={styles.metadata}>
+            {/* <p>Author <span>{caseStudy.author.name}</span></p> */}
+            <p>Date <span>{caseStudy.publishDate}</span></p>
+            <p>Read-Time <span className={styles.glowDot}></span> <span>{caseStudy.readTime}</span></p>
+            {
+              isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
+          </div>
+          {
+            isMobile &&
+            <aside className={styles.leftAside}>
+              <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+              </div>
+                <div className={styles.index}>
+                  <h1>INDEX</h1>
+                </div>
+                <ul className={styles.navigation}>
+                  {caseStudy.sections.map((section) => {
+                    const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                    return (
+                      <li
+                        key={section.title}
+                        data-section={sectionId}
+                        className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                          }`}
+                        onClick={() => scrollToSection(sectionId)}
                       >
                         {section.title}
-                      </button>
-                    </li>
-                  ))}
+                      </li>
+                    );
+                  })}
                 </ul>
-              </div>
 
-      
-              <div className={styles.sidebarFooter}>
-                <h3>Share this case study</h3>
-                <div className={styles.socialLinks}>
-                  <a
-                    href={shareUrls.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on LinkedIn"
-                    className={styles.socialButton}
-                  >
-                    <FaLinkedin />
-                  </a>
-                  <a
-                    href={shareUrls.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on Twitter"
-                    className={styles.socialButton}
-                  >
-                    <FaSquareXTwitter />
-                  </a>
-                  <button
-                    onClick={handleCopyLink}
-                    className={styles.copyButton}
-                    aria-label="Copy Link"
-                  >
-                    <Link2 />
-                  </button>
-                </div>
+
               </div>
             </aside>
-
-            <article className={styles.article}>
-              {caseStudy.sections.map((section) => (
-                <section
-                  key={section.title}
-                  id={section.title.toLowerCase().replace(/\s+/g, '-')}
-                  className={styles.section}
-                >
-                  <h2>{section.title}</h2>
-                  {section.content.map((block, index) => {
-                    switch (block.type) {
-                      case 'paragraph':
-                        return (
-                          <p
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></p>
-                        );
-                      case 'quote':
-                        return (
-                          <blockquote
-                            key={index}
-                            className={styles.quote}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></blockquote>
-                        );
-                      case 'highlight':
-                        return (
-                          <div
-                            key={index}
-                            className={styles.highlight}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></div>
-                        );
-                      case 'code':
-                        return (
-                          <pre key={index} className={styles.codeBlock}>
-                            <code>{block.content}</code>
-                          </pre>
-                        );
-                      case 'image':
-                        return (
-                          <figure key={index} className={styles.imageBlock}>
-                            <Image
-                              src={block.src}
-                              alt={block.alt}
-                              className={styles.image}
-                              width={800}
-                              height={600}
-                            />
-                            {block.caption && (
-                              <figcaption className={styles.caption}>
-                                {block.caption}
-                              </figcaption>
-                            )}
-                          </figure>
-                        );
-                      case 'video':
-                        return (
-                          <div key={index} className={styles.videoBlock}>
-                            <iframe
-                              src={block.src}
-                              title={block.title || 'Video'}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              className={styles.video}
-                            ></iframe>
-                            {block.caption && (
-                              <div className={styles.caption}>
-                                {block.caption}
-                              </div>
-                            )}
+          }
+          {caseStudy.sections.map((section) => (
+            <section
+              key={section.title}
+              id={section.title.toLowerCase().replace(/\s+/g, '-')}
+              className={styles.section}
+            >
+              <h2 className={styles.sectionHeading}>{section.title}</h2>
+              {section.content.map((block, index) => {
+                switch (block.type) {
+                  case 'paragraph':
+                    return (
+                      <p
+                        key={index}
+                        dangerouslySetInnerHTML={{ __html: block.content }}
+                        className={styles.paragraph}
+                      ></p>
+                    );
+                  case 'quote':
+                    return (
+                      <blockquote
+                        key={index}
+                        className={styles.quote}
+                        dangerouslySetInnerHTML={{ __html: block.content }}
+                      ></blockquote>
+                    );
+                  case 'highlight':
+                    return (
+                      <div
+                        key={index}
+                        className={styles.highlight}
+                        dangerouslySetInnerHTML={{ __html: block.content }}
+                      ></div>
+                    );
+                  case 'code':
+                    return (
+                      <pre key={index} className={styles.codeBlock}>
+                        <code>{block.content}</code>
+                      </pre>
+                    );
+                  case 'image':
+                    return (
+                      <figure key={index} className={styles.imageBlock}>
+                        <Image
+                          src={block.src}
+                          alt={block.alt}
+                          className={styles.image}
+                          width={800}
+                          height={600}
+                        />
+                        {block.caption && (
+                          <figcaption className={styles.caption}>
+                            {block.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    );
+                  case 'video':
+                    return (
+                      <div key={index} className={styles.videoBlock}>
+                        <iframe
+                          src={block.src}
+                          title={block.title || 'Video'}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className={styles.video}
+                        ></iframe>
+                        {block.caption && (
+                          <div className={styles.caption}>
+                            {block.caption}
                           </div>
-                        );
-                      case 'table':
-                        return (
-                          <table
-                            key={index}
-                            className={styles.dynamicTable}
-                          >
-                            <thead>
-                              <tr>
-                                {block.content.headers.map((heading, colIndex) => (
-                                  <th key={colIndex} className={styles.heading}>
-                                    {heading}
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {block.content.rows.map((row, rowIndex) => (
-                                <tr key={rowIndex}>
-                                  {row.map((cell, colIndex) => (
-                                    <td key={colIndex} className={styles.cell}>
-                                      {cell}
-                                    </td>
-                                  ))}
-                                </tr>
+                        )}
+                      </div>
+                    );
+                  case 'table':
+                    return (
+                      <table
+                        key={index}
+                        className={styles.dynamicTable}
+                      >
+                        <thead>
+                          <tr>
+                            {block.content.headers.map((heading, colIndex) => (
+                              <th key={colIndex} className={styles.heading}>
+                                {heading}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {block.content.rows.map((row, rowIndex) => (
+                            <tr key={rowIndex}>
+                              {row.map((cell, colIndex) => (
+                                <td key={colIndex} className={styles.cell}>
+                                  {cell}
+                                </td>
                               ))}
-                            </tbody>
-                          </table>
-                        );
-                      case 'box':
-                        return (
-                          <div key={index} className={styles.box}>
-                            <h3 className={styles.boxHeading}>
-                              {block.content.heading}
-                            </h3>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html: block.content.text,
-                              }}
-                            ></p>
-                          </div>
-                        );
-                      default:
-                        return null;
-                    }
-                  })}
-                </section>
-              ))}
-            </article>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    );
+                  case 'box':
+                    return (
+                      <div key={index} className={styles.box}>
+                        <h3 className={styles.boxHeading}>
+                          {block.content.heading}
+                        </h3>
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: block.content.text,
+                          }}
+                        ></p>
+                      </div>
+                    );
+                  default:
+                    return null;
+                }
+              })}
+            </section>
+          ))}
+        </article>
+        <aside className={styles.rightAside}>
+          <div className={styles.stickyDiv}>
+            <h1 className={styles.heading}>Share Article</h1>
+            <div className={styles.shareElement} onClick={handleCopyLink}>
+              <Link2 size={'24px'} />
+              <p>Copy link</p>
+            </div>
+            <div className={styles.shareElement} onClick={() => handleShare('linkedin')}>
+              <FaLinkedin size={'24px'} />
+              <p>Post on Linkedin</p>
+            </div>
+            <div className={styles.shareElement} onClick={() => handleShare('twitter')}>
+              <FaSquareXTwitter size={'24px'} />
+              <p>Post on X</p>
+            </div>
+            {
+              !isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
-        </main>
-
-        <button
-          className={styles.scrollToTopButton}
-          onClick={handleScrollToTop}
-          aria-label="Scroll to Top"
-        >
-          <ArrowUp />
-        </button>
+        </aside>
       </div>
+      <div className={styles.moreItemsContanier}>
+        <div className={styles.arrows}>
+          <h1>More Articles</h1>
+          <div>
+            <div onClick={() => sliderRef.current?.slickPrev()}>
+              <FontAwesomeIcon icon={faChevronLeft} size='2x' />
+            </div>
+            <div onClick={() => sliderRef.current?.slickNext()}>
+              <FontAwesomeIcon icon={faChevronRight} size='2x' />
+            </div>
+          </div>
+
+        </div>
+        {loadingCaseStudies ? <p>Loading...</p> : (
+          <div className={styles.scrollContainer} >
+            <Slider {...settings} ref={sliderRef}>
+              {caseStudies.map(data => (
+                <div className={styles.card} key={data.slug} onClick={() => { router.push(`/case-study/${data.slug}`) }}>
+                  <div className={styles.cardImageContainer}>
+                    <Image
+                      height={500}
+                      width={1000}
+                      src={data.coverImage}
+                      alt="Card"
+                      className={styles.cardImage}
+                    />
+                    <div className={styles.cardOverlay}>Read more &rarr;</div>
+                  </div>
+                  <h2 className={styles.cardTitle}>{data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}</h2>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        )}
+      </div>
+
       <Footer />
     </>
   );

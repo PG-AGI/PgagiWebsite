@@ -18,6 +18,7 @@ export interface AINewsContentBlock {
     contentType: string;
     coverImage: string;
     title: string;
+    description: string;
     publishDate: string;
     readTime: string;
     metaDescription: string;

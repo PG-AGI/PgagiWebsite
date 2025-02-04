@@ -1,0 +1,46 @@
+.theme-switch-button {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 25px;
+    background-color: #1a1a1a; // Use the sidebar background or slightly lighter shade
+    border: 1px solid #333; // Subtle border to define button edges
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  
+    &.light {
+      background-color: #ffffff; // Lighter for light mode
+      color: #333;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  
+    &.dark {
+      background-color: #1a1a1a; 
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+  
+    &:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    }
+  
+    svg {
+      margin-left: 0.3rem;
+      margin-right: 0.3rem;
+      transition: transform 0.3s ease;
+    }
+  
+    .theme-label {
+      font-size: 14px;
+      color: inherit; // Ensures the text color adapts to the theme
+      white-space: nowrap;
+      transition: opacity 0.3s ease;
+    }
+  
+    &:active {
+      svg {
+        transform: scale(0.9);
+      }
+    }
+  }
+  

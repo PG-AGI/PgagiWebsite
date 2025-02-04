@@ -54,6 +54,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
       contentType: 'caseStudy',
       coverImage: '',
       title: '',
+      description: '',
       publishDate: '',
       readTime: '',
       authorName: '',
@@ -190,6 +191,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
       contentType: 'caseStudy',
       coverImage: '',
       title: '',
+      description: '',
       publishDate: '',
       readTime: '',
       authorName: '',
@@ -254,6 +256,17 @@ const ContentForm: React.FC<ContentFormProps> = ({
             required
           />
           {errors.title && <span className={styles.error}>{errors.title.message}</span>}
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="description">Description:</label>
+          <input
+            type="text"
+            id="description"
+            {...register('description', { required: 'Description is required' })}
+            placeholder="Enter description"
+            required
+          />
+          {errors.description && <span className={styles.error}>{errors.description.message}</span>}
         </div>
 
         <div className={styles.formGroup}>

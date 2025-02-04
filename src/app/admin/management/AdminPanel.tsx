@@ -63,6 +63,7 @@ const AdminPanel: React.FC = () => {
         contentType: data.contentType,
         coverImage: data.coverImage || '',
         title: data.title || '',
+        description: data.description || '',
         publishDate: data.publishDate || '',
         readTime: data.readTime || '',
         authorName: data.author.name || '',

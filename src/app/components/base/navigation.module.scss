@@ -1,5 +1,3 @@
-
-
 .navigation {
   position: relative;
   top: 0;
@@ -9,8 +7,11 @@
   align-items: center;
   z-index: 900;
   transition: all 0.2s ease-out;
+  background-color: inherit !important;
+
   &.scrolled {
     background: rgba(0, 0, 0, 0.611);
+    // background: inherit;
   }
 
   .banner {
@@ -23,18 +24,22 @@
     font-weight: 400;
     padding: 10px 0 6px 0; // Adjust padding if necessary
     background: #040aa3;
-  
+    padding: 1rem 0;
+    color: white !important;
+
     a {
       font-weight: 800;
       text-decoration: none;
-      color: #fff;
+      color: white !important;
     }
   }
 
   .logo {
     display: flex;
-    flex-direction: column; /* To stack logo image and text vertically */
-    align-items: center; /* Center-align the text below the logo */
+    flex-direction: column;
+    /* To stack logo image and text vertically */
+    align-items: center;
+    /* Center-align the text below the logo */
     margin: 0;
     padding: 10px;
     text-decoration: none;
@@ -48,9 +53,11 @@
     p {
       font-size: 12px;
       font-weight: 900;
-      margin: 5px 0 0; /* Adjust margin to position text correctly below the logo */
-      color: #fff;
-      text-align: center; /* Center text under the logo */
+      margin: 0px 0 0 0;
+      /* Adjust margin to position text correctly below the logo */
+      color: var(--text-color-light);
+      text-align: center;
+      /* Center text under the logo */
     }
 
     &.logoHidden {
@@ -69,6 +76,7 @@
     will-change: transform, opacity;
     z-index: 1900;
 
+
     &.navHidden {
       opacity: 0;
       visibility: hidden;
@@ -82,15 +90,14 @@
       justify-content: center;
       padding-left: 90px;
 
-      > a,
-      .whatWeDo > a {
+      >a,
+      .whatWeDo>a {
         position: relative;
         font-size: 14px;
         font-weight: 400;
         padding: 2px 8px;
         cursor: pointer;
         text-decoration: none;
-        color: #fff;
 
         &::after {
           content: '';
@@ -132,11 +139,12 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease-out;
-      color: #fff;
+      color: black;
 
       &:hover {
         background: linear-gradient(90deg, #050caf 0%, #070a5d 100%);
         transform: scale(1.1);
+        color: white;
       }
     }
 
@@ -152,14 +160,16 @@
         display: block;
         width: 100%;
         height: 3px;
-        background-color: #fff;
+        background-color: rgba(0, 0, 0, 0.6) !important;
         transition: all 0.3s ease-in-out;
+        border-radius: 2px;
       }
 
       &.open {
         span {
           &:first-child {
             transform: translateY(9px) rotate(45deg);
+            background-color: white !important;
           }
 
           &:nth-child(2) {
@@ -168,107 +178,135 @@
 
           &:last-child {
             transform: translateY(-9px) rotate(-45deg);
+            background-color: white !important;
           }
         }
       }
     }
   }
 }
-        .dropdown {
+
+
+
+[data-theme="dark"] .navigation {
+  color: white !important;
+  .logo {
+    p {
+      color: var(--text-color-dark);
+    }
+  }
+  .nav {
+
+    .hamburger {
+      span {
+        background-color: white!important;
+      }
+    }
+  }
+}
+
+[data-theme="dark"] .contact {
+  color: var(--text-color-dark) !important;
+}
+
+.dropdown {
+  position: absolute;
+  left: -1%;
+  width: 80vw;
+  height: 500px;
+  display: none;
+  padding-top: 55px;
+  // z-index: 10000; /* Ensure it's higher than .calendly */
+
+  .content {
+    position: relative;
+    flex: 1;
+    background: #160c30;
+    border-radius: 5px;
+    display: flex;
+
+    .background {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 900px;
+      height: 700px;
+      transform: translate(-38%, -50%);
+      border-radius: 999px;
+      background: #1c3352;
+      filter: blur(89px);
+      opacity: 0.6;
+      pointer-events: none;
+
+    }
+
+    .menu {
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px;
+      gap: 16px;
+
+      >span {
+        position: relative;
+        width: 100%;
+        padding: 8px 16px;
+        border-radius: 4px;
+        user-select: none;
+        color: #fff !important;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &::after {
+          content: '';
           position: absolute;
-          left: -1%;
-          width: 80vw;
-          height: 500px;
-          display: none;
-          padding-top: 55px;
-          // z-index: 10000; /* Ensure it's higher than .calendly */
+          top: 50%;
+          right: 16px;
+          transform: translateY(-50%);
+        }
 
-          .content {
-            position: relative;
-            flex: 1;
-            background: #160c30;
-            border-radius: 5px;
-            display: flex;
+        &.active {
+          background: #32304e;
 
-            .background {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              width: 900px;
-              height: 700px;
-              transform: translate(-38%, -50%);
-              border-radius: 999px;
-              background: #1c3352;
-              filter: blur(89px);
-              opacity: 0.6;
-              pointer-events: none;
-              
-            }
-
-            .menu {
-              min-width: 300px;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              padding: 24px;
-              gap: 16px;
-
-              > span {
-                position: relative;
-                width: 100%;
-                padding: 8px 16px;
-                border-radius: 4px;
-                user-select: none;
-                color: #fff;
-                cursor: pointer;
-                transition: background 0.3s ease;
-
-                &::after {
-                  content: '';
-                  position: absolute;
-                  top: 50%;
-                  right: 16px;
-                  transform: translateY(-50%);
-                }
-
-                &.active {
-                  background: #32304e;
-
-                  &::after {
-                    content: ' ➤';
-                  }
-                }
-
-                &:hover {
-                  background: rgba(255, 255, 255, 0.1);
-                }
-              }
-            }
-
-            .dropdownLinks {
-              flex: 1;
-              display: flex;
-              flex-direction: column;
-              flex-wrap: wrap;
-              margin-left: -25px;
-              padding: 24px;
-
-              > a {
-                padding: 12px;
-                font-size: 14px;
-                font-weight: 500;
-                text-decoration: none;
-                color: #fff;
-                border-radius: 4px;
-                transition: all 0.3s ease-out;
-
-                &:hover {
-                  background-color: rgba(255, 255, 255, 0.1);
-                }
-              }
-            }
+          &::after {
+            content: ' ➤';
           }
         }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+
+    .dropdownLinks {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      margin-left: -25px;
+      padding: 24px;
+      
+
+      >a {
+        padding: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        color: var(--bg-color-light);
+        border-radius: 4px;
+        transition: all 0.3s ease-out;
+        color: #fff !important;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 1000px) {
   .navigation {
     .nav {
@@ -282,6 +320,7 @@
 @media (max-width: 768px) {
   .navigation {
     position: relative;
+
     .mastermenu {
       z-index: 2;
       display: flex;
@@ -291,15 +330,18 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%); /* Centers the div */
-      margin-top: 0; /* Reset margin since centering with flexbox */
+      transform: translate(-50%, -50%);
+      /* Centers the div */
+      margin-top: 0;
+      /* Reset margin since centering with flexbox */
     }
+
     .mobileMenuItem {
       font-size: 1.875rem;
       width: 18rem;
       height: 5rem;
       text-align: center;
-      color: #fff;
+      color: var(--bg-color-light);
       background: #32304e;
       border-radius: 12px;
       display: flex;
@@ -309,17 +351,18 @@
       cursor: pointer;
       margin-top: 2rem;
       text-decoration: none;
- 
+
     }
-.menuItem{
-  font-size: 1.5rem;
-  width: 100%;
-  padding: 10px 0;
-  text-align: left;
-  border-bottom: 1px solid #777;
-  color: #fff;
-  cursor: pointer;
-}
+
+    .menuItem {
+      font-size: 1.5rem;
+      width: 100%;
+      padding: 10px 0;
+      text-align: left;
+      border-bottom: 1px solid #777;
+      color: #fff !important;
+      cursor: pointer;
+    }
 
     .mobileBack {
       font-size: 1.875rem;
@@ -327,11 +370,12 @@
       width: 100%;
       margin-bottom: 20px;
       cursor: pointer;
-      color: #fff;
+      color: var(--bg-color-light);
       margin-top: -2.75rem;
       margin-left: -1rem;
     }
-    .paragraph{
+
+    .paragraph {
       font-size: 1.5rem;
       margin-bottom: -3rem;
       margin-top: -3rem;
@@ -343,37 +387,47 @@
       padding: 10px 0;
       text-align: left;
       margin-left: 2rem;
-      color: #b5b5b5;
+      color: #fff !important;
       cursor: pointer;
       transition: transform 0.3s ease, color 0.3s ease;
-    
+
       &:hover {
         transform: scale(1.05); // Slight zoom
-        color: #ffffff; // Full white on hover
+        color: var(--bg-color-light); // Full white on hover
       }
     }
+
     .scrollableMenu {
-      max-height: 100vh; /* Set a max height for the scrollable area */
-      overflow-y: auto; /* Enable vertical scroll */
-      overflow-x: hidden; /* Disable horizontal scroll */
-      scrollbar-width: thin; /* Firefox */
-      scrollbar-color: #666 #32304e; /* Firefox */
+      max-height: 100vh;
+      /* Set a max height for the scrollable area */
+      overflow-y: auto;
+      /* Enable vertical scroll */
+      overflow-x: hidden;
+      /* Disable horizontal scroll */
+      scrollbar-width: thin;
+      /* Firefox */
+      scrollbar-color: #666 #32304e;
+      /* Firefox */
     }
-    
+
     /* Customize scrollbar for Webkit browsers (Chrome, Safari) */
     .scrollableMenu::-webkit-scrollbar {
-      width: 6px; /* Set scrollbar width */
+      width: 6px;
+      /* Set scrollbar width */
     }
-    
+
     .scrollableMenu::-webkit-scrollbar-thumb {
-      background-color: #666; /* Color of the scroll thumb */
-      border-radius: 10px; /* Round the corners of the scroll thumb */
+      background-color: #666;
+      /* Color of the scroll thumb */
+      border-radius: 10px;
+      /* Round the corners of the scroll thumb */
     }
-    
+
     .scrollableMenu::-webkit-scrollbar-track {
-      background-color: #32304e; /* Scrollbar track color */
+      background-color: #32304e;
+      /* Scrollbar track color */
     }
-    
+
 
     .nav {
       width: 100%;
@@ -391,7 +445,17 @@
 
       .hamburger {
         display: flex;
-        z-index: 6;
+        position: relative;
+        z-index: 2000;
+
+        span {
+          display: block;
+          width: 100%;
+          height: 3px;
+          background-color: white;
+          transition: all 0.3s ease-in-out;
+          border-radius: 2px;
+        }
       }
 
 
@@ -409,7 +473,7 @@
         padding: 70px 48px 48px 48px;
         z-index: 5;
 
-        
+
         .whatWeDo {
           .dropdown {
             position: relative;
@@ -431,11 +495,12 @@
                 padding: 0;
                 display: none;
 
-                > span {
+                >span {
                   max-width: 100%;
                   padding: 0;
                   font-size: 18px;
                   position: relative;
+                  color: #fff !important;
 
                   &::after {
                     content: '⮟';
@@ -460,6 +525,7 @@
                     width: 100%;
                     text-align: left;
                     border-bottom: 1px solid #444;
+                    color: #fff !important;
                   }
                 }
               }
@@ -469,15 +535,22 @@
       }
 
       .contact {
-        display: none; /* Keep hidden in mobile */
+        display: none;
+        /* Keep hidden in mobile */
       }
 
       &.open {
         .links {
-          display: flex; /* Display when open */
+          display: flex;
+          /* Display when open */
         }
       }
     }
+  }
+}
+[data-theme="dark"] .navigation {
+  .mobileMenuItem {
+    color: white !important;
   }
 }
 
@@ -516,7 +589,7 @@
   .navigation {
     .logo {
       margin-top: 60px;
-       margin-left: 20px;
+      margin-left: 20px;
 
       img {
         height: 40px;
@@ -531,7 +604,8 @@
     }
 
     .nav {
-      margin-top: 30px;
+      margin-top: 3.2rem;
+
       .links {
         .whatWeDo {
           .dropdown {

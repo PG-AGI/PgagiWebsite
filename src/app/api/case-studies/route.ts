@@ -26,6 +26,7 @@ interface CaseStudy {
   contentType: string;
   coverImage: string;
   title: string;
+  description: string;
   publishDate: string;
   readTime: string;
   author: {
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
       !data.contentType ||
       !data.coverImage ||
       !data.title ||
+      !data.description ||
       !data.publishDate ||
       !data.readTime ||
       !data.authorName ||
@@ -159,6 +161,7 @@ export async function POST(request: NextRequest) {
       contentType: data.contentType,
       coverImage: data.coverImage,
       title: data.title,
+      description: data.description,
       publishDate: data.publishDate,
       readTime: data.readTime,
       author: {

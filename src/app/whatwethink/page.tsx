@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import Skeleton from 'react-loading-skeleton'; 
 import 'react-loading-skeleton/dist/skeleton.css';
 import { generateSlug } from '@/services/generateSlugService';
+import '../globals.css';
 
 type CaseStudy = {
   id: string;
@@ -80,6 +81,10 @@ export default function BlogPage() {
       return () => topList.removeEventListener('scroll', handleScroll);
     }
   }, []);
+  useEffect(()=>{
+		localStorage.setItem('theme', 'dark');
+		document.documentElement.setAttribute("data-theme", "dark");
+	  }, []);
   
 
   useEffect(() => {
@@ -141,6 +146,7 @@ export default function BlogPage() {
 
   // Fetch case studies from the API
   useEffect(() => {
+
     const fetchCaseStudies = async () => {
       setLoadingCaseStudies(true);
       setErrorCaseStudies('');
@@ -157,7 +163,6 @@ export default function BlogPage() {
         setLoadingCaseStudies(false);
       }
     };
-
     const fetchBlogs = async () => {
       setLoadingBlogs(true);
       setErrorBlogs('');

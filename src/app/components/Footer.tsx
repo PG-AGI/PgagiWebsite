@@ -5,6 +5,7 @@ import { useState } from "react";
 import { links, resources, socialList, services } from "@/utils/constants";
 import styles from "./footer.module.scss";
 import logo from '../assets/logo.png';
+import '../globals.css';
 
 export default function Footer() {
   const [email, setEmail] = useState<string>("");
@@ -42,9 +43,6 @@ export default function Footer() {
           </div>
           <div className={styles.list}>
             <h6>Resources</h6>
-            {/* {links.map((link, i) => (
-              <span key={i}>{link}</span>
-            ))} */}
             <Link href="/whatwethink#blogs"><span>Blogs</span></Link>            
             <Link href="/whatwethink#ainews"><span>News</span></Link>
             <Link href="/whatwethink#case-studies"><span>Case Study</span></Link>
@@ -78,8 +76,6 @@ export default function Footer() {
         </div>
       </div>
       <div className={styles.footerText}>
-        <p className={styles.pgHidden}>Playing God With</p>
-        <p className={styles.agiHidden}>AGI</p>
         <p className={styles.pg}>Playing God</p>
         <p className={styles.agi}>With AGI</p>
       </div>

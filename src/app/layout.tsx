@@ -5,11 +5,12 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
 
 import { inter } from "../utils/fontHelper";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "PGAGI",
   description:
-    "Your Go-To AI Consultancy For AI Research, AI Products, AI Solutions, AI MVP Design, Idea Validation",
+    "PGAGI – Leading AI company specializing in scalable AI products, advanced AI agents, and cutting-edge AI research. From idea validation to full-scale AI development, we turn your vision into reality. Explore case studies & book a call today!",
   icons: "icon.svg",
 };
 
@@ -63,7 +64,7 @@ export default function RootLayout({
             />
           </head>
 
-          <body>
+          <body >
             {/* Google Tag Manager (noscript) */}
             <noscript>
               <iframe
@@ -73,7 +74,9 @@ export default function RootLayout({
                 style={{ display: "none", visibility: "hidden" }}
               ></iframe>
             </noscript>
-            {children}
+            <ThemeProvider>
+              {children}
+            </ThemeProvider>
           </body>
         </html>
       </Providers>

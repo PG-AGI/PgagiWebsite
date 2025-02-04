@@ -25,6 +25,7 @@ export type ContentBlock = {
     contentType: ContentType;
     coverImage: string;
     title: string;
+    description: string;
     publishDate: string;
     readTime: string;
     authorName: string;
@@ -48,6 +49,7 @@ export type ContentDetails = {
   slug: string;
   coverImage: string;
   title: string;
+  description: string;
   publishDate: string;
   readTime: string;
   author: {

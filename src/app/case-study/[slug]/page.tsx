@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getMetaTags } from "@/services/apiMetaService";
 import CaseStudy from "./CaseStudy";
 
@@ -6,15 +7,17 @@ export default function CaseStudyPage() {
     <CaseStudy />
   )
 }
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const slug = params.slug as string;
+  
   try {
-    const metaData = await getMetaTags({ contentType: 'case-studies', pageId: slug });
+    const metaData = await getMetaTags({ contentType: "case-studies", pageId: slug });
 
     const metaDescription = metaData.metaDescription;
-    const metaKeywords = metaData.metaKeywords;
-    const metaAuthor = metaData.metaAuthor;
     const appTitle = metaData.metaTitle;
+    
+    const baseUrl = "https://pgagi.in"; // Change this to your live domain
 
     return {
       title: appTitle,
@@ -27,12 +30,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         title: appTitle,
       },
       applicationName: appTitle,
-      keywords: metaKeywords.split(/[\s,]+/), 
-      author: metaAuthor,
+      openGraph: {
+        title: appTitle,
+        description: metaDescription,
+        url: `${baseUrl}/case-studies/${slug}`, // ✅ This should now work
+        siteName: "PGAGI",
+        type: "website",
+      },
     };
-  }catch(error){
-    return {}
+  } catch (error) {
+    console.error("Metadata Fetch Error:", error);
+    return {};
   }
-
 }
 

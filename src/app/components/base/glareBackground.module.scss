@@ -88,6 +88,10 @@
     }
 }
 
+[data-theme="light"] .glareBackground{
+    display: none;
+}
+
 @media (max-width:478px){
         
    .header {            
