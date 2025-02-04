@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 const HomePage = () => {
   const positionsRef = useRef<HTMLDivElement>(null); // Ref for the Positions section
   const benefitsRef = useRef<HTMLDivElement>(null); // Ref for the Benefits section
+  
   useEffect(() => {
     localStorage.setItem('theme', 'dark');
     document.documentElement.setAttribute("data-theme", "dark");
