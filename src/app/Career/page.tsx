@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Navigation from "../components/base/Navigation";
 import { Hero } from "./components/Hero";
 import { Values } from "./components/Values";
@@ -11,6 +11,11 @@ import Footer from "../components/Footer";
 const HomePage = () => {
   const positionsRef = useRef<HTMLDivElement>(null); // Ref for the Positions section
   const benefitsRef = useRef<HTMLDivElement>(null); // Ref for the Benefits section
+  
+  useEffect(() => {
+    localStorage.setItem('theme', 'dark');
+    document.documentElement.setAttribute("data-theme", "dark");
+  }, []);
 
   const handleScrollToPositions = () => {
     positionsRef.current?.scrollIntoView({ behavior: "smooth" }); // Scroll smoothly to the Positions section

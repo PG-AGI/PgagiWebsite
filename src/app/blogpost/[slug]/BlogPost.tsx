@@ -17,6 +17,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import '../../globals.css';
+import DarkModeToggle from '@/app/components/ThemeToggle';
 
 type BlogPostType = {
   slug: string;
@@ -70,6 +72,11 @@ const BlogPost = () => {
   const [errorBlogs, setErrorBlogs] = useState<string>('');
   const sliderRef = useRef<Slider | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(()=>{
+		localStorage.setItem('theme', 'light');
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -127,6 +134,7 @@ const BlogPost = () => {
   }, [slug]);
 
   useEffect(() => {
+    if (isMobile) return;
     const handleScroll = () => {
       if (!blogPost?.sections) return;
 
@@ -151,7 +159,14 @@ const BlogPost = () => {
 
       if (foundActive) {
         setActiveSection(foundActive);
-        console.log('active section is here', foundActive);
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
       }
     };
 
@@ -159,7 +174,7 @@ const BlogPost = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [blogPost]);
+  }, [blogPost, isMobile]);
 
 
 
@@ -352,34 +367,47 @@ const BlogPost = () => {
               <p>Date <span>{blogPost.publishDate}</span></p>
               <p>Read-Time <span className={styles.glowDot}></span> <span>{blogPost.readTime}</span></p>
             </div>
+            {
+              isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
           {
-            isMobile && 
+            isMobile &&
             <aside className={styles.leftAside}>
-            <div className={styles.stickyDiv}>
-              <div className={styles.index}>
-                <h1>INDEX</h1>
+              <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+
               </div>
-              <ul className={styles.navigation}>
-                {blogPost.sections.map((section) => {
-                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-                  return (
-                    <li
-                      key={section.title}
-                      data-section={sectionId}
-                      className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
-                        }`}
-                      onClick={() => scrollToSection(sectionId)}
-                    >
-                      {section.title}
-                    </li>
-                  );
-                })}
-              </ul>
-  
-  
-            </div>
-          </aside>
+                <div className={styles.index}>
+                  <h1>INDEX</h1>
+                </div>
+                <ul className={styles.navigation}>
+                  {blogPost.sections.map((section) => {
+                    const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                    return (
+                      <li
+                        key={section.title}
+                        data-section={sectionId}
+                        className={`${styles.navItem} ${activeSection === sectionId ? styles.active : ''
+                          }`}
+                        onClick={() => scrollToSection(sectionId)}
+                      >
+                        {section.title}
+                      </li>
+                    );
+                  })}
+                </ul>
+
+
+              </div>
+            </aside>
           }
           <div className={styles.tldr}>
             <h2>TL; DR (60-second blog summary)</h2>
@@ -526,6 +554,12 @@ const BlogPost = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
+            {
+              !isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
         </aside>
       </div>
@@ -559,7 +593,7 @@ const BlogPost = () => {
                         />
                         <div className={styles.cardOverlay}>Read more &rarr;</div>
                       </div>
-                      <h2 className={styles.cardTitle}>{data.title.length > 100 ? `${data.title.substring(0, 100)}...` : data.title}</h2>
+                      <h2 className={styles.cardTitle}>{data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}</h2>
                     </div>
                   )
                 })

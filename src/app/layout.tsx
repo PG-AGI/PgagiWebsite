@@ -5,7 +5,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
 
 import { inter } from "../utils/fontHelper";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "PGAGI",
@@ -64,7 +64,7 @@ export default function RootLayout({
             />
           </head>
 
-          <body>
+          <body >
             {/* Google Tag Manager (noscript) */}
             <noscript>
               <iframe
@@ -74,7 +74,7 @@ export default function RootLayout({
                 style={{ display: "none", visibility: "hidden" }}
               ></iframe>
             </noscript>
-            <ThemeProvider attribute="class" defaultTheme="light">
+            <ThemeProvider>
               {children}
             </ThemeProvider>
           </body>

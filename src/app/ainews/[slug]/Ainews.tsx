@@ -17,6 +17,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import DarkModeToggle from '@/app/components/ThemeToggle';
 
 type AinewsType = {
   slug: string;
@@ -67,6 +68,11 @@ const Ainews = () => {
   const [errorNews, setErrorNews] = useState<string>('');
   const sliderRef = useRef<Slider | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(()=>{
+		localStorage.setItem('theme', 'light');
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -138,6 +144,7 @@ const Ainews = () => {
   }, [slug]);
 
   useEffect(() => {
+    if (isMobile) return;
     const handleScroll = () => {
       if (!aiNews?.sections) return;
 
@@ -162,7 +169,14 @@ const Ainews = () => {
 
       if (foundActive) {
         setActiveSection(foundActive);
-        console.log('active section is here', foundActive);
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
       }
     };
 
@@ -170,7 +184,7 @@ const Ainews = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [aiNews]);
+  }, [aiNews, isMobile]);
 
 
 
@@ -346,16 +360,25 @@ const Ainews = () => {
           <h1 className={styles.heading}>{aiNews.title}</h1>
           <p className={styles.shortDescription}>{aiNews.description && aiNews.description}</p>
           <div className={styles.metadata}>
-            <p>Author <span>{aiNews.author.name}</span></p>
-            <div>
-              <p>Date <span>{aiNews.publishDate}</span></p>
-              <p>Read-Time <span className={styles.glowDot}></span> <span>{aiNews.readTime}</span></p>
-            </div>
+            <p>Date <span>{aiNews.publishDate}</span></p>
+            <p>Read-Time <span className={styles.glowDot}></span> <span>{aiNews.readTime}</span></p>
+            {
+              isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
           {
             isMobile &&
             <aside className={styles.leftAside}>
               <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+              </div>
                 <div className={styles.index}>
                   <h1>INDEX</h1>
                 </div>
@@ -517,6 +540,12 @@ const Ainews = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
+            {
+              !isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
         </aside>
       </div>
@@ -550,7 +579,7 @@ const Ainews = () => {
                         />
                         <div className={styles.cardOverlay}>Read more &rarr;</div>
                       </div>
-                      <h2 className={styles.cardTitle}>{data.title.length > 150 ? `${data.title.substring(0, 150)}...` : data.title}</h2>
+                      <h2 className={styles.cardTitle}>{data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}</h2>
                     </div>
                   )
                 })

@@ -126,18 +126,22 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        color: #fff;
+        color: #fff !important;
 
         > h2{
             font-size: 80px;
             font-weight: 600;
             margin-top: 25%;
+            color: #fff !important;
+
         }
 
         > p{
             margin-top: -10%;
             font-size: 28px;
             font-weight: 500;
+            color: #fff !important;
+
         }
       }
     }

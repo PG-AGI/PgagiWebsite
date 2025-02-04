@@ -7,13 +7,9 @@
     >h3 {
         font-size: 48px;
         font-weight: 500;
-        color: #caccff;
+        color: var(--text-color-light);
         margin-bottom: 48px;
-        background: #FFF;
-        -webkit-background-clip: text;
-        background-clip: text;
         text-align: center;
-        color: transparent;
     }
 
     .trendingList {
@@ -194,6 +190,22 @@
       }
     }    
 }
+
+[data-theme="dark"] .trending {
+
+
+  >h3 {
+    font-size: 48px;
+    font-weight: 500;
+    color: var(--text-color-light);
+    margin-bottom: 48px;
+    background: #FFF;
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-align: center;
+    color: transparent;
+}
+}
   
 @media (max-width:478px) {
     .trending {
@@ -329,7 +341,7 @@
   > h3 {
     font-size: 30px;
     font-weight: 500;
-    color: #caccff;
+    color: var(--text-color-light);
     margin-bottom: 30px;
     text-align: center;
   }
@@ -375,6 +387,11 @@
         height: 100%;
       }
     }
+  }
+}
+[data-theme="dark"] .trendingMobile {
+  > h3 {
+    color: var(--text-color-dark);
   }
 }
 

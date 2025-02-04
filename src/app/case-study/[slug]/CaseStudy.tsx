@@ -19,6 +19,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import '../../globals.css';
+import DarkModeToggle from '@/app/components/ThemeToggle';
 
 type caseStudy = {
   slug: string;
@@ -72,6 +74,11 @@ const CaseStudy = () => {
   const sliderRef = useRef<Slider | null>(null);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(()=>{
+		localStorage.setItem('theme', 'light');
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -130,7 +137,9 @@ const CaseStudy = () => {
 
     fetchCaseStudy();
   }, [slug]);
+
   useEffect(() => {
+    if (isMobile) return;
     const handleScroll = () => {
       if (!caseStudy?.sections) return;
 
@@ -145,7 +154,7 @@ const CaseStudy = () => {
         if (sectionElement) {
           const { offsetTop, offsetHeight } = sectionElement;
           if (
-            scrollPosition >= offsetTop - 50 && // Adjust offset if needed
+            scrollPosition >= offsetTop - 50 &&
             scrollPosition < offsetTop + offsetHeight - 50
           ) {
             foundActive = sectionElement.id;
@@ -155,7 +164,15 @@ const CaseStudy = () => {
 
       if (foundActive) {
         setActiveSection(foundActive);
-        console.log('active section is here', foundActive);
+
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
       }
     };
 
@@ -163,7 +180,7 @@ const CaseStudy = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [caseStudy]);
+  }, [caseStudy, isMobile]);
 
 
 
@@ -203,17 +220,14 @@ const CaseStudy = () => {
 
 
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-      caseStudyUrl
-    )}&title=${encodeURIComponent(caseStudy?.title || '')}`,
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      caseStudyUrl
-    )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(caseStudyUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(caseStudyUrl)}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
-
+  
   const handleShare = (platform: keyof typeof shareUrls) => {
     window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
+  
 
   const settings = {
     infinite: false,
@@ -353,11 +367,23 @@ const CaseStudy = () => {
             {/* <p>Author <span>{caseStudy.author.name}</span></p> */}
             <p>Date <span>{caseStudy.publishDate}</span></p>
             <p>Read-Time <span className={styles.glowDot}></span> <span>{caseStudy.readTime}</span></p>
+            {
+              isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
           {
             isMobile &&
             <aside className={styles.leftAside}>
               <div className={styles.stickyDiv}>
+              <div className={styles.allArticles} >
+                &larr;
+                <Link href={'/whatwethink'}>
+                  <h1>Articles</h1>
+                </Link>
+              </div>
                 <div className={styles.index}>
                   <h1>INDEX</h1>
                 </div>
@@ -519,6 +545,12 @@ const CaseStudy = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
+            {
+              !isMobile &&
+              <div className={styles.toggleButton}>
+                <DarkModeToggle />
+              </div>
+            }
           </div>
         </aside>
       </div>
@@ -550,7 +582,7 @@ const CaseStudy = () => {
                     />
                     <div className={styles.cardOverlay}>Read more &rarr;</div>
                   </div>
-                  <h2 className={styles.cardTitle}>{data.title.length > 100 ? `${data.title.substring(0, 100)}...` : data.title}</h2>
+                  <h2 className={styles.cardTitle}>{data.title.length > 60 ? `${data.title.substring(0, 60)}...` : data.title}</h2>
                 </div>
               ))}
             </Slider>

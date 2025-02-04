@@ -5,6 +5,7 @@ import { useState } from "react";
 import { links, resources, socialList, services } from "@/utils/constants";
 import styles from "./footer.module.scss";
 import logo from '../assets/logo.png';
+import '../globals.css';
 
 export default function Footer() {
   const [email, setEmail] = useState<string>("");

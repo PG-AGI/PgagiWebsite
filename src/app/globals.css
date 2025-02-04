@@ -1,38 +1,45 @@
-/* Light theme colors */
+/* Dark theme as default */
 :root {
+  --bg-color-dark: #111827;
+  --text-color-dark: #ffffff;
+  --button-color-dark: #007bff;
+
+  /* Default variables pointing to dark mode */
+  --bg-color: var(--bg-color-dark);
+  --text-color: var(--text-color-dark);
+  --button-color: var(--button-color-dark);
+}
+
+/* Light theme colors */
+[data-theme='light'] {
   --bg-color-light: #ffffff;
   --text-color-light: #000000;
   --button-color-light: #007bff;
+
+  /* Override default variables for light mode */
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-light);
+  --button-color: var(--button-color-light);
 }
 
-/* Dark theme colors */
-[data-theme='dark'] {
-  --bg-color-dark: #1a1a1a;
-  --text-color-dark: #ffffff;
-  --button-color-dark: #007bff;
-}
-
-/* Default styles */
+/* Global styles */
 body {
-  background-color: var(--bg-color-light); /* Fallback to light background */
-  color: var(--text-color-light);           /* Fallback to light text color */
+  background-color: var(--bg-color);
+  color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark theme styles */
-[data-theme='dark'] body {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-dark);
-}
-
-/* Example button that changes color based on theme */
+/* Button styles */
 button {
-  background-color: var(--button-color-light);
+  background-color: var(--button-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-[data-theme='dark'] button {
-  background-color: var(--button-color-dark);
-}
 
 
 @tailwind base;

@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./contactUs.module.scss";
+import '../../globals.css';
 
 interface ContactUsFormProps {
   onClose: () => void;
