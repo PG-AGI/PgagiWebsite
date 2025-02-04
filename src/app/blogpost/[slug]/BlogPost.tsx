@@ -141,62 +141,40 @@ const BlogPost = () => {
   }, [slug]);
 
   useEffect(() => {
-    if (isMobile) return;
-    
-    let isScrolling: NodeJS.Timeout;
-    const handleScroll = () => {
-      // Clear the previous timeout
-      clearTimeout(isScrolling);
+    if (isMobile || !blogPost?.sections) return;
 
-      // Set a new timeout
-      isScrolling = setTimeout(() => {
-        if (!blogPost?.sections) return;
-
-        const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-        let foundActive = null;
-
-        blogPost.sections.forEach((section) => {
-          const sectionElement = document.getElementById(
-            section.title.toLowerCase().replace(/\s+/g, '-')
-          );
-
-          if (sectionElement) {
-            const { offsetTop, offsetHeight } = sectionElement;
-            if (
-              scrollPosition >= offsetTop - 50 &&
-              scrollPosition < offsetTop + offsetHeight - 50
-            ) {
-              foundActive = sectionElement.id;
-            }
-          }
-        });
-
-        if (foundActive) {
-          setActiveSection(foundActive);
-          
-          // Only scroll the nav item into view if user isn't actively scrolling
-          const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
-          if (activeNavItem && !document.documentElement.classList.contains('scrolling')) {
-            activeNavItem.scrollIntoView({
-              behavior: 'smooth',
-              block: 'nearest',
-            });
-          }
-        }
-      }, 150); // Debounce time of 150ms
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -70% 0px', // Adjust bottom margin to trigger earlier
+      threshold: 0, // Trigger as soon as the section enters the viewport
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        const sectionId = entry.target.id;
+        if (entry.isIntersecting) {
+          setActiveSection(sectionId);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, options);
+
+    // Observe each section
+    blogPost.sections.forEach((section) => {
+      const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+      const sectionElement = document.getElementById(sectionId);
+      if (sectionElement) {
+        observer.observe(sectionElement);
+      }
+    });
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(isScrolling);
+      observer.disconnect();
     };
   }, [blogPost, isMobile]);
 
-
-
   const scrollToSection = (sectionId: string) => {
-    document.documentElement.classList.add('scrolling');
     const sectionElement = document.getElementById(sectionId);
     if (sectionElement) {
       sectionElement.scrollIntoView({
@@ -204,11 +182,6 @@ const BlogPost = () => {
         block: 'start',
       });
       setActiveSection(sectionId);
-      
-      // Remove the scrolling class after animation completes
-      setTimeout(() => {
-        document.documentElement.classList.remove('scrolling');
-      }, 1000);
     }
   };
 
