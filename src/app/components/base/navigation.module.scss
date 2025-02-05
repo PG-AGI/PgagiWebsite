@@ -314,16 +314,6 @@
   }
 }
 
-@media (max-width: 1000px) {
-  .navigation {
-    .nav {
-      padding: 0px;
-      .links {
-        gap: 50px;
-      }
-    }
-  }
-}
 
 @media (max-width: 768px) {
   .navigation {
@@ -609,8 +599,6 @@
 
       p {
         font-size: 9px;
-        // margin-top: -3px;
-        // margin-left: 3px;
       }
     }
 
