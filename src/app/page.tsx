@@ -17,7 +17,6 @@ export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 	const lottieWindowRef = useRef<HTMLDivElement>(null)
 	useEffect(()=>{
-		localStorage.setItem('theme', 'dark');
 		document.documentElement.setAttribute("data-theme", "dark");
 	  }, []);
 

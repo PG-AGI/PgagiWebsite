@@ -6,7 +6,9 @@
   display: flex;
   flex-direction: column;
   z-index: 0;
-  //padding: 20px; // Added padding for a cleaner layout
+}
+[data-theme="dark"] .main{
+  background-color: var(--bg-color-dark);
 }
 
 .listContainer {
@@ -33,7 +35,6 @@
     margin: 10px auto 0;
   }
 }
-
 .navButton {
   background: rgba(5, 12, 175, 0.8);
   border: none;
@@ -71,6 +72,11 @@
   }
 }
 
+[data-theme="dark"] .navButton{
+  svg{
+    color: var(--text-color-dark);
+  }
+}
 /* Top Section Styles */
 .topSection {
   display: flex;

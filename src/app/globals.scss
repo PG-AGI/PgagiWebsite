@@ -1,21 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-/* Light Mode Defaults */
-:root {
-	--bg-color-light: #121212;
-	--text-color-light: #ffffff;
-	--scrollbar-track: #d1d5db;
-	--scrollbar-thumb: #4b5563;
-}
-
-/* Dark Mode */
-[data-theme="dark"] {
-	--bg-color-dark: #ffffff;
-	--text-color-dark: #000000;
-	--scrollbar-track: #27272a;
-	--scrollbar-thumb: #6b7280;
-}
-
 html, body {
 	width: 100%;
 	height: 100% !important;
@@ -27,14 +11,6 @@ html, body {
 	font-family: "Poppins", sans-serif;
 	box-sizing: border-box;
 }
-
-/* Apply Theme to All Elements */
-* {
-	color: var(--text-color-light);
-	box-sizing: border-box;
-	overflow-wrap: break-word;
-}
-
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
 	width: 10px;

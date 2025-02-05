@@ -61,7 +61,6 @@ const Ainews = () => {
   const [aiNews, setAiNews] = useState<AinewsType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeSection, setActiveSection] = useState<string>('overview');
   const [news, setNews] = useState<News[]>([]);
   const [loadingNews, setLoadingNews] = useState<boolean>(false);
@@ -69,17 +68,9 @@ const Ainews = () => {
   const sliderRef = useRef<Slider | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (!savedTheme) {
-      // Set default theme to light if no theme is saved
-      localStorage.setItem('theme', 'light');
-      document.documentElement.setAttribute("data-theme", "light");
-    } else {
-      // Use saved theme preference
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
-  }, []);
+  useEffect(()=>{
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -151,37 +142,49 @@ const Ainews = () => {
   }, [slug]);
 
   useEffect(() => {
-    if (isMobile || !aiNews?.sections) return;
+    if (isMobile) return;
+    const handleScroll = () => {
+      if (!aiNews?.sections) return;
 
-    const options = {
-      root: null,
-      rootMargin: '0px 0px -70% 0px',
-      threshold: 0,
-    };
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      let foundActive = null;
 
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        const sectionId = entry.target.id;
-        if (entry.isIntersecting) {
-          setActiveSection(sectionId);
+      aiNews.sections.forEach((section) => {
+        const sectionElement = document.getElementById(
+          section.title.toLowerCase().replace(/\s+/g, '-')
+        );
+
+        if (sectionElement) {
+          const { offsetTop, offsetHeight } = sectionElement;
+          if (
+            scrollPosition >= offsetTop - 50 && // Adjust offset if needed
+            scrollPosition < offsetTop + offsetHeight - 50
+          ) {
+            foundActive = sectionElement.id;
+          }
         }
       });
+
+      if (foundActive) {
+        setActiveSection(foundActive);
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
+      }
     };
 
-    const observer = new IntersectionObserver(handleIntersect, options);
-
-    aiNews.sections.forEach((section) => {
-      const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-      const sectionElement = document.getElementById(sectionId);
-      if (sectionElement) {
-        observer.observe(sectionElement);
-      }
-    });
-
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [aiNews, isMobile]);
+
+
 
   const scrollToSection = (sectionId: string) => {
     const sectionElement = document.getElementById(sectionId);
@@ -190,10 +193,9 @@ const Ainews = () => {
         behavior: 'smooth',
         block: 'start',
       });
-      setActiveSection(sectionId);
+      setActiveSection(sectionId); // Immediately set active
     }
   };
-
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     alert('Link copied to clipboard!');
@@ -218,21 +220,15 @@ const Ainews = () => {
 
   const ainewsUrl = generateAinewsUrl();
 
-  const generateLinkedInShareText = () => {
-    if (!aiNews) return '';
-    return `Here's an interesting AI news article that I found on PG-AGI: "${aiNews.title}". Check it out!`;
+  const shareUrls: Record<'linkedin' | 'twitter', string> = {
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${aiNews?.title || ''}&summary=${aiNews?.description || ''}&source=${window.location.origin}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(ainewsUrl)}&text=${encodeURIComponent(aiNews?.title || '')}`,
   };
 
-  const handleShare = (platform: 'linkedin' | 'twitter') => {
-    if (platform === 'linkedin') {
-      const linkedInUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(aiNews?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`;
-      window.open(linkedInUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
-    } else {
-      // Handle Twitter sharing
-      const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(aiNews?.title || '')}`;
-      window.open(twitterUrl, '_blank', 'noopener,noreferrer');
-    }
+  const handleShare = (platform: keyof typeof shareUrls) => {
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
+
 
   if (loading) {
     return (

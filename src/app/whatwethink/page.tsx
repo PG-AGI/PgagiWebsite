@@ -82,7 +82,6 @@ export default function BlogPage() {
     }
   }, []);
   useEffect(()=>{
-		localStorage.setItem('theme', 'dark');
 		document.documentElement.setAttribute("data-theme", "dark");
 	  }, []);
   

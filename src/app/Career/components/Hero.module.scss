@@ -2,6 +2,9 @@
     position: relative;
     padding-top: 1rem;
 }
+[data-theme="dark"] .header {
+    background-color: var(--bg-color-dark);
+}
 
 .content {
     position: relative;
@@ -33,13 +36,10 @@
 
 .description {
     font-size: 1rem;
-    color: var(--text-color-light);
+    color: #d1d5db;
     /* gray-300 */
     max-width: 48rem;
     margin: 0 auto 2rem;
-}
-[data-theme="dark"] .description{
-    color: var(--text-color-dark);
 }
 
 .buttons {
@@ -65,15 +65,12 @@
 
 .secondaryButton {
     background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-color-light);
+    color: #fff;
     padding: 0.75rem 2rem;
     border-radius: 0.5rem;
     font-weight: 500;
     backdrop-filter: blur(4px);
     transition: background-color 0.3s;
-}
-[data-theme="dark"] .secondaryButton{
-    color: var(--text-color-dark);
 }
 
 .secondaryButton:hover {

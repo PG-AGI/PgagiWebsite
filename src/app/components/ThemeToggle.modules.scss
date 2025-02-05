@@ -1,7 +1,7 @@
 .theme-switch-button {
     display: flex;
     align-items: center;
-    padding: 8px 12px;
+    padding: 8px 12px !important;
     border-radius: 25px;
     background-color: #1a1a1a; // Use the sidebar background or slightly lighter shade
     border: 1px solid #333; // Subtle border to define button edges
@@ -9,15 +9,15 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   
     &.light {
-      background-color: #ffffff; // Lighter for light mode
-      color: #333;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff !important; // Lighter for light mode
+      color: #333 !important;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
     }
   
     &.dark {
-      background-color: #1a1a1a; 
-      color: #fff;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      background-color: #1a1a1a !important; 
+      color: #fff !important;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1) !important;
     }
   
     &:hover {
@@ -44,3 +44,19 @@
     }
   }
   
+  @media (max-width: 768px){
+    .theme-switch-button {
+    
+      &.light {
+        background-color: #ffffff !important; // Lighter for light mode
+        color: #333 !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+      }
+    
+      &.dark {
+        background-color: #1a1a1a !important; 
+        color: #fff !important;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1) !important;
+      }
+    }
+  }

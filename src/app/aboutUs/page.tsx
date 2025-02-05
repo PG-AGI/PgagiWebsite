@@ -18,10 +18,8 @@ import down from '../assets/down.png';
 import BookCallModal from "../components/base/bookCallModela";
 
 export default function AboutUs() {
-  const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
-    localStorage.setItem('theme', 'dark');
     document.documentElement.setAttribute("data-theme", "dark");
   }, []);
 
