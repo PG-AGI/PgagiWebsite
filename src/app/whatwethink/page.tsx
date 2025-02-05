@@ -19,6 +19,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { generateSlug } from '@/services/generateSlugService';
 import '../globals.css';
+import '../globals.css';
 
 type CaseStudy = {
   id: string;
@@ -145,6 +146,7 @@ export default function BlogPage() {
 
   // Fetch case studies from the API
   useEffect(() => {
+
 
     const fetchCaseStudies = async () => {
       setLoadingCaseStudies(true);

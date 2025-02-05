@@ -36,10 +36,13 @@
 
 .description {
     font-size: 1rem;
-    color: #d1d5db;
+    color: var(--text-color-light);
     /* gray-300 */
     max-width: 48rem;
     margin: 0 auto 2rem;
+}
+[data-theme="dark"] .description{
+    color: var(--text-color-dark);
 }
 
 .buttons {
@@ -65,12 +68,15 @@
 
 .secondaryButton {
     background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    color: var(--text-color-light);
     padding: 0.75rem 2rem;
     border-radius: 0.5rem;
     font-weight: 500;
     backdrop-filter: blur(4px);
     transition: background-color 0.3s;
+}
+[data-theme="dark"] .secondaryButton{
+    color: var(--text-color-dark);
 }
 
 .secondaryButton:hover {

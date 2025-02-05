@@ -16,6 +16,7 @@ import Head from "next/head";
 import caseFrame from "../../assets/case.png"; // Use your own image or placeholder
 
 
+
 const BlogPage = () => {
   const params = useParams();
   const slug = params.slug; // Get the slug from the URL

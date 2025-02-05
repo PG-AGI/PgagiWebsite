@@ -7,16 +7,29 @@ html, body {
 	margin: 0;
 	background-color: var(--bg-color-light);
 	color: var(--text-color-light);
+	background-color: var(--bg-color-light);
+	color: var(--text-color-light);
 	scroll-behavior: smooth;
 	font-family: "Poppins", sans-serif;
 	box-sizing: border-box;
 }
+
+/* Apply Theme to All Elements */
+* {
+	color: var(--text-color-light);
+	box-sizing: border-box;
+	overflow-wrap: break-word;
+	font-family: "Poppins", sans-serif;
+	box-sizing: border-box;
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
 	width: 10px;
 }
 
 ::-webkit-scrollbar-track {
+	background-color: var(--scrollbar-track);
 	background-color: var(--scrollbar-track);
 	border-radius: 10px;
 }
@@ -29,4 +42,11 @@ html, body {
 /* Ensure smooth color transition */
 body, * {
 	transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+	background: var(--scrollbar-thumb);
 }
+
+/* Ensure smooth color transition */
+body, * {
+	transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+

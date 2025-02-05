@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import Navigation from "../components/base/Navigation";
 import { Hero } from "./components/Hero";
