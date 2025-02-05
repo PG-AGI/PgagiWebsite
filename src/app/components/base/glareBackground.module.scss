@@ -88,8 +88,8 @@
     }
 }
 
-[data-theme="light"] .glareBackground{
-    display: none;
+[data-theme="dark"] .glareBackground{
+    // background-color: var(--bg-color-dark);
 }
 
 @media (max-width:478px){

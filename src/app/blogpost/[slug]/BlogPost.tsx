@@ -73,17 +73,9 @@ const BlogPost = () => {
   const sliderRef = useRef<Slider | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (!savedTheme) {
-      // Set default theme to light if no theme is saved
-      localStorage.setItem('theme', 'light');
-      document.documentElement.setAttribute("data-theme", "light");
-    } else {
-      // Use saved theme preference
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
-  }, []);
+  useEffect(()=>{
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -141,38 +133,48 @@ const BlogPost = () => {
   }, [slug]);
 
   useEffect(() => {
-    if (isMobile || !blogPost?.sections) return;
+    if (isMobile) return;
+    const handleScroll = () => {
+      if (!blogPost?.sections) return;
 
-    const options = {
-      root: null,
-      rootMargin: '0px 0px -70% 0px', // Adjust bottom margin to trigger earlier
-      threshold: 0, // Trigger as soon as the section enters the viewport
-    };
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      let foundActive = null;
 
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        const sectionId = entry.target.id;
-        if (entry.isIntersecting) {
-          setActiveSection(sectionId);
+      blogPost.sections.forEach((section) => {
+        const sectionElement = document.getElementById(
+          section.title.toLowerCase().replace(/\s+/g, '-')
+        );
+
+        if (sectionElement) {
+          const { offsetTop, offsetHeight } = sectionElement;
+          if (
+            scrollPosition >= offsetTop - 50 && // Adjust offset if needed
+            scrollPosition < offsetTop + offsetHeight - 50
+          ) {
+            foundActive = sectionElement.id;
+          }
         }
       });
+
+      if (foundActive) {
+        setActiveSection(foundActive);
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
+      }
     };
 
-    const observer = new IntersectionObserver(handleIntersect, options);
-
-    // Observe each section
-    blogPost.sections.forEach((section) => {
-      const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-      const sectionElement = document.getElementById(sectionId);
-      if (sectionElement) {
-        observer.observe(sectionElement);
-      }
-    });
-
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [blogPost, isMobile]);
+
+
 
   const scrollToSection = (sectionId: string) => {
     const sectionElement = document.getElementById(sectionId);
@@ -181,7 +183,7 @@ const BlogPost = () => {
         behavior: 'smooth',
         block: 'start',
       });
-      setActiveSection(sectionId);
+      setActiveSection(sectionId); // Immediately set active
     }
   };
 
@@ -208,23 +210,13 @@ const BlogPost = () => {
 
   const blogPostUrl = generateBlogPostUrl();
 
-  const generateLinkedInShareText = () => {
-    if (!blogPost) return '';
-    return `Here's a detailed blog that I found on PG-AGI: "${blogPost.title}". Check it out!`;
-  };
-
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(blogPost?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${blogPost?.title || ''}&summary=${blogPost?.description || ''}&source=${window.location.origin}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(blogPostUrl)}&text=${encodeURIComponent(blogPost?.title || '')}`,
   };
 
   const handleShare = (platform: keyof typeof shareUrls) => {
-    if (platform === 'linkedin') {
-      const linkedInUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(blogPost?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`;
-      window.open(linkedInUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
-    } else {
-      window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
-    }
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
 
   const settings = {

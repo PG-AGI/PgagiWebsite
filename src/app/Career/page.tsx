@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import Navigation from "../components/base/Navigation";
 import { Hero } from "./components/Hero";
@@ -13,7 +12,6 @@ const HomePage = () => {
   const benefitsRef = useRef<HTMLDivElement>(null); // Ref for the Benefits section
   
   useEffect(() => {
-    localStorage.setItem('theme', 'dark');
     document.documentElement.setAttribute("data-theme", "dark");
   }, []);
 

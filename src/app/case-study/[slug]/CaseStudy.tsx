@@ -22,12 +22,6 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 import '../../globals.css';
 import DarkModeToggle from '@/app/components/ThemeToggle';
 
-type caseStudy = {
-  slug: string;
-  title: string;
-  coverImage: string;
-};
-
 type CaseStudy = {
   slug: string;
   coverImage: string;
@@ -75,17 +69,10 @@ const CaseStudy = () => {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (!savedTheme) {
-      // Set default theme to light if no theme is saved
-      localStorage.setItem('theme', 'light');
-      document.documentElement.setAttribute("data-theme", "light");
-    } else {
-      // Use saved theme preference
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
-  }, []);
+  useEffect(()=>{
+		document.documentElement.setAttribute("data-theme", "light");
+	  }, []);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -146,37 +133,50 @@ const CaseStudy = () => {
   }, [slug]);
 
   useEffect(() => {
-    if (isMobile || !caseStudy?.sections) return;
+    if (isMobile) return;
+    const handleScroll = () => {
+      if (!caseStudy?.sections) return;
 
-    const options = {
-      root: null,
-      rootMargin: '0px 0px -70% 0px',
-      threshold: 0,
-    };
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      let foundActive = null;
 
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        const sectionId = entry.target.id;
-        if (entry.isIntersecting) {
-          setActiveSection(sectionId);
+      caseStudy.sections.forEach((section) => {
+        const sectionElement = document.getElementById(
+          section.title.toLowerCase().replace(/\s+/g, '-')
+        );
+
+        if (sectionElement) {
+          const { offsetTop, offsetHeight } = sectionElement;
+          if (
+            scrollPosition >= offsetTop - 50 &&
+            scrollPosition < offsetTop + offsetHeight - 50
+          ) {
+            foundActive = sectionElement.id;
+          }
         }
       });
+
+      if (foundActive) {
+        setActiveSection(foundActive);
+
+        // Ensure the corresponding <li> scrolls into view
+        const activeNavItem = document.querySelector(`[data-section="${foundActive}"]`);
+        if (activeNavItem) {
+          activeNavItem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
+      }
     };
 
-    const observer = new IntersectionObserver(handleIntersect, options);
-
-    caseStudy.sections.forEach((section) => {
-      const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-      const sectionElement = document.getElementById(sectionId);
-      if (sectionElement) {
-        observer.observe(sectionElement);
-      }
-    });
-
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [caseStudy, isMobile]);
+
+
 
   const scrollToSection = (sectionId: string) => {
     const sectionElement = document.getElementById(sectionId);
@@ -185,9 +185,10 @@ const CaseStudy = () => {
         behavior: 'smooth',
         block: 'start',
       });
-      setActiveSection(sectionId);
+      setActiveSection(sectionId); // Immediately set active
     }
   };
+
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -211,25 +212,14 @@ const CaseStudy = () => {
 
   const caseStudyUrl = generateCaseStudyUrl();
 
-  const generateLinkedInShareText = () => {
-    if (!caseStudy) return '';
-    return `Here's an insightful case study that I found on PG-AGI: "${caseStudy.title}". Check it out!`;
-  };
 
   const shareUrls: Record<'linkedin' | 'twitter', string> = {
-    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(caseStudy?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=${caseStudy?.title || ''}&summary=${caseStudy?.description || ''}&source=${window.location.origin}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(caseStudyUrl)}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
   
-  const handleShare = (platform: 'linkedin' | 'twitter') => {
-    if (platform === 'linkedin') {
-      const linkedInUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(caseStudy?.title || '')}&summary=${encodeURIComponent(generateLinkedInShareText())}&source=${encodeURIComponent(window.location.origin)}`;
-      window.open(linkedInUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
-    } else {
-      // Handle Twitter sharing
-      const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(caseStudy?.title || '')}`;
-      window.open(twitterUrl, '_blank', 'noopener,noreferrer');
-    }
+  const handleShare = (platform: keyof typeof shareUrls) => {
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
   
 

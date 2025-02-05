@@ -12,6 +12,9 @@ const AdminPage = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  useEffect(()=>{
+		document.documentElement.setAttribute("data-theme", "dark");
+	  }, []);
   useEffect(() => {
     if (status === "loading") return;
     if (!session) router.push("/auth/signin"); 

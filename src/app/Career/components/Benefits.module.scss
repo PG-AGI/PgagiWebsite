@@ -1,47 +1,41 @@
 .benefits-section {
     padding: 5rem 0 15rem 0;
-    color: var(--text-color-light)
+    color: var(--text-color-light);
 }
-[dark-theme="dark"] .benefits-section {
-    color: var(--text-color-dark)
+[data-theme="dark"] .benefits-section {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
 }
 
 .benefits-container {
     max-width: 75%;
-    /* max-w-7xl */
     margin: 0 auto;
     padding: 0 1.5rem;
-    /* px-4 */
 }
 
 .benefits-heading {
     font-size: 2rem;
-    /* text-3xl */
     font-weight: bold;
     text-align: center;
     margin-bottom: 3rem;
-    /* mb-12 */
     color: var(--text-color-light);
 }
-[data-theme="dark"] .benefits-heading {
+
+[data-theme="dark"] .benefits-heading{
     color: var(--text-color-dark);
 }
 
 .benefits-grid {
     display: grid;
     gap: 1.5rem;
-    /* gap-6 */
     grid-template-columns: repeat(1, 1fr);
-    /* Single column on small screens */
 
     @media (min-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
-        /* Two columns for medium screens */
     }
 
     @media (min-width: 1024px) {
         grid-template-columns: repeat(3, 1fr);
-        /* Three columns for large screens */
     }
 }
 
@@ -49,24 +43,33 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    /* gap-4 */
     background: rgba(255, 255, 255, 0.05);
-    /* Slightly transparent background */
     padding: 1.5rem;
-    /* p-6 */
     border-radius: 1rem;
-    /* Rounded corners */
     border: 1px solid rgba(255, 255, 255, 0.1);
-    /* Subtle border */
     backdrop-filter: blur(10px);
-    /* Blur for frosted glass effect */
     transition: all 0.3s ease-in-out;
 
     &:hover {
         background: rgba(255, 255, 255, 0.1);
-        /* Slightly brighter on hover */
         box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
-        /* Subtle shadow */
+    }
+}
+
+[data-theme="dark"] .benefits-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
     }
 }
 
@@ -75,17 +78,17 @@
     align-items: center;
     justify-content: center;
     width: 3rem;
-    /* w-12 */
     height: 3rem;
-    /* h-12 */
     border-radius: 0.5rem;
-    /* Rounded */
     background: rgba(59, 130, 246, 0.2);
-    /* Blue background */
     color: rgba(147, 197, 253, 1);
-    /* Blue text */
     font-size: 1.5rem;
-    /* Icon size */
+}
+
+[data-theme="dark"] .icon-container {
+    background: rgba(59, 130, 246, 0.2);
+    background: var(--bg-color-dark);
+    color: var(--text-color-dark);
 }
 
 .card-details {
@@ -94,22 +97,20 @@
 
 .card-title {
     font-size: 1.25rem;
-    /* text-xl */
     font-weight: 600;
-    /* Semi-bold */
     margin-bottom: 0.5rem;
-    /* mb-1 */
-    color: #ffffff;
-    /* White text */
+    color: var(--text-color-light);
+}
+
+[data-theme="dark"] .card-title {
+    color: var(--text-color-dark);
 }
 
 .card-description {
     font-size: 1rem;
-    /* text-base */
-    color: var(--text-color-light)
-    /* Subtle gray */
+    color: var(--text-color-light);
 }
 
-[data-theme="dark"] .card-description{
+[data-theme="dark"] .card-description {
     color: var(--text-color-dark);
 }

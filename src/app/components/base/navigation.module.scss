@@ -11,7 +11,6 @@
 
   &.scrolled {
     background: rgba(0, 0, 0, 0.611);
-    // background: inherit;
   }
 
   .banner {
@@ -98,6 +97,7 @@
         padding: 2px 8px;
         cursor: pointer;
         text-decoration: none;
+        color: var(--text-color-light);
 
         &::after {
           content: '';
@@ -189,7 +189,7 @@
 
 
 [data-theme="dark"] .navigation {
-  color: white !important;
+  color: var(--text-color-dark);
   .logo {
     p {
       color: var(--text-color-dark);
@@ -199,9 +199,17 @@
 
     .hamburger {
       span {
-        background-color: white!important;
+        background-color: white !important;
       }
     }
+    
+    .links {
+      >a,
+      .whatWeDo>a {
+        color: var(--text-color-dark);
+      }
+    }
+
   }
 }
 
@@ -216,7 +224,6 @@
   height: 500px;
   display: none;
   padding-top: 55px;
-  // z-index: 10000; /* Ensure it's higher than .calendly */
 
   .content {
     position: relative;
@@ -307,19 +314,11 @@
   }
 }
 
-@media (max-width: 1000px) {
-  .navigation {
-    .nav {
-      .links {
-        gap: 50px;
-      }
-    }
-  }
-}
 
 @media (max-width: 768px) {
   .navigation {
     position: relative;
+    padding: 0px;
 
     .mastermenu {
       z-index: 2;
@@ -447,6 +446,7 @@
         display: flex;
         position: relative;
         z-index: 2000;
+        margin-right: 1rem;
 
         span {
           display: block;
@@ -557,6 +557,7 @@
 @media (max-width: 568px) {
   .navigation {
     .nav {
+      padding: 0px;
       margin-top: 3%;
 
       .links {
@@ -598,15 +599,14 @@
 
       p {
         font-size: 9px;
-        // margin-top: -3px;
-        // margin-left: 3px;
       }
     }
 
     .nav {
       margin-top: 3.2rem;
-
+      padding: 0px;
       .links {
+        padding: 0;
         .whatWeDo {
           .dropdown {
             .content {
