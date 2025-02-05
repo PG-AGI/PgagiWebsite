@@ -23,11 +23,6 @@ export default function AboutUs() {
     document.documentElement.setAttribute("data-theme", "dark");
   }, []);
 
-  useEffect(()=>{
-    localStorage.setItem('theme', 'dark');
-    document.documentElement.setAttribute("data-theme", "dark");
-  }, []);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleBookCall = () => {
