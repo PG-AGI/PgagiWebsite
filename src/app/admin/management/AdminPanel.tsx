@@ -80,10 +80,6 @@ const AdminPanel: React.FC = () => {
             id: block.title + Math.random().toString(),
             type: block.type || 'paragraph',
             content: block.type === 'table' ? block.content : block.content || '',
-            src: block.src || '',
-            alt: block.alt || '',
-            caption: block.caption || '',
-            title: block.title || '',
           })),
         })),
       };
@@ -97,7 +93,7 @@ const AdminPanel: React.FC = () => {
     }
   };
 
-  const handleDelete = async (content: ContentSummary, fetchContents: ()=> void) => {
+  const handleDelete = async (content: ContentSummary, fetchContents: () => void) => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete this ${content.contentType === 'caseStudy'
         ? 'Case Study'
@@ -180,7 +176,7 @@ const AdminPanel: React.FC = () => {
             editingContentId={editingContentId}
             initialValues={initialValues}
             onAfterSubmit={handleAfterSubmit}
-            setActiveTabToView={()=> { setActiveTab('view')}}
+            setActiveTabToView={() => { setActiveTab('view') }}
           />
         )}
         {activeTab === 'view' && (
@@ -197,11 +193,6 @@ const AdminPanel: React.FC = () => {
         ) : contentDetails ? (
           <div className={styles.modalContentInner}>
             <h2>{contentDetails.title}</h2>
-            {/* <img
-              src={contentDetails.coverImage}
-              alt={contentDetails.title}
-              className={styles.coverImage}
-            /> */}
             <Image
               src={contentDetails.coverImage}
               alt={contentDetails.title}
@@ -253,20 +244,15 @@ const AdminPanel: React.FC = () => {
                     case 'image':
                       return (
                         <figure key={blockIndex} className={styles.imageBlock}>
-                          {/* <img
-                            src={block.src || 'https://via.placeholder.com/600x400'}
-                            alt={block.alt || 'Image'}
-                            className={styles.image}
-                          /> */}
                           <Image
-                            src={block.src || 'https://via.placeholder.com/600x400'}
-                            alt={block.alt || 'Image'}
+                            src={(block.content as { src: string }).src || 'https://via.placeholder.com/600x400'}
+                            alt={(block.content as { alt: string }).alt || 'Image'}
                             className={styles.image}
                             width={100}
                             height={50}
-                            />
-                          {block.caption && (
-                            <figcaption className={styles.caption}>{block.caption}</figcaption>
+                          />
+                          {(block.content as { caption: string }).caption && (
+                            <figcaption className={styles.caption}>{(block.content as { caption: string }).caption}</figcaption>
                           )}
                         </figure>
                       );
@@ -274,15 +260,15 @@ const AdminPanel: React.FC = () => {
                       return (
                         <div key={blockIndex} className={styles.videoBlock}>
                           <iframe
-                            src={block.src || 'https://www.youtube.com/embed/dQw4w9WgXcQ'}
-                            title={block.title || 'Video'}
+                            src={(block.content as { src: string }).src || 'https://www.youtube.com/embed/dQw4w9WgXcQ'}
+                            title={(block.content as { title: string }).title || 'Video'}
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             className={styles.video}
                           ></iframe>
-                          {block.caption && (
-                            <div className={styles.caption}>{block.caption}</div>
+                          {(block.content as { caption: string }).caption && (
+                            <div className={styles.caption}>{(block.content as { caption: string }).caption}</div>
                           )}
                         </div>
                       );

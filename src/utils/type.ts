@@ -4,10 +4,7 @@ export type ContentType = 'caseStudy' | 'blog' | 'ainews';
 export type ContentBlock = {
     id: string;
     type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
-    content?: string | { headers: string[]; rows: string[][] } | { heading: string; text: string };
-    src?: string;
-    alt?: string;
-    caption?: string;
+    content?: string | { headers: string[]; rows: string[][] } | { heading: string; text: string } | {src: string; alt: string; caption: string} | {src: string; title: string; caption: string} | {};
     title?: string;
   };
 
@@ -68,10 +65,7 @@ export type ContentDetails = {
     title: string;
     content: {
       type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
-      content?: string | { headers: string[]; rows: string[][] };
-      src?: string;
-      alt?: string;
-      caption?: string;
+      content?: string | { headers: string[]; rows: string[][] } | {src: string; alt: string; caption: string} | {src: string; title: string; caption: string} | {};
       title?: string;
     }[];
   }[];

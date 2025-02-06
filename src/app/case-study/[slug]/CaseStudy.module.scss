@@ -287,7 +287,8 @@ $purple-light: #a855f7;
         flex-direction: column;
         margin-top: 1rem;
         padding: 0;
-        p{
+
+        p {
           background-color: lighten($purple-light, 10%);
           width: fit-content;
           color: white !important;
@@ -448,6 +449,41 @@ $purple-light: #a855f7;
           margin-bottom: 1rem;
         }
       }
+
+      // imageBlock
+      .imageBlock {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 1rem;
+
+        .image {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        .caption {
+          margin: 10px;
+          margin-top: 0px;
+        }
+      }
+
+      .videoBlock{
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 1rem;
+        .video{
+          width: 100%;
+          margin-bottom: 1rem;
+          height: 100%;
+          min-height: 400px;
+        }
+        .caption{
+          margin: 10px;
+          margin-top: 0px;
+        }
+      }
     }
   }
 
@@ -490,9 +526,10 @@ $purple-light: #a855f7;
   }
 }
 
-[data-theme="dark"] .container{
+[data-theme="dark"] .container {
   background-color: var(--bg-color-dark);
   color: var(--text-color-dark) !important;
+
   .articleContainer {
 
     .metadata {
@@ -526,7 +563,7 @@ $purple-light: #a855f7;
       .box {
         color: black !important;
       }
-      
+
     }
   }
 }
@@ -670,7 +707,7 @@ $purple-light: #a855f7;
 
 }
 
-.toggleButton{
+.toggleButton {
   margin-top: 1rem;
 }
 
@@ -835,7 +872,8 @@ $purple-light: #a855f7;
           flex-direction: column;
           margin-top: 1rem;
           padding: 0;
-          p{
+
+          p {
             background-color: lighten($purple-light, 10%);
             width: fit-content;
             color: black !important;
@@ -867,6 +905,7 @@ $purple-light: #a855f7;
               font-weight: 500;
               text-decoration-thickness: 2px !important;
               text-underline-offset: 5px;
+              text-decoration: underline;
 
               &:hover {
                 color: lighten($purple-light, 10%);
@@ -896,6 +935,7 @@ $purple-light: #a855f7;
               font-weight: 500;
               text-decoration-thickness: 2px !important;
               text-underline-offset: 5px;
+              text-decoration: underline;
 
               &:hover {
                 color: lighten($purple-light, 10%);
@@ -925,6 +965,7 @@ $purple-light: #a855f7;
               font-weight: 500;
               text-decoration-thickness: 2px !important;
               text-underline-offset: 5px;
+              text-decoration: underline;
 
               &:hover {
                 color: lighten($purple-light, 10%);
@@ -987,6 +1028,22 @@ $purple-light: #a855f7;
             color: #1e40af;
             font-size: 24px;
             font-weight: bold;
+          }
+        }
+        .videoBlock{
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          padding: 10px;
+          margin-bottom: 1rem;
+          .video{
+            width: 100%;
+            margin-bottom: 1rem;
+            height: 100%;
+            min-height: 240px;
+          }
+          .caption{
+            margin: 10px;
+            margin-top: 0px;
           }
         }
       }

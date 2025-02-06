@@ -429,6 +429,38 @@ $purple-light: #a855f7;
           margin-bottom: 1rem;
         }
       }
+      // imageBlock
+      .imageBlock{
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 1rem;
+        .image{
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+        .caption{
+          margin: 10px;
+          margin-top: 0px;
+        }
+      }
+      // videoBlock
+      .videoBlock{
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 1rem;
+        .video{
+          width: 100%;
+          margin-bottom: 1rem;
+          height: 100%;
+          min-height: 400px;
+        }
+        .caption{
+          margin: 10px;
+          margin-top: 0px;
+        }
+      }
     }
   }
 
@@ -968,6 +1000,22 @@ $purple-light: #a855f7;
             color: #1e40af;
             font-size: 24px;
             font-weight: bold;
+          }
+        }
+        .videoBlock{
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          padding: 10px;
+          margin-bottom: 1rem;
+          .video{
+            width: 100%;
+            margin-bottom: 1rem;
+            height: 100%;
+            min-height: 240px;
+          }
+          .caption{
+            margin: 10px;
+            margin-top: 0px;
           }
         }
       }

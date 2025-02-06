@@ -43,8 +43,8 @@ type ContentBlock =
   | { type: 'quote'; content: string }
   | { type: 'highlight'; content: string }
   | { type: 'code'; content: string }
-  | { type: 'image'; src: string; alt: string; caption?: string }
-  | { type: 'video'; src: string; title?: string; caption?: string }
+  | { type: 'image'; content: {src: string; alt: string; caption?: string} }
+  | { type: 'video'; content: {src: string; title?: string; caption?: string } }
   | { type: 'table'; content: { headers: string[]; rows: string[][] } }
   | { type: 'box'; content: { heading: string; text: string } };
 
@@ -440,15 +440,15 @@ const Ainews = () => {
                     return (
                       <figure key={index} className={styles.imageBlock}>
                         <Image
-                          src={block.src}
-                          alt={block.alt}
+                          src={block.content.src}
+                          alt={block.content.alt}
                           className={styles.image}
                           width={800}
                           height={600}
                         />
-                        {block.caption && (
+                        {block.content.caption && (
                           <figcaption className={styles.caption}>
-                            {block.caption}
+                            {block.content.caption}
                           </figcaption>
                         )}
                       </figure>
@@ -457,16 +457,16 @@ const Ainews = () => {
                     return (
                       <div key={index} className={styles.videoBlock}>
                         <iframe
-                          src={block.src}
-                          title={block.title || 'Video'}
+                          src={block.content.src}
+                          title={block.content.title || 'Video'}
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                           className={styles.video}
                         ></iframe>
-                        {block.caption && (
+                        {block.content.caption && (
                           <div className={styles.caption}>
-                            {block.caption}
+                            {block.content.caption}
                           </div>
                         )}
                       </div>

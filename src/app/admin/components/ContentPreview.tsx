@@ -93,20 +93,15 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({ data }) => {
               case 'image':
                 return (
                   <figure key={block.id} className={styles.imageBlock}>
-                    {/* <img
-                      src={block.src || 'https://via.placeholder.com/600x400'}
-                      alt={block.alt || 'Image'}
-                      className={styles.image}
-                    /> */}
                     <Image
-                    src={block.src || 'https://via.placeholder.com/600x400'}
-                    alt={block.alt || 'Image'}
-                    width={100}
-                    height={50}
+                    src={(block.content as { src: string }).src || 'https://via.placeholder.com/600x400'}
+                    alt={(block.content as { alt: string }).alt || 'Image'}
+                    width={1000}
+                    height={500}
                     className={styles.image} />
-                    {block.caption && (
+                    {(block.content as { caption: string }).caption && (
                       <figcaption className={styles.caption}>
-                        {block.caption}
+                        {(block.content as { caption: string }).caption}
                       </figcaption>
                     )}
                   </figure>
@@ -115,15 +110,15 @@ const ContentPreview: React.FC<ContentPreviewProps> = ({ data }) => {
                 return (
                   <div key={block.id} className={styles.videoBlock}>
                     <iframe
-                      src={block.src || 'https://www.youtube.com/embed/dQw4w9WgXcQ'}
-                      title={block.title || 'Video'}
+                      src={(block.content as { src: string }).src || 'https://www.youtube.com/embed/dQw4w9WgXcQ'}
+                      title={(block.content as { title: string }).title || 'Video'}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className={styles.video}
                     />
-                    {block.caption && (
-                      <div className={styles.caption}>{block.caption}</div>
+                    {(block.content as { caption: string }).caption && (
+                      <div className={styles.caption}>{(block.content as { caption: string }).caption}</div>
                     )}
                   </div>
                 );

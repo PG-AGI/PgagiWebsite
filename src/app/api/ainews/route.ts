@@ -16,7 +16,6 @@ interface ContentBlock {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
-    console.log('api call data is here', data)
     if (
       !data.contentType ||
       !data.coverImage ||
@@ -26,10 +25,6 @@ export async function POST(request: NextRequest) {
       !data.readTime ||
       !data.authorName ||
       !data.authorRole ||
-      !data.metaDescription ||
-      !data.metaKeywords ||
-      !data.metaAuthor ||
-      !data.metaTitle ||
       !Array.isArray(data.sections)
     ) {
       return NextResponse.json(
@@ -71,14 +66,15 @@ export async function POST(request: NextRequest) {
             }
             break;
           case 'image':
-            if (!block.src || !block.alt) {
+            if (!block.content.src || !block.content.alt) {
+              console.log('api data block is here', block)
               return NextResponse.json(
                 { message: `Image block ${blockIndex + 1} in section ${sectionIndex + 1} requires src and alt.` },
                 { status: 400 }
               );
             }
             const imageUrlPattern = /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/;
-            if (!imageUrlPattern.test(block.src)) {
+            if (!imageUrlPattern.test(block.content.src)) {
               return NextResponse.json(
                 { message: `Image block ${blockIndex + 1} in section ${sectionIndex + 1} requires a valid image URL.` },
                 { status: 400 }
@@ -86,14 +82,14 @@ export async function POST(request: NextRequest) {
             }
             break;
           case 'video':
-            if (!block.src) {
+            if (!block.content.src) {
               return NextResponse.json(
                 { message: `Video block ${blockIndex + 1} in section ${sectionIndex + 1} requires src.` },
                 { status: 400 }
               );
             }
             const youtubeEmbedRegex = /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/;
-            if (!youtubeEmbedRegex.test(block.src)) {
+            if (!youtubeEmbedRegex.test(block.content.src)) {
               return NextResponse.json(
                 { message: `Video block ${blockIndex + 1} in section ${sectionIndex + 1} requires a valid YouTube embed URL.` },
                 { status: 400 }
@@ -168,10 +164,6 @@ export async function POST(request: NextRequest) {
         content: section.content.map((block: any) => ({
           type: block.type,
           content: block.content || '',
-          src: block.src || '',
-          alt: block.alt || '',
-          caption: block.caption || '',
-          title: block.title || '',
         })),
       })),
       createdAt: new Date(),

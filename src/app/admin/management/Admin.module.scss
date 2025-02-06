@@ -30,6 +30,12 @@ $red-color: #ef4444;
   border: 2px solid rgba(255, 255, 255, 0.05);
 }
 
+.quill{
+  color: white !important;
+}
+.sections{
+  color: white !important;
+}
 // Main container
 .container {
   max-width: 1200px;
@@ -213,12 +219,13 @@ $red-color: #ef4444;
 
       .imagePreview {
         margin-top: 1rem;
-
+        
         img {
-          max-width: 100%;
+          width: auto;
           height: auto;
-          border-radius: 0.5rem;
+          border-radius: 10px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          object-fit: contain;
         }
       }
     }
@@ -328,6 +335,7 @@ $red-color: #ef4444;
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
 }
 
 .previewContent {
@@ -443,10 +451,11 @@ $red-color: #ef4444;
       margin: 1rem 0;
 
       .image {
-        max-width: 100%;
+        width: auto;
         height: auto;
-        border-radius: 0.5rem;
+        border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        object-fit: contain;
       }
 
       .caption {
@@ -456,26 +465,23 @@ $red-color: #ef4444;
       }
     }
 
-    .videoBlock {
-      text-align: center;
-      margin: 1rem 0;
-
-      .video {
+    .videoBlock{
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 1rem;
+      .video{
         width: 100%;
-        max-width: 800px;
-        height: 450px;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
+        margin-bottom: 1rem;
+        height: 100%;
+        min-height: 400px;
         @media (max-width: 768px) {
-          height: 250px;
+          min-height: 240px;          
         }
       }
-
-      .caption {
-        margin-top: 0.5rem;
-        font-size: 0.875rem;
-        color: $text-secondary;
+      .caption{
+        margin: 10px;
+        margin-top: 0px;
       }
     }
   }
@@ -601,10 +607,11 @@ $red-color: #ef4444;
       margin: 1rem 0;
 
       .image {
-        max-width: 100%;
+        width: auto;
         height: auto;
-        border-radius: 0.5rem;
+        border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        object-fit: contain;
       }
 
       .caption {
@@ -649,19 +656,24 @@ $red-color: #ef4444;
 .table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 
   th,
   td {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff !important;
   }
 
   th {
     background-color: rgba(147, 51, 234, 0.2);
     color: $text-primary;
     font-weight: 600;
+    color: #fff !important;
+  }
+  tr,td{
+    color: #fff !important;
   }
 
   tr:hover {
@@ -853,6 +865,7 @@ $red-color: #ef4444;
   display: flex;
   align-items: center;
   gap: 10px;
+  color: white !important;
 }
 
 .filterSelect {
@@ -860,6 +873,7 @@ $red-color: #ef4444;
   border-radius: 4px;
   border: 1px solid #ccc;
   background-color: transparent;
+  color: white !important;
   
 }
 
@@ -941,7 +955,7 @@ $red-color: #ef4444;
 .dynamicTable {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
   background: #1a1a1a;
   border-radius: 8px;
   overflow: hidden;
@@ -1078,6 +1092,7 @@ $red-color: #ef4444;
     color: #9333ea;
     font-size: 24px;
   }
+  margin-bottom: 1rem;
 }
 $spacing-unit: 1rem;
 .boxHeading{

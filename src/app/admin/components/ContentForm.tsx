@@ -103,10 +103,6 @@ const ContentForm: React.FC<ContentFormProps> = ({
               return {
                 ...block,
                 content: updatedContent,
-                src: block.src ? block.src.trim() : '',
-                alt: block.alt ? block.alt.trim() : '',
-                caption: block.caption ? block.caption.trim() : '',
-                title: block.title ? block.title.trim() : '',
               };
             })
             .filter((block) => {
@@ -118,16 +114,9 @@ const ContentForm: React.FC<ContentFormProps> = ({
                 case 'code':
                   return block.content !== '';
                 case 'image':
-                  return (
-                    block.src &&
-                    block.alt &&
-                    /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(block.src)
-                  );
+                  return true
                 case 'video':
-                  return (
-                    block.src &&
-                    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+$/.test(block.src)
-                  );
+                  return true
                 case 'table':
                   return true;
                 case 'box':
@@ -137,8 +126,9 @@ const ContentForm: React.FC<ContentFormProps> = ({
               }
             }),
         }))
-        .filter((section) => section.content.length > 0),
     };
+
+    console.log('sanitizedData of forms', sanitizedData);
     const endpointMap: Record<ContentType, string> = {
       caseStudy: '/api/case-studies',
       blog: '/api/blogs',
@@ -209,7 +199,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
         },
       ],
     };
-  
+
     reset(defaultValues); // Always reset to default values
   };
   return (
@@ -324,63 +314,65 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <span className={styles.error}>{errors.authorRole.message}</span>
           )}
         </div>
-        <label>Metadata for SEO</label>
-        <div className={styles.section}>
-          <div className={styles.formGroup}>
-            <label htmlFor="metaTitle">Meta Title</label>
-            <input
-              type="text"
-              id="metaTitle"
-              {...register('metaTitle')}
-              {...register('metaTitle')}
-              {...register('metaTitle')}
-              placeholder="Enter meta title"
-            />
-            {errors.metaTitle && (
-              <span className={styles.error}>{errors.metaTitle.message}</span>
-            )}
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="metaDescription">Meta Description</label>
-            <input
-              type="text"
-              id="metaDescription"
-              {...register('metaDescription')}
-              {...register('metaDescription')}
-              {...register('metaDescription')}
-              placeholder="Enter Meta Description..."
-            />
-            {errors.metaDescription && (
-              <span className={styles.error}>{errors.metaDescription.message}</span>
-            )}
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="metaKeywords">Meta Keywords</label>
-            <input
-              type="text"
-              id="metaKeywords"
-              {...register('metaKeywords')}
-              {...register('metaKeywords')}
-              {...register('metaKeywords')}
-              placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
-            />
-            {errors.metaKeywords && (
-              <span className={styles.error}>{errors.metaKeywords.message}</span>
-            )}
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="metaAuthor">Meta Author</label>
-            <input
-              type="text"
-              id="metaAuthor"
-              {...register('metaAuthor')}
-              {...register('metaAuthor')}
-              {...register('metaAuthor')}
-              placeholder="Enter meta author"
-            />
-            {errors.metaAuthor && (
-              <span className={styles.error}>{errors.metaAuthor.message}</span>
-            )}
+        <div className={styles.sections}>
+          <label>Metadata for SEO</label>
+          <div className={styles.section}>
+            <div className={styles.formGroup}>
+              <label htmlFor="metaTitle">Meta Title</label>
+              <input
+                type="text"
+                id="metaTitle"
+                {...register('metaTitle')}
+                {...register('metaTitle')}
+                {...register('metaTitle')}
+                placeholder="Enter meta title"
+              />
+              {errors.metaTitle && (
+                <span className={styles.error}>{errors.metaTitle.message}</span>
+              )}
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="metaDescription">Meta Description</label>
+              <input
+                type="text"
+                id="metaDescription"
+                {...register('metaDescription')}
+                {...register('metaDescription')}
+                {...register('metaDescription')}
+                placeholder="Enter Meta Description..."
+              />
+              {errors.metaDescription && (
+                <span className={styles.error}>{errors.metaDescription.message}</span>
+              )}
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="metaKeywords">Meta Keywords</label>
+              <input
+                type="text"
+                id="metaKeywords"
+                {...register('metaKeywords')}
+                {...register('metaKeywords')}
+                {...register('metaKeywords')}
+                placeholder="Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... "
+              />
+              {errors.metaKeywords && (
+                <span className={styles.error}>{errors.metaKeywords.message}</span>
+              )}
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="metaAuthor">Meta Author</label>
+              <input
+                type="text"
+                id="metaAuthor"
+                {...register('metaAuthor')}
+                {...register('metaAuthor')}
+                {...register('metaAuthor')}
+                placeholder="Enter meta author"
+              />
+              {errors.metaAuthor && (
+                <span className={styles.error}>{errors.metaAuthor.message}</span>
+              )}
+            </div>
           </div>
         </div>
         {watch('contentType') === 'blog' ? (
@@ -409,6 +401,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
                   rules={{ required: 'TLDR text is required' }}
                   render={({ field }) => (
                     <ReactQuill
+                      className={styles.quill}
                       theme="snow"
                       value={typeof field.value === 'string' ? field.value : ''}
                       onChange={field.onChange}
@@ -544,11 +537,11 @@ const ContentForm: React.FC<ContentFormProps> = ({
           {isEditing && (
             <button
               type="button"
-              onClick={()=>{
+              onClick={() => {
                 reset();
                 onAfterSubmit();
                 setActiveTabToView();
-                
+
               }}
               className={styles.cancelButton}
             >

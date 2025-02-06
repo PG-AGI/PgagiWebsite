@@ -53,8 +53,9 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
         newType === 'table'
           ? { headers: ['Header 1'], rows: [['Cell 1']] }
           : newType === 'box'
-          ? { heading: '', text: '' }
-          : '',
+            ? { heading: '', text: '' }
+            : newType === 'image' ? { src: '', alt: '', caption: '' }
+              : newType === 'video' ? { src: '', title: '', caption: '' } : '',
     };
     onUpdateBlock(updatedBlock);
   };
@@ -76,13 +77,38 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
     });
   };
 
+  const handleImageFieldChange = (field: 'src' | 'alt' | 'caption', value: string) => {
+    onUpdateBlock({
+      ...block,
+      content: {
+        ...(block.content as { src: string; alt: string; caption: string }),
+        [field]: value,
+      },
+    });
+  };
+
+
+  const handleVideoFieldChange = (field: 'src' | 'title' | 'caption', value: string) => {
+    onUpdateBlock({
+      ...block,
+      content: {
+        ...(block.content as { src: string; title: string; caption: string }),
+        [field]: value,
+      },
+    });
+  };
+
+
   useEffect(() => {
     if (blockType === 'table') {
       onUpdateBlock({ ...block, content: { headers: ['Header 1'], rows: [['Cell 1']] } });
     } else if (blockType === 'box') {
       onUpdateBlock({ ...block, content: { heading: '', text: '' } });
+    } else if (blockType === 'image') {
+      onUpdateBlock({ ...block, content: { src: '', alt: '', caption: '' } });
     }
   }, [blockType]);
+
 
   return (
     <div className={styles.contentBlock}>
@@ -128,6 +154,7 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
             rules={{ required: 'Content is required' }}
             render={({ field }) => (
               <ReactQuill
+              className={styles.quill}
                 theme="snow"
                 value={typeof field.value === 'string' ? field.value : ''}
                 onChange={field.onChange}
@@ -170,7 +197,7 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
               type="text"
               value={
                 typeof block.content === 'object' &&
-                'heading' in block.content
+                  'heading' in block.content
                   ? block.content.heading
                   : ''
               }
@@ -182,10 +209,11 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
           <div className={styles.formGroup}>
             <label>Box Text:</label>
             <ReactQuill
+            className={styles.quill}
               theme="snow"
               value={
                 typeof block.content === 'object' &&
-                'text' in block.content
+                  'text' in block.content
                   ? block.content.text
                   : ''
               }
@@ -212,7 +240,104 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
             />
           </div>
         </>
+      ) : blockType === 'image' ? (
+        <>
+          <div className={styles.formGroup}>
+            <label>Image Source:</label>
+            <input
+              type="text"
+              value={
+                typeof block.content === 'object' &&
+                  'src' in block.content
+                  ? block.content.src
+                  : ''
+              }
+              onChange={(e) => handleImageFieldChange('src', e.target.value)}
+              placeholder="Enter image URL"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Alt Text:</label>
+            <input
+              type="text"
+              value={
+                typeof block.content === 'object' &&
+                  'alt' in block.content
+                  ? block.content.alt
+                  : ''
+              }
+              onChange={(e) => handleImageFieldChange('alt', e.target.value)}
+              placeholder="Enter alt text"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Caption:</label>
+            <input
+              type="text"
+              value={
+                typeof block.content === 'object' &&
+                  'caption' in block.content
+                  ? block.content.caption
+                  : ''
+              }
+              onChange={(e) => handleImageFieldChange('caption', e.target.value)}
+              placeholder="Enter caption"
+              required
+            />
+          </div>
+        </>
+      ) : blockType === 'video' ? (
+        <>
+          <div className={styles.formGroup}>
+            <label>Video Source:</label>
+            <input
+              type="text"
+              value={
+                typeof block.content === 'object' &&
+                  'src' in block.content
+                  ? block.content.src
+                  : ''
+              }
+              onChange={(e) => handleVideoFieldChange('src', e.target.value)}
+              placeholder="Enter video URL"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Video Title:</label>
+            <input
+              type="text"
+              value={
+                typeof block.content === 'object' &&
+                  'title' in block.content
+                  ? block.content.title
+                  : ''
+              }
+              onChange={(e) => handleVideoFieldChange('title', e.target.value)}
+              placeholder="Enter video title"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Caption:</label>
+            <input
+              type="text"
+              value={
+                typeof block.content === 'object' &&
+                  'caption' in block.content
+                  ? block.content.caption
+                  : ''
+              }
+              onChange={(e) => handleVideoFieldChange('caption', e.target.value)}
+              placeholder="Enter caption"
+              required
+            />
+          </div>
+        </>
       ) : null}
+
     </div>
   );
 };
