@@ -10,4 +10,5 @@ export default interface Job {
   numberOfOpenings: number;
   applicationUrl: string;
   status: 'active' | 'inactive';
+  category: 'technical' | 'non technical';
 }

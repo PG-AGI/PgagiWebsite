@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb'; 
-
 interface Job {
   id: string;
   title: string;
   department: string;
   location: string;
   type: string;
+  category: 'technical' | 'non technical';
   description: string;
   responsibilities: string[];
   requirements: string[];
@@ -21,12 +21,11 @@ export async function GET(request: Request) {
     const database = client.db('jobPosting');
     const jobsCollection = database.collection('Postings');
 
-    // Parse query parameters
     const url = new URL(request.url);
-    const status = url.searchParams.get('status') || 'active'; // Default to 'active'
+    const status = url.searchParams.get('status') || 'active'; 
 
-    // Fetch jobs based on status
     const jobs = await jobsCollection.find({ status }).toArray();
+
 
     const formattedJobs: Job[] = jobs.map(job => ({
       id: job.id,
@@ -34,6 +33,7 @@ export async function GET(request: Request) {
       department: job.department,
       location: job.location,
       type: job.type,
+      category: job.category, 
       description: job.description,
       responsibilities: job.responsibilities,
       requirements: job.requirements,
@@ -57,12 +57,14 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+
     const {
       id,
       title,
       department,
       location,
       type,
+      category,
       description,
       responsibilities,
       requirements,
@@ -76,6 +78,8 @@ export async function POST(request: Request) {
       !department ||
       !location ||
       !type ||
+      !category ||
+      (category !== 'technical' && category !== 'non technical') ||
       !description ||
       !Array.isArray(responsibilities) ||
       !Array.isArray(requirements) ||
@@ -87,22 +91,21 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
     const client = await clientPromise;
     const database = client.db('jobPosting');
     const jobsCollection = database.collection('Postings');
-
     const newJob: Job = {
       id,
       title,
       department,
       location,
       type,
+      category, 
       description,
       responsibilities,
       requirements,
-      applicationUrl,
       numberOfOpenings,
+      applicationUrl,
       status: 'active'
     };
 
