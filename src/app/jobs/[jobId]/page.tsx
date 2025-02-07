@@ -17,7 +17,7 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
   const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLDivElement>(null); // Reference to the form section
   const router = useRouter();
-  const { jobId } = params; // Get the jobId from params
+  const { jobId } = params; 
 
   useEffect(() => {
     async function fetchJobDetails() {
@@ -30,7 +30,7 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
 
         const jobs: Job[] = await response.json();
 
-        // Find the specific job by ID
+
         const foundJob = jobs.find((j) => j.id === jobId);
         console.log(foundJob);
         if (!foundJob) {
@@ -157,6 +157,8 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
               jobId={job.id}
               onSubmit={handleApplicationSubmit}
               applicationUrl={job.applicationUrl}
+              jobCategory={job.category}
+
             />
           )}
         </div>

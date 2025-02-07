@@ -19,12 +19,13 @@ interface Job {
   department: string;
   location: string;
   type: string;
+  category: 'technical' | 'non technical';
   description: string;
   responsibilities: string[];
   requirements: string[];
   numberOfOpenings: number;
   applicationUrl: string;
-  status: 'active' | 'inactive'; 
+  status: 'active' | 'inactive';
 }
 
 type FormValues = {
@@ -32,6 +33,7 @@ type FormValues = {
   department: string;
   location: string;
   type: string;
+  category: 'technical' | 'non technical' | ''; // added category field
   description: string;
   responsibilities: { id: string; value: string }[];
   requirements: { id: string; value: string }[];
@@ -64,6 +66,7 @@ const JobPostingsManagement = () => {
       department: '',
       location: '',
       type: '',
+      category: 'technical', // default value for category
       description: '',
       responsibilities: [{ id: uuidv4(), value: '' }],
       requirements: [{ id: uuidv4(), value: '' }],
@@ -134,6 +137,7 @@ const JobPostingsManagement = () => {
       department: data.department.trim(),
       location: data.location.trim(),
       type: data.type.trim(),
+      category: data.category === "" ? "technical" : data.category, 
       description: data.description.trim(),
       responsibilities: data.responsibilities
         .map((resp) => resp.value.trim())
@@ -143,7 +147,7 @@ const JobPostingsManagement = () => {
         .filter((req) => req !== ''),
       numberOfOpenings: data.numberOfOpenings,
       applicationUrl: data.applicationUrl.trim(),
-      status: isEditing ? 'active' : 'active', // Ensure status is active on creation/editing
+      status: 'active', // always active on creation/editing
     };
 
     try {
@@ -180,6 +184,7 @@ const JobPostingsManagement = () => {
       department: job.department,
       location: job.location,
       type: job.type,
+      category: job.category, // pre-fill category on edit
       description: job.description,
       responsibilities: job.responsibilities.map((resp) => ({ id: uuidv4(), value: resp })),
       requirements: job.requirements.map((req) => ({ id: uuidv4(), value: req })),
@@ -217,6 +222,7 @@ const JobPostingsManagement = () => {
       department: job.department,
       location: job.location,
       type: job.type,
+      category: job.category, // include category when recreating
       description: job.description,
       responsibilities: job.responsibilities.map((resp) => ({ id: uuidv4(), value: resp })),
       requirements: job.requirements.map((req) => ({ id: uuidv4(), value: req })),
@@ -299,6 +305,21 @@ const JobPostingsManagement = () => {
             {errors.type && <span className={styles.error}>{errors.type.message}</span>}
           </div>
 
+          {/* Category */}
+          <div className={styles.formGroup}>
+            <label htmlFor="category">Category:</label>
+            <select
+              id="category"
+              {...register('category', { required: 'Job category is required' })}
+              required
+            >
+              <option value="">Select Category</option>
+              <option value="technical">Technical</option>
+              <option value="non technical">Non Technical</option>
+            </select>
+            {errors.category && <span className={styles.error}>{errors.category.message}</span>}
+          </div>
+
           <div className={styles.formGroup}>
             <label htmlFor="numberOfOpenings">Number of Openings:</label>
             <input
@@ -310,7 +331,7 @@ const JobPostingsManagement = () => {
                   value: 0,
                   message: 'Number of openings cannot be negative',
                 },
-                valueAsNumber: true, 
+                valueAsNumber: true,
                 validate: {
                   isInteger: (value) =>
                     Number.isInteger(value) || 'Number of openings must be an integer',
@@ -365,10 +386,6 @@ const JobPostingsManagement = () => {
                 <button type="button" onClick={() => removeResponsibility(index)} className={styles.removeButton}>
                   Remove
                 </button>
-                {/* Uncomment below if you want to display errors for responsibilities
-                {errors.responsibilities?.[index]?.value && (
-                  <span className={styles.error}>{errors.responsibilities[index].value?.message}</span>
-                )} */}
               </div>
             ))}
             <button type="button" onClick={() => appendResponsibility({ id: uuidv4(), value: '' })} className={styles.addButton}>
@@ -482,6 +499,8 @@ const JobPostingsManagement = () => {
           </tbody>
         </table>
       )}
+
+      {/* Inactive Jobs List */}
       <h2>Inactive Job Postings</h2>
       {loadingInactive ? (
         <p>Loading inactive jobs...</p>
@@ -534,6 +553,7 @@ const JobPostingsManagement = () => {
             <p><strong>Department:</strong> {selectedJob.department}</p>
             <p><strong>Location:</strong> {selectedJob.location}</p>
             <p><strong>Type:</strong> {selectedJob.type}</p>
+            <p><strong>Category:</strong> {selectedJob.category}</p>
             <p><strong>Number of Openings:</strong> {selectedJob.numberOfOpenings}</p>
             <div className={styles.description}>
               <strong>Description:</strong>
