@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/utils/mongodb'; 
-
+import clientPromise from '@/utils/mongodb';
 
 interface Job {
   id: string;
@@ -8,12 +7,13 @@ interface Job {
   department: string;
   location: string;
   type: string;
+  category: 'technical' | 'non technical';
   description: string;
   responsibilities: string[];
   requirements: string[];
   numberOfOpenings: number;
   applicationUrl: string;
-  status: 'active' | 'inactive'; 
+  status: 'active' | 'inactive';
 }
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
@@ -39,13 +39,13 @@ export async function GET(request: Request, { params }: { params: { id: string }
       department: job.department,
       location: job.location,
       type: job.type,
+      category: job.category, 
       description: job.description,
       responsibilities: job.responsibilities,
       requirements: job.requirements,
       numberOfOpenings: job.numberOfOpenings,
       applicationUrl: job.applicationUrl,
       status: job.status,
-
     };
 
     return NextResponse.json(formattedJob, { status: 200 });
@@ -59,8 +59,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
   }
 }
 
-// src\app\api\careers\postings\[id]\route.ts
-
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   const { id } = params;
 
@@ -72,23 +70,27 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       department,
       location,
       type,
+      category, 
       description,
       responsibilities,
       requirements,
       numberOfOpenings,
       applicationUrl,
-      status // Optional field
+      status 
     } = body;
+
 
     if (
       !title ||
       !department ||
       !location ||
       !type ||
+      !category ||
+      (category !== 'technical' && category !== 'non technical') ||
       !description ||
       !Array.isArray(responsibilities) ||
       !Array.isArray(requirements) ||
-      numberOfOpenings == null || 
+      numberOfOpenings == null ||
       !applicationUrl
     ) {
       return NextResponse.json(
@@ -97,7 +99,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       );
     }
 
-    // Validate status if provided
     if (status && !['active', 'inactive'].includes(status)) {
       return NextResponse.json(
         { message: 'Invalid status value' },
@@ -114,22 +115,25 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       department: department.trim(),
       location: location.trim(),
       type: type.trim(),
+      category: category.trim(),
       description: description.trim(),
-      responsibilities: responsibilities.map((resp: string) => resp.trim()).filter((resp: string) => resp !== ''),
-      requirements: requirements.map((req: string) => req.trim()).filter((req: string) => req !== ''),
+      responsibilities: responsibilities
+        .map((resp: string) => resp.trim())
+        .filter((resp: string) => resp !== ''),
+      requirements: requirements
+        .map((req: string) => req.trim())
+        .filter((req: string) => req !== ''),
       numberOfOpenings: numberOfOpenings,
-      applicationUrl: applicationUrl.trim()
+      applicationUrl: applicationUrl.trim(),
     };
-    
+
     if (status) {
       updateFields.status = status;
     }
 
     const updateResult = await jobsCollection.updateOne(
       { id },
-      {
-        $set: updateFields
-      }
+      { $set: updateFields }
     );
 
     if (updateResult.matchedCount === 0) {
@@ -168,7 +172,6 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     const database = client.db('jobPosting');
     const jobsCollection = database.collection('Postings');
 
-    // Update the job's status to 'inactive' instead of deleting
     const updateResult = await jobsCollection.updateOne(
       { id },
       { $set: { status: 'inactive' } }

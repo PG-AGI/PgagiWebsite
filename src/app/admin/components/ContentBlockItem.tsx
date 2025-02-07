@@ -46,16 +46,25 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newType = e.target.value as ContentBlock['type'];
-    const updatedBlock: ContentBlock = {
-      ...block,
-      type: newType,
-      content:
-        newType === 'table'
-          ? { headers: ['Header 1'], rows: [['Cell 1']] }
-          : newType === 'box'
-          ? { heading: '', text: '' }
-          : '',
-    };
+    let updatedBlock: ContentBlock;
+
+    switch (newType) {
+      case 'table':
+        updatedBlock = { ...block, type: newType, content: { headers: ['Header 1'], rows: [['Cell 1']] } };
+        break;
+      case 'box':
+        updatedBlock = { ...block, type: newType, content: { heading: '', text: '' } };
+        break;
+      case 'image':
+        updatedBlock = { ...block, type: newType, src: '', alt: '', caption: '' };
+        break;
+      case 'video':
+        updatedBlock = { ...block, type: newType, src: '', title: '', caption: '' };
+        break;
+      default:
+        updatedBlock = { ...block, type: newType, content: '' };
+        break;
+    }
     onUpdateBlock(updatedBlock);
   };
 
@@ -154,6 +163,69 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
             )}
           />
         </div>
+      ) : blockType === 'image' ? (
+        <>
+          <div className={styles.formGroup}>
+            <label>Image URL:</label>
+            <input
+              type="url"
+              value={block.src || ''}
+              onChange={(e) => onUpdateBlock({ ...block, src: e.target.value })}
+              placeholder="Enter image URL"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Alt Text:</label>
+            <input
+              type="text"
+              value={block.alt || ''}
+              onChange={(e) => onUpdateBlock({ ...block, alt: e.target.value })}
+              placeholder="Enter alt text"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Caption (optional):</label>
+            <input
+              type="text"
+              value={block.caption || ''}
+              onChange={(e) => onUpdateBlock({ ...block, caption: e.target.value })}
+              placeholder="Enter caption"
+            />
+          </div>
+        </>
+      ) : blockType === 'video' ? (
+        <>
+          <div className={styles.formGroup}>
+            <label>Video URL (YouTube embed):</label>
+            <input
+              type="url"
+              value={block.src || ''}
+              onChange={(e) => onUpdateBlock({ ...block, src: e.target.value })}
+              placeholder="Enter YouTube embed URL"
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Video Title (optional):</label>
+            <input
+              type="text"
+              value={block.title || ''}
+              onChange={(e) => onUpdateBlock({ ...block, title: e.target.value })}
+              placeholder="Enter video title"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Caption (optional):</label>
+            <input
+              type="text"
+              value={block.caption || ''}
+              onChange={(e) => onUpdateBlock({ ...block, caption: e.target.value })}
+              placeholder="Enter caption"
+            />
+          </div>
+        </>
       ) : blockType === 'table' ? (
         <div className={styles.formGroup}>
           <label>Table Data:</label>
