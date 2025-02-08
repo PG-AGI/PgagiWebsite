@@ -22,7 +22,7 @@ interface FormData {
   phone: string;
   linkedIn: string;
   portfolio: string;
-  resume: string; // Now a URL (link) only
+  resumeLink: string; 
   coverLetter: string;
   projectDocUrl: string;
   demoVideoUrl: string;
@@ -45,7 +45,7 @@ export const JobApplicationForm = ({
     phone: "",
     linkedIn: "",
     portfolio: "",
-    resume: "",
+    resumeLink: "",
     coverLetter: "",
     projectDocUrl: "",
     demoVideoUrl: "",
@@ -114,7 +114,7 @@ export const JobApplicationForm = ({
     formDataToSubmit.append("demoVideoUrl", formData.demoVideoUrl || "");
     formDataToSubmit.append("codeBaseUrl", formData.codeBaseUrl || "");
     formDataToSubmit.append("hostedLink", formData.hostedLink || "");
-    formDataToSubmit.append("resume", formData.resume || "");
+    formDataToSubmit.append("resume", formData.resumeLink || "");
 
     try {
       const response = await fetch("/api/careers/apply", {
@@ -138,7 +138,7 @@ export const JobApplicationForm = ({
         phone: "",
         linkedIn: "",
         portfolio: "",
-        resume: "",
+        resumeLink: "",
         coverLetter: "",
         projectDocUrl: "",
         demoVideoUrl: "",
@@ -371,10 +371,10 @@ export const JobApplicationForm = ({
             <label htmlFor="resume">Resume/CV (Paste Link) *</label>
             <input
               type="url"
-              id="resume"
-              name="resume"
+              id="resumeLink"
+              name="resumeLink"
               required
-              value={formData.resume}
+              value={formData.resumeLink}
               onChange={handleInputChange}
               className={styles["input"]}
               placeholder="https://yourresume.com/yourresume.pdf"

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb';
-import { Binary, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 export async function POST(req: Request) {
   try {
@@ -18,31 +18,41 @@ export async function POST(req: Request) {
     const demoVideoUrl = formData.get('demoVideoUrl') as string;
     const codeBaseUrl = formData.get('codeBaseUrl') as string;
     const hostedLink = formData.get('hostedLink') as string;
-    const resumeFile = formData.get('resume') as File;
+
+  
+    const resumeLink = formData.get('resumeLink') as string;
+
+
     const projectDocFile = formData.get('projectDocFile') as File;
     const demoVideoFile = formData.get('demoVideoFile') as File;
     const codeBaseFile = formData.get('codeBaseFile') as File;
-    if (!jobId || !jobTitle || !firstName || !lastName || !email || !resumeFile) {
-      return NextResponse.json(
-        { message: 'Missing required fields' }, 
-        { status: 400 }
-      );
-    }
+
+  
+    // if (!jobId || !jobTitle || !firstName || !lastName || !email || !resumeLink) {
+    //   return NextResponse.json(
+    //     { message: 'Missing required fields' },
+    //     { status: 400 }
+    //   );
+    // }
+
     const fileToBinary = async (file: File | null) => {
       if (!file) return null;
       const buffer = await file.arrayBuffer();
-      return new Binary(new Uint8Array(buffer));
+      return new Uint8Array(buffer);
     };
-    const resumeBinary = await fileToBinary(resumeFile);
+
     const projectDocBinary = await fileToBinary(projectDocFile);
     const demoVideoBinary = await fileToBinary(demoVideoFile);
     const codeBaseBinary = await fileToBinary(codeBaseFile);
+
     const applicantId = new ObjectId();
     const client = await clientPromise;
     const session = client.startSession();
 
     try {
       session.startTransaction();
+
+      // Insert applicant data
       const jobPostingDb = client.db('jobPosting');
       const applicantsCollection = jobPostingDb.collection('Applicants');
 
@@ -62,6 +72,7 @@ export async function POST(req: Request) {
 
       await applicantsCollection.insertOne(applicantData, { session });
 
+      // Insert assignment details
       const applicationDetailsDb = client.db('jobPosting');
       const assignmentsCollection = applicationDetailsDb.collection('Assignments');
 
@@ -69,52 +80,58 @@ export async function POST(req: Request) {
         _id: applicantId,
         projectDocument: {
           url: projectDocUrl || '',
-          file: projectDocBinary ? {
-            filename: projectDocFile.name,
-            contentType: projectDocFile.type,
-            data: projectDocBinary
-          } : null
+          file: projectDocBinary
+            ? {
+                filename: projectDocFile.name,
+                contentType: projectDocFile.type,
+                data: projectDocBinary,
+              }
+            : null,
         },
         demoVideo: {
           url: demoVideoUrl || '',
-          file: demoVideoBinary ? {
-            filename: demoVideoFile.name,
-            contentType: demoVideoFile.type,
-            data: demoVideoBinary
-          } : null
+          file: demoVideoBinary
+            ? {
+                filename: demoVideoFile.name,
+                contentType: demoVideoFile.type,
+                data: demoVideoBinary,
+              }
+            : null,
         },
         codeBase: {
           url: codeBaseUrl || '',
-          file: codeBaseBinary ? {
-            filename: codeBaseFile.name,
-            contentType: codeBaseFile.type,
-            data: codeBaseBinary
-          } : null
+          file: codeBaseBinary
+            ? {
+                filename: codeBaseFile.name,
+                contentType: codeBaseFile.type,
+                data: codeBaseBinary,
+              }
+            : null,
         },
-        hostedLink: hostedLink || ''
+        hostedLink: hostedLink || '',
       };
-      {/**Merged with main */}
 
       await assignmentsCollection.insertOne(assignmentsData, { session });
+
+      // Insert resume information as a link.
       const resumesCollection = applicationDetailsDb.collection('Resumes');
 
       const resumeData = {
         _id: applicantId,
-        filename: resumeFile.name,
-        contentType: resumeFile.type,
-        data: resumeBinary,
-        uploadedAt: new Date()
+        resumeLink, // Storing the resume link directly.
+        uploadedAt: new Date(),
       };
 
       await resumesCollection.insertOne(resumeData, { session });
+
       await session.commitTransaction();
       session.endSession();
 
       return NextResponse.json(
-        { 
-          message: 'Application submitted successfully', 
-          applicantId: applicantId.toHexString() 
-        }, 
+        {
+          message: 'Application submitted successfully',
+          applicantId: applicantId.toHexString(),
+        },
         { status: 201 }
       );
     } catch (transactionError) {
@@ -122,7 +139,6 @@ export async function POST(req: Request) {
       session.endSession();
       throw transactionError;
     }
-
   } catch (error) {
     const err = error as Error;
     console.error('Error submitting application:', err.message, err.stack);
