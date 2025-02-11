@@ -18,22 +18,12 @@ export async function POST(req: Request) {
     const demoVideoUrl = formData.get('demoVideoUrl') as string;
     const codeBaseUrl = formData.get('codeBaseUrl') as string;
     const hostedLink = formData.get('hostedLink') as string;
-
-  
     const resumeLink = formData.get('resumeLink') as string;
-
+    const educationalInstitute = formData.get('educational_institute') as string;
 
     const projectDocFile = formData.get('projectDocFile') as File;
     const demoVideoFile = formData.get('demoVideoFile') as File;
     const codeBaseFile = formData.get('codeBaseFile') as File;
-
-  
-    // if (!jobId || !jobTitle || !firstName || !lastName || !email || !resumeLink) {
-    //   return NextResponse.json(
-    //     { message: 'Missing required fields' },
-    //     { status: 400 }
-    //   );
-    // }
 
     const fileToBinary = async (file: File | null) => {
       if (!file) return null;
@@ -51,8 +41,6 @@ export async function POST(req: Request) {
 
     try {
       session.startTransaction();
-
-      // Insert applicant data
       const jobPostingDb = client.db('jobPosting');
       const applicantsCollection = jobPostingDb.collection('Applicants');
 
@@ -67,12 +55,13 @@ export async function POST(req: Request) {
         linkedIn: linkedIn || '',
         portfolio: portfolio || '',
         coverLetter: coverLetter || '',
+        educational_institute: educationalInstitute || '', // Added field
         applicationDate: new Date(),
       };
 
       await applicantsCollection.insertOne(applicantData, { session });
 
-      // Insert assignment details
+   
       const applicationDetailsDb = client.db('jobPosting');
       const assignmentsCollection = applicationDetailsDb.collection('Assignments');
 
@@ -113,12 +102,11 @@ export async function POST(req: Request) {
 
       await assignmentsCollection.insertOne(assignmentsData, { session });
 
-      // Insert resume information as a link.
       const resumesCollection = applicationDetailsDb.collection('Resumes');
 
       const resumeData = {
         _id: applicantId,
-        resumeLink, // Storing the resume link directly.
+        resumeLink, 
         uploadedAt: new Date(),
       };
 

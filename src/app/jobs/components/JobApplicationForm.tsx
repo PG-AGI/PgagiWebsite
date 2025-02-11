@@ -22,6 +22,7 @@ interface FormData {
   phone: string;
   linkedIn: string;
   portfolio: string;
+  educational_institute: string;
   resumeLink: string; 
   coverLetter: string;
   projectDocUrl: string;
@@ -45,6 +46,7 @@ export const JobApplicationForm = ({
     phone: "",
     linkedIn: "",
     portfolio: "",
+    educational_institute: "",
     resumeLink: "",
     coverLetter: "",
     projectDocUrl: "",
@@ -109,12 +111,13 @@ export const JobApplicationForm = ({
     formDataToSubmit.append("phone", formData.phone || "");
     formDataToSubmit.append("linkedIn", formData.linkedIn || "");
     formDataToSubmit.append("portfolio", formData.portfolio || "");
+    formDataToSubmit.append("educational_institute", formData.educational_institute || "");
     formDataToSubmit.append("coverLetter", formData.coverLetter || "");
     formDataToSubmit.append("projectDocUrl", formData.projectDocUrl || "");
     formDataToSubmit.append("demoVideoUrl", formData.demoVideoUrl || "");
     formDataToSubmit.append("codeBaseUrl", formData.codeBaseUrl || "");
     formDataToSubmit.append("hostedLink", formData.hostedLink || "");
-    formDataToSubmit.append("resume", formData.resumeLink || "");
+    formDataToSubmit.append("resumeLink", formData.resumeLink || "");
 
     try {
       const response = await fetch("/api/careers/apply", {
@@ -138,6 +141,7 @@ export const JobApplicationForm = ({
         phone: "",
         linkedIn: "",
         portfolio: "",
+        educational_institute: "",
         resumeLink: "",
         coverLetter: "",
         projectDocUrl: "",
@@ -165,9 +169,7 @@ export const JobApplicationForm = ({
       <form onSubmit={handleSubmit} className={styles["form"]}>
         <div className={styles["header"]}>
           <h2 className={styles["form-title"]}>Apply for {jobTitle}</h2>
-          <p
-            className={`${styles["form-description"]} ${styles["form-note"]}`}
-          >
+          <p className={`${styles["form-description"]} ${styles["form-note"]}`}>
             To apply, please complete the assignment first and then fill out the
             application form.
           </p>
@@ -264,6 +266,18 @@ export const JobApplicationForm = ({
               placeholder="https://yourportfolio.com or https://github.com/yourrepo"
             />
           </div>
+          <div className={styles["input-group"]}>
+            <label htmlFor="educational_institute">Educational Institute</label>
+            <input
+              type="text"
+              id="educational_institute"
+              name="educational_institute"
+              value={formData.educational_institute}
+              onChange={handleInputChange}
+              className={styles["input"]}
+              placeholder="Enter your educational institute"
+            />
+          </div>
 
           {/* Assignment Submission Section */}
           <div className={styles["assignment-section"]}>
@@ -271,7 +285,6 @@ export const JobApplicationForm = ({
               Submitting Assignment *
             </h3>
             {jobCategory === "non technical" ? (
-        
               <div className={styles["assignment-subsection"]}>
                 <h4 className={styles["subsection-title"]}>
                   Project Document
@@ -293,7 +306,6 @@ export const JobApplicationForm = ({
                 </div>
               </div>
             ) : (
-       
               <>
                 <div className={styles["assignment-subsection"]}>
                   <h4 className={styles["subsection-title"]}>
