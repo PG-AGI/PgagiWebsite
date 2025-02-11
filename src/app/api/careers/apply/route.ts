@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 export async function POST(req: Request) {
   try {
@@ -29,11 +30,14 @@ export async function POST(req: Request) {
       if (!file) return null;
       const buffer = await file.arrayBuffer();
       return new Uint8Array(buffer);
+      return new Uint8Array(buffer);
     };
+
 
     const projectDocBinary = await fileToBinary(projectDocFile);
     const demoVideoBinary = await fileToBinary(demoVideoFile);
     const codeBaseBinary = await fileToBinary(codeBaseFile);
+
 
     const applicantId = new ObjectId();
     const client = await clientPromise;
@@ -41,6 +45,8 @@ export async function POST(req: Request) {
 
     try {
       session.startTransaction();
+
+      // Insert applicant data
       const jobPostingDb = client.db('jobPosting');
       const applicantsCollection = jobPostingDb.collection('Applicants');
 
@@ -96,7 +102,15 @@ export async function POST(req: Request) {
                 data: codeBaseBinary,
               }
             : null,
+          file: codeBaseBinary
+            ? {
+                filename: codeBaseFile.name,
+                contentType: codeBaseFile.type,
+                data: codeBaseBinary,
+              }
+            : null,
         },
+        hostedLink: hostedLink || '',
         hostedLink: hostedLink || '',
       };
 
@@ -112,10 +126,15 @@ export async function POST(req: Request) {
 
       await resumesCollection.insertOne(resumeData, { session });
 
+
       await session.commitTransaction();
       session.endSession();
 
       return NextResponse.json(
+        {
+          message: 'Application submitted successfully',
+          applicantId: applicantId.toHexString(),
+        },
         {
           message: 'Application submitted successfully',
           applicantId: applicantId.toHexString(),

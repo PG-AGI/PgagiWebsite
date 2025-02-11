@@ -40,6 +40,7 @@ export const JobApplicationForm = ({
 }: JobApplicationFormProps) => {
   const [formData, setFormData] = useState<FormData>({
     jobId,
+    jobId,
     firstName: "",
     lastName: "",
     email: "",
@@ -58,6 +59,7 @@ export const JobApplicationForm = ({
   const [error, setError] = useState<string | null>(null);
 
   // Handle changes for text/URL inputs
+  // Handle changes for text/URL inputs
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -71,12 +73,35 @@ export const JobApplicationForm = ({
     setError(null);
 
     // Validate LinkedIn URL if provided
+    // Validate LinkedIn URL if provided
     const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*$/;
     if (formData.linkedIn && !linkedInRegex.test(formData.linkedIn)) {
       toast.error("Please enter a valid LinkedIn URL.");
       setIsSubmitting(false);
       return;
     }
+
+    // Assignment submission validations based on job category:
+    if (jobCategory === "non technical") {
+      // For non-technical roles, only require the Project Document URL.
+      if (!formData.projectDocUrl) {
+        toast.error("Please provide the Project Document URL.");
+        setIsSubmitting(false);
+        return;
+      }
+    } else {
+      // For technical roles, require all assignment fields.
+      if (
+        !formData.projectDocUrl ||
+        !formData.demoVideoUrl ||
+        !formData.codeBaseUrl
+      ) {
+        toast.error(
+          "Please provide the Project Document, Demo Video, and Code Base URLs."
+        );
+        setIsSubmitting(false);
+        return;
+      }
 
     // Assignment submission validations based on job category:
     if (jobCategory === "non technical") {
@@ -133,7 +158,9 @@ export const JobApplicationForm = ({
 
       toast.success("Application submitted successfully!");
       onSubmit(formData);
+      onSubmit(formData);
       setFormData({
+        jobId,
         jobId,
         firstName: "",
         lastName: "",
@@ -385,7 +412,12 @@ export const JobApplicationForm = ({
               type="url"
               id="resumeLink"
               name="resumeLink"
+              type="url"
+              id="resumeLink"
+              name="resumeLink"
               required
+              value={formData.resumeLink}
+              onChange={handleInputChange}
               value={formData.resumeLink}
               onChange={handleInputChange}
               className={styles["input"]}
