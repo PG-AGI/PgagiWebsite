@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
-import { ObjectId } from 'mongodb';
 
 export async function POST(req: Request) {
   try {
@@ -29,7 +28,6 @@ export async function POST(req: Request) {
     const fileToBinary = async (file: File | null) => {
       if (!file) return null;
       const buffer = await file.arrayBuffer();
-      return new Uint8Array(buffer);
       return new Uint8Array(buffer);
     };
 
@@ -102,15 +100,7 @@ export async function POST(req: Request) {
                 data: codeBaseBinary,
               }
             : null,
-          file: codeBaseBinary
-            ? {
-                filename: codeBaseFile.name,
-                contentType: codeBaseFile.type,
-                data: codeBaseBinary,
-              }
-            : null,
         },
-        hostedLink: hostedLink || '',
         hostedLink: hostedLink || '',
       };
 
@@ -135,10 +125,7 @@ export async function POST(req: Request) {
           message: 'Application submitted successfully',
           applicantId: applicantId.toHexString(),
         },
-        {
-          message: 'Application submitted successfully',
-          applicantId: applicantId.toHexString(),
-        },
+  
         { status: 201 }
       );
     } catch (transactionError) {

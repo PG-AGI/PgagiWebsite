@@ -11,7 +11,7 @@ interface JobApplicationFormProps {
   jobId: string;
   onSubmit: (formData: any) => void;
   applicationUrl: string;
-  jobCategory: "technical" | "non technical"; 
+  jobCategory: "technical" | "non technical";
 }
 
 interface FormData {
@@ -23,7 +23,7 @@ interface FormData {
   linkedIn: string;
   portfolio: string;
   educational_institute: string;
-  resumeLink: string; 
+  resumeLink: string;
   coverLetter: string;
   projectDocUrl: string;
   demoVideoUrl: string;
@@ -39,7 +39,6 @@ export const JobApplicationForm = ({
   jobCategory,
 }: JobApplicationFormProps) => {
   const [formData, setFormData] = useState<FormData>({
-    jobId,
     jobId,
     firstName: "",
     lastName: "",
@@ -58,8 +57,6 @@ export const JobApplicationForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Handle changes for text/URL inputs
-  // Handle changes for text/URL inputs
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -73,35 +70,12 @@ export const JobApplicationForm = ({
     setError(null);
 
     // Validate LinkedIn URL if provided
-    // Validate LinkedIn URL if provided
     const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*$/;
     if (formData.linkedIn && !linkedInRegex.test(formData.linkedIn)) {
       toast.error("Please enter a valid LinkedIn URL.");
       setIsSubmitting(false);
       return;
     }
-
-    // Assignment submission validations based on job category:
-    if (jobCategory === "non technical") {
-      // For non-technical roles, only require the Project Document URL.
-      if (!formData.projectDocUrl) {
-        toast.error("Please provide the Project Document URL.");
-        setIsSubmitting(false);
-        return;
-      }
-    } else {
-      // For technical roles, require all assignment fields.
-      if (
-        !formData.projectDocUrl ||
-        !formData.demoVideoUrl ||
-        !formData.codeBaseUrl
-      ) {
-        toast.error(
-          "Please provide the Project Document, Demo Video, and Code Base URLs."
-        );
-        setIsSubmitting(false);
-        return;
-      }
 
     // Assignment submission validations based on job category:
     if (jobCategory === "non technical") {
@@ -136,7 +110,10 @@ export const JobApplicationForm = ({
     formDataToSubmit.append("phone", formData.phone || "");
     formDataToSubmit.append("linkedIn", formData.linkedIn || "");
     formDataToSubmit.append("portfolio", formData.portfolio || "");
-    formDataToSubmit.append("educational_institute", formData.educational_institute || "");
+    formDataToSubmit.append(
+      "educational_institute",
+      formData.educational_institute || ""
+    );
     formDataToSubmit.append("coverLetter", formData.coverLetter || "");
     formDataToSubmit.append("projectDocUrl", formData.projectDocUrl || "");
     formDataToSubmit.append("demoVideoUrl", formData.demoVideoUrl || "");
@@ -158,9 +135,7 @@ export const JobApplicationForm = ({
 
       toast.success("Application submitted successfully!");
       onSubmit(formData);
-      onSubmit(formData);
       setFormData({
-        jobId,
         jobId,
         firstName: "",
         lastName: "",
@@ -294,7 +269,9 @@ export const JobApplicationForm = ({
             />
           </div>
           <div className={styles["input-group"]}>
-            <label htmlFor="educational_institute">Educational Institute</label>
+            <label htmlFor="educational_institute">
+              Educational Institute
+            </label>
             <input
               type="text"
               id="educational_institute"
@@ -407,17 +384,12 @@ export const JobApplicationForm = ({
           </div>
 
           <div className={styles["input-group"]}>
-            <label htmlFor="resume">Resume/CV (Paste Link) *</label>
+            <label htmlFor="resumeLink">Resume/CV (Paste Link) *</label>
             <input
               type="url"
               id="resumeLink"
               name="resumeLink"
-              type="url"
-              id="resumeLink"
-              name="resumeLink"
               required
-              value={formData.resumeLink}
-              onChange={handleInputChange}
               value={formData.resumeLink}
               onChange={handleInputChange}
               className={styles["input"]}
