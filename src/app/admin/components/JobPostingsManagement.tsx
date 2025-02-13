@@ -33,7 +33,7 @@ type FormValues = {
   department: string;
   location: string;
   type: string;
-  category: 'technical' | 'non technical' | ''; // added category field
+  category: 'technical' | 'non technical' | '';
   description: string;
   responsibilities: { id: string; value: string }[];
   requirements: { id: string; value: string }[];
@@ -66,7 +66,7 @@ const JobPostingsManagement = () => {
       department: '',
       location: '',
       type: '',
-      category: 'technical', // default value for category
+      category: 'technical', 
       description: '',
       responsibilities: [{ id: uuidv4(), value: '' }],
       requirements: [{ id: uuidv4(), value: '' }],
@@ -184,7 +184,7 @@ const JobPostingsManagement = () => {
       department: job.department,
       location: job.location,
       type: job.type,
-      category: job.category, // pre-fill category on edit
+      category: job.category,
       description: job.description,
       responsibilities: job.responsibilities.map((resp) => ({ id: uuidv4(), value: resp })),
       requirements: job.requirements.map((req) => ({ id: uuidv4(), value: req })),
@@ -222,7 +222,7 @@ const JobPostingsManagement = () => {
       department: job.department,
       location: job.location,
       type: job.type,
-      category: job.category, // include category when recreating
+      category: job.category, 
       description: job.description,
       responsibilities: job.responsibilities.map((resp) => ({ id: uuidv4(), value: resp })),
       requirements: job.requirements.map((req) => ({ id: uuidv4(), value: req })),
@@ -421,14 +421,12 @@ const JobPostingsManagement = () => {
               type="url"
               id="applicationUrl"
               {...register('applicationUrl', {
-                required: 'Application URL is required',
                 pattern: {
                   value: /^https?:\/\/.+/,
                   message: 'Enter a valid URL',
                 },
               })}
               placeholder="Enter application URL"
-              required
             />
             {errors.applicationUrl && <span className={styles.error}>{errors.applicationUrl.message}</span>}
           </div>

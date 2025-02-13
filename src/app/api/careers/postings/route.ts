@@ -83,8 +83,7 @@ export async function POST(request: Request) {
       !description ||
       !Array.isArray(responsibilities) ||
       !Array.isArray(requirements) ||
-      numberOfOpenings == null || 
-      !applicationUrl
+      numberOfOpenings == null
     ) {
       return NextResponse.json(
         { message: 'Invalid job posting data' },
