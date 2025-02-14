@@ -274,7 +274,7 @@ export const JobApplicationForm = ({
           </div>
           <div className={styles["input-group"]}>
             <label htmlFor="educational_institute">
-              Educational Institute
+              Educational Institute*
             </label>
             <input
               type="text"
