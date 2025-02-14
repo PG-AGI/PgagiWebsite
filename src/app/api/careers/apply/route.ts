@@ -25,17 +25,22 @@ export async function POST(req: Request) {
     const demoVideoFile = formData.get('demoVideoFile') as File;
     const codeBaseFile = formData.get('codeBaseFile') as File;
 
+    if (!firstName || !lastName || !email || !phone || !educationalInstitute || !resumeLink) {
+      return NextResponse.json(
+        { message: 'First Name, Last Name, Email, Phone Number, Educational Institute, and Resume/CV are required.' },
+        { status: 400 }
+      );
+    }
+
     const fileToBinary = async (file: File | null) => {
       if (!file) return null;
       const buffer = await file.arrayBuffer();
       return new Uint8Array(buffer);
     };
 
-
     const projectDocBinary = await fileToBinary(projectDocFile);
     const demoVideoBinary = await fileToBinary(demoVideoFile);
     const codeBaseBinary = await fileToBinary(codeBaseFile);
-
 
     const applicantId = new ObjectId();
     const client = await clientPromise;
@@ -59,13 +64,12 @@ export async function POST(req: Request) {
         linkedIn: linkedIn || '',
         portfolio: portfolio || '',
         coverLetter: coverLetter || '',
-        educational_institute: educationalInstitute || '', // Added field
+        educational_institute: educationalInstitute || '', 
         applicationDate: new Date(),
       };
 
       await applicantsCollection.insertOne(applicantData, { session });
 
-   
       const applicationDetailsDb = client.db('jobPosting');
       const assignmentsCollection = applicationDetailsDb.collection('Assignments');
 
@@ -116,7 +120,6 @@ export async function POST(req: Request) {
 
       await resumesCollection.insertOne(resumeData, { session });
 
-
       await session.commitTransaction();
       session.endSession();
 
@@ -125,7 +128,6 @@ export async function POST(req: Request) {
           message: 'Application submitted successfully',
           applicantId: applicantId.toHexString(),
         },
-  
         { status: 201 }
       );
     } catch (transactionError) {

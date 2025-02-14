@@ -1,5 +1,3 @@
-// JobDetailsPage.tsx
-
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -15,9 +13,9 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
   const [job, setJob] = useState<Job | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const formRef = useRef<HTMLDivElement>(null); // Reference to the form section
+  const formRef = useRef<HTMLDivElement>(null); 
   const router = useRouter();
-  const { jobId } = params; 
+  const { jobId } = params;
 
   useEffect(() => {
     async function fetchJobDetails() {
@@ -29,10 +27,8 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
         }
 
         const jobs: Job[] = await response.json();
-
-
         const foundJob = jobs.find((j) => j.id === jobId);
-        console.log(foundJob);
+
         if (!foundJob) {
           throw new Error("Job not found");
         }
@@ -63,8 +59,6 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
     formRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Removed handleViewAssignment since it's no longer needed
-
   if (isLoading) {
     return <SkeletonLoader />;
   }
@@ -81,6 +75,7 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
       </div>
     );
   }
+
   return (
     <div className={styles["job-details-container"]}>
       <div className={styles["content-container"]}>
@@ -134,19 +129,17 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
                 ))}
               </ul>
             </div>
-            {job.applicationUrl && (
-              <div className={styles["assignment-section"]}>
-                <div className={styles["buttons-container"]}>
-                  <button
-                    onClick={handleApplyNow}
-                    className={styles["apply-button"]}
-                  >
-                    Apply Now
-                  </button>
-                  {/* Removed the View Assignment button from here */}
-                </div>
+
+            <div className={styles["assignment-section"]}>
+              <div className={styles["buttons-container"]}>
+                <button
+                  onClick={handleApplyNow}
+                  className={styles["apply-button"]}
+                >
+                  Apply Now
+                </button>
               </div>
-            )}
+            </div>
           </div>
         </div>
 
@@ -158,7 +151,6 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
               onSubmit={handleApplicationSubmit}
               applicationUrl={job.applicationUrl}
               jobCategory={job.category}
-
             />
           )}
         </div>
