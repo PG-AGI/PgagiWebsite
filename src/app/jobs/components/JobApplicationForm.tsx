@@ -69,7 +69,6 @@ export const JobApplicationForm = ({
     setIsSubmitting(true);
     setError(null);
 
-    // Validate LinkedIn URL if provided
     const linkedInRegex = /^https:\/\/(www\.)?linkedin\.com\/.*$/;
     if (formData.linkedIn && !linkedInRegex.test(formData.linkedIn)) {
       toast.error("Please enter a valid LinkedIn URL.");
@@ -77,16 +76,15 @@ export const JobApplicationForm = ({
       return;
     }
 
-    // Assignment submission validations based on job category:
-    if (jobCategory === "non technical") {
-      // For non-technical roles, only require the Project Document URL.
+    if (jobCategory === "non technical" && applicationUrl !== "") {
       if (!formData.projectDocUrl) {
         toast.error("Please provide the Project Document URL.");
         setIsSubmitting(false);
         return;
       }
-    } else {
-      // For technical roles, require all assignment fields.
+    }
+    
+    if (jobCategory === "technical" && applicationUrl !== "") {
       if (
         !formData.projectDocUrl ||
         !formData.demoVideoUrl ||
@@ -99,8 +97,10 @@ export const JobApplicationForm = ({
         return;
       }
     }
+    
+  
 
-    // Prepare the form payload using FormData (all values are strings)
+    // Prepare the form payload using FormData
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("jobId", formData.jobId);
     formDataToSubmit.append("jobTitle", jobTitle);
@@ -163,7 +163,9 @@ export const JobApplicationForm = ({
   };
 
   const handleViewAssignment = () => {
-    window.open(applicationUrl, "_blank");
+    if (applicationUrl) {
+      window.open(applicationUrl, "_blank");
+    }
   };
 
   return (
@@ -176,15 +178,17 @@ export const JobApplicationForm = ({
             application form.
           </p>
         </div>
-        <div className={styles["view-assignment-container"]}>
-          <button
-            type="button"
-            onClick={handleViewAssignment}
-            className={styles["view-assignment-button"]}
-          >
-            View Assignment
-          </button>
-        </div>
+        {applicationUrl && (
+          <div className={styles["view-assignment-container"]}>
+            <button
+              type="button"
+              onClick={handleViewAssignment}
+              className={styles["view-assignment-button"]}
+            >
+              View Assignment
+            </button>
+          </div>
+        )}
 
         <div className={styles["grid"]}>
           {/* Personal Information Fields */}
@@ -270,7 +274,7 @@ export const JobApplicationForm = ({
           </div>
           <div className={styles["input-group"]}>
             <label htmlFor="educational_institute">
-              Educational Institute
+              Educational Institute*
             </label>
             <input
               type="text"
@@ -284,33 +288,12 @@ export const JobApplicationForm = ({
           </div>
 
           {/* Assignment Submission Section */}
-          <div className={styles["assignment-section"]}>
-            <h3 className={styles["section-subtitle"]}>
-              Submitting Assignment *
-            </h3>
-            {jobCategory === "non technical" ? (
-              <div className={styles["assignment-subsection"]}>
-                <h4 className={styles["subsection-title"]}>
-                  Project Document
-                </h4>
-                <div className={styles["input-group"]}>
-                  <label htmlFor="projectDocUrl">
-                    Doc Explaining the Project (Paste URL)
-                  </label>
-                  <input
-                    type="url"
-                    id="projectDocUrl"
-                    name="projectDocUrl"
-                    value={formData.projectDocUrl}
-                    onChange={handleInputChange}
-                    className={styles["input"]}
-                    placeholder="https://docs.google.com/document/yourdoc"
-                    required
-                  />
-                </div>
-              </div>
-            ) : (
-              <>
+          {applicationUrl && (
+            <div className={styles["assignment-section"]}>
+              <h3 className={styles["section-subtitle"]}>
+                Submitting Assignment *
+              </h3>
+              {jobCategory === "non technical" ? (
                 <div className={styles["assignment-subsection"]}>
                   <h4 className={styles["subsection-title"]}>
                     Project Document
@@ -327,61 +310,84 @@ export const JobApplicationForm = ({
                       onChange={handleInputChange}
                       className={styles["input"]}
                       placeholder="https://docs.google.com/document/yourdoc"
-                      required
+                      
                     />
                   </div>
                 </div>
-                <div className={styles["assignment-subsection"]}>
-                  <h4 className={styles["subsection-title"]}>Demo Video</h4>
+              ) : (
+                <>
+                  <div className={styles["assignment-subsection"]}>
+                    <h4 className={styles["subsection-title"]}>
+                      Project Document
+                    </h4>
+                    <div className={styles["input-group"]}>
+                      <label htmlFor="projectDocUrl">
+                        Doc Explaining the Project (Paste URL)
+                      </label>
+                      <input
+                        type="url"
+                        id="projectDocUrl"
+                        name="projectDocUrl"
+                        value={formData.projectDocUrl}
+                        onChange={handleInputChange}
+                        className={styles["input"]}
+                        placeholder="https://docs.google.com/document/yourdoc"
+                     
+                      />
+                    </div>
+                  </div>
+                  <div className={styles["assignment-subsection"]}>
+                    <h4 className={styles["subsection-title"]}>Demo Video</h4>
+                    <div className={styles["input-group"]}>
+                      <label htmlFor="demoVideoUrl">
+                        Demo Video (Paste Link)
+                      </label>
+                      <input
+                        type="url"
+                        id="demoVideoUrl"
+                        name="demoVideoUrl"
+                        value={formData.demoVideoUrl}
+                        onChange={handleInputChange}
+                        className={styles["input"]}
+                        placeholder="https://www.loom.com/share/..."
+                        
+                      />
+                    </div>
+                  </div>
+                  <div className={styles["assignment-subsection"]}>
+                    <h4 className={styles["subsection-title"]}>Code Base</h4>
+                    <div className={styles["input-group"]}>
+                      <label htmlFor="codeBaseUrl">
+                        Code Base (Paste GitHub Repo URL)
+                      </label>
+                      <input
+                        type="url"
+                        id="codeBaseUrl"
+                        name="codeBaseUrl"
+                        value={formData.codeBaseUrl}
+                        onChange={handleInputChange}
+                        className={styles["input"]}
+                        placeholder="https://github.com/yourrepo"
+                        
+                      />
+                    </div>
+                  </div>
                   <div className={styles["input-group"]}>
-                    <label htmlFor="demoVideoUrl">
-                      Demo Video (Paste Link)
-                    </label>
+                    <label htmlFor="hostedLink">Hosted Link (Optional)</label>
                     <input
                       type="url"
-                      id="demoVideoUrl"
-                      name="demoVideoUrl"
-                      value={formData.demoVideoUrl}
+                      id="hostedLink"
+                      name="hostedLink"
+                      value={formData.hostedLink}
                       onChange={handleInputChange}
                       className={styles["input"]}
-                      placeholder="https://www.loom.com/share/..."
-                      required
+                      placeholder="https://yourproject.com"
                     />
                   </div>
-                </div>
-                <div className={styles["assignment-subsection"]}>
-                  <h4 className={styles["subsection-title"]}>Code Base</h4>
-                  <div className={styles["input-group"]}>
-                    <label htmlFor="codeBaseUrl">
-                      Code Base (Paste GitHub Repo URL)
-                    </label>
-                    <input
-                      type="url"
-                      id="codeBaseUrl"
-                      name="codeBaseUrl"
-                      value={formData.codeBaseUrl}
-                      onChange={handleInputChange}
-                      className={styles["input"]}
-                      placeholder="https://github.com/yourrepo"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className={styles["input-group"]}>
-                  <label htmlFor="hostedLink">Hosted Link (Optional)</label>
-                  <input
-                    type="url"
-                    id="hostedLink"
-                    name="hostedLink"
-                    value={formData.hostedLink}
-                    onChange={handleInputChange}
-                    className={styles["input"]}
-                    placeholder="https://yourproject.com"
-                  />
-                </div>
-              </>
-            )}
-          </div>
+                </>
+              )}
+            </div>
+          )}
 
           <div className={styles["input-group"]}>
             <label htmlFor="resumeLink">Resume/CV (Paste Link) *</label>
