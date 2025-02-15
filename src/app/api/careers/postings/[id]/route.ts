@@ -90,8 +90,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       !description ||
       !Array.isArray(responsibilities) ||
       !Array.isArray(requirements) ||
-      numberOfOpenings == null ||
-      !applicationUrl
+      numberOfOpenings == null 
     ) {
       return NextResponse.json(
         { message: 'Invalid job posting data' },
