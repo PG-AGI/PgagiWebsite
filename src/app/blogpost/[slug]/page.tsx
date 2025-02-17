@@ -3,7 +3,7 @@ import BlogPost from "./BlogPost";
 
 export default function BlogPostPage() {
   return (
-    <BlogPost />
+    <BlogPost params={{slug: "state-management-in-react-redux-vs-zustand-vs-reacts-built-in-tools"}}/>
   )
 }
 
