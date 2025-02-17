@@ -1,9 +1,3 @@
-.blogpg_paragraph_him {
-	color: black !important;
-	line-height: 1.8;
-	// color: #4b5563;
-	margin-bottom: 1.5rem;
-}
 html,
 body {
 	width: 100%;
@@ -12,13 +6,11 @@ body {
 	margin: 0;
 	background-color: black;
 	scroll-behavior: smooth;
-
-	* {
 		font-family: var(--inter);
 		color: white;
 		box-sizing: border-box;
 		overflow-wrap: normal;
-	}
+	
 }
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
