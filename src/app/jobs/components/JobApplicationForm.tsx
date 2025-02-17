@@ -173,10 +173,14 @@ export const JobApplicationForm = ({
       <form onSubmit={handleSubmit} className={styles["form"]}>
         <div className={styles["header"]}>
           <h2 className={styles["form-title"]}>Apply for {jobTitle}</h2>
-          <p className={`${styles["form-description"]} ${styles["form-note"]}`}>
-            To apply, please complete the assignment first and then fill out the
-            application form.
-          </p>
+          { applicationUrl &&( <p className={`${styles["form-description"]} ${styles["form-note"]}`}>
+To apply, please complete the assignment first and then fill out the
+application form.
+</p>)
+
+
+          }
+         
         </div>
         {applicationUrl && (
           <div className={styles["view-assignment-container"]}>
@@ -191,7 +195,7 @@ export const JobApplicationForm = ({
         )}
 
         <div className={styles["grid"]}>
-          {/* Personal Information Fields */}
+
           <div className={styles["input-group"]}>
             <label htmlFor="firstName">First Name *</label>
             <input
