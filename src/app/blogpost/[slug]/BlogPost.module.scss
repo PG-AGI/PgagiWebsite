@@ -1,7 +1,9 @@
-
-$background-dark: black;
-$text-primary: #ffffff;
-$text-secondary: #a8a8b3;
+$background-light: #ffffff;
+$background-dark: #000000;
+$text-primary: #000000;
+$text-dark: #333333;
+$text-secondary: #666666;
+$text-secondary-dark: #666666;
 $purple-primary: #9333ea;
 $purple-light: #a855f7;
 $purple-dark: #6b21a8;
@@ -31,21 +33,23 @@ $code-border: #333333;
 
 .container {
   min-height: 100vh;
-  background-color: $background-dark;
-  color: $text-primary;
+  background-color: $background-light;
+  color: $text-dark;
 }
 
 .main {
   max-width: 1200px;
   margin: 0 auto;
   padding: $spacing-unit * 2;
+  background-color: $background-light;
 }
 
 /* Header styles */
 .header {
   margin-bottom: $spacing-unit * 3;
   padding: $spacing-unit * 2;
-  @include glass-effect;
+  background-color: $background-light;
+  border: 1px solid #eaeaea;
   border-radius: 1rem;
 }
 
@@ -53,10 +57,10 @@ $code-border: #333333;
   display: flex;
   align-items: center;
   gap: $spacing-unit;
-  color: $purple-light;
+  color: $text-secondary-dark;
   font-size: 0.875rem;
   margin-bottom: $spacing-unit;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 1rem;
@@ -84,7 +88,7 @@ $code-border: #333333;
 .title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: $text-primary;
+  color: $text-dark;
   margin-bottom: $spacing-unit;
   line-height: 1.2;
 }
@@ -98,12 +102,12 @@ $code-border: #333333;
     .authorName {
       font-size: 1rem;
       font-weight: 600;
-      color: $text-primary;
+      color: $text-dark;
     }
   
     .authorDesignation {
       font-size: 1rem;
-      color: $text-secondary;
+      color: $text-secondary-dark;
     }
   }
 
@@ -120,6 +124,8 @@ $code-border: #333333;
   padding: $spacing-unit * 1.5;
   border-radius: 1rem;
   @include glass-effect;
+  background-color: $background-light;
+  border: 1px solid #eaeaea;
 }
 
 .navigationHeading {
@@ -145,9 +151,9 @@ $code-border: #333333;
   text-align: left;
   padding: $spacing-unit $spacing-unit * 1.5;
   border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: $text-secondary;
+  background: #f5f5f5;
+  border: 1px solid #eaeaea;
+  color: $text-secondary-dark;
   font-weight: 500;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -167,8 +173,8 @@ $code-border: #333333;
   }
 
   &:hover {
-    color: $text-primary;
-    background: rgba(255, 255, 255, 0.12);
+    color: $text-dark;
+    background: #eaeaea;
     transform: translateY(-1px);
   }
 
@@ -177,8 +183,8 @@ $code-border: #333333;
   }
 
   &.active {
-    color: $text-primary;
-    background: rgba($purple-primary, 0.15);
+    color: $purple-primary;
+    background: rgba($purple-primary, 0.1);
     border-color: rgba($purple-primary, 0.3);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -212,7 +218,7 @@ $code-border: #333333;
     height: 32px;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 0.5rem;
-    color: $text-secondary;
+    color: black;
     cursor: pointer;
     @include hover-transition;
 
@@ -245,11 +251,12 @@ $code-border: #333333;
 
 /* Article content */
 .article {
-  color: $text-secondary;
+  color: $text-dark;
   scroll-margin-top: $spacing-unit * 2;
   padding: $spacing-unit * 2;
-  background: rgba(255, 255, 255, 0.03);
+  background: $background-light;
   border-radius: 1rem;
+  border: 1px solid #eaeaea;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -260,6 +267,8 @@ $code-border: #333333;
   @include glass-effect;
   border-top: none;
   border-bottom: none;
+  background-color: $background-light;
+  border: 1px solid #eaeaea;
 
   &:last-child {
     margin-bottom: 0;
@@ -268,7 +277,7 @@ $code-border: #333333;
   h2 {
     font-size: 1.75rem;
     font-weight: bold;
-    color: $purple-light;
+    color: $text-dark;
     margin-bottom: $spacing-unit * 1.5;
   }
 
@@ -287,6 +296,7 @@ $code-border: #333333;
   p {
     line-height: 1.8;
     margin-bottom: $spacing-unit * 1.5;
+    color: $text-dark;
 
     &:last-child {
       margin-bottom: 0;
@@ -319,21 +329,21 @@ $code-border: #333333;
 
   .quote {
     font-style: italic;
-    color: $quote-color;
-    border-left: 4px solid $quote-border;
+    color: $text-dark;
+    border-left: 4px solid $purple-primary;
     padding-left: $spacing-unit;
     margin: $spacing-unit 0;
-    background: $quote-bg;
+    background: #f8f9fa;
     font-size: 1rem;
     line-height: 1.6;
   }
 
   .highlight {
-    background-color: $highlight-bg;
+    background-color: #f8f9fa;
     padding: $spacing-unit;
     border-radius: 0.5rem;
     margin: $spacing-unit 0;
-    color: $text-primary;
+    color: $text-dark;
     font-weight: 500;
   }
 

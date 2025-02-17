@@ -7,12 +7,12 @@ body {
 	background-color: black;
 	scroll-behavior: smooth;
 
-	* {
+	
 		font-family: var(--inter);
 		color: white;
 		box-sizing: border-box;
 		overflow-wrap: normal;
-	}
+	
 }
 
 ::-webkit-scrollbar {
