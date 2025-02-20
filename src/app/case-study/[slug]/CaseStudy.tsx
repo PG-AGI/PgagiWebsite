@@ -11,7 +11,8 @@ import { FaSquareXTwitter } from 'react-icons/fa6';
 
 import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
-
+import Recommendation from '@/app/components/Recommendation';
+import { AiOutlineCopy } from 'react-icons/ai';
 import styles from './CaseStudy.module.scss';
 
 type CaseStudy = {
@@ -42,9 +43,14 @@ type ContentBlock =
   | { type: 'table'; content: { headers: string[]; rows: string[][] } }
   | { type: 'box'; content: { heading: string; text: string } };
 
+// Add type for params
+type Params = {
+  slug: string;
+}
+
 const CaseStudy = () => {
   const router = useRouter();
-  const params = useParams();
+  const params = useParams() as Params; // Type assertion to ensure params.slug is string
   const slug = params.slug;
 
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null);
@@ -53,7 +59,19 @@ const CaseStudy = () => {
 
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeSection, setActiveSection] = useState<string>('overview');
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+    
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   useEffect(() => {
     if (!slug) {
       setError('No case study slug provided.');
@@ -192,6 +210,13 @@ const CaseStudy = () => {
     )}&text=${encodeURIComponent(caseStudy?.title || '')}`,
   };
 
+  const handleShare = (platform: keyof typeof shareUrls) => {
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
+  };
+  // const handleScrollToTop = () => {
+  //   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // };
+
   if (loading) {
     return (
       <>
@@ -308,7 +333,7 @@ const CaseStudy = () => {
       </Head>
 
       <Navigation />
-      <div className={styles.container}>
+      {/* <div className={styles.container}>
         <main className={styles.main}>
           <header className={styles.header}>
             <div className={styles.metadata}>
@@ -514,6 +539,238 @@ const CaseStudy = () => {
           <ArrowUp />
         </button>
       </div>
+      <Recommendation currentSlug={params.slug} contentType="caseStudy" />
+      <Footer />
+    </>
+  );
+}; */}
+<div className={styles.container}>
+        <main className={styles.main}>
+          <div className={styles.flexrow}>
+          <div className={styles.content}>
+      
+            <aside className={styles.blogpg_leftAside}>
+            <div className={styles.blogpg_stickyDiv}>
+              <div className={styles.blogpg_index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.blogpg_navigation}>
+                {caseStudy.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={
+                        activeSection === sectionId ? styles.blogpg_active : ''
+                      }
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </aside>
+            <article className={styles.article}>
+            <div className={styles.metadata}>
+              <span className={styles.publishDate}>{caseStudy.publishDate}</span>
+              <span className={styles.glowDot}></span>
+              <span className={styles.readTime}>{caseStudy.readTime}</span>
+            </div>
+            <h1 className={styles.title}>{caseStudy.title}</h1>
+            <div className={styles.flexWrapper}>
+              <div className={styles.authorInfo}>
+                <span className={styles.authorName}>{caseStudy.author.name}</span>
+                <span className={styles.separator}>|</span>
+                <span className={styles.authorDesignation}>
+                  {caseStudy.author.role}
+                </span>
+              </div>
+            </div>
+
+          {/* {caseStudy.tldr && (
+            <div className={styles.header}>
+              <div className={styles.flexWrapper}>
+
+                <h2>TL; DR (60-second blog summary)</h2>
+                
+                <div className={styles.metadata}>
+
+                  <span className={styles.glowDot}></span>
+                  <span className={styles.readTime}>60 seconds</span>
+                </div>
+              </div>
+              <div>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: blogPost.tldr?.text,
+                  }}
+                ></p>
+              </div>
+            </div>
+          )} */}
+              {caseStudy.sections.map((section) => (
+                <section
+                  key={section.title}
+                  id={section.title.toLowerCase().replace(/\s+/g, '-')}
+                  className={styles.section}
+                >
+                  <h2>{section.title}</h2>
+                  {section.content.map((block, index) => {
+                    switch (block.type) {
+                      case 'paragraph':
+                        return (
+                          <p
+                            key={index}
+                            dangerouslySetInnerHTML={{ __html: block.content }}
+                          ></p>
+                        );
+                      case 'quote':
+                        return (
+                          <blockquote
+                            key={index}
+                            className={styles.quote}
+                            dangerouslySetInnerHTML={{ __html: block.content }}
+                          ></blockquote>
+                        );
+                      case 'highlight':
+                        return (
+                          <div
+                            key={index}
+                            className={styles.highlight}
+                            dangerouslySetInnerHTML={{ __html: block.content }}
+                          ></div>
+                        );
+                      case 'code':
+                        return (
+                          <pre key={index} className={styles.codeBlock}>
+                            <code>{block.content}</code>
+                          </pre>
+                        );
+                      case 'image':
+                        return (
+                          <figure key={index} className={styles.imageBlock}>
+                            <Image
+                              src={block.src}
+                              alt={block.alt}
+                              className={styles.image}
+                              width={800}
+                              height={600}
+                            />
+                            {block.caption && (
+                              <figcaption className={styles.caption}>
+                                {block.caption}
+                              </figcaption>
+                            )}
+                          </figure>
+                        );
+                      case 'video':
+                        return (
+                          <div key={index} className={styles.videoBlock}>
+                            <iframe
+                              src={block.src}
+                              title={block.title || 'Video'}
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className={styles.video}
+                            ></iframe>
+                            {block.caption && (
+                              <div className={styles.caption}>
+                                {block.caption}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      case 'table':
+                        return (
+                          <table key={index} className={styles.dynamicTable}>
+                            <thead>
+                              <tr>
+                                {block.content.headers.map((heading, colIndex) => (
+                                  <th key={colIndex} className={styles.heading}>
+                                    {heading}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {block.content.rows.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                  {row.map((cell, colIndex) => (
+                                    <td key={colIndex} className={styles.cell}>
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        );
+                      case 'box':
+                        return (
+                          <div key={index} className={styles.box}>
+                            <h3 className={styles.boxHeading}>
+                              {block.content.heading}
+                            </h3>
+                            <p
+                              dangerouslySetInnerHTML={{
+                                __html: block.content.text,
+                              }}
+                            ></p>
+                          </div>
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
+                </section>
+              ))}
+            </article>
+
+            
+          </div>
+          <aside className={styles.blogpg_rightAside}>
+          <div className={styles.blogpg_stickyDiv}>
+            <h1 className={styles.blogpg_heading}>Share Article</h1>
+            <div className={styles.blogpg_shareElement} onClick={handleCopyLink}>
+              <AiOutlineCopy size={'24px'} />
+              <p>Copy link</p>
+            </div>
+            <div
+              className={styles.blogpg_shareElement}
+              onClick={() => handleShare('linkedin')}
+            >
+              <FaLinkedin size={'24px'} />
+              <p>Post on Linkedin</p>
+            </div>
+            <div
+              className={styles.blogpg_shareElement}
+              onClick={() => handleShare('twitter')}
+            >
+              <FaSquareXTwitter size={'24px'} />
+              <p>Post on X</p>
+            </div>
+            <div className={styles.blogpg_exploreToing}>
+              <button onClick={() => (window.location.href = 'https://app.toingg.com/')}>
+                Explore Toingg
+              </button>
+            </div>
+          </div>
+        </aside>
+        </div>
+        </main> 
+        <button
+          className={styles.scrollToTopButton}
+          onClick={handleScrollToTop}
+          aria-label="Scroll to Top"
+        >
+          <ArrowUp />
+        </button>
+        </div>
+      <Recommendation currentSlug={params.slug} contentType="caseStudy" />
       <Footer />
     </>
   );

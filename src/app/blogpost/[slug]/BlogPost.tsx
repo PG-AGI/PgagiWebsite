@@ -11,6 +11,9 @@ import { FaSquareXTwitter } from 'react-icons/fa6';
 import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
 import axios from 'axios';
+import { AiOutlineCopy } from 'react-icons/ai';
+import Recommendation from '@/app/components/Recommendation'
+
 
 type BlogPostType = {
   slug: string;
@@ -53,6 +56,18 @@ const BlogPost = () => {
   const [error, setError] = useState<string>('');
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeSection, setActiveSection] = useState<string>('overview');
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+    
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (!slug) {
@@ -144,6 +159,10 @@ const BlogPost = () => {
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       blogPostUrl
     )}&text=${encodeURIComponent(blogPost?.title || '')}`,
+  };
+
+  const handleShare = (platform: keyof typeof shareUrls) => {
+    window.open(shareUrls[platform], '_blank', 'noopener,noreferrer');
   };
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -265,14 +284,40 @@ const BlogPost = () => {
         />
       </Head>
       <Navigation />
-      <div className={styles.container}>
+       <div className={styles.container}>
         <main className={styles.main}>
-          <header className={styles.header}>
-            <div className={styles.metadata}>
+          <div className={styles.flexrow}>
+            <div className={styles.content}>
+              <aside className={styles.blogpg_leftAside}>
+                <div className={styles.blogpg_stickyDiv}>
+                <div className={styles.blogpg_index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.blogpg_navigation}>
+                {blogPost.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={
+                        activeSection === sectionId ? styles.blogpg_active : ''
+                      }
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </aside>
+            <article className={styles.article}>
+            {/* <div className={styles.metadata}>
               <span className={styles.publishDate}>{blogPost.publishDate}</span>
               <span className={styles.glowDot}></span>
               <span className={styles.readTime}>{blogPost.readTime}</span>
-            </div>
+            </div> */}
             <h1 className={styles.title}>{blogPost.title}</h1>
             <div className={styles.flexWrapper}>
               <div className={styles.authorInfo}>
@@ -282,44 +327,23 @@ const BlogPost = () => {
                   {blogPost.author.role}
                 </span>
               </div>
-              <div className={styles.social}>
-                <div className={styles.socialLinks}>
-                  <a
-                    href={shareUrls.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on LinkedIn"
-                    className={styles.socialButton}
-                  >
-                    <FaLinkedin />
-                  </a>
-                  <a
-                    href={shareUrls.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on Twitter"
-                    className={styles.socialButton}
-                  >
-                    <FaSquareXTwitter />
-                  </a>
-                  <button
-                    onClick={handleCopyLink}
-                    className={styles.copyButton}
-                    aria-label="Copy Link"
-                  >
-                    <Link2 />
-                  </button>
-                </div>
-              </div>
+              <div className={styles.metadata}>
+              <span className={styles.publishDate}>{blogPost.publishDate}</span>
+              <span className={styles.glowDot}></span>
+              <span className={styles.readTime}>{blogPost.readTime}</span>
             </div>
-          </header>
+            </div>
+
           {blogPost.tldr && (
             <div className={styles.header}>
               <div className={styles.flexWrapper}>
+
                 <h2>TL; DR (60-second blog summary)</h2>
+                
                 <div className={styles.metadata}>
-                  <span className={styles.glowDot}></span>
-                  <span className={styles.readTime}>60 seconds</span>
+
+                  {/* <span className={styles.glowDot}></span>
+                  <span className={styles.readTime}>60 seconds</span> */}
                 </div>
               </div>
               <div>
@@ -331,34 +355,6 @@ const BlogPost = () => {
               </div>
             </div>
           )}
-          <div className={styles.content}>
-            <aside className={styles.sidebar}>
-              <nav>
-                <h3 className={styles.navigationHeading}>Summary</h3>
-                <ul className={styles.navigation}>
-                  {blogPost.sections.map((section) => (
-                    <li key={section.title}>
-                      <button
-                        onClick={() =>
-                          scrollToSection(
-                            section.title.toLowerCase().replace(/\s+/g, '-')
-                          )
-                        }
-                        className={`${styles.navButton} ${
-                          activeSection ===
-                          section.title.toLowerCase().replace(/\s+/g, '-')
-                            ? styles.active
-                            : ''
-                        }`}
-                      >
-                        {section.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </aside>
-            <article className={styles.article}>
               {blogPost.sections.map((section) => (
                 <section
                   key={section.title}
@@ -477,8 +473,40 @@ const BlogPost = () => {
                 </section>
               ))}
             </article>
+
+            
+          {/* </div> */}
+          <aside className={styles.blogpg_rightAside}>
+          <div className={styles.blogpg_stickyDiv}>
+            <h1 className={styles.blogpg_heading}>Share Article</h1>
+            <div className={styles.blogpg_shareElement} onClick={handleCopyLink}>
+              <AiOutlineCopy size={'24px'} />
+              <p>Copy link</p>
+            </div>
+            <div
+              className={styles.blogpg_shareElement}
+              onClick={() => handleShare('linkedin')}
+            >
+              <FaLinkedin size={'24px'} />
+              <p>Post on Linkedin</p>
+            </div>
+            <div
+              className={styles.blogpg_shareElement}
+              onClick={() => handleShare('twitter')}
+            >
+              <FaSquareXTwitter size={'24px'} />
+              <p>Post on X</p>
+            </div>
+            <div className={styles.blogpg_exploreToing}>
+              <button onClick={() => (window.location.href = 'https://app.toingg.com/')}>
+                Explore Toingg
+              </button>
+            </div>
           </div>
-        </main>
+        </aside>
+        </div>
+        </div>
+        </main> 
         <button
           className={styles.scrollToTopButton}
           onClick={handleScrollToTop}
@@ -487,6 +515,7 @@ const BlogPost = () => {
           <ArrowUp />
         </button>
       </div>
+      <Recommendation currentSlug={params.slug as string} contentType="blog" />
       <Footer />
     </>
   );
