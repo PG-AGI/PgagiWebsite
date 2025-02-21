@@ -146,9 +146,16 @@ affecting the functionality of the stylesheet. */
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
 
 
 }
+
 
 
 

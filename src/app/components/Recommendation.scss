@@ -158,59 +158,115 @@
   }
 }
 
-// Responsive adjustments
-@media (max-width: 768px) {
+// Mobile devices (phones)
+@media (max-width: 480px) {
   .recommendations {
-    margin: 2rem 1rem;
+    padding: 1rem 0;
+
     
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
     }
   }
 
   .recommendation-card {
-    width: 100%;
-    margin: 1rem 0;
+    width: 80%;
+    margin: 0.5rem;
+    height: auto;
+    aspect-ratio: 1/1.2;
   }
 
   .recommendation-image {
-    height: 220px;
+    height: 60%;
   }
 
   .recommendation-content {
-    height: calc(100% - 220px);
-    padding: 1rem;
+    padding: 0.8rem;
+    
+    h3 {
+      font-size: 0.9rem;
+      -webkit-line-clamp: 2;
+    }
+  }
+}
 
+// Tablets (portrait)
+@media (min-width: 481px) and (max-width: 768px) {
+  .recommendations {
+    padding: 1.5rem 0;
+    
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .recommendation-card {
+    width: 85%;
+    margin: 0.8rem;
+    aspect-ratio: 3/4;
+  }
+
+  .recommendation-image {
+    height: 65%;
+  }
+
+  .recommendation-content {
+    padding: 1rem;
+    
     h3 {
       font-size: 1rem;
     }
   }
+}
 
+// Tablets (landscape) and small laptops
+@media (min-width: 769px) and (max-width: 1024px) {
+  .recommendations {
+    padding: 2rem 0;
+    
+    h2 {
+      font-size: 2.5rem;
+    }
+  }
+
+  .recommendation-card {
+    width: 80%;
+    margin: 1rem;
+  }
+
+  .recommendation-content {
+    padding: 1.1rem;
+  }
+}
+
+// Large screens and desktops
+@media (min-width: 1025px) {
+  .recommendations {
+    padding: 2.5rem 0;
+    
+    h2 {
+      font-size: 3rem;
+    }
+  }
+
+  .recommendation-card {
+    width: 90%;
+    margin: 1.2rem;
+  }
+}
+
+// Adjust swiper navigation for different screen sizes
+@media (max-width: 768px) {
   .swiper {
     .swiper-button-next,
     .swiper-button-prev {
       display: none;
     }
-  }
 
-  .share-section {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    margin-top: 2rem;
-    z-index: 1;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .share-section {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    padding: 1rem;
-    margin-top: 2rem;
+    .swiper-pagination {
+      bottom: 0;
+    }
   }
 }
 
