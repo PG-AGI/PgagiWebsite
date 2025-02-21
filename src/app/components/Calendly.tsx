@@ -52,6 +52,7 @@ export default function Calendly() {
                                 boxShadow: '0 5px 5px 0px rgba(0, 0, 0, 0.25)',
                                 transition: 'all 0.3s ease-out',
                                 cursor: 'pointer',
+                                color: 'white'
                             }}
                             onClick={handleBookCall}
                         >

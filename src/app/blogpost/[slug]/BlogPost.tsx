@@ -498,11 +498,7 @@ const BlogPost = () => {
               <FaSquareXTwitter size={'24px'} />
               <p>Post on X</p>
             </div>
-            <div className={styles.blogpg_exploreToing}>
-              <button onClick={() => (window.location.href = 'https://app.toingg.com/')}>
-                Explore Toingg
-              </button>
-            </div>
+          
           </div>
         </aside>
         </div>
