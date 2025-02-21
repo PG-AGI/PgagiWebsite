@@ -48,6 +48,7 @@
             box-shadow: 0 5px 5px 0px rgba(0,0,0,0.25);
             transition: all 0.3s ease-out;
             cursor: pointer;
+            color: white;
 
             &:hover{                
                 background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
@@ -64,6 +65,7 @@
             box-shadow: 0 5px 5px 0px rgba(0,0,0,0.25);
             transition: all 0.3s ease-in-out;
             cursor: pointer;
+            color: white;
 
             &:hover{
                 background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);

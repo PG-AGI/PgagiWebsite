@@ -51,8 +51,8 @@ export default function Footer() {
           </div>
           <div className={styles.company}>
             <h6>Company</h6>
-            <span>
-              <a href="https://pgagi.in/aboutUs">About Us</a>
+            <span className={styles.companyLinks}>
+              <a href="https://pgagi.in/aboutUs"> About Us</a>
               <a href="https://x.com/PGAGI123?t=hAoqjn4ffAoYXjIp9yt-ug&s=09">Twitter</a>
               <a href="https://www.instagram.com/pgagi_ltd/">Instagram</a>
               <a href="https://www.linkedin.com/company/pg-agi/">LinkedIn</a>
