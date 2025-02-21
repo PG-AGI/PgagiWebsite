@@ -172,6 +172,7 @@ const BlogPost = () => {
     return (
       <>
         <Navigation />
+        
         <div className={styles.container}>
           <main className={styles.main}>
             <header className={`${styles.header} ${styles.skeletonHeader}`}>

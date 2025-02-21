@@ -1,9 +1,12 @@
 import { getMetaTags } from "@/services/apiMetaService";
 import BlogPost from "./BlogPost";
+import styles from './BlogPost.module.scss';
 
 export default function BlogPostPage() {
   return (
-    <BlogPost />
+    <div className={styles.pageWrapper}>
+      <BlogPost />
+    </div>
   )
 }
 

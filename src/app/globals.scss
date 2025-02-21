@@ -5,7 +5,9 @@ body {
 	height: 100% !important;
 	padding: 0;
 	margin: 0;
-	background-color: red;
+
+
+	background-color: black;
 	scroll-behavior: smooth;
 	
 	
@@ -13,6 +15,11 @@ body {
 		color: white;
 		box-sizing: border-box;
 		overflow-wrap: normal;
+		* {
+			box-sizing: border-box;
+		
+		    
+		   }
 	
 }
 

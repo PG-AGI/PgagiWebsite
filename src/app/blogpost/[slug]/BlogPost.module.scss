@@ -32,6 +32,9 @@ $code-border: #333333;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.05);
 }
+.pageWrapper {
+  overflow-x: hidden !important;
+}
 .main{
   width: 100vw !important;
   // background-color: $background-light;
@@ -147,6 +150,9 @@ affecting the functionality of the stylesheet. */
 
 }
 
+
+
+
 .section {
   font-family: "Poppins",serif;
   box-sizing: border-box;
@@ -193,19 +199,17 @@ affecting the functionality of the stylesheet. */
     }
 
     a {
-      color: $purple-light;
+      color: $purple-dark;
       text-decoration: underline;
       position: relative;
       transition: all 0.3s ease;
-      animation: glow-pulse 2s infinite;
+    
 
       &:hover {
         color: lighten($purple-light, 10%);
         text-decoration: none;
         animation: none;
-        text-shadow: 
-          0 0 15px lighten($purple-light, 20%), 
-          0 0 25px lighten($purple-light, 30%);
+      
       }
     }
 
