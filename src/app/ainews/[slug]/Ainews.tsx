@@ -706,8 +706,8 @@ const Ainews = () => {
         >
           <ArrowUp />
         </button>
-        </div>
-      <Recommendation currentSlug={params.slug} contentType="ainews" />
+      </div>
+      <Recommendation currentSlug={params.slug.toString()} contentType="ainews" />
       <Footer />
     </>
   );
