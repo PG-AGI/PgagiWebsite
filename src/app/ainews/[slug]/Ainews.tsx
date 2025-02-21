@@ -527,11 +527,11 @@ const Ainews = () => {
             </div>
           </aside>
             <article className={styles.article}>
-            <div className={styles.metadata}>
+            {/* <div className={styles.metadata}>
               <span className={styles.publishDate}>{aiNews.publishDate}</span>
               <span className={styles.glowDot}></span>
               <span className={styles.readTime}>{aiNews.readTime}</span>
-            </div>
+            </div> */}
             <h1 className={styles.title}>{aiNews.title}</h1>
             <div className={styles.flexWrapper}>
               <div className={styles.authorInfo}>
@@ -541,6 +541,11 @@ const Ainews = () => {
                   {aiNews.author.role}
                 </span>
               </div>
+              <div className={styles.metadata}>
+              <span className={styles.publishDate}>{aiNews.publishDate}</span>
+              <span className={styles.glowDot}></span>
+              <span className={styles.readTime}>{aiNews.readTime}</span>
+            </div>
             </div>
             {aiNews.sections.map((section) => (
                 <section
@@ -662,7 +667,7 @@ const Ainews = () => {
             </article>
 
             
-          </div>
+          {/* </div> */}
           <aside className={styles.blogpg_rightAside}>
           <div className={styles.blogpg_stickyDiv}>
             <h1 className={styles.blogpg_heading}>Share Article</h1>
@@ -691,6 +696,7 @@ const Ainews = () => {
             </div>
           </div>
         </aside>
+        </div>
         </div>
         </main> 
         <button

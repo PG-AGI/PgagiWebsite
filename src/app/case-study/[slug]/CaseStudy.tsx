@@ -574,11 +574,11 @@ const CaseStudy = () => {
             </div>
           </aside>
             <article className={styles.article}>
-            <div className={styles.metadata}>
+            {/* <div className={styles.metadata}>
               <span className={styles.publishDate}>{caseStudy.publishDate}</span>
               <span className={styles.glowDot}></span>
               <span className={styles.readTime}>{caseStudy.readTime}</span>
-            </div>
+            </div> */}
             <h1 className={styles.title}>{caseStudy.title}</h1>
             <div className={styles.flexWrapper}>
               <div className={styles.authorInfo}>
@@ -588,6 +588,12 @@ const CaseStudy = () => {
                   {caseStudy.author.role}
                 </span>
               </div>
+            
+            <div className={styles.metadata}>
+              <span className={styles.publishDate}>{caseStudy.publishDate}</span>
+              <span className={styles.glowDot}></span>
+              <span className={styles.readTime}>{caseStudy.readTime}</span>
+            </div>
             </div>
 
           {/* {caseStudy.tldr && (
@@ -731,7 +737,7 @@ const CaseStudy = () => {
             </article>
 
             
-          </div>
+          {/* </div> */}
           <aside className={styles.blogpg_rightAside}>
           <div className={styles.blogpg_stickyDiv}>
             <h1 className={styles.blogpg_heading}>Share Article</h1>
@@ -760,6 +766,7 @@ const CaseStudy = () => {
             </div>
           </div>
         </aside>
+        </div>
         </div>
         </main> 
         <button

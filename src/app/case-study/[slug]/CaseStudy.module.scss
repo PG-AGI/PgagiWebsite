@@ -568,7 +568,6 @@
 //   }
 // }
 
-
 @import url('https://use.typekit.net/your-font-kit-id.css');
 
 $background-light: #ffffff;
@@ -606,25 +605,37 @@ $code-border: #333333;
 .pageWrapper {
   overflow-x: hidden !important;
 }
+.main{
+  width: 100vw !important;
+  // background-color: $background-light;
+  overflow-y: none !important;
+}
 
 .container {
+  width: 100vw;
   background-color: $background-light;
   color: $text-dark;
 }
 
 
 .metadata {
+/* The lines `// box-sizing: border-box;` and `// border: 2px solid red;` are commented out in the SCSS
+code. This means that they are not active and do not affect the styling of the elements. Comments in
+SCSS are denoted by `//` and are used to provide explanations or temporarily disable code without
+affecting the functionality of the stylesheet. */
+  // box-sizing: border-box;
+  // border: 2px solid red;
   display: flex;
   align-items: center;
   gap: $spacing-unit;
   color: $text-secondary-dark;
   font-size: 0.875rem;
-  margin-bottom: $spacing-unit;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  // margin-bottom: $spacing-unit;
+  // border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 1rem;
-  width: fit-content;
+  // width: fit-content;
 }
 
 .glowDot {
@@ -646,13 +657,13 @@ $code-border: #333333;
 }
 
 .title {
-  position: sticky;
+  // position: sticky;
   top: 0;
   background: white; // Match the background color of your website
   padding: 0.5rem;
   z-index: 10; // Ensure it stays above other elements
   font-family: "Poppins", serif;
-  padding-top: 1rem;
+  // padding-top: 0.5rem;
   font-size: 2.5rem;
   // font-weight: bold;
   color: $text-dark;
@@ -687,26 +698,37 @@ $code-border: #333333;
   flex: 1;
   gap: 2rem;
   border: none;
-  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
 /* Article content */
 .article {
-  flex: 1;
-  max-width: 80%;
+  // flex: 1;
+  width: 90%;
   box-sizing: border-box;
   color: $text-dark;
   scroll-margin-top: $spacing-unit * 3;
   padding: $spacing-unit * 4;
+  padding-top: $spacing-unit;
   background: $background-light;
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
 
 
 }
+
+
+
+
 
 .section {
   font-family: "Poppins",serif;
@@ -754,19 +776,17 @@ $code-border: #333333;
     }
 
     a {
-      color: $purple-light;
+      color: $purple-dark;
       text-decoration: underline;
       position: relative;
       transition: all 0.3s ease;
-      animation: glow-pulse 2s infinite;
+    
 
       &:hover {
         color: lighten($purple-light, 10%);
         text-decoration: none;
         animation: none;
-        text-shadow: 
-          0 0 15px lighten($purple-light, 20%), 
-          0 0 25px lighten($purple-light, 30%);
+      
       }
     }
 
@@ -816,7 +836,7 @@ $code-border: #333333;
     text-align: center;
 
     .image {
-      max-width: 75%;
+      width: 75%;
       height: auto;
       border-radius: 0.5rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -899,10 +919,10 @@ $code-border: #333333;
     min-width: auto;
   }
 
-  .article {
-    max-width: 100%;
-    padding: $spacing-unit * 2;
-  }
+  // .article {
+  //   width: 100%;
+  //   padding: $spacing-unit * 2;
+  // }
 }
 
 
@@ -933,7 +953,8 @@ $code-border: #333333;
   background: white;
   // @include glass-effect;
   border-radius: 8px;
-  overflow: hidden;
+  // overflow: hidden;
+  overflow-y: none !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -1032,15 +1053,16 @@ $spacing-unit: 1rem;
 
 
 .blogpg_rightAside {
-  width: 15%;
-  min-width: 200px;
+  width: 20%;
+  // min-width: 200px;
   padding: 10px;
-  overflow: hidden;
+  // overflow: hidden;
+  overflow-y: none !important;
   display: flex;
   justify-content: center;
   font-size: 16px;
   align-self: flex-start;
-  position: sticky;
+  position: sticky !important;
   top: 0px;
   margin: 1rem;
 
@@ -1048,10 +1070,12 @@ $spacing-unit: 1rem;
     position: static;
     width: 100%;
     margin-bottom: 5rem;
+    // display:none;
   }
 
   .blogpg_stickyDiv {
     width: 100%;
+    // display:none;
 
     .blogpg_heading {
       font-weight: 600;
@@ -1101,21 +1125,22 @@ $spacing-unit: 1rem;
 .flexrow{
   display: flex !important;
   flex-direction: row !important;
-  max-width: 1500px;
+  width: 100%;
 }
 
 .blogpg_leftAside {
-  width: 20%;
-  min-width: 250px;
+  width: 30%;
+  // min-width: 250px;
   display: flex;
   justify-content: flex-start;
   font-size: 1rem;
   align-self: flex-start;
-  position: sticky;
+  position: sticky !important;
   top: 0px;
   max-height: 100vh;
   border: none;
-  overflow:auto;
+  overflow-x:auto;
+  overflow-y: none !important;
   &::-webkit-scrollbar {
     display: none;
     }
@@ -1171,6 +1196,7 @@ $spacing-unit: 1rem;
     width: 100%;
     position: static;
     padding: 1rem;
+    
   }
 }
 
