@@ -1,9 +1,12 @@
 import { getMetaTags } from "@/services/apiMetaService";
 import Ainews from "./Ainews";
+import styles from './Ainews.module.scss';
 
 export default function BlogPostPage() {
   return (
-    <Ainews />
+    <div className={styles.pageWrapper}>
+      <Ainews />
+    </div>
   )
 }
 

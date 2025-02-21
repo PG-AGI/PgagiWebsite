@@ -1,9 +1,11 @@
 import { getMetaTags } from "@/services/apiMetaService";
 import CaseStudy from "./CaseStudy";
-
+import styles from './CaseStudy.module.scss';
 export default function CaseStudyPage() {
   return (
-    <CaseStudy />
+    <div className={styles.pageWrapper}>
+      <CaseStudy />
+    </div>
   )
 }
 export async function generateMetadata({ params }: { params: { slug: string } }) {

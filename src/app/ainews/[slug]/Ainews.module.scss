@@ -1176,6 +1176,9 @@ $code-border: #333333;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.05);
 }
+.pageWrapper {
+  overflow-x: hidden !important;
+}
 .main{
   background-color: $background-light;
   width: 100vw;
