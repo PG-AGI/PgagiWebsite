@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Link2, ArrowUp } from 'lucide-react'; 
 import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
+import { LinkPreview } from "@/app/components/link-preview";
 
 import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
@@ -47,6 +48,53 @@ type ContentBlock =
 type Params = {
   slug: string;
 }
+
+const processLinksWithPreview = (content: string) => {
+  const linkRegex = /<a\s+(?:[^>]*?\s+)?href="([^"]*)"[^>]*>(.*?)<\/a>/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(content)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(
+        <span
+          key={`text-${lastIndex}`}
+          dangerouslySetInnerHTML={{
+            __html: content.slice(lastIndex, match.index),
+          }}
+        />
+      );
+    }
+
+    const url = match[1];
+    const linkText = match[2];
+    parts.push(
+      <LinkPreview
+        key={`link-${match.index}`}
+        url={url}
+        className="font-bold bg-clip-text text-transparent bg-gradient-to-br from-purple-500 to-pink-500"
+      >
+        {linkText}
+      </LinkPreview>
+    );
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < content.length) {
+    parts.push(
+      <span
+        key={`text-${lastIndex}`}
+        dangerouslySetInnerHTML={{
+          __html: content.slice(lastIndex),
+        }}
+      />
+    );
+  }
+
+  return parts;
+};
 
 const CaseStudy = () => {
   const router = useRouter();
@@ -333,80 +381,53 @@ const CaseStudy = () => {
       </Head>
 
       <Navigation />
-      {/* <div className={styles.container}>
+      <div className={styles.container}>
         <main className={styles.main}>
-          <header className={styles.header}>
+          <div className={styles.flexrow}>
+          <div className={styles.content}>
+      
+            <aside className={styles.blogpg_leftAside}>
+            <div className={styles.blogpg_stickyDiv}>
+              <div className={styles.blogpg_index}>
+                <h1>INDEX</h1>
+              </div>
+              <ul className={styles.blogpg_navigation}>
+                {caseStudy.sections.map((section) => {
+                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <li
+                      key={section.title}
+                      data-section={sectionId}
+                      className={
+                        activeSection === sectionId ? styles.blogpg_active : ''
+                      }
+                      onClick={() => scrollToSection(sectionId)}
+                    >
+                      {section.title}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </aside>
+            <article className={styles.article}>
+            <h1 className={styles.title}>{caseStudy.title}</h1>
+            <div className={styles.flexWrapper}>
+              <div className={styles.authorInfo}>
+                <span className={styles.authorName}>{caseStudy.author.name}</span>
+                <span className={styles.separator}>|</span>
+                <span className={styles.authorDesignation}>
+                  {caseStudy.author.role}
+                </span>
+              </div>
+            
             <div className={styles.metadata}>
               <span className={styles.publishDate}>{caseStudy.publishDate}</span>
               <span className={styles.glowDot}></span>
               <span className={styles.readTime}>{caseStudy.readTime}</span>
             </div>
-            <h1 className={styles.title}>{caseStudy.title}</h1>
-          </header>
+            </div>
 
-          <div className={styles.content}>
-            <aside className={styles.sidebar}>
-              <div className={styles.sidebarHeader}>
-                <h3 className={styles.navigationHeading}>Summary</h3>
-              </div>
-              <div className={styles.navScroll}>
-                <ul className={styles.navigation}>
-                  {caseStudy.sections.map((section) => (
-                    <li key={section.title}>
-                      <button
-                        onClick={() =>
-                          scrollToSection(
-                            section.title.toLowerCase().replace(/\s+/g, '-')
-                          )
-                        }
-                        className={`${styles.navButton} ${
-                          activeSection ===
-                          section.title.toLowerCase().replace(/\s+/g, '-')
-                            ? styles.active
-                            : ''
-                        }`}
-                      >
-                        {section.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-      
-              <div className={styles.sidebarFooter}>
-                <h3>Share this case study</h3>
-                <div className={styles.socialLinks}>
-                  <a
-                    href={shareUrls.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on LinkedIn"
-                    className={styles.socialButton}
-                  >
-                    <FaLinkedin />
-                  </a>
-                  <a
-                    href={shareUrls.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on Twitter"
-                    className={styles.socialButton}
-                  >
-                    <FaSquareXTwitter />
-                  </a>
-                  <button
-                    onClick={handleCopyLink}
-                    className={styles.copyButton}
-                    aria-label="Copy Link"
-                  >
-                    <Link2 />
-                  </button>
-                </div>
-              </div>
-            </aside>
-
-            <article className={styles.article}>
               {caseStudy.sections.map((section) => (
                 <section
                   key={section.title}
@@ -417,6 +438,13 @@ const CaseStudy = () => {
                   {section.content.map((block, index) => {
                     switch (block.type) {
                       case 'paragraph':
+                        if (block.content.includes('href=')) {
+                          return (
+                            <p key={index} className={styles.paragraph}>
+                              {processLinksWithPreview(block.content)}
+                            </p>
+                          );
+                        }
                         return (
                           <p
                             key={index}
@@ -528,216 +556,8 @@ const CaseStudy = () => {
                 </section>
               ))}
             </article>
-          </div>
-        </main>
-
-        <button
-          className={styles.scrollToTopButton}
-          onClick={handleScrollToTop}
-          aria-label="Scroll to Top"
-        >
-          <ArrowUp />
-        </button>
-      </div>
-      <Recommendation currentSlug={params.slug} contentType="caseStudy" />
-      <Footer />
-    </>
-  );
-}; */}
-<div className={styles.container}>
-        <main className={styles.main}>
-          <div className={styles.flexrow}>
-          <div className={styles.content}>
-      
-            <aside className={styles.blogpg_leftAside}>
-            <div className={styles.blogpg_stickyDiv}>
-              <div className={styles.blogpg_index}>
-                <h1>INDEX</h1>
-              </div>
-              <ul className={styles.blogpg_navigation}>
-                {caseStudy.sections.map((section) => {
-                  const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
-                  return (
-                    <li
-                      key={section.title}
-                      data-section={sectionId}
-                      className={
-                        activeSection === sectionId ? styles.blogpg_active : ''
-                      }
-                      onClick={() => scrollToSection(sectionId)}
-                    >
-                      {section.title}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </aside>
-            <article className={styles.article}>
-            {/* <div className={styles.metadata}>
-              <span className={styles.publishDate}>{caseStudy.publishDate}</span>
-              <span className={styles.glowDot}></span>
-              <span className={styles.readTime}>{caseStudy.readTime}</span>
-            </div> */}
-            <h1 className={styles.title}>{caseStudy.title}</h1>
-            <div className={styles.flexWrapper}>
-              <div className={styles.authorInfo}>
-                <span className={styles.authorName}>{caseStudy.author.name}</span>
-                <span className={styles.separator}>|</span>
-                <span className={styles.authorDesignation}>
-                  {caseStudy.author.role}
-                </span>
-              </div>
-            
-            <div className={styles.metadata}>
-              <span className={styles.publishDate}>{caseStudy.publishDate}</span>
-              <span className={styles.glowDot}></span>
-              <span className={styles.readTime}>{caseStudy.readTime}</span>
-            </div>
-            </div>
-
-          {/* {caseStudy.tldr && (
-            <div className={styles.header}>
-              <div className={styles.flexWrapper}>
-
-                <h2>TL; DR (60-second blog summary)</h2>
-                
-                <div className={styles.metadata}>
-
-                  <span className={styles.glowDot}></span>
-                  <span className={styles.readTime}>60 seconds</span>
-                </div>
-              </div>
-              <div>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: blogPost.tldr?.text,
-                  }}
-                ></p>
-              </div>
-            </div>
-          )} */}
-              {caseStudy.sections.map((section) => (
-                <section
-                  key={section.title}
-                  id={section.title.toLowerCase().replace(/\s+/g, '-')}
-                  className={styles.section}
-                >
-                  <h2>{section.title}</h2>
-                  {section.content.map((block, index) => {
-                    switch (block.type) {
-                      case 'paragraph':
-                        return (
-                          <p
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></p>
-                        );
-                      case 'quote':
-                        return (
-                          <blockquote
-                            key={index}
-                            className={styles.quote}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></blockquote>
-                        );
-                      case 'highlight':
-                        return (
-                          <div
-                            key={index}
-                            className={styles.highlight}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></div>
-                        );
-                      case 'code':
-                        return (
-                          <pre key={index} className={styles.codeBlock}>
-                            <code>{block.content}</code>
-                          </pre>
-                        );
-                      case 'image':
-                        return (
-                          <figure key={index} className={styles.imageBlock}>
-                            <Image
-                              src={block.src}
-                              alt={block.alt}
-                              className={styles.image}
-                              width={800}
-                              height={600}
-                            />
-                            {block.caption && (
-                              <figcaption className={styles.caption}>
-                                {block.caption}
-                              </figcaption>
-                            )}
-                          </figure>
-                        );
-                      case 'video':
-                        return (
-                          <div key={index} className={styles.videoBlock}>
-                            <iframe
-                              src={block.src}
-                              title={block.title || 'Video'}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              className={styles.video}
-                            ></iframe>
-                            {block.caption && (
-                              <div className={styles.caption}>
-                                {block.caption}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      case 'table':
-                        return (
-                          <table key={index} className={styles.dynamicTable}>
-                            <thead>
-                              <tr>
-                                {block.content.headers.map((heading, colIndex) => (
-                                  <th key={colIndex} className={styles.heading}>
-                                    {heading}
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {block.content.rows.map((row, rowIndex) => (
-                                <tr key={rowIndex}>
-                                  {row.map((cell, colIndex) => (
-                                    <td key={colIndex} className={styles.cell}>
-                                      {cell}
-                                    </td>
-                                  ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        );
-                      case 'box':
-                        return (
-                          <div key={index} className={styles.box}>
-                            <h3 className={styles.boxHeading}>
-                              {block.content.heading}
-                            </h3>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html: block.content.text,
-                              }}
-                            ></p>
-                          </div>
-                        );
-                      default:
-                        return null;
-                    }
-                  })}
-                </section>
-              ))}
-            </article>
 
             
-          {/* </div> */}
           <aside className={styles.blogpg_rightAside}>
           <div className={styles.blogpg_stickyDiv}>
             <h1 className={styles.blogpg_heading}>Share Article</h1>
