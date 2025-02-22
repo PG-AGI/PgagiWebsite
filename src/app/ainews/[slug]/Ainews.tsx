@@ -13,6 +13,7 @@ import Footer from '@/app/components/Footer';
 import axios from 'axios';
 import { AiOutlineCopy } from 'react-icons/ai';
 import Recommendation from '@/app/components/Recommendation';
+import { LinkPreview } from "@/app/components/link-preview";
 
 type AinewsType = {
   slug: string;
@@ -41,6 +42,53 @@ type ContentBlock =
   | { type: 'video'; src: string; title?: string; caption?: string }
   | { type: 'table'; content: { headers: string[]; rows: string[][] } }
   | { type: 'box'; content: { heading: string; text: string } };
+
+const processLinksWithPreview = (content: string) => {
+  const linkRegex = /<a\s+(?:[^>]*?\s+)?href="([^"]*)"[^>]*>(.*?)<\/a>/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(content)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(
+        <span
+          key={`text-${lastIndex}`}
+          dangerouslySetInnerHTML={{
+            __html: content.slice(lastIndex, match.index),
+          }}
+        />
+      );
+    }
+
+    const url = match[1];
+    const linkText = match[2];
+    parts.push(
+      <LinkPreview
+        key={`link-${match.index}`}
+        url={url}
+        className="font-bold bg-clip-text text-transparent bg-gradient-to-br from-purple-500 to-pink-500"
+      >
+        {linkText}
+      </LinkPreview>
+    );
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < content.length) {
+    parts.push(
+      <span
+        key={`text-${lastIndex}`}
+        dangerouslySetInnerHTML={{
+          __html: content.slice(lastIndex),
+        }}
+      />
+    );
+  }
+
+  return parts;
+};
 
 const Ainews = () => {
   const router = useRouter();
@@ -281,223 +329,7 @@ const Ainews = () => {
         />
       </Head>
       <Navigation />
-      {/* <div className={styles.container}>
-        <main className={styles.main}>
-          <header className={styles.header}>
-            <div className={styles.metadata}>
-              <span className={styles.publishDate}>{aiNews.publishDate}</span>
-              <span className={styles.glowDot}></span>
-              <span className={styles.readTime}>{aiNews.readTime}</span>
-            </div>
-            <h1 className={styles.title}>{aiNews.title}</h1>
-            <div className={styles.flexWrapper}>
-              <div className={styles.authorInfo}>
-                <span className={styles.authorName}>{aiNews.author.name}</span>
-                <span className={styles.separator}>|</span>
-                <span className={styles.authorDesignation}>
-                  {aiNews.author.role}
-                </span>
-              </div>
-              <div className={styles.social}>
-                <div className={styles.socialLinks}>
-                  <a
-                    href={shareUrls.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on LinkedIn"
-                    className={styles.socialButton}
-                  >
-                    <FaLinkedin />
-                  </a>
-                  <a
-                    href={shareUrls.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Share on Twitter"
-                    className={styles.socialButton}
-                  >
-                    <FaSquareXTwitter />
-                  </a>
-                  <button
-                    onClick={handleCopyLink}
-                    className={styles.copyButton}
-                    aria-label="Copy Link"
-                  >
-                    <Link2 />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </header>
-          <div className={styles.content}>
-            <aside className={styles.sidebar}>
-              <nav>
-                <h3 className={styles.navigationHeading}>Summary</h3>
-                <ul className={styles.navigation}>
-                  {aiNews.sections.map((section) => (
-                    <li key={section.title}>
-                      <button
-                        onClick={() =>
-                          scrollToSection(
-                            section.title.toLowerCase().replace(/\s+/g, '-')
-                          )
-                        }
-                        className={`${styles.navButton} ${
-                          activeSection ===
-                          section.title.toLowerCase().replace(/\s+/g, '-')
-                            ? styles.active
-                            : ''
-                        }`}
-                      >
-                        {section.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </aside>
-            <article className={styles.article}>
-              {aiNews.sections.map((section) => (
-                <section
-                  key={section.title}
-                  id={section.title.toLowerCase().replace(/\s+/g, '-')}
-                  className={styles.section}
-                >
-                  <h2>{section.title}</h2>
-                  {section.content.map((block, index) => {
-                    switch (block.type) {
-                      case 'paragraph':
-                        return (
-                          <p
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></p>
-                        );
-                      case 'quote':
-                        return (
-                          <blockquote
-                            key={index}
-                            className={styles.quote}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></blockquote>
-                        );
-                      case 'highlight':
-                        return (
-                          <div
-                            key={index}
-                            className={styles.highlight}
-                            dangerouslySetInnerHTML={{ __html: block.content }}
-                          ></div>
-                        );
-                      case 'code':
-                        return (
-                          <pre key={index} className={styles.codeBlock}>
-                            <code>{block.content}</code>
-                          </pre>
-                        );
-                      case 'image':
-                        return (
-                          <figure key={index} className={styles.imageBlock}>
-                            <Image
-                              src={block.src}
-                              alt={block.alt}
-                              className={styles.image}
-                              width={800}
-                              height={600}
-                            />
-                            {block.caption && (
-                              <figcaption className={styles.caption}>
-                                {block.caption}
-                              </figcaption>
-                            )}
-                          </figure>
-                        );
-                      case 'video':
-                        return (
-                          <div key={index} className={styles.videoBlock}>
-                            <iframe
-                              src={block.src}
-                              title={block.title || 'Video'}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              className={styles.video}
-                            ></iframe>
-                            {block.caption && (
-                              <div className={styles.caption}>
-                                {block.caption}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      case 'table':
-                        return (
-                          <table key={index} className={styles.dynamicTable}>
-                            <thead>
-                              <tr>
-                                {block.content.headers.map(
-                                  (heading, colIndex) => (
-                                    <th
-                                      key={colIndex}
-                                      className={styles.heading}
-                                    >
-                                      {heading}
-                                    </th>
-                                  )
-                                )}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {block.content.rows.map((row, rowIndex) => (
-                                <tr key={rowIndex}>
-                                  {row.map((cell, colIndex) => (
-                                    <td
-                                      key={colIndex}
-                                      className={styles.cell}
-                                    >
-                                      {cell}
-                                    </td>
-                                  ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        );
-                      case 'box':
-                        return (
-                          <div key={index} className={styles.box}>
-                            <h3 className={styles.boxHeading}>
-                              {block.content.heading}
-                            </h3>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html: block.content.text,
-                              }}
-                            ></p>
-                          </div>
-                        );
-                      default:
-                        return null;
-                    }
-                  })}
-                </section>
-              ))}
-            </article>
-          </div>
-        </main>
-        <button
-          className={styles.scrollToTopButton}
-          onClick={handleScrollToTop}
-          aria-label="Scroll to Top"
-        >
-          <ArrowUp />
-        </button>
-      </div>
-      <Footer />
-    </>
-  );
-}; */}
-<div className={styles.container}>
+      <div className={styles.container}>
         <main className={styles.main}>
           <div className={styles.flexrow}>
           <div className={styles.content}>
@@ -557,6 +389,13 @@ const Ainews = () => {
                   {section.content.map((block, index) => {
                     switch (block.type) {
                       case 'paragraph':
+                        if (block.content.includes('href=')) {
+                          return (
+                            <p key={index} className={styles.paragraph}>
+                              {processLinksWithPreview(block.content)}
+                            </p>
+                          );
+                        }
                         return (
                           <p
                             key={index}

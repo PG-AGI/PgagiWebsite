@@ -12,7 +12,8 @@ import Navigation from '@/app/components/base/Navigation';
 import Footer from '@/app/components/Footer';
 import axios from 'axios';
 import { AiOutlineCopy } from 'react-icons/ai';
-import Recommendation from '@/app/components/Recommendation'
+import Recommendation from '@/app/components/Recommendation';
+import { LinkPreview } from '@/app/components/link-preview';
 
 
 type BlogPostType = {
@@ -46,6 +47,57 @@ type ContentBlock =
   | { type: 'video'; src: string; title?: string; caption?: string }
   | { type: 'table'; content: { headers: string[]; rows: string[][] } }
   | { type: 'box'; content: { heading: string; text: string } };
+
+const processLinksWithPreview = (content: string) => {
+  // Regular expression to match HTML links
+  const linkRegex = /<a\s+(?:[^>]*?\s+)?href="([^"]*)"[^>]*>(.*?)<\/a>/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(content)) !== null) {
+    // Add text before the link
+    if (match.index > lastIndex) {
+      parts.push(
+        <span
+          key={`text-${lastIndex}`}
+          dangerouslySetInnerHTML={{
+            __html: content.slice(lastIndex, match.index),
+          }}
+        />
+      );
+    }
+
+    // Add the LinkPreview component
+    const url = match[1];
+    const linkText = match[2];
+    parts.push(
+      <LinkPreview
+        key={`link-${match.index}`}
+        url={url}
+        className="font-bold bg-clip-text text-transparent bg-gradient-to-br from-purple-500 to-pink-500"
+      >
+        {linkText}
+      </LinkPreview>
+    );
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add any remaining text after the last link
+  if (lastIndex < content.length) {
+    parts.push(
+      <span
+        key={`text-${lastIndex}`}
+        dangerouslySetInnerHTML={{
+          __html: content.slice(lastIndex),
+        }}
+      />
+    );
+  }
+
+  return parts;
+};
 
 const BlogPost = () => {
   const router = useRouter();
@@ -366,6 +418,14 @@ const BlogPost = () => {
                   {section.content.map((block, index) => {
                     switch (block.type) {
                       case 'paragraph':
+                        // If the content contains links, we need to process them
+                        if (block.content.includes('href=')) {
+                          return (
+                            <p key={index} className={styles.paragraph}>
+                              {processLinksWithPreview(block.content)}
+                            </p>
+                          );
+                        }
                         return (
                           <p
                             key={index}
