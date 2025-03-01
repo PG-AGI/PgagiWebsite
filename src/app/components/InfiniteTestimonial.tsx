@@ -110,6 +110,14 @@ const testimonials: Testimonial[] = [
       "They are very professional, flexible, and fast. Highly recommend working with them.",
     projectName: "RAG implementation for smart contact code",
   },
+  {
+    name: "Bally S",
+    company: "",
+    country: "USA",
+    quote:
+      "I had an exceptional experience working with this team. Their professionalism and deep expertise in React, React Flow, and AI were evident throughout the project. They quickly grasped our requirements and executed each task with precision, resulting in a swift and high-quality turnaround. Even when mid-stream changes occurred, they handled them gracefully while consistently meeting every milestone. I highly recommend this team for their technical prowess and commitment to excellence.",
+    projectName: "Implement React Flow Execution Graph",
+  }
 ];
 
 const TestimonialCarousel: React.FC = () => {
