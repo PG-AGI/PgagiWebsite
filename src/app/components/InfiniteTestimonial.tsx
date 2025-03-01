@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
 import styles from "./TestimonialCarousel.module.scss";
 import Image from "next/image";
@@ -112,7 +112,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Bally S",
-    company: "",
+    company: "Social 27",
     country: "USA",
     quote:
       "I had an exceptional experience working with this team. Their professionalism and deep expertise in React, React Flow, and AI were evident throughout the project. They quickly grasped our requirements and executed each task with precision, resulting in a swift and high-quality turnaround. Even when mid-stream changes occurred, they handled them gracefully while consistently meeting every milestone. I highly recommend this team for their technical prowess and commitment to excellence.",
@@ -125,6 +125,9 @@ const TestimonialCarousel: React.FC = () => {
   const xValue = useMotionValue(0);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const animationRef = React.useRef<ReturnType<typeof animate> | null>(null);
+  
+  // Track which testimonials are expanded
+  const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
 
   const [scrollWidth, setScrollWidth] = React.useState(0);
 
@@ -178,6 +181,19 @@ const TestimonialCarousel: React.FC = () => {
     startAnimation(currentX);
   };
 
+  const toggleExpand = (index: number) => {
+    setExpandedCards(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  // Function to truncate text and add ellipsis
+  const truncateText = (text: string, maxLength: number = 120) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
   return (
     <div className={styles.carouselSection}>
       <h2 className={styles.sectionHeading}>What Our Clients Say</h2>
@@ -186,7 +202,7 @@ const TestimonialCarousel: React.FC = () => {
           {infiniteTestimonials.map((testimonial, index) => (
             <motion.div
               key={index}
-              className={styles.testimonialCard}
+              className={`${styles.testimonialCard} ${expandedCards[index] ? styles.expanded : ''}`}
               whileHover={{ scale: 1.05 }}
             >
               <div
@@ -196,9 +212,26 @@ const TestimonialCarousel: React.FC = () => {
               >
                 <h3 className={styles.projectName}>{testimonial.projectName}</h3>
                 <div className={styles.divider}></div>
-                <blockquote className={styles.testimonialQuote}>
-                  {testimonial.quote}
+                <blockquote 
+                  className={`${styles.testimonialQuote} ${!expandedCards[index] ? styles.truncated : ''}`}
+                >
+                  {expandedCards[index] 
+                    ? testimonial.quote 
+                    : truncateText(testimonial.quote)}
                 </blockquote>
+                
+                {testimonial.quote.length > 120 && (
+                  <div 
+                    className={styles.viewMoreLink} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleExpand(index);
+                    }}
+                  >
+                    {expandedCards[index] ? "View Less" : "View More"}
+                  </div>
+                )}
+                
                 <div className={styles.quoteFooter}>
                   -{" "}
                   <span className={styles.footerText}>
@@ -208,13 +241,13 @@ const TestimonialCarousel: React.FC = () => {
                   </span>
                   {testimonial.country && (
                     <Image
-  className={styles.countryFlag}
-  src={flagImages[testimonial.country]}
-  alt={`${testimonial.country} flag`}
-  width={18}    // Fixed width based on your CSS
-  height={18}   // Adjust based on your flag's intrinsic aspect ratio
-  loading="lazy"
-/>
+                      className={styles.countryFlag}
+                      src={flagImages[testimonial.country]}
+                      alt={`${testimonial.country} flag`}
+                      width={18}
+                      height={18}
+                      loading="lazy"
+                    />
                   )}
                 </div>
               </div>

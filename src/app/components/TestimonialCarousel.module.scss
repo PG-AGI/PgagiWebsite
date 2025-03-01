@@ -42,7 +42,7 @@
   position: relative;
   min-width: 320px;
   max-width: 380px;
-  height: max-content;
+  height: 20rem; // Default height
   border-radius: 15px;
   overflow: hidden;
   flex-shrink: 0;
@@ -50,7 +50,14 @@
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, height 0.3s ease;
+
+  &.expanded {
+    height: auto;
+    min-height: 15rem;
+    max-height: none;
+    z-index: 10;
+  }
 
   &:hover {
     transform: translateY(-5px) scale(1.05);
@@ -111,6 +118,13 @@
       position: relative;
       padding-left: 1.5rem;
 
+      &.truncated {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       &::before {
         content: '“';
@@ -129,9 +143,22 @@
         bottom: -10px;
         color: #4a90e2;
       }
-
-      
     }
+
+    .viewMoreLink {
+      color: #4a90e2;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: underline;
+      align-self: center;
+      
+      &:hover {
+        color: lighten(#4a90e2, 15%);
+      }
+    }
+
     .quoteFooter {
       margin-top: 1rem;
       text-align: right;
