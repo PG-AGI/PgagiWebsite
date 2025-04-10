@@ -6,12 +6,15 @@ import aixl from '../assets/partners/aixl2.png'
 import Marquee from "react-fast-marquee";
 import o from '../assets/partners/o.png'
 import logok from '../assets/partners/logok.png'
+import wcg from '../assets/partners/wcg-logo.png'
+import fomo from '../assets/partners/fomo.png'
+import tenably from '../assets/partners/tenably.png'
 
 import Image from "next/image";
 
 import styles from "./partners.module.scss";
 
-const images = [ais, hx, social, ciek, aixl,o,logok];
+const images = [ais, hx, social, ciek, aixl,o,logok,wcg,fomo,tenably];
 export default function Partners () {
     return (
         <section className={styles.partners}>

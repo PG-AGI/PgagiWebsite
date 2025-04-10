@@ -29,7 +29,7 @@ const testimonials: Testimonial[] = [
     country: "USA",
     quote:
       "From day one, I was given expert analysis of our custom trained model. I don't know of many others that will walk you through data processing, model training, and endpoint deployment with such ease and expertise. Highly recommended for anyone who needs to get an A.I. endpoint up and running in under a week from scratch!",
-    projectName: "Create Vertex AI - Tabular Forcaste",
+    projectName: " VertexCast AI – Forecasting future trends with Vertex AI",
   },
   {
     name: "Nicholas",
@@ -44,7 +44,7 @@ const testimonials: Testimonial[] = [
     company: "Onchaintoolkit",
     country: "USA",
     quote: "You guys are really organized and professional. Thanks!",
-    projectName: "Development for Multi-Agent AI Trading",
+    projectName: "MULTI-AGENT AI CRYPTO TRADING SYSTEM",
   },
   {
     name: "",
@@ -76,7 +76,7 @@ const testimonials: Testimonial[] = [
     country: "Canada",
     quote:
       "This is the 2nd project we have worked together, highly satisfied. Hopefully will work more in future.",
-    projectName: "Machine Learning  for iRacing Telemetry Analytics Project",
+    projectName: "iRaceOpt AI – Intelligent Telemetry Optimization for iRacing",
   },
   {
     name: "Lorella Sini",
@@ -84,7 +84,7 @@ const testimonials: Testimonial[] = [
     country: "Italy",
     quote:
       "Great service ,i suggest to collaborate with Vivek and his team ,they are very prepared for everything ,even though you are ignorant like me .",
-    projectName: "AI Automation Bot",
+    projectName: "SMUBOO AI AUTOMATION AGENT",
   },
   {
     name: "Rizwan",
@@ -116,7 +116,31 @@ const testimonials: Testimonial[] = [
     country: "USA",
     quote:
       "I had an exceptional experience working with this team. Their professionalism and deep expertise in React, React Flow, and AI were evident throughout the project. They quickly grasped our requirements and executed each task with precision, resulting in a swift and high-quality turnaround. Even when mid-stream changes occurred, they handled them gracefully while consistently meeting every milestone. I highly recommend this team for their technical prowess and commitment to excellence.",
-    projectName: "Implement React Flow Execution Graph",
+    projectName: "React Flow Execution Graph",
+  },
+  {
+    name: "Nitesh Puchhadiya",
+    company: "WebCodeGenie Technology PVT Ltd",
+    country: "IN",
+    quote:
+      " I had a great experience working with PGAGI Consultancy on an AI project. Their team demonstrated strong technical expertise, clear communication, and a proactive approach throughout the engagement. They delivered high-quality work, met deadlines consistently, and were highly responsive to any feedback or adjustments needed. ",
+    projectName: "AI powered multi-agent trading system.",
+  },
+  {
+    name: "Mike Giuffrida",
+    company: "",
+    country: "USA",
+    quote:
+      "Great communication and very responsive throughout the project. The PGAGI team delivered excellent work, exceeding expectations in both quality and speed. They were proactive, collaborative, and quick to understand our requirements. Their technical expertise and dedication truly stood out. We’re extremely satisfied with the outcome and look forward to working with them again on future projects.",
+    projectName: "AI HIRING AGENT",
+  },
+  {
+    name: "Preska Thomas",
+    company: "DebitMyData",
+    country: "USA",
+    quote:
+      "PGAGI Team not only delivered the project on time but exceeded my expectations in every way. Their attention to detail, creativity, and ability to understand my vision were truly remarkable. They communicated clearly throughout the process, kept me updated regularly, and were always open to feedback, making collaboration seamless and enjoyable.",
+    projectName: "DebitMyData",
   }
 ];
 
