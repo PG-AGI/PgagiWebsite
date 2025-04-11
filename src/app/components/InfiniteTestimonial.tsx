@@ -140,7 +140,7 @@ const testimonials: Testimonial[] = [
     country: "USA",
     quote:
       "PGAGI Team not only delivered the project on time but exceeded my expectations in every way. Their attention to detail, creativity, and ability to understand my vision were truly remarkable. They communicated clearly throughout the process, kept me updated regularly, and were always open to feedback, making collaboration seamless and enjoyable.",
-    projectName: "DebitMyData",
+    projectName: "AI NFT GENERATOR",
   }
 ];
 
