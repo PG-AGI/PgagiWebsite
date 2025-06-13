@@ -8,13 +8,13 @@ import o from '../assets/partners/o.png'
 import logok from '../assets/partners/logok.png'
 import wcg from '../assets/partners/wcg-logo.png'
 import fomo from '../assets/partners/fomo.png'
-import tenably from '../assets/partners/tenably.png'
+
 
 import Image from "next/image";
 
 import styles from "./partners.module.scss";
 
-const images = [ais, hx, social, ciek, aixl,o,logok,wcg,fomo,tenably];
+const images = [ais, hx, social, ciek, aixl,o,logok,wcg,fomo];
 export default function Partners () {
     return (
         <section className={styles.partners}>
