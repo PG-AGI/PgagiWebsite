@@ -1,0 +1,317 @@
+.expertiseSection {
+  padding: 120px 0;
+  background: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  
+
+  .container {
+    width: 80%;
+    margin: 10rem auto;
+    padding: 0 24px;
+  }
+
+  .header {
+    margin-bottom: 80px;
+
+    .subtitle {
+      display: block;
+      font-size: 1.35rem;
+      color: #9F0000;
+    //   margin-bottom: px;
+      font-weight: 500;
+    }
+
+    .mainTitle {
+       
+      font-size: 3.0rem;
+      font-weight: 500;
+      line-height: 1.1;
+      max-width: 1025px;
+
+      @media (max-width: 768px) {
+        font-size: 2.5rem;
+      }
+
+      .titleLine1 {
+        display: block;
+        color: #9ca3af;
+
+      }
+
+      .titleLine2 {
+        display: block;
+        color: #111827;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .mainContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #e5e7eb;
+      transform: translateX(-50%);
+      z-index: 1;
+
+      @media (max-width: 1024px) {
+        display: none;
+      }
+    }
+  }
+
+  .leftSide {
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+    padding-right: 40px;
+
+    @media (max-width: 1024px) {
+      position: static;
+      text-align: center;
+      padding-right: 0;
+    }
+
+    .leftContent {
+      position: relative;
+      margin-bottom: 60px;
+
+      .leftText {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #111827;
+        line-height: 1.4;
+        margin-bottom: 32px;
+
+        @media (max-width: 768px) {
+          font-size: 1.25rem;
+        }
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: #6b7280;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: 0;
+
+        @media (max-width: 1024px) {
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+
+  .rightSide {
+    // Remove height and overflow constraints to let sections scroll with page
+    .section {
+      min-height: 100vh; // Each section takes full viewport height
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 0;
+      border-bottom: 1px solid #f3f4f6;
+
+      @media (max-width: 1024px) {
+        min-height: auto;
+        padding: 60px 0;
+        border-bottom: none;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .sectionHeader {
+        display: flex;
+        align-items: center;
+        margin-bottom: 32px;
+        gap: 16px;
+
+        .sectionNumber {
+          width: 32px;
+          height: 32px;
+          background: #111827;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.875rem;
+          font-weight: 600;
+          flex-shrink: 0;
+        }
+
+        .sectionTitle {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #111827;
+          margin: 0;
+        }
+      }
+
+      .sectionContent {
+        .sectionTagline {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 20px;
+          line-height: 1.3;
+        }
+
+        .sectionDescription {
+          font-size: 1rem;
+          color: #6b7280;
+          line-height: 1.6;
+          margin-bottom: 32px;
+          max-width: 500px;
+        }
+
+        .servicesList {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+
+          .serviceItem {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s ease;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            &:hover {
+              background: #f9fafb;
+              margin: 0 -16px;
+              padding: 12px 16px;
+              border-radius: 8px;
+            }
+
+            .checkmark {
+              width: 20px;
+              height: 20px;
+              background: #f3f4f6;
+              border: 1px solid #e5e7eb;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              color: #111827;
+
+              svg {
+                width: 10px;
+                height: 10px;
+              }
+            }
+
+            span {
+              font-size: 0.875rem;
+              color: #374151;
+              font-weight: 500;
+            }
+
+            // First item gets a solid black bullet point
+            &:first-child {
+              .checkmark {
+                background: #111827;
+                border-color: #111827;
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .expertiseSection {
+    background: #111827;
+
+    .header {
+      .subtitle {
+        color: #9ca3af;
+      }
+
+      .mainTitle .titleLine2 {
+        color: #f9fafb;
+      }
+    }
+
+    .mainContent::before {
+      background: #374151;
+    }
+
+    .leftSide .leftContent .leftText {
+      color: #f9fafb;
+    }
+
+    .rightSide {
+      .section {
+        border-bottom-color: #374151;
+
+        .sectionHeader .sectionNumber {
+          background: #f9fafb;
+          color: #111827;
+        }
+
+        .sectionHeader .sectionTitle {
+          color: #f9fafb;
+        }
+
+        .sectionContent {
+          .sectionTagline {
+            color: #f9fafb;
+          }
+
+          .sectionDescription {
+            color: #d1d5db;
+          }
+
+          .servicesList .serviceItem {
+            border-bottom-color: #374151;
+
+            &:hover {
+              background: #1f2937;
+            }
+
+            .checkmark {
+              background: #374151;
+              border-color: #4b5563;
+              color: #f9fafb;
+            }
+
+            span {
+              color: #d1d5db;
+            }
+          }
+        }
+      }
+    }
+  }
+} 

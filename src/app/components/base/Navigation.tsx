@@ -5,7 +5,6 @@ import styles from "./navigation.module.scss";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import clsx from "clsx";
-import { whatWeDoLinks } from "@/utils/constants";
 import ContactUsForm from "./contactUsForm";
 import { ArrowRight } from "lucide-react";
 
@@ -105,14 +104,11 @@ const useBackgroundColor = () => {
 
 export default function Navigation() {
   const [navbarVisible] = useState(true);
-  const [whatWeDo, setWhatWeDo] = useState<
-    "solutions" | "industries" | "caseStudy" | null
-  >("solutions");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuSection, setMobileMenuSection] = useState<
-    null | "main" | "whatWeDo" | "solutions" | "industries" | "caseStudy"
+    null | "main"
   >(null);
   const BLOGS = "/whatwethink";
   const ABOUT = "/aboutUs";
@@ -160,16 +156,8 @@ export default function Navigation() {
     }
   };
 
-  const openWhatWeDoMenu = () => {
-    setMobileMenuSection("whatWeDo");
-  };
-
-  const openSubMenu = (section: "solutions" | "industries" | "caseStudy") => {
-    setMobileMenuSection(section);
-  };
-
   const backToMenu = () => {
-    setMobileMenuSection("whatWeDo");
+    setMobileMenuSection("main");
   };
 
   useEffect(() => {
@@ -209,12 +197,12 @@ export default function Navigation() {
               {/* Mobile Menu Navigation */}
               {mobileMenuSection === "main" && (
                 <div className={styles.mastermenu}>
-                  <div
-                    className={styles.mobileMenuItem}
-                    onClick={openWhatWeDoMenu}
-                  >
-                    What we do
-                  </div>
+                  <Link href="/" className={styles.mobileMenuItem}>
+                    Home
+                  </Link>
+                  <Link href="/expertise" className={styles.mobileMenuItem}>
+                    Expertise
+                  </Link>
                   <Link href={BLOGS} className={styles.mobileMenuItem}>
                     What we think
                   </Link>
@@ -226,138 +214,16 @@ export default function Navigation() {
                   </Link>
                 </div>
               )}
-
-              {mobileMenuSection === "whatWeDo" && (
-                <>
-                  <div
-                    className={styles.mobileBack}
-                    onClick={() => setMobileMenuSection("main")}
-                  >
-                    ←
-                  </div>
-                  <div
-                    className={styles.menuItem}
-                    onClick={() => openSubMenu("solutions")}
-                  >
-                    Solutions
-                  </div>
-                  <div
-                    className={styles.menuItem}
-                    onClick={() => openSubMenu("industries")}
-                  >
-                    Industries
-                  </div>
-                  <div
-                    className={styles.menuItem}
-                    onClick={() => openSubMenu("caseStudy")}
-                  >
-                    Case Study
-                  </div>
-                </>
-              )}
-
-              {mobileMenuSection === "solutions" && (
-                <>
-                  <div className={styles.mobileBack} onClick={backToMenu}>
-                    ←
-                  </div>
-                  <p className={styles.paragraph}>Solutions</p>
-                  <div className={styles.scrollableMenu}>
-                    {whatWeDoLinks.solutions.map((link, index) => (
-                      <div key={index} className={styles.mobileSubMenuItem}>
-                        {link}
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {mobileMenuSection === "industries" && (
-                <>
-                  <div className={styles.mobileBack} onClick={backToMenu}>
-                    ←
-                  </div>
-                  <p className={styles.paragraph}>Industries</p>
-                  <div className={styles.scrollableMenu}>
-                    {whatWeDoLinks.industries.map((link, index) => (
-                      <div key={index} className={styles.mobileSubMenuItem}>
-                        {link}
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {mobileMenuSection === "caseStudy" && (
-                <>
-                  <div className={styles.mobileBack} onClick={backToMenu}>
-                    ←
-                  </div>
-                  <p className={styles.paragraph}>Case Study</p>
-                  <div className={styles.scrollableMenu}>
-                    {whatWeDoLinks.caseStudy.map((link, index) => (
-                      <div key={index} className={styles.mobileSubMenuItem}>
-                        {link}
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
             </>
           ) : (
             <>
-              <div
-                className={styles.whatWeDo}
-                onMouseEnter={() => {
-                  console.log('Mouse entered');
-                  setWhatWeDo("solutions")
-                }}
-                onMouseLeave={() => {
-                  console.log('Mouse leaved');
-                  setWhatWeDo(null)
-                }}
-              >
-                <span className={styles.whatwedospan}>What we do</span>
-                <div className={styles.dropdown}>
-                  <div className={styles.content}>
-                    <span className={styles.background} />
-                    <div className={styles.menu}>
-                      <span
-                        className={clsx(
-                          whatWeDo === "solutions" && styles.active
-                        )}
-                        onMouseEnter={() => setWhatWeDo("solutions")}
-                      >
-                        Solutions
-                      </span>
-                      <span
-                        className={clsx(
-                          whatWeDo === "industries" && styles.active
-                        )}
-                        onMouseEnter={() => setWhatWeDo("industries")}
-                      >
-                        Industries
-                      </span>
-                      <span
-                        className={clsx(
-                          whatWeDo === "caseStudy" && styles.active
-                        )}
-                        onMouseEnter={() => setWhatWeDo("caseStudy")}
-                      >
-                        Case Study
-                      </span>
-                    </div>
-                    <div className={styles.dropdownLinks}>
-                      {whatWeDo &&
-                        whatWeDoLinks[whatWeDo].map((link, index) => (
-                          <a key={index}>{link}</a>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               {/* Desktop links for What We Think and Who We Are */}
+              <Link href="/" className={styles.link}>
+                Home
+              </Link>
+              <Link href="/expertise" className={styles.link}>
+                Expertise
+              </Link>
               <Link href="/whatwethink" className={styles.link}>
                 What we think
               </Link>
