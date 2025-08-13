@@ -35,7 +35,7 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); 
+      setIsMobile(window.innerWidth <= 768);
     };
 
     handleResize(); // set initial value
@@ -112,9 +112,9 @@ export default function Navigation() {
         <Image src={logo} alt='Logo' width={60} height={60} />
         <p>PG-AGI</p>
       </Link>
-      <div style={{backgroundColor: 'yellow'}}
+      <div style={{ backgroundColor: 'yellow' }}
         className={clsx(styles.nav, !navbarVisible && styles.navHidden, isMenuOpen && styles.open)}
-      >       
+      >
         <div className={styles.links} >
           <div className={styles.whatWeDo}>
             <a>What we do</a>
@@ -122,7 +122,7 @@ export default function Navigation() {
               <div className={styles.content}>
                 <span className={styles.background} />
                 <div className={styles.menu}>
-                  <span 
+                  <span
                     className={clsx(whatWeDo === 'solutions' && styles.active)}
                     onMouseEnter={() => setWhatWeDo('solutions')}
                     onClick={() => toggleDropdown('solutions')}
@@ -134,7 +134,7 @@ export default function Navigation() {
                       {whatWeDoLinks.solutions.map((link, index) => <a key={index}>{link}</a>)}
                     </div>
                   )}
-                  <span 
+                  <span
                     className={clsx(whatWeDo === 'industries' && styles.active)}
                     onMouseEnter={() => setWhatWeDo('industries')}
                     onClick={() => toggleDropdown('industries')}
@@ -146,7 +146,7 @@ export default function Navigation() {
                       {whatWeDoLinks.industries.map((link, index) => <a key={index}>{link}</a>)}
                     </div>
                   )}
-                  <span 
+                  <span
                     className={clsx(whatWeDo === 'caseStudy' && styles.active)}
                     onMouseEnter={() => setWhatWeDo('caseStudy')}
                     onClick={() => toggleDropdown('caseStudy')}
@@ -175,7 +175,7 @@ export default function Navigation() {
           <span></span>
           <span></span>
           <span></span>
-        </div>        
+        </div>
       </div>
       {isModalOpen && <ContactUsForm onClose={handleCloseModal} />}
     </nav>

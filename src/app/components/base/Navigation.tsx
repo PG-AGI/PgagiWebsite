@@ -17,54 +17,54 @@ const useBackgroundColor = () => {
   useEffect(() => {
     const checkBackgroundColor = () => {
       if (!navRef.current) return;
-      
+
       const rect = navRef.current.getBoundingClientRect();
-      
+
       // Check multiple points to get a better understanding of the background
       const points = [
         { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }, // center
         { x: rect.left + 20, y: rect.top + 20 }, // top-left
         { x: rect.right - 20, y: rect.top + 20 }, // top-right
       ];
-      
+
       let backgroundColor = 'rgba(0, 0, 0, 0)';
-      
+
       for (const point of points) {
         const element = document.elementFromPoint(point.x, point.y);
-        
+
         if (element) {
           // Find the actual background color by traversing up the DOM tree
           let currentElement = element;
-          
+
           while (currentElement && currentElement !== document.body) {
             const computedStyle = window.getComputedStyle(currentElement);
             const bgColor = computedStyle.backgroundColor;
-            
+
             // Check if this element has a non-transparent background
             if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
               backgroundColor = bgColor;
               break;
             }
-            
+
             currentElement = currentElement.parentElement as HTMLElement;
           }
-          
+
           if (backgroundColor !== 'rgba(0, 0, 0, 0)') {
             break; // Found a background color, stop checking other points
           }
         }
       }
-      
+
       // Parse RGB values
       const rgbMatch = backgroundColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
       if (rgbMatch) {
         const r = parseInt(rgbMatch[1]);
         const g = parseInt(rgbMatch[2]);
         const b = parseInt(rgbMatch[3]);
-        
+
         // Calculate luminance using the standard formula
         const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-        
+
         // Set text color based on background luminance
         // Use a threshold of 0.5 - above this is light, below is dark
         const newTextColor = luminance > 0.5 ? 'black' : 'white';
@@ -116,7 +116,7 @@ export default function Navigation() {
   >(null);
   const BLOGS = "/whatwethink";
   const ABOUT = "/aboutUs";
-  
+
   const { textColor, navRef } = useBackgroundColor();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -194,11 +194,11 @@ export default function Navigation() {
         } as React.CSSProperties}
       >
         <Link className={styles.logo} href="/">
-          <Image 
-            src="/landing/PGAGI-logo.png" 
-            alt="PGAGI Logo" 
-            width={60} 
-            height={60} 
+          <Image
+            src="/landing/PGAGI-logo.png"
+            alt="PGAGI Logo"
+            width={60}
+            height={60}
           />
           <p>PG-AGI</p>
         </Link>
@@ -367,23 +367,25 @@ export default function Navigation() {
               <Link href="/Career" className={styles.link}>
                 Careers
               </Link>
+
+              <button className={styles.contact} onClick={handleContactUs}>
+                Get in touch
+                <ArrowRight size={16} />
+              </button>
             </>
           )}
         </div>
 
-        <button className={styles.contact} onClick={handleContactUs}>
-          Get in touch
-          <ArrowRight size={16} />
-        </button>
-        
+
+
         {/* Debug indicator - remove in production */}
         {process.env.NODE_ENV === 'development' && (
-          <div style={{ 
-            position: 'absolute', 
-            top: '10px', 
-            right: '10px', 
-            padding: '4px 8px', 
-            fontSize: '12px', 
+          <div style={{
+            position: 'absolute',
+            top: '8px',
+            right: '10px',
+            padding: '4px 8px',
+            fontSize: '12px',
             background: textColor === 'white' ? '#000' : '#fff',
             color: textColor === 'white' ? '#fff' : '#000',
             borderRadius: '4px',

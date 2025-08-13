@@ -10,6 +10,11 @@ import BookCallModal from '../components/base/bookCallModela';
 import { generateSlug } from '@/services/generateSlugService';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Marquee from 'react-fast-marquee';
+
+
 type CaseStudy = {
   id: string;
   title: string;
@@ -19,11 +24,15 @@ type Blog = {
   id: string;
   title: string;
   coverImage: string;
+  readTime: string;
+  category: string
 };
 type News = {
   id: string;
   title: string;
   coverImage: string;
+  readTime: string;
+  category: string
 };
 
 export default function BlogPage() {
@@ -37,19 +46,29 @@ export default function BlogPage() {
   const [news, setNews] = useState<News[]>([]);
   const [loadingNews, setLoadingNews] = useState<boolean>(false);
   const [errorNews, setErrorNews] = useState<string>('');
-  
+
+  const [visibleCount, setVisibleCount] = useState(4);
+
   const handleBookCall = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
+  function chunkArray<T>(arr: T[], chunkSize: number): T[][] {
+    const result: T[][] = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      result.push(arr.slice(i, i + chunkSize));
+    }
+    return result;
+  }
 
   // Parallax scroll effect for images
   useEffect(() => {
     const handleScroll = () => {
       const imageContainers = document.querySelectorAll(`.${styles.cardImage}`);
-      
+
       imageContainers.forEach((container) => {
         const rect = container.getBoundingClientRect();
         const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-        
+
         if (scrollProgress > 0 && scrollProgress < 1) {
           // Calculate the Y offset for parallax effect
           const yOffset = (scrollProgress - 0.5) * 100; // Move image up/down by 50px
@@ -119,10 +138,10 @@ export default function BlogPage() {
 
     fetchBlogs();
     fetchCaseStudies();
-    fetchNews(); 
+    fetchNews();
 
   }, []);
-  
+
   const skeletonCount = 3;
 
   return (
@@ -156,6 +175,7 @@ export default function BlogPage() {
             caseStudies
               .slice(0)
               .reverse()
+              .slice(0, visibleCount)
               .map((cs, index) => (
                 <div key={generateSlug(cs.title)} className={styles.card}>
                   <Link href={`/case-study/${generateSlug(cs.title)}`}>
@@ -185,118 +205,89 @@ export default function BlogPage() {
                 </div>
               ))
           )}
+
+          {/* Show Load More button only if there are more cards */}
+          {visibleCount < caseStudies.length && (
+            <div className={styles.loadMoreWrapper}>
+              <button
+                className={styles.loadMoreBtn}
+                onClick={() => setVisibleCount(caseStudies.length)}
+              >
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Blogs Section */}
-      <section className={styles.blogSection} id="blogs">
-        <div className={styles.cardsContainer}>
-          {loadingBlogs ? (
-            Array.from({ length: skeletonCount }).map((_, index) => (
-              <div className={styles.cardSkeleton} key={index}>
-                <div className={styles.skeletonContent}>
-                  <div className={styles.skeletonText}>
-                    <div className={styles.skeletonTitle} />
-                    <div className={styles.skeletonDescription} />
-                  </div>
-                  <div className={styles.skeletonImage} />
+      {/* Combined Blogs & News Section */}
+      <section className={styles.combinedSection} id="blogs-news">
+        <h1 className={styles.subheading}>News & Blogs</h1>
+        <div className={styles.combinedGrid}>
+          {loadingBlogs || loadingNews ? (
+            Array.from({ length: skeletonCount }).map((_, i) => (
+              <div className={styles.tileSkeleton} key={i}>
+                <div className={styles.imgSkeleton} />
+                <div className={styles.contentSkeleton}>
+                  <div className={styles.titleSkeleton} />
+                  <div className={styles.metaSkeleton} />
                 </div>
               </div>
             ))
           ) : errorBlogs ? (
             <p className={styles.error}>{errorBlogs}</p>
-          ) : blogs.length === 0 ? (
-            <p>No blogs found.</p>
+          ) : errorNews ? (
+            <p className={styles.error}>{errorNews}</p>
+          ) : blogs.length === 0 && news.length === 0 ? (
+            <p>No blogs or news found.</p>
           ) : (
-            blogs
-              .slice(0)
-              .reverse()
-              .map((blog, index) => (
-                <div key={generateSlug(blog.title)} className={styles.card}>
-                  <Link href={`/blogpost/${generateSlug(blog.title)}`}>
-                    <div className={styles.cardContent}>
-                      <div className={styles.cardText}>
-                        <h3>{blog.title}</h3>
-                        <p>Explore insights, trends, and expert perspectives on the latest developments in AI and technology.</p>
-                        <span className={styles.viewProject}>Read More →</span>
-                      </div>
-                      <div className={styles.cardImage}>
+            <>
+              <Marquee
+                gradient={false}
+                speed={50}
+                className={styles.marqueeWrapper}
+              >
+                {[...blogs, ...news].reverse().map((item) => {
+                  const isBlog = blogs.some((b) => b.title === item.title);
+                  return (
+                    <Link
+                      key={generateSlug(item.title)}
+                      href={
+                        isBlog
+                          ? `/blogpost/${generateSlug(item.title)}`
+                          : `/ainews/${generateSlug(item.title)}`
+                      }
+                      className={styles.tile}
+                    >
+                      <div className={styles.imageWrap}>
                         <Image
-                          className={styles.imgTag}
-                          src={getSafeImageUrl(blog.coverImage)}
-                          alt={blog.title}
-                          layout="fill"
-                          objectFit="cover"
-                          priority
+                          src={getSafeImageUrl(item.coverImage)}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className={styles.image}
                           onError={(e) => {
-                            // Fallback to placeholder if image fails to load
                             const target = e.target as HTMLImageElement;
-                            target.src = '/images/aboutus.png';
+                            target.src = "/images/aboutus.png";
                           }}
                         />
                       </div>
-                    </div>
-                  </Link>
-                </div>
-              ))
+                      <div className={styles.content}>
+                        <h3 className={styles.title}>{item.title}</h3>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </Marquee>
+
+
+            </>
           )}
         </div>
       </section>
 
-      {/* AI News Section */}
-      <section className={styles.newsSection} id='ainews'>
-        <div className={styles.cardsContainer}>
-          {loadingNews ? (
-            Array.from({ length: skeletonCount }).map((_, index) => (
-              <div className={styles.cardSkeleton} key={index}>
-                <div className={styles.skeletonContent}>
-                  <div className={styles.skeletonText}>
-                    <div className={styles.skeletonTitle} />
-                    <div className={styles.skeletonDescription} />
-                  </div>
-                  <div className={styles.skeletonImage} />
-                </div>
-              </div>
-            ))
-          ) : errorNews ? (
-            <p className={styles.error}>{errorNews}</p>
-          ) : news.length === 0 ? (
-            <p>No news found.</p>
-          ) : (
-            news
-              .slice(0)
-              .reverse()
-              .map((n, index) => (
-                <div key={generateSlug(n.title)} className={styles.card}>
-                  <Link href={`/ainews/${generateSlug(n.title)}`}>
-                    <div className={styles.cardContent}>
-                      <div className={styles.cardText}>
-                        <h3>{n.title}</h3>
-                        <p>Stay updated with the latest breakthroughs, innovations, and trends in artificial intelligence.</p>
-                        <span className={styles.viewProject}>Read News →</span>
-                      </div>
-                      <div className={styles.cardImage}>
-                        <Image
-                          className={styles.imgTag}
-                          src={getSafeImageUrl(n.coverImage)}
-                          alt={n.title}
-                          layout="fill"
-                          objectFit="cover"
-                          priority
-                          onError={(e) => {
-                            // Fallback to placeholder if image fails to load
-                            const target = e.target as HTMLImageElement;
-                            target.src = '/images/aboutus.png';
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))
-          )}
-        </div>
-      </section>
+
+
 
       {/* Featured Section
       <motion.section
