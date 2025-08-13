@@ -8,8 +8,6 @@ import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
-import Navigation from '@/app/components/base/Navigation';
-import Footer from '@/app/components/Footer';
 import axios from 'axios';
 import { AiOutlineCopy } from 'react-icons/ai';
 import Recommendation from '@/app/components/Recommendation';
@@ -216,7 +214,6 @@ const Ainews = () => {
   if (loading) {
     return (
       <>
-        <Navigation />
         <div className={styles.container}>
           <main className={styles.main}>
             <header className={`${styles.header} ${styles.skeletonHeader}`}>
@@ -272,7 +269,6 @@ const Ainews = () => {
             </div>
           </main>
         </div>
-        <Footer />
       </>
     );
   }
@@ -328,7 +324,6 @@ const Ainews = () => {
           content={aiNews.coverImage || `${currentUrl}/fallback-image.jpg`}
         />
       </Head>
-      <Navigation />
       <div className={styles.container}>
         <main className={styles.main}>
           <div className={styles.flexrow}>
@@ -543,7 +538,6 @@ const Ainews = () => {
         </button>
       </div>
       <Recommendation currentSlug={params.slug.toString()} contentType="ainews" />
-      <Footer />
     </>
   );
 };

@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { remark } from "remark";
 import Image from "next/image";
-import Navigation from "../../components/base/Navigation";
 import html from 'remark-html'
 import styles from "./blog.module.scss";
-import Footer from "../../components/Footer";
 import GlareBackground from "../../components/base/GlareBackground";
 import { ClipLoader } from "react-spinners";
 import { motion } from "framer-motion"; // Import framer-motion
@@ -68,7 +66,7 @@ const BlogPage = () => {
 </Head> */}
 
       <div>
-        <Navigation />
+        {/* Navigation removed */}
       </div>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -95,7 +93,7 @@ const BlogPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Footer />
+        {/* Footer removed */}
       </motion.div>
     </>
   );

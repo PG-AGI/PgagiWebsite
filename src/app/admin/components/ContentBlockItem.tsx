@@ -91,7 +91,7 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
     } else if (blockType === 'box') {
       onUpdateBlock({ ...block, content: { heading: '', text: '' } });
     }
-  }, [blockType]);
+  }, [blockType, block, onUpdateBlock]);
 
   return (
     <div className={styles.contentBlock}>

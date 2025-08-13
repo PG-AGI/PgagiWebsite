@@ -1,6 +1,5 @@
 "use-client"
 import { getPostBySlug } from "../../../lib/mdx"
-import Navigation from "@/app/components/base/Navigation";
 import GlareBackground from '@/app/components/base/GlareBackground';
 import styles from './singlepost.module.scss';
 // import Footer from '../../components/Footer'
@@ -15,7 +14,6 @@ const Page = async ({ params }) => {
   return (
     <section className={styles.main}>
       {/* <GlareBackground /> */}
-      <Navigation />
       <div className={styles.sect}>
         {/* thumbnail and title */}
         <div

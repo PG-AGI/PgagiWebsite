@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { motion, useMotionValue, animate } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./TestimonialCarousel.module.scss";
 import Image from "next/image";
 
@@ -131,7 +131,7 @@ const testimonials: Testimonial[] = [
     company: "",
     country: "USA",
     quote:
-      "Great communication and very responsive throughout the project. The PGAGI team delivered excellent work, exceeding expectations in both quality and speed. They were proactive, collaborative, and quick to understand our requirements. Their technical expertise and dedication truly stood out. We’re extremely satisfied with the outcome and look forward to working with them again on future projects.",
+      "Great communication and very responsive throughout the project. The PGAGI team delivered excellent work, exceeding expectations in both quality and speed. They were proactive, collaborative, and quick to understand our requirements. Their technical expertise and dedication truly stood out. We're extremely satisfied with the outcome and look forward to working with them again on future projects.",
     projectName: "AI HIRING AGENT",
   },
   {
@@ -145,141 +145,127 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialCarousel: React.FC = () => {
-  const infiniteTestimonials = Array.from({ length: 10 }, () => testimonials).flat();
-  const xValue = useMotionValue(0);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const animationRef = React.useRef<ReturnType<typeof animate> | null>(null);
-  
-  // Track which testimonials are expanded
-  const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  const [scrollWidth, setScrollWidth] = React.useState(0);
+  // Auto-advance testimonials
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000); // Change every 5 seconds
 
-  const startAnimation = React.useCallback(
-    (fromX: number) => {
-      if (animationRef.current) {
-        animationRef.current.stop();
-      }
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
 
-      const distance = -scrollWidth;
-      const currentOffset = fromX; 
-      const remaining = distance - currentOffset;
-      const totalDistance = distance;
-      const baseDuration = 300;
-      const duration = baseDuration * Math.abs(remaining / totalDistance);
-
-      animationRef.current = animate(xValue, distance, {
-        duration: Math.max(duration, 0.1),
-        ease: "linear",
-        onComplete: () => {
-          xValue.set(0);
-          startAnimation(0);
-        },
-      });
-    },
-    [scrollWidth, xValue]
-  );
-
-  React.useEffect(() => {
-    if (!containerRef.current) return;
-    const totalWidth = containerRef.current.scrollWidth;
-    setScrollWidth(totalWidth);
-  }, [infiniteTestimonials.length]);
-
-  React.useEffect(() => {
-    if (scrollWidth > 0) {
-      xValue.set(0);
-      startAnimation(0);
-    }
-  }, [scrollWidth, startAnimation, xValue]);
-
-  const handleMouseEnter = () => {
-    if (animationRef.current) {
-      animationRef.current.stop();
-      animationRef.current = null;
-    }
+  const handleDotClick = (index: number) => {
+    setCurrentIndex(index);
+    setIsAutoPlaying(false);
+    // Resume auto-play after 10 seconds of inactivity
+    setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
-  const handleMouseLeave = () => {
-    const currentX = xValue.get();
-    startAnimation(currentX);
-  };
-
-  const toggleExpand = (index: number) => {
-    setExpandedCards(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
-
-  // Function to truncate text and add ellipsis
-  const truncateText = (text: string, maxLength: number = 120) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
-  };
+  const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <div className={styles.carouselSection}>
-      <h2 className={styles.sectionHeading}>What Our Clients Say</h2>
-      <div className={styles.carouselContainer} ref={containerRef}>
-        <motion.div className={styles.testimonialTrack} style={{ x: xValue }}>
-          {infiniteTestimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className={`${styles.testimonialCard} ${expandedCards[index] ? styles.expanded : ''}`}
-              whileHover={{ scale: 1.05 }}
-            >
-              <div
-                className={styles.testimonialContent}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <h3 className={styles.projectName}>{testimonial.projectName}</h3>
-                <div className={styles.divider}></div>
-                <blockquote 
-                  className={`${styles.testimonialQuote} ${!expandedCards[index] ? styles.truncated : ''}`}
+    <section id="testimonials-section" className={styles.testimonialSection}>
+      <div className={styles.container}>
+        {/* Left Column - Testimonial and Experience */}
+        <div className={styles.leftColumn}>
+          {/* Top Left - Testimonial */}
+          <div className={styles.testimonialSection}>
+            <div className={styles.testimonialCard}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className={styles.testimonialContent}
                 >
-                  {expandedCards[index] 
-                    ? testimonial.quote 
-                    : truncateText(testimonial.quote)}
-                </blockquote>
-                
-                {testimonial.quote.length > 120 && (
-                  <div 
-                    className={styles.viewMoreLink} 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleExpand(index);
-                    }}
-                  >
-                    {expandedCards[index] ? "View Less" : "View More"}
+                  {/* Stars */}
+                  <div className={styles.stars}>
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className={styles.star}>★</span>
+                    ))}
                   </div>
-                )}
-                
-                <div className={styles.quoteFooter}>
-                  -{" "}
-                  <span className={styles.footerText}>
-                    {testimonial.company && testimonial.name
-                      ? `${testimonial.company}, ${testimonial.name}`
-                      : testimonial.company || testimonial.name}
-                  </span>
-                  {testimonial.country && (
-                    <Image
-                      className={styles.countryFlag}
-                      src={flagImages[testimonial.country]}
-                      alt={`${testimonial.country} flag`}
-                      width={18}
-                      height={18}
-                      loading="lazy"
-                    />
-                  )}
-                </div>
+
+                  {/* Quote */}
+                  <blockquote className={styles.quote}>
+                    &ldquo;{currentTestimonial.quote}&rdquo;
+                  </blockquote>
+
+                  {/* Author Info */}
+                  <div className={styles.authorInfo}>
+                    <div className={styles.authorImage}>
+                      <div className={styles.avatar}>
+                        {currentTestimonial.name.charAt(0).toUpperCase()}
+                      </div>
+                    </div>
+                    <div className={styles.authorDetails}>
+                      <div className={styles.authorName}>
+                        {currentTestimonial.name || currentTestimonial.company}
+                      </div>
+                      <div className={styles.authorTitle}>
+                        {currentTestimonial.company && currentTestimonial.name
+                          ? `${currentTestimonial.company}, ${currentTestimonial.name}`
+                          : currentTestimonial.company || currentTestimonial.name}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className={styles.dotsContainer}>
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ''}`}
+                  onClick={() => handleDotClick(index)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Left - 20 Years of Excellence */}
+          <div className={styles.experienceSection}>
+            <div className={styles.experienceContent}>
+              <div className={styles.laurelWreath}>
+                <div className={styles.experienceNumber}>20</div>
+                <div className={styles.experienceText}>years of experience</div>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              <div className={styles.experienceSubtext}>
+                Yup! That&apos;s 7,305 days of timeless ideas, crafted one day at a time.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - Stats and Description */}
+        <div className={styles.rightColumn}>
+          <div className={styles.statsContent}>
+            <div className={styles.statText}>
+              In a market of
+            </div>
+            <div className={styles.statNumber}>
+              
+              9,994
+            </div>
+            <div className={styles.statSubtext}>
+              look-alikes, only bold ideas cut through the clutter.
+            </div>
+          </div>
+
+          <div className={styles.description}>
+            We help businesses turn bold ideas into beautifully crafted digital experiences. From brand strategy to final execution, we work closely with our clients, designing with purpose, moving with precision, and delivering meaningful impact at every stage.
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

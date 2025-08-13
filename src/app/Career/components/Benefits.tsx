@@ -40,6 +40,9 @@ export const Benefits = () => {
     <section className={styles['benefits-section']}>
       <div className={styles['benefits-container']}>
         <h2 className={styles['benefits-heading']}>Benefits & Perks</h2>
+        <p className={styles['benefits-subtitle']}>
+          We believe in taking care of our team with comprehensive benefits that support your growth and well-being
+        </p>
         <div className={styles['benefits-grid']}>
           {benefits.map((benefit, index) => (
             <div key={index} className={styles['benefits-card']}>

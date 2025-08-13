@@ -102,12 +102,12 @@ export default function Navigation() {
 
   return (
     <nav className={styles.navigation}>
-      <div className={styles.banner}>
+      {/* <div className={styles.banner}>
         AI Calling Agent -{" "}
         <a href="https://www.toingg.com/" target="_blank" rel="noopener noreferrer">
           Try for Free
         </a>
-      </div>
+      </div> */}
       <Link className={clsx(styles.logo, !navbarVisible && styles.logoHidden)} href='/'>
         <Image src={logo} alt='Logo' width={60} height={60} />
         <p>PG-AGI</p>

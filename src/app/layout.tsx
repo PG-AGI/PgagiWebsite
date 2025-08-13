@@ -3,6 +3,9 @@ import Script from "next/script";
 import "./globals.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
+import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
+import Navigation from "@/app/components/base/Navigation";
+import Footer from "@/app/components/Footer";
 
 import { inter } from "../utils/fontHelper";
 
@@ -21,7 +24,8 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <Providers>
-        <html lang="en" className={inter.variable}>
+        <SmoothScrollProvider>
+          <html lang="en" className={inter.variable}>
           <head>
             {/* Google Tag Manager */}
             <Script id="google-tag-manager" strategy="afterInteractive">
@@ -72,9 +76,14 @@ export default function RootLayout({
                 style={{ display: "none", visibility: "hidden" }}
               ></iframe>
             </noscript>
-            {children}
+            <Navigation />
+            <main style={{ minHeight: '100vh', paddingTop: '0' }}>
+              {children}
+            </main>
+            <Footer />
           </body>
         </html>
+        </SmoothScrollProvider>
       </Providers>
     </AuthProvider>
   );

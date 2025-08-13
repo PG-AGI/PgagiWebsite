@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import { motion } from 'framer-motion'; // Import Framer Motion
-import Navigation from "../components/base/Navigation";
 import GlareBackground from "../components/base/GlareBackground";
 import styles from './aboutus.module.scss'
-import Footer from "../components/Footer";
 import Image from "next/image";
 import bg from '../assets/topFrame.png';
 import bg2 from '../assets/background.png';
@@ -45,7 +43,6 @@ export default function AboutUs() {
     <div className={styles.main}>
       <Link href="/" />
       <GlareBackground />
-      <Navigation />
 
       <motion.section
         className={styles.pageHead}
@@ -163,7 +160,6 @@ export default function AboutUs() {
         <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
       </motion.section>
 
-      <Footer />
     </div>
   );
 }

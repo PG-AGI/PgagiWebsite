@@ -10,8 +10,6 @@ import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
 import { LinkPreview } from "@/app/components/link-preview";
 
-import Navigation from '@/app/components/base/Navigation';
-import Footer from '@/app/components/Footer';
 import Recommendation from '@/app/components/Recommendation';
 import { AiOutlineCopy } from 'react-icons/ai';
 import styles from './CaseStudy.module.scss';
@@ -268,7 +266,6 @@ const CaseStudy = () => {
   if (loading) {
     return (
       <>
-        <Navigation />
         <div className={styles.container}>
           <main className={styles.main}>
             {/* Loading Skeleton */}
@@ -328,7 +325,7 @@ const CaseStudy = () => {
             </div>
           </main>
         </div>
-        <Footer />
+      
       </>
     );
   }
@@ -380,7 +377,6 @@ const CaseStudy = () => {
         />
       </Head>
 
-      <Navigation />
       <div className={styles.container}>
         <main className={styles.main}>
           <div className={styles.flexrow}>
@@ -593,10 +589,9 @@ const CaseStudy = () => {
           <ArrowUp />
         </button>
         </div>
-      <Recommendation currentSlug={params.slug} contentType="caseStudy" />
-      <Footer />
-    </>
-  );
+              <Recommendation currentSlug={params.slug} contentType="caseStudy" />
+      </>
+    );
 };
 
 export default CaseStudy;

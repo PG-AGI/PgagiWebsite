@@ -9,6 +9,7 @@ import news2 from '@/app/assets/trending_cards/news2.svg';
 import news3 from '@/app/assets/trending_cards/news3.svg';
 import news4 from '@/app/assets/trending_cards/news4.svg';
 import news5 from '@/app/assets/trending_cards/news5.svg';
+
 export default function TrendingOld() {
   const router = useRouter();
 
@@ -39,64 +40,64 @@ export default function TrendingOld() {
     }
   }, [router]);
 
+  // Blog data with 3 cards matching existing functionality
+  const blogPosts = [
+    {
+      id: 1,
+      image: news1,
+      title: "Case Studies",
+      category: "Case Studies",
+      description: "Real stories, real results — discover how our AI solutions are transforming ideas into impact through powerful success stories."
+    },
+    {
+      id: 2,
+      image: news2,
+      title: "Blogs",
+      category: "Blogs",
+      description: "Fresh insights, expert tips, and thought-provoking perspectives — your go-to space for all things AI and innovation."
+    },
+    {
+      id: 3,
+      image: news3,
+      title: "AI News",
+      category: "AI News",
+      description: "Stay ahead of the curve with the latest breakthroughs, trends, and updates shaping the future of artificial intelligence."
+    }
+  ];
+
   return (
-    <section className={styles.trending}>
-      <h3>{"What's Trending!"}</h3>
-      <div className={styles.trendingList}>
-        {trendingListOld.map((item, i) => (
-          <div
-            key={i}
-            className={styles.trendingItem}
-            onClick={() => handleExpand(item.title)}
-          >
-            <div className={styles.content}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <p className={styles.brief}>{item.brief}</p>
-              {/*<button className={styles.expandButton}>
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>*/}
+    <section id="trending" className={styles.trending}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h3 className={styles.blogLabel}>{/* Blog */}Blog</h3>
+          <h2 className={styles.mainTitle}>
+            Uncover the ideas, tools and trends shaping today&apos;s most impactful digital experiences.
+          </h2>
+        </div>
+        
+        <div className={styles.blogGrid}>
+          {blogPosts.map((post, index) => (
+            <div
+              key={post.id}
+              className={styles.blogCard}
+              onClick={() => handleExpand(post.category)}
+            >
+              <div className={styles.imageContainer}>
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  className={styles.blogImage}
+                />
+              </div>
+              
+              <div className={styles.cardContent}>
+                <h3 className={styles.cardTitle}>{post.title}</h3>
+                <p className={styles.cardDescription}>{post.description}</p>
+              </div>
             </div>
-            <Image
-              className={styles.imgTag}
-              src={item.image}
-              alt={item.title}
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
-        ))}
-
-        <div
-          className={styles.trendingItem}
-          onClick={() => handleExpand("Success Stories")}
-        >
-          <div className={styles.content}>
-            <h3>Success Stories</h3>
-            <p>Transformative Journeys and Breakthroughs</p>
-
-            <div className={styles.storybriefContainer}>
-              <p className={styles.storybrief1}>
-                Steep Grind <a href="https://hirextra.com/">HireXtra.com</a> faced slow, manual recruitment.
-              </p>
-              <p className={styles.storybrief1}>
-                We built an autonomous AI recruiter with 13 agents, transforming
-                their process.
-              </p>
-              <p className={styles.storybrief1}>
-                Tasks that once took weeks—like analyzing job descriptions,
-                matching candidates, and taking interviews—are now completed in
-                minutes, revolutionizing their recruitment.
-              </p>
-            </div>
-          </div>
-          <Image
-            className={styles.imgTag}
-            src= {news4}
-            alt="Success Stories"
-            fill 
-            style={{ objectFit: "cover" }}
-          />
+          ))}
         </div>
       </div>
     </section>

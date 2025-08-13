@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import dynamic from 'next/dynamic';
@@ -121,14 +121,14 @@ const JobPostingsManagement = () => {
     }
   };
 
-  const fetchJobs = () => {
+  const fetchJobs = useCallback(() => {
     fetchActiveJobs();
     fetchInactiveJobs();
-  };
+  }, []);
 
   useEffect(() => {
     fetchJobs();
-  }, []);
+  }, [fetchJobs]);
 
   const onSubmit = async (data: FormValues) => {
     const sanitizedData: Job = {

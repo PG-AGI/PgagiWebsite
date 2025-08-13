@@ -17,7 +17,7 @@ import styles from "./partners.module.scss";
 const images = [ais, hx, social, ciek, aixl,o,logok,wcg,fomo];
 export default function Partners () {
     return (
-        <section className={styles.partners}>
+        <section id="partners" className={styles.partners}>
             <h3>Partnered with Innovators like</h3>
       
 

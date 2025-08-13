@@ -1,13 +1,107 @@
 "use client";
 
 import Image from "next/image";
-import logo from "../../assets/logo.png";
 import styles from "./navigation.module.scss";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import clsx from "clsx";
 import { whatWeDoLinks } from "@/utils/constants";
 import ContactUsForm from "./contactUsForm";
+import { ArrowRight } from "lucide-react";
+
+// Custom hook to detect background color
+const useBackgroundColor = () => {
+  const [textColor, setTextColor] = useState<'white' | 'black'>('white');
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const checkBackgroundColor = () => {
+      if (!navRef.current) return;
+      
+      const rect = navRef.current.getBoundingClientRect();
+      
+      // Check multiple points to get a better understanding of the background
+      const points = [
+        { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }, // center
+        { x: rect.left + 20, y: rect.top + 20 }, // top-left
+        { x: rect.right - 20, y: rect.top + 20 }, // top-right
+      ];
+      
+      let backgroundColor = 'rgba(0, 0, 0, 0)';
+      
+      for (const point of points) {
+        const element = document.elementFromPoint(point.x, point.y);
+        
+        if (element) {
+          // Find the actual background color by traversing up the DOM tree
+          let currentElement = element;
+          
+          while (currentElement && currentElement !== document.body) {
+            const computedStyle = window.getComputedStyle(currentElement);
+            const bgColor = computedStyle.backgroundColor;
+            
+            // Check if this element has a non-transparent background
+            if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+              backgroundColor = bgColor;
+              break;
+            }
+            
+            currentElement = currentElement.parentElement as HTMLElement;
+          }
+          
+          if (backgroundColor !== 'rgba(0, 0, 0, 0)') {
+            break; // Found a background color, stop checking other points
+          }
+        }
+      }
+      
+      // Parse RGB values
+      const rgbMatch = backgroundColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (rgbMatch) {
+        const r = parseInt(rgbMatch[1]);
+        const g = parseInt(rgbMatch[2]);
+        const b = parseInt(rgbMatch[3]);
+        
+        // Calculate luminance using the standard formula
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        
+        // Set text color based on background luminance
+        // Use a threshold of 0.5 - above this is light, below is dark
+        const newTextColor = luminance > 0.5 ? 'black' : 'white';
+        setTextColor(newTextColor);
+        console.log(`Background: ${backgroundColor}, Luminance: ${luminance.toFixed(3)}, Text color: ${newTextColor}`);
+      } else {
+        // Fallback: if we can't parse the color, default to white text
+        // This handles cases like 'transparent', 'inherit', etc.
+        setTextColor('white');
+        console.log(`Could not parse background color: ${backgroundColor}, defaulting to white text`);
+      }
+    };
+
+    // Check on scroll and resize
+    const handleScroll = () => {
+      requestAnimationFrame(checkBackgroundColor);
+    };
+
+    const handleResize = () => {
+      requestAnimationFrame(checkBackgroundColor);
+    };
+
+    // Initial check with a small delay to ensure DOM is ready
+    const initialCheck = setTimeout(checkBackgroundColor, 100);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    return () => {
+      clearTimeout(initialCheck);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return { textColor, navRef };
+};
 
 export default function Navigation() {
   const [navbarVisible] = useState(true);
@@ -22,7 +116,9 @@ export default function Navigation() {
   >(null);
   const BLOGS = "/whatwethink";
   const ABOUT = "/aboutUs";
-
+  
+  const { textColor, navRef } = useBackgroundColor();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,6 +131,17 @@ export default function Navigation() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  // Handle scroll to add scrolled class
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolled(scrollTop > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleContactUs = () => {
@@ -74,27 +181,25 @@ export default function Navigation() {
   }, [isMenuOpen]);
 
   return (
-    <nav className={styles.navigation}>
-      <div className={styles.banner}>
-        AI Calling Agent -{" "}
-        <a
-          href="https://www.toingg.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Try for Free
-        </a>
-      </div>
-
+    <nav className={clsx(styles.navigation, isScrolled && styles.scrolled)} ref={navRef}>
       <div
         className={clsx(
           styles.nav,
           !navbarVisible && styles.navHidden,
           isMenuOpen && styles.open
         )}
+        style={{
+          '--text-color': textColor === 'white' ? '#ffffff' : '#000000',
+          '--text-color-inverse': textColor === 'white' ? '#000000' : '#ffffff',
+        } as React.CSSProperties}
       >
         <Link className={styles.logo} href="/">
-          <Image src={logo} alt="Logo" width={60} height={60} />
+          <Image 
+            src="/landing/PGAGI-logo.png" 
+            alt="PGAGI Logo" 
+            width={60} 
+            height={60} 
+          />
           <p>PG-AGI</p>
         </Link>
 
@@ -114,12 +219,11 @@ export default function Navigation() {
                     What we think
                   </Link>
                   <Link href={ABOUT} className={styles.mobileMenuItem}>
-                    Who We Are
+                    Who we are
                   </Link>
                   <Link href="/Career" className={styles.mobileMenuItem}>
                     Careers
                   </Link>
-
                 </div>
               )}
 
@@ -213,7 +317,7 @@ export default function Navigation() {
                   setWhatWeDo(null)
                 }}
               >
-                <span className={styles.whatwedospan} >What we do</span>
+                <span className={styles.whatwedospan}>What we do</span>
                 <div className={styles.dropdown}>
                   <div className={styles.content}>
                     <span className={styles.background} />
@@ -258,7 +362,7 @@ export default function Navigation() {
                 What we think
               </Link>
               <Link href="/aboutUs" className={styles.link}>
-                Who We Are
+                Who we are
               </Link>
               <Link href="/Career" className={styles.link}>
                 Careers
@@ -268,8 +372,26 @@ export default function Navigation() {
         </div>
 
         <button className={styles.contact} onClick={handleContactUs}>
-          Contact us
+          Get in touch
+          <ArrowRight size={16} />
         </button>
+        
+        {/* Debug indicator - remove in production */}
+        {process.env.NODE_ENV === 'development' && (
+          <div style={{ 
+            position: 'absolute', 
+            top: '10px', 
+            right: '10px', 
+            padding: '4px 8px', 
+            fontSize: '12px', 
+            background: textColor === 'white' ? '#000' : '#fff',
+            color: textColor === 'white' ? '#fff' : '#000',
+            borderRadius: '4px',
+            zIndex: 2000
+          }}>
+            {textColor} text
+          </div>
+        )}
         <div
           className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`}
           onClick={toggleMenu}

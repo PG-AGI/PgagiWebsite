@@ -1,172 +1,149 @@
+.pgagiLabel {
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+.pgagiUnderline {
+  height: 4px;
+  width: 60px;
+  background: #d60000;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  margin-bottom: 1rem;
+}
 .landing {
-    width: 100%;
-    height: 70vh;
-    display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.hyperspeedBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.landingContainer {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: 3rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 3rem 2rem 2rem 2rem;
+  min-height: 80vh;
+  position: relative;
+  z-index: 2;
+}
+.leftSection {
+  flex: 1 1 0;
+  min-width: 350px;
+  max-width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.mainHeading {
+  font-family: 'Poppins', 'Gilroy', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: #fff;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.1;
+}
+.coming {
+  color: #d60000;
+  font-weight: 400;
+}
+.description {
+  font-family: 'Alexandria', 'Poppins', sans-serif;
+  font-size: 1.35rem;
+  color: #bdb6b6;
+  font-weight: 300;
+  
+  margin-top: 0.5rem;
+}
+.buttonRow {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+.ctaButton {
+  background: #d60000;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.9rem 2.2rem;
+  font-size: 1.1rem;
+  font-family: 'Alexandria', 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: none;
+}
+.ctaButton:hover {
+  background: #b60306;
+  box-shadow: 0 4px 16px rgba(214,0,0,0.10);
+}
+.outlineButton {
+  background: #fff;
+  color: #111;
+  border: 2px solid #111;
+  border-radius: 2rem;
+  padding: 0.9rem 2.2rem;
+  font-size: 1.1rem;
+  font-family: 'Alexandria', 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.outlineButton:hover {
+  background: #f5f5f5;
+  color: #d60000;
+  border-color: #d60000;
+}
+.rightSection {
+  flex: 1 1 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-width: 350px;
+  position: relative;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .landingContainer {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    // z-index: 1;
-
-    h6 {
-        font-size: 23px;
-        font-weight: 500;
-        margin: 11px;
-        background: linear-gradient(to right, #878bf7, white);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        z-index: 1;
-    }
-    h1 {
-        font-size: 58px;
-        font-weight: 700;
-        margin: 4px;    
-        z-index: 1;    
-       
-    }
-
-    .ai span {
-        color: #0911DB;
-        font-weight: 600;
-    }
-    
-
-    .action {
-        margin-top: 48px;
-        display: flex;
-        gap: 24px;
-        z-index: 1;
-        flex-direction: column;
-
-        .call {
-            padding: 10px 20px;
-            border-radius: 12px;
-            background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
-            font-size: 15px;
-            font-weight: 500;
-            border: none;
-            box-shadow: 0 5px 5px 0px rgba(0,0,0,0.25);
-            transition: all 0.3s ease-out;
-            cursor: pointer;
-            color: white;
-
-            &:hover{                
-                background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
-                transform: scale(1.1);
-            }
-        }
-        .case {
-            padding: 10px 20px;
-            border-radius: 12px;
-            background: #9b9bab30;
-            font-size: 15px;
-            font-weight: 500;
-            border: none;
-            box-shadow: 0 5px 5px 0px rgba(0,0,0,0.25);
-            transition: all 0.3s ease-in-out;
-            cursor: pointer;
-            color: white;
-
-            &:hover{
-                background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
-                transform: scale(1.1);
-            }
-        }
-    }
-}
-
-@media (max-width: 1600px) and (max-height: 900px) {
-    .landing {
-      padding: 1.5rem;
-  
-      h6 {
-        font-size: 1rem;
-      }
-  
-      h1 {
-        font-size: 2rem;
-  
-        &.ai {
-          font-size: 2.5rem;
-        }
-      }
-  
-      .action {
-        flex-direction: column;
-        gap: 0.5rem;
-  
-        button {
-          width: 100%;
-          font-size: 0.875rem;
-  
-          &.call, &.case {
-            padding: 0.5rem 1rem;
-          }
-        }
-      }
-    }
+    align-items: flex-start;
+    padding: 2rem 1rem;
   }
-
-@media (max-width: 768px) {
-    .landing {
-        // margin-top:35%;
-        height: auto; /* Adjust height for mobile devices */
-        padding: 50px 20px; /* Add padding to reduce width */
-
-        h6 {
-            font-size: 18px; /* Smaller text size for mobile */
-            margin: 5px; /* Adjust margin */
-        }
-        h1 {
-            font-size: 30px; /* Smaller text size for mobile */
-            margin: 3px; /* Adjust margin */
-        }
-
-        .action {
-            flex-direction: column; /* Stack buttons vertically */
-            margin-top: 32px; /* Adjust margin top */
-
-            .call, .case {
-                padding: 8px 16px; /* Smaller padding */
-                font-size: 13px; /* Smaller font size */
-            }
-        }
-    }
+  .rightSection {
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto 0 auto;
+  }
+  
 }
-
-@media (max-width: 480px) {
-    .landing{
-        // margin-top:35%;
-        // margin-left:5%;
-        
-        h6 {
-            font-size: 14px; 
-        }
-        h1 {
-            font-size: 22px; 
-        }
-        
-        .action{
-            margin-top: 70px;
-        } 
-        .call,.action .case {
-            font-size: 12px; 
-        }
-    }
-}
-
-@media (max-width: 390px) {
-    .landing{
-        // margin-top:40%;        
-        h6 {
-            font-size: 14px; 
-        }
-        h1 {
-            font-size: 20px; 
-        }
-        
-        .action .call,.action .case {
-            font-size: 12px; 
-        }
-    }
+@media (max-width: 600px) {
+  .landingContainer {
+    padding: 1rem 0.5rem;
+  }
+  .mainHeading {
+    font-size: 2rem;
+  }
+  
+  .leftSection {
+    min-width: 0;
+    max-width: 100%;
+  }
 }
