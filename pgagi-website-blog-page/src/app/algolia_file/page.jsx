@@ -20,8 +20,8 @@ const Page = async () => {
 
   useEffect(() => {
     import('algoliasearch/lite').then(algoliasearch => {
-    const searchClient = algoliasearch(PITCQM3FDN, ebd799879bac96574477eafa285ebfb7);
-    const indexName = pgagi;
+      const searchClient = algoliasearch(PITCQM3FDN, ebd799879bac96574477eafa285ebfb7);
+      const indexName = pgagi;
     });
   }, []);
 
@@ -65,15 +65,15 @@ const Page = async () => {
           />
         </div> */}
         <InstantSearch searchClient={searchClient} indexName={indexName}>
-        <SearchBox
-          className='relative flex sm:items-center md:mr-24 md:ml-20 ml-16 sm:mr-32'
-          translations={{
-            placeholder: 'What are you looking for?',
-          }}
-          onChange={(event) => setQuery(event.currentTarget.value)}
-        />
-        <Hits hitComponent={Hit} />
-      </InstantSearch>
+          <SearchBox
+            className='relative flex sm:items-center md:mr-24 md:ml-20 ml-16 sm:mr-32'
+            translations={{
+              placeholder: 'What are you looking for?',
+            }}
+            onChange={(event) => setQuery(event.currentTarget.value)}
+          />
+          <Hits hitComponent={Hit} />
+        </InstantSearch>
       </div>
 
       <section className='py-4 sm:px-8'>

@@ -26,63 +26,63 @@ export default function RootLayout({
       <Providers>
         <SmoothScrollProvider>
           <html lang="en" className={inter.variable}>
-          <head>
-            {/* Google Tag Manager */}
-            <Script id="google-tag-manager" strategy="afterInteractive">
-              {`
+            <head>
+              {/* Google Tag Manager */}
+              <Script id="google-tag-manager" strategy="afterInteractive">
+                {`
                   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                   })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
                 `}
-            </Script>
+              </Script>
 
-            {/* Google Analytics */}
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
+              {/* Google Analytics */}
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
                   gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
                 `}
-            </Script>
+              </Script>
 
-            {/* Structured Data */}
-            <Script
-              id="structured-data"
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "Organization",
-                  "name": "PGAGI",
-                  "url": "https://pgagi.in",
-                }),
-              }}
-            />
-          </head>
+              {/* Structured Data */}
+              <Script
+                id="structured-data"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Organization",
+                    "name": "PGAGI",
+                    "url": "https://pgagi.in",
+                  }),
+                }}
+              />
+            </head>
 
-          <body>
-            <noscript>
-              <iframe
-                src="https://www.googletagmanager.com/ns.html?id=GTM-TD3PQLP6"
-                height="0"
-                width="0"
-                style={{ display: "none", visibility: "hidden" }}
-              ></iframe>
-            </noscript>
-            <Navigation />
-            <main style={{ minHeight: '100vh', paddingTop: '0' }}>
-              {children}
-            </main>
-            <Footer />
-          </body>
-        </html>
+            <body>
+              <noscript>
+                <iframe
+                  src="https://www.googletagmanager.com/ns.html?id=GTM-TD3PQLP6"
+                  height="0"
+                  width="0"
+                  style={{ display: "none", visibility: "hidden" }}
+                ></iframe>
+              </noscript>
+              <Navigation />
+              <main style={{ minHeight: '100vh', paddingTop: '0' }}>
+                {children}
+              </main>
+              <Footer />
+            </body>
+          </html>
         </SmoothScrollProvider>
       </Providers>
     </AuthProvider>
