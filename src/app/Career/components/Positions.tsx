@@ -55,6 +55,9 @@ export const Positions = () => {
       <section className={styles["positions-section"]}>
         <div className={styles["positions-container"]}>
           <h2 className={styles["positions-heading"]}>Open Positions</h2>
+          <p className={styles["positions-subtitle"]}>
+            Discover exciting opportunities to join our innovative team and shape the future of AI
+          </p>
           <div className={styles["positions-grid"]}>
             {Array.from({ length: 3 }).map((_, index) => (
               <ShimmerCard key={index} />
@@ -70,6 +73,9 @@ export const Positions = () => {
       <section className={styles["positions-section"]}>
         <div className={styles["positions-container"]}>
           <h2 className={styles["positions-heading"]}>Open Positions</h2>
+          <p className={styles["positions-subtitle"]}>
+            Discover exciting opportunities to join our innovative team and shape the future of AI
+          </p>
           <p className={styles["error-message"]}>{error}</p>
         </div>
       </section>
@@ -80,6 +86,9 @@ export const Positions = () => {
     <section className={styles["positions-section"]}>
       <div className={styles["positions-container"]}>
         <h2 className={styles["positions-heading"]}>Open Positions</h2>
+        <p className={styles["positions-subtitle"]}>
+          Discover exciting opportunities to join our innovative team and shape the future of AI
+        </p>
         <div className={styles["positions-grid"]}>
           {[...jobs].reverse().map((job) => {
             const plainDescription = stripHtml(job.description);

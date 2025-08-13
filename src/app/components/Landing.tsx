@@ -1,57 +1,94 @@
 'use client'
-import { TypeAnimation } from 'react-type-animation';
 import React, { useState, useEffect } from 'react';
 import styles from "./landing.module.scss";
 import BookCallModal from './base/bookCallModela';
-import { useRouter } from 'next/navigation';
+import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const router = useRouter();
+    const { scrollTo } = useSmoothScrollTo();
 
-    const handleBookCall = () => {
-        setIsModalOpen(true);
+    const handleBookCall = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
+
+    const handleScrollToTestimonials = () => {
+        scrollTo('#testimonials-section', { offset: 80, duration: 1.5 });
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-    const handleExpand = () => {
-        
-            router.push("/whatwethink#case-studies");
-    }
     useEffect(() => {
-        const hash = window.location.hash;
-        if (hash) {
-          const element = document.querySelector(hash);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
-        }
-      }, [router]);
+        console.log('Landing component mounted');
+    }, []);
+
     return (
-        <section className={styles.landing}>
-            <h6>Start your AI journey with us</h6>
-            <h1>Your Go-To AI Consultancy For</h1>
-            <h1 className={styles.ai}>
-                <div style={{ color: '#0051ff' }}> {/* Add inline style here if wrapper prop does not apply it */}
-                    <TypeAnimation
-                        sequence={[
-                            "AI MVP Design", 1000,
-                            'AI Research', 1000,
-                            'Idea Validation', 1000,
-                            "AI Solutions", 1000,
-                            "AI Products", 1000
-                        ]}
-                        wrapper="span"
-                        speed={50}
-                        repeat={Infinity}
-                    />
+        <section id="landing" className={styles.landing}>
+            {/* HyperSpeed Background */}
+            <div className={styles.hyperspeedBackground}>
+                <Hyperspeed 
+                    effectOptions={{
+                        colors: {
+                            roadColor: 0x080808,
+                            islandColor: 0x0a0a0a,
+                            background: 0x000000,
+                            shoulderLines: 0xffffff,
+                            brokenLines: 0xffffff,
+                            leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
+                            rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
+                            sticks: 0x03b3c3,
+                        },
+                        distortion: "turbulentDistortion",
+                        length: 400,
+                        roadWidth: 10,
+                        islandWidth: 2,
+                        lanesPerRoad: 4,
+                        fov: 90,
+                        fovSpeedUp: 150,
+                        speedUp: 2,
+                        carLightsFade: 0.4,
+                        totalSideLightSticks: 20,
+                        lightPairsPerRoadWay: 40,
+                        shoulderLinesWidthPercentage: 0.05,
+                        brokenLinesWidthPercentage: 0.1,
+                        brokenLinesLengthPercentage: 0.5,
+                        lightStickWidth: [0.12, 0.5],
+                        lightStickHeight: [1.3, 1.7],
+                        movingAwaySpeed: [60, 80],
+                        movingCloserSpeed: [-120, -160],
+                        carLightsLength: [400 * 0.03, 400 * 0.2],
+                        carLightsRadius: [0.05, 0.14],
+                        carWidthPercentage: [0.3, 0.5],
+                        carShiftX: [-0.8, 0.8],
+                        carFloorSeparation: [0, 5],
+                    }}
+                />
+            </div>
+            
+            <div className={styles.landingContainer}>
+                <div className={styles.leftSection}>
+                    <div className={styles.pgagiLabel}>
+                        <span>At <b>PG-AGI</b></span>
+                        <div className={styles.pgagiUnderline}></div>
+                    </div>
+                    <h1 className={styles.mainHeading}>
+                    We engineer purposeful<span className={styles.coming}> AI products</span> that<span className={styles.coming}>  scales</span>,
+                    and create meaningful impact in the world.
+                    </h1>
+                    <p className={styles.description}>
+                    Creating for the world that’s coming, Not the one passing.
+                    </p>
+                    <div className={styles.buttonRow}>
+                        <button className={styles.ctaButton} onClick={handleBookCall}>
+                            Book a Consultation
+                        </button>
+                        <button className={styles.outlineButton} onClick={handleScrollToTestimonials}>
+                            View Our Work
+                        </button>
+                    </div>
                 </div>
-            </h1>
-            <div className={styles.action}>
-                <button className={styles.call} onClick={handleBookCall}>Book a call</button>
-                <button className={styles.case} onClick={handleExpand}>See Case Studies</button>
+                <div className={styles.rightSection}>
+                    {/* Placeholder SVG for animated face/skull */}
+                   
+                </div>
             </div>
             <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </section>

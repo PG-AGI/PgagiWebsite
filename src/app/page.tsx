@@ -1,18 +1,21 @@
 'use client'
 import Landing from "./components/Landing";
-import Navigation from "./components/base/Navigation";
 import Partners from "./components/Partners";
 import styles from "./page.module.scss";
 import Segment from "./components/base/Segment";
 import GlareBackground from "./components/base/GlareBackground";
 import { segmentList } from "@/utils/constants";
-import Footer from "./components/Footer";
 import Calendly from "./components/Calendly";
 import { Lottie } from "xtreme-ui";
 import { useEffect, useRef } from "react";
 //import { motion } from 'framer-motion';
 import TrendingOld from "./components/trending_old";
+import ExpertiseSection from "./components/ExpertiseSection";
+import FAQ from "./components/FAQ";
 import TestimonialCarousel from "./components/InfiniteTestimonial";
+import ScrollIndicator from "./components/ScrollIndicator";
+import SmoothScrollNav from "./components/SmoothScrollNav";
+import LandingProjects from "./components/LandingProjects";
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 	const lottieWindowRef = useRef<HTMLDivElement>(null)
@@ -59,30 +62,28 @@ export default function Home() {
 
 	return (
 		<main className={styles.main}>
-			<GlareBackground />
-			<Navigation />
+			<ScrollIndicator />
+			{/* <SmoothScrollNav 
+				sections={[
+					{ id: 'landing', label: 'Home', offset: 0 },
+					{ id: 'testimonials-section', label: 'Testimonials', offset: 80 },
+					{ id: 'partners', label: 'Partners', offset: 80 },
+					{ id: 'trending', label: 'Trending', offset: 80 },
+					{ id: 'segment', label: 'Services', offset: 80 },
+				]}
+			/> */}
 			<Landing />
 			<Partners />
 			<TestimonialCarousel />
+			<LandingProjects/>
+			
+			
+			<ExpertiseSection />
+			
+			
 			<TrendingOld/>
-			<section className={styles.segmentSection}>
-				<div ref={lottieWindowRef} className={styles.lottieWindow}>
-					<Lottie className={styles.blob} src="/blob.lottie" />
-				</div>
-				<div ref={segmentRef} className={styles.segmentList}>
-					{segmentList.map((data, i) => (
-						<Segment
-							key={i}
-							index={i}
-							type={i === 0 ? "middle" : i % 2 === 0 ? "left" : "right"}
-							title={data.title}
-							subtitle={data.subtitle}
-						/>
-					))}
-				</div>
-			</section>
+			<FAQ />
 			<Calendly />
-			<Footer />
 		</main>
 	);
 }

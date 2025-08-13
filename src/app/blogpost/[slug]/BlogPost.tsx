@@ -8,8 +8,6 @@ import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
-import Navigation from '@/app/components/base/Navigation';
-import Footer from '@/app/components/Footer';
 import axios from 'axios';
 import { AiOutlineCopy } from 'react-icons/ai';
 import Recommendation from '@/app/components/Recommendation';
@@ -223,7 +221,6 @@ const BlogPost = () => {
   if (loading) {
     return (
       <>
-        <Navigation />
         
         <div className={styles.container}>
           <main className={styles.main}>
@@ -280,7 +277,7 @@ const BlogPost = () => {
             </div>
           </main>
         </div>
-        <Footer />
+        
       </>
     );
   }
@@ -336,7 +333,6 @@ const BlogPost = () => {
           content={blogPost.coverImage || `${currentUrl}/fallback-image.jpg`}
         />
       </Head>
-      <Navigation />
        <div className={styles.container}>
         <main className={styles.main}>
           <div className={styles.flexrow}>
@@ -573,7 +569,7 @@ const BlogPost = () => {
         </button>
       </div>
       <Recommendation currentSlug={params.slug as string} contentType="blog" />
-      <Footer />
+      
     </>
   );
 };

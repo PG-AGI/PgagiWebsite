@@ -1,12 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import Navigation from "../components/base/Navigation";
 import { Hero } from "./components/Hero";
 import { Values } from "./components/Values";
 import { Positions } from "./components/Positions";
 import { Benefits } from "./components/Benefits";
-import Footer from "../components/Footer";
 
 const HomePage = () => {
   const positionsRef = useRef<HTMLDivElement>(null); // Ref for the Positions section
@@ -22,7 +20,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Navigation />
       <Hero
         onScrollToPositions={handleScrollToPositions}
         onScrollToBenefits={handleScrollToBenefits}
@@ -34,7 +31,6 @@ const HomePage = () => {
       <div ref={benefitsRef}>
         <Benefits />
       </div>
-      <Footer />
     </>
   );
 };
