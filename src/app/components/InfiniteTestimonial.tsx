@@ -147,6 +147,7 @@ const testimonials: Testimonial[] = [
 const TestimonialCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [animatedNumber, setAnimatedNumber] = useState(5);
 
   // Auto-advance testimonials
   useEffect(() => {
@@ -158,6 +159,22 @@ const TestimonialCarousel: React.FC = () => {
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
+
+  // Animated counter effect for the "5+" in "75+"
+  useEffect(() => {
+    const counterInterval = setInterval(() => {
+      setAnimatedNumber((prev) => {
+        if (prev >= 5) {
+          // After reaching 5, wait for 1 second then reset to 1
+          setTimeout(() => setAnimatedNumber(1), 1000);
+          return 5;
+        }
+        return prev + 1;
+      });
+    }, 1000); // Change number every 0.1 seconds
+
+    return () => clearInterval(counterInterval);
+  }, []);
 
   const handleDotClick = (index: number) => {
     setCurrentIndex(index);
@@ -248,20 +265,38 @@ const TestimonialCarousel: React.FC = () => {
         {/* Right Column - Stats and Description */}
         <div className={styles.rightColumn}>
           <div className={styles.statsContent}>
-            <div className={styles.statText}>
-              In a market of
-            </div>
             <div className={styles.statNumber}>
-              
-              9,994
+              7
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={animatedNumber}
+                  initial={{ y: 100, opacity: 0, scale: 0.8 }}
+                  animate={{ y: 0, opacity: 1, scale: 1 }}
+                  exit={{ y: -100, opacity: 0, scale: 0.8 }}
+                  transition={{ 
+                    duration: 1.6, 
+                    ease: "easeInOut",
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 12
+                  }}
+                  className={styles.animatedNumber}
+                >
+                  {animatedNumber}
+                </motion.span>
+              </AnimatePresence>
+              +
             </div>
+            <div className={styles.statText}>
+              Projects Delivered
+            </div> 
             <div className={styles.statSubtext}>
-              look-alikes, only bold ideas cut through the clutter.
+              Currently building 8 more projects getting live in few weeks.
             </div>
           </div>
 
           <div className={styles.description}>
-            We help businesses turn bold ideas into beautifully crafted digital experiences. From brand strategy to final execution, we work closely with our clients, designing with purpose, moving with precision, and delivering meaningful impact at every stage.
+            We help businesses and founders turn bold ideas into beautifully crafted AI Products. From  strategy to final execution, we work closely with our clients, engineering with purpose, moving with precision, and delivering meaningful impact at every stage.
           </div>
         </div>
       </div>

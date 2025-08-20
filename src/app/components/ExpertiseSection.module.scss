@@ -1,32 +1,33 @@
 .expertiseSection {
   background-color: #ffffff;
-  height: 100vh;
+   height: 75vh;
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  
   
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  
+  margin: 0 12rem;
   min-height: min-content;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: center;
+  gap: 10rem;
+  align-items: end;
 }
 
 .leftSection {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .mainHeading {
-  font-size: 3.5rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 600;
   color: #000000;
-  line-height: 1.1;
+  line-height: 0.8;
   margin: 0;
   
   @media (max-width: 768px) {
@@ -39,11 +40,11 @@
 }
 
 .description {
-  font-size: 1.125rem;
-  color: #666666;
-  line-height: 1.6;
+  font-size: 1.115rem;
+  color: #000;
+  line-height: 1.4;
   margin: 0;
-  max-width: 500px;
+  max-width: 400px;
   
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -54,12 +55,12 @@
   display: flex;
   flex-direction: column;
   
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .expertiseHeading {
-  font-size: 2.5rem;
-  font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 600;
   color: #000000;
   margin: 0;
   
@@ -70,10 +71,11 @@
 
 .expertiseDescription {
   font-size: 1.5rem;
-  color: #666666;
-  line-height: 1.6;
+  color: #000;
+  line-height: 1.25;
+  max-width: 600px;
   margin: 0;
-  max-width: 500px;
+  
   
   @media (max-width: 768px) {
     font-size: 0.9rem;
@@ -83,24 +85,36 @@
 .servicesList {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 3.5rem;
+  margin-top: 3rem;
 }
 
 .serviceItem {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   cursor: pointer;
   transition: transform 0.2s ease;
+  position: relative;
   
   &:hover {
     transform: translateX(8px);
   }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1.75rem;
+    left: 0; /* Start from the beginning of the service number */
+    width: 100%; /* Extend to the full width of the service item */
+    height: 0.75px;
+    background-color: #d3d3d3; /* Light grey color */
+  }
 }
 
 .serviceNumber {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
   background-color: #000000;
   color: #ffffff;
   border-radius: 50%;
@@ -119,8 +133,9 @@
 }
 
 .serviceTitle {
-  font-size: 1.125rem;
+  font-size: 1.36rem;
   font-weight: 500;
+  gap: 1rem;
   color: #000000;
   
   @media (max-width: 768px) {
@@ -161,6 +176,7 @@
   .description {
     text-align: center;
     max-width: 100%;
+    
   }
   
   .expertiseHeading {

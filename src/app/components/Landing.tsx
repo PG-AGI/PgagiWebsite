@@ -65,16 +65,26 @@ export default function Landing() {
             
             <div className={styles.landingContainer}>
                 <div className={styles.leftSection}>
+                    <div className={styles.highlightSpot}>
+                        <a 
+                            href="https://www.upwork.com/agencies/1737467434828361728/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                            Top 1% recognized on the UpWork
+                        </a>
+                    </div>
                     <div className={styles.pgagiLabel}>
                         <span>At <b>PG-AGI</b></span>
                         <div className={styles.pgagiUnderline}></div>
                     </div>
                     <h1 className={styles.mainHeading}>
-                    We engineer purposeful<span className={styles.coming}> AI products</span> that<span className={styles.coming}>  scales</span>,
-                    and create meaningful impact in the world.
+                    Creating for the world that’s <span className={styles.coming}> coming, </span> 
+                    Not the one passing.
                     </h1>
                     <p className={styles.description}>
-                    Creating for the world that’s coming, Not the one passing.
+                    We engineer purposeful AI products that scales, and create meaningful impact in the world.
                     </p>
                     <div className={styles.buttonRow}>
                         <button className={styles.ctaButton} onClick={handleBookCall}>

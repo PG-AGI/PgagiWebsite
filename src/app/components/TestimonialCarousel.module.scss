@@ -18,36 +18,38 @@
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: flex-start; // Changed from stretch to flex-start for top alignment
   height: 90vh; // Take full height of parent
+  gap: 2rem; // Add gap between columns
 }
 
 // Left Column - Testimonial and Experience
 .leftColumn {
-  flex: 1;
+   flex: 1;
   max-width: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; // Changed back to space-between for proper distribution
   height: 100%; // Take full height
+  align-self: stretch; // Changed back to stretch for proper height matching
   
   .testimonialSection {
     flex: 1; // Take available space
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    
-    max-height: 10px; // Minimum height for testimonial area
+    justify-content: flex-start; // Start from top
+    max-height: 60%; // Limit height for testimonial area
+    position: relative; // Add relative positioning for dots
     
     .testimonialCard {
       background: transparent;
       border: none;
       box-shadow: none;
       padding: 0;
-      flex: 1; // Take available space
+      // flex: 1; // Take available space
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start; // Start from top
       
       .testimonialContent {
         padding: 0;
@@ -55,7 +57,7 @@
         flex: 1; // Take available space
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start; // Start from top
         
         .stars {
           display: flex;
@@ -125,6 +127,8 @@
   
   .experienceSection {
     text-align: left;
+    margin-top: auto; // Push to bottom
+    padding-bottom: 2rem; // Add bottom padding
     
     .experienceContent {
       .laurelWreath {
@@ -157,69 +161,20 @@
   }
 }
 
-// Right Column - Stats and Description
-.rightColumn {
-  flex: 1;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  text-align: left;
-  height: 100%; // Take full height
-  
-  .statsContent {
-    .statText {
-      font-size: 3.5rem; // Reduced from 3rem
-      color: #FFFFFF;
-      // Reduced from 1rem
-      text-align: left;
-      font-weight: 600;
-    }
-    
-    .statNumber {
-      font-size: 13rem; // Reduced from 10rem
-      font-weight: 700;
-      color: #FFFFFF;
-      // Reduced from 1rem
-      display: flex;
-      align-items: center;
-     // Reduced from 1rem
-      justify-content: flex-start;
-      
-      
-    }
-    
-    .statSubtext {
-      font-size: 2.6rem; // Reduced from 2.5rem
-      color: #FFFFFF;
-      text-align: left;
-      font-weight: 600;
-      margin-bottom: 1.5rem; // Reduced from 2rem
-    }
-  }
-  
-  .description {
-    font-size: 1.6rem; // Reduced from 1.25rem
-   // Reduced from 1.6
-    color: rgb(131,143,155);
-    
-    text-align: left;
-    margin-top: 10rem;
-  }
-}
-
-// Dots Indicator
+// Dots Indicator - Moved to be just below testimonials
 .dotsContainer {
   display: flex;
   justify-content: flex-start;
   gap: 0.25rem; // Reduced from 0.35rem
-  margin-top: 1rem; // Reduced from 2rem
+  margin-top: 0.5rem; // Reduced spacing between testimonial and dots
   margin-left: 0;
+  position: absolute; // Position absolutely within testimonial section
+  bottom: 0; // Position exactly at the bottom of testimonial section
+  left: 0; // Align with left edge of testimonial
   
   .dot {
-    width: 3px; // Reduced from 4px
-    height: 8px; // Reduced from 10px
+    width: 2.5px; // Reduced from 4px
+    height: 10px; // Reduced from 10px
     border-radius: 50%;
     border: none;
     background-color: #333333;
@@ -234,6 +189,68 @@
       background-color: #FFD700;
       transform: scale(1.2);
     }
+  }
+}
+
+// Right Column - Stats and Description
+.rightColumn {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // Changed to space-between for proper distribution
+  align-items: flex-start;
+  text-align: left;
+  height: 100%; // Take full height
+  align-self: stretch; // Changed back to stretch for proper height matching
+  padding-top: 0; // Remove top padding to align with left column
+  padding-bottom: 2rem; // Keep bottom padding
+  
+  .statsContent {
+    .statNumber {
+      font-size: 10rem;
+      color: #FFFFFF;
+      text-align: left;
+      font-weight: 700;
+      line-height: 0.8;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+      height: 8rem; // Fixed height to prevent layout shift
+      display: flex;
+      align-items: flex-start;
+      
+      .animatedNumber {
+        display: inline-block;
+        position: relative;
+        margin-left: 0.1em; // Small gap between 7 and animated digit
+      }
+    }
+    
+    .statText {
+      font-size: 2.5rem;
+      color: #FFFFFF;
+      text-align: left;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .statSubtext {
+      font-size: 1.5rem;
+      color: #FFFFFF;
+      text-align: left;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  .description {
+    font-size: 1.6rem; // Reduced from 1.25rem
+   // Reduced from 1.6
+    color: rgb(131,143,155);
+    
+    text-align: left;
+    margin-top: 10rem;
   }
 }
 
@@ -289,8 +306,14 @@
       text-align: center;
       
       .statNumber {
-        justify-content: center;
-        font-size: 2.5rem; // Reduced from 3rem
+        font-size: 6rem;
+        text-align: center;
+        height: 5rem; // Adjusted height for tablet
+      }
+      
+      .statText {
+        text-align: center;
+        font-size: 2rem;
       }
     }
     
@@ -338,12 +361,16 @@
   .rightColumn {
     .statsContent {
       .statNumber {
-        font-size: 2rem; // Reduced from 2.5rem
+        font-size: 4rem;
+        height: 3.5rem; // Adjusted height for mobile
       }
       
-      .statText,
+      .statText {
+        font-size: 1.5rem;
+      }
+      
       .statSubtext {
-        font-size: 0.9rem; // Reduced from 1rem
+        font-size: 1.2rem;
       }
     }
     
@@ -368,7 +395,16 @@
   .rightColumn {
     .statsContent {
       .statNumber {
-        font-size: 1.8rem; // Reduced from 2rem
+        font-size: 3rem;
+        height: 2.5rem; // Adjusted height for small screens
+      }
+      
+      .statText {
+        font-size: 1.2rem;
+      }
+      
+      .statSubtext {
+        font-size: 1rem;
       }
     }
   }

@@ -16,34 +16,30 @@ export default function FAQ() {
   const faqData: FAQItem[] = [
     {
       id: 0,
-      question: "What services do you offer?",
-      answer: "We cover the full creative journey: brand strategy, identity design, websites, digital products, campaigns, Mobile Apps, Social Media and everything in between. We don&apos;t do everything—but what we do, we do exceptionally well."
+      question: "I’ve got an idea. How do we start?",
+      answer: "Easy — book a call. We’ll explore your idea, map out the possibilities, and send you a tailored action plan."
     },
     {
       id: 1,
-      question: "What's your project timeline?",
-      answer: "Project timelines vary depending on scope and complexity. Typically, small projects take 2-4 weeks, medium projects 4-8 weeks, and large projects 8-16 weeks. We'll provide a detailed timeline during our initial consultation."
+      question: "How do I know my data is safe with you?",
+      answer: "We treat your data like we treat our own — with ironclad security, encrypted storage, and compliance-first protocols. No funny business."
     },
     {
       id: 2,
-      question: "How much do you charge?",
-      answer: "Our pricing is project-based and depends on scope, complexity, and timeline. We offer transparent pricing with no hidden fees. Contact us for a detailed quote tailored to your specific needs."
+      question: "What if I don’t speak “tech”?",
+      answer: "That's fine — we speak both CEO and CTO fluently. We’ll guide you through the process in plain language while we handle the code, math, and machine learning magic."
     },
     {
       id: 3,
-      question: "What industries do you work with?",
-      answer: "We work across diverse industries including technology, healthcare, finance, education, retail, and more. Our expertise spans both B2B and B2C sectors, allowing us to adapt our approach to your specific industry needs."
+      question: "Can you plug AI into my existing systems?",
+      answer: "Yes — whether it’s a CRM, ERP, or that ancient system your team swears by, we can make AI work with it (and even make it feel new again)."
     },
     {
       id: 4,
-      question: "Do you take on small projects?",
-      answer: "Yes, we work with clients of all sizes, from startups to enterprise companies. We believe every project deserves our full attention and expertise, regardless of size."
+      question: "What happens after launch?",
+      answer: "We don’t disappear. We monitor, optimize, and upgrade your AI so it keeps learning, adapting, and outperforming."
     },
-    {
-      id: 5,
-      question: "How can I start?",
-      answer: "Getting started is easy! Simply reach out to us through our contact form or email. We&apos;ll schedule a consultation to discuss your project, goals, and timeline. From there, we&apos;ll create a customized proposal for your review."
-    }
+    
   ];
 
   const toggleItem = (id: number) => {
@@ -63,18 +59,16 @@ export default function FAQ() {
           <div className={styles.imageSection}>
             <div className={styles.imageContainer}>
               <Image 
-                src="/images/customer-support.jpg" 
-                alt="Customer Support Representative"
-                width={300}
-                height={300}
+                src="/landing/Model.png" 
+                alt="AI Model Visualization"
+                width={180}
+                height={180}
                 className={styles.supportImage}
               />
             </div>
             <div className={styles.contactText}>
               <p>Still curious about something we haven&apos;t answered? No worries, drop us a message and we&apos;ll get you the clarity you&apos;re looking for.</p>
-              <Link href="/contact" className={styles.contactLink}>
-                Get in touch <span>→</span>
-              </Link>
+              
             </div>
           </div>
         </div>
@@ -116,18 +110,16 @@ export default function FAQ() {
         <div className={styles.mobileContactSection}>
           <div className={styles.mobileImageContainer}>
             <Image 
-              src="/images/customer-support.jpg" 
-              alt="Customer Support Representative"
-              width={250}
-              height={250}
+              src="/landing/Model.png" 
+              alt="AI Model Visualization"
+              width={150}
+              height={150}
               className={styles.mobileSupportImage}
             />
           </div>
           <div className={styles.mobileContactText}>
             <p>Still curious about something we haven&apos;t answered? No worries, drop us a message and we&apos;ll get you the clarity you&apos;re looking for.</p>
-            <Link href="/contact" className={styles.mobileContactLink}>
-              Get in touch <span>→</span>
-            </Link>
+            
           </div>
         </div>
       </div>

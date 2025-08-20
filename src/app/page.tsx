@@ -1,6 +1,7 @@
 'use client'
 import Landing from "./components/Landing";
 import Partners from "./components/Partners";
+import StatsSection from "./components/NewPage";
 import styles from "./page.module.scss";
 import Segment from "./components/base/Segment";
 import GlareBackground from "./components/base/GlareBackground";
@@ -12,6 +13,7 @@ import { useEffect, useRef } from "react";
 import TrendingOld from "./components/trending_old";
 import ExpertiseSection from "./components/ExpertiseSection";
 import FAQ from "./components/FAQ";
+import VideoTestimonial from "./components/VideoTestimonial";
 import TestimonialCarousel from "./components/InfiniteTestimonial";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SmoothScrollNav from "./components/SmoothScrollNav";
@@ -74,15 +76,18 @@ export default function Home() {
 			/> */}
 			<Landing />
 			<Partners />
-			<TestimonialCarousel />
+			<StatsSection />
+		
 			<LandingProjects/>
 			
 			
 			<ExpertiseSection />
 			
-			
-			<TrendingOld/>
+			<VideoTestimonial />
 			<FAQ />
+			<TrendingOld/>
+			
+			
 			<Calendly />
 		</main>
 	);

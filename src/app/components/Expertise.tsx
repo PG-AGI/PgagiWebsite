@@ -10,7 +10,7 @@ export default function Expertise() {
     {
       id: 1,
       number: "01",
-      title: "Branding",
+      title: "AI Research",
       tagline: "Where Brands Come Alive",
       description: "Where brands come alive. We craft identities that don't just look good they mean something. From strategy to storytelling, we help brands show up with confidence, clarity, and a whole lot of personality. Whether you're building from scratch or ready for a rebrand, we'll make sure every detail reflects who you are and where you're headed.",
       services: [
@@ -25,7 +25,7 @@ export default function Expertise() {
     {
       id: 2,
       number: "02", 
-      title: "Mobile Apps",
+      title: "AI SAAS DEVELOPMENT",
       tagline: "From Concept to Home Screen",
       description: "We transform ideas into intuitive, powerful mobile experiences. From native iOS and Android development to cross-platform solutions, we build apps that users love and businesses rely on. Our mobile expertise covers everything from concept to launch, ensuring your app stands out in crowded app stores.",
       services: [
@@ -40,7 +40,7 @@ export default function Expertise() {
     {
       id: 3,
       number: "03",
-      title: "Web Development", 
+      title: "AI Mobile App Development", 
       tagline: "Websites that work as good as they look",
       description: "From polished marketing sites to dynamic, content-rich platforms, our dev team turns bold ideas into seamless digital experiences. Designed for speed, built for scale, and engineered to convert. Our websites don't just exist online, they perform.",
       services: [
@@ -54,7 +54,7 @@ export default function Expertise() {
     {
       id: 4,
       number: "04",
-      title: "AI & Machine Learning",
+      title: "Integrating AI in Existing Workflows",
       tagline: "Intelligence That Drives Innovation",
       description: "We harness the power of artificial intelligence to solve complex business challenges. From custom AI models to intelligent automation, we help businesses leverage cutting-edge technology to gain competitive advantages and unlock new possibilities.",
       services: [
@@ -67,6 +67,31 @@ export default function Expertise() {
       ]
     }
   ];
+
+  useEffect(() => {
+    // Handle hash navigation on page load
+    const handleHashNavigation = () => {
+      if (typeof window !== 'undefined') {
+        const hash = window.location.hash;
+        if (hash) {
+          const sectionId = parseInt(hash.replace('#section-', ''));
+          if (sectionId >= 1 && sectionId <= expertiseSections.length) {
+            setActiveSection(sectionId);
+            
+            // Scroll to the section after a short delay to ensure DOM is ready
+            setTimeout(() => {
+              const targetSection = document.getElementById(`section-${sectionId}`);
+              if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }, 100);
+          }
+        }
+      }
+    };
+
+    handleHashNavigation();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

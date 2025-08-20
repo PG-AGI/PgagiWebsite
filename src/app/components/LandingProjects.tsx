@@ -1,27 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "@/app/components/LandingProjects.module.scss";
 import { trendingListOld } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 
-
 export default function LandingProjects() {
   const router = useRouter();
+  const [isFirstItemHovered, setIsFirstItemHovered] = useState(false);
+  const [isSecondItemHovered, setIsSecondItemHovered] = useState(false);
+  const [isThirdItemHovered, setIsThirdItemHovered] = useState(false);
+  const [isFourthItemHovered, setIsFourthItemHovered] = useState(false);
+
   const handleExpand = (title: string) => {
     switch (title) {
       case "Case Studies":
-        router.push("/whatwethink#case-studies");
+        window.open("/whatwethink#case-studies", "_blank");
         break;
       case "Blogs":
-        router.push("/whatwethink#blogs");
+        window.open("/whatwethink#blogs", "_blank");
         break;
       case "AI News":
-        router.push("/whatwethink#ainews");
+        window.open("/whatwethink#ainews", "_blank");
         break;
       default:
         console.error("URL is not defined");
     }
   };
+
   // This will handle scrolling after the route change
   useEffect(() => {
     const hash = window.location.hash;
@@ -32,6 +37,7 @@ export default function LandingProjects() {
       }
     }
   }, [router]);
+
   return (
     <section id="trending" className={styles.trending}>
       <h3>{"// Projects"}</h3>
@@ -40,54 +46,184 @@ export default function LandingProjects() {
           <div
             key={i}
             className={styles.trendingItem}
-            onClick={() => handleExpand(item.title)}
+            onClick={() => {
+              if (i === 0) {
+                window.open("https://cracked.ai/", "_blank");
+              } else if (i === 1) {
+                window.open("https://fomo.fund/", "_blank");
+              } else if (i === 2) {
+                window.open("https://aione.klinik-x.de/", "_blank");
+              } else {
+                handleExpand(item.title);
+              }
+            }}
+            onMouseEnter={() => {
+              if (i === 0) setIsFirstItemHovered(true);
+              else if (i === 1) setIsSecondItemHovered(true);
+              else if (i === 2) setIsThirdItemHovered(true);
+            }}
+            onMouseLeave={() => {
+              if (i === 0) setIsFirstItemHovered(false);
+              else if (i === 1) setIsSecondItemHovered(false);
+              else if (i === 2) setIsThirdItemHovered(false);
+            }}
+            style={{ cursor: "pointer" }}
           >
             <div className={styles.content}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <p className={styles.brief}>{item.brief}</p>
-              {/*<button className={styles.expandButton}>
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>*/}
+              <h3>
+                {i === 0 ? "" : 
+                 i === 1 ? "" : 
+                 i === 2 ? "" :
+                 item.title}
+              </h3>
+              {i === 0 ? (
+                <p style={{ 
+                  opacity: isFirstItemHovered ? 1 : 0, 
+                  transition: 'opacity 0.3s ease',
+                  textAlign: 'center',
+                  fontSize: '1.1rem',
+                  fontWeight: '600'
+                }}>
+                  Click to View
+                </p>
+              ) : i === 1 ? (
+                <p style={{ 
+                  opacity: isSecondItemHovered ? 1 : 0, 
+                  transition: 'opacity 0.3s ease',
+                  textAlign: 'center',
+                  fontSize: '1.1rem',
+                  fontWeight: '600'
+                }}>
+                  Click to View
+                </p>
+              ) : i === 2 ? (
+                <p style={{ 
+                  opacity: isThirdItemHovered ? 1 : 0, 
+                  transition: 'opacity 0.3s ease',
+                  textAlign: 'center',
+                  fontSize: '1.1rem',
+                  fontWeight: '600'
+                }}>
+                  Click to View
+                </p>
+              ) : (
+                <>
+                  <p>{item.description}</p>
+                  <p className={styles.brief}>{item.brief}</p>
+                </>
+              )}
             </div>
-            <Image
-              className={styles.imgTag}
-              src={item.image}
-              alt={item.title}
-              layout="fill"
-              objectFit="cover"
-            />
+            {i === 0 ? (
+              // First item with CrackedAI.webm functionality
+              <div className={styles.gifContainer}>
+                <video
+                  className={styles.imgTag}
+                  src="/Landing Projects/CrackedAI.webm"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover"
+                  }}
+                />
+              </div>
+            ) : i === 1 ? (
+              // Second item with FOMO.gif functionality
+              <div className={styles.gifContainer}>
+                <img
+                  className={styles.imgTag}
+                  src="/Landing Projects/FOMO.gif"
+                  alt="FOMO"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    animationPlayState: isSecondItemHovered ? "running" : "paused"
+                  }}
+                />
+              </div>
+            ) : i === 2 ? (
+              // Third item with LinkedAI.gif functionality
+              <div className={styles.gifContainer}>
+                <img
+                  className={styles.imgTag}
+                  src="/Landing Projects/LinkedAI.gif"
+                  alt="LinkedAI"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    animationPlayState: isThirdItemHovered ? "running" : "paused"
+                  }}
+                />
+              </div>
+            ) : (
+              // Other items with original images
+              <Image
+                className={styles.imgTag}
+                src={item.image}
+                alt={item.title}
+                layout="fill"
+                objectFit="cover"
+              />
+            )}
           </div>
         ))}
         <div
           className={styles.trendingItem}
-          onClick={() => handleExpand("Success Stories")}
+          onClick={() => window.open("https://www.toingg.com/", "_blank")}
+          onMouseEnter={() => setIsFourthItemHovered(true)}
+          onMouseLeave={() => setIsFourthItemHovered(false)}
+          style={{ cursor: "pointer" }}
         >
           <div className={styles.content}>
-            <h3>Success Stories</h3>
-            <p>Transformative Journeys and Breakthroughs</p>
-            <div className={styles.storybriefContainer}>
-              <p className={styles.storybrief1}>
-                Steep Grind <a href="https://hirextra.com/">HireXtra.com</a> faced slow, manual recruitment.
+            {/* <h3>Toingg</h3> */}
+            {isFourthItemHovered ? (
+              <p style={{ 
+                opacity: isFourthItemHovered ? 1 : 0, 
+                transition: 'opacity 0.3s ease',
+                textAlign: 'center',
+                fontSize: '1.1rem',
+                fontWeight: '600'
+              }}>
+                Click to View
               </p>
-              <p className={styles.storybrief1}>
-                We built an autonomous AI recruiter with 13 agents, transforming
-                their process.
-              </p>
-              <p className={styles.storybrief1}>
-                Tasks that once took weeks—like analyzing job descriptions,
-                matching candidates, and taking interviews—are now completed in
-                minutes, revolutionizing their recruitment.
-              </p>
-            </div>
+            ) : (
+              <>
+                <p>Transformative Journeys and Breakthroughs</p>
+                <div className={styles.storybriefContainer}>
+                  <p className={styles.storybrief1}>
+                    Steep Grind <a href="https://hirextra.com/">HireXtra.com</a> faced slow, manual recruitment.
+                  </p>
+                  <p className={styles.storybrief1}>
+                    We built an autonomous AI recruiter with 13 agents, transforming
+                    their process.
+                  </p>
+                  <p className={styles.storybrief1}>
+                    Tasks that once took weeks—like analyzing job descriptions,
+                    matching candidates, and taking interviews—are now completed in
+                    minutes, revolutionizing their recruitment.
+                  </p>
+                </div>
+              </>
+            )}
           </div>
-          {/* <Image
-            className={styles.imgTag}
-            src= {project1}
-            alt="Success Stories"
-            fill
-            style={{ objectFit: "cover" }}
-          /> */}
+          <div className={styles.gifContainer}>
+            <img
+              className={styles.imgTag}
+              src="/Landing Projects/Toingg.gif"
+              alt="Toingg"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                animationPlayState: isFourthItemHovered ? "running" : "paused"
+              }}
+            />
+          </div>
         </div>
       </div>
     </section>
