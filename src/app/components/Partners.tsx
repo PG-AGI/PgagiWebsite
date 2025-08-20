@@ -15,12 +15,12 @@ import Image from "next/image";
 import styles from "./partners.module.scss";
 
 const images = [ais, hx, social, ciek, aixl,o,logok,wcg,fomo];
+
 export default function Partners () {
     return (
         <section id="partners" className={styles.partners}>
             <h3>Partnered with Innovators like</h3>
-      
-
+            
             <Marquee className={styles.marquee} speed={55} >
             <div className={styles.partnerList}>
                 {

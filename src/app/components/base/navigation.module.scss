@@ -1,18 +1,18 @@
 .navigation {
   position: fixed;
-  top: -10px;
+  top: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 900;
   transition: all 0.2s ease-out;
-  background-color: #000000;
-  clear: #ffffff;
+  // background-color: #000000; // Removed background
+  // clear: #ffffff; // Removed clear property
 
-  // Default fallback (black text on white)
-  // --text-color: #000000;
-  // --text-color-inverse: #ffffff;
+  // Default fallback (grey text)
+  --text-color: #aaa5a5;
+  --text-color-inverse: #ffffff;
 
   // &.nav-dark {
   //   background: rgba(0, 0, 0, 0.95);
@@ -81,11 +81,11 @@
   }
 
   .nav {
-    width: 88%;
+    width: 85%;
     display: flex;
-    align-items: center;
+    
     justify-content: space-between;
-    margin-top: 10px;
+    
     cursor: pointer;
     transition: opacity 0.1s ease-in-out, visibility 0s 0.3s;
     will-change: transform, opacity;
@@ -212,23 +212,7 @@
 }
 
 
-.navDark {
-  --text-color: #fff;
-  background: rgba(0, 0, 0, 0.95);
-
-  &.scrolled {
-    background: rgba(30, 30, 30, 0.95); // still dark, just slightly different
-  }
-}
-
-.navLight {
-  --text-color: #000;
-  background: rgba(255, 255, 255, 0.95);
-
-  &.scrolled {
-    background: rgba(240, 240, 240, 0.95); // still light
-  }
-}
+// Removed navDark and navLight classes as they are no longer needed
 
 
 .dropdown {
@@ -383,8 +367,8 @@
       width: 18rem;
       height: 5rem;
       text-align: center;
-      color: var(--text-color, #000);
-      background: #f0f0f0;
+      color: var(--text-color, #666666);
+      // background: #f0f0f0; // Removed background
       border-radius: 12px;
       display: flex;
       justify-content: center;
@@ -401,7 +385,7 @@
       padding: 10px 0;
       text-align: center;
       border-bottom: 1px solid #ccc;
-      color: var(--text-color, #000);
+      color: var(--text-color, #666666);
       cursor: pointer;
     }
 
@@ -411,7 +395,7 @@
       width: 100%;
       margin-bottom: 20px;
       cursor: pointer;
-      color: var(--text-color, #000);
+      color: var(--text-color, #666666);
       margin-top: -2.75rem;
       margin-left: -1rem;
     }
@@ -420,7 +404,7 @@
       font-size: 1.5rem;
       margin-bottom: -3rem;
       margin-top: -3rem;
-      color: var(--text-color, #000);
+      color: var(--text-color, #666666);
     }
 
     .mobileSubMenuItem {
@@ -429,13 +413,13 @@
       padding: 10px 0;
       text-align: left;
       margin-left: 2rem;
-      color: var(--text-color, #666);
+      color: var(--text-color, #666666);
       cursor: pointer;
       transition: transform 0.3s ease, color 0.3s ease;
 
       &:hover {
         transform: scale(1.05);
-        color: var(--text-color, #000);
+        color: var(--text-color, #666666);
       }
     }
 
@@ -460,15 +444,15 @@
       background-color: #f0f0f0;
     }
 
-    .nav {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background: white;
-      --text-color: #000000;
-      --text-color-inverse: #ffffff;
+          .nav {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        // background: white; // Removed background
+        --text-color: #666666;
+        --text-color-inverse: #ffffff;
 
       .logo {
         display: flex;
@@ -481,16 +465,16 @@
         z-index: 6;
       }
 
-      .links {
-        position: fixed;
-        display: none;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: white;
-        --text-color: #000000;
-        --text-color-inverse: #ffffff;
+              .links {
+          position: fixed;
+          display: none;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          // background: white; // Removed background
+          --text-color: #666666;
+          --text-color-inverse: #ffffff;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;

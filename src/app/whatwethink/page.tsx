@@ -148,7 +148,7 @@ export default function BlogPage() {
     <div className={styles.main}>
       {/* Page Title */}
       <div className={styles.pageTitle}>
-        <span className={styles.category}>{/* Insights */}Insights</span>
+        <span className={styles.category}>// Insights</span>
         <h1>Discover our latest insights, case studies, and AI innovations</h1>
       </div>
 
@@ -229,6 +229,7 @@ export default function BlogPage() {
               <div className={styles.tileSkeleton} key={i}>
                 <div className={styles.imgSkeleton} />
                 <div className={styles.contentSkeleton}>
+                  <div className={styles.categorySkeleton} />
                   <div className={styles.titleSkeleton} />
                   <div className={styles.metaSkeleton} />
                 </div>
@@ -244,7 +245,7 @@ export default function BlogPage() {
             <>
               <Marquee
                 gradient={false}
-                speed={50}
+                speed={55}
                 className={styles.marqueeWrapper}
               >
                 {[...blogs, ...news].reverse().map((item) => {
@@ -273,7 +274,15 @@ export default function BlogPage() {
                         />
                       </div>
                       <div className={styles.content}>
-                        <h3 className={styles.title}>{item.title}</h3>
+                        <div>
+                          <div className={styles.category}>
+                            {isBlog ? 'Blog' : 'News'}
+                          </div>
+                          <h3 className={styles.title}>{item.title}</h3>
+                        </div>
+                        <div className={styles.readTime}>
+                          {item.readTime || '5 min read'}
+                        </div>
                       </div>
                     </Link>
                   );

@@ -123,16 +123,16 @@
   .rightSide {
     // Remove height and overflow constraints to let sections scroll with page
     .section {
-      min-height: 100vh; // Each section takes full viewport height
+      min-height: 80vh; // Reduced from 100vh to decrease space between sections
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 80px 0;
+      padding: 60px 0; // Reduced from 80px to decrease space between sections
       border-bottom: 1px solid #f3f4f6;
 
       @media (max-width: 1024px) {
         min-height: auto;
-        padding: 60px 0;
+        padding: 40px 0; // Reduced from 60px for mobile
         border-bottom: none;
       }
 
@@ -161,7 +161,7 @@
         }
 
         .sectionTitle {
-          font-size: 1.5rem;
+          font-size: 2rem; // Increased from 1.5rem
           font-weight: 600;
           color: #111827;
           margin: 0;
@@ -170,7 +170,7 @@
 
       .sectionContent {
         .sectionTagline {
-          font-size: 1.25rem;
+          font-size: 1.5rem; // Increased from 1.25rem
           font-weight: 700;
           color: #111827;
           margin-bottom: 20px;
@@ -178,7 +178,7 @@
         }
 
         .sectionDescription {
-          font-size: 1rem;
+          font-size: 1.125rem; // Increased from 1rem
           color: #6b7280;
           line-height: 1.6;
           margin-bottom: 32px;
@@ -228,7 +228,7 @@
             }
 
             span {
-              font-size: 0.875rem;
+              font-size: 1rem; // Increased from 0.875rem
               color: #374151;
               font-weight: 500;
             }
