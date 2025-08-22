@@ -90,7 +90,20 @@ body {
 /* Prevent horizontal overflow */
 html, body {
   overflow-x: hidden;
-  max-width: 100vw;
+  max-width: 100%; /* Changed from 100vw to prevent overflow */
+  width: 100%;
+}
+
+/* Additional overflow prevention for all elements */
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure containers don't overflow */
+.container, .main, .section, .wrapper {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Enable smooth scrolling for anchor navigation */

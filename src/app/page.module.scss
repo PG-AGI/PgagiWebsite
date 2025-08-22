@@ -94,7 +94,7 @@
       position: sticky;
       top: 50%;
       translate: 0 -50%;
-      width: 100vw;
+      width: 100%; // Changed from 100vw to prevent overflow
       height: 70vh;
       overflow: hidden;
 
