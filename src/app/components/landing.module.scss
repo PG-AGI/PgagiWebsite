@@ -145,7 +145,7 @@
 }
 
 .landing {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: relative;
   overflow: hidden;
@@ -175,8 +175,8 @@
 
 .leftSection {
   flex: 1 1 0;
-  min-width: 950px;
-  max-width: auto;
+  min-width: 0; // Remove fixed min-width to prevent overflow
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -203,7 +203,7 @@
   font-size: 1.35rem;
   color: #e0d7d7;
   font-weight: 300;
-   max-width: 60vw;
+  max-width: 100%; // Change from 60vw to prevent overflow
   margin-top: 0.5rem;
 }
 
@@ -256,7 +256,8 @@
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  min-width: 350px;
+  min-width: 0; // Remove fixed min-width
+  max-width: 100%;
   position: relative;
   height: 100%;
 }
@@ -266,6 +267,11 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 2rem 1rem;
+    max-width: 95%; // Increase max-width for mobile
+  }
+
+  .leftSection {
+    margin-top: 5rem; // Reduce top margin on mobile
   }
 
   .rightSection {
@@ -273,12 +279,12 @@
     justify-content: center;
     margin: 2rem auto 0 auto;
   }
-
 }
 
 @media (max-width: 600px) {
   .landingContainer {
     padding: 1rem 0.5rem;
+    max-width: 98%; // Further increase max-width for small mobile
   }
 
   .mainHeading {
@@ -288,9 +294,20 @@
   .leftSection {
     min-width: 0;
     max-width: 100%;
+    margin-top: 3rem; // Further reduce top margin
+  }
+
+  .description {
+    font-size: 1.1rem; // Reduce font size for mobile
   }
 
   .ctaButton {
-    padding: 0.1rem 0.5rem;
+    padding: 0.8rem 1.5rem; // Fix padding values
+    font-size: 1rem;
+  }
+
+  .outlineButton {
+    padding: 0.8rem 1.5rem; // Fix padding values
+    font-size: 1rem;
   }
 }

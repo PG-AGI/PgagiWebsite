@@ -113,7 +113,7 @@
 @media (max-width:478px){
     .segment{
         margin-top:40%;
-        width: 100vw;
+        width: 100%; // Changed from 100vw to prevent overflow
         height: 50vh;
         display: flex;
         align-items: center;
@@ -122,7 +122,8 @@
     
         .window {
             position: relative;
-            width: 390px;
+            width: 90%; // Changed from fixed 390px to responsive width
+            max-width: 390px; // Add max-width to maintain design
             height: 465px;
             display: flex;
             flex-direction: column;
@@ -200,9 +201,8 @@
                     p {
                         font-size: 16px;
                          font-weight: 400;
-                        min-width: 350px;
-                       
-
+                        min-width: 0; // Changed from fixed 350px to prevent overflow
+                        max-width: 100%; // Add max-width for responsiveness
                     }                   
                 }
                 

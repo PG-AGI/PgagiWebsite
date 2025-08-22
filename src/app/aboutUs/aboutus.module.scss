@@ -502,7 +502,7 @@
   overflow: hidden;
   
   .imageContainer {
-    width: 100vw;
+    width: 100%; // Changed from 100vw to prevent overflow
     left: 45%;
     position: relative;
     

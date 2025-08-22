@@ -36,13 +36,13 @@ $code-border: #333333;
   overflow-x: hidden !important;
 }
 .main{
-  width: 100vw !important;
+  width: 100% !important; // Changed from 100vw to prevent overflow
   // background-color: $background-light;
   overflow-y: none !important;
 }
 
 .container {
-  width: 100vw;
+  width: 100%; // Changed from 100vw to prevent overflow
   background-color: $background-light;
   color: $text-dark;
 }
