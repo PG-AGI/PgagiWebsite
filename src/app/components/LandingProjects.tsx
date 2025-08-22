@@ -133,13 +133,12 @@ export default function LandingProjects() {
             ) : i === 1 ? (
               // Second item with FOMO.gif functionality
               <div className={styles.gifContainer}>
-                <img
+                <Image
                   className={styles.imgTag}
                   src="/Landing Projects/FOMO.gif"
                   alt="FOMO"
+                  fill
                   style={{
-                    width: "100%",
-                    height: "100%",
                     objectFit: "cover",
                     animationPlayState: isSecondItemHovered ? "running" : "paused"
                   }}
@@ -148,13 +147,12 @@ export default function LandingProjects() {
             ) : i === 2 ? (
               // Third item with LinkedAI.gif functionality
               <div className={styles.gifContainer}>
-                <img
+                <Image
                   className={styles.imgTag}
                   src="/Landing Projects/LinkedAI.gif"
                   alt="LinkedAI"
+                  fill
                   style={{
-                    width: "100%",
-                    height: "100%",
                     objectFit: "cover",
                     animationPlayState: isThirdItemHovered ? "running" : "paused"
                   }}
@@ -212,13 +210,12 @@ export default function LandingProjects() {
             )}
           </div>
           <div className={styles.gifContainer}>
-            <img
+            <Image
               className={styles.imgTag}
               src="/Landing Projects/Toingg.gif"
               alt="Toingg"
+              fill
               style={{
-                width: "100%",
-                height: "100%",
                 objectFit: "cover",
                 animationPlayState: isFourthItemHovered ? "running" : "paused"
               }}

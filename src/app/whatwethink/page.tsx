@@ -148,7 +148,7 @@ export default function BlogPage() {
     <div className={styles.main}>
       {/* Page Title */}
       <div className={styles.pageTitle}>
-        <span className={styles.category}>// Insights</span>
+        <span className={styles.category}>{'// Insights'}</span>
         <h1>Discover our latest insights, case studies, and AI innovations</h1>
       </div>
 
