@@ -133,6 +133,26 @@ const testimonials: Testimonial[] = [
   }
 ];
 
+// Star Rating Component
+const StarRating: React.FC = () => (
+  <div className={styles.starRating}>
+    {[...Array(5)].map((_, index) => (
+      <svg
+        key={index}
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="#FFD700"
+        stroke="#FFD700"
+        strokeWidth="1"
+        className={styles.star}
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+    ))}
+  </div>
+);
+
 const VideoTestimonial: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -161,7 +181,7 @@ const VideoTestimonial: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Content */}
+        {/* Main Content - Two Column Layout for Desktop */}
         <div className={styles.mainContent}>
           {/* Left Column - Video */}
           <div className={styles.leftColumn}>
@@ -170,7 +190,7 @@ const VideoTestimonial: React.FC = () => {
                 <div className={styles.videoPlaceholder}>
                   <iframe 
                     width="100%" 
-                    height="400" 
+                    height="100%" 
                     src="https://www.youtube.com/embed/vsuDM890kmU?si=1ZfbE5tpp6FLtQE3" 
                     title="YouTube video player" 
                     frameBorder="0" 
@@ -201,8 +221,6 @@ const VideoTestimonial: React.FC = () => {
           {/* Right Column - Testimonials */}
           <div className={styles.rightColumn}>
             <div className={styles.testimonialContent}>
-            
-
               <div className={styles.testimonialBoxes}>
                 {/* First Testimonial Box */}
                 <div className={styles.testimonialBox}>
@@ -223,7 +241,10 @@ const VideoTestimonial: React.FC = () => {
                       {currentTestimonial.name.charAt(0).toUpperCase()}
                     </div>
                     <div className={styles.authorDetails}>
-                      <h4 className={styles.authorName}>{currentTestimonial.name || currentTestimonial.company}</h4>
+                      <div className={styles.authorNameRow}>
+                        <h4 className={styles.authorName}>{currentTestimonial.name || currentTestimonial.company}</h4>
+                        <StarRating />
+                      </div>
                       <p className={styles.authorTitle}>
                         {currentTestimonial.company && currentTestimonial.name
                           ? `${currentTestimonial.company}, ${currentTestimonial.name}`
@@ -252,7 +273,10 @@ const VideoTestimonial: React.FC = () => {
                       {nextTestimonial.name.charAt(0).toUpperCase()}
                     </div>
                     <div className={styles.authorDetails}>
-                      <h4 className={styles.authorName}>{nextTestimonial.name || nextTestimonial.company}</h4>
+                      <div className={styles.authorNameRow}>
+                        <h4 className={styles.authorName}>{nextTestimonial.name || nextTestimonial.company}</h4>
+                        <StarRating />
+                      </div>
                       <p className={styles.authorTitle}>
                         {nextTestimonial.company && nextTestimonial.name
                           ? `${nextTestimonial.company}, ${nextTestimonial.name}`
@@ -262,6 +286,121 @@ const VideoTestimonial: React.FC = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout - Video at Top, Testimonials Below */}
+        <div className={styles.mobileLayout}>
+          {/* Video Section - Top Priority for Mobile */}
+          <div className={styles.mobileVideoSection}>
+            <div className={styles.videoContainer}>
+              <div className={styles.videoPlaceholder}>
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/vsuDM890kmU?si=1ZfbE5tpp6FLtQE3" 
+                  title="YouTube video player" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className={styles.videoInfo}>
+                <h3 className={styles.speakerName}>Stunited</h3>
+                <p className={styles.speakerTitle}>
+                  Partnering with Toingg, they deployed an advanced, AI-powered communication system. Automated WhatsApp outreach, intelligent conversational AI calls, and seamless CRM integration with{' '}
+                  <a 
+                    href="https://monday.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={styles.mondayLink}
+                  >
+                    Monday.com
+                  </a>
+                  {' '}changed the game completely. With minimal human intervention, Stunited effortlessly booked 102 high-quality meetings, driving an astonishing 1100x ROI.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonials Section - Below Video for Mobile */}
+          <div className={styles.mobileTestimonialsSection}>
+            <div className={styles.testimonialBoxes}>
+              {/* First Testimonial Box */}
+              <motion.div 
+                className={styles.testimonialBox}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className={styles.testimonialText}
+                  >
+                    <p>{currentTestimonial.quote}</p>
+                  </motion.div>
+                </AnimatePresence>
+                <div className={styles.authorInfo}>
+                  <div className={styles.authorAvatar}>
+                    {currentTestimonial.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className={styles.authorDetails}>
+                    <div className={styles.authorNameRow}>
+                      <h4 className={styles.authorName}>{currentTestimonial.name || currentTestimonial.company}</h4>
+                      <StarRating />
+                    </div>
+                    <p className={styles.authorTitle}>
+                      {currentTestimonial.company && currentTestimonial.name
+                        ? `${currentTestimonial.company}, ${currentTestimonial.name}`
+                        : currentTestimonial.company || currentTestimonial.name}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Second Testimonial Box */}
+              <motion.div 
+                className={styles.testimonialBox}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentIndex + 1}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }}
+                    className={styles.testimonialText}
+                  >
+                    <p>{nextTestimonial.quote}</p>
+                  </motion.div>
+                </AnimatePresence>
+                <div className={styles.authorInfo}>
+                  <div className={styles.authorAvatar}>
+                    {nextTestimonial.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className={styles.authorDetails}>
+                    <div className={styles.authorNameRow}>
+                      <h4 className={styles.authorName}>{nextTestimonial.name || nextTestimonial.company}</h4>
+                      <StarRating />
+                    </div>
+                    <p className={styles.authorTitle}>
+                      {currentTestimonial.company && currentTestimonial.name
+                        ? `${currentTestimonial.company}, ${currentTestimonial.name}`
+                        : currentTestimonial.company || currentTestimonial.name}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
