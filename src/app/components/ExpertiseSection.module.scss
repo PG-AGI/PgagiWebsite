@@ -107,11 +107,11 @@
   }
   
   .container {
-    margin: 6rem 12rem;
+    margin: 6rem 10rem;
     min-height: min-content;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+    
     align-items: end;
     max-width: 1600px;
     padding: 0;
@@ -183,15 +183,11 @@
 }
 
 /* Large Desktop Layout (1024px and above) */
-@media (min-width: 1024px) {
-  .container {
-    gap: 6rem;
-  }
-}
+
 
 /* Extra Large Desktop Layout (1200px and above) */
 @media (min-width: 1200px) {
   .container {
-    margin: 6rem 12rem;
+    margin: 6rem 10rem;
   }
 } 
