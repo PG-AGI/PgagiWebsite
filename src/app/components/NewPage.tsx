@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './NewPage.module.scss';
 
 const StatsSection = () => {
@@ -41,9 +42,11 @@ const StatsSection = () => {
                 <h3 className={styles.statTitle}>Client Satisfaction</h3>
                 <div className={styles.separator}></div>
                 <div className={styles.upworkVerification}>
-                  <img 
+                  <Image 
                     src="/landing/Upwork.webp" 
                     alt="Upwork" 
+                    width={100}
+                    height={24}
                     className={styles.upworkLogo}
                   />
                   <a 
@@ -69,7 +72,7 @@ const StatsSection = () => {
               <div className={styles.separator}></div>
               <div className={styles.statContent}>
                 <span className={styles.statNumber}>2023</span>
-                <p className={styles.statDescription}>That year two founders launched their first project: "Toingg" , a communication OS for businesses.</p>
+                <p className={styles.statDescription}>That year two founders launched their first project: &quot;Toingg&quot; , a communication OS for businesses.</p>
               </div>
               
             </div>
@@ -87,9 +90,9 @@ const StatsSection = () => {
               {/* Agency Description */}
               <div className={styles.agencyDescription}>
                 <p>
-                  We're a full-service agency driven by <strong>strategy, design, and technology</strong>. 
+                  We&apos;re a full-service agency driven by <strong>strategy, design, and technology</strong>. 
                   From brand foundations to fully developed digital products, we create work 
-                  that doesn't just look good: <strong>it performs, connects, and endures</strong>.
+                  that doesn&apos;t just look good: <strong>it performs, connects, and endures</strong>.
                 </p>
               </div>
             </div>

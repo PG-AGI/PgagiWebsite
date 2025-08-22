@@ -40,9 +40,9 @@ export default function AboutUs() {
       >
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
-            <span className={styles.aboutLabel}>// About</span>
+            <span className={styles.aboutLabel}>{'// About'}</span>
             <h1 className={styles.heroTitle}>
-              <span className={styles.titleLine1}>We work with founders who don't</span>
+              <span className={styles.titleLine1}>We work with founders who don&apos;t</span>
               <span className={styles.titleLine2}>wait for permission. The ones building</span>
               <span className={styles.titleLine3}>the next big thing fearlessly, with</span>
               <span className={styles.titleLine4}>design that speaks louder than words.</span>

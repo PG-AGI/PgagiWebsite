@@ -146,7 +146,7 @@ export default function Expertise() {
       <div className={styles.container}>
         {/* Header Section */}
         <div className={styles.header}>
-          <span className={styles.subtitle}>// Expertise</span>
+          <span className={styles.subtitle}>{'// Expertise'}</span>
           <h1 className={styles.mainTitle}>
             <span className={styles.titleLine1}>We build the stuff brands brag about.</span>
             <span className={styles.titleLine2}>Bold identities, beautiful websites, scroll stopping campaigns and digital experiences people actually love.</span>

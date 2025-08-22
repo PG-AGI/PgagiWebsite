@@ -226,7 +226,7 @@ export default function Projects() {
     <div className={styles.main}>
       {/* Page Title */}
       <div className={styles.pageTitle}>
-        <span className={styles.category}>// Projects</span>
+        <span className={styles.category}>{'// Projects'}</span>
         <h1>Discover our latest projects and innovations</h1>
       </div>
 
@@ -306,28 +306,24 @@ export default function Projects() {
                     />
                   ) : i === 1 ? (
                     // Second item with FOMO.gif functionality
-                    <img
+                    <Image
                       className={styles.imgTag}
                       src="/Landing Projects/FOMO.gif"
                       alt="FOMO"
-                      loading="lazy"
+                      fill
                       style={{
-                        width: "100%",
-                        height: "100%",
                         objectFit: "cover",
                         animationPlayState: isSecondItemHovered ? "running" : "paused"
                       }}
                     />
                   ) : i === 2 ? (
                     // Third item with LinkedAI.gif functionality
-                    <img
+                    <Image
                       className={styles.imgTag}
                       src="/Landing Projects/LinkedAI.gif"
                       alt="LinkedAI"
-                      loading="lazy"
+                      fill
                       style={{
-                        width: "100%",
-                        height: "100%",
                         objectFit: "cover",
                         animationPlayState: isThirdItemHovered ? "running" : "paused"
                       }}
@@ -375,14 +371,12 @@ export default function Projects() {
                 )}
               </div>
               <div className={styles.cardImage}>
-                <img
+                <Image
                   className={styles.imgTag}
                   src="/Landing Projects/Toingg.gif"
                   alt="Toingg"
-                  loading="lazy"
+                  fill
                   style={{
-                    width: "100%",
-                    height: "100%",
                     objectFit: "cover",
                     animationPlayState: isFourthItemHovered ? "running" : "paused"
                   }}

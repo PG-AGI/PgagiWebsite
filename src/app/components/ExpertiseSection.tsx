@@ -22,7 +22,7 @@ export default function ExpertiseSection() {
       <div className={styles.container}>
         {/* Expertise Section */}
         <div className={styles.expertiseContent}>
-          <h3 className={styles.expertiseHeading}>// Expertise</h3>
+          <h3 className={styles.expertiseHeading}>{'// Expertise'}</h3>
           <p className={styles.expertiseDescription}>
             We team up with bold thinkers to build brands that actually matter. Our expertise spans the full creative journey, from brand identity to digital products. We deliver solutions that connects, converts and drives real results.
           </p>
