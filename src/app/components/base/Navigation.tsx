@@ -65,12 +65,23 @@ export default function Navigation() {
     setMobileMenuSection("main");
   };
 
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
     } else {
       document.body.style.overflow = "auto";
+      document.body.style.position = "static";
+      document.body.style.width = "auto";
     }
+
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.position = "static";
+      document.body.style.width = "auto";
+    };
   }, [isMenuOpen]);
 
   return (
@@ -100,62 +111,69 @@ export default function Navigation() {
           {isMobile ? (
             <>
               {/* Mobile Menu Navigation */}
-                              {mobileMenuSection === "main" && (
-                  <div className={styles.mastermenu}>
-                    <Link href="/" className={styles.mobileMenuItem}>
-                      Home
-                    </Link>
-                    <Link href="/expertise" className={styles.mobileMenuItem}>
-                      Expertise
-                    </Link>
-                    <Link href="/projects" className={styles.mobileMenuItem}>
-                      Projects
-                    </Link>
-                    <Link href={BLOGS} className={styles.mobileMenuItem}>
-                      What we think
-                    </Link>
-                    <Link href={ABOUT} className={styles.mobileMenuItem}>
-                      Who we are
-                    </Link>
-                    <Link href="/Career" className={styles.mobileMenuItem}>
-                      Careers
-                    </Link>
-                  </div>
-                )}
+              {mobileMenuSection === "main" && (
+                <div className={styles.mastermenu}>
+                  <Link href="/" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Home
+                  </Link>
+                  <Link href="/expertise" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Expertise
+                  </Link>
+                  <Link href="/projects" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Projects
+                  </Link>
+                  <Link href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    What we think
+                  </Link>
+                  <Link href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Who we are
+                  </Link>
+                  <Link href="/Career" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Careers
+                  </Link>
+                  <button className={styles.mobileContact} onClick={() => {
+                    setIsMenuOpen(false);
+                    handleContactUs();
+                  }}>
+                    Get in touch
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              )}
             </>
           ) : (
-                          <>
-                {/* Desktop Navigation */}
-                <Link href="/" className={styles.link}>
-                  Home
-                </Link>
-                <Link href="/aboutUs" className={styles.link}>
-                  About Us
-                </Link>
-                <Link href="/expertise" className={styles.link}>
-                  Expertise
-                </Link>
-                <Link href="/projects" className={styles.link}>
-                  Projects
-                </Link>
-                <Link href="/whatwethink" className={styles.link}>
-                  Blogs
-                </Link>
-               
-                <Link href="/Career" className={styles.link}>
-                  Careers
-                </Link>
+            <>
+              {/* Desktop Navigation */}
+              <Link href="/" className={styles.link}>
+                Home
+              </Link>
+              <Link href="/aboutUs" className={styles.link}>
+                About Us
+              </Link>
+              <Link href="/expertise" className={styles.link}>
+                Expertise
+              </Link>
+              <Link href="/projects" className={styles.link}>
+                Projects
+              </Link>
+              <Link href="/whatwethink" className={styles.link}>
+                Blogs
+              </Link>
+             
+              <Link href="/Career" className={styles.link}>
+                Careers
+              </Link>
 
-                <button className={styles.contact} onClick={handleContactUs}>
-                  Get in touch
-                  <ArrowRight size={16} />
-                </button>
-              </>
+              <button className={styles.contact} onClick={handleContactUs}>
+                Get in touch
+                <ArrowRight size={16} />
+              </button>
+            </>
           )}
         </div>
 
         <div
-          className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`}
+          className={clsx(styles.hamburger, isMenuOpen && styles.open)}
           onClick={toggleMenu}
         >
           <span></span>

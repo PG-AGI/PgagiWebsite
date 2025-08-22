@@ -3,7 +3,7 @@
   color: #ffffff;
   position: relative;
   width: 100%;
-  height: 120vh;
+  min-height: 120vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -42,6 +42,7 @@
   flex-direction: column;
   min-height: 70vh;
   flex: 1;
+  padding-bottom: 120px; // Add padding to prevent overlap with bottom section
 }
 
 // Top section with branding and navigation
@@ -183,11 +184,10 @@
 .bottomSection {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.2);
-  position: absolute;
-  bottom: 1.5rem;
-  left: 0;
-  right: 0;
+  position: relative; // Changed from absolute to relative
+  margin-top: auto; // Push to bottom
   z-index: 10;
+  padding: 1.5rem 0;
 }
 
 .bottomContainer {
@@ -262,6 +262,10 @@
     bottom: 18%;
     line-height: 1.1;
   }
+  
+  .contentContainer {
+    padding-bottom: 100px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -289,18 +293,18 @@
   .navigationSection {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    justify-items: center;
-    text-align: center;
+    justify-items: start; // Changed from center to start for left alignment
+    text-align: left; // Changed from center to left
   }
   
   .navColumn {
-    align-items: center;
+    align-items: flex-start; // Changed from center to flex-start for left alignment
   }
   
   .contactSection {
-    align-items: center;
-    justify-self: center;
-    text-align: center;
+    align-items: flex-start; // Changed from center to flex-start
+    justify-self: start; // Changed from center to start
+    text-align: left; // Changed from center to left
     min-width: auto;
     grid-column: 1 / -1;
     margin-top: 1rem;
@@ -323,8 +327,13 @@
   .backgroundText {
     font-size: clamp(8rem, 15vw, 14rem);
     max-width: 100vw;
-    bottom: 20%;
+    bottom: 15%; // Reduced from 20% to ensure lists stay below
     line-height: 1.0;
+    opacity: 0.4; // Reduce opacity on mobile to prevent interference
+  }
+  
+  .contentContainer {
+    padding-bottom: 80px;
   }
 }
 
@@ -348,11 +357,12 @@
   .navigationSection {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    justify-items: center;
+    justify-items: start; // Keep left alignment
+    text-align: left; // Keep left alignment
   }
   
   .navColumn {
-    align-items: center;
+    align-items: flex-start; // Keep left alignment
   }
   
   .columnHeader {
@@ -371,7 +381,8 @@
   .contactSection {
     grid-column: 1 / -1;
     margin-top: 1rem;
-    text-align: center;
+    text-align: left; // Keep left alignment
+    align-items: flex-start; // Keep left alignment
   }
   
   .bottomSection {
@@ -390,8 +401,13 @@
   .backgroundText {
     font-size: clamp(6rem, 12vw, 10rem);
     max-width: 100vw;
-    bottom: 22%;
+    bottom: 12%; // Further reduced to ensure lists stay below
     line-height: 0.9;
+    opacity: 0.3; // Further reduce opacity on smaller screens
+  }
+  
+  .contentContainer {
+    padding-bottom: 70px;
   }
 }
 
@@ -420,17 +436,19 @@
   .navigationSection {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    justify-items: center;
+    justify-items: start; // Keep left alignment
+    text-align: left; // Keep left alignment
   }
   
   .navColumn {
-    align-items: center;
+    align-items: flex-start; // Keep left alignment
   }
   
   .contactSection {
     grid-column: 1 / -1;
     margin-top: 1rem;
-    text-align: center;
+    text-align: left; // Keep left alignment
+    align-items: flex-start; // Keep left alignment
   }
   
   .link {
@@ -440,8 +458,13 @@
   .backgroundText {
     font-size: clamp(4rem, 10vw, 8rem);
     max-width: 100vw;
-    bottom: 25%;
+    bottom: 10%; // Further reduced to ensure lists stay below
     line-height: 0.8;
+    opacity: 0.25; // Very low opacity on very small screens
+  }
+  
+  .contentContainer {
+    padding-bottom: 60px;
   }
 }
 
@@ -469,18 +492,25 @@
   
   .navigationSection {
     grid-template-columns: 1fr;
-    gap: 1rem;
-    justify-items: center;
+    gap: 1.5rem; // Increased gap for single column layout
+    justify-items: start; // Keep left alignment
+    text-align: left; // Keep left alignment
   }
   
   .navColumn {
-    align-items: center;
+    align-items: flex-start; // Keep left alignment
+    gap: 0.5rem; // Reduced gap between links
+  }
+  
+  .linkList {
+    gap: 0.4rem; // Reduced gap between list items
   }
   
   .contactSection {
     grid-column: 1 / -1;
-    margin-top: 1rem;
-    text-align: center;
+    margin-top: 1.5rem; // Increased margin for better separation
+    text-align: left; // Keep left alignment
+    align-items: flex-start; // Keep left alignment
   }
   
   .columnHeader {
@@ -490,6 +520,7 @@
   
   .link {
     font-size: clamp(0.7rem, 2vw, 0.8rem);
+    padding: 0.2rem 0; // Add some padding for better touch targets
   }
   
   .contactEmail,
@@ -513,7 +544,12 @@
   .backgroundText {
     font-size: clamp(3rem, 8vw, 6rem);
     max-width: 100vw;
-    bottom: 28%;
+    bottom: 8%; // Further reduced to ensure lists stay below
     line-height: 0.7;
+    opacity: 0.2; // Minimal opacity on smallest screens
+  }
+  
+  .contentContainer {
+    padding-bottom: 50px;
   }
 }

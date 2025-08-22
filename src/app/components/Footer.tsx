@@ -65,7 +65,7 @@ export default function Footer() {
               {/* Contact Information */}
               <div className={styles.contactSection}>
                 <div className={styles.contactInfo}>
-                  <p className={styles.contactEmail}>pgagiadmin@pgagi.in</p>
+                  <p className={styles.contactEmail}>admin@pgagi.in</p>
                   <p className={styles.contactPhone}>+91 80-35736907</p>
                 </div>
               </div>

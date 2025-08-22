@@ -80,12 +80,7 @@ const StatsSection = () => {
             {/* Agency Information Section */}
             <div className={styles.agencySection}>
               {/* Agency Identity */}
-              <div className={styles.agencyIdentity}>
-                <h2 className={styles.agencyName}>Astra</h2>
-                <p className={styles.agencyTagline}>Creative Agency</p>
-                <h4 className={styles.founderName}>Michael Rosenberg</h4>
-                <p className={styles.founderTitle}>Founder</p>
-              </div>
+             
 
               {/* Agency Description */}
               <div className={styles.agencyDescription}>
