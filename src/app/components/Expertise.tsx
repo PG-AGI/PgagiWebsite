@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styles from './expertise.module.scss';
 
 export default function Expertise() {
   const [activeSection, setActiveSection] = useState(1);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const expertiseSections = [
+  const expertiseSections = useMemo(() => [
     {
       id: 1,
       number: "01",
@@ -66,7 +69,7 @@ export default function Expertise() {
         "AI Strategy & Consulting"
       ]
     }
-  ];
+  ], []);
 
   useEffect(() => {
     // Handle hash navigation on page load
@@ -94,30 +97,49 @@ export default function Expertise() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const expertiseSection = document.querySelector(`.${styles.expertiseSection}`) as HTMLElement;
+    // Completely passive approach - only update when scrolling stops
+    const handleScrollEnd = () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
       
-      if (expertiseSection) {
-        const sectionTop = expertiseSection.offsetTop;
-        const sectionHeight = expertiseSection.offsetHeight;
+      scrollTimeoutRef.current = setTimeout(() => {
+        // Only calculate active section when scrolling stops
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const windowHeight = window.innerHeight;
         
-        // Calculate how much of the expertise section is visible
-        const scrollProgress = (scrollTop - sectionTop + windowHeight) / sectionHeight;
+        let currentSection = 1;
+        sectionRefs.current.forEach((section, index) => {
+          if (section) {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= windowHeight * 0.5) {
+              currentSection = index + 1;
+            }
+          }
+        });
         
-        if (scrollProgress > 0 && scrollProgress <= 1) {
-          // Calculate which section should be active based on scroll position
-          const sectionIndex = Math.floor(scrollProgress * expertiseSections.length);
-          const currentSection = Math.min(Math.max(sectionIndex + 1, 1), expertiseSections.length);
-          setActiveSection(currentSection);
-        }
-      }
+        setActiveSection(currentSection);
+      }, 150); // Wait 150ms after scrolling stops
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScrollEnd, { passive: true });
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('scroll', handleScrollEnd);
+      }
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
   }, []);
+
+  // Set section refs
+  const setSectionRef = (el: HTMLElement | null, index: number) => {
+    sectionRefs.current[index] = el;
+  };
 
   return (
     <section className={styles.expertiseSection}>
@@ -147,8 +169,13 @@ export default function Expertise() {
 
           {/* Right Side - Scrollable Content with Headers */}
           <div className={styles.rightSide}>
-            {expertiseSections.map((section) => (
-              <div key={section.id} className={styles.section} id={`section-${section.id}`}>
+            {expertiseSections.map((section, index) => (
+              <div 
+                key={section.id} 
+                className={styles.section} 
+                id={`section-${section.id}`}
+                ref={(el) => setSectionRef(el, index)}
+              >
                 <div className={styles.sectionHeader}>
                   <div className={styles.sectionNumber}>{section.number}</div>
                   <h2 className={styles.sectionTitle}>{section.title}</h2>
@@ -159,10 +186,10 @@ export default function Expertise() {
                   <p className={styles.sectionDescription}>{section.description}</p>
                   
                   <div className={styles.servicesList}>
-                    {section.services.map((service, index) => (
-                      <div key={index} className={styles.serviceItem}>
+                    {section.services.map((service, serviceIndex) => (
+                      <div key={serviceIndex} className={styles.serviceItem}>
                         <div className={styles.checkmark}>
-                          {index === 0 ? (
+                          {serviceIndex === 0 ? (
                             // First item gets a solid black bullet point
                             <div style={{ width: '6px', height: '6px', background: 'white', borderRadius: '50%' }}></div>
                           ) : (

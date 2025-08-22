@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -35,10 +35,83 @@ export default function Projects() {
   const [errorCaseStudies, setErrorCaseStudies] = useState('');
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const handleBookCall = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleBookCall = useCallback(() => setIsModalOpen(true), []);
+  const handleCloseModal = useCallback(() => setIsModalOpen(false), []);
 
-  // Fetch case studies when component mounts and set up continuous updates
+  // Memoize the trending list to prevent unnecessary re-renders
+  const memoizedTrendingList = useMemo(() => trendingListOld, []);
+
+  // Optimized hover handlers
+  const handleMouseEnter = useCallback((index: number) => {
+    switch (index) {
+      case 0:
+        setIsFirstItemHovered(true);
+        break;
+      case 1:
+        setIsSecondItemHovered(true);
+        break;
+      case 2:
+        setIsThirdItemHovered(true);
+        break;
+      case 3:
+        setIsFourthItemHovered(true);
+        break;
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback((index: number) => {
+    switch (index) {
+      case 0:
+        setIsFirstItemHovered(false);
+        break;
+      case 1:
+        setIsSecondItemHovered(false);
+        break;
+      case 2:
+        setIsThirdItemHovered(false);
+        break;
+      case 3:
+        setIsFourthItemHovered(false);
+        break;
+    }
+  }, []);
+
+  // Optimized click handler
+  const handleCardClick = useCallback((index: number, title: string) => {
+    switch (index) {
+      case 0:
+        window.open("https://cracked.ai/", "_blank");
+        break;
+      case 1:
+        window.open("https://fomo.fund/", "_blank");
+        break;
+      case 2:
+        window.open("https://aione.klinik-x.de/", "_blank");
+        break;
+      default:
+        handleExpand(title);
+    }
+  }, []);
+
+  // Memoized expand handler
+  const handleExpand = useCallback((title: string) => {
+    switch (title) {
+      case "Case Studies":
+        window.open("/whatwethink#case-studies", "_blank");
+        break;
+      case "Blogs":
+        window.open("/whatwethink#blogs", "_blank");
+        break;
+      case "AI News":
+        window.open("/whatwethink#ainews", "_blank");
+        break;
+      default:
+        console.error("URL is not defined");
+    }
+  }, []);
+
+  // Optimized case studies fetching with better error handling and reduced frequency
   useEffect(() => {
     const fetchCaseStudies = async (isInitialFetch = false) => {
       if (isInitialFetch) {
@@ -53,18 +126,10 @@ export default function Projects() {
           throw new Error(`Error: ${response.statusText}`);
         }
         const data: CaseStudy[] = await response.json();
-        console.log('Fetched case studies:', data); // Debug log
         
-        // Only update if data has changed to prevent unnecessary re-renders
+        // Only update if data has actually changed to prevent unnecessary re-renders
         setCaseStudies(prevData => {
-          const prevIds = new Set(prevData.map(item => item.id));
-          const newIds = new Set(data.map(item => item.id));
-          
-          // Check if data has actually changed
-          if (prevData.length !== data.length || 
-              !data.every(item => prevIds.has(item.id)) ||
-              !prevData.every(item => newIds.has(item.id))) {
-            console.log('New case studies detected, updating...');
+          if (JSON.stringify(prevData) !== JSON.stringify(data)) {
             return data;
           }
           return prevData;
@@ -72,7 +137,7 @@ export default function Projects() {
         
         setErrorCaseStudies('');
       } catch (error: any) {
-        console.error('Error fetching case studies:', error); // Debug log
+        console.error('Error fetching case studies:', error);
         setErrorCaseStudies(error.message || 'An unexpected error occurred.');
       } finally {
         setLoadingCaseStudies(false);
@@ -83,39 +148,79 @@ export default function Projects() {
     // Initial fetch
     fetchCaseStudies(true);
 
-    // Set up polling for new case studies (every 30 seconds)
-    const intervalId = setInterval(() => fetchCaseStudies(false), 30000);
+    // Reduced polling frequency from 30s to 60s to improve performance
+    const intervalId = setInterval(() => fetchCaseStudies(false), 60000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
-  const handleExpand = (title: string) => {
-    switch (title) {
-      case "Case Studies":
-        window.open("/whatwethink#case-studies", "_blank");
-        break;
-      case "Blogs":
-        window.open("/whatwethink#blogs", "_blank");
-        break;
-      case "AI News":
-        window.open("/whatwethink#ainews", "_blank");
-        break;
-      default:
-        console.error("URL is not defined");
-    }
-  };
-
-  // This will handle scrolling after the route change
+  // Optimized scroll handling
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
       const element = document.querySelector(hash);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        // Use requestAnimationFrame for smoother scrolling
+        requestAnimationFrame(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        });
       }
     }
   }, [router]);
+
+  // Memoize case studies for marquee to prevent unnecessary re-renders
+  const memoizedCaseStudies = useMemo(() => {
+    if (caseStudies.length === 0) return [];
+    // Simple duplication for smooth loop - just 2 copies is enough
+    return [...caseStudies, ...caseStudies];
+  }, [caseStudies]);
+
+  // Memoize the marquee component to prevent unnecessary re-renders
+  const caseStudiesMarquee = useMemo(() => {
+    if (caseStudies.length === 0) return null;
+    
+    return (
+      <Marquee
+        speed={30}
+        gradient={true}
+        gradientColor="#ffffff"
+        gradientWidth={100}
+        className={styles.caseStudiesMarquee}
+        pauseOnHover={false}
+        play={true}
+        loop={0}
+      >
+        {memoizedCaseStudies.map((caseStudy, index) => (
+          <div key={`${caseStudy.id}-${index}`} className={styles.caseStudyCard}>
+            <Link href={`/case-study/${generateSlug(caseStudy.title)}`}>
+              <div className={styles.caseStudyCardContent}>
+                <div className={styles.caseStudyCardImage}>
+                  <Image
+                    src={getSafeImageUrl(caseStudy.coverImage)}
+                    alt={caseStudy.title}
+                    layout="fill"
+                    objectFit="cover"
+                    loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/images/aboutus.png';
+                    }}
+                  />
+                  <div className={styles.caseStudyCardOverlay}>
+                    <span className={styles.viewProject}>View Project</span>
+                  </div>
+                </div>
+                <div className={styles.caseStudyCardText}>
+                  <h3>{caseStudy.title}</h3>
+                  <p>Discover how we helped transform this project with innovative AI solutions and strategic insights.</p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </Marquee>
+    );
+  }, [memoizedCaseStudies]);
 
   return (
     <div className={styles.main}>
@@ -128,31 +233,13 @@ export default function Projects() {
       {/* Projects Section */}
       <section className={styles.caseSection} id="projects">
         <div className={styles.cardsContainer}>
-          {trendingListOld.map((item, i) => (
+          {memoizedTrendingList.map((item, i) => (
             <div
               key={i}
               className={styles.card}
-              onClick={() => {
-                if (i === 0) {
-                  window.open("https://cracked.ai/", "_blank");
-                } else if (i === 1) {
-                  window.open("https://fomo.fund/", "_blank");
-                } else if (i === 2) {
-                  window.open("https://aione.klinik-x.de/", "_blank");
-                } else {
-                  handleExpand(item.title);
-                }
-              }}
-              onMouseEnter={() => {
-                if (i === 0) setIsFirstItemHovered(true);
-                else if (i === 1) setIsSecondItemHovered(true);
-                else if (i === 2) setIsThirdItemHovered(true);
-              }}
-              onMouseLeave={() => {
-                if (i === 0) setIsFirstItemHovered(false);
-                else if (i === 1) setIsSecondItemHovered(false);
-                else if (i === 2) setIsThirdItemHovered(false);
-              }}
+              onClick={() => handleCardClick(i, item.title)}
+              onMouseEnter={() => handleMouseEnter(i)}
+              onMouseLeave={() => handleMouseLeave(i)}
               style={{ cursor: "pointer" }}
             >
               <div className={styles.cardContent}>
@@ -210,6 +297,7 @@ export default function Projects() {
                       muted
                       loop
                       playsInline
+                      preload="metadata"
                       style={{
                         width: "100%",
                         height: "100%",
@@ -222,6 +310,7 @@ export default function Projects() {
                       className={styles.imgTag}
                       src="/Landing Projects/FOMO.gif"
                       alt="FOMO"
+                      loading="lazy"
                       style={{
                         width: "100%",
                         height: "100%",
@@ -235,6 +324,7 @@ export default function Projects() {
                       className={styles.imgTag}
                       src="/Landing Projects/LinkedAI.gif"
                       alt="LinkedAI"
+                      loading="lazy"
                       style={{
                         width: "100%",
                         height: "100%",
@@ -250,6 +340,7 @@ export default function Projects() {
                       alt={item.title}
                       layout="fill"
                       objectFit="cover"
+                      loading="lazy"
                     />
                   )}
                 </div>
@@ -261,8 +352,8 @@ export default function Projects() {
           <div
             className={styles.card}
             onClick={() => window.open("https://www.toingg.com/", "_blank")}
-            onMouseEnter={() => setIsFourthItemHovered(true)}
-            onMouseLeave={() => setIsFourthItemHovered(false)}
+            onMouseEnter={() => handleMouseEnter(3)}
+            onMouseLeave={() => handleMouseLeave(3)}
             style={{ cursor: "pointer" }}
           >
             <div className={styles.cardContent}>
@@ -288,6 +379,7 @@ export default function Projects() {
                   className={styles.imgTag}
                   src="/Landing Projects/Toingg.gif"
                   alt="Toingg"
+                  loading="lazy"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -326,44 +418,7 @@ export default function Projects() {
             <p className={styles.error}>{errorCaseStudies}</p>
           ) : caseStudies.length > 0 ? (
             <div className={styles.marqueeContainer}>
-              <Marquee
-                speed={40}
-                gradient={true}
-                gradientColor="#ffffff"
-                gradientWidth={100}
-                className={styles.caseStudiesMarquee}
-                pauseOnHover={false}
-                play={true}
-              >
-                {[...caseStudies, ...caseStudies].map((caseStudy, index) => (
-                  <div key={`${caseStudy.id}-${index}`} className={styles.caseStudyCard}>
-                    <Link href={`/case-study/${generateSlug(caseStudy.title)}`}>
-                      <div className={styles.caseStudyCardContent}>
-                        <div className={styles.caseStudyCardImage}>
-                          <Image
-                            src={getSafeImageUrl(caseStudy.coverImage)}
-                            alt={caseStudy.title}
-                            layout="fill"
-                            objectFit="cover"
-
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = '/images/aboutus.png';
-                            }}
-                          />
-                          <div className={styles.caseStudyCardOverlay}>
-                            <span className={styles.viewProject}>View Project</span>
-                          </div>
-                        </div>
-                        <div className={styles.caseStudyCardText}>
-                          <h3>{caseStudy.title}</h3>
-                          <p>Discover how we helped transform this project with innovative AI solutions and strategic insights.</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </Marquee>
+              {caseStudiesMarquee}
             </div>
           ) : (
             <p>No case studies found.</p>

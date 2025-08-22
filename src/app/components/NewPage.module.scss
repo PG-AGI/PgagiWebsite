@@ -273,41 +273,84 @@
 // Responsive Design
 @media (max-width: 768px) {
   .statsSection {
-    padding: 2rem 2rem;
+    padding: 2rem 1.5rem;
+    height: auto;
+    min-height: 100vh;
   }
 
   .container {
     width: 100%;
+    gap: 3rem;
   }
 
   .mainContent {
     flex-direction: column;
-    gap: 4rem;
-    margin-top: 4rem;
+    gap: 3rem;
+    margin-top: 2rem;
+    align-items: flex-start;
   }
 
   .leftSide {
     width: 100%;
     margin-left: 0;
     order: 1;
+    align-self: flex-start;
   }
 
   .rightSide {
     width: 100%;
     margin-left: 0;
     order: 2;
+    gap: 3rem;
   }
 
   .topRow {
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
+    width: 100%;
+  }
+
+  .statItem {
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .statTitle {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+  .separator {
+    width: 100%;
+    margin: 0.75rem 0;
+  }
+
+  .statContent {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .statNumber {
+    font-size: 3.5rem;
+    text-align: left;
+  }
+
+  .statDescription {
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .upworkVerification {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
     margin-top: 1rem;
+    text-align: left;
   }
 
   .upworkLogo {
@@ -316,72 +359,111 @@
   }
 
   .verificationText {
-    font-size: 0.85rem;
-    text-align: center;
+    font-size: 0.9rem;
+    text-align: left;
   }
 
   .teamSection {
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.5rem;
+  }
+
+  .teamTitle {
+    font-size: 2rem;
+    text-align: left;
   }
 
   .teamAvatars {
-    flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    gap: 1rem;
   }
 
   .agencySection {
     flex-direction: column;
     gap: 2rem;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
+    margin-top: 0;
   }
 
   .agencyIdentity {
-    text-align: center;
-  }
-
-  .statTitle {
-    font-size: 1.25rem;
-  }
-
-  .statNumber {
-    font-size: 2.5rem;
-  }
-
-  .statContent {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .statDescription {
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
+    text-align: left;
+    gap: 0.75rem;
   }
 
   .agencyName {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
-  .teamTitle {
-    font-size: 2rem;
+  .agencyTagline {
+    font-size: 1.1rem;
+  }
+
+  .founderName {
+    font-size: 1.3rem;
+  }
+
+  .founderTitle {
+    font-size: 1rem;
   }
 
   .agencyDescription {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .agencyDescription p {
     font-size: 1rem;
-    text-align: center;
+    text-align: left;
   }
 }
 
 @media (max-width: 480px) {
   .statsSection {
-    padding: 1.5rem 0.75rem;
+    padding: 1.5rem 1rem;
   }
 
   .container {
-    width: 100vw;
+    gap: 2.5rem;
+  }
+
+  .mainContent {
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .rightSide {
+    gap: 2.5rem;
+  }
+
+  .topRow {
+    gap: 2.5rem;
+  }
+
+  .statItem {
+    gap: 0.75rem;
+  }
+
+  .statTitle {
+    font-size: 1.4rem;
+  }
+
+  .separator {
+    margin: 0.5rem 0;
+  }
+
+  .statContent {
+    gap: 1.25rem;
+  }
+
+  .statNumber {
+    font-size: 3rem;
+  }
+
+  .statDescription {
+    font-size: 0.95rem;
   }
 
   .upworkVerification {
@@ -394,67 +476,101 @@
   }
 
   .verificationText {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
-  .statTitle {
-    font-size: 1.1rem;
-  }
-
-  .statNumber {
-    font-size: 2rem;
-  }
-
-  .agencyName {
-    font-size: 1.75rem;
+  .teamSection {
+    gap: 1.25rem;
   }
 
   .teamTitle {
     font-size: 1.75rem;
   }
 
+  .teamAvatars {
+    gap: 0.75rem;
+  }
+
+  .agencySection {
+    gap: 1.75rem;
+  }
+
+  .agencyIdentity {
+    gap: 0.5rem;
+  }
+
+  .agencyName {
+    font-size: 1.4rem;
+  }
+
   .agencyTagline {
     font-size: 1rem;
   }
 
-  .agencyDescription {
+  .founderName {
+    font-size: 1.2rem;
+  }
+
+  .founderTitle {
     font-size: 0.95rem;
   }
 
-  .teamAvatars {
-    gap: 0.5rem;
+  .agencyDescription p {
+    font-size: 0.95rem;
   }
 
   .teamCount {
-    width: 50px;
-    height: 50px;
-    font-size: 0.9rem;
+    width: 45px;
+    height: 45px;
+    font-size: 0.85rem;
   }
 
   .avatar {
-    width: 40px;
-    height: 40px;
-  }
-
-  .founderAvatar {
     width: 35px;
     height: 35px;
-  }
-
-  .clientLogos {
-    font-size: 0.8rem;
-    gap: 0.75rem;
-  }
-
-  .ctaButton {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 360px) {
   .statsSection {
-    padding: 1rem 0.5rem;
+    padding: 1rem 0.75rem;
+  }
+
+  .container {
+    gap: 2rem;
+  }
+
+  .mainContent {
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .rightSide {
+    gap: 2rem;
+  }
+
+  .topRow {
+    gap: 2rem;
+  }
+
+  .statItem {
+    gap: 0.5rem;
+  }
+
+  .statTitle {
+    font-size: 1.3rem;
+  }
+
+  .statContent {
+    gap: 1rem;
+  }
+
+  .statNumber {
+    font-size: 2.5rem;
+  }
+
+  .statDescription {
+    font-size: 0.9rem;
   }
 
   .upworkVerification {
@@ -467,37 +583,56 @@
   }
 
   .verificationText {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
 
-  .statTitle {
-    font-size: 1rem;
-  }
-
-  .statNumber {
-    font-size: 1.75rem;
-  }
-
-  .agencyName {
-    font-size: 1.5rem;
+  .teamSection {
+    gap: 1rem;
   }
 
   .teamTitle {
     font-size: 1.5rem;
   }
 
+  .teamAvatars {
+    gap: 0.5rem;
+  }
+
+  .agencySection {
+    gap: 1.5rem;
+  }
+
+  .agencyIdentity {
+    gap: 0.4rem;
+  }
+
+  .agencyName {
+    font-size: 1.3rem;
+  }
+
+  .agencyTagline {
+    font-size: 0.95rem;
+  }
+
+  .founderName {
+    font-size: 1.1rem;
+  }
+
+  .founderTitle {
+    font-size: 0.9rem;
+  }
+
+  .agencyDescription p {
+    font-size: 0.9rem;
+  }
+
   .teamCount {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     font-size: 0.8rem;
   }
 
   .avatar {
-    width: 35px;
-    height: 35px;
-  }
-
-  .founderAvatar {
     width: 30px;
     height: 30px;
   }

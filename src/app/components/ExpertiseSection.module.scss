@@ -1,120 +1,64 @@
 .expertiseSection {
   background-color: #ffffff;
-   height: 75vh;
+  min-height: 100vh;
   display: flex;
-  align-items: baseline;
-  
-  
+  flex-direction: column;
 }
 
 .container {
-  
-  margin: 0 12rem;
-  min-height: min-content;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10rem;
-  align-items: end;
-}
-
-.leftSection {
+  padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.mainHeading {
-  font-size: 2.2rem;
-  font-weight: 600;
-  color: #000000;
-  line-height: 0.8;
-  margin: 0;
-  
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
-}
-
-.description {
-  font-size: 1.115rem;
-  color: #000;
-  line-height: 1.4;
-  margin: 0;
+  gap: 3rem;
   max-width: 400px;
-  
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
+  margin: 0 auto;
+  width: 100%;
 }
 
-.rightSection {
+.expertiseContent {
   display: flex;
   flex-direction: column;
-  
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .expertiseHeading {
-  font-size: 1.8rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: #000000;
+  color: #666666;
   margin: 0;
-  
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
-  }
+  font-family: monospace;
 }
 
 .expertiseDescription {
-  font-size: 1.5rem;
-  color: #000;
-  line-height: 1.25;
-  max-width: 600px;
+  font-size: 1rem;
+  color: #000000;
+  line-height: 1.5;
   margin: 0;
-  
-  
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
+  max-width: 100%;
 }
 
 .servicesList {
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
-  margin-top: 3rem;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 
 .serviceItem {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   cursor: pointer;
   transition: transform 0.2s ease;
-  position: relative;
   
   &:hover {
     transform: translateX(8px);
   }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -1.75rem;
-    left: 0; /* Start from the beginning of the service number */
-    width: 100%; /* Extend to the full width of the service item */
-    height: 0.75px;
-    background-color: #d3d3d3; /* Light grey color */
-  }
 }
 
 .serviceNumber {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background-color: #000000;
   color: #ffffff;
   border-radius: 50%;
@@ -124,82 +68,130 @@
   font-size: 0.875rem;
   font-weight: 600;
   flex-shrink: 0;
-  
-  @media (max-width: 768px) {
-    width: 2rem;
-    height: 2rem;
-    font-size: 0.75rem;
-  }
 }
 
 .serviceTitle {
-  font-size: 1.36rem;
+  font-size: 1.125rem;
   font-weight: 500;
-  gap: 1rem;
   color: #000000;
-  
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
 }
 
-// Responsive Design
-@media (max-width: 1024px) {
-  .container {
-    gap: 3rem;
-  }
+.sloganSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-@media (max-width: 768px) {
+.mainHeading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.1;
+  margin: 0;
+  text-align: left;
+}
+
+.description {
+  font-size: 1rem;
+  color: #000000;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 100%;
+}
+
+/* Desktop Layout (768px and above) */
+@media (min-width: 768px) {
   .expertiseSection {
-    padding: 4rem 0;
+    height: 120vh;
+    align-items: baseline;
   }
   
   .container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    padding: 0 1.5rem;
+    margin: 6rem 12rem;
+    min-height: min-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: end;
+    max-width: 1600px;
+    padding: 0;
   }
   
-  .leftSection {
+  .expertiseContent {
     order: 2;
-  }
-  
-  .rightSection {
-    order: 1;
-  }
-  
-  .mainHeading {
-    text-align: center;
-  }
-  
-  .description {
-    text-align: center;
-    max-width: 100%;
-    
+    gap: 2.5rem;
   }
   
   .expertiseHeading {
-    text-align: center;
+    font-size: 1.8rem;
+    color: #000000;
+    font-family: inherit;
   }
   
   .expertiseDescription {
-    text-align: center;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .expertiseSection {
-    padding: 3rem 0;
-  }
-  
-  .container {
-    padding: 0 1rem;
-    gap: 2rem;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    max-width: 600px;
   }
   
   .servicesList {
-    gap: 1rem;
+    gap: 3.5rem;
+    margin-top: 3rem;
+  }
+  
+  .serviceItem {
+    gap: 1.5rem;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1.75rem;
+      left: 0;
+      width: 100%;
+      height: 0.75px;
+      background-color: #d3d3d3;
+    }
+  }
+  
+  .serviceNumber {
+    width: 2.8rem;
+    height: 2.8rem;
+    font-size: 0.875rem;
+  }
+  
+  .serviceTitle {
+    font-size: 1.36rem;
+  }
+  
+  .sloganSection {
+    order: 1;
+    gap: 1.5rem;
+  }
+  
+  .mainHeading {
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 0.8;
+  }
+  
+  .description {
+    font-size: 1.115rem;
+    line-height: 1.4;
+    max-width: 400px;
+  }
+}
+
+/* Large Desktop Layout (1024px and above) */
+@media (min-width: 1024px) {
+  .container {
+    gap: 6rem;
+  }
+}
+
+/* Extra Large Desktop Layout (1200px and above) */
+@media (min-width: 1200px) {
+  .container {
+    margin: 6rem 12rem;
   }
 } 

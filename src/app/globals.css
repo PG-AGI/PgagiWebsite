@@ -3,6 +3,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Performance optimizations for smooth scrolling */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Enable hardware acceleration for smooth scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  /* Optimize for scrolling performance */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Force hardware acceleration and reduce repaints */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize scrolling containers */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Force GPU acceleration for all scrollable elements */
+.expertiseSection,
+.expertiseSection *,
+.mainContent,
+.leftSide,
+.rightSide,
+.section {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: auto;
+}
+
+/* Optimize sticky positioning */
+.leftSide {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
   .header-links li span {
     position: relative;
     z-index: 0;

@@ -4,6 +4,7 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
+  /* Remove will-change to prevent performance issues */
   
 
   .container {
@@ -82,11 +83,14 @@
     top: 120px;
     height: fit-content;
     padding-right: 40px;
+    /* Optimize sticky positioning for better performance */
+    transform: translateZ(0);
 
     @media (max-width: 1024px) {
       position: static;
       text-align: center;
       padding-right: 0;
+      transform: none;
     }
 
     .leftContent {
@@ -129,11 +133,14 @@
       justify-content: center;
       padding: 60px 0; // Reduced from 80px to decrease space between sections
       border-bottom: 1px solid #f3f4f6;
+      /* Optimize for scroll performance without will-change */
+      transform: translateZ(0);
 
       @media (max-width: 1024px) {
         min-height: auto;
         padding: 40px 0; // Reduced from 60px for mobile
         border-bottom: none;
+        transform: none;
       }
 
       &:last-child {
@@ -196,7 +203,8 @@
             gap: 12px;
             padding: 12px 0;
             border-bottom: 1px solid #f3f4f6;
-            transition: all 0.2s ease;
+            /* Simplified transitions for better performance */
+            transition: background-color 0.15s ease;
 
             &:last-child {
               border-bottom: none;
@@ -204,9 +212,7 @@
 
             &:hover {
               background: #f9fafb;
-              margin: 0 -16px;
-              padding: 12px 16px;
-              border-radius: 8px;
+              /* Remove complex hover effects that might cause lag */
             }
 
             .checkmark {
