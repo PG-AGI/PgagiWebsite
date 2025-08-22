@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import styles from "@/app/components/LandingProjects.module.scss";
 import { trendingListOld } from "@/utils/constants";
@@ -11,7 +11,7 @@ export default function LandingProjects() {
   const [isThirdItemHovered, setIsThirdItemHovered] = useState(false);
   const [isFourthItemHovered, setIsFourthItemHovered] = useState(false);
 
-  const handleExpand = (title: string) => {
+  const handleExpand = useCallback((title: string) => {
     switch (title) {
       case "Case Studies":
         window.open("/whatwethink#case-studies", "_blank");
@@ -25,7 +25,7 @@ export default function LandingProjects() {
       default:
         console.error("URL is not defined");
     }
-  };
+  }, []);
 
   // This will handle scrolling after the route change
   useEffect(() => {
@@ -114,7 +114,7 @@ export default function LandingProjects() {
               )}
             </div>
             {i === 0 ? (
-              // First item with CrackedAI.webm functionality
+              // First item with optimized video
               <div className={styles.gifContainer}>
                 <video
                   className={styles.imgTag}
@@ -123,38 +123,44 @@ export default function LandingProjects() {
                   muted
                   loop
                   playsInline
+                  preload="metadata"
                   style={{
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover"
+                    objectFit: "cover",
+                    willChange: "auto"
                   }}
                 />
               </div>
             ) : i === 1 ? (
-              // Second item with FOMO.gif functionality
+              // Second item with optimized GIF
               <div className={styles.gifContainer}>
                 <Image
                   className={styles.imgTag}
                   src="/Landing Projects/FOMO.gif"
                   alt="FOMO"
                   fill
+                  loading="lazy"
                   style={{
                     objectFit: "cover",
-                    animationPlayState: isSecondItemHovered ? "running" : "paused"
+                    animationPlayState: isSecondItemHovered ? "running" : "paused",
+                    willChange: "auto"
                   }}
                 />
               </div>
             ) : i === 2 ? (
-              // Third item with LinkedAI.gif functionality
+              // Third item with optimized GIF
               <div className={styles.gifContainer}>
                 <Image
                   className={styles.imgTag}
                   src="/Landing Projects/LinkedAI.gif"
                   alt="LinkedAI"
                   fill
+                  loading="lazy"
                   style={{
                     objectFit: "cover",
-                    animationPlayState: isThirdItemHovered ? "running" : "paused"
+                    animationPlayState: isThirdItemHovered ? "running" : "paused",
+                    willChange: "auto"
                   }}
                 />
               </div>
@@ -166,6 +172,7 @@ export default function LandingProjects() {
                 alt={item.title}
                 layout="fill"
                 objectFit="cover"
+                loading="lazy"
               />
             )}
           </div>
@@ -210,14 +217,19 @@ export default function LandingProjects() {
             )}
           </div>
           <div className={styles.gifContainer}>
-            <Image
+            <video
               className={styles.imgTag}
-              src="/Landing Projects/Toingg.gif"
-              alt="Toingg"
-              fill
+              src="/Landing Projects/Toingg.webm"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
               style={{
+                width: "100%",
+                height: "100%",
                 objectFit: "cover",
-                animationPlayState: isFourthItemHovered ? "running" : "paused"
+                willChange: "auto"
               }}
             />
           </div>

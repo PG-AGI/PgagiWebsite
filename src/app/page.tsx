@@ -8,7 +8,7 @@ import GlareBackground from "./components/base/GlareBackground";
 import { segmentList } from "@/utils/constants";
 import Calendly from "./components/Calendly";
 import { Lottie } from "xtreme-ui";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 //import { motion } from 'framer-motion';
 import TrendingOld from "./components/trending_old";
 import ExpertiseSection from "./components/ExpertiseSection";
@@ -18,28 +18,42 @@ import TestimonialCarousel from "./components/InfiniteTestimonial";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SmoothScrollNav from "./components/SmoothScrollNav";
 import LandingProjects from "./components/LandingProjects";
+
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
 	const lottieWindowRef = useRef<HTMLDivElement>(null)
+	const rafRef = useRef<number>()
+	const isScrollingRef = useRef(false)
 
-	useEffect(() => {
-		const handleScroll = () => {
-			if (!segmentRef.current || !lottieWindowRef.current) return;
+	// Throttled scroll handler using RAF
+	const handleScroll = useCallback(() => {
+		if (isScrollingRef.current) return;
+		
+		isScrollingRef.current = true;
+		rafRef.current = requestAnimationFrame(() => {
+			if (!segmentRef.current || !lottieWindowRef.current) {
+				isScrollingRef.current = false;
+				return;
+			}
 
 			const scroll = window.scrollY;
 			const rectSegment = segmentRef.current.getBoundingClientRect();
-			const lottieWindow = lottieWindowRef.current;
 			
 			const offset = Math.round(rectSegment.top + scroll);
 			const blob = document.querySelector(`.${styles.blob}`) as HTMLDivElement;
 
-			if (!blob) return;
+			if (!blob) {
+				isScrollingRef.current = false;
+				return;
+			}
+			
 			const segmentSectionHeight = segmentRef.current.scrollHeight * 2;
 			const windowHeight = window.innerHeight;
 
 			const scrollY = (scroll - offset) / windowHeight;
 			const percent = (scrollY - Math.floor(scrollY)) * 100;
 			let pos;
+			
 			if (scroll >= offset && scroll <= offset + segmentSectionHeight - windowHeight) {
 				if (scrollY <= 1) {
 					pos = 50 - percent / 2;
@@ -48,19 +62,26 @@ export default function Home() {
 				} else {
 					pos = percent;
 				}
-				blob.style.top = '50%';
-				blob.style.left = `${Math.min(pos, 120)}%`;
-			} 
-			else if (scroll > offset + segmentSectionHeight - windowHeight) {
-				blob.style.left = '120%';
+				blob.style.transform = `translate(${Math.min(pos, 120)}%, -50%)`;
+			} else if (scroll > offset + segmentSectionHeight - windowHeight) {
+				blob.style.transform = `translate(120%, -50%)`;
 			}
-		};
+			
+			isScrollingRef.current = false;
+		});
+	}, []);
 
-		window.addEventListener("scroll", handleScroll);
+	useEffect(() => {
+		// Use passive event listener for better performance
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
+			if (rafRef.current) {
+				cancelAnimationFrame(rafRef.current);
+			}
 		};
-	}, []);
+	}, [handleScroll]);
 
 	return (
 		<main className={styles.main}>
