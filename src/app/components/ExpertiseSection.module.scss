@@ -1,6 +1,6 @@
 .expertiseSection {
   background-color: #ffffff;
-  min-height: 100vh;
+  min-height: "auto";
   display: flex;
   flex-direction: column;
 }
@@ -8,10 +8,11 @@
 .container {
   padding: 2rem 1.5rem;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start;
   gap: 3rem;
   max-width: 400px;
-  margin: 0 auto;
+  // margin: 0 auto;
   width: 100%;
 }
 
@@ -50,7 +51,7 @@
   gap: 1rem;
   cursor: pointer;
   transition: transform 0.2s ease;
-  
+
   &:hover {
     transform: translateX(8px);
   }
@@ -105,46 +106,45 @@
     height: 120vh;
     align-items: baseline;
   }
-  
+
   .container {
-    margin: 6rem 10rem;
+    // margin: 6rem 10rem;
     min-height: min-content;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    
-    align-items: end;
+    align-items: start;
     max-width: 1600px;
     padding: 0;
   }
-  
+
   .expertiseContent {
     order: 2;
-    gap: 2.5rem;
+    gap: 2rem;
   }
-  
+
   .expertiseHeading {
     font-size: 1.8rem;
     color: #000000;
     font-family: inherit;
   }
-  
+
   .expertiseDescription {
     font-size: 1.5rem;
     line-height: 1.25;
     max-width: 600px;
   }
-  
+
   .servicesList {
     gap: 3.5rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
-  
+
   .serviceItem {
-    gap: 1.5rem;
+    gap: 1rem;
     position: relative;
-    
+
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: -1.75rem;
       left: 0;
@@ -153,28 +153,28 @@
       background-color: #d3d3d3;
     }
   }
-  
+
   .serviceNumber {
     width: 2.8rem;
     height: 2.8rem;
     font-size: 0.875rem;
   }
-  
+
   .serviceTitle {
     font-size: 1.36rem;
   }
-  
+
   .sloganSection {
     order: 1;
     gap: 1.5rem;
   }
-  
+
   .mainHeading {
     font-size: 2.2rem;
     font-weight: 600;
     line-height: 0.8;
   }
-  
+
   .description {
     font-size: 1.115rem;
     line-height: 1.4;
@@ -184,10 +184,9 @@
 
 /* Large Desktop Layout (1024px and above) */
 
-
 /* Extra Large Desktop Layout (1200px and above) */
 @media (min-width: 1200px) {
   .container {
-    margin: 6rem 10rem;
+    padding: 2rem;
   }
-} 
+}

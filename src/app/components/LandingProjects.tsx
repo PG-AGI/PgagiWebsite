@@ -70,40 +70,41 @@ export default function LandingProjects() {
             style={{ cursor: "pointer" }}
           >
             <div className={styles.content}>
-              <h3>
-                {i === 0 ? "" : 
-                 i === 1 ? "" : 
-                 i === 2 ? "" :
-                 item.title}
-              </h3>
+              <h3>{i === 0 ? "" : i === 1 ? "" : i === 2 ? "" : item.title}</h3>
               {i === 0 ? (
-                <p style={{ 
-                  opacity: isFirstItemHovered ? 1 : 0, 
-                  transition: 'opacity 0.3s ease',
-                  textAlign: 'center',
-                  fontSize: '1.1rem',
-                  fontWeight: '600'
-                }}>
+                <p
+                  style={{
+                    opacity: isFirstItemHovered ? 1 : 0,
+                    transition: "opacity 0.3s ease",
+                    textAlign: "center",
+                    fontSize: "1.1rem",
+                    fontWeight: "600",
+                  }}
+                >
                   Click to View
                 </p>
               ) : i === 1 ? (
-                <p style={{ 
-                  opacity: isSecondItemHovered ? 1 : 0, 
-                  transition: 'opacity 0.3s ease',
-                  textAlign: 'center',
-                  fontSize: '1.1rem',
-                  fontWeight: '600'
-                }}>
+                <p
+                  style={{
+                    opacity: isSecondItemHovered ? 1 : 0,
+                    transition: "opacity 0.3s ease",
+                    textAlign: "center",
+                    fontSize: "1.1rem",
+                    fontWeight: "600",
+                  }}
+                >
                   Click to View
                 </p>
               ) : i === 2 ? (
-                <p style={{ 
-                  opacity: isThirdItemHovered ? 1 : 0, 
-                  transition: 'opacity 0.3s ease',
-                  textAlign: 'center',
-                  fontSize: '1.1rem',
-                  fontWeight: '600'
-                }}>
+                <p
+                  style={{
+                    opacity: isThirdItemHovered ? 1 : 0,
+                    transition: "opacity 0.3s ease",
+                    textAlign: "center",
+                    fontSize: "1.1rem",
+                    fontWeight: "600",
+                  }}
+                >
                   Click to View
                 </p>
               ) : (
@@ -128,7 +129,7 @@ export default function LandingProjects() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    willChange: "auto"
+                    willChange: "auto",
                   }}
                 />
               </div>
@@ -143,8 +144,10 @@ export default function LandingProjects() {
                   loading="lazy"
                   style={{
                     objectFit: "cover",
-                    animationPlayState: isSecondItemHovered ? "running" : "paused",
-                    willChange: "auto"
+                    animationPlayState: isSecondItemHovered
+                      ? "running"
+                      : "paused",
+                    willChange: "auto",
                   }}
                 />
               </div>
@@ -159,8 +162,10 @@ export default function LandingProjects() {
                   loading="lazy"
                   style={{
                     objectFit: "cover",
-                    animationPlayState: isThirdItemHovered ? "running" : "paused",
-                    willChange: "auto"
+                    animationPlayState: isThirdItemHovered
+                      ? "running"
+                      : "paused",
+                    willChange: "auto",
                   }}
                 />
               </div>
@@ -187,13 +192,15 @@ export default function LandingProjects() {
           <div className={styles.content}>
             {/* <h3>Toingg</h3> */}
             {isFourthItemHovered ? (
-              <p style={{ 
-                opacity: isFourthItemHovered ? 1 : 0, 
-                transition: 'opacity 0.3s ease',
-                textAlign: 'center',
-                fontSize: '1.1rem',
-                fontWeight: '600'
-              }}>
+              <p
+                style={{
+                  opacity: isFourthItemHovered ? 1 : 0,
+                  transition: "opacity 0.3s ease",
+                  textAlign: "center",
+                  fontSize: "1.1rem",
+                  fontWeight: "600",
+                }}
+              >
                 Click to View
               </p>
             ) : (
@@ -201,16 +208,17 @@ export default function LandingProjects() {
                 <p>Transformative Journeys and Breakthroughs</p>
                 <div className={styles.storybriefContainer}>
                   <p className={styles.storybrief1}>
-                    Steep Grind <a href="https://hirextra.com/">HireXtra.com</a> faced slow, manual recruitment.
+                    Steep Grind <a href="https://hirextra.com/">HireXtra.com</a>{" "}
+                    faced slow, manual recruitment.
                   </p>
                   <p className={styles.storybrief1}>
-                    We built an autonomous AI recruiter with 13 agents, transforming
-                    their process.
+                    We built an autonomous AI recruiter with 13 agents,
+                    transforming their process.
                   </p>
                   <p className={styles.storybrief1}>
                     Tasks that once took weeks—like analyzing job descriptions,
-                    matching candidates, and taking interviews—are now completed in
-                    minutes, revolutionizing their recruitment.
+                    matching candidates, and taking interviews—are now completed
+                    in minutes, revolutionizing their recruitment.
                   </p>
                 </div>
               </>
@@ -229,7 +237,7 @@ export default function LandingProjects() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                willChange: "auto"
+                willChange: "auto",
               }}
             />
           </div>

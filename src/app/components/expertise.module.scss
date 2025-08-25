@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   /* Remove will-change to prevent performance issues */
-  
 
   .container {
     width: 80%;
@@ -19,14 +18,13 @@
     .subtitle {
       display: block;
       font-size: 1.35rem;
-      color: #9F0000;
-    //   margin-bottom: px;
+      color: #9f0000;
+      //   margin-bottom: px;
       font-weight: 500;
     }
 
     .mainTitle {
-       
-      font-size: 3.0rem;
+      font-size: 3rem;
       font-weight: 500;
       line-height: 1.1;
       max-width: 1025px;
@@ -38,7 +36,6 @@
       .titleLine1 {
         display: block;
         color: #9ca3af;
-
       }
 
       .titleLine2 {
@@ -62,7 +59,7 @@
     }
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 50%;
       top: 0;
@@ -320,4 +317,4 @@
       }
     }
   }
-} 
+}
