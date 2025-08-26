@@ -3,13 +3,13 @@
   width: 100%;
   min-height: 100vh;
   background-color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #1a1a1a;
   overflow-x: hidden;
-  
+
   // Left border line
   &::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
@@ -26,7 +26,7 @@
   padding: 120px 20px 80px;
   max-width: 1600px;
   margin: 0 auto;
-  
+
   .heroContent {
     display: flex;
     flex-direction: column;
@@ -34,37 +34,34 @@
     gap: 0;
     position: relative;
   }
-  
+
   .heroText {
     width: 100%;
     margin-top: 12rem;
-    
+
     .aboutLabel {
-      
       font-size: 1.29rem;
       font-weight: 500;
-      color: #9F0000;
-     margin-bottom: 2rem;
+      color: #9f0000;
+      margin-bottom: 2rem;
       letter-spacing: 0.5px;
       margin-left: 0;
     }
-    
+
     .heroTitle {
       font-size: 64px;
       line-height: 1.1;
       font-weight: 400;
       margin: 0;
       text-align: left;
-      
+
       span {
-        
-        
         &.titleLine1,
         &.titleLine2 {
           color: #666666;
           font-weight: 300;
         }
-        
+
         &.titleLine3,
         &.titleLine4 {
           color: #1a1a1a;
@@ -73,7 +70,7 @@
       }
     }
   }
-  
+
   .heroDot {
     position: absolute;
     top: 200px;
@@ -88,22 +85,22 @@
 
 // Main Content Section
 .mainContent {
-  padding:  100px 10px;
+  padding: 100px 10px;
   max-width: 1600px;
   margin: 0 auto;
-  
+
   .contentGrid {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 120px;
     align-items: flex-start;
   }
-  
+
   .leftColumn {
     display: flex;
     flex-direction: column;
     gap: 80px;
-    
+
     // Mission & Vision Sections
     .missionSection,
     .visionSection {
@@ -113,20 +110,20 @@
         color: #1a1a1a;
         margin: 0 0 16px 0;
         position: relative;
-        
+
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           left: -20px;
           top: 50%;
           transform: translateY(-50%);
           width: 4px;
           height: 24px;
-          background: linear-gradient(135deg, #9F0000 0%, #d32f2f 100%);
+          background: linear-gradient(135deg, #9f0000 0%, #d32f2f 100%);
           border-radius: 2px;
         }
       }
-      
+
       .sectionText {
         font-size: 16px;
         line-height: 1.6;
@@ -138,7 +135,7 @@
         margin-left: 20px;
       }
     }
-    
+
     .statsList,
     .servicesList {
       .listItem {
@@ -147,23 +144,23 @@
         align-items: center;
         padding: 20px 0;
         border-bottom: 1px solid #f0f0f0;
-        
+
         &:last-child {
           border-bottom: none;
         }
-        
+
         .itemLabel {
           font-size: 16px;
           font-weight: 500;
           color: #1a1a1a;
         }
-        
+
         .itemValue {
           font-size: 16px;
           font-weight: 400;
           color: #666666;
         }
-        
+
         .checkIcon {
           width: 20px;
           height: 20px;
@@ -172,32 +169,32 @@
       }
     }
   }
-  
+
   .rightColumn {
     .contentText {
       margin-bottom: 80px;
-      
+
       p {
         font-size: 18px;
         line-height: 1.6;
         color: #1a1a1a;
         margin: 0 0 24px 0;
         font-weight: 400;
-        
+
         &:last-child {
           margin-bottom: 0;
         }
       }
     }
-    
+
     .keyMetrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 100px;
-      
+
       .metric {
         text-align: center;
-        
+
         .metricValue {
           display: block;
           font-size: 36px;
@@ -205,7 +202,7 @@
           color: #1a1a1a;
           margin-bottom: 8px;
         }
-        
+
         .metricLabel {
           font-size: 14px;
           font-weight: 400;
@@ -232,7 +229,7 @@
   font-size: 14px;
   font-weight: 500;
   z-index: 1000;
-  
+
   .badgeIcon {
     font-size: 12px;
     transform: rotate(90deg);
@@ -244,18 +241,18 @@
   padding: 80px 40px 0;
   max-width: 1600px;
   margin: 0 auto;
-  
+
   .missionVisionContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: center;
-    
+
     .missionVisionContent {
       display: flex;
       flex-direction: column;
       gap: 60px;
-      
+
       .missionSection,
       .visionSection {
         .sectionTitle {
@@ -264,20 +261,20 @@
           color: #1a1a1a;
           margin: 0 0 16px 0;
           position: relative;
-          
+
           &::before {
-            content: '';
+            content: "";
             position: absolute;
             left: -20px;
             top: 50%;
             transform: translateY(-50%);
             width: 4px;
             height: 24px;
-            background: linear-gradient(135deg, #9F0000 0%, #d32f2f 100%);
+            background: linear-gradient(135deg, #9f0000 0%, #d32f2f 100%);
             border-radius: 2px;
           }
         }
-        
+
         .sectionText {
           font-size: 16px;
           line-height: 1.6;
@@ -290,41 +287,43 @@
         }
       }
     }
-    
+
     .missionVisionImage {
       position: relative;
       width: 100%;
       height: 400px;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.1),
-        0 8px 16px rgba(0, 0, 0, 0.06),
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      
+
       // Canvas border effect
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: -2px;
         left: -2px;
         right: -2px;
         bottom: -2px;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+        background: linear-gradient(
+          135deg,
+          #f8f9fa 0%,
+          #e9ecef 50%,
+          #dee2e6 100%
+        );
         border-radius: 22px;
         z-index: -1;
-        box-shadow: 
-          0 4px 8px rgba(0, 0, 0, 0.1),
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.8);
       }
-      
+
       .missionVisionImg {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: 20px;
         transition: transform 0.3s ease, filter 0.3s ease;
-        
+
         &:hover {
           transform: scale(1.02);
           filter: brightness(1.05) contrast(1.1);
@@ -342,15 +341,15 @@
     padding-left: 60px;
     padding-right: 60px;
   }
-  
+
   .hero .heroContent {
     gap: 0;
   }
-  
+
   .mainContent .contentGrid {
     gap: 80px;
   }
-  
+
   .missionVisionSection .missionVisionContainer {
     gap: 60px;
   }
@@ -359,47 +358,47 @@
 @media (max-width: 900px) {
   .hero {
     padding: 80px 40px 60px;
-    
+
     .heroContent {
       gap: 0;
-      
+
       .heroText {
         margin-top: 30px;
-        
+
         .heroTitle {
           font-size: 48px;
         }
       }
     }
-    
+
     .heroDot {
       top: 180px;
       left: 50%;
     }
   }
-  
+
   .missionVisionSection {
     padding: 60px 40px 0;
-    
+
     .missionVisionContainer {
       grid-template-columns: 1fr;
       gap: 60px;
-      
+
       .missionVisionImage {
         height: 300px;
         order: -1; // Image appears above text on mobile
       }
     }
   }
-  
+
   .mainContent {
     padding: 0 40px 80px;
-    
+
     .contentGrid {
       grid-template-columns: 1fr;
       gap: 60px;
     }
-    
+
     .rightColumn .keyMetrics {
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
@@ -410,46 +409,46 @@
 @media (max-width: 600px) {
   .hero {
     padding: 60px 24px 40px;
-    
+
     .heroText {
       margin-top: 20px;
-      
+
       .heroTitle {
         font-size: 36px;
       }
-      
+
       .aboutLabel {
         margin-bottom: 40px;
       }
     }
-    
+
     .heroDot {
       top: 160px;
       left: 50%;
     }
   }
-  
+
   .missionVisionSection {
     padding: 40px 24px 0;
-    
+
     .missionVisionContainer {
       gap: 40px;
-      
+
       .missionVisionContent {
         gap: 40px;
-        
+
         .missionSection,
         .visionSection {
           .sectionTitle {
             font-size: 20px;
-            
+
             &::before {
               left: -15px;
               width: 3px;
               height: 20px;
             }
           }
-          
+
           .sectionText {
             font-size: 15px;
             padding-left: 15px;
@@ -457,36 +456,36 @@
           }
         }
       }
-      
+
       .missionVisionImage {
         height: 250px;
       }
     }
   }
-  
+
   .mainContent {
     padding: 0 24px 60px;
-    
+
     .leftColumn {
       gap: 60px;
     }
-    
+
     .rightColumn {
       .contentText p {
         font-size: 16px;
       }
-      
+
       .keyMetrics {
         grid-template-columns: 1fr;
         gap: 30px;
-        
+
         .metric .metricValue {
           font-size: 32px;
         }
       }
     }
   }
-  
+
   .framerBadge {
     bottom: 16px;
     right: 16px;
@@ -500,12 +499,12 @@
   width: 100%;
   margin-top: 80px;
   overflow: hidden;
-  
+
   .imageContainer {
     width: 100%; // Changed from 100vw to prevent overflow
     left: 45%;
     position: relative;
-    
+
     .bottomImage {
       width: 50%;
       height: 45rem;
@@ -516,27 +515,29 @@
       display: block;
       filter: brightness(0.9) contrast(1.1);
       transition: filter 0.3s ease, transform 0.3s ease;
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.1),
-        0 8px 16px rgba(0, 0, 0, 0.06),
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      
+
       // Modern canvas border effect
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: -2px;
         left: -2px;
         right: -2px;
         bottom: -2px;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+        background: linear-gradient(
+          135deg,
+          #f8f9fa 0%,
+          #e9ecef 50%,
+          #dee2e6 100%
+        );
         border-radius: 22px;
         z-index: -1;
-        box-shadow: 
-          0 4px 8px rgba(0, 0, 0, 0.1),
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.8);
       }
-      
+
       &:hover {
         filter: brightness(1) contrast(1.2);
         transform: scale(1.01);
@@ -549,7 +550,7 @@
 @media (max-width: 900px) {
   .bottomImageSection {
     margin-top: 60px;
-    
+
     .imageContainer .bottomImage {
       filter: brightness(0.95) contrast(1.05);
     }
@@ -559,12 +560,9 @@
 @media (max-width: 600px) {
   .bottomImageSection {
     margin-top: 40px;
-    
+
     .imageContainer .bottomImage {
       filter: brightness(0.98) contrast(1.02);
     }
   }
 }
-    
-  
-  
