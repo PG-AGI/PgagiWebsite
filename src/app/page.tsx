@@ -18,6 +18,7 @@ import TestimonialCarousel from "./components/InfiniteTestimonial";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SmoothScrollNav from "./components/SmoothScrollNav";
 import LandingProjects from "./components/LandingProjects";
+import Process from "./components/Process";
 
 export default function Home() {
   const segmentRef = useRef<HTMLDivElement>(null);
@@ -103,6 +104,7 @@ export default function Home() {
       <StatsSection />
 
       <LandingProjects />
+      <Process />
 
       <ExpertiseSection />
       {/* causing overflow issue */}

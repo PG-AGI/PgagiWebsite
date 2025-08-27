@@ -1,0 +1,132 @@
+.section {
+  padding: 3rem 2rem;
+  background-color: #f9fbff;
+}
+
+.container {
+  border: 0.5px solid rgb(203, 197, 197);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+}
+
+.left {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.right {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 22px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    align-items: flex-start;
+  }
+}
+
+.tag {
+  background-color: #504343;
+  font-size: 13px;
+  padding: 9px 14px;
+  border-radius: 20px;
+  color: white;
+  width: fit-content;
+  //   display: inline-block;
+}
+
+.title {
+  font-size: 38px;
+  max-width: 284px;
+  color: #504343;
+  margin: 0;
+}
+
+.desc {
+  max-width: 400px;
+  color: gray;
+  font-size: 1.1rem;
+  line-height: 27px;
+  margin: 0;
+}
+
+/* CTA button */
+.cta {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 0.5px solid gray;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background-color: #504343;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #3a2f2f;
+  }
+}
+
+.iconWrapper {
+  background-color: white;
+  height: 34px;
+  width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20%;
+}
+
+/* Steps */
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.stepNumber {
+  font-size: 40px;
+  margin: 0;
+  color: #504343;
+}
+
+.stepTitle {
+  margin: 0;
+  color: #504343;
+}
+
+.stepDesc {
+  margin: 0;
+  color: gray;
+  width: "100%";
+  line-height: 1.6;
+}
