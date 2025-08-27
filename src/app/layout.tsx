@@ -60,8 +60,8 @@ export default function RootLayout({
                   __html: JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": "Organization",
-                    "name": "PGAGI",
-                    "url": "https://pgagi.in",
+                    name: "PGAGI",
+                    url: "https://pgagi.in",
                   }),
                 }}
               />
@@ -77,7 +77,7 @@ export default function RootLayout({
                 ></iframe>
               </noscript>
               <Navigation />
-              <main style={{ minHeight: '100vh', paddingTop: '0' }}>
+              <main style={{ minHeight: "100vh", paddingTop: "0" }}>
                 {children}
               </main>
               <Footer />
@@ -88,5 +88,3 @@ export default function RootLayout({
     </AuthProvider>
   );
 }
-
-

@@ -3,10 +3,11 @@
   min-height: "auto";
   display: flex;
   flex-direction: column;
+  padding: 3rem 4.5rem 2rem 8rem;
+  height: 200px;
 }
 
 .container {
-  padding: 2rem 1.5rem;
   display: flex;
   align-items: flex-start;
   justify-content: start;
@@ -119,7 +120,7 @@
 
   .expertiseContent {
     order: 2;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .expertiseHeading {
@@ -129,7 +130,7 @@
   }
 
   .expertiseDescription {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 1.25;
     max-width: 600px;
   }
@@ -185,8 +186,7 @@
 /* Large Desktop Layout (1024px and above) */
 
 /* Extra Large Desktop Layout (1200px and above) */
-@media (min-width: 1200px) {
-  .container {
-    padding: 2rem;
-  }
-}
+// @media (min-width: 1200px) {
+//   .container {
+//   }
+// }

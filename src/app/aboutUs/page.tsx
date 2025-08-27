@@ -287,7 +287,7 @@ export default function AboutUs() {
 
   // Fade in & move up
   const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
@@ -342,6 +342,7 @@ export default function AboutUs() {
       </motion.section>
 
       {/* Mission & Vision Section */}
+
       <motion.section
         className={styles.missionVisionSection}
         initial="hidden"

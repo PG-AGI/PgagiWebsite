@@ -77,42 +77,42 @@
 
 @media (max-width: 480px) {
   .main {
-  --blobSize: 750px;
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 0;
-
-  .segmentSection {
+    --blobSize: 750px;
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 50vh;
+    z-index: 0;
 
-    .lottieWindow {
-      position: sticky;
-      top: 50%;
-      translate: 0 -50%;
-      width: 100%; // Changed from 100vw to prevent overflow
-      height: 70vh;
-      overflow: hidden;
+    .segmentSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50vh;
 
-      .blob {
-        position: absolute;
-        z-index: 1000000;
-        left: 50%;
+      .lottieWindow {
+        position: sticky;
         top: 50%;
-        translate: -50% -50%;
-        
-        width: var(--blobSize);
-        height: var(--blobSize);
+        translate: 0 -50%;
+        width: 100%; // Changed from 100vw to prevent overflow
+        height: 70vh;
+        overflow: hidden;
+
+        .blob {
+          position: absolute;
+          z-index: 1000000;
+          left: 50%;
+          top: 50%;
+          translate: -50% -50%;
+
+          width: var(--blobSize);
+          height: var(--blobSize);
+        }
+      }
+
+      .segmentList {
+        margin-top: calc(-120vh);
       }
     }
-
-    .segmentList {
-      margin-top: calc(-120vh);
-    }
   }
-}
 }

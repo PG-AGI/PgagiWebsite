@@ -498,6 +498,15 @@ export default function Projects() {
   const handleCloseModal = useCallback(() => setIsModalOpen(false), []);
   const memoizedTrendingList = useMemo(() => trendingListOld, []);
 
+  const pageAnimation = {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
   const handleMouseEnter = useCallback(
     (index: number) => setHoveredIndex(index),
     []
@@ -819,16 +828,14 @@ export default function Projects() {
   );
 
   return (
-    <div className={styles.main}>
+    <motion.div
+      className={styles.main}
+      initial="hidden"
+      animate="visible"
+      variants={pageAnimation}
+    >
       <div className={styles.pageTitle}>
-        <motion.span
-          className={styles.category}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          {"// Projects"}
-        </motion.span>
+        <h2>{"Projects"}</h2>
 
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
@@ -879,6 +886,6 @@ export default function Projects() {
       </section>
 
       <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
-    </div>
+    </motion.div>
   );
 }

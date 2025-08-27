@@ -1,7 +1,7 @@
 "use client";
 import Landing from "./components/Landing";
 import Partners from "./components/Partners";
-import StatsSection from "./components/NewPage";
+import StatsSection from "./components/StatsSection";
 import styles from "./page.module.scss";
 import Segment from "./components/base/Segment";
 import GlareBackground from "./components/base/GlareBackground";
@@ -105,10 +105,10 @@ export default function Home() {
       <LandingProjects />
 
       <ExpertiseSection />
-
+      {/* causing overflow issue */}
       <VideoTestimonial />
       <FAQ />
-      <TrendingOld />
+      {/* <TrendingOld /> */}
 
       <Calendly />
     </main>
