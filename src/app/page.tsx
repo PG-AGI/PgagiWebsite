@@ -100,19 +100,19 @@ export default function Home() {
 				]}
 			/> */}
       <Landing />
-      <Partners />
-      <StatsSection />
+      {/* <Partners /> */}
+      {/* <StatsSection /> */}
 
-      <LandingProjects />
-      <Process />
+      {/* <LandingProjects /> */}
+      {/* <Process /> */}
 
-      <ExpertiseSection />
+      {/* <ExpertiseSection /> */}
       {/* causing overflow issue */}
-      <VideoTestimonial />
-      <FAQ />
+      {/* <VideoTestimonial /> */}
+      {/* <FAQ /> */}
       {/* <TrendingOld /> */}
 
-      <Calendly />
+      {/* <Calendly /> */}
     </main>
   );
 }

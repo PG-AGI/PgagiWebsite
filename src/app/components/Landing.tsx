@@ -1,5 +1,6 @@
 // "use client";
 // import React, { useState, useEffect } from "react";
+// import { motion } from "framer-motion";
 // import styles from "./landing.module.scss";
 // import BookCallModal from "./base/bookCallModela";
 // import Hyperspeed from "./ui/Hyperspeed/Hyperspeed";
@@ -64,7 +65,13 @@
 //       </div>
 
 //       <div className={styles.landingContainer}>
-//         <div className={styles.leftSection}>
+//         {/* LEFT SECTION */}
+//         <motion.div
+//           className={styles.leftSection}
+//           initial={{ opacity: 0, y: 80 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 1, ease: "easeOut" }}
+//         >
 //           <div className={styles.highlightSpot}>
 //             <a
 //               href="https://www.upwork.com/agencies/1737467434828361728/"
@@ -87,8 +94,8 @@
 //             Not the one passing.
 //           </h1>
 //           <p className={styles.description}>
-//             We engineer purposeful AI products that scales, and create
-//             meaningful impact in the world.
+//             We engineer purposeful AI products that scale, and create meaningful
+//             impact in the world.
 //           </p>
 //           <div className={styles.buttonRow}>
 //             <button className={styles.ctaButton} onClick={handleBookCall}>
@@ -101,17 +108,23 @@
 //               View Our Work
 //             </button>
 //           </div>
-//         </div>
-//         <div className={styles.rightSection}>
-//           {/* Placeholder SVG for animated face/skull */}
-//         </div>
+//         </motion.div>
+
+//         {/* RIGHT SECTION (Animated Face/Skull Placeholder) */}
+//         <motion.div
+//           className={styles.rightSection}
+//           initial={{ opacity: 0, y: 100 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 1.2, ease: "easeOut" }}
+//         >
+//           {/* Add your animated SVG/Canvas here */}
+//         </motion.div>
 //       </div>
+
 //       <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
 //     </section>
 //   );
 // }
-
-//
 
 "use client";
 import React, { useState, useEffect } from "react";
@@ -138,7 +151,7 @@ export default function Landing() {
 
   return (
     <section id="landing" className={styles.landing}>
-      {/* HyperSpeed Background */}
+      {/* Background Hyperspeed effect */}
       <div className={styles.hyperspeedBackground}>
         <Hyperspeed
           effectOptions={{
@@ -183,35 +196,37 @@ export default function Landing() {
         {/* LEFT SECTION */}
         <motion.div
           className={styles.leftSection}
-          initial={{ opacity: 0, y: 80 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className={styles.highlightSpot}>
             <a
               href="https://www.upwork.com/agencies/1737467434828361728/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ textDecoration: "none", color: "inherit" }}
             >
-              Top 1% recognized on the UpWork
+              🚀 Top 1% Agency on UpWork
             </a>
           </div>
+
           <div className={styles.pgagiLabel}>
             <span>
               At <b>PG-AGI</b>
             </span>
             <div className={styles.pgagiUnderline}></div>
           </div>
+
           <h1 className={styles.mainHeading}>
-            Creating for the world that’s{" "}
-            <span className={styles.coming}> coming, </span>
-            Not the one passing.
+            We create AI products for the{" "}
+            <span className={styles.coming}>future</span>, not the past.
           </h1>
+
           <p className={styles.description}>
-            We engineer purposeful AI products that scale, and create meaningful
-            impact in the world.
+            Building purposeful, scalable AI solutions that deliver real-world
+            impact.
           </p>
+
           <div className={styles.buttonRow}>
             <button className={styles.ctaButton} onClick={handleBookCall}>
               Book a Consultation
@@ -225,14 +240,14 @@ export default function Landing() {
           </div>
         </motion.div>
 
-        {/* RIGHT SECTION (Animated Face/Skull Placeholder) */}
+        {/* RIGHT SECTION */}
         <motion.div
           className={styles.rightSection}
-          initial={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          {/* Add your animated SVG/Canvas here */}
+          <div className={styles.gradientBlob}></div>
         </motion.div>
       </div>
 
