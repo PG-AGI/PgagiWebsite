@@ -77,7 +77,12 @@ export default function RootLayout({
                 ></iframe>
               </noscript>
               <Navigation />
-              <main style={{ minHeight: "100vh", paddingTop: "0" }}>
+              <main
+                style={{
+                  minHeight: "100vh",
+                  paddingTop: "0",
+                }}
+              >
                 {children}
               </main>
               <Footer />

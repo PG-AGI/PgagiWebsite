@@ -115,67 +115,108 @@ export default function Calendly() {
         />
       </motion.div>
 
-      <div className={styles.content}>
-        <motion.div
-          className={styles.textContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ staggerChildren: 0.2 }}
+      <motion.div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          // gap: "1rem",
+        }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ staggerChildren: 0.2 }}
+      >
+        {/* Main Heading */}
+        <motion.h1
+          style={{
+            fontFamily: "Poppins, Gilroy, sans-serif",
+            fontSize: "3.5rem",
+            fontWeight: "400",
+            color: "#ffffff",
+            margin: "0",
+            lineHeight: "1.2",
+          }}
+          // className={styles.mainHeading}
+          variants={{
+            hidden: { opacity: 0, y: 40 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+          }}
         >
-          {/* Main Heading */}
-          <motion.h1
-            className={styles.mainHeading}
-            variants={{
-              hidden: { opacity: 0, y: 40 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-            }}
-          >
-            Let&apos;s build the future
-          </motion.h1>
+          Let&apos;s build the future
+        </motion.h1>
 
-          {/* Emphasized Text */}
-          <motion.h2
-            className={styles.emphasizedText}
-            variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-            }}
-          >
-            TOGETHER.
-          </motion.h2>
+        {/* Emphasized Text */}
+        <motion.h2
+          style={{
+            fontFamily: "Poppins, Gilroy, sans-serif",
+            fontSize: "4rem",
+            fontWeight: "700",
+            color: "#b60306",
+            margin: "0",
+            lineHeight: "1.1",
+          }}
+          // className={styles.emphasizedText}
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+          }}
+        >
+          TOGETHER.
+        </motion.h2>
 
-          {/* Subheading */}
-          <motion.p
-            className={styles.subHeading}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-            }}
-          >
-            Not sure where to start? Book a call and let&apos;s explore
-            what&apos;s possible.
-          </motion.p>
+        {/* Subheading */}
+        <motion.p
+          // className={styles.subHeading}
+          style={{
+            fontFamily: "Alexandria, Poppins, sans-serif",
+            fontSize: "1.4rem",
+            fontWeight: "300",
+            color: "#ffdfbe",
+            margin: "0",
+            lineHeight: "1.5",
+          }}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+          }}
+        >
+          Not sure where to start? Book a call and let&apos;s explore
+          what&apos;s possible.
+        </motion.p>
 
-          {/* CTA Button with Hover Effect */}
-          <motion.button
-            className={styles.ctaButton}
-            onClick={handleBookCall}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.7, delay: 0.2 },
-              },
-            }}
-          >
-            Book a Free Consultation
-          </motion.button>
-        </motion.div>
-      </div>
+        {/* CTA Button with Hover Effect */}
+        <motion.button
+          // className={styles.ctaButton}
+          style={{
+            background: "#b60306",
+            color: "#ffffff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "1rem 2.5rem",
+            fontFamily: "Alexandria, Poppins, sans-serif",
+            fontSize: "1.1rem",
+            fontWeight: "600",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            boxShadow: "0 4px 16px rgba(214, 0, 0, 0.3)",
+            marginTop: "1rem",
+          }}
+          onClick={handleBookCall}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.7, delay: 0.2 },
+            },
+          }}
+        >
+          Book a Free Consultation
+        </motion.button>
+      </motion.div>
 
       {/* Modal */}
       <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />

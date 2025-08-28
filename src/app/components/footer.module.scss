@@ -3,7 +3,7 @@
 //   color: #ffffff;
 //   position: relative;
 //   width: 100%;
-//   min-height: 120vh;
+//   min-height: auto; // remove fixed 120vh for better responsiveness
 //   display: flex;
 //   flex-direction: column;
 //   overflow: hidden;
@@ -12,22 +12,27 @@
 // // Large background watermark text
 // .backgroundText {
 //   text-align: center;
-//   font-size: 12rem;
+//   font-size: clamp(4rem, 12vw, 12rem);
 //   font-weight: 900;
-//   color: transparent;
 //   background: #ffdfbe;
-//   -webkit-background-clip: text;
-//   -webkit-text-fill-color: transparent;
+
+//   // background-clip (with vendor prefixes for compatibility)
 //   background-clip: text;
-//   opacity: 0.65;
+//   -webkit-background-clip: text; // Chrome, Safari, Edge
+//   -moz-background-clip: text; // Older Firefox versions
+
+//   -webkit-text-fill-color: transparent;
+//   color: transparent; // fallback if text-fill-color not supported
+
+//   opacity: 0.5;
 //   z-index: 0;
 //   pointer-events: none;
-//   line-height: 1.2;
+//   line-height: 1.3;
 //   font-family: "Arial Black", "Helvetica Bold", sans-serif;
 //   white-space: pre-line;
 //   width: 100%;
-//   max-width: 100%; // Changed from 100vw to prevent overflow
-//   word-wrap: break-word;
+//   max-width: 100%;
+//   margin: 2rem 0;
 // }
 
 // // Main content container
@@ -36,15 +41,13 @@
 //   z-index: 10;
 //   display: flex;
 //   flex-direction: column;
-//   min-height: 70vh;
-//   flex: 1;
-//   padding-bottom: 120px; // Add padding to prevent overlap with bottom section
 // }
 
-// // Top section with branding and navigation
+// // Top section with branding + navigation
 // .topSection {
 //   flex: 1;
-//   padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+//   // padding: clamp(2rem, 5vw, 4rem) clamp(4.5rem, 5vw, 6rem) 0
+//   //   clamp(4.5rem, 5vw, 6rem);
 //   display: flex;
 //   flex-direction: column;
 // }
@@ -55,69 +58,63 @@
 //   margin: 0 auto;
 //   display: grid;
 //   grid-template-columns: 1fr 3fr;
-//   gap: clamp(2rem, 4vw, 4rem);
-//   align-items: start;
+//   gap: clamp(2rem, 4vw, 3rem);
 // }
 
-// // Left side - Branding
+// // Branding
 // .brandingSection {
 //   display: flex;
 //   flex-direction: column;
-//   gap: 1.2rem;
+//   gap: 1rem;
 // }
 
 // .logoContainer {
 //   display: flex;
 //   align-items: center;
-//   gap: 1.2rem;
+//   gap: 1rem;
 // }
 
 // .brandText {
 //   display: flex;
 //   flex-direction: column;
-//   gap: 0.4rem;
+//   gap: 0.3rem;
 // }
 
 // .brandName {
-//   font-size: clamp(2rem, 4vw, 3rem);
+//   font-size: clamp(1.8rem, 4vw, 2.5rem);
 //   font-weight: 700;
-//   color: #ffffff;
 //   margin: 0;
-//   letter-spacing: -0.5px;
 // }
 
 // .tagline {
-//   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+//   font-size: clamp(0.8rem, 1.2vw, 1rem);
 //   color: #cccccc;
 //   font-weight: 300;
 //   margin: 0;
 //   opacity: 0.8;
 // }
 
-// // Right side - Navigation and Contact
+// // Navigation
 // .navigationSection {
 //   display: grid;
 //   grid-template-columns: repeat(4, 1fr);
-//   gap: clamp(1.5rem, 2.5vw, 2.5rem);
-//   justify-items: start;
-//   align-items: start;
+//   gap: 2rem;
 //   width: 100%;
 // }
 
 // .navColumn {
 //   display: flex;
 //   flex-direction: column;
-//   gap: 0.8rem;
+//   gap: 0.5rem;
 // }
 
 // .columnHeader {
-//   font-size: clamp(1rem, 1.2vw, 1.2rem);
+//   font-size: clamp(0.9rem, 1vw, 1.1rem);
 //   font-weight: 600;
-//   color: #ffffff;
-//   margin: 0 0 0.8rem 0;
-//   letter-spacing: 0.5px;
 //   text-transform: uppercase;
+//   margin-bottom: 0.6rem;
 //   opacity: 0.9;
+//   margin: 0;
 // }
 
 // .linkList {
@@ -126,193 +123,103 @@
 //   margin: 0;
 //   display: flex;
 //   flex-direction: column;
-//   gap: 0.6rem;
+//   gap: 0.7rem;
 // }
 
 // .link {
 //   color: #ffffff;
 //   text-decoration: none;
-//   font-size: clamp(0.85rem, 1vw, 0.95rem);
-//   font-weight: 400;
-//   transition: all 0.3s ease;
-//   display: flex;
-//   align-items: center;
+//   font-size: clamp(0.8rem, 1vw, 0.9rem);
 //   opacity: 0.8;
+//   transition: all 0.3s ease;
 
 //   &:hover {
 //     color: #d4af37;
 //     opacity: 1;
-//     transform: translateX(5px);
+//     transform: translateX(4px);
 //   }
 // }
 
-// // Contact Section
+// // Contact
 // .contactSection {
 //   display: flex;
 //   flex-direction: column;
-//   gap: 0.8rem;
-//   justify-self: start;
-//   text-align: left;
-//   min-width: auto;
-// }
-
-// .contactInfo {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 0.6rem;
+//   gap: 0.5rem;
 // }
 
 // .contactEmail,
 // .contactPhone {
-//   color: #ffffff;
-//   font-size: clamp(0.85rem, 1vw, 0.95rem);
-//   font-weight: 400;
-//   margin: 0;
+//   font-size: clamp(0.8rem, 1vw, 0.9rem);
 //   opacity: 0.8;
-//   transition: opacity 0.3s ease;
+//   margin: 0;
+//   display: flex;
+//   align-items: center;
+//   gap: 0.3rem;
 
 //   &:hover {
 //     opacity: 1;
 //   }
 // }
+// .contactInfo {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.6rem;
+//   cursor: pointer;
+// }
 
-// // Bottom section with copyright and legal links
+// // Bottom Section
 // .bottomSection {
 //   border-top: 1px solid rgba(255, 255, 255, 0.1);
 //   background: rgba(0, 0, 0, 0.2);
-//   position: relative; // Changed from absolute to relative
-//   margin-top: auto; // Push to bottom
-//   z-index: 10;
-//   padding: 1.5rem 0;
+//   padding: 1rem 4.5rem;
 // }
 
 // .bottomContainer {
 //   max-width: 1400px;
-//   width: 100%;
 //   margin: 0 auto;
 //   display: flex;
 //   justify-content: space-between;
 //   align-items: center;
+//   flex-wrap: wrap;
 //   gap: 1rem;
 // }
 
-// .copyright {
-//   p {
-//     color: #cccccc;
-//     font-size: clamp(0.8rem, 1vw, 0.9rem);
-//     font-weight: 300;
-//     margin: 0;
-//     opacity: 0.7;
-//   }
+// .copyright p {
+//   font-size: clamp(0.75rem, 1vw, 0.85rem);
+//   opacity: 0.7;
 // }
 
 // .legalLinks {
 //   display: flex;
-//   gap: clamp(1.5rem, 2vw, 2rem);
+//   gap: 1.5rem;
+//   flex-wrap: wrap;
 // }
 
 // .legalLink {
-//   color: #cccccc;
-//   text-decoration: none;
-//   font-size: clamp(0.8rem, 1vw, 0.9rem);
-//   font-weight: 300;
-//   transition: all 0.3s ease;
+//   font-size: clamp(0.75rem, 1vw, 0.85rem);
 //   opacity: 0.7;
+//   text-decoration: none;
+//   transition: all 0.3s ease;
 
 //   &:hover {
-//     color: #ffffff;
 //     opacity: 1;
+//     color: #fff;
 //   }
 // }
 
-// // Responsive Design - Large screens (maintain single row)
-// @media (min-width: 1200px) {
-//   .navigationSection {
-//     grid-template-columns: repeat(4, 1fr);
-//     gap: clamp(2rem, 3vw, 3rem);
-//   }
-// }
+// /* -----------------
+//    Responsive Breakpoints
+// ------------------ */
 
-// // Responsive Design - Tablet
-// @media (max-width: 1024px) {
-//   .container {
-//     grid-template-columns: 1fr;
-//     gap: 3rem;
-//   }
-
-//   .navigationSection {
-//     grid-template-columns: repeat(2, 1fr);
-//     gap: 2.5rem;
-//     justify-items: center;
-//   }
-
-//   .contactSection {
-//     justify-self: center;
-//     text-align: center;
-//     min-width: auto;
-//   }
-
-//   .backgroundText {
-//     font-size: clamp(12rem, 20vw, 20rem);
-//     max-width: 100%;
-//     bottom: 18%;
-//     line-height: 1.1;
-//   }
-
-//   .contentContainer {
-//     padding-bottom: 100px;
-//   }
-// }
-
+// // Mobile
 // @media (max-width: 768px) {
-//   .footer {
-//     min-height: auto;
-//   }
-
-//   .topSection {
-//     padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2rem);
-//   }
-
-//   .container {
-//     gap: 2.5rem;
-//   }
-
-//   .brandingSection {
-//     text-align: center;
-//     align-items: center;
-//   }
-
-//   .logoContainer {
-//     justify-content: center;
-//   }
-
 //   .navigationSection {
-//     grid-template-columns: repeat(2, 1fr);
-//     gap: 2rem;
-//     justify-items: start; // Changed from center to start for left alignment
-//     text-align: left; // Changed from center to left
-//   }
-
-//   .navColumn {
-//     align-items: flex-start; // Changed from center to flex-start for left alignment
-//   }
-
-//   .contactSection {
-//     align-items: flex-start; // Changed from center to flex-start
-//     justify-self: start; // Changed from center to start
-//     text-align: left; // Changed from center to left
-//     min-width: auto;
-//     grid-column: 1 / -1;
-//     margin-top: 1rem;
-//   }
-
-//   .bottomSection {
-//     padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2rem);
+//     grid-template-columns: 1fr 1fr;
+//     gap: 1.5rem;
 //   }
 
 //   .bottomContainer {
 //     flex-direction: column;
-//     gap: 1.5rem;
 //     text-align: center;
 //   }
 
@@ -321,261 +228,89 @@
 //   }
 
 //   .backgroundText {
-//     font-size: clamp(8rem, 15vw, 14rem);
-//     max-width: 100%;
-//     bottom: 15%; // Reduced from 20% to ensure lists stay below
-//     line-height: 1;
-//     opacity: 0.4; // Reduce opacity on mobile to prevent interference
-//   }
-
-//   .contentContainer {
-//     padding-bottom: 80px;
+//     font-size: clamp(4rem, 15vw, 8rem);
+//     opacity: 0.3;
 //   }
 // }
 
+// // Small Mobile
 // @media (max-width: 480px) {
-//   .topSection {
-//     padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 1.5rem);
-//   }
-
-//   .container {
-//     gap: 2rem;
-//   }
-
-//   .brandName {
-//     font-size: clamp(1.8rem, 6vw, 2.5rem);
-//   }
-
-//   .tagline {
-//     font-size: clamp(0.8rem, 3vw, 1rem);
-//   }
-
-//   .navigationSection {
-//     grid-template-columns: repeat(2, 1fr);
-//     gap: 1.5rem;
-//     justify-items: start; // Keep left alignment
-//     text-align: left; // Keep left alignment
-//   }
-
-//   .navColumn {
-//     align-items: flex-start; // Keep left alignment
-//   }
-
-//   .columnHeader {
-//     font-size: clamp(0.9rem, 3vw, 1.1rem);
-//   }
-
-//   .link {
-//     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-//   }
-
-//   .contactEmail,
-//   .contactPhone {
-//     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-//   }
-
-//   .contactSection {
-//     grid-column: 1 / -1;
-//     margin-top: 1rem;
-//     text-align: left; // Keep left alignment
-//     align-items: flex-start; // Keep left alignment
-//   }
-
-//   .bottomSection {
-//     padding: clamp(1rem, 3vw, 1.5rem) clamp(1rem, 3vw, 1.5rem);
-//   }
-
-//   .copyright p,
-//   .legalLink {
-//     font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-//   }
-
-//   .legalLinks {
-//     gap: 1rem;
-//   }
-
-//   .backgroundText {
-//     font-size: clamp(6rem, 12vw, 10rem);
-//     max-width: 100%;
-//     bottom: 12%; // Further reduced to ensure lists stay below
-//     line-height: 0.9;
-//     opacity: 0.3; // Further reduce opacity on smaller screens
-//   }
-
-//   .contentContainer {
-//     padding-bottom: 70px;
-//   }
-// }
-
-// // Extra small devices
-// @media (max-width: 360px) {
-//   .topSection {
-//     padding: clamp(1rem, 3vw, 1.5rem) clamp(0.75rem, 2vw, 1rem);
-//   }
-
-//   .container {
-//     gap: 1.5rem;
-//   }
-
-//   .logoContainer {
-//     gap: 0.8rem;
-//   }
-
-//   .brandName {
-//     font-size: clamp(1.5rem, 5vw, 2rem);
-//   }
-
-//   .tagline {
-//     font-size: clamp(0.75rem, 2.5vw, 0.9rem);
-//   }
-
-//   .navigationSection {
-//     grid-template-columns: repeat(2, 1fr);
-//     gap: 1rem;
-//     justify-items: start; // Keep left alignment
-//     text-align: left; // Keep left alignment
-//   }
-
-//   .navColumn {
-//     align-items: flex-start; // Keep left alignment
-//   }
-
-//   .contactSection {
-//     grid-column: 1 / -1;
-//     margin-top: 1rem;
-//     text-align: left; // Keep left alignment
-//     align-items: flex-start; // Keep left alignment
-//   }
-
-//   .link {
-//     font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-//   }
-
-//   .backgroundText {
-//     font-size: clamp(4rem, 10vw, 8rem);
-//     max-width: 100%;
-//     bottom: 10%; // Further reduced to ensure lists stay below
-//     line-height: 0.8;
-//     opacity: 0.25; // Very low opacity on very small screens
-//   }
-
-//   .contentContainer {
-//     padding-bottom: 60px;
-//   }
-// }
-
-// // Very small devices
-// @media (max-width: 320px) {
-//   .topSection {
-//     padding: clamp(0.75rem, 2.5vw, 1rem) clamp(0.5rem, 1.5vw, 0.75rem);
-//   }
-
-//   .container {
-//     gap: 1rem;
-//   }
-
-//   .logoContainer {
-//     gap: 0.6rem;
-//   }
-
-//   .brandName {
-//     font-size: clamp(1.3rem, 4vw, 1.8rem);
-//   }
-
-//   .tagline {
-//     font-size: clamp(0.7rem, 2vw, 0.8rem);
-//   }
-
 //   .navigationSection {
 //     grid-template-columns: 1fr;
-//     gap: 1.5rem; // Increased gap for single column layout
-//     justify-items: start; // Keep left alignment
-//     text-align: left; // Keep left alignment
 //   }
 
 //   .navColumn {
-//     align-items: flex-start; // Keep left alignment
-//     gap: 0.5rem; // Reduced gap between links
-//   }
-
-//   .linkList {
-//     gap: 0.4rem; // Reduced gap between list items
-//   }
-
-//   .contactSection {
-//     grid-column: 1 / -1;
-//     margin-top: 1.5rem; // Increased margin for better separation
-//     text-align: left; // Keep left alignment
-//     align-items: flex-start; // Keep left alignment
-//   }
-
-//   .columnHeader {
-//     font-size: clamp(0.8rem, 2.5vw, 1rem);
-//     margin-bottom: 0.6rem;
-//   }
-
-//   .link {
-//     font-size: clamp(0.7rem, 2vw, 0.8rem);
-//     padding: 0.2rem 0; // Add some padding for better touch targets
-//   }
-
-//   .contactEmail,
-//   .contactPhone {
-//     font-size: clamp(0.7rem, 2vw, 0.8rem);
-//   }
-
-//   .bottomSection {
-//     padding: clamp(0.75rem, 2.5vw, 1rem) clamp(0.5rem, 1.5vw, 0.75rem);
-//   }
-
-//   .copyright p,
-//   .legalLink {
-//     font-size: clamp(0.65rem, 2vw, 0.75rem);
-//   }
-
-//   .legalLinks {
-//     gap: 0.75rem;
+//     gap: 0.4rem;
 //   }
 
 //   .backgroundText {
-//     font-size: clamp(3rem, 8vw, 6rem);
-//     max-width: 100%;
-//     bottom: 8%; // Further reduced to ensure lists stay below
-//     line-height: 0.7;
-//     opacity: 0.2; // Minimal opacity on smallest screens
+//     font-size: clamp(3rem, 12vw, 6rem);
+//     opacity: 0.25;
+//   }
+// }
+// @media (max-width: 360px) {
+//   .topSection {
+//     padding: clamp(0.75rem, 2.5vw, 1rem) clamp(02rem, 1.5vw, 0.75rem);
+//   }
+// }
+// @media (max-width: 1024px) {
+//   .topSection {
+//     padding: 0, 5rem 0px;
+//   }
+//   .contentContainer {
+//     padding: 1.5rem;
+//   }
+//   .container {
+//     display: grid;
+//     padding: 0;
+//   }
+//   .bottomSection {
+//     border-top: 1px solid rgba(255, 255, 255, 0.1);
+//     background: rgba(0, 0, 0, 0.2);
+//     padding: 1rem 1.5rem;
 //   }
 
-//   .contentContainer {
-//     padding-bottom: 50px;
+//   .logoContainer {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     gap: 0.5rem;
+//   }
+//   .navigationSection {
+//     display: grid;
+//     align-items: start;
+//     grid-template-columns: repeat(4, 1fr);
+//     gap: 2rem;
+//     width: 100%;
 //   }
 // }
 
+/* -----------------
+   Base Footer
+------------------ */
 .footer {
   background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #000000 100%);
   color: #ffffff;
   position: relative;
   width: 100%;
-  min-height: auto; // remove fixed 120vh for better responsiveness
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-// Large background watermark text
+/* -----------------
+   Large Background Watermark Text
+------------------ */
 .backgroundText {
   text-align: center;
   font-size: clamp(4rem, 12vw, 12rem);
   font-weight: 900;
   background: #ffdfbe;
-
-  // background-clip (with vendor prefixes for compatibility)
   background-clip: text;
-  -webkit-background-clip: text; // Chrome, Safari, Edge
-  -moz-background-clip: text; // Older Firefox versions
-
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent; // fallback if text-fill-color not supported
-
+  color: transparent;
   opacity: 0.5;
   z-index: 0;
   pointer-events: none;
@@ -587,19 +322,18 @@
   margin: 2rem 0;
 }
 
-// Main content container
+/* -----------------
+   Content Container
+------------------ */
 .contentContainer {
   position: relative;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  padding-bottom: 4rem;
+  padding: 4rem 4rem 0.5rem 4rem;
 }
 
-// Top section with branding + navigation
 .topSection {
-  flex: 1;
-  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
   display: flex;
   flex-direction: column;
 }
@@ -613,7 +347,9 @@
   gap: clamp(2rem, 4vw, 3rem);
 }
 
-// Branding
+/* -----------------
+   Branding
+------------------ */
 .brandingSection {
   display: flex;
   flex-direction: column;
@@ -646,7 +382,9 @@
   opacity: 0.8;
 }
 
-// Navigation
+/* -----------------
+   Navigation
+------------------ */
 .navigationSection {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -664,7 +402,7 @@
   font-size: clamp(0.9rem, 1vw, 1.1rem);
   font-weight: 600;
   text-transform: uppercase;
-  margin-bottom: 0.6rem;
+  margin: 0 0 0.6rem 0;
   opacity: 0.9;
 }
 
@@ -674,7 +412,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.7rem;
 }
 
 .link {
@@ -691,7 +429,9 @@
   }
 }
 
-// Contact
+/* -----------------
+   Contact
+------------------ */
 .contactSection {
   display: flex;
   flex-direction: column;
@@ -702,17 +442,30 @@
 .contactPhone {
   font-size: clamp(0.8rem, 1vw, 0.9rem);
   opacity: 0.8;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 
   &:hover {
     opacity: 1;
   }
 }
 
-// Bottom Section
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+/* -----------------
+   Bottom Section
+------------------ */
 .bottomSection {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.2);
-  padding: 1.5rem 0;
+  padding: 1rem 4.5rem;
 }
 
 .bottomContainer {
@@ -752,38 +505,41 @@
    Responsive Breakpoints
 ------------------ */
 
-// Tablet
+/* Tablet (≤1024px) */
 @media (max-width: 1024px) {
   .container {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 0 1.5rem;
+  }
+
+  .logoContainer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .navigationSection {
     grid-template-columns: repeat(2, 1fr);
-    justify-items: start;
+    gap: 1.5rem;
   }
 
-  .contactSection {
-    margin-top: 1rem;
-  }
-
-  .backgroundText {
-    font-size: clamp(6rem, 18vw, 10rem);
-    opacity: 0.4;
+  .bottomSection {
+    padding: 1rem 1.5rem;
   }
 }
 
-// Mobile
+/* Mobile (≤768px) */
 @media (max-width: 768px) {
   .navigationSection {
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 1.2rem;
   }
 
   .bottomContainer {
     flex-direction: column;
     text-align: center;
+    gap: 1rem;
   }
 
   .legalLinks {
@@ -796,7 +552,7 @@
   }
 }
 
-// Small Mobile
+/* Small Mobile (≤480px) */
 @media (max-width: 480px) {
   .navigationSection {
     grid-template-columns: 1fr;
@@ -809,5 +565,16 @@
   .backgroundText {
     font-size: clamp(3rem, 12vw, 6rem);
     opacity: 0.25;
+  }
+}
+
+/* Extra Small (≤360px) */
+@media (max-width: 360px) {
+  .topSection {
+    padding: 0.75rem;
+  }
+
+  .navigationSection {
+    gap: 1rem;
   }
 }

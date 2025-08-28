@@ -4,6 +4,7 @@ import Link from "next/link";
 import { links, socialList, services } from "@/utils/constants";
 import styles from "./footer.module.scss";
 import logo from "../assets/logo.png";
+import { Phone, ShieldBan } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -128,8 +129,15 @@ export default function Footer() {
               {/* Contact Information */}
               <div className={styles.contactSection}>
                 <div className={styles.contactInfo}>
-                  <p className={styles.contactEmail}>admin@pgagi.in</p>
-                  <p className={styles.contactPhone}>+91 80-35736907</p>
+                  <p className={styles.contactEmail}>
+                    <ShieldBan size={16} />
+                    admin@pgagi.in
+                  </p>
+                  <p className={styles.contactPhone}>
+                    {" "}
+                    <Phone size={16} />
+                    +91 80-35736907
+                  </p>
                 </div>
               </div>
             </div>

@@ -1,93 +1,171 @@
 "use client";
-import React from "react";
-import { ArrowUpRight, Sparkles, Target, Code2, Rocket } from "lucide-react";
-import { motion } from "framer-motion";
-import Divider from "./Divider";
+import { ArrowUpRight } from "lucide-react";
 import styles from "./process.module.scss";
+import Divider from "./Divider";
+import Image from "next/image";
+import { motion } from "framer-motion"; // ✨ import motion
 
+// Images
+import initialConsultation from "../../../public/initialCinsoltation.png";
+import Strategic from "../../../public/Strategic.png";
+import code from "../../../public/code.png";
+
+// Steps Data
 const steps = [
   {
     number: "01",
     title: "Initial Consultation",
-    desc: "We kick things off with a quick discovery call to understand your product idea, goals, and user needs.",
-    icon: <Sparkles size={28} />,
+    description:
+      "We kick things off with a quick discovery call to understand your product idea, goals, and user needs.",
+    image: initialConsultation,
+    reverse: false,
   },
   {
     number: "02",
     title: "Strategy",
-    desc: "We map out features, prioritize what to build first, and align the roadmap around fast validation and clear outcomes.",
-    icon: <Target size={28} />,
+    description:
+      "We map out features, prioritize what to build first, and align the roadmap around fast validation and clear outcomes.",
+    image: Strategic,
+    reverse: true,
   },
   {
     number: "03",
     title: "Code",
-    desc: "We use industry-standard AI tools like Lovable and Cursor to write clean, scalable code faster.",
-    icon: <Code2 size={28} />,
+    description:
+      "We use industry-standard AI tools like Lovable and Cursor to write clean, scalable code faster.",
+    image: code,
+    reverse: false,
   },
   {
     number: "04",
     title: "Launch",
-    desc: "Once launched, your product is ready to test with users and scale. We support you through feedback and iteration.",
-    icon: <Rocket size={28} />,
+    description:
+      "Once launched, your product is ready to test with users, pitch to investors, or go to market — with support from our team along the way.",
+    image: null, // 🚫 No image for Launch
+    reverse: true,
   },
 ];
 
-export default function Process() {
+type StepSectionProps = {
+  number: string;
+  title: string;
+  description: string;
+  image: any;
+  reverse?: boolean;
+};
+
+// Step Component
+function StepSection({
+  number,
+  title,
+  description,
+  image,
+  reverse,
+}: StepSectionProps) {
+  const isLaunchStep = number === "04";
+
   return (
-    <section className={styles.section}>
+    <motion.div
+      className={`${styles.step} ${
+        reverse && !isLaunchStep ? styles.reverse : ""
+      } ${isLaunchStep ? styles.launchStep : ""}`}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <motion.div
-        className={styles.container}
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
+        className={styles.stepText}
+        initial={{ x: reverse ? 50 : -50, opacity: 0 }}
+        whileInView={{ x: 0, opacity: 1 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <h2 className={styles.stepNumber}>{number}</h2>
+        <p className={styles.stepTitle}>{title}</p>
+        <span className={styles.stepDesc}>{description}</span>
+      </motion.div>
+
+      {image && (
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Image
+            src={image}
+            alt={title}
+            width={400}
+            height={250}
+            className={styles.stepImage}
+          />
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}
+
+// Main Process Component
+const Process = () => {
+  return (
+    <motion.div
+      className={styles.processContainer}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      <motion.div
+        className={styles.card}
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         {/* Header */}
         <div className={styles.header}>
-          <div className={styles.left}>
-            <span className={styles.tag}>Our Process</span>
-            <h2 className={styles.title}>Move at Startup Speed 🚀</h2>
-          </div>
-          <div className={styles.right}>
-            <p className={styles.desc}>
+          <motion.div
+            className={styles.leftHeader}
+            initial={{ x: -50, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className={styles.badge}>Our Process</span>
+            <h1 className={styles.title}>Move at Startup Speed</h1>
+          </motion.div>
+
+          <motion.div
+            className={styles.rightHeader}
+            initial={{ x: 50, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className={styles.subtitle}>
               Our 4-step process is built for momentum. We keep it lean,
               focused, and validation-ready so you can launch without delays.
-            </p>
+            </h2>
+
             <motion.button
-              className={styles.cta}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className={styles.button}
             >
-              Book a slot
+              Book a Slot
               <span className={styles.iconWrapper}>
-                <ArrowUpRight size={16} color="black" strokeWidth={3} />
+                <ArrowUpRight size={16} color="black" />
               </span>
             </motion.button>
-          </div>
+          </motion.div>
         </div>
 
         <Divider />
 
-        {/* Steps */}
-        <div className={styles.stepsGrid}>
-          {steps.map((step, i) => (
-            <motion.div
-              key={i}
-              className={styles.stepCard}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              viewport={{ once: true }}
-            >
-              <div className={styles.iconCircle}>{step.icon}</div>
-              <h1 className={styles.stepNumber}>{step.number}</h1>
-              <h2 className={styles.stepTitle}>{step.title}</h2>
-              <p className={styles.stepDesc}>{step.desc}</p>
-            </motion.div>
-          ))}
-        </div>
+        {/* Steps Loop */}
+        {steps.map((step) => (
+          <StepSection key={step.number} {...step} />
+        ))}
       </motion.div>
-    </section>
+    </motion.div>
   );
-}
-// test-2
+};
+
+export default Process;
