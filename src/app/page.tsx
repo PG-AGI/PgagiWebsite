@@ -104,7 +104,7 @@ export default function Home() {
       {/* <StatsSection /> */}
 
       {/* <LandingProjects /> */}
-      {/* <Process /> */}
+      <Process />
 
       {/* <ExpertiseSection /> */}
       {/* causing overflow issue */}
