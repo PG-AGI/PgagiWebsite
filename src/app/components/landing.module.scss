@@ -80,6 +80,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
   display: inline-block;
+  width: "fit-content";
 
   &:hover {
     background: rgba(214, 0, 0, 0.2);

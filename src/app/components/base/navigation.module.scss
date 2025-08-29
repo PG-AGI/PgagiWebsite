@@ -34,7 +34,7 @@
   p {
     font-size: 14px;
     font-weight: 600;
-    color: #fff; // default white
+    color: gray;
   }
 }
 
@@ -53,7 +53,7 @@
   a {
     font-size: 0.9rem;
     text-decoration: none;
-    color: #fff; // default white
+    color: gray; // default white
     font-weight: 500;
     position: relative;
 
@@ -82,9 +82,9 @@
 
 .contact {
   cursor: pointer;
-  background-color: transparent;
-  border: 2px solid #fff;
+  background-color: #e93030;
   color: #fff;
+  border: none;
   padding: 10px 20px;
   border-radius: 25px;
   font-size: 14px;

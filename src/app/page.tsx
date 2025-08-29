@@ -100,7 +100,7 @@ export default function Home() {
 				]}
 			/> */}
       <Landing />
-      <Partners />
+      {/* <Partners /> */}
       <StatsSection />
 
       <LandingProjects />

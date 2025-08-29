@@ -1,639 +1,276 @@
-.statsSection {
-  background: white;
-  padding: 3rem 2rem 2rem 3rem;
-
-  height: 110vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-.container {
-  width: 85vw;
-  margin: 0rem auto;
+.section {
+  background-color: white;
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  align-items: center;
 }
 
-.mainContent {
+.wrapper {
   display: flex;
-  width: 100%;
-  position: relative;
-  align-items: flex-start;
-  margin-top: 8rem;
+  flex-direction: column;
+  padding: 5rem 5rem 2rem 5rem;
+  gap: 4rem;
+
+  @media (max-width: 768px) {
+    padding: 3rem 2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+  }
 }
 
-.leftSide {
-  flex: 0 0 auto;
+/* ========== Stats Part ========== */
+.statsContainer {
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
   align-items: flex-end;
-  padding-left: 0;
-  width: 25vw;
-  margin-left: 0;
+  gap: 4rem;
+
+  @media (max-width: 1024px) {
+    align-items: flex-start;
+  }
 }
 
-.rightSide {
-  width: 55vw;
+.statsRow {
   display: flex;
-  flex-direction: column;
-  // gap: 8rem;
-  margin-left: auto;
-}
-
-.topRow {
-  display: flex;
-  gap: 6rem;
   justify-content: space-between;
-  width: 100%;
-}
+  width: 56%;
+  gap: 2rem;
 
-.teamSection {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: flex-start;
-  text-align: left;
-}
-
-.teamTitle {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #000;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.teamAvatars {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  // margin-top: 1rem;
-  flex-wrap: wrap;
-  flex-direction: row;
-  // align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.teamCount {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #f5f5f5;
-  border: 2px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  color: #000;
-  font-size: 0.9rem;
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #e0e0e0;
-  border: 2px solid #ccc;
-}
-
-.upworkVerification {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 0.5rem;
-  margin-top: 0.2rem;
-}
-
-.upworkLogo {
-  width: 300px;
-  height: auto;
-  max-height: 120px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.verificationText {
-  display: flex;
-  align-items: center;
-  gap: 0.1rem;
-  font-size: 0.9rem;
-  color: #666;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.verificationLink {
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.2s ease;
-  margin-left: 15px;
-}
-
-.verificationLink:hover {
-  opacity: 0.8;
-}
-
-.blueTick {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-.statItem {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  // gap: 0.5rem;
-}
-
-.statTitle {
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: #000;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.separator {
-  width: 100%;
-  height: 2px;
-  background-color: rgb(176, 176, 176);
-  margin: 0.5rem 0;
-}
-
-.statContent {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1rem;
-  flex-wrap: wrap;
-}
-
-.statNumber {
-  font-size: 5rem;
-  font-weight: 600;
-  color: #000;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.statDescription {
-  font-size: 1rem;
-  color: #666;
-  margin: 0;
-  line-height: 1.5;
-  flex: 1;
-  width: 280px;
-  max-width: 280px;
-}
-
-.founders {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.founderAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #f0f0f0;
-  border: 2px solid #ddd;
-}
-
-.agencySection {
-  display: flex;
-
-  align-items: flex-start;
-  gap: 6rem;
-  margin-top: 2rem;
-}
-
-.agencyIdentity {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 0 0 auto;
-}
-
-.agencyDescription {
-  flex: 1;
-  max-width: 500px;
-}
-
-.agencyHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.agencyName {
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #000;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.agencyTagline {
-  font-size: 1.2rem;
-  color: #666;
-  margin: 0;
-  font-weight: 400;
-}
-
-.founderInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.founderName {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #000;
-  margin: 0;
-}
-
-.founderTitle {
-  font-size: 1rem;
-  color: #666;
-  margin: 0;
-}
-
-.agencyDescription p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
-  margin: 0;
-}
-
-// Responsive Design
-@media (max-width: 768px) {
-  .statsSection {
-    padding: 2rem 1.5rem;
-    height: auto;
-    min-height: 100vh;
+  @media (max-width: 1200px) {
+    width: 70%;
   }
 
-  .container {
+  @media (max-width: 1024px) {
     width: 100%;
-    gap: 3rem;
-  }
-
-  .mainContent {
     flex-direction: column;
-    gap: 3rem;
-    margin-top: 2rem;
-    align-items: flex-start;
   }
+}
 
-  .leftSide {
-    width: 100%;
-    margin-left: 0;
-    order: 1;
-    align-self: flex-start;
-  }
+.card {
+  flex: 1;
 
-  .rightSide {
-    width: 100%;
-    margin-left: 0;
-    order: 2;
-    gap: 3rem;
-  }
-
-  .topRow {
-    flex-direction: column;
-    gap: 3rem;
-    width: 100%;
-  }
-
-  .statItem {
-    width: 100%;
-    gap: 1rem;
-  }
-
-  .statTitle {
+  h3 {
+    margin: 0;
     font-size: 1.5rem;
-    text-align: left;
+
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+    }
   }
 
-  .separator {
-    width: 100%;
-    margin: 0.75rem 0;
+  .divider {
+    height: 3px;
+    background-color: rgba(176, 176, 176, 1);
+    margin: 1rem 0;
   }
 
-  .statContent {
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .statNumber {
-    font-size: 3.5rem;
-    text-align: left;
-  }
-
-  .statDescription {
-    width: 100%;
-    max-width: 100%;
-    text-align: left;
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-
-  .upworkVerification {
+  .stat {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-between;
     gap: 1rem;
-    margin-top: 1rem;
-    text-align: left;
+
+    h2 {
+      margin: 0;
+      font-size: 4rem;
+      position: relative;
+
+      @media (max-width: 768px) {
+        font-size: 3rem;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 2.2rem;
+      }
+    }
+
+    span {
+      max-width: 180px;
+      font-size: 17px;
+      line-height: 1.3rem;
+      color: rgba(104, 105, 99, 1);
+      font-weight: 500;
+
+      @media (max-width: 480px) {
+        font-size: 15px;
+      }
+    }
   }
 
-  .upworkLogo {
-    width: 200px;
-    max-height: 80px;
+  .percent {
+    position: relative;
+
+    .icon {
+      position: absolute;
+      top: 20px;
+      left: 84px;
+
+      @media (max-width: 480px) {
+        left: 65px;
+        top: 12px;
+      }
+    }
+  }
+}
+
+.relativeNum {
+  position: relative;
+}
+
+.plusIcon {
+  position: absolute;
+}
+
+/* Year Card */
+.yearCard {
+  width: 41%;
+
+  @media (max-width: 1024px) {
+    width: 100%;
   }
 
-  .verificationText {
-    font-size: 0.9rem;
-    text-align: left;
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+    }
   }
 
-  .teamSection {
-    align-items: flex-start;
-    text-align: left;
-    gap: 1.5rem;
+  .divider {
+    height: 3px;
+    background-color: rgba(176, 176, 176, 1);
+    margin: 1rem 0;
   }
 
-  .teamTitle {
-    font-size: 2rem;
-    text-align: left;
-  }
-
-  .teamAvatars {
-    justify-content: flex-start;
+  .yearContent {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 1rem;
-  }
 
-  .agencySection {
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    span {
+      max-width: 250px;
+      font-size: 17px;
+      line-height: 1.4rem;
+      color: rgba(104, 105, 99, 1);
+      font-weight: 500;
+
+      @media (max-width: 480px) {
+        font-size: 15px;
+      }
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 4rem;
+
+      @media (max-width: 768px) {
+        font-size: 3rem;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 2.4rem;
+      }
+    }
+  }
+}
+
+/* ========== Team Intro ========== */
+.teamIntro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+
+  @media (max-width: 1024px) {
     flex-direction: column;
-    gap: 2rem;
-    align-items: flex-start;
-    text-align: left;
-    margin-top: 0;
+    padding: 2rem 0;
   }
 
-  .agencyIdentity {
-    text-align: left;
-    gap: 0.75rem;
+  h2 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 600;
+
+    @media (max-width: 480px) {
+      font-size: 18px;
+    }
   }
 
-  .agencyName {
-    font-size: 1.5rem;
-  }
+  p {
+    margin: 0;
+    max-width: 570px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.9rem;
+    // color: rgba(104, 105, 99, 1);
 
-  .agencyTagline {
-    font-size: 1.1rem;
-  }
+    @media (max-width: 768px) {
+      font-size: 18px;
+      line-height: 1.6rem;
+    }
 
-  .founderName {
-    font-size: 1.3rem;
-  }
-
-  .founderTitle {
-    font-size: 1rem;
-  }
-
-  .agencyDescription {
-    text-align: left;
-    max-width: 100%;
-  }
-
-  .agencyDescription p {
-    font-size: 1rem;
-    text-align: left;
+    @media (max-width: 480px) {
+      font-size: 16px;
+      line-height: 1.4rem;
+    }
   }
 }
 
-@media (max-width: 480px) {
-  .statsSection {
-    padding: 1.5rem 1rem;
-  }
+.teamLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .container {
-    gap: 2.5rem;
-  }
+.topRow,
+.middleRow,
+.bottomRow {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
 
-  .mainContent {
-    gap: 2.5rem;
-    margin-top: 1.5rem;
-  }
-
-  .rightSide {
-    gap: 2.5rem;
-  }
-
-  .topRow {
-    gap: 2.5rem;
-  }
-
-  .statItem {
-    gap: 0.75rem;
-  }
-
-  .statTitle {
-    font-size: 1.4rem;
-  }
-
-  .separator {
-    margin: 0.5rem 0;
-  }
-
-  .statContent {
-    gap: 1.25rem;
-  }
-
-  .statNumber {
-    font-size: 3rem;
-  }
-
-  .statDescription {
-    font-size: 0.95rem;
-  }
-
-  .upworkVerification {
-    gap: 0.75rem;
-  }
-
-  .upworkLogo {
-    width: 180px;
-    max-height: 70px;
-  }
-
-  .verificationText {
-    font-size: 0.85rem;
-  }
-
-  .teamSection {
-    gap: 1.25rem;
-  }
-
-  .teamTitle {
-    font-size: 1.75rem;
-  }
-
-  .teamAvatars {
-    gap: 0.75rem;
-  }
-
-  .agencySection {
-    gap: 1.75rem;
-  }
-
-  .agencyIdentity {
-    gap: 0.5rem;
-  }
-
-  .agencyName {
-    font-size: 1.4rem;
-  }
-
-  .agencyTagline {
-    font-size: 1rem;
-  }
-
-  .founderName {
-    font-size: 1.2rem;
-  }
-
-  .founderTitle {
-    font-size: 0.95rem;
-  }
-
-  .agencyDescription p {
-    font-size: 0.95rem;
-  }
-
-  .teamCount {
-    width: 45px;
-    height: 45px;
-    font-size: 0.85rem;
-  }
-
-  .avatar {
-    width: 35px;
-    height: 35px;
+  @media (max-width: 480px) {
+    justify-content: flex-start;
   }
 }
 
-@media (max-width: 360px) {
-  .statsSection {
-    padding: 1rem 0.75rem;
-  }
+.countCircle {
+  background-color: rgba(238, 237, 236, 1);
+  border-radius: 100%;
+  font-size: 1rem;
+  width: 40px;
+  height: 40px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
-  .container {
-    gap: 2rem;
+  @media (max-width: 480px) {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
   }
+}
 
-  .mainContent {
-    gap: 2rem;
-    margin-top: 1rem;
-  }
+.miniPlus {
+  position: absolute;
+  right: 1px;
+  top: 13px;
 
-  .rightSide {
-    gap: 2rem;
-  }
-
-  .topRow {
-    gap: 2rem;
-  }
-
-  .statItem {
-    gap: 0.5rem;
-  }
-
-  .statTitle {
-    font-size: 1.3rem;
-  }
-
-  .statContent {
-    gap: 1rem;
-  }
-
-  .statNumber {
-    font-size: 2.5rem;
-  }
-
-  .statDescription {
-    font-size: 0.9rem;
-  }
-
-  .upworkVerification {
-    gap: 0.5rem;
-  }
-
-  .upworkLogo {
-    width: 160px;
-    max-height: 60px;
-  }
-
-  .verificationText {
-    font-size: 0.8rem;
-  }
-
-  .teamSection {
-    gap: 1rem;
-  }
-
-  .teamTitle {
-    font-size: 1.5rem;
-  }
-
-  .teamAvatars {
-    gap: 0.5rem;
-  }
-
-  .agencySection {
-    gap: 1.5rem;
-  }
-
-  .agencyIdentity {
-    gap: 0.4rem;
-  }
-
-  .agencyName {
-    font-size: 1.3rem;
-  }
-
-  .agencyTagline {
-    font-size: 0.95rem;
-  }
-
-  .founderName {
-    font-size: 1.1rem;
-  }
-
-  .founderTitle {
-    font-size: 0.9rem;
-  }
-
-  .agencyDescription p {
-    font-size: 0.9rem;
-  }
-
-  .teamCount {
-    width: 40px;
-    height: 40px;
-    font-size: 0.8rem;
-  }
-
-  .avatar {
-    width: 30px;
-    height: 30px;
+  @media (max-width: 480px) {
+    top: 9px;
+    right: 0;
   }
 }
