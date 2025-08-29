@@ -1,5 +1,5 @@
 .main {
-  padding: 120px 95px 80px 100px;
+  padding: 4rem 5.3rem;
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -247,6 +247,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: center;
+    padding: 5rem 0px;
 
     .missionVisionContent {
       display: flex;
@@ -259,13 +260,14 @@
           font-size: 24px;
           font-weight: 600;
           color: #1a1a1a;
-          margin: 0 0 16px 0;
+          margin: 0 0 16px 20px;
           position: relative;
 
           &::before {
             content: "";
             position: absolute;
-            left: -20px;
+            margin-right: 0px;
+            left: -10px;
             top: 50%;
             transform: translateY(-50%);
             width: 4px;

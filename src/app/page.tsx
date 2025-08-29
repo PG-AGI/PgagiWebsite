@@ -111,8 +111,6 @@ export default function Home() {
       {/* <VideoTestimonial /> */}
       <FAQ />
       <TrendingOld />
-
-      <Calendly />
     </main>
   );
 }

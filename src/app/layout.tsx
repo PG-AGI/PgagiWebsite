@@ -8,6 +8,7 @@ import Navigation from "@/app/components/base/Navigation";
 import Footer from "@/app/components/Footer";
 
 import { inter } from "../utils/fontHelper";
+import Calendly from "./components/Calendly";
 
 export const metadata: Metadata = {
   title: "PGAGI",
@@ -85,6 +86,7 @@ export default function RootLayout({
               >
                 {children}
               </main>
+              <Calendly />
               <Footer />
             </body>
           </html>
