@@ -7,6 +7,12 @@
   text-align: center;
   position: relative;
   z-index: 1;
+  /* Make this section span the full viewport width while keeping it
+    visually centered inside any constrained parent container. */
+  width: 100vw;
+  box-sizing: border-box;
+  margin-left: calc(50% - 50vw);
+  margin-bottom: calc(50% - 49vw);
 }
 
 .content {
@@ -63,6 +69,7 @@
     background: #990404;
   }
 }
+
 // ✅ Responsive Design
 
 @media (max-width: 1024px) {

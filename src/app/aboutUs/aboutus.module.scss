@@ -57,6 +57,7 @@
       text-align: left;
 
       span {
+
         &.titleLine1,
         &.titleLine2 {
           color: #666666;
@@ -305,12 +306,10 @@
         left: -2px;
         right: -2px;
         bottom: -2px;
-        background: linear-gradient(
-          135deg,
-          #f8f9fa 0%,
-          #e9ecef 50%,
-          #dee2e6 100%
-        );
+        background: linear-gradient(135deg,
+            #f8f9fa 0%,
+            #e9ecef 50%,
+            #dee2e6 100%);
         border-radius: 22px;
         z-index: -1;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
@@ -335,6 +334,7 @@
 
 // Responsive Design
 @media (max-width: 1200px) {
+
   .hero,
   .mainContent,
   .missionVisionSection {
@@ -526,12 +526,10 @@
         left: -2px;
         right: -2px;
         bottom: -2px;
-        background: linear-gradient(
-          135deg,
-          #f8f9fa 0%,
-          #e9ecef 50%,
-          #dee2e6 100%
-        );
+        background: linear-gradient(135deg,
+            #f8f9fa 0%,
+            #e9ecef 50%,
+            #dee2e6 100%);
         border-radius: 22px;
         z-index: -1;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
@@ -544,6 +542,10 @@
       }
     }
   }
+}
+
+.calendlyWrapper {
+  width: 100vw;
 }
 
 // Responsive styles for bottom image

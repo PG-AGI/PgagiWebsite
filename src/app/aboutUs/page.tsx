@@ -504,12 +504,17 @@ export default function AboutUs() {
                   Customer Satisfaction
                 </span>
               </div>
+
             </div>
+
           </motion.div>
+
         </div>
+
       </motion.section>
 
       <Calendly />
     </motion.div>
+
   );
 }
