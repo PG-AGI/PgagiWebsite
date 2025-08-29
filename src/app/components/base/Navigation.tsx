@@ -80,7 +80,7 @@ export default function Navigation() {
         {!isMobile && (
           <motion.button
             className={styles.contact}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => window.open("https://form.pgagi.in/", "_self")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
