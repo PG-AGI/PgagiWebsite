@@ -3,6 +3,9 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  // Ensure proper scaling at different zoom levels
+  transform-origin: center;
+  will-change: transform;
 }
 
 .container {
@@ -10,9 +13,9 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  max-width: 400px;
+  // max-width: 400px;
   margin: 0 auto;
-  width: 100%;
+  width: 100vw;
 }
 
 .expertiseContent {
@@ -99,44 +102,85 @@
   max-width: 100%;
 }
 
-/* Desktop Layout (768px and above) */
+/* Laptop Layout (768px and above) */
 @media (min-width: 768px) {
   .expertiseSection {
-    height: 120vh;
-    align-items: baseline;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
   }
   
   .container {
-    margin: 6rem 10rem;
-    min-height: min-content;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    
-    align-items: end;
-    max-width: 1600px;
-    padding: 0;
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
   
+  // Top section: Centered heading and description
   .expertiseContent {
-    order: 2;
-    gap: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
   }
   
   .expertiseHeading {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #000000;
     font-family: inherit;
+    margin: 0;
   }
   
   .expertiseDescription {
-    font-size: 1.5rem;
-    line-height: 1.25;
-    max-width: 600px;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0;
+  }
+  
+  // Bottom section: Two-column layout
+  .bottomSection {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+  }
+  
+  .sloganSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+    padding-right: 2rem;
+  }
+  
+  .mainHeading {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 0;
+  }
+  
+  .description {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    max-width: 100%;
+    margin: 0;
   }
   
   .servicesList {
-    gap: 3.5rem;
-    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    flex: 1;
+    padding-left: 2rem;
   }
   
   .serviceItem {
@@ -146,7 +190,7 @@
     &::after {
       content: '';
       position: absolute;
-      bottom: -1.75rem;
+      bottom: -1.25rem;
       left: 0;
       width: 100%;
       height: 0.75px;
@@ -161,33 +205,169 @@
   }
   
   .serviceTitle {
-    font-size: 1.36rem;
+    font-size: 1.25rem;
+  }
+}
+
+/* Medium Laptop Layout (900px and above) */
+@media (min-width: 900px) {
+  .expertiseSection {
+    padding: 4.5rem 2.5rem;
   }
   
-  .sloganSection {
-    order: 1;
-    gap: 1.5rem;
+  .container {
+    max-width: 1500px;
+    gap: 4.5rem;
+    padding: 0 2.5rem;
+  }
+  
+  .expertiseHeading {
+    font-size: 1.625rem;
+  }
+  
+  .expertiseDescription {
+    font-size: 1.3125rem;
+    max-width: 850px;
+  }
+  
+  .bottomSection {
+    gap: 4.5rem;
   }
   
   .mainHeading {
-    font-size: 2.2rem;
-    font-weight: 600;
-    line-height: 0.8;
+    font-size: 2.625rem;
   }
   
   .description {
-    font-size: 1.115rem;
-    line-height: 1.4;
-    max-width: 400px;
+    font-size: 1.1875rem;
+  }
+  
+  .servicesList {
+    gap: 2.75rem;
+  }
+  
+  .serviceTitle {
+    font-size: 1.3125rem;
   }
 }
 
 /* Large Desktop Layout (1024px and above) */
-
+@media (min-width: 1024px) {
+  .expertiseSection {
+    padding: 5rem 3rem;
+  }
+  
+  .container {
+    max-width: 1600px;
+    gap: 5rem;
+    padding: 0 3rem;
+  }
+  
+  .expertiseContent {
+    gap: 2rem;
+  }
+  
+  .expertiseHeading {
+    font-size: 1.75rem;
+  }
+  
+  .expertiseDescription {
+    font-size: 1.375rem;
+    max-width: 900px;
+  }
+  
+  .bottomSection {
+    gap: 5rem;
+  }
+  
+  .mainHeading {
+    font-size: 2.75rem;
+  }
+  
+  .description {
+    font-size: 1.25rem;
+  }
+  
+  .servicesList {
+    gap: 3rem;
+  }
+  
+  .serviceTitle {
+    font-size: 1.375rem;
+  }
+}
 
 /* Extra Large Desktop Layout (1200px and above) */
 @media (min-width: 1200px) {
+  .expertiseSection {
+    padding: 6rem 4rem;
+  }
+  
   .container {
-    margin: 6rem 10rem;
+    max-width: 1800px;
+    gap: 6rem;
+    padding: 0 4rem;
+  }
+  
+  .expertiseContent {
+    gap: 2.5rem;
+  }
+  
+  .expertiseHeading {
+    font-size: 2rem;
+  }
+  
+  .expertiseDescription {
+    font-size: 1.5rem;
+    max-width: 1000px;
+  }
+  
+  .bottomSection {
+    gap: 6rem;
+  }
+  
+  .sloganSection {
+    padding-right: 3rem;
+  }
+  
+  .servicesList {
+    padding-left: 3rem;
+    gap: 3.5rem;
+  }
+  
+  .mainHeading {
+    font-size: 3rem;
+  }
+  
+  .description {
+    font-size: 1.375rem;
+  }
+  
+  .serviceTitle {
+    font-size: 1.5rem;
+  }
+}
+
+/* Ultra Wide Desktop Layout (1440px and above) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 2000px;
+    padding: 0 5rem;
+  }
+  
+  .expertiseDescription {
+    max-width: 1200px;
+  }
+  
+  .bottomSection {
+    gap: 8rem;
+  }
+  
+  .sloganSection {
+    padding-right: 4rem;
+  }
+  
+  .servicesList {
+    padding-left: 4rem;
   }
 } 

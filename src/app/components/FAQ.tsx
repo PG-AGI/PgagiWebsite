@@ -51,7 +51,7 @@ export default function FAQ() {
       <div className={styles.container}>
         {/* Left Column - Desktop */}
         <div className={styles.leftColumn}>
-          <h3 className={styles.sectionTitle}>{/* FAQs */}FAQs</h3>
+          <h3 className={styles.sectionTitle}>{'// FAQs'}</h3>
           <h2 className={styles.mainTitle}>
             Everything you need to know about how we work. From our process to what makes working with us different.
           </h2>
