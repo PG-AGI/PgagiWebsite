@@ -4,7 +4,11 @@ import styles from './NewPage.module.scss';
 
 const StatsSection = () => {
   return (
-    <section id="stats-section" className={styles.statsSection}>
+    <section 
+      id="stats-section" 
+      className={styles.statsSection}
+      aria-label="Company Statistics and Team Information"
+    >
       <div className={styles.container}>
         {/* Main Content Area */}
         <div className={styles.mainContent}>
@@ -12,13 +16,13 @@ const StatsSection = () => {
           <div className={styles.leftSide}>
             <div className={styles.teamSection}>
               <h2 className={styles.teamTitle}>Team of Pilots</h2>
-              <div className={styles.teamAvatars}>
-                <div className={styles.teamCount}>32+</div>
-                <div className={styles.avatar}></div>
-                <div className={styles.avatar}></div>
-                <div className={styles.avatar}></div>
-                <div className={styles.avatar}></div>
-                <div className={styles.avatar}></div>
+              <div className={styles.teamAvatars} role="group" aria-label="Team member avatars">
+                <div className={styles.teamCount} aria-label="32 plus team members">32+</div>
+                <div className={styles.avatar} aria-hidden="true"></div>
+                <div className={styles.avatar} aria-hidden="true"></div>
+                <div className={styles.avatar} aria-hidden="true"></div>
+                <div className={styles.avatar} aria-hidden="true"></div>
+                <div className={styles.avatar} aria-hidden="true"></div>
               </div>
             </div>
           </div>
@@ -30,34 +34,43 @@ const StatsSection = () => {
               {/* Launched Projects Section */}
               <div className={styles.statItem}>
                 <h3 className={styles.statTitle}>Launched Projects</h3>
-                <div className={styles.separator}></div>
+                <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.statContent}>
-                  <span className={styles.statNumber}>75+</span>
-                  <p className={styles.statDescription}>Projects were launched successful since 2023.</p>
+                  <span className={styles.statNumber} aria-label="75 plus projects">75+</span>
+                  <p className={styles.statDescription}>Projects were launched successfully since 2023.</p>
                 </div>
               </div>
 
               {/* Client Satisfaction Section */}
               <div className={styles.statItem}>
                 <h3 className={styles.statTitle}>Client Satisfaction</h3>
-                <div className={styles.separator}></div>
+                <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.upworkVerification}>
                   <Image 
                     src="/landing/Upwork.webp" 
-                    alt="Upwork" 
+                    alt="Upwork Logo" 
                     width={100}
                     height={24}
                     className={styles.upworkLogo}
+                    priority
                   />
                   <a 
                     href="https://www.upwork.com/agencies/1737467434828361728/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className={styles.verificationLink}
+                    aria-label="View our Upwork profile - opens in new tab"
                   >
                     <div className={styles.verificationText}>
                       <span>As Verified on Upwork</span>
-                      <svg className={styles.blueTick} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg 
+                        className={styles.blueTick} 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        role="img"
+                      >
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#1DA1F2"/>
                       </svg>
                     </div>
@@ -69,33 +82,26 @@ const StatsSection = () => {
             {/* Year of Establishment Section */}
             <div className={styles.statItem}>
               <h3 className={styles.statTitle}>Year of Establishment</h3>
-              <div className={styles.separator}></div>
+              <div className={styles.separator} aria-hidden="true"></div>
               <div className={styles.statContent}>
-                <span className={styles.statNumber}>2023</span>
-                <p className={styles.statDescription}>That year two founders launched their first project: &quot;Toingg&quot; , a communication OS for businesses.</p>
+                <span className={styles.statNumber} aria-label="Established in 2023">2023</span>
+                <p className={styles.statDescription}>
+                  That year two founders launched their first project: &quot;Toingg&quot;, a communication OS for businesses.
+                </p>
               </div>
-              
             </div>
 
             {/* Agency Information Section */}
             <div className={styles.agencySection}>
-              {/* Agency Identity */}
-             
-
               {/* Agency Description */}
               <div className={styles.agencyDescription}>
                 <p>
-                  We&apos;re a full-service agency driven by <strong>strategy, design, and technology</strong>. 
-                  From brand foundations to fully developed digital products, we create work 
-                  that doesn&apos;t just look good: <strong>it performs, connects, and endures</strong>.
+                We specialize in engineering <strong> full-scale AI applications </strong>  from research and product development to scalable deployment. Whether you are launching <strong> a new AI product </strong> or <strong> optimizing an existing one</strong>, we bring together deep tech expertise to drive real-world tangible results.
                 </p>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Footer with CTA */}
-        
       </div>
     </section>
   );

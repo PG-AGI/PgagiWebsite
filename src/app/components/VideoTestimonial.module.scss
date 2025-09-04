@@ -17,53 +17,22 @@
 
 // Header Section
 .headerSection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: flex-start;
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // margin-bottom: 2rem;
   position: relative;
   
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -1rem;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, #e9ecef 0%, #6c757d 50%, #e9ecef 100%);
-    z-index: 1;
-  }
-  
-  .leftHeader {
+  .centeredHeader {
     position: relative;
     z-index: 2;
     
     .testimonialLabel {
-      display: inline-block;
-      background: #ffffff;
-      color: #6c757d;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border: 1px solid #e9ecef;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-  }
-  
-  .rightHeader {
-    position: relative;
-    z-index: 2;
-    
-    .mainHeading {
-      font-size: 2.5rem;
-      font-weight: 400;
+      font-size: 2rem;
+      font-weight: 600;
       color: #000000;
-      line-height: 1.2;
       margin: 0;
+      font-family: inherit;
     }
   }
 }
@@ -81,6 +50,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 5rem;
 }
 
 .videoSection {
@@ -149,6 +119,18 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  
+  .rightColumnHeader {
+    margin-bottom: 1rem;
+    
+    .rightHeading {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #000000;
+      line-height: 1.3;
+      margin: 0;
+    }
+  }
 }
 
 .testimonialContent {
@@ -437,13 +419,7 @@
   }
   
   .headerSection {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    text-align: center;
-    
-    .rightHeader .mainHeading {
-      font-size: 2.25rem;
-    }
+    margin-bottom: 1.5rem;
   }
   
   .videoSection .videoContainer .videoPlaceholder {
@@ -462,17 +438,16 @@
   }
   
   .headerSection {
-    gap: 1.5rem;
     margin-bottom: 1.5rem;
     
-    .rightHeader .mainHeading {
-      font-size: 2rem;
-    }
-    
-    .leftHeader .testimonialLabel {
+    .centeredHeader .testimonialLabel {
       font-size: 0.85rem;
       padding: 0.4rem 0.8rem;
     }
+  }
+  
+  .rightColumn .rightColumnHeader .rightHeading {
+    font-size: 1.25rem;
   }
   
   // Hide desktop layout on mobile
@@ -556,17 +531,16 @@
   }
   
   .headerSection {
-    gap: 1rem;
     margin-bottom: 1rem;
     
-    .leftHeader .testimonialLabel {
+    .centeredHeader .testimonialLabel {
       font-size: 0.8rem;
       padding: 0.35rem 0.7rem;
     }
-    
-    .rightHeader .mainHeading {
-      font-size: 1.75rem;
-    }
+  }
+  
+  .rightColumn .rightColumnHeader .rightHeading {
+    font-size: 1.1rem;
   }
   
   .mobileVideoSection .videoContainer {
@@ -648,9 +622,14 @@
   }
   
   .headerSection {
-    .rightHeader .mainHeading {
-      font-size: 1.5rem;
+    .centeredHeader .testimonialLabel {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
     }
+  }
+  
+  .rightColumn .rightColumnHeader .rightHeading {
+    font-size: 1rem;
   }
   
   .mobileVideoSection .videoContainer .videoPlaceholder {

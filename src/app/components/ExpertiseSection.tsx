@@ -6,10 +6,10 @@ export default function ExpertiseSection() {
   const router = useRouter();
   
   const services = [
-    { number: '01', title: 'Branding' },
-    { number: '02', title: 'Mobile Apps' },
-    { number: '03', title: 'Social Media' },
-    { number: '04', title: 'Web Development' }
+    { number: '01', title: 'AI Research' },
+    { number: '02', title: 'AI Architecture' },
+    { number: '03', title: 'AI Mobile App Development' },
+    { number: '04', title: 'AI SAAS Development' }
   ];
 
   const handleServiceClick = (serviceNumber: string) => {
@@ -20,13 +20,27 @@ export default function ExpertiseSection() {
   return (
     <section className={styles.expertiseSection}>
       <div className={styles.container}>
-        {/* Expertise Section */}
+        {/* Top Section: Centered Expertise Heading and Description */}
         <div className={styles.expertiseContent}>
           <h3 className={styles.expertiseHeading}>{'// Expertise'}</h3>
           <p className={styles.expertiseDescription}>
-            We team up with bold thinkers to build brands that actually matter. Our expertise spans the full creative journey, from brand identity to digital products. We deliver solutions that connects, converts and drives real results.
+          We partner with bold founders to build end-to-end AI products that truly matter to users. Our expertise spans from designing and developing AI-driven products to delivering enterprise-grade solutions that scale.
           </p>
-          
+        </div>
+
+        {/* Bottom Section: Two-column layout */}
+        <div className={styles.bottomSection}>
+          {/* Left Column: Slogan and Description */}
+          <div className={styles.sloganSection}>
+            <h2 className={styles.mainHeading}>
+              Less talk, more impact.
+            </h2>
+            <p className={styles.description}>
+              No big words. No bloated pitch decks. No five-hour Zoom calls. Just smart strategy, flawless execution and results that actually move the needle.
+            </p>
+          </div>
+
+          {/* Right Column: Services List */}
           <div className={styles.servicesList}>
             {services.map((service, index) => (
               <div 
@@ -45,17 +59,9 @@ export default function ExpertiseSection() {
             ))}
           </div>
         </div>
-
-        {/* Slogan and Description */}
-        <div className={styles.sloganSection}>
-          <h2 className={styles.mainHeading}>
-            Less talk, more impact.
-          </h2>
-          <p className={styles.description}>
-            No big words. No bloated pitch decks. No five-hour Zoom calls. Just smart strategy, flawless execution and results that actually move the needle.
-          </p>
-        </div>
       </div>
     </section>
   );
 } 
+
+

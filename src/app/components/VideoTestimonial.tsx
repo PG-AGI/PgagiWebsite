@@ -173,11 +173,8 @@ const VideoTestimonial: React.FC = () => {
       <div className={styles.container}>
         {/* Header Section */}
         <div className={styles.headerSection}>
-          <div className={styles.leftHeader}>
-            <span className={styles.testimonialLabel}>{'//Testimonial'}</span>
-          </div>
-          <div className={styles.rightHeader}>
-            <h2 className={styles.mainHeading}>See what our client says</h2>
+          <div className={styles.centeredHeader}>
+            <h3 className={styles.testimonialLabel}>{'// Testimonial'}</h3>
           </div>
         </div>
 
@@ -220,6 +217,9 @@ const VideoTestimonial: React.FC = () => {
 
           {/* Right Column - Testimonials */}
           <div className={styles.rightColumn}>
+            <div className={styles.rightColumnHeader}>
+              <h2 className={styles.rightHeading}>See what our client says</h2>
+            </div>
             <div className={styles.testimonialContent}>
               <div className={styles.testimonialBoxes}>
                 {/* First Testimonial Box */}
