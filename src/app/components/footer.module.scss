@@ -13,7 +13,7 @@
 .backgroundText {
   position: absolute;
   left: 50%;
-  bottom: 15%;
+  bottom: 5%;
   text-align: center;
   transform: translateX(-50%);
   font-size: 15rem;
@@ -42,7 +42,7 @@
   flex-direction: column;
   min-height: 70vh;
   flex: 1;
-  padding-bottom: 120px; // Add padding to prevent overlap with bottom section
+  // padding-bottom: 120px; // Add padding to prevent overlap with bottom section
 }
 
 // Top section with branding and navigation

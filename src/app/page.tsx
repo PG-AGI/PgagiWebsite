@@ -18,6 +18,7 @@ import TestimonialCarousel from "./components/InfiniteTestimonial";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SmoothScrollNav from "./components/SmoothScrollNav";
 import LandingProjects from "./components/LandingProjects";
+import Process from "./components/process";
 
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
@@ -98,7 +99,7 @@ export default function Home() {
 			<Landing />
 			<Partners />
 			<StatsSection />
-		
+			<Process />
 			<LandingProjects/>
 			
 			
