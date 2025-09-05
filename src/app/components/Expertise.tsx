@@ -14,59 +14,59 @@ export default function Expertise() {
       id: 1,
       number: "01",
       title: "AI Research",
-      tagline: "Where Brands Come Alive",
-      description: "Where brands come alive. We craft identities that don't just look good they mean something. From strategy to storytelling, we help brands show up with confidence, clarity, and a whole lot of personality. Whether you're building from scratch or ready for a rebrand, we'll make sure every detail reflects who you are and where you're headed.",
+      tagline: "Where Ideas Become Intelligence",
+      description: "We push the boundaries of what’s possible with AI. From data to discovery, we explore, test, and shape innovations that move businesses forward.",
       services: [
-        "Brand Strategy & Positioning",
-        "Visual Identity Design", 
-        "Brand Voice & Messaging",
-        "Brand Guidelines",
-        "Packaging Design",
-        "Naming & Tagline Development"
+        "Model Research & Prototyping",
+        "Data Strategy & Analysis", 
+        "Custom AI Experiments",
+        "Performance Benchmarking",
+        "Emerging Tech Exploration",
+        
       ]
     },
     {
       id: 2,
       number: "02", 
-      title: "AI SAAS DEVELOPMENT",
-      tagline: "From Concept to Home Screen",
-      description: "We transform ideas into intuitive, powerful mobile experiences. From native iOS and Android development to cross-platform solutions, we build apps that users love and businesses rely on. Our mobile expertise covers everything from concept to launch, ensuring your app stands out in crowded app stores.",
+      title: "AI Architecture",
+      tagline: "Where Systems Find Their Strength",
+      description: "Strong AI needs a strong foundation. We design secure, scalable architectures that power intelligence at every level.",
       services: [
-        "Native iOS Development",
-        "Native Android Development",
-        "Cross-Platform Solutions",
-        "UI/UX Design",
-        "App Store Optimization",
-        "Maintenance & Updates"
+        "End-to-End AI Infrastructure",
+        "Cloud & On-Prem Solutions",
+        "MLOps & Automation",
+        "Scalable Data Pipelines",
+        "Security & Compliance",
+        
       ]
     },
     {
       id: 3,
       number: "03",
       title: "AI Mobile App Development", 
-      tagline: "Websites that work as good as they look",
-      description: "From polished marketing sites to dynamic, content-rich platforms, our dev team turns bold ideas into seamless digital experiences. Designed for speed, built for scale, and engineered to convert. Our websites don't just exist online, they perform.",
+      tagline: "Where Intelligence Meets Mobility",
+      description: "We bring AI into everyday moments—crafting mobile apps that think, learn, and feel seamless in the palm of your hand.",
       services: [
-        "Custom Front-End Development",
-        "Framer & No-Code Development",
-        "E-commerce Development",
-        "Accessibility Optimization",
-        "Interactive Web Experiences"
+        "AI-Powered Apps",
+        "On-Device AI Models",
+        "Cross-Platform Integration",
+        "User-Centric Design",
+        "Continuous Optimization"
       ]
     },
     {
       id: 4,
       number: "04",
-      title: "Integrating AI in Existing Workflows",
-      tagline: "Intelligence That Drives Innovation",
-      description: "We harness the power of artificial intelligence to solve complex business challenges. From custom AI models to intelligent automation, we help businesses leverage cutting-edge technology to gain competitive advantages and unlock new possibilities.",
+      title: "AI SaaS Development",
+      tagline: "Where Products Come to Life",
+      description: "From idea to launch, we build AI-driven SaaS platforms that scale with your vision and grow with your users.",
       services: [
-        "Custom AI Models",
-        "Natural Language Processing",
-        "Computer Vision",
-        "Predictive Analytics",
-        "Machine Learning Pipelines",
-        "AI Strategy & Consulting"
+        "Custom SaaS Platforms",
+        "Multi-Tenant Architecture",
+        "Subscription & Monetization",
+        "Seamless Integrations",
+        "Analytics & Insights",
+        
       ]
     }
   ], []);
@@ -148,8 +148,8 @@ export default function Expertise() {
         <div className={styles.header}>
           <span className={styles.subtitle}>{'// Expertise'}</span>
           <h1 className={styles.mainTitle}>
-            <span className={styles.titleLine1}>We build the stuff brands brag about.</span>
-            <span className={styles.titleLine2}>Bold identities, beautiful websites, scroll stopping campaigns and digital experiences people actually love.</span>
+            <span className={styles.titleLine1}>We partner with bold founders to build end-to-end AI products that truly matter to users.</span>
+            <span className={styles.titleLine2}>Our expertise spans from designing and developing AI-driven products to delivering enterprise-grade solutions that scale.</span>
           </h1>
         </div>
 

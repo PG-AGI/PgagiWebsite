@@ -18,13 +18,13 @@ export default function Footer() {
           <div className={styles.container}>
             {/* Left side - Branding */}
             <div className={styles.brandingSection}>
-              <div className={styles.logoContainer}>
+              {/* <div className={styles.logoContainer}>
                 <Image src={logo} alt="PG-AGI Logo" width={60} height={60} />
                 <div className={styles.brandText}>
-                  <h2 className={styles.brandName}>PG-AGI</h2>
-                  <p className={styles.tagline}>Playing God With AGI</p>
+                  {/* <h2 className={styles.brandName}>PG-AGI</h2> */}
+                  {/* <p className={styles.tagline}>Playing God With AGI</p> 
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Right side - Navigation and Contact */}
