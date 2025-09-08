@@ -17,7 +17,7 @@ const StatsSection = () => {
             <div className={styles.teamSection}>
               <h2 className={styles.teamTitle}>Team of Pilots</h2>
               <div className={styles.teamAvatars} role="group" aria-label="Team member avatars">
-                <div className={styles.teamCount} aria-label="32 plus team members">32+</div>
+                <div className={styles.teamCount} aria-label="32 plus team members">35+</div>
                 <div className={styles.avatar} aria-hidden="true"></div>
                 <div className={styles.avatar} aria-hidden="true"></div>
                 <div className={styles.avatar} aria-hidden="true"></div>
@@ -49,8 +49,8 @@ const StatsSection = () => {
                   <Image 
                     src="/landing/Upwork.webp" 
                     alt="Upwork Logo" 
-                    width={100}
-                    height={24}
+                    width={250}
+                    height={30}
                     className={styles.upworkLogo}
                     priority
                   />

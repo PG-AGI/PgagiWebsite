@@ -6,9 +6,10 @@ import Image from "next/image";
 import { motion } from "framer-motion"; // ✨ import motion
 
 // Images
-// import initialConsultation from "../../../public/initialCinsoltation.png";
-// import Strategic from "../../../public/Strategic.png";
-// import code from "../../../public/code.png";
+import Engineering from "../../../public/Engineering_.jpg";
+import Strategy from "../../../public/Strategy.jpg";
+import Launch from "../../../public/Launch.jpg";
+import initialConsultation from "../../../public/Initial Consultation.jpg";
 
 // Steps Data
 const steps = [
@@ -16,32 +17,32 @@ const steps = [
     number: "01",
     title: "Initial Consultation",
     description:
-      "We kick things off with a quick discovery call to understand your product idea, goals, and user needs.",
-    image: null,
+      "We begin with a focused discovery call to align on your product vision, goals, and user needs, setting the foundation for clear planning and initial architecture design.",
+    image: initialConsultation,
     reverse: false,
   },
   {
     number: "02",
     title: "Strategy",
     description:
-      "We map out features, prioritize what to build first, and align the roadmap around fast validation and clear outcomes.",
-    image: null,
+      "We craft a comprehensive architecture and detailed proposal, secure approval, and then plan a feature-driven roadmap that prioritizes fast validation and measurable outcomes.",
+    image: Strategy,
     reverse: true,
   },
   {
     number: "03",
-    title: "Code",
+    title: "Engineering",
     description:
-      "We use industry-standard AI tools like Lovable and Cursor to write clean, scalable code faster.",
-    image: null,
+      "We move from proof of concept to backend and frontend development, followed by rigorous testing, to deliver a polished MVP ready for real-world use.",
+    image: Engineering,
     reverse: false,
   },
   {
     number: "04",
     title: "Launch",
     description:
-      "Once launched, your product is ready to test with users, pitch to investors, or go to market — with support from our team along the way.",
-    image: null, // 🚫 No image for Launch
+      "From deployment and user testing to go-to-market and full-scale launch, we ensure your product is market-ready and backed by our end-to-end support.",
+    image: Launch, // 🚫 No image for Launch
     reverse: true,
   },
 ];
@@ -62,13 +63,9 @@ function StepSection({
   image,
   reverse,
 }: StepSectionProps) {
-  const isLaunchStep = number === "04";
-
   return (
     <motion.div
-      className={`${styles.step} ${
-        reverse && !isLaunchStep ? styles.reverse : ""
-      } ${isLaunchStep ? styles.launchStep : ""}`}
+      className={`${styles.step} ${reverse ? styles.reverse : ""}`}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -96,8 +93,8 @@ function StepSection({
           <Image
             src={image}
             alt={title}
-            width={400}
-            height={250}
+            width={700}
+            height={300}
             className={styles.stepImage}
           />
         </motion.div>
@@ -148,6 +145,9 @@ const Process = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={styles.button}
+              onClick={() => {
+                window.open("https://form.pgagi.in/", "_blank");
+              }}
             >
               Book a Slot
               <span className={styles.iconWrapper}>

@@ -1,11 +1,37 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from './aboutus.module.scss';
 import Image from 'next/image';
+import Link from 'next/link';
 import Calendly from "../components/Calendly";
+import { generateSlug } from '@/services/generateSlugService';
+import { getSafeImageUrl } from '@/utils/imageUtils';
+import Marquee from 'react-fast-marquee';
+
+type Blog = {
+  id: string;
+  title: string;
+  coverImage: string;
+  readTime: string;
+  category: string
+};
+type News = {
+  id: string;
+  title: string;
+  coverImage: string;
+  readTime: string;
+  category: string
+};
 
 export default function AboutUs() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loadingBlogs, setLoadingBlogs] = useState<boolean>(false);
+  const [errorBlogs, setErrorBlogs] = useState<string>('');
+  const [news, setNews] = useState<News[]>([]);
+  const [loadingNews, setLoadingNews] = useState<boolean>(false);
+  const [errorNews, setErrorNews] = useState<string>('');
   // Framer Motion variants for animations
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -28,6 +54,46 @@ export default function AboutUs() {
     },
   };
 
+  // Fetch blogs and news from the API
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoadingBlogs(true);
+      setErrorBlogs('');
+      try {
+        const response = await fetch('/api/blogs');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: Blog[] = await response.json();
+        setBlogs(data);
+      } catch (error: any) {
+        setErrorBlogs(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingBlogs(false);
+      }
+    }
+
+    const fetchNews = async () => {
+      setLoadingNews(true);
+      setErrorNews('');
+      try {
+        const response = await fetch('/api/ainews');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: News[] = await response.json();
+        setNews(data);
+      } catch (error: any) {
+        setErrorNews(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingNews(false);
+      }
+    }
+
+    fetchBlogs();
+    fetchNews();
+  }, []);
+
   return (
     <div className={styles.main}>
       {/* Hero Section */}
@@ -42,10 +108,10 @@ export default function AboutUs() {
           <div className={styles.heroText}>
             <span className={styles.aboutLabel}>{'// About'}</span>
             <h1 className={styles.heroTitle}>
-              <span className={styles.titleLine1}>We work with founders who don&apos;t</span>
-              <span className={styles.titleLine2}>wait for permission. The ones building</span>
-              <span className={styles.titleLine3}>the next big thing fearlessly, with</span>
-              <span className={styles.titleLine4}>design that speaks louder than words.</span>
+              <span className={styles.titleLine1}>We engineer AI solutions from research to deployment,</span>
+              {/* <span className={styles.titleLine2}>from research and product development to scalable deployment.</span> */}
+              <span className={styles.titleLine3}>optimizing products for real-world impact</span>
+              <span className={styles.titleLine4}> with deep tech expertise and scalable results.</span>
             </h1>
           </div>
         </div>
@@ -54,7 +120,7 @@ export default function AboutUs() {
 
       
 
-      {/* Mission & Vision Section */}
+      {/* Content Section */}
       <motion.section
         className={styles.missionVisionSection}
         initial="hidden"
@@ -64,17 +130,15 @@ export default function AboutUs() {
       >
         <div className={styles.missionVisionContainer}>
           <div className={styles.missionVisionContent}>
-            <div className={styles.missionSection}>
-              <h3 className={styles.sectionTitle}>Mission</h3>
-              <p className={styles.sectionText}>
-                At PGAGI, we believe in a future where AI and human intelligence coexist in harmony, creating a smarter, faster, and better world.
+            <div className={styles.contentText}>
+              <p>
+              It all began in 2021, inside a quiet astrophysics lab. Driven by curiosity, spent long nights fine-tuning machine learning models not knowing we were planting the seeds of something bigger. What started as helping researchers make predictions soon grew into a vision: bringing AI out of labs and into the real world.
               </p>
-            </div>
-
-            <div className={styles.visionSection}>
-              <h3 className={styles.sectionTitle}>Vision</h3>
-              <p className={styles.sectionText}>
-                At PGAGI, we believe innovation starts with understanding people and their challenges. Our mission is to research, design, and build powerful in-house AI products that solve real problems across industries. From streamlining everyday tasks to tackling complex global issues, we create solutions that empower businesses, improve lives, and help shape a smarter, more connected world.
+              <p>
+              From those humble beginnings, PGAGI was born. First, building products for small businesses and individuals. Then, daring to create our own product—TOINGG, an AI communication operating system bridging voice and text. Step by step, the journey expanded to startups and enterprises, proving that AI could truly make a difference.
+              </p>
+              <p>
+              Today, with a team of 35+ passionate engineers, PGAGI continues that journey. From late-night experiments in a lab to powering businesses worldwide, one thing has never changed the belief that AI, when built with purpose, can change lives.
               </p>
             </div>
           </div>
@@ -83,8 +147,8 @@ export default function AboutUs() {
             <Image
               src="/landing/IMG_1531.webp"
               alt="PGAGI Mission & Vision"
-              width={600}
-              height={400}
+              width={800}
+              height={600}
               className={styles.missionVisionImg}
               priority
             />
@@ -92,7 +156,7 @@ export default function AboutUs() {
         </div>
       </motion.section>
 
-      {/* Main Content Section */}
+      {/* Main Content Section */}  
       <motion.section
         className={styles.mainContent}
         initial="hidden"
@@ -135,24 +199,28 @@ export default function AboutUs() {
             </div>
           </motion.div>
 
-          {/* Right Column - Content */}
+          {/* Right Column - Mission & Vision */}
           <motion.div className={styles.rightColumn} variants={fadeInUp}>
-            <div className={styles.contentText}>
-              <p>
-              It all began in 2021, inside a quiet astrophysics lab. Driven by curiosity, spent long nights fine-tuning machine learning models not knowing we were planting the seeds of something bigger. What started as helping researchers make predictions soon grew into a vision: bringing AI out of labs and into the real world.
-              </p>
-              <p>
-              From those humble beginnings, PGAGI was born. First, building products for small businesses and individuals. Then, daring to create our own product—TOINGG, an AI communication operating system bridging voice and text. Step by step, the journey expanded to startups and enterprises, proving that AI could truly make a difference.
-              </p>
-              <p>
-              Today, with a team of 35+ passionate engineers, PGAGI continues that journey. From late-night experiments in a lab to powering businesses worldwide, one thing has never changed the belief that AI, when built with purpose, can change lives.
-              </p>
+            <div className={styles.missionVisionContent}>
+              <div className={styles.missionSection}>
+                <h3 className={styles.sectionTitle}>Mission</h3>
+                <p className={styles.sectionText}>
+                  At PGAGI, we believe in a future where AI and human intelligence coexist in harmony, creating a smarter, faster, and better world.
+                </p>
+              </div>
+
+              <div className={styles.visionSection}>
+                <h3 className={styles.sectionTitle}>Vision</h3>
+                <p className={styles.sectionText}>
+                  At PGAGI, we believe innovation starts with understanding people and their challenges. Our mission is to research, design, and build powerful in-house AI products that solve real problems across industries. From streamlining everyday tasks to tackling complex global issues, we create solutions that empower businesses, improve lives, and help shape a smarter, more connected world.
+                </p>
+              </div>
             </div>
 
             {/* Key Metrics */}
             <div className={styles.keyMetrics}>
               <div className={styles.metric}>
-                <span className={styles.metricValue}>1.5+</span>
+                <span className={styles.metricValue}>2.5+</span>
                 <span className={styles.metricLabel}>Years of Experience</span>
               </div>
               <div className={styles.metric}>
@@ -160,7 +228,7 @@ export default function AboutUs() {
                 <span className={styles.metricLabel}>Projects Delivered</span>
               </div>
               <div className={styles.metric}>
-                <span className={styles.metricValue}>99%</span>
+                <span className={styles.metricValue}>100%</span>
                 <span className={styles.metricLabel}>Customer Satisfaction</span>
               </div>
             </div>
@@ -187,7 +255,85 @@ export default function AboutUs() {
           />
         </div>
       </motion.section> */}
+
+      {/* Combined Blogs & News Section */}
+      <section className={styles.combinedSection} id="blogs-news">
+        <h3 className={styles.sectionTitle}>News & Blogs</h3>
+        <div className={styles.combinedGrid}>
+          {loadingBlogs || loadingNews ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div className={styles.tileSkeleton} key={i}>
+                <div className={styles.imgSkeleton} />
+                <div className={styles.contentSkeleton}>
+                  <div className={styles.categorySkeleton} />
+                  <div className={styles.titleSkeleton} />
+                  <div className={styles.metaSkeleton} />
+                </div>
+              </div>
+            ))
+          ) : errorBlogs ? (
+            <p className={styles.error}>{errorBlogs}</p>
+          ) : errorNews ? (
+            <p className={styles.error}>{errorNews}</p>
+          ) : blogs.length === 0 && news.length === 0 ? (
+            <p>No blogs or news found.</p>
+          ) : (
+            <>
+              <Marquee
+                gradient={false}
+                speed={55}
+                className={styles.marqueeWrapper}
+              >
+                {[...blogs, ...news].reverse().map((item) => {
+                  const isBlog = blogs.some((b) => b.title === item.title);
+                  return (
+                    <Link
+                      key={generateSlug(item.title)}
+                      href={
+                        isBlog
+                          ? `/blogpost/${generateSlug(item.title)}`
+                          : `/ainews/${generateSlug(item.title)}`
+                      }
+                      className={styles.tile}
+                    >
+                      <div className={styles.imageWrap}>
+                        <Image
+                          src={getSafeImageUrl(item.coverImage)}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className={styles.image}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "/images/aboutus.png";
+                          }}
+                        />
+                      </div>
+                      <div className={styles.content}>
+                        <div>
+                          <div className={styles.category}>
+                            {isBlog ? 'Blog' : 'News'}
+                          </div>
+                          <h3 className={styles.title}>{item.title}</h3>
+                        </div>
+                        <div className={styles.readTime}>
+                          {item.readTime || '5 min read'}
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </Marquee>
+            </>
+          )}
+        </div>
+      </section>
+
       <Calendly />
+
+      
     </div>
+
+    
   );
 }
