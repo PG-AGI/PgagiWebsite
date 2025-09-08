@@ -7,7 +7,7 @@ import TransitionLink from "../TransitionLink";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import ContactUsForm from "./contactUsForm";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Target } from "lucide-react";
 
 export default function Navigation() {
   const [navbarVisible] = useState(true);
@@ -133,12 +133,12 @@ export default function Navigation() {
                     Careers
                   </TransitionLink>
                   <button className={styles.mobileContact} onClick={() => {
-                    setIsMenuOpen(false);
-                    handleContactUs();
+                    window.open("https://form.pgagi.in/", "_blank");                    // setIsMenuOpen(false);
+                    // handleContactUs();
                   }}>
                     Get in touch
                     <ArrowRight size={16} />
-                  </button>
+                  </button> 
                 </div>
               )}
             </>
@@ -165,7 +165,9 @@ export default function Navigation() {
                 Careers
               </TransitionLink>
 
-              <button className={styles.contact} onClick={handleContactUs}>
+              <button className={styles.contact} onClick={() => {
+                window.open("https://form.pgagi.in/", "_blank");
+              }}>
                 Get in touch
                 <ArrowRight size={16} />
               </button>

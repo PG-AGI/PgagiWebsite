@@ -72,7 +72,7 @@ export default function Landing() {
                             rel="noopener noreferrer"
                             style={{ textDecoration: 'none', color: 'inherit' }}
                         >
-                            Top 1% recognized on the UpWork
+                            Top 1% recognized on UpWork
                         </a>
                     </div>
                     <div className={styles.pgagiLabel}>
@@ -89,7 +89,9 @@ export default function Landing() {
                     Not the one passing.
                     </p>
                     <div className={styles.buttonRow}>
-                        <button className={styles.ctaButton} onClick={handleBookCall}>
+                        <button className={styles.ctaButton} onClick={() => {
+                            window.open("https://form.pgagi.in/", "_blank");
+                        }}>
                             Book a Consultation
                         </button>
                         <button className={styles.outlineButton} onClick={handleScrollToTestimonials}>

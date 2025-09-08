@@ -1,10 +1,36 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import styles from './expertise.module.scss';
+import { generateSlug } from '@/services/generateSlugService';
+import { getSafeImageUrl } from '@/utils/imageUtils';
+import Marquee from 'react-fast-marquee';
+
+type Blog = {
+  id: string;
+  title: string;
+  coverImage: string;
+  readTime: string;
+  category: string
+};
+type News = {
+  id: string;
+  title: string;
+  coverImage: string;
+  readTime: string;
+  category: string
+};
 
 export default function Expertise() {
   const [activeSection, setActiveSection] = useState(1);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loadingBlogs, setLoadingBlogs] = useState<boolean>(false);
+  const [errorBlogs, setErrorBlogs] = useState<string>('');
+  const [news, setNews] = useState<News[]>([]);
+  const [loadingNews, setLoadingNews] = useState<boolean>(false);
+  const [errorNews, setErrorNews] = useState<string>('');
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -136,6 +162,46 @@ export default function Expertise() {
     };
   }, []);
 
+  // Fetch blogs and news from the API
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoadingBlogs(true);
+      setErrorBlogs('');
+      try {
+        const response = await fetch('/api/blogs');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: Blog[] = await response.json();
+        setBlogs(data);
+      } catch (error: any) {
+        setErrorBlogs(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingBlogs(false);
+      }
+    }
+
+    const fetchNews = async () => {
+      setLoadingNews(true);
+      setErrorNews('');
+      try {
+        const response = await fetch('/api/ainews');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data: News[] = await response.json();
+        setNews(data);
+      } catch (error: any) {
+        setErrorNews(error.message || 'An unexpected error occurred.');
+      } finally {
+        setLoadingNews(false);
+      }
+    }
+
+    fetchBlogs();
+    fetchNews();
+  }, []);
+
   // Set section refs
   const setSectionRef = (el: HTMLElement | null, index: number) => {
     sectionRefs.current[index] = el;
@@ -208,6 +274,79 @@ export default function Expertise() {
             ))}
           </div>
         </div>
+
+        {/* Combined Blogs & News Section */}
+        <section className={styles.combinedSection} id="blogs-news">
+          <h3 className={styles.sectionTitle}>News & Blogs</h3>
+          <div className={styles.combinedGrid}>
+            {loadingBlogs || loadingNews ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <div className={styles.tileSkeleton} key={i}>
+                  <div className={styles.imgSkeleton} />
+                  <div className={styles.contentSkeleton}>
+                    <div className={styles.categorySkeleton} />
+                    <div className={styles.titleSkeleton} />
+                    <div className={styles.metaSkeleton} />
+                  </div>
+                </div>
+              ))
+            ) : errorBlogs ? (
+              <p className={styles.error}>{errorBlogs}</p>
+            ) : errorNews ? (
+              <p className={styles.error}>{errorNews}</p>
+            ) : blogs.length === 0 && news.length === 0 ? (
+              <p>No blogs or news found.</p>
+            ) : (
+              <>
+                <Marquee
+                  gradient={false}
+                  speed={55}
+                  className={styles.marqueeWrapper}
+                >
+                  {[...blogs, ...news].reverse().map((item) => {
+                    const isBlog = blogs.some((b) => b.title === item.title);
+                    return (
+                      <Link
+                        key={generateSlug(item.title)}
+                        href={
+                          isBlog
+                            ? `/blogpost/${generateSlug(item.title)}`
+                            : `/ainews/${generateSlug(item.title)}`
+                        }
+                        className={styles.tile}
+                      >
+                        <div className={styles.imageWrap}>
+                          <Image
+                            src={getSafeImageUrl(item.coverImage)}
+                            alt={item.title}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className={styles.image}
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "/images/aboutus.png";
+                            }}
+                          />
+                        </div>
+                        <div className={styles.content}>
+                          <div>
+                            <div className={styles.category}>
+                              {isBlog ? 'Blog' : 'News'}
+                            </div>
+                            <h3 className={styles.title}>{item.title}</h3>
+                          </div>
+                          <div className={styles.readTime}>
+                            {item.readTime || '5 min read'}
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </Marquee>
+              </>
+            )}
+          </div>
+        </section>
       </div>
     </section>
   );

@@ -6,7 +6,7 @@
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border-color: #b60306;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -15,7 +15,7 @@
   animation: slideInFromTop 0.8s ease-out, smoothBounce 3s ease-in-out infinite;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   border: 2px solid transparent;
   background-clip: padding-box;
   
@@ -182,6 +182,7 @@
   align-items: flex-start;
   justify-content: center;
   margin-top: 2rem;
+  height: 50vh;
 }
 
 .mainHeading {

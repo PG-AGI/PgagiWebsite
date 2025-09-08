@@ -104,7 +104,8 @@
   }
   
   .button {
-    background-color: #504343;
+    // background-color: #504343;
+    background-color: #000000;
     color: white;
     border: none;
     border-radius: 8px;
@@ -196,12 +197,8 @@
   
   /* LAUNCH STEP */
   .launchStep {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-  
+    /* Remove the column layout override to follow the same pattern as other steps */
     .stepText {
-      max-width: none !important;
-      width: 100%;
+      max-width: 500px;
     }
   }
