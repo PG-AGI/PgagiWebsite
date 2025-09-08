@@ -3,6 +3,7 @@
 import Image from "next/image";
 import styles from "./navigation.module.scss";
 import Link from "next/link";
+import TransitionLink from "../TransitionLink";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import ContactUsForm from "./contactUsForm";
@@ -97,7 +98,7 @@ export default function Navigation() {
           '--text-color-inverse': '#ffffff',
         } as React.CSSProperties}
       >
-        <Link className={styles.logo} href="/">
+        <TransitionLink className={styles.logo} href="/">
           <Image
             src="/landing/PGAGI-logo.png"
             alt="PGAGI Logo"
@@ -105,7 +106,7 @@ export default function Navigation() {
             height={60}
           />
           <p>PG-AGI</p>
-        </Link>
+        </TransitionLink>
 
         <div className={styles.links}>
           {isMobile ? (
@@ -113,24 +114,24 @@ export default function Navigation() {
               {/* Mobile Menu Navigation */}
               {mobileMenuSection === "main" && (
                 <div className={styles.mastermenu}>
-                  <Link href="/" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  <TransitionLink href="/" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Home
-                  </Link>
-                  <Link href="/expertise" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  </TransitionLink>
+                  <TransitionLink href="/expertise" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Expertise
-                  </Link>
-                  <Link href="/projects" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  </TransitionLink>
+                  <TransitionLink href="/projects" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Projects
-                  </Link>
-                  <Link href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  </TransitionLink>
+                  <TransitionLink href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     What we think
-                  </Link>
-                  <Link href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  </TransitionLink>
+                  <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Who we are
-                  </Link>
-                  <Link href="/Career" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  </TransitionLink>
+                  <TransitionLink href="/Career" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Careers
-                  </Link>
+                  </TransitionLink>
                   <button className={styles.mobileContact} onClick={() => {
                     setIsMenuOpen(false);
                     handleContactUs();
@@ -144,25 +145,25 @@ export default function Navigation() {
           ) : (
             <>
               {/* Desktop Navigation */}
-              <Link href="/" className={styles.link}>
+              <TransitionLink href="/" className={styles.link}>
                 Home
-              </Link>
-              <Link href="/aboutUs" className={styles.link}>
+              </TransitionLink>
+              <TransitionLink href="/aboutUs" className={styles.link}>
                 About Us
-              </Link>
-              <Link href="/expertise" className={styles.link}>
+              </TransitionLink>
+              <TransitionLink href="/expertise" className={styles.link}>
                 Expertise
-              </Link>
-              <Link href="/projects" className={styles.link}>
+              </TransitionLink>
+              <TransitionLink href="/projects" className={styles.link}>
                 Projects
-              </Link>
-              <Link href="/whatwethink" className={styles.link}>
+              </TransitionLink>
+              <TransitionLink href="/whatwethink" className={styles.link}>
                 Blogs
-              </Link>
+              </TransitionLink>
              
-              <Link href="/Career" className={styles.link}>
+              <TransitionLink href="/Career" className={styles.link}>
                 Careers
-              </Link>
+              </TransitionLink>
 
               <button className={styles.contact} onClick={handleContactUs}>
                 Get in touch

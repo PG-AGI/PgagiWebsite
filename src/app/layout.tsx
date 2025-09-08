@@ -6,6 +6,7 @@ import Providers from "@/contexts/providers";
 import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
 import Navigation from "@/app/components/base/Navigation";
 import Footer from "@/app/components/Footer";
+import PageTransition from "@/app/components/PageTransition";
 
 import { inter } from "../utils/fontHelper";
 
@@ -77,8 +78,10 @@ export default function RootLayout({
                 ></iframe>
               </noscript>
               <Navigation />
-              <main style={{ minHeight: '100vh', paddingTop: '0' }}>
-                {children}
+              <main style={{ minHeight: '100vh', paddingTop: '0', position: 'relative' }}>
+                <PageTransition>
+                  {children}
+                </PageTransition>
               </main>
               <Footer />
             </body>
