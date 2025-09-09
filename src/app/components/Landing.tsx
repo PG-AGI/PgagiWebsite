@@ -13,7 +13,7 @@ export default function Landing() {
     const handleCloseModal = () => setIsModalOpen(false);
 
     const handleScrollToTestimonials = () => {
-        scrollTo('#testimonials-section', { offset: 80, duration: 1.5 });
+        window.location.href = "/projects";
     };
 
     useEffect(() => {
@@ -92,7 +92,7 @@ export default function Landing() {
                         <button className={styles.ctaButton} onClick={() => {
                             window.open("https://form.pgagi.in/", "_blank");
                         }}>
-                            Book a Consultation
+                            Book Private Strategy Session
                         </button>
                         <button className={styles.outlineButton} onClick={handleScrollToTestimonials}>
                             View Our Work
