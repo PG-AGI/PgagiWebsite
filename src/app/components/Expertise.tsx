@@ -230,7 +230,7 @@ export default function Expertise() {
                 Remember. Move Faster<br />
                 Than They Can Follow.
               </p>
-              <div className={styles.dot}></div>
+              {/* <div className={styles.dot}></div> */}
             </div>
           </div>
 

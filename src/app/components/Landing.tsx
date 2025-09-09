@@ -80,12 +80,12 @@ export default function Landing() {
                         <div className={styles.pgagiUnderline}></div>
                     </div>
                     <h1 className={styles.mainHeading}>
-                    We engineer purposeful  <span className={styles.coming}> AI products that scales</span> 
+                    We engineer purposeful  <span className={styles.coming}> AI products that scales </span> 
                     and create meaningful impact in the world
                     </h1>
                     <p className={styles.description}>
                     {/* We engineer purposeful AI products that scales, and create meaningful impact in the world. */}
-                    Creating for the world that’s <span className={styles.coming}> coming, </span> 
+                    Creating for the world that’s <span className={styles.coming}> coming </span> 
                     Not the one passing.
                     </p>
                     <div className={styles.buttonRow}>

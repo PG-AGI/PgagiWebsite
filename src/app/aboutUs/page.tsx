@@ -115,7 +115,7 @@ export default function AboutUs() {
             </h1>
           </div>
         </div>
-        <div className={styles.heroDot}></div>
+        {/* <div className={styles.heroDot}></div> */}
       </motion.section>
 
       
