@@ -7,6 +7,7 @@ import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
 import Navigation from "@/app/components/base/Navigation";
 import Footer from "@/app/components/Footer";
 import PageTransition from "@/app/components/PageTransition";
+import MobileBlocker from "@/app/components/MobileBlocker";
 
 import { inter } from "../utils/fontHelper";
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <html lang="en" className={inter.variable}>
             <head>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
               {/* Google Tag Manager */}
               <Script id="google-tag-manager" strategy="afterInteractive">
                 {`
@@ -77,6 +79,7 @@ export default function RootLayout({
                   style={{ display: "none", visibility: "hidden" }}
                 ></iframe>
               </noscript>
+              <MobileBlocker />
               <Navigation />
               <main style={{ minHeight: '100vh', paddingTop: '0', position: 'relative' }}>
                 <PageTransition>

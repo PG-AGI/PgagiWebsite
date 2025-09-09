@@ -52,7 +52,7 @@ export default function Calendly() {
                     
                     <button
                         className={styles.ctaButton}
-                        onClick={handleBookCall}
+                        onClick={() => window.open("https://form.pgagi.in/", "_blank")}
                     >
                         Book a Free Consultation
                     </button>
