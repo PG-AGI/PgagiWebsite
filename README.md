@@ -105,7 +105,7 @@ const getPostWithDetails = async (id) => {
   });
 };
 ```
-
+.
 ### 4. SEO Optimizations
 
 1. Implement proper metadata:
