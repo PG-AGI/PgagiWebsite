@@ -57,48 +57,13 @@
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: clamp(2rem, 4vw, 4rem);
+  display: flex;
+  justify-content: center;
   align-items: start;
 }
 
-// Left side - Branding
-.brandingSection {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
 
-.logoContainer {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-}
-
-.brandText {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.brandName {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-  letter-spacing: -0.5px;
-}
-
-.tagline {
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  color: #cccccc;
-  font-weight: 300;
-  margin: 0;
-  opacity: 0.8;
-}
-
-// Right side - Navigation and Contact
+// Navigation and Contact
 .navigationSection {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -106,6 +71,7 @@
   justify-items: start;
   align-items: start;
   width: 100%;
+  max-width: 1300px;
 }
 
 .navColumn {
@@ -150,8 +116,8 @@
   }
 }
 
-// Contact Section
-.contactSection {
+// Newsletter Section
+.newsletterSection {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -160,23 +126,57 @@
   min-width: auto;
 }
 
-.contactInfo {
+.newsletterForm {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 0.5rem;
+  transition: border-color 0.3s ease;
+  
+  &:focus-within {
+    border-bottom-color: #D4AF37;
+  }
 }
 
-.contactEmail,
-.contactPhone {
+.emailInput {
+  background: transparent;
+  border: none;
+  outline: none;
   color: #ffffff;
   font-size: clamp(0.85rem, 1vw, 0.95rem);
   font-weight: 400;
-  margin: 0;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+  flex: 1;
+  padding: 0.5rem 0;
+  
+  &::placeholder {
+    color: #cccccc;
+    opacity: 0.7;
+  }
+  
+  &:focus {
+    &::placeholder {
+      opacity: 0.5;
+    }
+  }
+}
+
+.submitButton {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   &:hover {
-    opacity: 1;
+    color: #D4AF37;
+    transform: translateX(3px);
   }
 }
 
@@ -240,8 +240,7 @@
 // Responsive Design - Tablet
 @media (max-width: 1024px) {
   .container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    justify-content: center;
   }
   
   .navigationSection {
@@ -250,7 +249,7 @@
     justify-items: center;
   }
   
-  .contactSection {
+  .newsletterSection {
     justify-self: center;
     text-align: center;
     min-width: auto;
@@ -278,15 +277,6 @@
   }
   
   .container {
-    gap: 2.5rem;
-  }
-  
-  .brandingSection {
-    text-align: center;
-    align-items: center;
-  }
-  
-  .logoContainer {
     justify-content: center;
   }
   
@@ -301,7 +291,7 @@
     align-items: flex-start; // Changed from center to flex-start for left alignment
   }
   
-  .contactSection {
+  .newsletterSection {
     align-items: flex-start; // Changed from center to flex-start
     justify-self: start; // Changed from center to start
     text-align: left; // Changed from center to left
@@ -343,15 +333,7 @@
   }
   
   .container {
-    gap: 2rem;
-  }
-  
-  .brandName {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
-  }
-  
-  .tagline {
-    font-size: clamp(0.8rem, 3vw, 1rem);
+    justify-content: center;
   }
   
   .navigationSection {
@@ -373,12 +355,11 @@
     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   }
   
-  .contactEmail,
-  .contactPhone {
+  .emailInput {
     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   }
   
-  .contactSection {
+  .newsletterSection {
     grid-column: 1 / -1;
     margin-top: 1rem;
     text-align: left; // Keep left alignment
@@ -418,19 +399,7 @@
   }
   
   .container {
-    gap: 1.5rem;
-  }
-  
-  .logoContainer {
-    gap: 0.8rem;
-  }
-  
-  .brandName {
-    font-size: clamp(1.5rem, 5vw, 2rem);
-  }
-  
-  .tagline {
-    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+    justify-content: center;
   }
   
   .navigationSection {
@@ -444,7 +413,7 @@
     align-items: flex-start; // Keep left alignment
   }
   
-  .contactSection {
+  .newsletterSection {
     grid-column: 1 / -1;
     margin-top: 1rem;
     text-align: left; // Keep left alignment
@@ -475,19 +444,7 @@
   }
   
   .container {
-    gap: 1rem;
-  }
-  
-  .logoContainer {
-    gap: 0.6rem;
-  }
-  
-  .brandName {
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-  }
-  
-  .tagline {
-    font-size: clamp(0.7rem, 2vw, 0.8rem);
+    justify-content: center;
   }
   
   .navigationSection {
@@ -506,7 +463,7 @@
     gap: 0.4rem; // Reduced gap between list items
   }
   
-  .contactSection {
+  .newsletterSection {
     grid-column: 1 / -1;
     margin-top: 1.5rem; // Increased margin for better separation
     text-align: left; // Keep left alignment
@@ -523,8 +480,7 @@
     padding: 0.2rem 0; // Add some padding for better touch targets
   }
   
-  .contactEmail,
-  .contactPhone {
+  .emailInput {
     font-size: clamp(0.7rem, 2vw, 0.8rem);
   }
   

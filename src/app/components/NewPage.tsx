@@ -43,18 +43,41 @@ const StatsSection = () => {
 
               {/* Client Satisfaction Section */}
               <div className={styles.statItem}>
-                <h3 className={styles.statTitle}>Client Satisfaction</h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <h3 className={styles.statTitle}>Client Satisfaction</h3>
+                  <a 
+                      href="https://www.upwork.com/agencies/1737467434828361728/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className={styles.verificationLink}
+                      aria-label="View our Upwork profile - opens in new tab"
+                    >
+                      <div className={styles.verificationText}>
+                        <span>As Verified on Upwork</span>
+                        <svg 
+                          className={styles.blueTick} 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          role="img"
+                        >
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#1DA1F2"/>
+                        </svg>
+                      </div>
+                    </a>
+                </div>
                 <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.upworkVerification}>
                   <Image 
                     src="/landing/Upwork.webp" 
                     alt="Upwork Logo" 
-                    width={250}
-                    height={30}
+                    width={400}
+                    height={50}
                     className={styles.upworkLogo}
                     priority
                   />
-                  <a 
+                  {/* <a 
                     href="https://www.upwork.com/agencies/1737467434828361728/" 
                     target="_blank" 
                     rel="noopener noreferrer"
@@ -73,8 +96,8 @@ const StatsSection = () => {
                       >
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#1DA1F2"/>
                       </svg>
-                    </div>
-                  </a>
+                    </div> */}
+                  {/* </a> */}
                 </div>
               </div>
             </div>

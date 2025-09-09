@@ -1,15 +1,16 @@
 .expertiseSection {
-  padding: 120px 0;
+  padding: 120px 0 0;
   background: white;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   /* Remove will-change to prevent performance issues */
   
 
   .container {
     width: 80%;
-    margin: 10rem auto;
+    margin: 10rem auto 0;
     padding: 0 24px;
   }
 

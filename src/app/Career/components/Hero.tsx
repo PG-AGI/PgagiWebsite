@@ -13,10 +13,10 @@ export const Hero = ({
         <div className={styles.overlay} />
       </div>
       <div className={styles.content}>
-        <div className={styles.badge}>
+        {/* <div className={styles.badge}>
           <span>🚀</span>
           <span>Join the Future</span>
-        </div>
+        </div> */}
         <p className={styles.subheading}>Be the Architect of AI Transformation</p>
         <h1 className={styles.heading}>
           Join our pioneering team at the forefront <br />

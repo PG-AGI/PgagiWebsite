@@ -14,21 +14,10 @@ export default function Footer() {
       
       {/* Main content container */}
       <div className={styles.contentContainer}>
-        {/* Top section with branding and navigation */}
+        {/* Top section with navigation */}
         <div className={styles.topSection}>
           <div className={styles.container}>
-            {/* Left side - Branding */}
-            <div className={styles.brandingSection}>
-              {/* <div className={styles.logoContainer}>
-                <Image src={logo} alt="PG-AGI Logo" width={60} height={60} />
-                <div className={styles.brandText}>
-                  {/* <h2 className={styles.brandName}>PG-AGI</h2> */}
-                  {/* <p className={styles.tagline}>Playing God With AGI</p> 
-                </div>
-              </div> */}
-            </div>
-
-            {/* Right side - Navigation and Contact */}
+            {/* Navigation and Contact */}
             <div className={styles.navigationSection}>
               {/* Services Column */}
               <div className={styles.navColumn}>
@@ -63,11 +52,18 @@ export default function Footer() {
                 </ul>
               </div>
 
-              {/* Contact Information */}
-              <div className={styles.contactSection}>
-                <div className={styles.contactInfo}>
-                  <p className={styles.contactEmail}>admin@pgagi.in</p>
-                  <p className={styles.contactPhone}>+91 80-35736907</p>
+              {/* Newsletter Signup */}
+              <div className={styles.newsletterSection}>
+                <h6 className={styles.columnHeader}>Sign up for our newsletter to stay up to date</h6>
+                <div className={styles.newsletterForm}>
+                  <input 
+                    type="email" 
+                    placeholder="Your Email ID..." 
+                    className={styles.emailInput}
+                  />
+                  <button className={styles.submitButton}>
+                    →
+                  </button>
                 </div>
               </div>
             </div>

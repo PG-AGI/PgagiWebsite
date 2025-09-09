@@ -191,6 +191,7 @@
     }
     
     .keyMetrics {
+      margin-top: 5rem;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 100px;
@@ -571,7 +572,7 @@
   max-width: 100%;
   margin: 0 auto;
   padding: 0 4vw;
-  margin-top: 5%;
+  // margin-top: 5%;
   margin-bottom: 5%;
 }
 

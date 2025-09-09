@@ -33,7 +33,7 @@ export default function ExpertiseSection() {
           {/* Left Column: Slogan and Description */}
           <div className={styles.sloganSection}>
             <h2 className={styles.mainHeading}>
-              Less talk, more impact.
+              Less talk more impact
             </h2>
             <p className={styles.description}>
               No big words. No bloated pitch decks. No five-hour Zoom calls. Just smart strategy, flawless execution and results that actually move the needle.

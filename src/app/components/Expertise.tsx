@@ -7,6 +7,7 @@ import styles from './expertise.module.scss';
 import { generateSlug } from '@/services/generateSlugService';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 import Marquee from 'react-fast-marquee';
+import Calendly from './Calendly';
 
 type Blog = {
   id: string;
@@ -274,9 +275,13 @@ export default function Expertise() {
             ))}
           </div>
         </div>
+        {/* </div> */}
 
         {/* Combined Blogs & News Section */}
-        <section className={styles.combinedSection} id="blogs-news">
+        
+        {/* <Calendly /> */}
+      </div>
+      <section className={styles.combinedSection} id="blogs-news">
           <h3 className={styles.sectionTitle}>News & Blogs</h3>
           <div className={styles.combinedGrid}>
             {loadingBlogs || loadingNews ? (
@@ -347,7 +352,8 @@ export default function Expertise() {
             )}
           </div>
         </section>
-      </div>
+      <Calendly />
     </section>
+    
   );
 } 
