@@ -7,7 +7,6 @@ import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
 import Navigation from "@/app/components/base/Navigation";
 import Footer from "@/app/components/Footer";
 import PageTransition from "@/app/components/PageTransition";
-import MobileBlocker from "@/app/components/MobileBlocker";
 
 import { inter } from "../utils/fontHelper";
 
@@ -79,7 +78,6 @@ export default function RootLayout({
                   style={{ display: "none", visibility: "hidden" }}
                 ></iframe>
               </noscript>
-              <MobileBlocker />
               <Navigation />
               <main style={{ minHeight: '100vh', paddingTop: '0', position: 'relative' }}>
                 <PageTransition>

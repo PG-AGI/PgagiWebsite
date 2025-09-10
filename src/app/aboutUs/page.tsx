@@ -110,7 +110,7 @@ export default function AboutUs() {
             <h1 className={styles.heroTitle}>
               <span className={styles.titleLine1}>We engineer AI solutions from research to deployment</span>
               {/* <span className={styles.titleLine2}>from research and product development to scalable deployment.</span> */}
-              <span className={styles.titleLine3}>optimizing products for real-world impact</span>
+              <span className={styles.titleLine3}> optimizing products for real-world impact</span>
               <span className={styles.titleLine4}> with deep tech expertise and scalable results</span>
             </h1>
           </div>
