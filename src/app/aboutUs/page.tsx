@@ -220,8 +220,8 @@ export default function AboutUs() {
             {/* Key Metrics */}
             <div className={styles.keyMetrics}>
               <div className={styles.metric}>
-                <span className={styles.metricValue}>2.5+</span>
-                <span className={styles.metricLabel}>Years of Experience</span>
+                <span className={styles.metricValue}>35+</span>
+                <span className={styles.metricLabel}>Team Count</span>
               </div>
               <div className={styles.metric}>
                 <span className={styles.metricValue}>75+</span>
