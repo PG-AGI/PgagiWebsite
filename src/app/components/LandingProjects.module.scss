@@ -9,7 +9,7 @@
         color: #000;
         margin-bottom: 5rem;
         text-align: right;
-        margin-right: 43rem;
+        // margin-right: 43rem;
     }
     .trendingList {
       width: 98%;
@@ -238,18 +238,18 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 75%;
+        // margin-top: 75%;
         >h3 {
             font-size: 23px;
             font-weight: 500;
-            color: #CACCFF;
-            margin-top: -50%;
+            color: #000;
+            // margin-top: -50%;
             margin-bottom: 3.5%;
-            background: linear-gradient(to right, #6E74F9, #B3B6FF, white);
+            // background: linear-gradient(to right, #6E74F9, #B3B6FF, white);
             -webkit-background-clip: text;
             background-clip: text;
             text-align: center;
-            color: transparent;
+            // color: transparent;
         }
         .trendingList {
             width: 95%;
@@ -367,10 +367,10 @@
 // Add small mobile breakpoint
 @media (max-width: 360px) {
     .trending {
-        margin-top: 60%;
+        // margin-top: 60%;
         >h3 {
             font-size: 20px;
-            margin-top: -40%;
+            // margin-top: -40%;
             margin-bottom: 3%;
         }
         .trendingList {

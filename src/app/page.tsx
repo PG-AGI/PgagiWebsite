@@ -99,7 +99,7 @@ export default function Home() {
 			<Landing />
 			<Partners />
 			<StatsSection />
-			{/* /<Process /> */}
+			/<Process />
 			<LandingProjects/>
 			
 			

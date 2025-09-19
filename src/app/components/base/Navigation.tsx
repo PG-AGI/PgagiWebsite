@@ -117,6 +117,9 @@ export default function Navigation() {
                   <TransitionLink href="/" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Home
                   </TransitionLink>
+                  <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    About Us
+                  </TransitionLink>
                   <TransitionLink href="/expertise" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Expertise
                   </TransitionLink>
@@ -124,11 +127,9 @@ export default function Navigation() {
                     Projects
                   </TransitionLink>
                   <TransitionLink href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    What we think
+                    Blogs
                   </TransitionLink>
-                  <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Who we are
-                  </TransitionLink>
+                 
                   <TransitionLink href="/Career" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Careers
                   </TransitionLink>
