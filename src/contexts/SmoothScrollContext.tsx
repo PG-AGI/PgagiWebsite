@@ -1,9 +1,8 @@
 'use client'
 import React, { createContext, useContext, useEffect, useRef } from 'react';
-import Lenis from 'lenis';
 
 interface SmoothScrollContextType {
-  lenis: Lenis | null;
+  lenis: any | null;
 }
 
 const SmoothScrollContext = createContext<SmoothScrollContextType>({ lenis: null });
@@ -21,27 +20,81 @@ interface SmoothScrollProviderProps {
 }
 
 export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ children }) => {
-  const lenisRef = useRef<Lenis | null>(null);
+  const lenisRef = useRef<any | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis
-    lenisRef.current = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-    });
+    let rafId: number | null = null;
+    let running = false;
 
-    // RAF for smooth animation
     function raf(time: number) {
+      if (!running) return;
       lenisRef.current?.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    function startLoop() {
+      if (running) return;
+      running = true;
+      rafId = requestAnimationFrame(raf);
+    }
 
-    // Cleanup
+    function stopLoop() {
+      running = false;
+      if (rafId != null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    let didInit = false;
+
+    async function initLenis() {
+      if (didInit) return;
+      didInit = true;
+      try {
+        const { default: Lenis } = await import('lenis');
+        lenisRef.current = new Lenis({
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+
+        // start RAF only when page is visible
+        if (!document.hidden) startLoop();
+      } catch (e) {
+        // if import fails, leave lenisRef null
+        // eslint-disable-next-line no-console
+        console.error('Failed to load Lenis dynamically', e);
+      }
+    }
+
+    // initialize after first user interaction or short timeout
+    const events: Array<keyof DocumentEventMap> = ['pointerdown', 'wheel', 'touchstart', 'keydown'];
+    const onFirstInteraction = () => {
+      initLenis();
+      events.forEach((ev) => document.removeEventListener(ev, onFirstInteraction as EventListener));
+    };
+    events.forEach((ev) => document.addEventListener(ev, onFirstInteraction as EventListener, { passive: true }));
+
+    const timeoutId = window.setTimeout(() => initLenis(), 2000);
+
+    function onVisibilityChange() {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    }
+
+    document.addEventListener('visibilitychange', onVisibilityChange, { passive: true });
+
+    // cleanup
     return () => {
-      if (lenisRef.current) {
-        lenisRef.current.destroy();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      events.forEach((ev) => document.removeEventListener(ev, onFirstInteraction as EventListener));
+      clearTimeout(timeoutId);
+      stopLoop();
+      if (lenisRef.current && typeof lenisRef.current.destroy === 'function') {
+        try {
+          lenisRef.current.destroy();
+        } catch {}
+        lenisRef.current = null;
       }
     };
   }, []);
@@ -51,4 +104,4 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
       {children}
     </SmoothScrollContext.Provider>
   );
-}; 
+};

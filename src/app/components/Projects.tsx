@@ -49,22 +49,6 @@ export default function Projects() {
   }, []);
 
   // Optimized click handler
-  const handleCardClick = useCallback((index: number, title: string) => {
-    switch (index) {
-      case 0:
-        window.open("https://cracked.ai/", "_blank");
-        break;
-      case 1:
-        window.open("https://fomo.fund/", "_blank");
-        break;
-      case 2:
-        window.open("https://aione.klinik-x.de/", "_blank");
-        break;
-      default:
-        handleExpand(title);
-    }
-  }, []);
-
   // Memoized expand handler
   const handleExpand = useCallback((title: string) => {
     switch (title) {
@@ -81,6 +65,23 @@ export default function Projects() {
         console.error("URL is not defined");
     }
   }, []);
+
+  // Optimized click handler
+  const handleCardClick = useCallback((index: number, title: string) => {
+    switch (index) {
+      case 0:
+        window.open("https://cracked.ai/", "_blank");
+        break;
+      case 1:
+        window.open("https://fomo.fund/", "_blank");
+        break;
+      case 2:
+        window.open("https://aione.klinik-x.de/", "_blank");
+        break;
+      default:
+        handleExpand(title);
+    }
+  }, [handleExpand]);
 
   // Optimized case studies fetching with better error handling and reduced frequency
   useEffect(() => {
@@ -332,6 +333,7 @@ export default function Projects() {
                 src="/Landing Projects/FOMO.gif"
                 alt="FOMO"
                 fill
+                sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 style={{
                   objectFit: "cover",
                   animationPlayState: hoveredIndex === i ? "running" : "paused"
@@ -343,6 +345,7 @@ export default function Projects() {
                 src="/Landing Projects/LinkedAI.gif"
                 alt="LinkedAI"
                 fill
+                sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 style={{
                   objectFit: "cover",
                   animationPlayState: hoveredIndex === i ? "running" : "paused"

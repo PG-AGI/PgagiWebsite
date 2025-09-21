@@ -1,8 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import styles from "./landing.module.scss";
 import BookCallModal from './base/bookCallModela';
-import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+const Hyperspeed = dynamic(() => import('./ui/Hyperspeed/Hyperspeed'), { ssr: false, loading: () => null });
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
 
 export default function Landing() {

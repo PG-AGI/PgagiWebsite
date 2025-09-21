@@ -140,6 +140,7 @@ export default function LandingProjects() {
                   src="/Landing Projects/FOMO.gif"
                   alt="FOMO"
                   fill
+                  sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                   style={{
                     objectFit: "cover",
@@ -156,6 +157,7 @@ export default function LandingProjects() {
                   src="/Landing Projects/LinkedAI.gif"
                   alt="LinkedAI"
                   fill
+                  sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                   style={{
                     objectFit: "cover",
@@ -172,6 +174,7 @@ export default function LandingProjects() {
                 alt={item.title}
                 layout="fill"
                 objectFit="cover"
+                sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 loading="lazy"
               />
             )}
