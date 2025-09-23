@@ -3,8 +3,9 @@ import Image from "next/image";
 import styles from "@/app/components/LandingProjects.module.scss";
 import { trendingListOld } from "@/utils/constants";
 import { useRouter } from "next/navigation";
+import React from "react";
 
-export default function LandingProjects() {
+const LandingProjects = React.memo(() => {
   const router = useRouter();
   const [isFirstItemHovered, setIsFirstItemHovered] = useState(false);
   const [isSecondItemHovered, setIsSecondItemHovered] = useState(false);
@@ -141,9 +142,13 @@ export default function LandingProjects() {
                   alt="FOMO"
                   fill
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                  unoptimized={true}
                   style={{
                     objectFit: "cover",
                     animationPlayState: isSecondItemHovered ? "running" : "paused",
+                    animationDelay: "0s",
                     willChange: "auto"
                   }}
                 />
@@ -157,9 +162,13 @@ export default function LandingProjects() {
                   alt="LinkedAI"
                   fill
                   loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                  unoptimized={true}
                   style={{
                     objectFit: "cover",
                     animationPlayState: isThirdItemHovered ? "running" : "paused",
+                    animationDelay: "0s",
                     willChange: "auto"
                   }}
                 />
@@ -173,6 +182,8 @@ export default function LandingProjects() {
                 layout="fill"
                 objectFit="cover"
                 loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               />
             )}
           </div>
@@ -237,4 +248,8 @@ export default function LandingProjects() {
       </div>
     </section>
   );
-}
+});
+
+LandingProjects.displayName = 'LandingProjects';
+
+export default LandingProjects;

@@ -1,8 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
 import { Blog } from '@/interfaces/blog';
+
+export const revalidate = 3600; // Revalidate every hour
 
 export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
   const { slug } = params;

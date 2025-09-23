@@ -4,7 +4,7 @@ import { productData } from '@/utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Products: React.FC = () => {
+const Products: React.FC = React.memo(() => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
   return (
@@ -50,6 +50,6 @@ const Products: React.FC = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Products;

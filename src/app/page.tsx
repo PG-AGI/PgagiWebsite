@@ -1,24 +1,23 @@
 'use client'
 import Landing from "./components/Landing";
-import Partners from "./components/Partners";
-import StatsSection from "./components/NewPage";
 import styles from "./page.module.scss";
 import Segment from "./components/base/Segment";
 import GlareBackground from "./components/base/GlareBackground";
 import { segmentList } from "@/utils/constants";
-import Calendly from "./components/Calendly";
-import { Lottie } from "xtreme-ui";
 import { useEffect, useRef, useCallback } from "react";
+import dynamic from 'next/dynamic';
 //import { motion } from 'framer-motion';
-import TrendingOld from "./components/trending_old";
-import ExpertiseSection from "./components/ExpertiseSection";
-import FAQ from "./components/FAQ";
-import VideoTestimonial from "./components/VideoTestimonial";
-import TestimonialCarousel from "./components/InfiniteTestimonial";
-import ScrollIndicator from "./components/ScrollIndicator";
-import SmoothScrollNav from "./components/SmoothScrollNav";
-import LandingProjects from "./components/LandingProjects";
-import Process from "./components/process";
+
+const Partners = dynamic(() => import("./components/Partners"), { loading: () => <div>Loading...</div> });
+const StatsSection = dynamic(() => import("./components/NewPage"), { loading: () => <div>Loading...</div> });
+const Process = dynamic(() => import("./components/process"), { loading: () => <div>Loading...</div> });
+const LandingProjects = dynamic(() => import("./components/LandingProjects"), { loading: () => <div>Loading...</div> });
+const ExpertiseSection = dynamic(() => import("./components/ExpertiseSection"), { loading: () => <div>Loading...</div> });
+const VideoTestimonial = dynamic(() => import("./components/VideoTestimonial"), { loading: () => <div>Loading...</div> });
+const FAQ = dynamic(() => import("./components/FAQ"), { loading: () => <div>Loading...</div> });
+const TrendingOld = dynamic(() => import("./components/trending_old"), { loading: () => <div>Loading...</div> });
+const Calendly = dynamic(() => import("./components/Calendly"), { loading: () => <div>Loading...</div> });
+const ScrollIndicator = dynamic(() => import("./components/ScrollIndicator"), { ssr: false, loading: () => <div>Loading...</div> });
 
 export default function Home() {
 	const segmentRef = useRef<HTMLDivElement>(null)
@@ -99,7 +98,7 @@ export default function Home() {
 			<Landing />
 			<Partners />
 			<StatsSection />
-			/<Process />
+			<Process />
 			<LandingProjects/>
 			
 			
