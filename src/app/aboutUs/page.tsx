@@ -9,6 +9,7 @@ import Calendly from "../components/Calendly";
 import { generateSlug } from '@/services/generateSlugService';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 import Marquee from 'react-fast-marquee';
+import Team from './team';
 
 type Blog = {
   id: string;
@@ -328,7 +329,7 @@ export default function AboutUs() {
           )}
         </div>
       </section>
-
+        <Team/>
       <Calendly />
 
       
