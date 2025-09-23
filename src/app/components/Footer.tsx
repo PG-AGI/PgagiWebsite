@@ -73,7 +73,7 @@ export default function Footer() {
 
         <div className={styles.backgroundText}>
   <span className="styles.desktopText">Playing God{'\n'}with AGI</span>
-  <span className="styles.mobileText">Playing{'\n'}God{'\n'}with AGI</span>
+  {/* <span className="styles.mobileText">Playing{'\n'}God{'\n'}with AGI</span> */}
 </div>
         {/* Bottom section with copyright, legal links, and background text */}
         <div className={styles.bottomSection}>
