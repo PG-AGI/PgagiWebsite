@@ -1,55 +1,55 @@
-import React, { useState } from 'react';
-import styles from './products.module.scss';
-import { productData } from '@/utils/constants';
-import Image from 'next/image';
-import Link from 'next/link';
+// import React, { useState } from 'react';
+// import styles from './products.module.scss';
+// import { productData } from '@/utils/constants';
+// import Image from 'next/image';
+// import Link from 'next/link';
 
-const Products: React.FC = React.memo(() => {
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+// const Products: React.FC = React.memo(() => {
+//   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  return (
-    <section className={styles.main} id="products">
-      <h1>Our Products</h1>
-      <div className={styles.products}>
-      {productData.map((product, index) => (
-        <div
-          key={index}
-          className={`${styles.card} ${hoverIndex === index ? styles.hovered : ''}`}
-          onMouseEnter={() => setHoverIndex(index)}
-          onMouseLeave={() => setHoverIndex(null)}
-        >
-           <div className={styles.icon}>
-            <div className={styles.iconContainer}>
-            <Image src={product.icon} alt={product.title} width={120} height={120} /> {/* Use Next.js Image */}
-            <h3>{product.miniTitle}</h3> 
-            </div>
-            {hoverIndex === index ?
-            <div>
+//   return (
+//     <section className={styles.main} id="products">
+//       <h1>Our Products</h1>
+//       <div className={styles.products}>
+//       {productData.map((product, index) => (
+//         <div
+//           key={index}
+//           className={`${styles.card} ${hoverIndex === index ? styles.hovered : ''}`}
+//           onMouseEnter={() => setHoverIndex(index)}
+//           onMouseLeave={() => setHoverIndex(null)}
+//         >
+//            <div className={styles.icon}>
+//             <div className={styles.iconContainer}>
+//             <Image src={product.icon} alt={product.title} width={120} height={120} /> {/* Use Next.js Image */}
+//             <h3>{product.miniTitle}</h3> 
+//             </div>
+//             {hoverIndex === index ?
+//             <div>
              
-             <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p>
-             </div>: (
-              <div>
-                <h2>{product.title}</h2>
-                <h4>{product.subtitle}</h4>
+//              <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p>
+//              </div>: (
+//               <div>
+//                 <h2>{product.title}</h2>
+//                 <h4>{product.subtitle}</h4>
                
-              </div>
-              )}
-          </div>
-          {/* <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p> */}
-          <a className={styles.productLink} href={product.link}>
-          <button
-        className={styles.viewButton}
+//               </div>
+//               )}
+//           </div>
+//           {/* <p className={hoverIndex === index ? styles.show : styles.hide}>{product.description}</p> */}
+//           <a className={styles.productLink} href={product.link}>
+//           <button
+//         className={styles.viewButton}
 
-      >
-        {'View »'}
-      </button>
-    </a>
-          <div className={styles.circle}></div>
-        </div>
-      ))}
-      </div>
-    </section>
-  );
-});
+//       >
+//         {'View »'}
+//       </button>
+//     </a>
+//           <div className={styles.circle}></div>
+//         </div>
+//       ))}
+//       </div>
+//     </section>
+//   );
+// });
 
-export default Products;
+// export default Products;

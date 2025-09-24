@@ -1,6 +1,6 @@
 // app/api/case-studies/[id]/route.ts
 
-import { NextRequest, NextResponse } from 'next/server';
+import {NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb'; 
 import { ObjectId } from 'mongodb';

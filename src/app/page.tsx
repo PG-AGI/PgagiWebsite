@@ -62,9 +62,9 @@ export default function Home() {
 				} else {
 					pos = percent;
 				}
-				blob.style.transform = `translate(${Math.min(pos, 120)}%, -50%)`;
+				blob.style.transform = `translate(${Math.min(pos, 100)}%, -50%)`;
 			} else if (scroll > offset + segmentSectionHeight - windowHeight) {
-				blob.style.transform = `translate(120%, -50%)`;
+				blob.style.transform = `translate(100%, -50%)`;
 			}
 			
 			isScrollingRef.current = false;
