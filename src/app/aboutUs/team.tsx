@@ -56,7 +56,7 @@ const Team: React.FC = () => {
             <motion.div
               className={styles.overlay}
               initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
+              whileHover={{ opacity: 0.5 }}
               transition={{ duration: 0.3 }}
             >
               <h4>{member.name}</h4>
