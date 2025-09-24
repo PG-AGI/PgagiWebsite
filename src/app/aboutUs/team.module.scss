@@ -186,5 +186,25 @@
         align-self: flex-start;
       }
     }
+
+    /* Always show name/designation on mobile */
+    .card {
+      img {
+        transition: none;
+      }
+
+      .overlay {
+        opacity: 1 !important; /* override motion initial opacity */
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+      }
+
+      &:hover img {
+        transform: none;
+      }
+
+      &:hover .overlay {
+        opacity: 1;
+      }
+    }
   }
   
