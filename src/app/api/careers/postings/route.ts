@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb'; 
+
+export const revalidate = 3600; // Revalidate every hour
+
 interface Job {
   id: string;
   title: string;

@@ -13,6 +13,7 @@ html {
   /* Remove conflicting scroll-behavior when using Lenis */
   /* scroll-behavior: smooth; */
   -webkit-overflow-scrolling: touch;
+  /* width: 100%; */
 }
 
 body {

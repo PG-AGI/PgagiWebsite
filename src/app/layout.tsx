@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Inter, Poppins, Alexandria } from 'next/font/google';
 import "./globals.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
@@ -8,7 +9,20 @@ import Navigation from "@/app/components/base/Navigation";
 import Footer from "@/app/components/Footer";
 import PageTransition from "@/app/components/PageTransition";
 
-import { inter } from "../utils/fontHelper";
+// Fonts
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+});
+
+const alexandria = Alexandria({
+  subsets: ['latin'],
+  variable: '--font-alexandria',
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "PGAGI",
@@ -26,7 +40,10 @@ export default function RootLayout({
     <AuthProvider>
       <Providers>
         <SmoothScrollProvider>
-          <html lang="en" className={inter.variable}>
+          <html
+            lang="en"
+            className={`${poppins.variable} ${alexandria.variable}`}
+          >
             <head>
               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
               {/* Google Tag Manager */}

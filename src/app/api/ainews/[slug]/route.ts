@@ -4,6 +4,8 @@ import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
 import { AINews } from '@/interfaces/ainews';
 
+export const revalidate = 3600; // Revalidate every hour
+
 interface ContentBlock {
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table';
   content?: string | { headers: string[]; rows: string[][] };

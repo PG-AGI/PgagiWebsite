@@ -1,7 +1,7 @@
 // app/api/case-studies/route.ts
 // https://pgagi.in/api/case-studies/[id]
 
-import { NextResponse } from 'next/server';
+import {NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb'; 
 import { ObjectId } from 'mongodb';
@@ -40,6 +40,8 @@ interface CaseStudy {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export const revalidate = 3600; // Revalidate every hour
 
 export async function POST(request: NextRequest) {
   try {
