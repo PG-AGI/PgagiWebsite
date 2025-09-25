@@ -53,7 +53,7 @@ const StatsSection = () => {
                     aria-label="View our Upwork profile - opens in new tab"
                   >
                     <span className={styles.verificationText}>
-                      <span>See verification</span>
+                      <span>Verify</span>
                       <svg 
                         className={styles.blueTick} 
                         viewBox="0 0 24 24" 
