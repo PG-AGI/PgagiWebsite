@@ -1,8 +1,9 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/utils/mongodb';
-import { ObjectId } from 'mongodb';
+// import { ObjectId } from 'mongodb';
 import { Blog } from '@/interfaces/blog';
+
+export const revalidate = 3600; // Revalidate every hour
 
 interface ContentBlock {
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';

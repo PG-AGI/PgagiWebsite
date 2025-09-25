@@ -457,7 +457,7 @@ export default function Projects() {
         </section>
       </section>
 
-      <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      {/* <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} /> */}
     </div>
   );
 }

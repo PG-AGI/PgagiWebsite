@@ -1,9 +1,11 @@
 // app/api/case-studies/[id]/route.ts
 
-import { NextResponse } from 'next/server';
+import {NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb'; 
 import { ObjectId } from 'mongodb';
+
+export const revalidate = 3600; // Revalidate every hour
 
 interface ContentBlock {
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';

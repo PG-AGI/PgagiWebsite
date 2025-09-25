@@ -1,11 +1,17 @@
 .statsSection {
   background: white;
   padding: clamp(1.5rem, 3vw, 3rem);
-  height: 100vh;
+  min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: flex;
   align-items: center;
   overflow: hidden;
+}
+
+/* Ensure any images within the stats section are responsive by default */
+.statsSection :global(img) {
+  max-width: 100%;
+  height: auto;
 }
 
 .container {
@@ -118,10 +124,10 @@
 }
 
 .upworkLogo {
-  // width: clamp(120px, 15vw, 150px);
-  // height: auto;
-  // max-height: clamp(30px, 4vw, 40px);
-  // object-fit: contain;
+  width: 100%;
+  max-width: clamp(120px, 15vw, 150px);
+  height: auto;
+  object-fit: contain;
   flex-shrink: 0;
 }
 
@@ -160,12 +166,23 @@
   flex: 1;
 }
 
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(0.5rem, 1vw, 1rem);
+}
+
 .statTitle {
   font-size: clamp(1.2rem, 1.4vw, 1.4rem);
   font-weight: 700;
   color: #000;
   margin: 0;
   line-height: 1.2;
+}
+
+.clientSatisfactionTitle {
+  white-space: nowrap;
 }
 
 .separator {
@@ -199,6 +216,7 @@
   line-height: 1.4;
   flex: 1;
   min-width: 0;
+  text-align: right;
 }
 
 .founders {
@@ -398,7 +416,7 @@
 @media (max-width: 1199px) {
   .statsSection {
     padding: clamp(1.5rem, 2.5vw, 2.5rem);
-    height: 100vh;
+    min-height: 100vh;
   }
 
   .container {
@@ -475,8 +493,9 @@
   }
 
   .upworkLogo {
-    width: clamp(100px, 12vw, 120px);
-    max-height: clamp(25px, 3vw, 30px);
+    width: 100%;
+    max-width: clamp(100px, 12vw, 120px);
+    height: auto;
   }
 
   .verificationText {
@@ -600,8 +619,9 @@
   }
 
   .upworkLogo {
-    width: clamp(80px, 10vw, 90px);
-    max-height: clamp(20px, 2.5vw, 25px);
+    width: 100%;
+    max-width: clamp(80px, 10vw, 90px);
+    height: auto;
   }
 
   .verificationText {
@@ -718,8 +738,9 @@
   }
 
   .upworkLogo {
-    width: clamp(70px, 8vw, 80px);
-    max-height: clamp(18px, 2vw, 20px);
+    width: 100%;
+    max-width: clamp(70px, 8vw, 80px);
+    height: auto;
   }
 
   .verificationText {
@@ -832,8 +853,9 @@
   }
 
   .upworkLogo {
-    width: clamp(60px, 7vw, 70px);
-    max-height: clamp(15px, 1.8vw, 18px);
+    width: 100%;
+    max-width: clamp(60px, 7vw, 70px);
+    height: auto;
   }
 
   .verificationText {

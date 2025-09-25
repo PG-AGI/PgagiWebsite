@@ -3,7 +3,7 @@
 .main {
   position: relative;
   width: 100%;
-  margin-bottom: 10rem;
+  // margin-bottom: 10rem;
   display: flex;
   flex-direction: column;
   z-index: 0;
@@ -273,13 +273,14 @@
     overflow: hidden;
     background: #f8f8f8; // Light grey background
     // Keep original container size, but zoom the image inside
-    width: 80rem; // Increased from 60rem to increase width
+    width: 70rem; // Increased from 60rem to increase width
     margin-left: 0;
     border-radius: 10px; // Added 10px border-radius to image container
 
     @media (max-width: 768px) {
       height: 500px; // Increased from 400px for mobile
       order: 2; // Image second on mobile
+      width: 100%;
     }
 
     .imgTag {

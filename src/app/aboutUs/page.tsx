@@ -9,6 +9,7 @@ import Calendly from "../components/Calendly";
 import { generateSlug } from '@/services/generateSlugService';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 import Marquee from 'react-fast-marquee';
+// import Team from './team';
 
 type Blog = {
   id: string;
@@ -110,7 +111,7 @@ export default function AboutUs() {
             <h1 className={styles.heroTitle}>
               <span className={styles.titleLine1}>We engineer AI solutions from research to deployment</span>
               {/* <span className={styles.titleLine2}>from research and product development to scalable deployment.</span> */}
-              <span className={styles.titleLine3}>optimizing products for real-world impact</span>
+              <span className={styles.titleLine3}> optimizing products for real-world impact</span>
               <span className={styles.titleLine4}> with deep tech expertise and scalable results</span>
             </h1>
           </div>
@@ -256,6 +257,8 @@ export default function AboutUs() {
         </div>
       </motion.section> */}
 
+      {/* <Team/> */}
+
       {/* Combined Blogs & News Section */}
       <section className={styles.combinedSection} id="blogs-news">
         <h3 className={styles.sectionTitle}>News & Blogs</h3>
@@ -328,7 +331,6 @@ export default function AboutUs() {
           )}
         </div>
       </section>
-
       <Calendly />
 
       

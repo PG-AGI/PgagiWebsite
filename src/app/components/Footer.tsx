@@ -9,16 +9,15 @@ import logo from '../assets/logo.png';
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      {/* Large background watermark text */}
-      <div className={styles.backgroundText}>Playing god{'\n'}with AGI</div>
-      
       {/* Main content container */}
       <div className={styles.contentContainer}>
+        
         {/* Top section with navigation */}
         <div className={styles.topSection}>
           <div className={styles.container}>
             {/* Navigation and Contact */}
             <div className={styles.navigationSection}>
+              
               {/* Services Column */}
               <div className={styles.navColumn}>
                 <h6 className={styles.columnHeader}>Services</h6>
@@ -58,6 +57,8 @@ export default function Footer() {
                 <div className={styles.newsletterForm}>
                   <input 
                     type="email" 
+                    id="emailInput"
+                    name="emailInput"
                     placeholder="Your Email ID..." 
                     className={styles.emailInput}
                   />
@@ -70,15 +71,20 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom section with copyright and legal links */}
+        <div className={styles.backgroundText}>
+  <span className="styles.desktopText">Playing God{'\n'}with AGI</span>
+  {/* <span className="styles.mobileText">Playing{'\n'}God{'\n'}with AGI</span> */}
+</div>
+        {/* Bottom section with copyright, legal links, and background text */}
         <div className={styles.bottomSection}>
+          
+          {/*Background watermark text now inside bottomSection */}
           <div className={styles.bottomContainer}>
             <div className={styles.copyright}>
               <p>©2025 All Rights Reserved by PG-AGI</p>
             </div>
             <div className={styles.legalLinks}>
               <TransitionLink href="/terms" className={styles.legalLink}>Terms of Service ↗</TransitionLink>
-            
               <TransitionLink href="/privacy" className={styles.legalLink}>Privacy Policy ↗</TransitionLink>
             </div>
           </div>

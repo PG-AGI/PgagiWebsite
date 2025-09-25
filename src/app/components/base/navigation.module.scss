@@ -365,8 +365,8 @@
 
     .mobileMenuItem {
       font-size: 1.875rem;
-      width: 18rem;
-      height: 5rem;
+      width: 100%;
+      height: 100%;
       text-align: center;
       color: var(--text-color, #666666);
       // background: #f0f0f0; // Removed background
@@ -580,7 +580,7 @@
 @media (max-width: 568px) {
   .navigation {
     .nav {
-      margin-top: 3%;
+      // margin-top: 3%;
 
       .links {
         a {
@@ -631,7 +631,7 @@
     }
 
     .nav {
-      margin-top: 30px;
+      // margin-top: 30px;
 
       .links {
         .whatWeDo {
