@@ -82,14 +82,22 @@ const StatsSection = () => {
               </div>
             </div>
 
-            {/* Year of Establishment Section */}
+            {/* our product Section */}
             <div className={styles.statItem}>
-              <h3 className={styles.statTitle}>Year of Establishment</h3>
+              <h3 className={styles.statTitle}>Our Own Product</h3>
               <div className={styles.separator} aria-hidden="true"></div>
               <div className={styles.statContent}>
-                <span className={styles.statNumber} aria-label="Established in 2023">2023</span>
+                {/* <span className={styles.statNumber} aria-label="Established in 2023">2023</span>
+                 */}
+                 <div className={styles.toinggButtonContainer}>
+                        <button className={styles.toinggButton} onClick={() => {
+                            window.open("https://www.toingg.com/", "_blank");
+                        }}>
+                            TOINGG
+                        </button>
+                    </div>
                 <p className={styles.statDescription}>
-                  That year two founders launched their first project: &quot;Toingg&quot;, a communication OS for businesses.
+                  In year 2023, two founders launched their first project: &quot;Toingg&quot;, a communication OS for businesses. 
                 </p>
               </div>
             </div>
