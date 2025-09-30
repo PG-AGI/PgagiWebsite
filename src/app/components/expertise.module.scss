@@ -10,12 +10,18 @@
 
   .container {
     width: 80%;
-    margin: 10rem auto 0;
-    padding: 0 24px;
+    // margin: 10rem auto 0;
+    // padding: 0 24px;
   }
 
   .header {
     margin-bottom: 80px;
+    margin-top: 80px;
+
+    @media (max-width: 768px) {
+      // margin-bottom: 40px;
+      margin-top: 0;
+    }
 
     .subtitle {
       display: block;
