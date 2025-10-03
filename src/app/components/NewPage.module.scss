@@ -965,3 +965,14 @@
     left: 100%;
   }
 }
+
+
+.wrapperContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 2.5rem; // Tailwind mb-10 = 40px
+  width: 100%;
+}
