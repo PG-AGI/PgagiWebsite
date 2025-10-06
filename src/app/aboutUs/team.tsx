@@ -13,13 +13,19 @@ interface TeamMember {
 }
 
 const teamMembers: TeamMember[] = [
-  { id: 1, name: "Alice Johnson", role: "AI Engineer", image: "/assets/team/member1.jpg" },
-  { id: 2, name: "Brian Smith", role: "Frontend Dev", image: "/assets/team/member1.jpg" },
-  { id: 3, name: "Carla Lopez", role: "Product Designer", image: "/assets/team/member1.jpg" },
-  { id: 4, name: "David Kim", role: "ML Researcher", image: "/assets/team/member1.jpg" },
-  { id: 5, name: "Ella Brown", role: "Data Scientist", image: "/assets/team/member1.jpg" },
-  { id: 6, name: "Frank Green", role: "Backend Dev", image: "/assets/team/member1.jpg" },
+  { id: 1, name: "VivekJyothi Bhowmik", role: "Founder", image: "/assets/team/member1.png" },
+  { id: 2, name: "ShibaJyothi Bhowmik", role: "Managing Director", image: "/assets/team/member2.png" },
+  { id: 3, name: "Tanvi Sharma", role: "Pre Sales Executive", image: "/assets/team/member3.png" },
+  { id: 4, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member4.png" },
+  { id: 4, name: "Javeriya Shaik", role: "Hr Executive", image: "/assets/team/member5.png" },
+  { id: 5, name: "Rohan Sonkar", role: "Graphic Designer & Video Editor", image: "/assets/team/member6.png" },
+  { id: 6, name: "Nishmitha", role: "QA Engineer", image: "/assets/team/member7.png" },
+  { id: 7, name: "Abhinav", role: "Senior AI Engineer", image: "/assets/team/member8.png" },
+  { id: 8, name: "Sahil Sinha", role: "SDE-2", image: "/assets/team/member9.png" },
+  { id: 9, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
+  // { id: 10, name: "Frank Green", role: "Backend Dev", image: "/assets/team/member10.png" },
 ];
+
 
 const Team: React.FC = () => {
   return (
