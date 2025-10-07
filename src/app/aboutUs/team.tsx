@@ -13,17 +13,31 @@ interface TeamMember {
 }
 
 const teamMembers: TeamMember[] = [
+  // { id: 1, name: "VivekJyothi Bhowmik", role: "Founder", image: "/assets/team/member1.png" },
+  // { id: 2, name: "ShibaJyothi Bhowmik", role: "Managing Director", image: "/assets/team/member2.png" },
+  // { id: 3, name: "Tanvi Sharma", role: "Pre Sales Executive", image: "/assets/team/member3.png" },
+  // { id: 4, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member4.png" },
+  // { id: 4, name: "Javeriya Shaik", role: "Hr Executive", image: "/assets/team/member5.png" },
+  // { id: 5, name: "Rohan Sonkar", role: "Graphic Designer & Video Editor", image: "/assets/team/member6.png" },
+  // { id: 6, name: "Nishmitha", role: "QA Engineer", image: "/assets/team/member7.png" },
+  // { id: 7, name: "Abhinav", role: "Senior AI Engineer", image: "/assets/team/member8.png" },
+  // { id: 8, name: "Sahil Sinha", role: "SDE-2", image: "/assets/team/member9.png" },
+  // { id: 9, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
+  // { id: 10, name: "Frank Green", role: "Backend Dev", image: "/assets/team/member10.png" },
   { id: 1, name: "VivekJyothi Bhowmik", role: "Founder", image: "/assets/team/member1.png" },
   { id: 2, name: "ShibaJyothi Bhowmik", role: "Managing Director", image: "/assets/team/member2.png" },
-  { id: 3, name: "Tanvi Sharma", role: "Pre Sales Executive", image: "/assets/team/member3.png" },
-  { id: 4, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member4.png" },
-  { id: 4, name: "Javeriya Shaik", role: "Hr Executive", image: "/assets/team/member5.png" },
-  { id: 5, name: "Rohan Sonkar", role: "Graphic Designer & Video Editor", image: "/assets/team/member6.png" },
-  { id: 6, name: "Nishmitha", role: "QA Engineer", image: "/assets/team/member7.png" },
-  { id: 7, name: "Abhinav", role: "Senior AI Engineer", image: "/assets/team/member8.png" },
-  { id: 8, name: "Sahil Sinha", role: "SDE-2", image: "/assets/team/member9.png" },
-  { id: 9, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
-  // { id: 10, name: "Frank Green", role: "Backend Dev", image: "/assets/team/member10.png" },
+  { id: 3, name: "Pratik Hegde", role: "Founding Engineer", image: "/assets/team/PRATIK.png" },
+  { id: 4, name: "Abhinav", role: "Founding Engineer", image: "/assets/team/member8.png" },
+  { id: 5, name: "Sahil Sinha", role: "Founding Engineer", image: "/assets/team/member9.png" },
+  { id: 6, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
+  { id: 7, name: "Javeriya Shaik", role: "Hr Executive", image: "/assets/team/member5.png" },
+  { id: 8, name: "Nishmitha", role: "QA Engineer", image: "/assets/team/member7.png" },
+  { id: 9, name: "Abhishek Khatri", role: "AI/ML Engineer", image: "/assets/team/WhatsApp Image 2025-10-07 at 11.24.18_13618cfe-modified.jpg" },
+  { id: 10, name: "Kulwnant Singh", role: "SDE-1", image: "/assets/team/IMG_1890-modified.jpg" },
+  { id: 11, name: "Rohan Sonkar", role: "Graphic Designer & Video Editor", image: "/assets/team/member6.png" },
+  { id: 12, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
+  { id: 13, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member4.png" },
+
 ];
 
 
@@ -35,9 +49,7 @@ const Team: React.FC = () => {
         <div className={styles.headerLeft}>
         <span className={styles.aboutLabel}>{'// Meet Our Team'}</span>
           <h2 className={styles.description}>
-            We are a global family of <b>80 thinkers and builders</b>. Spread across{" "}
-            <b>10 time zones</b>, speaking <b>11 languages</b> and proudly representing{" "}
-            <b>17 nationalities</b>.
+          We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life.
           </h2>
         </div>
         <p className={styles.caption}>Our strength lies in our people.</p>
@@ -72,7 +84,7 @@ const Team: React.FC = () => {
         ))}
 
         {/* Testimonial card */}
-        <motion.div
+        {/* <motion.div
           className={`${styles.card} ${styles.testimonial}`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,7 +100,7 @@ const Team: React.FC = () => {
           <a href="#" className={styles.link}>
             See our work →
           </a>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
