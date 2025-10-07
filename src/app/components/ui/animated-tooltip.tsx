@@ -24,16 +24,16 @@ interface AnimatedTooltipProps {
 
 export const AnimatedTooltip: React.FC<AnimatedTooltipProps> = ({ items }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const springConfig = { stiffness: 100, damping: 15 };
+  const springConfig = { stiffness: 200, damping: 20 };
   const x = useMotionValue(0);
   const animationFrameRef = useRef<number | null>(null);
 
   const rotate = useSpring(
-    useTransform(x, [-100, 100], [-45, 45]),
+    useTransform(x, [-32, 32], [-8, 8]),
     springConfig,
   );
   const translateX = useSpring(
-    useTransform(x, [-100, 100], [-50, 50]),
+    useTransform(x, [-32, 32], [-12, 12]),
     springConfig,
   );
 
@@ -48,30 +48,43 @@ export const AnimatedTooltip: React.FC<AnimatedTooltipProps> = ({ items }) => {
     });
   };
 
+  const handleMouseEnter = (id: number) => {
+    setHoveredIndex(id);
+    x.set(0); // center on enter
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredIndex(null);
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    x.set(0); // reset on leave to avoid drift
+  };
+
   return (
     <>
       {items.map((item) => (
         <div
           className="tooltip-group"
           key={item.id}
-          onMouseEnter={() => setHoveredIndex(item.id)}
-          onMouseLeave={() => setHoveredIndex(null)}
+          onMouseEnter={() => handleMouseEnter(item.id)}
+          onMouseLeave={handleMouseLeave}
         >
           <AnimatePresence>
             {hoveredIndex === item.id && (
               <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.6 }}
+                initial={{ opacity: 0, y: 8, scale: 0.95 }}
                 animate={{
                   opacity: 1,
                   y: 0,
                   scale: 1,
                   transition: {
                     type: "spring",
-                    stiffness: 260,
-                    damping: 10,
+                    stiffness: 300,
+                    damping: 22,
                   },
                 }}
-                exit={{ opacity: 0, y: 20, scale: 0.6 }}
+                exit={{ opacity: 0, y: 8, scale: 0.95 }}
                 style={{
                   translateX: translateX,
                   rotate: rotate,
@@ -89,8 +102,8 @@ export const AnimatedTooltip: React.FC<AnimatedTooltipProps> = ({ items }) => {
 
           <img
             onMouseMove={handleMouseMove}
-            height={100}
-            width={100}
+            height={64}
+            width={64}
             src={item.image}
             alt={item.name}
             className="tooltip-avatar"
