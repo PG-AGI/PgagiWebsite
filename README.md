@@ -12,6 +12,7 @@ const ReactQuill = dynamic(() => import('react-quill'), {
 });
 ```
 
+
 2. Route-based code splitting for major sections:
 ```typescript
 // In app directory
@@ -203,3 +204,4 @@ export function middleware(request: NextRequest) {
 - Build optimizations
 - Advanced caching strategies
 - Performance monitoring setup
+
