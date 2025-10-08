@@ -60,6 +60,10 @@ export default function Projects() {
       case 2:
         window.open("https://aione.klinik-x.de/", "_blank");
         break;
+      case 3:
+        window.open("https://onchaintoolkit.com/", "_blank");
+        break;
+
       default:
         handleExpand(title);
     }
@@ -216,7 +220,7 @@ export default function Projects() {
     // We need at least 3 full sets to ensure ultra-smooth transitions
     // [A, B, C, A, B, C, A, B, C] - provides buffer for seamless looping
     const repeatedArray = [];
-    for (let i = 0; i < 3; i++) { // 3 sets for ultra-smooth infinite loop
+    for (let i = 0; i < 4; i++) { // 3 sets for ultra-smooth infinite loop
       repeatedArray.push(...caseStudies);
     }
     return repeatedArray;
@@ -291,9 +295,10 @@ export default function Projects() {
               {i === 0 ? "Cracked.AI" : 
                i === 1 ? "FOMO" : 
                i === 2 ? "LinkedAI" :
+               i === 3 ? "Onchain Toolkit" :
                item.title}
             </h3>
-            {i <= 2 ? (
+            {i <= 3 ? (
               <p style={{ 
                 opacity: hoveredIndex === i ? 1 : 0, 
                 transition: 'opacity 0.2s ease',
@@ -339,13 +344,29 @@ export default function Projects() {
               />
             ) : i === 2 ? (
               <Image
+                  className={styles.imgTag}
+                  src="/Landing Projects/LinkedAI.gif"
+                  alt="LinkedAI"
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    animationPlayState: hoveredIndex === i ? "running" : "paused"
+                  }}
+                />
+
+            ) : i === 3 ? (
+              <video
                 className={styles.imgTag}
-                src="/Landing Projects/LinkedAI.gif"
-                alt="LinkedAI"
-                fill
+                src="/Landing Projects/OnchainToolkit.webm"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
                 style={{
-                  objectFit: "cover",
-                  animationPlayState: hoveredIndex === i ? "running" : "paused"
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover"
                 }}
               />
             ) : (
@@ -408,6 +429,52 @@ export default function Projects() {
     </div>
   ), [hoveredIndex, handleMouseEnter, handleMouseLeave]);
 
+
+
+  const onchainProjectCard = useMemo(() => (
+  <div
+    className={styles.card}
+    onClick={() => window.open("https://onchaintoolkit.com/", "_blank")}
+    onMouseEnter={() => handleMouseEnter(4)}
+    onMouseLeave={handleMouseLeave}
+    style={{ cursor: "pointer" }}
+  >
+    <div className={styles.cardContent}>
+      <div className={styles.cardText}>
+        <h3>Onchain Toolkit</h3>
+        {hoveredIndex === 4 && (
+          <p style={{
+            opacity: 1,
+            transition: 'opacity 0.2s ease',
+            textAlign: 'center',
+            fontSize: '1.1rem',
+            fontWeight: '600'
+          }}>
+            Click to View
+          </p>
+        )}
+      </div>
+      <div className={styles.cardImage}>
+        <video
+          className={styles.imgTag}
+          src="/Landing Projects/OnchainToolkit.webm"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+          }}
+        />
+      </div>
+    </div>
+  </div>
+), [hoveredIndex, handleMouseEnter, handleMouseLeave]);
+
+
   return (
     <div className={styles.main}>
       {/* Page Title */}
@@ -421,6 +488,7 @@ export default function Projects() {
         <div className={styles.cardsContainer}>
           {projectCards}
           {additionalProjectCard}
+          {onchainProjectCard}
         </div>
 
         {/* Case Studies Section - Always Visible */}
