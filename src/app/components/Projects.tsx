@@ -430,7 +430,7 @@ export default function Projects() {
   ), [hoveredIndex, handleMouseEnter, handleMouseLeave]);
 
 
-
+//added onchaintoolit card
   const onchainProjectCard = useMemo(() => (
   <div
     className={styles.card}
