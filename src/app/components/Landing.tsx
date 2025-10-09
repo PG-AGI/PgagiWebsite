@@ -2,12 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./landing.module.scss";
 import BookCallModal from './base/bookCallModela';
-import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+import dynamic from 'next/dynamic';
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
+
+const Hyperspeed = dynamic(() => import('./ui/Hyperspeed/Hyperspeed'), { ssr: false, loading: () => null });
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { scrollTo } = useSmoothScrollTo();
+    const [canRenderFx, setCanRenderFx] = useState(false);
 
     const handleBookCall = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -17,13 +20,18 @@ export default function Landing() {
     };
 
     useEffect(() => {
-        console.log('Landing component mounted');
+        if ('requestIdleCallback' in window) {
+            (window as any).requestIdleCallback(() => setCanRenderFx(true), { timeout: 2000 });
+        } else {
+            setTimeout(() => setCanRenderFx(true), 0);
+        }
     }, []);
 
     return (
         <section id="landing" className={styles.landing}>
             {/* HyperSpeed Background */}
             <div className={styles.hyperspeedBackground}>
+                {canRenderFx && (
                 <Hyperspeed 
                     effectOptions={{
                         colors: {
@@ -61,6 +69,7 @@ export default function Landing() {
                         carFloorSeparation: [0, 5],
                     }}
                 />
+                )}
             </div>
             
             <div className={styles.landingContainer}>

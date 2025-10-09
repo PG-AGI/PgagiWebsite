@@ -37,6 +37,8 @@ const teamMembers: TeamMember[] = [
   { id: 11, name: "Rohan Sonkar", role: "Graphic Designer & Video Editor", image: "/assets/team/member6.png" },
   { id: 12, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
   { id: 13, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member4.png" },
+  { id: 14, name: "Tanvi Sharma", role: "Pre Sales Executive", image: "/assets/team/2.png" },
+  { id: 15, name: "Deb Dey", role: "Account Manager", image: "/assets/team/deb.png" },
 
 ];
 

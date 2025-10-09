@@ -13,14 +13,14 @@ import PageTransition from "@/app/components/PageTransition";
 const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  weight: ['400', '600'],
   display: 'swap',
 });
 
 const alexandria = Alexandria({
   subsets: ['latin'],
   variable: '--font-alexandria',
-  weight: ['100', '200', '300', '400', '500', '600', '700'],
+  weight: ['400', '600'],
   display: 'swap',
 });
 
@@ -47,7 +47,8 @@ export default function RootLayout({
             <head>
               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
               {/* Google Tag Manager */}
-              <Script id="google-tag-manager" strategy="afterInteractive">
+              {process.env.NODE_ENV === 'production' && (
+              <Script id="google-tag-manager" strategy="lazyOnload">
                 {`
                   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -56,13 +57,17 @@ export default function RootLayout({
                   })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
                 `}
               </Script>
+              )}
 
               {/* Google Analytics */}
+              {process.env.NODE_ENV === 'production' && (
               <Script
                 src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-                strategy="afterInteractive"
+                strategy="lazyOnload"
               />
-              <Script id="google-analytics" strategy="afterInteractive">
+              )}
+              {process.env.NODE_ENV === 'production' && (
+              <Script id="google-analytics" strategy="lazyOnload">
                 {`
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
@@ -70,6 +75,7 @@ export default function RootLayout({
                   gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
                 `}
               </Script>
+              )}
 
               {/* Structured Data */}
               <Script

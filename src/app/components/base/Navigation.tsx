@@ -104,6 +104,8 @@ export default function Navigation() {
             alt="PGAGI Logo"
             width={60}
             height={60}
+            priority
+            sizes="60px"
           />
           <p>PG-AGI</p>
         </TransitionLink>

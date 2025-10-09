@@ -24,19 +24,27 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis
-    lenisRef.current = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-    });
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isSmall = window.innerWidth < 768;
 
-    // RAF for smooth animation
-    function raf(time: number) {
-      lenisRef.current?.raf(time);
+    const init = () => {
+      if (prefersReduced || isSmall) return;
+      lenisRef.current = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      function raf(time: number) {
+        lenisRef.current?.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
-    }
+    };
 
-    requestAnimationFrame(raf);
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(init, { timeout: 2000 });
+    } else {
+      setTimeout(init, 0);
+    }
 
     // Cleanup
     return () => {
