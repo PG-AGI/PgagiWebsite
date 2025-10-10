@@ -1,13 +1,18 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from "./landing.module.scss";
 import BookCallModal from './base/bookCallModela';
-import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+import dynamic from 'next/dynamic';
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
+
+const Hyperspeed = dynamic(() => import('./ui/Hyperspeed/Hyperspeed'), { ssr: false, loading: () => null });
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { scrollTo } = useSmoothScrollTo();
+    const [canRenderFx, setCanRenderFx] = useState(false);
+    const bgRef = useRef<HTMLDivElement>(null);
+    const interactedRef = useRef(false);
 
     const handleBookCall = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -17,13 +22,53 @@ export default function Landing() {
     };
 
     useEffect(() => {
-        console.log('Landing component mounted');
+        let obs: IntersectionObserver | null = null;
+        const maybeEnable = () => {
+            if (interactedRef.current && document.visibilityState === 'visible') {
+                setCanRenderFx(true);
+                cleanup();
+            }
+        };
+        const onInteract = () => {
+            interactedRef.current = true;
+            maybeEnable();
+        };
+        const onVisibility = () => {
+            if (document.visibilityState === 'visible') maybeEnable();
+        };
+        const observe = () => {
+            if (!bgRef.current) return;
+            obs = new IntersectionObserver(([e]) => {
+                if (e.isIntersecting) {
+                    window.addEventListener('scroll', onInteract, { passive: true, once: true });
+                    window.addEventListener('pointerdown', onInteract, { passive: true, once: true } as any);
+                    window.addEventListener('keydown', onInteract, { once: true } as any);
+                    document.addEventListener('visibilitychange', onVisibility);
+                    // Fallback if no interaction for a while
+                    const idle = setTimeout(() => { interactedRef.current = true; maybeEnable(); }, 5000);
+                    (onInteract as any)._idle = idle;
+                    obs && obs.disconnect();
+                }
+            }, { rootMargin: '200px' });
+            obs.observe(bgRef.current);
+        };
+        const cleanup = () => {
+            window.removeEventListener('scroll', onInteract as any);
+            window.removeEventListener('pointerdown', onInteract as any);
+            window.removeEventListener('keydown', onInteract as any);
+            document.removeEventListener('visibilitychange', onVisibility);
+            if ((onInteract as any)._idle) clearTimeout((onInteract as any)._idle);
+            if (obs) obs.disconnect();
+        };
+        observe();
+        return cleanup;
     }, []);
 
     return (
         <section id="landing" className={styles.landing}>
             {/* HyperSpeed Background */}
-            <div className={styles.hyperspeedBackground}>
+            <div className={styles.hyperspeedBackground} ref={bgRef}>
+                {canRenderFx && (
                 <Hyperspeed 
                     effectOptions={{
                         colors: {
@@ -61,6 +106,7 @@ export default function Landing() {
                         carFloorSeparation: [0, 5],
                     }}
                 />
+                )}
             </div>
             
             <div className={styles.landingContainer}>

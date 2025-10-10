@@ -6,6 +6,7 @@ import GlareBackground from "./components/base/GlareBackground";
 import { segmentList } from "@/utils/constants";
 import { useEffect, useRef, useCallback } from "react";
 import dynamic from 'next/dynamic';
+import LazyOnVisible from "./components/LazyOnVisible";
 //import { motion } from 'framer-motion';
 
 const Partners = dynamic(() => import("./components/Partners"), { loading: () => <div>Loading...</div> });
@@ -96,20 +97,15 @@ export default function Home() {
 				]}
 			/> */}
 			<Landing />
-			<Partners />
-			<StatsSection />
-			<Process />
-			<LandingProjects/>
-			
-			
-			<ExpertiseSection />
-			
-			<VideoTestimonial />
-			<FAQ />
-			<TrendingOld/>
-			
-			
-			<Calendly />
+			<LazyOnVisible><Partners /></LazyOnVisible>
+			<LazyOnVisible><StatsSection /></LazyOnVisible>
+			<LazyOnVisible><Process /></LazyOnVisible>
+			<LazyOnVisible><LandingProjects/></LazyOnVisible>
+			<LazyOnVisible><ExpertiseSection /></LazyOnVisible>
+			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>
+			<LazyOnVisible><FAQ /></LazyOnVisible>
+			<LazyOnVisible><TrendingOld/></LazyOnVisible>
+			<LazyOnVisible><Calendly /></LazyOnVisible>
 		</main>
 	);
 }

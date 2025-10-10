@@ -100,26 +100,47 @@
     }
   
     .overlay {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      padding: 1rem;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-      color: #fff;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    position: absolute;
+    inset: 0; /* cover full image area */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end; /* center name & role */
+    background: rgba(0, 0, 0, 0.5);
+
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 4.75%;
+    
+      // h4 {
+      //   margin: 0;
+      //   font-size: 1rem;
+      //   font-weight: 600;
+      // }
   
+      // span {
+      //   font-size: 0.9rem;
+      //   opacity: 0.9;
+      // }
+
       h4 {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 600;
-      }
-  
-      span {
-        font-size: 0.9rem;
-        opacity: 0.9;
-      }
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff; /* pure white for strong visibility */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); /* subtle glow for clarity */
+  }
+
+  span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #ffffff; /* slightly softer white */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+
+
     }
   
     &:hover .overlay {

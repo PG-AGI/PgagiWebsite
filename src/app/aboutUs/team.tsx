@@ -37,6 +37,8 @@ const teamMembers: TeamMember[] = [
   { id: 11, name: "Rohan Sonkar", role: "Graphic Designer & Video Editor", image: "/assets/team/member6.png" },
   { id: 12, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
   { id: 13, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member4.png" },
+  { id: 14, name: "Tanvi Sharma", role: "Pre Sales Executive", image: "/assets/team/2.png" },
+  { id: 15, name: "Deb Dey", role: "Account Manager", image: "/assets/team/deb.png" },
 
 ];
 
@@ -50,6 +52,7 @@ const Team: React.FC = () => {
         <span className={styles.aboutLabel}>{'// Meet Our Team'}</span>
           <h2 className={styles.description}>
           We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life.
+          {/* We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life. */}
           </h2>
         </div>
         <p className={styles.caption}>Our strength lies in our people.</p>
@@ -85,6 +88,7 @@ const Team: React.FC = () => {
 
         {/* Testimonial card */}
         {/* <motion.div
+        {/* <motion.div
           className={`${styles.card} ${styles.testimonial}`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -101,6 +105,7 @@ const Team: React.FC = () => {
             See our work →
           </a>
         </motion.div> */}
+        {/* </motion.div>  */}
       </div>
     </section>
   );

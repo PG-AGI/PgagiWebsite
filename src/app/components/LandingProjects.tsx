@@ -53,7 +53,7 @@ const LandingProjects = React.memo(() => {
               } else if (i === 1) {
                 window.open("https://fomo.fund/", "_blank");
               } else if (i === 2) {
-                window.open("https://aione.klinik-x.de/", "_blank");
+                window.open("https://onchaintoolkit.com/", "_blank");
               } else {
                 handleExpand(item.title);
               }
@@ -134,7 +134,7 @@ const LandingProjects = React.memo(() => {
                 />
               </div>
             ) : i === 1 ? (
-              // Second item with optimized GIF
+              // Second item retains GIF until WebM is available
               <div className={styles.gifContainer}>
                 <Image
                   className={styles.imgTag}
@@ -154,22 +154,21 @@ const LandingProjects = React.memo(() => {
                 />
               </div>
             ) : i === 2 ? (
-              // Third item with optimized GIF
+              // Third item with optimized video (existing file)
               <div className={styles.gifContainer}>
                 <Image
                   className={styles.imgTag}
-                  src="/Landing Projects/LinkedAI.gif"
-                  alt="LinkedAI"
+                  src="/Landing Projects/Onchain_Toolkit.gif"
+                  alt="Onchain Toolkit"
                   fill
                   loading="lazy"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                   unoptimized={true}
                   style={{
-                    objectFit: "cover",
-                    animationPlayState: isThirdItemHovered ? "running" : "paused",
-                    animationDelay: "0s",
-                    willChange: "auto"
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover"
                   }}
                 />
               </div>

@@ -23,9 +23,9 @@ export default function Footer() {
                 <h6 className={styles.columnHeader}>Services</h6>
                 <ul className={styles.linkList}>
                   <li><TransitionLink href="/expertise#section-1" className={styles.link}>AI Research ↗</TransitionLink></li>
-                  <li><TransitionLink href="/expertise#section-2" className={styles.link}>AI SAAS Development ↗</TransitionLink></li>
+                  <li><TransitionLink href="/expertise#section-2" className={styles.link}>AI Architecture ↗</TransitionLink></li>
                   <li><TransitionLink href="/expertise#section-3" className={styles.link}>AI Mobile App Development ↗</TransitionLink></li>
-                  <li><TransitionLink href="/expertise#section-4" className={styles.link}>Integrating AI in Existing Workflows ↗</TransitionLink></li>
+                  <li><TransitionLink href="/expertise#section-4" className={styles.link}>AI SaaS Development ↗</TransitionLink></li>
                 </ul>
               </div>
 
@@ -34,7 +34,7 @@ export default function Footer() {
                 <h6 className={styles.columnHeader}>Resources</h6>
                 <ul className={styles.linkList}>
                   <li><TransitionLink href="/whatwethink#blogs" className={styles.link}>Blogs ↗</TransitionLink></li>
-                  <li><TransitionLink href="/ainews" className={styles.link}>News ↗</TransitionLink></li>
+                  <li><TransitionLink href="/whatwethink#ainews" className={styles.link}>News ↗</TransitionLink></li>
                   <li><TransitionLink href="/whatwethink#case-studies" className={styles.link}>Case Study ↗</TransitionLink></li>
                 </ul>
               </div>
@@ -84,8 +84,8 @@ export default function Footer() {
               <p>©2025 All Rights Reserved by PG-AGI</p>
             </div>
             <div className={styles.legalLinks}>
-              <TransitionLink href="/terms" className={styles.legalLink}>Terms of Service ↗</TransitionLink>
-              <TransitionLink href="/privacy" className={styles.legalLink}>Privacy Policy ↗</TransitionLink>
+              <TransitionLink href="#terms" className={styles.legalLink}>Terms of Service ↗</TransitionLink>
+              <TransitionLink href="#privacy" className={styles.legalLink}>Privacy Policy ↗</TransitionLink>
             </div>
           </div>
         </div>
