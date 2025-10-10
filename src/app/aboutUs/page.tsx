@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect , useRef } from 'react';
 import { motion } from 'framer-motion';
 import styles from './aboutus.module.scss';
 import Image from 'next/image';
@@ -42,6 +42,54 @@ export default function AboutUs() {
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 } },
+  };
+
+  const AnimatedNumber: React.FC<{ target: number }> = ({ target }) => {
+    const [count, setCount] = useState(0);
+    const ref = useRef<HTMLSpanElement>(null);
+    const [hasAnimated, setHasAnimated] = useState(false);
+  
+    useEffect(() => {
+      const observer = new window.IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+          }
+        },
+        { threshold: 0.5 }
+      );
+      if (ref.current) observer.observe(ref.current);
+      return () => observer.disconnect();
+    }, [hasAnimated]);
+  
+    useEffect(() => {
+      if (!hasAnimated) return;
+      let start = 0;
+      const duration = 2000; // ms
+      const step = Math.ceil(target / (duration / 16));
+      const animate = () => {
+        start += step;
+        if (start >= target) {
+          setCount(target);
+        } else {
+          setCount(start);
+          requestAnimationFrame(animate);
+        }
+      };
+      animate();
+    }, [hasAnimated, target]);
+  
+    return (
+      <span
+        ref={ref}
+        // className={styles.statNumber}
+        className={styles.metricValue}
+        // aria-label={`${target} plus projects`}
+        // style={{ display: 'inline-block', width: '3ch', textAlign: 'right' }} // Add this line
+      >
+        {count}
+      </span>
+    );
   };
 
   const staggerContainer = {
@@ -221,15 +269,18 @@ export default function AboutUs() {
             {/* Key Metrics */}
             <div className={styles.keyMetrics}>
               <div className={styles.metric}>
-                <span className={styles.metricValue}>35+</span>
+                {/* <span className={styles.metricValue}>45+</span> */}
+                <AnimatedNumber target={45} /><span className={styles.metricValue}>+</span>
                 <span className={styles.metricLabel}>Team Count</span>
               </div>
               <div className={styles.metric}>
-                <span className={styles.metricValue}>75+</span>
+                {/* <span className={styles.metricValue}>75+</span> */}
+                <AnimatedNumber target={75} /><span className={styles.metricValue}>+</span>
                 <span className={styles.metricLabel}>Projects Delivered</span>
               </div>
               <div className={styles.metric}>
-                <span className={styles.metricValue}>100%</span>
+                {/* <span className={styles.metricValue}>100%</span> */}
+                <AnimatedNumber target={100} /><span className={styles.metricValue}>%</span>
                 <span className={styles.metricLabel}>Customer Satisfaction</span>
               </div>
             </div>

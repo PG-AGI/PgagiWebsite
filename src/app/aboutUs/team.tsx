@@ -52,6 +52,7 @@ const Team: React.FC = () => {
         <span className={styles.aboutLabel}>{'// Meet Our Team'}</span>
           <h2 className={styles.description}>
           We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life.
+          {/* We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life. */}
           </h2>
         </div>
         <p className={styles.caption}>Our strength lies in our people.</p>
@@ -87,6 +88,7 @@ const Team: React.FC = () => {
 
         {/* Testimonial card */}
         {/* <motion.div
+        {/* <motion.div
           className={`${styles.card} ${styles.testimonial}`}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -103,6 +105,7 @@ const Team: React.FC = () => {
             See our work →
           </a>
         </motion.div> */}
+        {/* </motion.div>  */}
       </div>
     </section>
   );

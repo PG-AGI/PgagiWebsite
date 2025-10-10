@@ -17,7 +17,7 @@ const ExpertiseSection = dynamic(() => import("./components/ExpertiseSection"), 
 const VideoTestimonial = dynamic(() => import("./components/VideoTestimonial"), { loading: () => <div>Loading...</div> });
 const FAQ = dynamic(() => import("./components/FAQ"), { loading: () => <div>Loading...</div> });
 const TrendingOld = dynamic(() => import("./components/trending_old"), { loading: () => <div>Loading...</div> });
-const Calendly = dynamic(() => import("./components/CalendlyFacade"), { loading: () => <div>Loading...</div> });
+const Calendly = dynamic(() => import("./components/Calendly"), { loading: () => <div>Loading...</div> });
 const ScrollIndicator = dynamic(() => import("./components/ScrollIndicator"), { ssr: false, loading: () => <div>Loading...</div> });
 
 export default function Home() {
@@ -105,7 +105,7 @@ export default function Home() {
 			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>
 			<LazyOnVisible><FAQ /></LazyOnVisible>
 			<LazyOnVisible><TrendingOld/></LazyOnVisible>
-			<Calendly />
+			<LazyOnVisible><Calendly /></LazyOnVisible>
 		</main>
 	);
 }

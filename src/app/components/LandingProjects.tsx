@@ -156,13 +156,15 @@ const LandingProjects = React.memo(() => {
             ) : i === 2 ? (
               // Third item with optimized video (existing file)
               <div className={styles.gifContainer}>
-                <video
+                <Image
                   className={styles.imgTag}
-                  src="/Landing Projects/OnchainToolkit.webm"
-                  playsInline
-                  muted
-                  loop
-                  preload="none"
+                  src="/Landing Projects/Onchain_Toolkit.gif"
+                  alt="Onchain Toolkit"
+                  fill
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                  unoptimized={true}
                   style={{
                     width: "100%",
                     height: "100%",
