@@ -6,6 +6,7 @@ import GlareBackground from "./components/base/GlareBackground";
 import { segmentList } from "@/utils/constants";
 import { useEffect, useRef, useCallback } from "react";
 import dynamic from 'next/dynamic';
+import LazyOnVisible from "./components/LazyOnVisible";
 //import { motion } from 'framer-motion';
 
 const Partners = dynamic(() => import("./components/Partners"), { loading: () => <div>Loading...</div> });
@@ -16,7 +17,7 @@ const ExpertiseSection = dynamic(() => import("./components/ExpertiseSection"), 
 const VideoTestimonial = dynamic(() => import("./components/VideoTestimonial"), { loading: () => <div>Loading...</div> });
 const FAQ = dynamic(() => import("./components/FAQ"), { loading: () => <div>Loading...</div> });
 const TrendingOld = dynamic(() => import("./components/trending_old"), { loading: () => <div>Loading...</div> });
-const Calendly = dynamic(() => import("./components/Calendly"), { loading: () => <div>Loading...</div> });
+const Calendly = dynamic(() => import("./components/CalendlyFacade"), { loading: () => <div>Loading...</div> });
 const ScrollIndicator = dynamic(() => import("./components/ScrollIndicator"), { ssr: false, loading: () => <div>Loading...</div> });
 
 export default function Home() {
@@ -96,19 +97,14 @@ export default function Home() {
 				]}
 			/> */}
 			<Landing />
-			<Partners />
-			<StatsSection />
-			<Process />
-			<LandingProjects/>
-			
-			
-			<ExpertiseSection />
-			
-			<VideoTestimonial />
-			<FAQ />
-			<TrendingOld/>
-			
-			
+			<LazyOnVisible><Partners /></LazyOnVisible>
+			<LazyOnVisible><StatsSection /></LazyOnVisible>
+			<LazyOnVisible><Process /></LazyOnVisible>
+			<LazyOnVisible><LandingProjects/></LazyOnVisible>
+			<LazyOnVisible><ExpertiseSection /></LazyOnVisible>
+			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>
+			<LazyOnVisible><FAQ /></LazyOnVisible>
+			<LazyOnVisible><TrendingOld/></LazyOnVisible>
 			<Calendly />
 		</main>
 	);

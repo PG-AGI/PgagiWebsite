@@ -45,7 +45,7 @@ export default function RootLayout({
             className={`${poppins.variable} ${alexandria.variable}`}
           >
             <head>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
               {/* Google Tag Manager */}
               {process.env.NODE_ENV === 'production' && (
               <Script id="google-tag-manager" strategy="lazyOnload">

@@ -134,7 +134,7 @@ const LandingProjects = React.memo(() => {
                 />
               </div>
             ) : i === 1 ? (
-              // Second item with optimized GIF
+              // Second item retains GIF until WebM is available
               <div className={styles.gifContainer}>
                 <Image
                   className={styles.imgTag}
@@ -154,40 +154,21 @@ const LandingProjects = React.memo(() => {
                 />
               </div>
             ) : i === 2 ? (
-              // Third item with optimized GIF
+              // Third item with optimized video (existing file)
               <div className={styles.gifContainer}>
-                {/* <video
+                <video
                   className={styles.imgTag}
                   src="/Landing Projects/OnchainToolkit.webm"
-                  autoPlay
+                  playsInline
                   muted
                   loop
-                  playsInline
-                  preload="metadata"
+                  preload="none"
                   style={{
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
-                    willChange: "auto"
+                    objectFit: "cover"
                   }}
-                /> */}
-
-                  <Image
-                    className={styles.imgTag}
-                    src="/Landing Projects/Onchain_Toolkit.gif"
-                    alt="OnchainToolkit"
-                    fill
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                    unoptimized={true}
-                    style={{
-                      objectFit: "cover",
-                      willChange: "auto"
-                    }}
-                  />
-
-
+                />
               </div>
             ) : (
               // Other items with original images

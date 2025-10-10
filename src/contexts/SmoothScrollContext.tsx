@@ -26,31 +26,57 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isSmall = window.innerWidth < 768;
+    let rafId: number | null = null;
+    let initialized = false;
 
     const init = () => {
-      if (prefersReduced || isSmall) return;
+      if (initialized) return;
+      initialized = true;
+      if (prefersReduced || isSmall || document.visibilityState !== 'visible') return;
       lenisRef.current = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
-      function raf(time: number) {
+      const raf = (time: number) => {
         lenisRef.current?.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+        rafId = requestAnimationFrame(raf);
+      };
+      rafId = requestAnimationFrame(raf);
+      removeStartupListeners();
     };
 
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(init, { timeout: 2000 });
-    } else {
-      setTimeout(init, 0);
-    }
+    const onFirstInteraction = () => init();
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') return;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    };
 
-    // Cleanup
+    const removeStartupListeners = () => {
+      window.removeEventListener('scroll', onFirstInteraction);
+      window.removeEventListener('wheel', onFirstInteraction, { capture: true } as any);
+      window.removeEventListener('touchstart', onFirstInteraction, { capture: true } as any);
+      window.removeEventListener('keydown', onFirstInteraction, { capture: true } as any);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+
+    // Initialize on first real interaction to avoid TBT at startup
+    window.addEventListener('scroll', onFirstInteraction, { passive: true, once: true });
+    window.addEventListener('wheel', onFirstInteraction, { passive: true, capture: true, once: true } as any);
+    window.addEventListener('touchstart', onFirstInteraction, { passive: true, capture: true, once: true } as any);
+    window.addEventListener('keydown', onFirstInteraction, { capture: true, once: true } as any);
+    document.addEventListener('visibilitychange', onVisibility);
+
+    // Fallback: idle init after a delay if no interaction happens
+    const idleFallback = setTimeout(() => init(), 4000);
+
     return () => {
+      clearTimeout(idleFallback);
+      removeStartupListeners();
       if (lenisRef.current) {
         lenisRef.current.destroy();
       }
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
