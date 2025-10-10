@@ -455,7 +455,7 @@ export default function Projects() {
         )}
       </div>
       <div className={styles.cardImage}>
-        <video
+        {/* <video
           className={styles.imgTag}
           src="/Landing Projects/OnchainToolkit.webm"
           autoPlay
@@ -468,7 +468,20 @@ export default function Projects() {
             height: "100%",
             objectFit: "cover"
           }}
-        />
+        /> */}
+        
+
+        <Image
+          className={styles.imgTag}
+          src="/Landing Projects/Onchain_Toolkit.gif"
+          alt="FOMO"
+          fill
+          style={{
+          objectFit: "cover",
+          animationPlayState: hoveredIndex === 4 ? "running" : "paused"
+            }}
+          />
+
       </div>
     </div>
   </div>
