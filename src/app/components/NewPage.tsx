@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './NewPage.module.scss';
 import { AnimatedTooltip } from './ui/animated-tooltip';
@@ -14,6 +14,53 @@ const people = [
   { id: 5, name: "Sahil Sinha", designation: "Founding Engineer", image: "/assets/team/member9.png" },
   // {id: 6, name: "With", designation: "Team Size of", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
 ];
+
+const AnimatedNumber: React.FC<{ target: number }> = ({ target }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
+  useEffect(() => {
+    if (!hasAnimated) return;
+    let start = 0;
+    const duration = 2000; // ms
+    const step = Math.ceil(target / (duration / 16));
+    const animate = () => {
+      start += step;
+      if (start >= target) {
+        setCount(target);
+      } else {
+        setCount(start);
+        requestAnimationFrame(animate);
+      }
+    };
+    animate();
+  }, [hasAnimated, target]);
+
+  return (
+    <span
+      ref={ref}
+      className={styles.statNumber}
+      aria-label={`${target} plus projects`}
+      style={{ display: 'inline-block', width: '3ch', textAlign: 'right' }} // Add this line
+    >
+      {count}+
+    </span>
+  );
+};
 
 const StatsSection = () => {
   return (
@@ -54,7 +101,7 @@ const StatsSection = () => {
                 <h3 className={styles.statTitle}>Launched Projects</h3>
                 <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.statContent}>
-                  <span className={styles.statNumber} aria-label="75 plus projects">75+</span>
+                  <AnimatedNumber target={75} />
                   <p className={styles.statDescription}>Projects were launched successfully since 2023.</p>
                 </div>
               </div>
@@ -133,6 +180,7 @@ const StatsSection = () => {
         </div>
       </div>
     </section>
+    
   );
 };
 

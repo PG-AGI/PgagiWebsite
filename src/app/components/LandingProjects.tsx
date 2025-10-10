@@ -156,7 +156,7 @@ const LandingProjects = React.memo(() => {
             ) : i === 2 ? (
               // Third item with optimized GIF
               <div className={styles.gifContainer}>
-                <video
+                {/* <video
                   className={styles.imgTag}
                   src="/Landing Projects/OnchainToolkit.webm"
                   autoPlay
@@ -170,7 +170,23 @@ const LandingProjects = React.memo(() => {
                     objectFit: "cover",
                     willChange: "auto"
                   }}
-                />
+                /> */}
+
+                  <Image
+                    className={styles.imgTag}
+                    src="/Landing Projects/Onchain_Toolkit.gif"
+                    alt="OnchainToolkit"
+                    fill
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                    unoptimized={true}
+                    style={{
+                      objectFit: "cover",
+                      willChange: "auto"
+                    }}
+                  />
+
 
               </div>
             ) : (
