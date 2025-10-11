@@ -51,7 +51,7 @@ const Team: React.FC = () => {
         <div className={styles.headerLeft}>
         <span className={styles.aboutLabel}>{'// Meet Our Team'}</span>
           <h2 className={styles.description}>
-          We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life.
+          We&apos;re a dynamic team of <b>45+ innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life.
           {/* We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life. */}
           </h2>
         </div>
@@ -61,29 +61,25 @@ const Team: React.FC = () => {
       {/* Team Grid */}
       <div className={styles.grid}>
         {teamMembers.map((member) => (
-          <motion.div
-            key={member.id}
-            className={styles.card}
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Image
-              src={member.image}
-              alt={member.name}
-              width={400}
-              height={400}
-              className={styles.memberImage}
-            />
             <motion.div
-              className={styles.overlay}
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 0.5 }}
+              key={member.id}
+              className={styles.card}
+              whileHover={{ scale: 1.03 }} // keep image zoom effect
               transition={{ duration: 0.3 }}
             >
-              <h4>{member.name}</h4>
-              <span>{member.role}</span>
+              <Image
+                src={member.image}
+                alt={member.name}
+                width={400}
+                height={400}
+                className={styles.memberImage}
+              />
+              {/* Overlay is now a plain div */}
+              <div className={styles.overlay}>
+                <h4>{member.name}</h4>
+                <span>{member.role}</span>
+              </div>
             </motion.div>
-          </motion.div>
         ))}
 
         {/* Testimonial card */}
