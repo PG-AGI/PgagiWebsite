@@ -198,9 +198,10 @@ const LandingProjects = React.memo(() => {
             <div className={styles.badge}>Our Own Product</div>
             <h3 className={styles.productTitle}>TOINGG</h3>
             <p className={styles.productSubtitle}>
-              In year 2023, two founders launched their first product: "Toingg",
+              In year 2023, two founders launched their first product: &quot;Toingg&quot;,
               an AI communication OS for businesses.
             </p>
+
             <button
               className={styles.ctaButton}
               onClick={(e) => {
