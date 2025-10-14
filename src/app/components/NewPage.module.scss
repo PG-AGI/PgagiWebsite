@@ -916,55 +916,72 @@
 } 
 
 
-
 .toinggButtonContainer {
-  // margin-top: 1.5rem;
   display: flex;
-  justify-content: flex-start;
+  align-items: center;  // keep button and text vertically aligned
+  gap: 0.5rem;          // slightly bigger gap if needed
+  flex-wrap: wrap;      // allows wrapping on small screens
 }
 
+.statDescription {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  font-size: 1.1rem;    // increase font size for emphasis
+  line-height: 1.3;     // slightly more spacing
+  font-weight: 450;     // make it a bit bolder
+}
+
+
+
 .toinggButton {
-  background-color: #FDF5E6;
-  color: #000;
-  border: none;
+  display: inline-block;
+  background: linear-gradient(145deg, #1a1a1a 0%, #232323 100%);
+  color: #fff;
+  padding: 14px 32px;
   border-radius: 50px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: 'Poppins', 'Arial', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: 'Poppins', 'Alexandria', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  
-  &:hover {
-    background-color: #F5E6D3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  }
-  
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
-  
+  border: none;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+
+  // subtle diagonal shimmer
   &::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
+    left: -120%;
+    width: 120%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s ease;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+    transform: skewX(-20deg);
+    animation: shimmer 2.5s infinite;
   }
-  
-  &:hover::before {
-    left: 100%;
+
+  &:hover {
+    background-color: #555555;  // grey hover
+    color: #fff;                // text stays white
+    transform: scale(1.03) translateY(-1px); // reduced hover effect
+    box-shadow: 0 7px 18px rgba(85,85,85,0.35), 0 0 8px rgba(200,200,200,0.15); // softer shadow
   }
+
+  &:active {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+}
+
+/* shimmer animation */
+@keyframes shimmer {
+  0% { left: -120%; }
+  100% { left: 120%; }
 }
 
 

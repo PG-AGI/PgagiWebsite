@@ -87,7 +87,7 @@ const StatsSection = () => {
 
 <div className={styles.wrapperContainer}>
       <AnimatedTooltip items={people} />
-      <div className={styles.teamCount} aria-label="32 plus team members">35+</div>
+      <div className={styles.teamCount} aria-label="32 plus team members">45+</div>
     </div>
             </div>
           </div>
@@ -102,7 +102,7 @@ const StatsSection = () => {
                 <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.statContent}>
                   <AnimatedNumber target={75} />
-                  <p className={styles.statDescription}>Projects were launched successfully since 2023.</p>
+                  {/* <p className={styles.statDescription}>Projects were launched successfully since 2023.</p> */}
                 </div>
               </div>
 
@@ -151,20 +151,17 @@ const StatsSection = () => {
             <div className={styles.statItem}>
               <h3 className={styles.statTitle}>Our Own Product</h3>
               <div className={styles.separator} aria-hidden="true"></div>
-              <div className={styles.statContent}>
-                {/* <span className={styles.statNumber} aria-label="Established in 2023">2023</span>
-                 */}
-                 <div className={styles.toinggButtonContainer}>
-                        <button className={styles.toinggButton} onClick={() => {
-                            window.open("https://www.toingg.com/", "_blank");
-                        }}>
-                            TOINGG
-                        </button>
-                    </div>
-                <p className={styles.statDescription}>
-                  In year 2023, two founders launched their first project: &quot;Toingg&quot;, a communication OS for businesses. 
-                </p>
+              <div className={styles.toinggButtonContainer}>
+                  <button className={styles.toinggButton} onClick={() => {
+                      window.open("https://www.toingg.com/", "_blank");
+                  }}>
+                      TOINGG
+                  </button>
+                  <p className={styles.statDescription}>
+                      In year 2023, two founders launched their first project: &quot;Toingg&quot;, an AI communication OS for businesses. 
+                  </p>
               </div>
+
             </div>
 
             {/* Agency Information Section */}
