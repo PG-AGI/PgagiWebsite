@@ -3,6 +3,18 @@
 .skeleton-container {
     padding: 6rem 0;
     color: #ffffff;
+    background: linear-gradient(135deg, #0b0b0b 0%, #111111 100%);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 75% 20%, rgba(159, 0, 0, 0.15) 0%, transparent 55%),
+                  radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
   
     .content-container {
       max-width: 64rem;
@@ -16,18 +28,19 @@
       width: 180px;
       height: 40px;
       margin-bottom: 2rem;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 7px;
       animation: shimmer 2s infinite linear;
     }
   
     .skeleton-card {
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.06);
       backdrop-filter: blur(15px);
       border-radius: 1rem;
       padding: 2.5rem;
       margin-bottom: 2rem;
-      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
       position: relative;
       overflow: hidden;
   
@@ -42,8 +55,8 @@
         background-image: linear-gradient(
           90deg,
           rgba(255, 255, 255, 0) 0,
-          rgba(255, 255, 255, 0.05) 20%,
-          rgba(255, 255, 255, 0.05) 60%,
+          rgba(255, 255, 255, 0.08) 20%,
+          rgba(255, 255, 255, 0.08) 60%,
           rgba(255, 255, 255, 0)
         );
         animation: shimmer 2s infinite;

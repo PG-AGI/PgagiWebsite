@@ -27,7 +27,7 @@ const teamMembers: TeamMember[] = [
   { id: 1, name: "VivekJyothi Bhowmik", role: "Founder", image: "/assets/team/member1.png" },
   { id: 2, name: "ShibaJyothi Bhowmik", role: "Managing Director", image: "/assets/team/member2.png" },
   { id: 3, name: "Pratik Hegde", role: "Founding Engineer", image: "/assets/team/PRATIK.png" },
-  { id: 4, name: "Abhinav", role: "Founding Engineer", image: "/assets/team/member8.png" },
+  { id: 4, name: "Abhinav", role: "Founding Engineer", image: "/assets/team/ABHINAV.jpg" },
   { id: 5, name: "Sahil Sinha", role: "Founding Engineer", image: "/assets/team/member9.png" },
   { id: 6, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
   { id: 7, name: "Javeriya Shaik", role: "Hr Executive", image: "/assets/team/member5.png" },

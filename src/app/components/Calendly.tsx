@@ -33,7 +33,7 @@ export default function Calendly() {
     return (
         <section className={styles.calendly}>
             <div className={styles.backgroundImage}>
-                <Image src="/landing/CTA-Background.png" alt="CTA Background" width={1920} height={1080} />
+                <Image src="/landing/CTA-Background-New.jpg" alt="CTA Background" width={1920} height={1080} />
             </div>
             
             <div className={styles.content}>

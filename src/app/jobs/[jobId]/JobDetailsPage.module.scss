@@ -1,10 +1,19 @@
 /* Main container */
 .job-details-container {
     padding: 6rem 0;
-    /* Vertical spacing */
     color: #ffffff;
-    /* Default text color */
-    /* Dark gradient background */
+    background: linear-gradient(135deg, #0b0b0b 0%, #111111 100%);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 75% 20%, rgba(159, 0, 0, 0.15) 0%, transparent 55%),
+                  radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
   }
   
   /* Content container for alignment */
@@ -20,14 +29,13 @@
   .back-button {
     display: inline-flex;
     align-items: center;
-    color: #6b21a8;
-    /* Blue color */
+    color: #ffcccc;
     font-weight: 500;
     cursor: pointer;
     margin-bottom: 2rem;
     border-radius: 7px;
     border: hidden;
-    background-color: black;
+    background-color: transparent;
   
     &:hover {
       text-decoration: underline;
@@ -43,21 +51,18 @@
   
   /* Job details card */
   .job-details-card {
-    background: rgba(0, 0, 0, 0.25);
-    /* Subtle transparency */
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(15px);
-    /* Enhanced blur effect */
     border-radius: 1rem;
-    /* Rounded corners */
     padding: 2.5rem;
-
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
-    /* Soft shadow for elevation */
-    transition: transform 0.3s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
   
     &:hover {
       transform: translateY(-5px);
-      /* Lift on hover */
+      box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.8);
+      border-color: rgba(255, 255, 255, 0.2);
     }
   }
   
@@ -89,10 +94,9 @@
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid #6b21a8;
-    color: #6b21a8;
-    background: rgba(37, 99, 235, 0.1);
-    /* Subtle background */
+    border: 1px solid rgba(159, 0, 0, 0.4);
+    color: #ffb3b3;
+    background: rgba(159, 0, 0, 0.12);
     border-radius: 9999px;
   }
   
@@ -101,22 +105,18 @@
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid #4b5563;
-    color: #9ca3af;
-    background: rgba(255, 255, 255, 0.05);
-    /* Slight transparency */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 9999px;
   }
   .tag-openings {
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid #d97706;
-
-    background: rgba(234, 179, 8, 0.2);
-    /* bg-yellow-500/20 */
-    color: rgba(250, 204, 21, 1);
-    /* text-yellow-300 */
+    border: 1px solid rgba(159, 0, 0, 0.4);
+    background: rgba(159, 0, 0, 0.12);
+    color: #ffb3b3;
     border-radius: 9999px;
 }
   /* Description */
@@ -152,10 +152,10 @@
   /* Ready to apply section */
   .ready-section {
     text-align: center;
-    background: rgba(255, 255, 255, 0.05);
-
+    background: rgba(255, 255, 255, 0.06);
     padding: 2rem;
     border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
   
   .ready-text {
@@ -166,7 +166,7 @@
   
   /* Apply button */
   .apply-button {
-    background: #6b21a8;
+    background: linear-gradient(135deg, #9F0000 0%, #7b0000 100%);
     color: #ffffff;
     padding: 0.75rem 2rem;
     border-radius: 0.5rem;
@@ -176,10 +176,9 @@
     margin-bottom: 2rem;
   
     &:hover {
-      background: #a855f7;
-      /* Darker blue on hover */
+      background: linear-gradient(135deg, #b80000 0%, #9F0000 100%);
       transform: translateY(-3px);
-      /* Slight lift */
+      box-shadow: 0 20px 40px -12px rgba(159, 0, 0, 0.6);
     }
   }
   
@@ -190,7 +189,7 @@
     color: #ffffff;
   
     .back-button {
-      color: #2563eb;
+      color: #ffcccc;
       font-weight: 500;
   
       &:hover {
@@ -217,7 +216,7 @@
   
   /* Assignment button */
   .assignment-button {
-    background: #6b21a8;
+    background: linear-gradient(135deg, #9F0000 0%, #7b0000 100%);
     color: #ffffff;
     padding: 0.75rem 2rem;
     border: none;
@@ -227,14 +226,13 @@
     transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
   
     &:hover {
-      background: #a855f7;
-      /* Darker purple on hover */
+      background: linear-gradient(135deg, #b80000 0%, #9F0000 100%);
       transform: translateY(-3px);
-      /* Slight lift */
+      box-shadow: 0 20px 40px -12px rgba(159, 0, 0, 0.6);
     }
   
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 0 0 3px rgba(159, 0, 0, 0.35);
     }
   }
