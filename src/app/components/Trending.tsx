@@ -58,7 +58,9 @@ export default function Trending() {
                   className={styles.imgTag}
                   src={item.image}
                   alt={item.title}
-                  layout='fill'
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={i === 0}
                 />
               </div>
             </div>
@@ -82,8 +84,8 @@ export default function Trending() {
                   className={styles.imgTag}
                   src={item.image}
                   alt={item.title}
-                  layout='fill'
-                  objectFit="cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
             </div>
@@ -110,7 +112,8 @@ export default function Trending() {
                   className={styles.imgTag}
                   src={item.image}
                   alt={item.title}
-                  layout='fill'
+                  fill
+                  sizes="100vw"
                 />
               </div>
             </div>

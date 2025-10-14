@@ -6,10 +6,12 @@ import Image from "next/image";
 import { motion } from "framer-motion"; // ✨ import motion
 
 // Images
-import Engineering from "../../../public/Engineering_.jpg";
-import Strategy from "../../../public/Strategy.jpg";
-import Launch from "../../../public/Launch.jpg";
+import Engineering from "../../../public/Engineering.gif";
+import Strategy from "../../../public/strategy.gif";
+import Launch from "../../../public/launch.gif";
 import initialConsultation from "../../../public/Initial Consultation.jpg";
+import AI1 from "../../../public/1.gif";
+
 
 // Steps Data
 const steps = [
@@ -18,7 +20,7 @@ const steps = [
     title: "Initial Consultation",
     description:
       "We begin with a focused discovery call to align on your product vision, goals, and user needs, setting the foundation for clear planning and initial architecture design.",
-    image: initialConsultation,
+    image: AI1,
     reverse: false,
   },
   {

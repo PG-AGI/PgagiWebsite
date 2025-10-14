@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { usePageTransition } from "@/contexts/PageTransitionContext";
 import { useSmoothScroll } from "@/contexts/SmoothScrollContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface PageTransitionProps {
   children: React.ReactNode;
@@ -14,6 +14,11 @@ export default function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname();
   const { isTransitioning, endTransition } = usePageTransition();
   const { lenis } = useSmoothScroll();
+  const hasMountedRef = useRef(false);
+
+  useEffect(() => {
+    hasMountedRef.current = true;
+  }, []);
 
   // End transition when pathname changes and refresh Lenis
   useEffect(() => {
@@ -43,16 +48,18 @@ export default function PageTransition({ children }: PageTransitionProps) {
     }
   }, [pathname, lenis]);
 
+  const initialAnim = hasMountedRef.current ? { 
+    y: "100vh", 
+    opacity: 0,
+    scale: 0.95
+  } : false;
+
   return (
     <div className="page-transition-container">
       <AnimatePresence mode="wait">
         <motion.div
           key={pathname}
-          initial={{ 
-            y: "100vh", 
-            opacity: 0,
-            scale: 0.95
-          }}
+          initial={initialAnim}
           animate={{ 
             y: 0, 
             opacity: 1,
