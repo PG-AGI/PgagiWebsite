@@ -195,23 +195,14 @@ const LandingProjects = React.memo(() => {
           style={{ cursor: "pointer" }}
         >
           <div className={styles.content}>
-            <div className={styles.badge}>Our Own Product</div>
-            <h3 className={styles.productTitle}>TOINGG</h3>
-            <p className={styles.productSubtitle}>
+            {/* <div className={styles.badge}>Our Own Product</div>
+            <h3 className={styles.productTitle}>TOINGG</h3> */}
+            {/* <p className={styles.productSubtitle}>
               In year 2023, two founders launched their first product: &quot;Toingg&quot;,
               an AI communication OS for businesses.
-            </p>
+            </p> */}
 
-            <button
-              className={styles.ctaButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open("https://www.toingg.com/", "_blank");
-              }}
-              aria-label="Visit TOINGG website"
-            >
-              Explore TOINGG
-            </button>
+            
           </div>
           <div className={styles.gifContainer}>
             <video
