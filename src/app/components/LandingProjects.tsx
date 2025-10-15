@@ -195,36 +195,14 @@ const LandingProjects = React.memo(() => {
           style={{ cursor: "pointer" }}
         >
           <div className={styles.content}>
-            {/* <h3>Toingg</h3> */}
-            {isFourthItemHovered ? (
-              <p style={{ 
-                opacity: isFourthItemHovered ? 1 : 0, 
-                transition: 'opacity 0.3s ease',
-                textAlign: 'center',
-                fontSize: '1.1rem',
-                fontWeight: '600'
-              }}>
-                Click to View
-              </p>
-            ) : (
-              <>
-                <p>Transformative Journeys and Breakthroughs</p>
-                <div className={styles.storybriefContainer}>
-                  <p className={styles.storybrief1}>
-                    Steep Grind <a href="https://hirextra.com/">HireXtra.com</a> faced slow, manual recruitment.
-                  </p>
-                  <p className={styles.storybrief1}>
-                    We built an autonomous AI recruiter with 13 agents, transforming
-                    their process.
-                  </p>
-                  <p className={styles.storybrief1}>
-                    Tasks that once took weeks—like analyzing job descriptions,
-                    matching candidates, and taking interviews—are now completed in
-                    minutes, revolutionizing their recruitment.
-                  </p>
-                </div>
-              </>
-            )}
+            {/* <div className={styles.badge}>Our Own Product</div>
+            <h3 className={styles.productTitle}>TOINGG</h3> */}
+            {/* <p className={styles.productSubtitle}>
+              In year 2023, two founders launched their first product: &quot;Toingg&quot;,
+              an AI communication OS for businesses.
+            </p> */}
+
+            
           </div>
           <div className={styles.gifContainer}>
             <video

@@ -62,6 +62,7 @@
   margin-bottom: 1.5rem;
   line-height: 1.1;
   letter-spacing: -0.025em;
+  font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
 }
 
 .values-description {
@@ -71,6 +72,7 @@
   font-size: 1.125rem;
   line-height: 1.7;
   font-weight: 400;
+  font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
 }
 
 .values-grid {
@@ -114,7 +116,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #1e293b, #475569, #64748b);
+    background: linear-gradient(90deg, #9F0000, #7b0000, #9F0000);
     transform: scaleX(0);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -155,6 +157,7 @@
   position: relative;
   z-index: 2;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #9F0000;
 }
 
 .values-icon-bg {
@@ -166,6 +169,7 @@
   height: 80px;
   border-radius: 50%;
   opacity: 0.6;
+  background: radial-gradient(circle, rgba(159, 0, 0, 0.2) 0%, rgba(159, 0, 0, 0.08) 60%, transparent 70%);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -175,6 +179,7 @@
   color: #0f172a;
   margin-bottom: 1rem;
   letter-spacing: -0.025em;
+  font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
 }
 
 .values-text {
@@ -183,6 +188,7 @@
   line-height: 1.6;
   font-weight: 400;
   margin: 0;
+  font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
 }
 
 @media (max-width: 768px) {

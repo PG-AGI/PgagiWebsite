@@ -14,7 +14,7 @@ const PartnerCompanies = () => {
     <div className="bg-white pb-8 mt-10 ">
       <div className="container mx-auto px-6">
         <div className="flex flex-col items-center">
-          <h2 className="text-xl lg:text-2xl text-gray-600 pb-5 md:pb-0 whitespace-nowrap">Partnered with Innovators like</h2>
+          <h2 className="text-xl lg:text-2xl text-gray-600 pb-5 md:pb-0 whitespace-nowrap">Our Trusted Partners</h2>
           <div className="flex justify-center items-center space-x-20 mt-4">
             {companyLogos.map((logo, index) => (
               <Image key={index} src={logo} alt="Company logo" width={64} height={64} className="h-16 object-contain " />

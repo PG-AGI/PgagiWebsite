@@ -1,5 +1,6 @@
 .processContainer {
     background-color: white;
+    color: #000000;
     padding: 4rem 4rem;
   
     @media (max-width: 1024px) {
@@ -71,16 +72,32 @@
     }
   }
   
-  .badge {
-    background-color: #504343;
-    color: white;
-    border-radius: 13px;
-    font-size: 12px;
-    padding: 4px 6px;
-    font-weight: 500;
-    width: fit-content;
-  }
+  // .badge {
+  //   background-color: #d60000; // Example: red accent to match theme
+  //   color: #fff;               // White text for contrast
+  //   border-radius: 13px;
+  //   font-size: 14px;
+  //   padding: 6px 10px;
+  //   font-weight: 600;
+  //   width: fit-content;
+  // }
   
+.badge {
+  background-color: #d60000; // keep existing
+  color: white;
+  border-radius: 13px;
+  font-size: 1rem; // increased from 12px
+  padding: 6px 12px; // slightly bigger padding
+  font-weight: 700; // bolder
+  width: fit-content;
+  text-transform: uppercase;
+  letter-spacing: 0.8px; // improve spacing
+}
+
+
+
+
+
   .title {
     margin: 0;
     font-size: clamp(28px, 6vw, 50px);
@@ -202,3 +219,33 @@
       max-width: 500px;
     }
   }
+
+
+
+
+  /* Make all text black except buttons */
+.processContainer,
+.card,
+.header,
+.leftHeader,
+.rightHeader,
+.step,
+.stepText,
+.stepNumber,
+.stepTitle,
+.stepDesc,
+.subtitle,
+.title,
+.badge {
+  color: #000 !important;
+}
+
+
+
+/* Step images remain unchanged */
+.stepImage {
+  border-radius: 10%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  max-width: 100%;
+  height: auto;
+}

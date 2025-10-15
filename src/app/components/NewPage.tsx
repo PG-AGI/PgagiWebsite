@@ -10,7 +10,7 @@ const people = [
   { id: 1, name: "VivekJyothi Bhowmik", designation: "Founder", image: "/assets/team/member1.png" },
   { id: 2, name: "ShibaJyothi Bhowmik", designation: "Managing Director", image: "/assets/team/member2.png" },
   { id: 3, name: "Pratik Hegde", designation: "Founding Engineer", image: "/assets/team/PRATIK.png" },
-  { id: 4, name: "Abhinav", designation: "Founding Engineer", image: "/assets/team/member8.png" },
+  { id: 4, name: "Abhinav", designation: "Founding Engineer", image: "/assets/team/ABHINAV.jpg" },
   { id: 5, name: "Sahil Sinha", designation: "Founding Engineer", image: "/assets/team/member9.png" },
   // {id: 6, name: "With", designation: "Team Size of", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
 ];
@@ -87,7 +87,7 @@ const StatsSection = () => {
 
 <div className={styles.wrapperContainer}>
       <AnimatedTooltip items={people} />
-      <div className={styles.teamCount} aria-label="32 plus team members">35+</div>
+      <div className={styles.teamCount} aria-label="32 plus team members">45+</div>
     </div>
             </div>
           </div>
@@ -102,7 +102,7 @@ const StatsSection = () => {
                 <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.statContent}>
                   <AnimatedNumber target={75} />
-                  <p className={styles.statDescription}>Projects were launched successfully since 2023.</p>
+                  {/* <p className={styles.statDescription}>Projects were launched successfully since 2023.</p> */}
                 </div>
               </div>
 
@@ -151,20 +151,17 @@ const StatsSection = () => {
             <div className={styles.statItem}>
               <h3 className={styles.statTitle}>Our Own Product</h3>
               <div className={styles.separator} aria-hidden="true"></div>
-              <div className={styles.statContent}>
-                {/* <span className={styles.statNumber} aria-label="Established in 2023">2023</span>
-                 */}
-                 <div className={styles.toinggButtonContainer}>
-                        <button className={styles.toinggButton} onClick={() => {
-                            window.open("https://www.toingg.com/", "_blank");
-                        }}>
-                            TOINGG
-                        </button>
-                    </div>
-                <p className={styles.statDescription}>
-                  In year 2023, two founders launched their first project: &quot;Toingg&quot;, a communication OS for businesses. 
-                </p>
+              <div className={styles.toinggButtonContainer}>
+                  <button className={styles.toinggButton} onClick={() => {
+                      window.open("https://www.toingg.com/", "_blank");
+                  }}>
+                      TOINGG
+                  </button>
+                  <p className={styles.statDescription}>
+                      In year 2023, two founders launched their first product : &quot;Toingg&quot;, an AI communication OS for businesses. 
+                  </p>
               </div>
+
             </div>
 
             {/* Agency Information Section */}
