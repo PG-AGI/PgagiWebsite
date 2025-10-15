@@ -169,8 +169,13 @@ const StatsSection = () => {
               {/* Agency Description */}
               <div className={styles.agencyDescription}>
                 <p>
-                We specialize in engineering <strong> full-scale AI applications </strong>  from research and product development to scalable deployment. Whether you are launching <strong> a new AI product </strong> or <strong> optimizing an existing one</strong>, we bring together deep tech expertise to drive real-world tangible results.
+                  We specialize in engineering <strong style={{ color: "#b60306" }}>full-scale AI applications </strong> 
+                  from research and product development to scalable deployment. Whether you are launching 
+                  <strong style={{ color: "#b60306" }}> a new AI product </strong> or 
+                  <strong style={{ color: "#b60306" }}> optimizing an existing one</strong>, we bring together deep tech 
+                  expertise to drive real-world tangible results.
                 </p>
+
               </div>
             </div>
           </div>

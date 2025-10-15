@@ -32,12 +32,12 @@ const teamMembers: TeamMember[] = [
   { id: 6, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
   { id: 7, name: "Javeriya Shaik", role: "Hr Executive", image: "/assets/team/member5.png" },
   { id: 8, name: "Nishmitha", role: "QA Engineer", image: "/assets/team/member7.png" },
-  { id: 9, name: "Abhishek Khatri", role: "AI/ML Engineer", image: "/assets/team/WhatsApp Image 2025-10-07 at 11.24.18_13618cfe-modified.jpg" },
-  { id: 10, name: "Kulwnant Singh", role: "SDE-1", image: "/assets/team/IMG_1890-modified.jpg" },
+  { id: 9, name: "Abhishek Khatri", role: "AI/ML Engineer", image: "/assets/team/WhatsApp Image 2025-10-07 at 11.24.18_13618cfe-modified.png" },
+  { id: 10, name: "Kulwnant Singh", role: "SDE-1", image: "/assets/team/IMG_1890-modified.png" },
   { id: 11, name: "Rohan Sonkar", role: "Graphic Designer & Video Editor", image: "/assets/team/member6.png" },
   { id: 12, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
-  { id: 13, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member4.png" },
-  { id: 14, name: "Tanvi Sharma", role: "Pre Sales Executive", image: "/assets/team/2.png" },
+  { id: 13, name: "Praneeth Ram", role: "AI/ML Engineer", image: "/assets/team/member-4.png" },
+  { id: 14, name: "Tanvi Sharma", role: "Pre Sales Executive", image: "/assets/team/member3.png" },
   { id: 15, name: "Deb Dey", role: "Account Manager", image: "/assets/team/deb.png" },
 
 ];
