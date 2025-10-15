@@ -83,7 +83,7 @@
     display: block; // remove inline-spacing quirks
     border-radius: 50%;
     overflow: hidden; // ensure perfect circular crop
-    border: 2px solid #b60306;
+    border: 2px solid #fff;
     box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.0);
     object-fit: cover; // center-crop images for uniform look
     object-position: center; // center instead of top to avoid head cuts
@@ -95,7 +95,8 @@
     &:hover {
       transform: scale(1.08);
       z-index: 30;
-      box-shadow: 0 0 0 2px #b60306, 0 6px 18px rgba(0, 0, 0, 0.25);
+      border-color: #b60306;
+      box-shadow: 0 0 0 0px #b60306, 0 6px 18px rgba(0, 0, 0, 0.25);
     }
   }
   
