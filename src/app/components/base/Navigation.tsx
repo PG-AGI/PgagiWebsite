@@ -21,6 +21,7 @@ export default function Navigation() {
   const ABOUT = "/aboutUs";
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showGlassEffect, setShowGlassEffect] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,11 +36,14 @@ export default function Navigation() {
     };
   }, []);
 
-  // Handle scroll to add scrolled class
+  // Handle scroll to detect when past hero section
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const heroHeight = window.innerHeight; // Assuming hero section is full viewport height
+      
       setIsScrolled(scrollTop > 50);
+      setShowGlassEffect(scrollTop > heroHeight * 0.8); // Show glass effect after 80% of hero
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -86,7 +90,11 @@ export default function Navigation() {
   }, [isMenuOpen]);
 
   return (
-    <nav className={clsx(styles.navigation, isScrolled && styles.scrolled)}>
+    <nav className={clsx(
+      styles.navigation, 
+      isScrolled && styles.scrolled,
+      showGlassEffect && styles.glassEffect
+    )}>
       <div
         className={clsx(
           styles.nav,
