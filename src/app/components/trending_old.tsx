@@ -69,7 +69,7 @@ export default function TrendingOld() {
     <section id="trending" className={styles.trending}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h3 className={styles.blogLabel}>{'//Trending'}</h3>
+          <h3 className={styles.blogLabel}>{'Trending'}</h3>
           <h2 className={styles.mainTitle}>
             Uncover the ideas, tools and trends shaping today&apos;s most impactful in AI World.
           </h2>

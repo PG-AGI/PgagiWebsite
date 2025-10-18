@@ -157,9 +157,12 @@ const StatsSection = () => {
                   }}>
                       TOINGG
                   </button>
-                  <p className={styles.statDescription}>
-                      In year 2023, two founders launched their first product : &quot;Toingg&quot;, an AI communication OS for businesses. 
-                  </p>
+                  <span>
+                    In year 2023, two founders launched their first product
+                    <span style={{ color: "#b60306" }}> Toingg </span>
+                    , an AI communication OS for businesses.
+                  </span>
+
               </div>
 
             </div>

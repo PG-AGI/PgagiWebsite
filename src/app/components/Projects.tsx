@@ -492,7 +492,7 @@ export default function Projects() {
     <div className={styles.main}>
       {/* Page Title */}
       <div className={styles.pageTitle}>
-        <span className={styles.category}>{'// Projects'}</span>
+        <span className={styles.category}>{'Projects'}</span>
         <h1>Discover our latest projects and innovations</h1>
       </div>
 

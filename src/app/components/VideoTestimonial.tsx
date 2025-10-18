@@ -938,7 +938,7 @@ const VideoTestimonial: React.FC = () => {
         {/* Header */}
         <div className={styles.headerSection}>
           <div className={styles.centeredHeader}>
-            <h3 className={styles.testimonialLabel}>{'// Testimonial'}</h3>
+            <h3 className={styles.testimonialLabel}>{'Testimonial'}</h3>
 
           </div>
         </div>

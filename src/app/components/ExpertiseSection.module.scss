@@ -371,3 +371,62 @@
     padding-left: 4rem;
   }
 } 
+
+
+
+/* Center container */
+.expertiseButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+/* Expertise button (same as Projects button) */
+.expertiseButton {
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #b60306;  /* your red */
+  border-radius: 50px;          /* pill shape */
+  padding: 15px 20px;            /* small */
+  font-size: 20px;            /* small text */
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;                     /* space before arrow */
+  transition: all 0.25s ease-in-out;
+  outline: none;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+
+  &:hover {
+    background-color: #b60306;
+    color: #000000;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(182, 3, 6, 0.25);
+
+    .arrow {
+      transform: translateX(3px);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Arrow animation */
+.arrow {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+/* Optional: slightly larger on mobile for touch comfort */
+@media (max-width: 768px) {
+  .projectsButton {
+    padding: 8px 18px;
+    font-size: 1rem;
+  }
+}
