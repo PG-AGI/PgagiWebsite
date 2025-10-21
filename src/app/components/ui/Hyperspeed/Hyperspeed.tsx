@@ -1340,7 +1340,7 @@
 
 
 
-import { useEffect, useRef, FC } from 'react';
+import { useEffect, useRef, FC, useMemo } from 'react';
 import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
 
@@ -2278,6 +2278,10 @@ class App {
   speedUpTarget: number;
   speedUp: number;
   timeOffset: number;
+  pixelRatioCap: number;
+  rafId: number | null;
+  isPaused: boolean;
+  handleWindowResize: () => void;
 
   constructor(container: HTMLElement, options: HyperspeedOptions) {
     this.options = options;
@@ -2289,12 +2293,17 @@ class App {
     }
     this.container = container;
 
+    this.pixelRatioCap = this.computePixelRatioCap();
+    this.rafId = null;
+    this.isPaused = true;
+
     this.renderer = new THREE.WebGLRenderer({
       antialias: false,
-      alpha: true
+      alpha: true,
+      powerPreference: 'high-performance'
     });
     this.renderer.setSize(container.offsetWidth, container.offsetHeight, false);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.applyPixelRatio();
 
     this.composer = new EffectComposer(this.renderer);
     container.appendChild(this.renderer.domElement);
@@ -2352,14 +2361,37 @@ class App {
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.onContextMenu = this.onContextMenu.bind(this);
 
-    window.addEventListener('resize', this.onWindowResize.bind(this));
+    this.handleWindowResize = this.onWindowResize.bind(this);
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  computePixelRatioCap() {
+    if (typeof window === 'undefined') {
+      return 1;
+    }
+    const viewportWidth = window.innerWidth || this.container.offsetWidth;
+    return viewportWidth <= 768 ? 1.25 : 1.75;
+  }
+
+  applyPixelRatio() {
+    if (typeof window === 'undefined') {
+      this.renderer.setPixelRatio(1);
+      return;
+    }
+    const target = Math.min(window.devicePixelRatio || 1, this.pixelRatioCap);
+    if (this.renderer.getPixelRatio() !== target) {
+      this.renderer.setPixelRatio(target);
+    }
   }
 
   onWindowResize() {
-    const width = this.container.offsetWidth;
-    const height = this.container.offsetHeight;
+    const width = this.container.offsetWidth || window.innerWidth || 1;
+    const height = this.container.offsetHeight || window.innerHeight || 1;
 
-    this.renderer.setSize(width, height);
+    this.pixelRatioCap = this.computePixelRatioCap();
+    this.applyPixelRatio();
+
+    this.renderer.setSize(width, height, false);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.composer.setSize(width, height);
@@ -2440,7 +2472,41 @@ class App {
     this.container.addEventListener('touchcancel', this.onTouchEnd, { passive: true });
     this.container.addEventListener('contextmenu', this.onContextMenu);
 
-    this.tick();
+    this.renderOnce();
+  }
+
+  start() {
+    if (this.disposed) return;
+    if (!this.isPaused && this.rafId !== null) {
+      return;
+    }
+    this.isPaused = false;
+    this.clock.start();
+    this.clock.getDelta();
+    this.rafId = requestAnimationFrame(this.tick);
+  }
+
+  stop() {
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+    if (!this.isPaused) {
+      this.isPaused = true;
+      this.clock.stop();
+    }
+  }
+
+  renderOnce() {
+    if (this.disposed) return;
+    this.applyPixelRatio();
+    if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
+      const canvas = this.renderer.domElement;
+      this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      this.camera.updateProjectionMatrix();
+    }
+    this.update(0);
+    this.render(0);
   }
 
   onMouseDown(ev: MouseEvent) {
@@ -2512,6 +2578,7 @@ class App {
 
   dispose() {
     this.disposed = true;
+    this.stop();
 
     if (this.renderer) {
       this.renderer.dispose();
@@ -2523,7 +2590,7 @@ class App {
       this.scene.clear();
     }
 
-    window.removeEventListener('resize', this.onWindowResize.bind(this));
+    window.removeEventListener('resize', this.handleWindowResize);
     if (this.container) {
       this.container.removeEventListener('mousedown', this.onMouseDown);
       this.container.removeEventListener('mouseup', this.onMouseUp);
@@ -2541,36 +2608,50 @@ class App {
   }
 
   tick() {
-    if (this.disposed || !this) return;
+    if (this.disposed || this.isPaused) {
+      this.rafId = null;
+      return;
+    }
+    this.applyPixelRatio();
     if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
       const canvas = this.renderer.domElement;
       this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
       this.camera.updateProjectionMatrix();
     }
-    const delta = this.clock.getDelta();
+    const delta = Math.min(this.clock.getDelta(), 0.05);
     this.render(delta);
     this.update(delta);
-    requestAnimationFrame(this.tick);
+    this.rafId = requestAnimationFrame(this.tick);
   }
 }
 
 const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
-  const mergedOptions: HyperspeedOptions = {
-    ...defaultOptions,
-    ...effectOptions
-  };
+  const mergedOptions = useMemo<HyperspeedOptions>(
+    () => ({
+      ...defaultOptions,
+      ...effectOptions
+    }),
+    [effectOptions]
+  );
   const hyperspeed = useRef<HTMLDivElement>(null);
   const appRef = useRef<App | null>(null);
 
   useEffect(() => {
-    if (appRef.current) {
-      appRef.current.dispose();
-      const container = document.getElementById('lights');
-      if (container) {
-        while (container.firstChild) {
-          container.removeChild(container.firstChild);
+    const teardown = (app: App | null) => {
+      if (app) {
+        app.dispose();
+      }
+      const containerEl = hyperspeed.current;
+      if (containerEl) {
+        while (containerEl.firstChild) {
+          containerEl.removeChild(containerEl.firstChild);
         }
       }
+    };
+
+    if (appRef.current) {
+      teardown(appRef.current);
+      appRef.current = null;
     }
 
     const container = hyperspeed.current;
@@ -2583,17 +2664,136 @@ const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
 
     const myApp = new App(container, options);
     appRef.current = myApp;
-    myApp.loadAssets().then(myApp.init);
+
+    let isMounted = true;
+    let isInView = false;
+    let prefersReducedMotion = false;
+    let isPlaying = false;
+    let intersectionObserver: IntersectionObserver | null = null;
+    let motionQuery: MediaQueryList | null = null;
+    const cleanupFns: Array<() => void> = [];
+
+    const syncPlayback = () => {
+      if (!isMounted || myApp.disposed) return;
+      const documentVisible = typeof document !== 'undefined' ? document.visibilityState === 'visible' : true;
+      const shouldPlay = !prefersReducedMotion && documentVisible && isInView;
+      if (shouldPlay) {
+        if (!isPlaying) {
+          isPlaying = true;
+          myApp.start();
+        }
+        return;
+      }
+
+      if (isPlaying) {
+        myApp.stop();
+        myApp.renderOnce();
+        isPlaying = false;
+      } else {
+        myApp.stop();
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      syncPlayback();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    cleanupFns.push(() => document.removeEventListener('visibilitychange', handleVisibilityChange));
+
+    myApp
+      .loadAssets()
+      .then(() => {
+        if (!isMounted || appRef.current !== myApp) {
+          return;
+        }
+
+        myApp.init();
+
+        const updateInView = () => {
+          const rect = container.getBoundingClientRect();
+          const margin = 200;
+          const viewportHeight = (typeof window !== 'undefined' ? window.innerHeight : 0) || 
+                                (typeof document !== 'undefined' ? document.documentElement.clientHeight : 0) || 0;
+          isInView = rect.bottom >= -margin && rect.top <= viewportHeight + margin;
+        };
+
+        const intersectionHandler: IntersectionObserverCallback = entries => {
+          entries.forEach(entry => {
+            if (entry.target === container) {
+              isInView = entry.isIntersecting || entry.intersectionRatio > 0;
+            }
+          });
+          syncPlayback();
+        };
+
+        if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+          intersectionObserver = new IntersectionObserver(intersectionHandler, {
+            threshold: [0, 0.1],
+            rootMargin: '200px'
+          });
+          intersectionObserver.observe(container);
+          cleanupFns.push(() => {
+            if (intersectionObserver) {
+              intersectionObserver.disconnect();
+              intersectionObserver = null;
+            }
+          });
+          // Ensure initial state reflects current viewport position
+          updateInView();
+        } else if (typeof window !== 'undefined') {
+          const onScroll = () => {
+            updateInView();
+            syncPlayback();
+          };
+          updateInView();
+          const globalWindow = global.window || window;
+          if (globalWindow && globalWindow.addEventListener) {
+            globalWindow.addEventListener('scroll', onScroll, { passive: true });
+            cleanupFns.push(() => globalWindow.removeEventListener('scroll', onScroll));
+          }
+        }
+
+        if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
+          motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+          const handleMotion = (event?: MediaQueryListEvent) => {
+            prefersReducedMotion = event ? event.matches : motionQuery?.matches ?? false;
+            syncPlayback();
+          };
+          handleMotion();
+          if (typeof motionQuery.addEventListener === 'function') {
+            motionQuery.addEventListener('change', handleMotion);
+            cleanupFns.push(() => {
+              motionQuery?.removeEventListener('change', handleMotion);
+            });
+          } else if (typeof motionQuery.addListener === 'function') {
+            motionQuery.addListener(handleMotion as any);
+            cleanupFns.push(() => {
+              motionQuery?.removeListener(handleMotion as any);
+            });
+          }
+        }
+
+        syncPlayback();
+      })
+      .catch(() => {
+        // If assets fail to load we silently bail out to avoid blocking the page.
+      });
 
     return () => {
-      if (appRef.current) {
-        appRef.current.dispose();
+      isMounted = false;
+      cleanupFns.forEach(fn => fn());
+      if (intersectionObserver) {
+        intersectionObserver.disconnect();
+        intersectionObserver = null;
       }
+      if (appRef.current === myApp) {
+        appRef.current = null;
+      }
+      teardown(myApp);
     };
   }, [mergedOptions]);
 
   return <div id="lights" ref={hyperspeed}></div>;
 };
-
 export default Hyperspeed;
-

@@ -46,6 +46,9 @@ export default function RootLayout({
           >
             <head>
               <meta name="viewport" content="width=device-width, initial-scale=1" />
+              {/* Preload critical resources for Hyperspeed component */}
+              <link rel="preload" href="/api/three" as="script" />
+              <link rel="preload" href="/api/postprocessing" as="script" />
               {/* Google Tag Manager */}
               {process.env.NODE_ENV === 'production' && (
               <Script id="google-tag-manager" strategy="lazyOnload">

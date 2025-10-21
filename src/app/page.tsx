@@ -7,6 +7,10 @@ import { segmentList } from "@/utils/constants";
 import { useEffect, useRef, useCallback } from "react";
 import dynamic from 'next/dynamic';
 import LazyOnVisible from "./components/LazyOnVisible";
+
+// Preload critical imports for faster loading
+import "three";
+import "postprocessing";
 //import { motion } from 'framer-motion';
 
 const Partners = dynamic(() => import("./components/Partners"), { loading: () => <div>Loading...</div> });
@@ -83,6 +87,67 @@ export default function Home() {
 			}
 		};
 	}, [handleScroll]);
+
+	// Preload critical Hyperspeed dependencies immediately
+	useEffect(() => {
+		// Start loading Three.js and postprocessing as soon as possible
+		const preloadHyperspeedDeps = async () => {
+			try {
+				await Promise.all([
+					import('three'),
+					import('postprocessing')
+				]);
+			} catch (error) {
+				console.warn('Failed to preload Hyperspeed dependencies:', error);
+			}
+		};
+		
+		preloadHyperspeedDeps();
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+
+		const preload = () => {
+			const components = [
+				Partners,
+				StatsSection,
+				Process,
+				LandingProjects,
+				ExpertiseSection,
+				VideoTestimonial,
+				FAQ,
+				TrendingOld,
+				Calendly,
+				ScrollIndicator,
+			];
+
+			components.forEach((component) => {
+				(component as any)?.preload?.();
+			});
+		};
+
+		let idleHandle: number | null = null;
+		let timeoutHandle: number | null = null;
+
+		const requestIdle = (window as any).requestIdleCallback?.bind(window);
+		const cancelIdle = (window as any).cancelIdleCallback?.bind(window);
+
+		if (typeof requestIdle === 'function') {
+			idleHandle = requestIdle(preload, { timeout: 1000 });
+		} else {
+			timeoutHandle = window.setTimeout(preload, 300);
+		}
+
+		return () => {
+			if (idleHandle !== null && typeof cancelIdle === 'function') {
+				cancelIdle(idleHandle);
+			}
+			if (timeoutHandle !== null) {
+				window.clearTimeout(timeoutHandle);
+			}
+		};
+	}, []);
 
 	return (
 		<main className={styles.main}>
