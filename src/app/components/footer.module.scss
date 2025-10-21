@@ -56,9 +56,19 @@
   font-weight: 600;
   margin: 0 0 0.8rem 0;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
+ 
   opacity: 0.9;
 }
+
+
+.addressText {
+  text-transform: none !important;  /* disable all caps */
+  font-weight: 400;                 /* make it less bold */
+  opacity: 0.85;                    /* soften the tone slightly */
+  line-height: 1.6;                 /* improve readability */
+  font-size: clamp(0.9rem, 1vw, 1rem); /* match the rest of the footer scale */
+}
+
 
 .linkList {
   list-style: none;

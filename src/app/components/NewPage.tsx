@@ -10,7 +10,7 @@ const people = [
   { id: 1, name: "VivekJyothi Bhowmik", designation: "Founder", image: "/assets/team/member1.png" },
   { id: 2, name: "ShibaJyothi Bhowmik", designation: "Managing Director", image: "/assets/team/member2.png" },
   { id: 3, name: "Pratik Hegde", designation: "Founding Engineer", image: "/assets/team/PRATIK.png" },
-  { id: 4, name: "Abhinav", designation: "Founding Engineer", image: "/assets/team/ABHINAV.jpg" },
+  { id: 4, name: "Abhinav", designation: "Founding Engineer", image: "/assets/team/ABHINAV.png" },
   { id: 5, name: "Sahil Sinha", designation: "Founding Engineer", image: "/assets/team/member9.png" },
   // {id: 6, name: "With", designation: "Team Size of", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
 ];
@@ -157,9 +157,12 @@ const StatsSection = () => {
                   }}>
                       TOINGG
                   </button>
-                  <p className={styles.statDescription}>
-                      In year 2023, two founders launched their first product : &quot;Toingg&quot;, an AI communication OS for businesses. 
-                  </p>
+                  <span>
+                    In year 2023, two founders launched their first product
+                    <span style={{ color: "#b60306" }}> Toingg </span>
+                    , an AI communication OS for businesses.
+                  </span>
+
               </div>
 
             </div>
@@ -169,8 +172,13 @@ const StatsSection = () => {
               {/* Agency Description */}
               <div className={styles.agencyDescription}>
                 <p>
-                We specialize in engineering <strong> full-scale AI applications </strong>  from research and product development to scalable deployment. Whether you are launching <strong> a new AI product </strong> or <strong> optimizing an existing one</strong>, we bring together deep tech expertise to drive real-world tangible results.
+                  We specialize in engineering <strong style={{ color: "#b60306" }}>full-scale AI applications </strong> 
+                  from research and product development to scalable deployment. Whether you are launching 
+                  <strong style={{ color: "#b60306" }}> a new AI product </strong> or 
+                  <strong style={{ color: "#b60306" }}> optimizing an existing one</strong>, we bring together deep tech 
+                  expertise to drive real-world tangible results.
                 </p>
+
               </div>
             </div>
           </div>

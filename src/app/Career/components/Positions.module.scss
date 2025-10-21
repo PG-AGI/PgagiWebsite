@@ -174,7 +174,7 @@
 
 .tag-department {
   background: rgba(159, 0, 0, 0.08);
-  color: #ffb3b3;
+  color: #c77a7a;
   border-color: rgba(159, 0, 0, 0.2);
 
   &:hover {
@@ -184,30 +184,31 @@
 }
 
 .tag-location {
-  background: rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
-  border-color: rgba(255, 255, 255, 0.15);
+   background: rgba(159, 0, 0, 0.08);
+  color: #c77a7a;
+  border-color: rgba(159, 0, 0, 0.2);
+
 
   &:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
+     background: rgba(159, 0, 0, 0.12);
+    border-color: rgba(159, 0, 0, 0.3);
   }
 }
 
 .tag-type {
-  background: rgba(255, 255, 255, 0.06);
-  color: #e5e7eb;
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(159, 0, 0, 0.08);
+  color: #c77a7a;
+  border-color: rgba(159, 0, 0, 0.2);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
+     background: rgba(159, 0, 0, 0.12);
+    border-color: rgba(159, 0, 0, 0.3);
   }
 }
 
 .tag-openings {
   background: rgba(159, 0, 0, 0.08);
-  color: #ffb3b3;
+  color: #c77a7a;
   border-color: rgba(159, 0, 0, 0.2);
 
   &:hover {

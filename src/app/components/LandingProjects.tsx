@@ -41,7 +41,16 @@ const LandingProjects = React.memo(() => {
 
   return (
     <section id="trending" className={styles.trending}>
-      <h3>{"// Projects"}</h3>
+      <div className={styles.projectsButtonContainer}>
+      <button
+        type="button"
+        onClick={() => router.push("/projects")}
+        className={styles.projectsButton}
+      >
+        Projects 
+      </button>
+    </div>
+
       <div className={styles.trendingList}>
         {trendingListOld.map((item, i) => (
           <div

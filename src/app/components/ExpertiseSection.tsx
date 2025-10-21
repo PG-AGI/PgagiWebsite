@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './ExpertiseSection.module.scss';
 
+
 export default function ExpertiseSection() {
   const router = useRouter();
   
@@ -22,7 +23,16 @@ export default function ExpertiseSection() {
       <div className={styles.container}>
         {/* Top Section: Centered Expertise Heading and Description */}
         <div className={styles.expertiseContent}>
-          <h3 className={styles.expertiseHeading}>{'// Expertise'}</h3>
+          <div className={styles.expertiseButtonContainer}>
+            <button
+              type="button"
+              onClick={() => router.push("/expertise")}
+              className={styles.expertiseButton}
+            >
+              Expertise
+            </button>
+          </div>
+
           <p className={styles.expertiseDescription}>
           We partner with bold founders to build end-to-end AI products that truly matter to users. Our expertise spans from designing and developing AI-driven products to delivering enterprise-grade solutions that scale.
           </p>

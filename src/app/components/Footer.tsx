@@ -53,19 +53,13 @@ export default function Footer() {
 
               {/* Newsletter Signup */}
               <div className={styles.newsletterSection}>
-                <h6 className={styles.columnHeader}>Sign up for our newsletter to stay up to date</h6>
-                <div className={styles.newsletterForm}>
-                  <input 
-                    type="email" 
-                    id="emailInput"
-                    name="emailInput"
-                    placeholder="Your Email ID..." 
-                    className={styles.emailInput}
-                  />
-                  <button className={styles.submitButton}>
-                    →
-                  </button>
-                </div>
+                <h6 className={`${styles.columnHeader} ${styles.addressText}`}>
+                 <h6 className={styles.columnHeader}>Address:</h6>Tech37, Plot No.2-A Electronic City 2nd Phase. SY-No. 37 Part
+                  Konappana Agrahara Village Begur Hobli, Bengaluru - Chennai Hwy, Taluk,
+                  Bengaluru, Karnataka 560100
+                </h6>
+
+                
               </div>
             </div>
           </div>

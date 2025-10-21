@@ -4,9 +4,9 @@ import styles from "./trending_old.module.scss";
 import { trendingListOld } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import trend4 from '../../app/assets/trending_cards/trend_4.png';
-import news1 from '@/app/assets/trending_cards/news1.svg';
-import news2 from '@/app/assets/trending_cards/news2.svg';
-import news3 from '@/app/assets/trending_cards/news3.svg';
+import news1 from '@/app/assets/trending_cards/CASE STUDY.png';
+import news2 from '@/app/assets/trending_cards/BLOG.png';
+import news3 from '@/app/assets/trending_cards/news.png';
 import news4 from '@/app/assets/trending_cards/news4.svg';
 import news5 from '@/app/assets/trending_cards/news5.svg';
 
@@ -69,7 +69,7 @@ export default function TrendingOld() {
     <section id="trending" className={styles.trending}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h3 className={styles.blogLabel}>{'//Trending'}</h3>
+          <h3 className={styles.blogLabel}>{'Trending'}</h3>
           <h2 className={styles.mainTitle}>
             Uncover the ideas, tools and trends shaping today&apos;s most impactful in AI World.
           </h2>

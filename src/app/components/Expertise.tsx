@@ -213,7 +213,7 @@ export default function Expertise() {
       <div className={styles.container}>
         {/* Header Section */}
         <div className={styles.header}>
-          <span className={styles.subtitle}>{'// Expertise'}</span>
+          <span className={styles.subtitle}>{'Expertise'}</span>
           <h1 className={styles.mainTitle}>
             <span className={styles.titleLine1}>We partner with bold founders to build end-to-end AI products that truly matter to users.</span>
             <span className={styles.titleLine2}>Our expertise spans from designing and developing AI-driven products to delivering enterprise-grade solutions that scale.</span>
