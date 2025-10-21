@@ -900,7 +900,7 @@ interface Testimonial {
     company: "AI HR Company",
     country: "USA",
     quote:
-      "Pgagi consultancy private limited's work has led to delivering the client's project milestones. The team has been highly motivated and provided timely, high-quality deliverables throughout the engagement. Moreover, pgagi consultancy private limited has proactively thought through all edge cases.",
+     "pgagi consultancy private limited has honest, hardworking individuals looking to deliver quality products." ,
     projectName: "",
     verifiedBy: "Upwork",
     verifiedLogo: "/images/upwork-logo.png",
