@@ -2,7 +2,11 @@
 
 .container {
   padding: 2rem;
+  background-color: #0a0a0f; // your dark background
+  color: #ffffff; // ensures all text is visible
+  min-height: 100vh; // ensure full height layout
 }
+
 
 .header {
   display: flex;

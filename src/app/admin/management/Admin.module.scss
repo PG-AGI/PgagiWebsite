@@ -116,7 +116,7 @@ $red-color: #ef4444;
     background-color: rgba(255, 255, 255, 0.1);
 
     &:focus {
-      background-color: $background-dark;
+      background-color: #fff;
     }
   }
 }
@@ -853,13 +853,22 @@ $red-color: #ef4444;
   display: flex;
   align-items: center;
   gap: 10px;
+  
+  :global(label) {
+    color: inherit !important;
+  }
+  label {
+    color: #ffffff !important; // ✅ ensures it’s visible on dark background
+    font-weight: 500;
+  }
+  
 }
 
 .filterSelect {
   padding: 5px 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  background-color: transparent;
+  // background-color: transparent;
   
 }
 
@@ -1095,3 +1104,6 @@ $spacing-unit: 1rem;
   // @include glass-effect;
   // border-radius: 1rem;
 }
+
+
+

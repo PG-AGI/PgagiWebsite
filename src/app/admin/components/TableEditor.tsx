@@ -27,11 +27,27 @@ const TableEditor: React.FC<TableEditorProps> = ({ value, onChange }) => {
   const [headers, setHeaders] = useState<string[]>(initialData.headers);
   const [rows, setRows] = useState<string[][]>(initialData.rows);
   const [columns, setColumns] = useState<number>(initialData.headers.length);
-  useEffect(() => {
-    setHeaders(initialData.headers);
-    setRows(initialData.rows);
-    setColumns(initialData.headers.length);
-  }, [initialData.headers, initialData.rows]);
+// useEffect(() => {
+//   // Only run once when component mounts
+//   if (!headers.length && !rows.length) {
+//     setHeaders(initialData.headers);
+//     setRows(initialData.rows);
+//     setColumns(initialData.headers.length);
+//   }
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, []);
+useEffect(() => {
+  if (
+    value &&
+    typeof value === 'object' &&
+    Array.isArray(value.headers) &&
+    Array.isArray(value.rows)
+  ) {
+    setHeaders(value.headers);
+    setRows(value.rows);
+    setColumns(value.headers.length);
+  }
+}, [value]);
 
   const addRow = () => {
     const newRows = [...rows, new Array(columns).fill('')];

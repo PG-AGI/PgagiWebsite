@@ -895,6 +895,16 @@ interface Testimonial {
     verifiedBy: "Upwork",
     verifiedLogo: "/images/upwork-logo.png",
   },
+  {
+    name: "CEO",
+    company: "AI HR Company",
+    country: "USA",
+    quote:
+     "pgagi consultancy private limited has honest, hardworking individuals looking to deliver quality products." ,
+    projectName: "",
+    verifiedBy: "Upwork",
+    verifiedLogo: "/images/upwork-logo.png",
+  },
 ];
 
 

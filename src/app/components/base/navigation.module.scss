@@ -24,10 +24,14 @@
     );
     backdrop-filter: blur(25px) saturate(180%);
     -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    // border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+     border-bottom: none;
+    // box-shadow: 
+    //   0 8px 32px rgba(0, 0, 0, 0.12),
+    //   inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      box-shadow:
+      0 2px 20px rgba(0, 0, 0, 0.08),  /* soft outer */
+      inset 0 1px 0 rgba(255, 255, 255, 0.2); /* gentle inner */
   }
 
   // Text colors - white for transparent state, dark for glass state
@@ -688,4 +692,8 @@
       }
     }
   }
+}
+
+.navigation {
+  transition: all 1.5s ease-in-out;
 }
