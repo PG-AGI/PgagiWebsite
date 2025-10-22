@@ -4,9 +4,9 @@ import styles from "./trending_old.module.scss";
 import { trendingListOld } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import trend4 from '../../app/assets/trending_cards/trend_4.png';
-import news1 from '@/app/assets/trending_cards/CASE STUDY.png';
-import news2 from '@/app/assets/trending_cards/BLOG.png';
-import news3 from '@/app/assets/trending_cards/news.png';
+import news1 from '@/app/assets/trending_cards/new_case_studies.jpg';
+import news2 from '@/app/assets/trending_cards/new_blogs.jpg';
+import news3 from '@/app/assets/trending_cards/new_news.jpg';
 import news4 from '@/app/assets/trending_cards/news4.svg';
 import news5 from '@/app/assets/trending_cards/news5.svg';
 

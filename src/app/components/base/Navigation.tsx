@@ -37,18 +37,17 @@ export default function Navigation() {
   }, []);
 
   // Handle scroll to detect when past hero section
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const heroHeight = window.innerHeight; // Assuming hero section is full viewport height
-      
-      setIsScrolled(scrollTop > 50);
-      setShowGlassEffect(scrollTop > heroHeight * 0.8); // Show glass effect after 80% of hero
-    };
+useEffect(() => {
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    setShowGlassEffect(scrollTop > 10); // glass effect after 10px scroll
+  };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  handleScroll(); // Apply correct state on load
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
 
   const handleContactUs = () => {
     setIsModalOpen(true);

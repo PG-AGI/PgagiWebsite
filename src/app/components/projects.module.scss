@@ -195,15 +195,16 @@
     }
   }
 
-  .cardText {
-    padding: 60px 50px; // Reduced padding from 80px 60px to fit more content
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background: #ffffff;
-    color: #000000;
-    position: relative;
+.cardText {
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers content vertically */
+  align-items: center; /* Centers horizontally */
+  background: #ffffff;
+  color: #000000;
+  position: relative;
+  text-align: center; /* Centers text alignment */
 
     @media (max-width: 768px) {
       padding: 40px 30px; // Adjusted padding for mobile

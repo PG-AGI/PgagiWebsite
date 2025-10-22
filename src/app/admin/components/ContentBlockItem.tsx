@@ -85,13 +85,36 @@ const ContentBlockItem: React.FC<ContentBlockItemProps> = ({
     });
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (blockType === 'table') {
+  //     onUpdateBlock({ ...block, content: { headers: ['Header 1'], rows: [['Cell 1']] } });
+  //   } else if (blockType === 'box') {
+  //     onUpdateBlock({ ...block, content: { heading: '', text: '' } });
+  //   }
+  // }, [blockType, block, onUpdateBlock]);
+
+
+useEffect(() => {
     if (blockType === 'table') {
-      onUpdateBlock({ ...block, content: { headers: ['Header 1'], rows: [['Cell 1']] } });
+      const content = block.content as TableData | undefined;
+      const hasValidTable =
+        content && Array.isArray(content.headers) && Array.isArray(content.rows);
+      if (!hasValidTable) {
+        onUpdateBlock({ ...block, content: { headers: ['Header 1'], rows: [['Cell 1']] } });
+      }
     } else if (blockType === 'box') {
-      onUpdateBlock({ ...block, content: { heading: '', text: '' } });
+      const content = block.content as { heading: string; text: string } | undefined;
+      const hasValidBox =
+        content && typeof content.heading === 'string' && typeof content.text === 'string';
+      if (!hasValidBox) {
+        onUpdateBlock({ ...block, content: { heading: '', text: '' } });
+      }
     }
-  }, [blockType, block, onUpdateBlock]);
+    // only run when the type changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blockType]);
+
+
 
   return (
     <div className={styles.contentBlock}>
