@@ -1,11 +1,14 @@
 .highlightSpot {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: #1a1a1a !important;
   color: white;
-  padding: 8px 16px;
+  padding: 10px 16px;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
+  line-height: 1.3; // prevent descenders from clipping on Safari/iOS
   margin-bottom: 1rem;
   border-color: #b60306;
   letter-spacing: 0.5px;
@@ -152,7 +155,8 @@
 
 .landing {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh; // ensure full viewport height on iOS Safari
   position: relative;
   overflow: hidden;
 }
@@ -162,11 +166,13 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: 100dvh; // match iOS dynamic viewport height
   z-index: 1;
   overflow: hidden;
   min-width: 100vw;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 
@@ -351,5 +357,17 @@
   .outlineButton {
     padding: 0.8rem 1.5rem; // Fix padding values
     font-size: 1rem;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .landingContainer {
+    padding-top: calc(3rem + env(safe-area-inset-top));
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  .highlightSpot {
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 }
