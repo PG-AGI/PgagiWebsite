@@ -568,7 +568,7 @@ const VideoTestimonial: React.FC = () => {
                   onClick={() => setIsDialogOpen(true)}
                 >
                   <div className={styles.heroThumbnail}>
-                    <img src="/images/hero-image.png" alt="Hero Video" className={styles.heroThumbnailImg} />
+                    <img src="/images/THUMBNAIL.jpg" alt="Hero Video" className={styles.heroThumbnailImg} />
                     <span className={styles.playButton} aria-hidden>
                       <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
                     </span>

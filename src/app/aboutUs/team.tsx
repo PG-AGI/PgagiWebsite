@@ -25,7 +25,7 @@ const teamMembers: TeamMember[] = [
   // { id: 9, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
   // { id: 10, name: "Frank Green", role: "Backend Dev", image: "/assets/team/member10.png" },
   { id: 1, name: "VivekJyothi Bhowmik", role: "Founder", image: "/assets/team/member1.png" },
-  { id: 2, name: "ShibaJyothi Bhowmik", role: "Managing Director", image: "/assets/team/member2.png" },
+  { id: 2, name: "ShibaJyothi Bhowmik", role: "Managing Director", image: "/assets/team/member2Shibasir.jpg" },
   { id: 3, name: "Pratik Hegde", role: "Founding Engineer", image: "/assets/team/PRATIK.png" },
   { id: 4, name: "Abhinav", role: "Founding Engineer", image: "/assets/team/ABHINAV.png" },
   { id: 5, name: "Sahil Sinha", role: "Founding Engineer", image: "/assets/team/member9.png" },
