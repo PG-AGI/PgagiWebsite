@@ -679,7 +679,7 @@ $accent: #b60306;
 }
 
 .container {
-  max-width: 1600px;
+  // max-width: 1600px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -711,7 +711,7 @@ $accent: #b60306;
 /* Main content: 2 cols desktop, 1 col tablet+mobile */
 .mainContent {
   display: grid;
-  grid-template-columns: 0.8fr 0.2fr; /* 80% video, 20% reviews */
+  grid-template-columns: 0.8fr 1.2fr; /* 80% video, 20% reviews */
   gap: 2.5rem;
   align-items: start;
 }
@@ -733,7 +733,9 @@ $accent: #b60306;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    height: var(--vt-section-height);
+    /* allow content to grow while keeping a comfortable min height aligned with marquee */
+    min-height: var(--vt-section-height);
+    height: auto;
 
     &:hover {
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
@@ -752,8 +754,9 @@ $accent: #b60306;
     .heroThumbnail {
       position: relative;
       width: 100%;
-      height: auto;
-      flex: 1 1 auto;
+      /* fixed visual height for thumbnail to free more space for text */
+      height: clamp(220px, 40vh, 380px);
+      flex: 0 0 auto;
       border-radius: 16px 16px 0 0;
       overflow: hidden;
       background: #ececec;
@@ -788,7 +791,10 @@ $accent: #b60306;
     }
 
     .videoInfo {
-      padding: 2rem;
+      padding: 1.5rem 2rem;
+      /* make long copy readable fully without clipping */
+      max-height: none;
+      overflow: visible;
 
       .speakerName {
         font-size: 1.75rem;
@@ -799,10 +805,10 @@ $accent: #b60306;
       }
 
       .speakerTitle {
-        font-size: 1.1rem;
-        color: #6c757d;
+        font-size: 1.05rem;
+        color: #444; /* improve contrast for readability */
         margin: 0;
-        line-height: 1.7;
+        line-height: 1.75;
 
         .mondayLink {
           color: #9F0000;
@@ -851,17 +857,16 @@ $accent: #b60306;
 
 /* === SINGLE SOURCE OF TRUTH FOR TESTIMONIAL BOX STYLES === */
 .testimonialBox {
-  background: linear-gradient(180deg, #fafafa 0%, #f3f3f3 100%);
+  background: #ffffff; /* cleaner minimalist card */
   border-radius: 18px;
-  padding: 2.5rem;
+  padding: 2rem; /* slightly tighter for readability */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 2.25rem;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #ededed;
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.04),
-    0 0 1px rgba(0, 0, 0, 0.08);
+    0 2px 8px rgba(0, 0, 0, 0.04);
   transition: all 0.35s ease;
   position: relative;
   overflow: hidden;
@@ -873,18 +878,7 @@ $accent: #b60306;
       0 0 1px rgba(0, 0, 0, 0.1);
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 18px;
-    background: radial-gradient(
-      circle at 80% 10%,
-      rgba(182, 3, 6, 0.05),
-      transparent 70%
-    );
-    pointer-events: none;
-  }
+  &::after { content: none; }
 
   .topRating {
     display: flex;
@@ -927,13 +921,13 @@ $accent: #b60306;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
     position: relative;
 
     p {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 400;
-      line-height: 1.8;
+      line-height: 1.85;
       color: #0f0f0f;
       margin: 0;
       letter-spacing: 0.15px;
@@ -1024,7 +1018,7 @@ $accent: #b60306;
 
 @media (max-width: 1200px) {
   .container {
-    max-width: 1000px;
+    // max-width: 1000px;
     padding: 0 1.5rem;
   }
 }
@@ -1245,25 +1239,28 @@ $accent: #b60306;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 5000; /* above navbar */
   animation: overlay-fade 200ms ease;
 }
 
 .dialogContent {
   position: relative;
-  width: min(1200px, 92vw);
+  width: min(900px, 92vw); /* keep dialog smaller */
   aspect-ratio: 16 / 9;
   background: #000;
   border-radius: 14px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   animation: top-in-bottom-out 400ms ease;
+  max-height: 85vh; /* prevent overflow under mobile address bars */
 }
+
 
 .dialogVideoWrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 0; /* fallback for browsers without aspect-ratio */
+  padding-top: 56.25%; /* 16:9 ratio */
 
   iframe {
     position: absolute;
@@ -1271,6 +1268,24 @@ $accent: #b60306;
     width: 100%;
     height: 100%;
     border: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .dialogContent {
+    width: 96vw;
+    /* rely on padding-top ratio for height; aspect-ratio may not be supported on older mobile */
+    aspect-ratio: auto;
+    animation: none;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .dialogContent {
+    aspect-ratio: auto;
+    animation: none;
+    transform: none;
   }
 }
 
@@ -1328,6 +1343,70 @@ $accent: #b60306;
   padding: 0; /* avoid internal padding pushing columns inward */
 }
 
+/* Smaller, denser cards inside scrolling marquee for readability */
+.verticalMarquee .testimonialBox {
+  padding: 1.1rem 1rem;
+  gap: 1rem;
+  border-radius: 14px;
+  background: #f6f7f8; /* subtle grey for readability */
+}
+
+.verticalMarquee .topRating .ratingValue {
+  font-size: 1rem;
+}
+
+.verticalMarquee .starRating .star {
+  width: 14px;
+  height: 14px;
+}
+
+.verticalMarquee .testimonialText {
+  padding: 0 0.75rem;
+}
+
+.verticalMarquee .testimonialText p {
+  font-size: 1rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5; /* keep height consistent while readable */
+  line-clamp: 5; /* standard property for compatibility */
+  overflow: hidden;
+}
+
+.verticalMarquee .footerBox {
+  padding: 0.75rem 1rem;
+}
+
+.verticalMarquee .verifiedLogo {
+  width: 40px;
+}
+
+/* Stack verification and make caption smaller under the logo */
+.verticalMarquee .verifiedSection {
+  display: flex;
+  flex-direction: column-reverse; /* show logo first, caption below */
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.verticalMarquee .verifiedText {
+  font-size: 0.65rem;
+  color: #777;
+}
+
+/* Make reviewer and company clearer in marquee */
+.verticalMarquee .footerLeft .reviewerRole {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.verticalMarquee .footerLeft .reviewerCompany {
+  font-size: 0.9rem;
+  color: #333;
+}
+
 .reverseMarquee {
   animation-direction: reverse;
 }
@@ -1371,9 +1450,17 @@ $accent: #b60306;
 .marqueeTrack {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  animation: scroll-up 70s linear infinite;
+  gap: 1.25rem; /* slightly tighter spacing for better scanability */
+  /* slow down for readability */
+  animation: scroll-up 95s linear infinite;
   will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
 }
 
 .paused {
@@ -1445,7 +1532,7 @@ $accent: #b60306;
 /* Large desktop tweaks */
 @media (min-width: 1280px) {
   .mainContent {
-    grid-template-columns: 0.8fr 0.2fr; /* keep 80/20 on large screens */
+    grid-template-columns: 0.8fr 1.2fr; /* keep 80/20 on large screens */
   }
   .videoTestimonialSection {
     --vt-section-height: 600px;

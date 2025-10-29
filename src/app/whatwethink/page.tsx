@@ -60,29 +60,7 @@ export default function BlogPage() {
     return result;
   }
 
-  // Parallax scroll effect for images
-  useEffect(() => {
-    const handleScroll = () => {
-      const imageContainers = document.querySelectorAll(`.${styles.cardImage}`);
-
-      imageContainers.forEach((container) => {
-        const rect = container.getBoundingClientRect();
-        const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-
-        if (scrollProgress > 0 && scrollProgress < 1) {
-          // Calculate the Y offset for parallax effect
-          const yOffset = (scrollProgress - 0.5) * 100; // Move image up/down by 50px
-          (container as HTMLElement).style.setProperty('--scroll-offset', `${yOffset}px`);
-          container.classList.add(styles.parallax);
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Removed parallax/scroll effects for images
 
   // Fetch case studies from the API
   useEffect(() => {
@@ -191,7 +169,7 @@ export default function BlogPage() {
                           src={getSafeImageUrl(cs.coverImage)}
                           alt={cs.title}
                           layout="fill"
-                          objectFit="cover"
+                        objectFit="contain"
                           priority
                           onError={(e) => {
                             // Fallback to placeholder if image fails to load

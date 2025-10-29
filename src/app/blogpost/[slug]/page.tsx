@@ -43,4 +43,4 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       // const metaDescription = "AI-powered business solutions for your company";
       // const metaKeywords = "AI, business, solutions, technology, innovation";
       // const metaAuthor = "AI-powered business solutions for your company";
-      // const appTitle = "AI-powered business solutions for your company";
+      // const appTitle = "AI-powered business solutions for your company"

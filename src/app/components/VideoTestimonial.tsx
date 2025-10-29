@@ -320,7 +320,7 @@
 
 
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import styles from "./VideoTestimonial.module.scss";
 
 
@@ -335,6 +335,16 @@ interface Testimonial {
 }
 
 const testimonials: Testimonial[] = [
+  {
+    name: "Will Dean",
+    company: "FOMO INC.",
+    country: "USA",
+    quote:
+      "This was the best engineering team I have found on Upwork to date. Clean code, scalable systems, amazing project management and they know everything about AI and AI Tooling. We will be working with them again very soon!",
+    projectName: "",
+    verifiedBy: "Upwork",
+    verifiedLogo: "/images/upwork-logo.png",
+  },
   {
     name: "Bernard",
     company: "",
@@ -525,6 +535,17 @@ const VideoTestimonial: React.FC = () => {
   const firstColumn = useMemo(() => testimonials.slice(0, Math.ceil(testimonials.length / 2)), []);
   const secondColumn = useMemo(() => testimonials.slice(Math.ceil(testimonials.length / 2)), []);
 
+  useEffect(() => {
+    if (!isDialogOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsDialogOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isDialogOpen]);
+
   return (
     <section className={styles.videoTestimonialSection}>
       <div className={styles.container}>
@@ -542,6 +563,7 @@ const VideoTestimonial: React.FC = () => {
                 <button
                   type="button"
                   aria-label="Open video"
+                  aria-haspopup="dialog"
                   className={styles.heroVideoButton}
                   onClick={() => setIsDialogOpen(true)}
                 >
@@ -648,11 +670,21 @@ const VideoTestimonial: React.FC = () => {
 
         {/* Hero Video Dialog */}
         {isDialogOpen && (
-          <div className={styles.dialogOverlay} onClick={() => setIsDialogOpen(false)}>
-            <div className={styles.dialogContent} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={styles.dialogOverlay}
+            onClick={() => setIsDialogOpen(false)}
+            role="presentation"
+          >
+            <div
+              className={styles.dialogContent}
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Testimonial video dialog"
+            >
               <div className={styles.dialogVideoWrapper}>
                 <iframe
-                  src="https://www.youtube.com/embed/vsuDM890kmU?autoplay=1&rel=0"
+                  src="https://www.youtube.com/embed/vsuDM890kmU?rel=0&playsinline=1"
                   title="Hero Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
