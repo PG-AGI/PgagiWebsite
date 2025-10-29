@@ -1,6 +1,6 @@
+
 // "use client";
-// import React, { useState, useEffect } from "react";
-// import { motion, AnimatePresence } from "framer-motion";
+// import React, { useState } from "react";
 // import styles from "./VideoTestimonial.module.scss";
 
 // interface Testimonial {
@@ -13,8 +13,7 @@
 //   verifiedLogo?: string;
 // }
 
-
-//   const testimonials: Testimonial[] = [
+// const testimonials: Testimonial[] = [
 //   {
 //     name: "Bernard",
 //     company: "",
@@ -177,8 +176,6 @@
 //   },
 // ];
 
-
-// // ⭐ Star Rating Component
 // const StarRating: React.FC = () => (
 //   <div className={styles.starRating}>
 //     {[...Array(5)].map((_, index) => (
@@ -191,6 +188,7 @@
 //         stroke="#FFD700"
 //         strokeWidth="1"
 //         className={styles.star}
+//         aria-hidden="true"
 //       >
 //         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
 //       </svg>
@@ -199,18 +197,7 @@
 // );
 
 // const VideoTestimonial: React.FC = () => {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-//     }, 5000);
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   const currentTestimonial = testimonials[currentIndex];
-//   const nextTestimonial =
-//     testimonials[(currentIndex + 1) % testimonials.length];
+//   const [hovered, setHovered] = useState(false);
 
 //   return (
 //     <section className={styles.videoTestimonialSection}>
@@ -218,12 +205,11 @@
 //         {/* Header */}
 //         <div className={styles.headerSection}>
 //           <div className={styles.centeredHeader}>
-//             <h3 className={styles.testimonialLabel}>{'Testimonial'}</h3>
-
+//             <h3 className={styles.testimonialLabel}>Testimonials</h3>
 //           </div>
 //         </div>
 
-//         {/* Main Content */}
+//         {/* Main Grid */}
 //         <div className={styles.mainContent}>
 //           {/* Left Column - Video */}
 //           <div className={styles.leftColumn}>
@@ -246,8 +232,7 @@
 //                   <p className={styles.speakerTitle}>
 //                     Partnering with Toingg, they deployed an advanced,
 //                     AI-powered communication system. Automated WhatsApp outreach,
-//                     intelligent conversational AI calls, and seamless CRM
-//                     integration with{" "}
+//                     intelligent AI calls, and seamless CRM integration with{" "}
 //                     <a
 //                       href="https://monday.com/"
 //                       target="_blank"
@@ -256,112 +241,63 @@
 //                     >
 //                       Monday.com
 //                     </a>{" "}
-//                     changed the game completely. With minimal human intervention,
-//                     Stunited effortlessly booked 102 high-quality meetings,
-//                     driving an astonishing 1100x ROI.
+//                     helped them achieve 1100x ROI effortlessly.
 //                   </p>
 //                 </div>
 //               </div>
 //             </div>
 //           </div>
 
-//           {/* Right Column - Testimonials */}
+//           {/* Right Column - Infinite Scroll Testimonials */}
 //           <div className={styles.rightColumn}>
 //             <div className={styles.rightColumnHeader}>
-//               <h2 className={styles.rightHeading}>See what our client says</h2>
+//               <h2 className={styles.rightHeading}>See what our clients say</h2>
 //             </div>
 
-//             <div className={styles.testimonialContent}>
-//               <div className={styles.testimonialBoxes}>
-//                 {/* First Testimonial */}
-//                 <div className={styles.testimonialBox}>
-//                   <div className={styles.topRating}>
-//                     <span className={styles.ratingValue}>5.0</span>
-//                     <StarRating />
-//                   </div>
-
-//                   <AnimatePresence mode="wait">
-//                     <motion.div
-//                       key={currentIndex}
-//                       initial={{ opacity: 0, y: 20 }}
-//                       animate={{ opacity: 1, y: 0 }}
-//                       exit={{ opacity: 0, y: -20 }}
-//                       transition={{ duration: 0.5, ease: "easeInOut" }}
-//                       className={styles.testimonialText}
-//                     >
-//                       <p>&quot;{currentTestimonial.quote}&quot;</p>
-//                     </motion.div>
-//                   </AnimatePresence>
-
-//                   <div className={styles.footerBox}>
-//                     <div className={styles.footerLeft}>
-//                       <h4 className={styles.reviewerRole}>
-//                         {currentTestimonial.name || "Project Manager"}
-//                       </h4>
-//                       <p className={styles.reviewerCompany}>
-//                         {currentTestimonial.company || "CLOUDCOMPLI"}
-//                       </p>
+//             <div
+//               className={styles.marqueeContainer}
+//               onMouseEnter={() => setHovered(true)}
+//               onMouseLeave={() => setHovered(false)}
+//             >
+//               <div
+//                 className={`${styles.marqueeTrack} ${
+//                   hovered ? styles.paused : ""
+//                 }`}
+//               >
+//                 {[...testimonials, ...testimonials].map((t, index) => (
+//                   <div key={index} className={styles.testimonialBox}>
+//                     <div className={styles.topRating}>
+//                       <span className={styles.ratingValue}>5.0</span>
+//                       <StarRating />
 //                     </div>
+//                     <div className={styles.testimonialText}>
+//                       <p>&quot;{t.quote}&quot;</p>
 
-//                     <div className={styles.verifiedSection}>
-//                       <p className={styles.verifiedText}>
-//                         Verified by {currentTestimonial.verifiedBy}
-//                       </p>
-//                       <img
-//                         src={currentTestimonial.verifiedLogo}
-//                         alt={`${currentTestimonial.verifiedBy} logo`}
-//                         className={styles.verifiedLogo}
-//                       />
 //                     </div>
-//                   </div>
-//                 </div>
-
-//                 {/* Second Testimonial */}
-//                 <div className={styles.testimonialBox}>
-//                   <div className={styles.topRating}>
-//                     <span className={styles.ratingValue}>5.0</span>
-//                     <StarRating />
-//                   </div>
-
-//                   <AnimatePresence mode="wait">
-//                     <motion.div
-//                       key={currentIndex + 1}
-//                       initial={{ opacity: 0, y: 20 }}
-//                       animate={{ opacity: 1, y: 0 }}
-//                       exit={{ opacity: 0, y: -20 }}
-//                       transition={{
-//                         duration: 0.5,
-//                         ease: "easeInOut",
-//                         delay: 0.2,
-//                       }}
-//                       className={styles.testimonialText}
-//                     >
-//                       <p>&quot;{nextTestimonial.quote}&quot;</p>
-//                     </motion.div>
-//                   </AnimatePresence>
-
-//                   <div className={styles.footerBox}>
-//                     <div className={styles.footerLeft}>
-//                       <h4 className={styles.reviewerRole}>
-//                         {nextTestimonial.name || "Project Manager"}
-//                       </h4>
-//                       <p className={styles.reviewerCompany}>
-//                         {nextTestimonial.company || "CLOUDCOMPLI"}
-//                       </p>
-//                     </div>
-
-//                     <div className={styles.verifiedSection}>
-//                       <p className={styles.verifiedText}>
-//                         Verified by {nextTestimonial.verifiedBy}
-//                       </p>
-//                       <img
-//                         src={nextTestimonial.verifiedLogo}
-//                         alt={`${nextTestimonial.verifiedBy} logo`}
-//                         className={styles.verifiedLogo}
-//                       />
+//                     <div className={styles.footerBox}>
+//                       <div className={styles.footerLeft}>
+//                         <h4 className={styles.reviewerRole}>
+//                           {t.name || "Project Manager"}
+//                         </h4>
+//                         <p className={styles.reviewerCompany}>
+//                           {t.company || "CLOUDCOMPLI"}
+//                         </p>
+//                       </div>
+//                       <div className={styles.verifiedSection}>
+//                         <p className={styles.verifiedText}>
+//                           Verified by {t.verifiedBy}
+//                         </p>
+//                         {t.verifiedLogo && (
+//                           <img
+//                             src={t.verifiedLogo}
+//                             alt="verified logo"
+//                             className={styles.verifiedLogo}
+//                           />
+//                         )}
+//                       </div>
 //                     </div>
 //                   </div>
-//                 </div>
+//                 ))}
 //               </div>
 //             </div>
 //           </div>
@@ -375,17 +311,18 @@
 
 
 
+/////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import styles from "./VideoTestimonial.module.scss";
+
 
 interface Testimonial {
   name: string;
@@ -581,49 +518,53 @@ const StarRating: React.FC = () => (
 );
 
 const VideoTestimonial: React.FC = () => {
-  const [hovered, setHovered] = useState(false);
+  const [hoveredCol1, setHoveredCol1] = useState(false);
+  const [hoveredCol2, setHoveredCol2] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const firstColumn = useMemo(() => testimonials.slice(0, Math.ceil(testimonials.length / 2)), []);
+  const secondColumn = useMemo(() => testimonials.slice(Math.ceil(testimonials.length / 2)), []);
 
   return (
     <section className={styles.videoTestimonialSection}>
       <div className={styles.container}>
-        {/* Header */}
         <div className={styles.headerSection}>
           <div className={styles.centeredHeader}>
             <h3 className={styles.testimonialLabel}>Testimonials</h3>
           </div>
         </div>
 
-        {/* Main Grid */}
         <div className={styles.mainContent}>
-          {/* Left Column - Video */}
+          {/* Left Column - Hero Video Dialog (40%) */}
           <div className={styles.leftColumn}>
             <div className={styles.videoSection}>
               <div className={styles.videoContainer}>
-                <div className={styles.videoPlaceholder}>
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/vsuDM890kmU?si=1ZfbE5tpp6FLtQE3"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
-                </div>
+                <button
+                  type="button"
+                  aria-label="Open video"
+                  className={styles.heroVideoButton}
+                  onClick={() => setIsDialogOpen(true)}
+                >
+                  <div className={styles.heroThumbnail}>
+                    <img src="/images/hero-image.png" alt="Hero Video" className={styles.heroThumbnailImg} />
+                    <span className={styles.playButton} aria-hidden>
+                      <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                    </span>
+                  </div>
+                </button>
                 <div className={styles.videoInfo}>
                   <h3 className={styles.speakerName}>Stunited</h3>
                   <p className={styles.speakerTitle}>
                     Partnering with Toingg, they deployed an advanced,
                     AI-powered communication system. Automated WhatsApp outreach,
-                    intelligent AI calls, and seamless CRM integration with{" "}
+                    intelligent AI calls, and seamless CRM integration with
                     <a
                       href="https://monday.com/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.mondayLink}
                     >
-                      Monday.com
+                      {" "}Monday.com
                     </a>{" "}
                     helped them achieve 1100x ROI effortlessly.
                   </p>
@@ -632,63 +573,101 @@ const VideoTestimonial: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column - Infinite Scroll Testimonials */}
+          {/* Right Column - Dual Vertical Marquees (60%) */}
           <div className={styles.rightColumn}>
             <div className={styles.rightColumnHeader}>
               <h2 className={styles.rightHeading}>See what our clients say</h2>
             </div>
 
-            <div
-              className={styles.marqueeContainer}
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-            >
+            <div className={styles.marqueeContainer}>
               <div
-                className={`${styles.marqueeTrack} ${
-                  hovered ? styles.paused : ""
-                }`}
+                className={styles.verticalMarquee}
+                onMouseEnter={() => setHoveredCol1(true)}
+                onMouseLeave={() => setHoveredCol1(false)}
               >
-                {[...testimonials, ...testimonials].map((t, index) => (
-                  <div key={index} className={styles.testimonialBox}>
-                    <div className={styles.topRating}>
-                      <span className={styles.ratingValue}>5.0</span>
-                      <StarRating />
-                    </div>
-                    <div className={styles.testimonialText}>
-                      <p>&quot;{t.quote}&quot;</p>
-
-                    </div>
-                    <div className={styles.footerBox}>
-                      <div className={styles.footerLeft}>
-                        <h4 className={styles.reviewerRole}>
-                          {t.name || "Project Manager"}
-                        </h4>
-                        <p className={styles.reviewerCompany}>
-                          {t.company || "CLOUDCOMPLI"}
-                        </p>
+                <div className={`${styles.marqueeTrack} ${hoveredCol1 ? styles.paused : ""}`}>
+                  {[...firstColumn, ...firstColumn].map((t, index) => (
+                    <div key={`col1-${index}`} className={styles.testimonialBox}>
+                      <div className={styles.topRating}>
+                        <span className={styles.ratingValue}>5.0</span>
+                        <StarRating />
                       </div>
-                      <div className={styles.verifiedSection}>
-                        <p className={styles.verifiedText}>
-                          Verified by {t.verifiedBy}
-                        </p>
-                        {t.verifiedLogo && (
-                          <img
-                            src={t.verifiedLogo}
-                            alt="verified logo"
-                            className={styles.verifiedLogo}
-                          />
-                        )}
+                      <div className={styles.testimonialText}>
+                        <p>&quot;{t.quote}&quot;</p>
+                      </div>
+                      <div className={styles.footerBox}>
+                        <div className={styles.footerLeft}>
+                          <h4 className={styles.reviewerRole}>{t.name || "Project Manager"}</h4>
+                          <p className={styles.reviewerCompany}>{t.company || "CLOUDCOMPLI"}</p>
+                        </div>
+                        <div className={styles.verifiedSection}>
+                          <p className={styles.verifiedText}>Verified by {t.verifiedBy}</p>
+                          {t.verifiedLogo && (
+                            <img src={t.verifiedLogo} alt="verified logo" className={styles.verifiedLogo} />
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </div>
+              <div
+                className={styles.verticalMarquee}
+                onMouseEnter={() => setHoveredCol2(true)}
+                onMouseLeave={() => setHoveredCol2(false)}
+              >
+                <div className={`${styles.marqueeTrack} ${styles.reverseMarquee} ${hoveredCol2 ? styles.paused : ""}`}>
+                  {[...secondColumn, ...secondColumn].map((t, index) => (
+                    <div key={`col2-${index}`} className={styles.testimonialBox}>
+                      <div className={styles.topRating}>
+                        <span className={styles.ratingValue}>5.0</span>
+                        <StarRating />
+                      </div>
+                      <div className={styles.testimonialText}>
+                        <p>&quot;{t.quote}&quot;</p>
+                      </div>
+                      <div className={styles.footerBox}>
+                        <div className={styles.footerLeft}>
+                          <h4 className={styles.reviewerRole}>{t.name || "Project Manager"}</h4>
+                          <p className={styles.reviewerCompany}>{t.company || "CLOUDCOMPLI"}</p>
+                        </div>
+                        <div className={styles.verifiedSection}>
+                          <p className={styles.verifiedText}>Verified by {t.verifiedBy}</p>
+                          {t.verifiedLogo && (
+                            <img src={t.verifiedLogo} alt="verified logo" className={styles.verifiedLogo} />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Hero Video Dialog */}
+        {isDialogOpen && (
+          <div className={styles.dialogOverlay} onClick={() => setIsDialogOpen(false)}>
+            <div className={styles.dialogContent} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.dialogVideoWrapper}>
+                <iframe
+                  src="https://www.youtube.com/embed/vsuDM890kmU?autoplay=1&rel=0"
+                  title="Hero Video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <button type="button" className={styles.dialogClose} onClick={() => setIsDialogOpen(false)} aria-label="Close video">
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
 export default VideoTestimonial;
+
