@@ -164,10 +164,11 @@ export default function Home() {
 			<Landing />
 			<LazyOnVisible><Partners /></LazyOnVisible>
 			<LazyOnVisible><StatsSection /></LazyOnVisible>
+			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>
 			<LazyOnVisible><Process /></LazyOnVisible>
 			<LazyOnVisible><LandingProjects/></LazyOnVisible>
 			<LazyOnVisible><ExpertiseSection /></LazyOnVisible>
-			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>
+			{/* <LazyOnVisible><VideoTestimonial /></LazyOnVisible> */}
 			<LazyOnVisible><FAQ /></LazyOnVisible>
 			<LazyOnVisible><TrendingOld/></LazyOnVisible>
 			<LazyOnVisible><Calendly /></LazyOnVisible>
