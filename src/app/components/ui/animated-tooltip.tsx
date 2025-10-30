@@ -10,7 +10,8 @@ import {
 } from "motion/react";
 
 import "./AnimatedTooltip.scss"; // <-- import your SCSS here
-
+import Image from "next/image";
+  
 interface TooltipItem {
   id: number;
   name: string;
@@ -100,7 +101,7 @@ export const AnimatedTooltip: React.FC<AnimatedTooltipProps> = ({ items }) => {
             )}
           </AnimatePresence>
 
-          <img
+          <Image
             onMouseMove={handleMouseMove}
             height={64}
             width={64}
