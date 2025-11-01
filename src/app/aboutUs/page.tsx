@@ -187,7 +187,7 @@ export default function AboutUs() {
               From those humble beginnings, PGAGI was born. First, building products for small businesses and individuals. Then, daring to create our own product—TOINGG, an AI communication operating system bridging voice and text. Step by step, the journey expanded to startups and enterprises, proving that AI could truly make a difference.
               </p>
               <p>
-              Today, with a team of 35+ passionate engineers, PGAGI continues that journey. From late-night experiments in a lab to powering businesses worldwide, one thing has never changed the belief that AI, when built with purpose, can change lives.
+              Today, with a team of 45+ passionate engineers, PGAGI continues that journey. From late-night experiments in a lab to powering businesses worldwide, one thing has never changed the belief that AI, when built with purpose, can change lives.
               </p>
             </div>
           </div>
