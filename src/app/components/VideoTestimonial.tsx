@@ -347,7 +347,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Bernard",
-    company: "",
+    company: "Stealth Startup",
     country: "USA",
     quote:
       "From day one, I was given expert analysis of our custom trained model. I don't know of many others that will walk you through data processing, model training, and endpoint deployment with such ease and expertise. Highly recommended for anyone who needs to get an A.I. endpoint up and running in under a week from scratch!",
@@ -357,7 +357,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Nicholas",
-    company: "",
+    company: "Stealth Startup",
     country: "Canada",
     quote:
       "Awesome service, sometimes takes more time than expected but they worked very hard and a very complicated project and never gave up. at the end of the day, project is done and working. We will hire for sure",
@@ -386,7 +386,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "David Catarious",
-    company: "",
+    company: "Stealth Startup",
     country: "USA",
     quote:
       "PGAGI and the team were excellent. They were fast, thorough, and effective - can't really ask for more than that.",
@@ -396,7 +396,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Nicholas",
-    company: "",
+    company: "Stealth Startup",
     country: "Canada",
     quote:
       "The team were very research oriented, worked over hours to get it done. Excellent work and sure will work together again.",
@@ -406,7 +406,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Nicholas",
-    company: "",
+    company: "Stealth Startup",
     country: "Canada",
     quote:
       "This is the 2nd project we have worked together, highly satisfied. Hopefully will work more in future.",
@@ -436,7 +436,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Sybestian",
-    company: "",
+    company: "Stealth Startup",
     country: "USA",
     quote:
       "Great working with the team, they are very research oriented and also responsive at the same time.",
@@ -447,7 +447,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Subrotom21",
-    company: "",
+    company: "Stealth Startup",
     country: "USA",
     quote:
       "They are very professional, flexible, and fast. Highly recommend working with them.",
@@ -477,7 +477,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Mike Giuffrida",
-    company: "",
+    company: "Stealth Startup",
     country: "USA",
     quote:
       "Great communication and very responsive throughout the project. The PGAGI team delivered excellent work, exceeding expectations in both quality and speed. They were proactive, collaborative, and quick to understand our requirements. Their technical expertise and dedication truly stood out. We're extremely satisfied with the outcome and look forward to working with them again on future projects.",
@@ -496,8 +496,8 @@ const testimonials: Testimonial[] = [
     verifiedLogo: "/images/upwork-logo.png",
   },
   {
-    name: "CEO",
-    company: "AI HR Company",
+    name: "Nishant Banore",
+    company: "Stealth Startup",
     country: "USA",
     quote:
      "pgagi consultancy private limited has honest, hardworking individuals looking to deliver quality products." ,
@@ -620,7 +620,7 @@ const VideoTestimonial: React.FC = () => {
                       <div className={styles.footerBox}>
                         <div className={styles.footerLeft}>
                           <h4 className={styles.reviewerRole}>{t.name || "Project Manager"}</h4>
-                          <p className={styles.reviewerCompany}>{t.company || "CLOUDCOMPLI"}</p>
+                          <p className={styles.reviewerCompany}>{t.company || "Stealth Startup"}</p>
                         </div>
                         <div className={styles.verifiedSection}>
                           <p className={styles.verifiedText}>Verified by {t.verifiedBy}</p>
@@ -651,7 +651,7 @@ const VideoTestimonial: React.FC = () => {
                       <div className={styles.footerBox}>
                         <div className={styles.footerLeft}>
                           <h4 className={styles.reviewerRole}>{t.name || "Project Manager"}</h4>
-                          <p className={styles.reviewerCompany}>{t.company || "CLOUDCOMPLI"}</p>
+                          <p className={styles.reviewerCompany}>{t.company || "Stealth Startup"}</p>
                         </div>
                         <div className={styles.verifiedSection}>
                           <p className={styles.verifiedText}>Verified by {t.verifiedBy}</p>
