@@ -225,7 +225,7 @@ $border-color: #e5e5e5;
   position: relative;
   width: 100%;
   overflow-x: hidden; // Hide horizontal overflow
-  overflow-y: visible; // Allow vertical expansion
+  overflow-y: hidden; // Allow vertical expansion
   background: transparent;
   z-index: 2;
 }

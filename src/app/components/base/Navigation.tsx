@@ -143,7 +143,8 @@ useEffect(() => {
                     Careers
                   </TransitionLink>
                   <button className={styles.mobileContact} onClick={() => {
-                    window.open("https://form.pgagi.in/", "_blank");                    // setIsMenuOpen(false);
+                    // window.open("https://form.pgagi.in/", "_blank");   
+                    window.open("https://calendly.com/vivek-_ou/30min", "_blank");                    // setIsMenuOpen(false);
                     // handleContactUs();
                   }}>
                     Get in touch
@@ -176,7 +177,8 @@ useEffect(() => {
               </TransitionLink>
 
               <button className={styles.contact} onClick={() => {
-                window.open("https://form.pgagi.in/", "_blank");
+                // window.open("https://form.pgagi.in/", "_blank");
+                 window.open("https://calendly.com/vivek-_ou/30min", "_blank");
               }}>
                 Get in touch
                 <ArrowRight size={16} />

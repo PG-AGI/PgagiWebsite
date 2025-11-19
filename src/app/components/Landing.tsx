@@ -87,7 +87,8 @@ export default function Landing() {
                     </p>
                     <div className={styles.buttonRow}>
                         <button className={styles.ctaButton} onClick={() => {
-                            window.open("https://form.pgagi.in/", "_blank");
+                            // window.open("https://form.pgagi.in/", "_blank");
+                             window.open("https://calendly.com/vivek-_ou/30min", "_blank");
                         }}>
                             Book Private Strategy Session
                         </button>

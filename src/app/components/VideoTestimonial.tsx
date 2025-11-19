@@ -744,15 +744,26 @@ const testimonialImages: string[] = [
   "/images/testimonials/Artboard 1 copy 2.jpg",
   "/images/testimonials/Artboard 1 copy 3.jpg",
   "/images/testimonials/Artboard 1 copy 4.jpg",
-  "/images/testimonials/Artboard 1 copy 5.jpg",
-  "/images/testimonials/Artboard 1 copy 6.jpg",
-  "/images/testimonials/Artboard 1 copy 7.jpg",
+  // "/images/testimonials/Artboard 1 copy 5.jpg",
+  // "/images/testimonials/Artboard 1 copy 6.jpg",
+  // "/images/testimonials/Artboard 1 copy 7.jpg",
   "/images/testimonials/Artboard 1 copy 8.jpg",
-  "/images/testimonials/Artboard 1 copy 9.jpg",
+  // "/images/testimonials/Artboard 1 copy 9.jpg",
   "/images/testimonials/Artboard 1 copy 10.jpg",
   "/images/testimonials/Artboard 1 copy 11.jpg",
+  // "/images/testimonials/Artboard 1 copy 12.jpg",
+  "/images/testimonials/Artboard 1 copy 13.jpg",
+  // "/images/testimonials/Artboard 1 copy 14.jpg",
+  "/images/testimonials/FOMO (2).jpg",
   "/images/testimonials/Artboard 1 copy.jpg",
-  "/images/testimonials/Artboard 1.jpg",
+  // "/images/testimonials/Artboard 1.jpg",
+   "/images/testimonials/Artboard 1 copy 5.jpg",
+  "/images/testimonials/Artboard 1 copy 6.jpg",
+  "/images/testimonials/Artboard 1 copy 7.jpg",
+   "/images/testimonials/Artboard 1 copy 9.jpg",
+   "/images/testimonials/Artboard 1 copy 12.jpg",
+    "/images/testimonials/Artboard 1 copy 14.jpg",
+     "/images/testimonials/Artboard 1.jpg",
 ];
 
 // Video data - Just paste your full YouTube URL here!
@@ -771,9 +782,9 @@ const videos: VideoData[] = [
   {
     thumbnail: "/images/THUMBNAIL2.jpg", // Update with second video thumbnail
     youtubeUrl: "https://youtu.be/6xaFA25-cc8?si=dlXudFrTusBX7aaJ", // Paste full YouTube URL here
-    title: "Stunited",
+    title: "Maputo Rides",
     description:
-      "Partnering with Toingg, they deployed an advanced, AI-powered communication system. Automated WhatsApp outreach, intelligent AI calls, and seamless CRM integration with Monday.com helped them achieve 1100x ROI effortlessly.",
+      "Using Toingg conversational intelligence, Maputo Rides has transformed passive data into actionable engagement, driving both reactivation and relationship depth at scale.",
   },
 ];
 
@@ -916,7 +927,7 @@ const VideoTestimonial: React.FC = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
             {/* Navigation Arrows - Show on hover */}
-            {isHovered && (
+            { (
               <>
                 <button
                   type="button"
@@ -939,7 +950,8 @@ const VideoTestimonial: React.FC = () => {
                   </svg>
                 </button>
               </>
-            )}
+            )
+            }
 
             {/* Carousel Track */}
             <div className={styles.carouselTrack} ref={carouselRef}>

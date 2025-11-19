@@ -105,49 +105,49 @@ export default function Home() {
 		preloadHyperspeedDeps();
 	}, []);
 
-	useEffect(() => {
-		if (typeof window === 'undefined') return;
+	// useEffect(() => {
+	// 	if (typeof window === 'undefined') return;
 
-		const preload = () => {
-			const components = [
-				Partners,
-				StatsSection,
-				Process,
-				LandingProjects,
-				ExpertiseSection,
-				VideoTestimonial,
-				FAQ,
-				TrendingOld,
-				Calendly,
-				ScrollIndicator,
-			];
+		// const preload = () => {
+		// 	const components = [
+		// 		Partners,
+		// 		StatsSection,
+		// 		Process,
+		// 		LandingProjects,
+		// 		ExpertiseSection,
+		// 		VideoTestimonial,
+		// 		FAQ,
+		// 		TrendingOld,
+		// 		Calendly,
+		// 		ScrollIndicator,
+		// 	];
 
-			components.forEach((component) => {
-				(component as any)?.preload?.();
-			});
-		};
+		// 	components.forEach((component) => {
+		// 		(component as any)?.preload?.();
+		// 	});
+		// };
 
-		let idleHandle: number | null = null;
-		let timeoutHandle: number | null = null;
+		// let idleHandle: number | null = null;
+		// let timeoutHandle: number | null = null;
 
-		const requestIdle = (window as any).requestIdleCallback?.bind(window);
-		const cancelIdle = (window as any).cancelIdleCallback?.bind(window);
+		// const requestIdle = (window as any).requestIdleCallback?.bind(window);
+		// const cancelIdle = (window as any).cancelIdleCallback?.bind(window);
 
-		if (typeof requestIdle === 'function') {
-			idleHandle = requestIdle(preload, { timeout: 1000 });
-		} else {
-			timeoutHandle = window.setTimeout(preload, 300);
-		}
+		// if (typeof requestIdle === 'function') {
+		// 	idleHandle = requestIdle(preload, { timeout: 1000 });
+		// } else {
+		// 	timeoutHandle = window.setTimeout(preload, 300);
+		// }
 
-		return () => {
-			if (idleHandle !== null && typeof cancelIdle === 'function') {
-				cancelIdle(idleHandle);
-			}
-			if (timeoutHandle !== null) {
-				window.clearTimeout(timeoutHandle);
-			}
-		};
-	}, []);
+	// 	return () => {
+	// 		// if (idleHandle !== null && typeof cancelIdle === 'function') {
+	// 		// 	cancelIdle(idleHandle);
+	// 		// }
+	// 		// if (timeoutHandle !== null) {
+	// 		// 	window.clearTimeout(timeoutHandle);
+	// 		// }
+	// 	};
+	// }, []);
 
 	return (
 		<main className={styles.main}>
