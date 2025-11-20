@@ -148,7 +148,8 @@ const Process = () => {
               whileTap={{ scale: 0.95 }}
               className={styles.button}
               onClick={() => {
-                window.open("https://form.pgagi.in/", "_blank");
+                // window.open("https://form.pgagi.in/", "_blank");
+                 window.open("https://calendly.com/vivek-_ou/30min", "_blank");
               }}
             >
               Book a Slot
