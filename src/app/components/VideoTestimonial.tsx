@@ -754,7 +754,7 @@ const testimonialImages: string[] = [
   // "/images/testimonials/Artboard 1 copy 12.jpg",
   "/images/testimonials/Artboard 1 copy 13.jpg",
   // "/images/testimonials/Artboard 1 copy 14.jpg",
-  "/images/testimonials/FOMO (2).jpg",
+  "/images/testimonials/FOMO (3).jpg",
   "/images/testimonials/Artboard 1 copy.jpg",
   // "/images/testimonials/Artboard 1.jpg",
    "/images/testimonials/Artboard 1 copy 5.jpg",
