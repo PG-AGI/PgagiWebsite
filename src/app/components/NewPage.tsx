@@ -72,8 +72,27 @@ const StatsSection = () => {
       <div className={styles.container}>
         {/* Main Content Area */}
         <div className={styles.mainContent}>
-          {/* Left Side - Team of Pilots */}
+          {/* Left Side - Our Own Product & Team of Pilots */}
           <div className={styles.leftSide}>
+            {/* Our Own Product Section */}
+            <div className={styles.statItem}>
+              <h3 className={styles.statTitle}>Our Own Product</h3>
+              <div className={styles.separator} aria-hidden="true"></div>
+              <div className={styles.toinggButtonContainer}>
+                <button className={styles.toinggButton} onClick={() => {
+                    window.open("https://www.toingg.com/", "_blank");
+                }}>
+                    TOINGG
+                </button>
+              </div>
+              <span className={styles.productDescription}>
+                In year 2023, two founders launched their first product
+                <span style={{ color: "#b60306" }}> Toingg </span>
+                , an AI communication OS for businesses.
+              </span>
+            </div>
+
+            {/* Team of Pilots Section */}
             <div className={styles.teamSection}>
               <h2 className={styles.teamTitle}>Team of Pilots</h2>
               {/* <div className={styles.teamAvatars} role="group" aria-label="Team member avatars">
@@ -92,7 +111,7 @@ const StatsSection = () => {
             </div>
           </div>
 
-          {/* Right Side - Stats and Agency Info */}
+          {/* Right Side - Stats */}
           <div className={styles.rightSide}>
             {/* Top Row - Launched Projects and Client Satisfaction */}
             <div className={styles.topRow}>
@@ -102,7 +121,6 @@ const StatsSection = () => {
                 <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.statContent}>
                   <AnimatedNumber target={75} />
-                  {/* <p className={styles.statDescription}>Projects were launched successfully since 2023.</p> */}
                 </div>
               </div>
 
@@ -117,7 +135,7 @@ const StatsSection = () => {
                     className={styles.verificationLink}
                     aria-label="View our Upwork profile - opens in new tab"
                   >
-                    <span className={styles.verificationText}>
+                    {/* <span className={styles.verificationText}>
                       <span>Verify</span>
                       <svg 
                         className={styles.blueTick} 
@@ -129,7 +147,7 @@ const StatsSection = () => {
                       >
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#1DA1F2"/>
                       </svg>
-                    </span>
+                    </span> */}
                   </a>
                 </div>
                 <div className={styles.separator} aria-hidden="true"></div>
@@ -147,45 +165,21 @@ const StatsSection = () => {
               </div>
             </div>
 
-            {/* our product Section */}
-            <div className={styles.statItem}>
-              <h3 className={styles.statTitle}>Our Own Product</h3>
-              <div className={styles.separator} aria-hidden="true"></div>
-              <div className={styles.toinggButtonContainer}>
-                  <button className={styles.toinggButton} onClick={() => {
-                      window.open("https://www.toingg.com/", "_blank");
-                  }}>
-                      TOINGG
-                  </button>
-                  <span>
-                    In year 2023, two founders launched their first product
-                    <span style={{ color: "#b60306" }}> Toingg </span>
-                    , an AI communication OS for businesses.
-                  </span>
-
-              </div>
-
-            </div>
-
             {/* Agency Information Section */}
             <div className={styles.agencySection}>
-              {/* Agency Description */}
               <div className={styles.agencyDescription}>
                 <p>
-                  We specialize in engineering <strong style={{ color: "#b60306" }}>full-scale AI applications </strong> 
-                  from research and product development to scalable deployment. Whether you are launching 
-                  <strong style={{ color: "#b60306" }}> a new AI product </strong> or 
-                  <strong style={{ color: "#b60306" }}> optimizing an existing one</strong>, we bring together deep tech 
-                  expertise to drive real-world tangible results.
+                  We specialize in engineering <strong style={{ color: "#b60306" }}>full-scale AI applications</strong> from research and product development to scalable deployment.
                 </p>
-
+                <p>
+                  Whether you are launching <strong style={{ color: "#b60306" }}>a new AI product</strong> or <strong style={{ color: "#b60306" }}>optimizing an existing one</strong>, we bring together deep tech expertise to drive real-world tangible results.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    
   );
 };
 
