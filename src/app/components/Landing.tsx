@@ -3,7 +3,8 @@ import React, { useState, useRef } from 'react';
 import styles from "./landing.module.scss";
 import BookCallModal from './base/bookCallModela';
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
-import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+// import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+import Image from 'next/image';
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,7 @@ export default function Landing() {
     return (
         <section id="landing" className={styles.landing}>
             {/* HyperSpeed Background */}
-            <div className={styles.hyperspeedBackground} ref={bgRef}>
+            {/* <div className={styles.hyperspeedBackground} ref={bgRef}>
                 <Hyperspeed 
                     effectOptions={{
                         colors: {
@@ -58,10 +59,20 @@ export default function Landing() {
                         carFloorSeparation: [0, 5],
                     }}
                 />
-            </div>
+            </div> */}
+
+
+            {/* CURVED LINES BACKGROUND (insert BEFORE landingContainer) */}
+<div className={styles.curvedLines}>
+  {/* <div className={styles.line}></div> */}
+  <div className={styles.line}></div>
+  <div className={styles.line}></div>
+  <div className={styles.line}></div>
+  <div className={styles.line}></div>
+</div>
             
             <div className={styles.landingContainer}>
-                <div className={styles.leftSection}>
+                {/* <div className={styles.leftSection}>
                     <div className={styles.highlightSpot}>
                         <a 
                             href="https://www.upwork.com/agencies/1737467434828361728/" 
@@ -81,7 +92,7 @@ export default function Landing() {
                     and create meaningful impact in the world
                     </h1>
                     <p className={styles.description}>
-                    {/* We engineer purposeful AI products that scales, and create meaningful impact in the world. */}
+                    We engineer purposeful AI products that scales, and create meaningful impact in the world.
                     Creating for the world that’s <span className={styles.coming}> coming </span> 
                     Not the one passing.
                     </p>
@@ -96,7 +107,47 @@ export default function Landing() {
                             View Our Work
                         </button>
                     </div>
-                </div>
+                </div> */}
+
+                <div className={styles.enterpriseBlock}>
+    <h1 className={styles.enterpriseHeading}>
+        Building AI Systems for Enterprises
+    </h1>
+
+    <p className={styles.enterpriseSubtext}>
+        Top 1% Recognized on Upwork{' '}
+        <Image 
+            src="/images/up-arrow.png" 
+            alt="Upwork Link" 
+            width={16} 
+            height={16}
+            className={styles.upWorkLink}
+            onClick={() => {
+                window.open("https://www.upwork.com/agencies/1737467434828361728/", "_blank");
+            }}
+            style={{ cursor: 'pointer', display: 'inline-block', verticalAlign: 'middle' }}
+        />
+    </p>
+
+    <div className={styles.enterpriseInputWrapper}>
+        <textarea 
+            placeholder="Tell us what you want to build."
+            className={styles.enterpriseInput}
+        />
+        <Image 
+            src="/images/send-button.png" 
+            alt="Send" 
+            width={28} 
+            height={28}
+            className={styles.enterpriseSubmitBtn}
+            onClick={() => {
+                // Add your submit logic here
+            }}
+            style={{ cursor: 'pointer' }}
+        />
+    </div>
+</div>
+
                 <div className={styles.rightSection}>
                     {/* Placeholder SVG for animated face/skull */}
                    

@@ -1,12 +1,15 @@
 .navigation {
   position: fixed;
-  top: 0;
-  width: 100%;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 900;
   transition: all 0.2s ease-out;
+  justify-items: center;
   
   // Pure glass effect - starts transparent
   background: transparent;
@@ -15,6 +18,12 @@
   border-bottom: none;
   box-shadow: none;
   transition: all 0.3s ease-in-out;
+  // background-color: red;
+  background-color: #FFFFFF;
+  // width: 120rem;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-radius: 50px;
 
   // Glass effect when scrolled past hero
   &.glassEffect {
