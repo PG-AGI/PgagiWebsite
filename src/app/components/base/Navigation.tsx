@@ -19,6 +19,7 @@ export default function Navigation() {
   >(null);
   const BLOGS = "/whatwethink";
   const ABOUT = "/aboutUs";
+  const INDUSTRIES = "/industries";
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [showGlassEffect, setShowGlassEffect] = useState(false);
@@ -37,17 +38,16 @@ export default function Navigation() {
   }, []);
 
   // Handle scroll to detect when past hero section
-useEffect(() => {
-  const handleScroll = () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    setShowGlassEffect(scrollTop > 10); // glass effect after 10px scroll
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setShowGlassEffect(scrollTop > 10); // glass effect after 10px scroll
+    };
 
-  handleScroll(); // Apply correct state on load
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
-
+    handleScroll(); // Apply correct state on load
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleContactUs = () => {
     setIsModalOpen(true);
@@ -129,6 +129,9 @@ useEffect(() => {
                   <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     About Us
                   </TransitionLink>
+                   <TransitionLink href={INDUSTRIES} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Industries
+                  </TransitionLink>
                   <TransitionLink href="/expertise" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Expertise
                   </TransitionLink>
@@ -161,6 +164,9 @@ useEffect(() => {
               </TransitionLink>
               <TransitionLink href="/aboutUs" className={styles.link}>
                 About Us
+              </TransitionLink>
+               <TransitionLink href={INDUSTRIES} className={styles.link}>
+                Industries
               </TransitionLink>
               <TransitionLink href="/expertise" className={styles.link}>
                 Expertise
