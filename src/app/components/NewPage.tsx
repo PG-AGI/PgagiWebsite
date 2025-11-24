@@ -135,32 +135,34 @@ const StatsSection = () => {
                     className={styles.verificationLink}
                     aria-label="View our Upwork profile - opens in new tab"
                   >
-                    {/* <span className={styles.verificationText}>
-                      <span>Verify</span>
-                      <svg 
-                        className={styles.blueTick} 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        role="img"
-                      >
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#1DA1F2"/>
-                      </svg>
-                    </span> */}
                   </a>
                 </div>
                 <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.upworkVerification}>
-                  <Image 
-                    src="/landing/Upwork.webp" 
-                    alt="Upwork Logo" 
-                    width={400}
-                    height={50}
-                    sizes="(max-width: 480px) 70px, (max-width: 768px) 90px, (max-width: 1199px) 120px, 150px"
-                    className={styles.upworkLogo}
-                    priority
-                  />
+                  <div className={styles.badgeItem}>
+                    <Image 
+                      src="/images/success.png" 
+                      alt="Success Badge" 
+                      width={50}
+                      height={50}
+                      sizes="(max-width: 480px) 35px, (max-width: 768px) 40px, 50px"
+                      className={styles.successBadge}
+                      priority
+                    />
+                    <span className={styles.badgeText}>100% Job Success</span>
+                  </div>
+                  <div className={styles.badgeItem}>
+                    <Image 
+                      src="/images/toprated.png" 
+                      alt="Upwork Top Rated Badge" 
+                      width={50}
+                      height={50}
+                      sizes="(max-width: 480px) 35px, (max-width: 768px) 40px, 50px"
+                      className={styles.topratedBadge}
+                      priority
+                    />
+                    <span className={styles.badgeText}>Top Rated Plus on Upwork</span>
+                  </div>
                 </div>
               </div>
             </div>
