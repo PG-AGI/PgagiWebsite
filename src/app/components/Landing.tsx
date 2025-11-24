@@ -64,7 +64,6 @@ export default function Landing() {
 
             {/* CURVED LINES BACKGROUND (insert BEFORE landingContainer) */}
 <div className={styles.curvedLines}>
-  {/* <div className={styles.line}></div> */}
   <div className={styles.line}></div>
   <div className={styles.line}></div>
   <div className={styles.line}></div>
