@@ -460,22 +460,86 @@
 
 .messageItem {
   max-width: 85%;
-  align-self: flex-start;
-  background: #ffffff;
-  color: #1a1a1a;
   padding: 0.9rem 1.1rem;
-  border-radius: 16px 16px 16px 6px;
+  border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 8px 24px rgba(15, 15, 15, 0.08);
   display: flex;
   word-break: break-word;
 }
 
+.userMessage {
+  align-self: flex-end;
+  background: #d60000;
+  color: #ffffff;
+  border-radius: 16px 16px 6px 16px;
+  border: 1px solid rgba(214, 0, 0, 0.2);
+}
+
+.botMessage {
+  align-self: flex-start;
+  background: #ffffff;
+  color: #1a1a1a;
+  border-radius: 16px 16px 16px 6px;
+}
+
 .messageBody {
   margin: 0;
   font-size: 1rem;
   line-height: 1.5;
-  color: #1f1f1f;
+  color: inherit;
+}
+
+.streamingCursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: #d60000;
+  animation: blink 1s infinite;
+  font-weight: bold;
+}
+
+.userMessage .streamingCursor {
+  color: #ffffff;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.typingIndicator {
+  color: #999;
+  font-style: italic;
+  
+  &::after {
+    content: '...';
+    animation: dots 1.5s steps(4, end) infinite;
+  }
+}
+
+@keyframes dots {
+  0%, 20% {
+    content: '.';
+  }
+  40% {
+    content: '..';
+  }
+  60%, 100% {
+    content: '...';
+  }
+}
+
+.connectionStatus {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  font-style: italic;
 }
 
 .enterpriseInput {
@@ -502,6 +566,12 @@
   &:focus {
     border-color: #000;
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+
+  &:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.7;
   }
 }
 
