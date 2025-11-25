@@ -8,6 +8,8 @@ import Image from 'next/image';
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [messages, setMessages] = useState<string[]>([]);
+    const [currentMessage, setCurrentMessage] = useState('');
     const { scrollTo } = useSmoothScrollTo();
     const bgRef = useRef<HTMLDivElement>(null);
 
@@ -17,6 +19,23 @@ export default function Landing() {
     const handleScrollToTestimonials = () => {
         window.location.href = "/projects";
     };
+
+    const handleSendMessage = () => {
+        const trimmed = currentMessage.trim();
+        if (!trimmed) return;
+
+        setMessages((prev) => [...prev, trimmed]);
+        setCurrentMessage('');
+    };
+
+    const handleInputKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleSendMessage();
+        }
+    };
+
+    const hasMessages = messages.length > 0;
 
     return (
         <section id="landing" className={styles.landing}>
@@ -128,22 +147,34 @@ export default function Landing() {
         />
     </p>
 
-    <div className={styles.enterpriseInputWrapper}>
-        <textarea 
-            placeholder="Tell us what you want to build."
-            className={styles.enterpriseInput}
-        />
-        <Image 
-            src="/images/send-button.png" 
-            alt="Send" 
-            width={28} 
-            height={28}
-            className={styles.enterpriseSubmitBtn}
-            onClick={() => {
-                // Add your submit logic here
-            }}
-            style={{ cursor: 'pointer' }}
-        />
+    <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''}`}>
+        {hasMessages && (
+            <div className={styles.messageList}>
+                {messages.map((text, index) => (
+                    <div key={`${text}-${index}`} className={styles.messageItem}>
+                        <p className={styles.messageBody}>{text}</p>
+                    </div>
+                ))}
+            </div>
+        )}
+        <div className={styles.enterpriseInputWrapper}>
+            <textarea 
+                placeholder="Tell us what you want to build."
+                className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
+                value={currentMessage}
+                onChange={(event) => setCurrentMessage(event.target.value)}
+                onKeyDown={handleInputKeyDown}
+            />
+            <Image 
+                src="/images/send-button.png" 
+                alt="Send" 
+                width={28} 
+                height={28}
+                className={styles.enterpriseSubmitBtn}
+                onClick={handleSendMessage}
+                style={{ cursor: 'pointer' }}
+            />
+        </div>
     </div>
 </div>
 

@@ -421,9 +421,61 @@
   }
 }
 
+.chatContainer {
+  width: 90%;
+  max-width: 640px;
+  margin: 0 auto;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  padding: 1.25rem 1.25rem 1.5rem 1.25rem;
+  box-sizing: border-box;
+}
+
+.chatContainerActive {
+  background: #f8f8f8;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
 .enterpriseInputWrapper {
   width: 100%;
   position: relative;
+}
+
+.messageList {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 18px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-sizing: border-box;
+}
+
+.messageItem {
+  max-width: 85%;
+  align-self: flex-start;
+  background: #ffffff;
+  color: #1a1a1a;
+  padding: 0.9rem 1.1rem;
+  border-radius: 16px 16px 16px 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(15, 15, 15, 0.08);
+  display: flex;
+  word-break: break-word;
+}
+
+.messageBody {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #1f1f1f;
 }
 
 .enterpriseInput {
@@ -453,6 +505,12 @@
   }
 }
 
+.enterpriseInputCompact {
+  height: 120px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
 .enterpriseSubmitBtn {
   position: absolute;
   right: 18px;
@@ -479,6 +537,10 @@
     margin-top: 6rem;
   }
 
+  .chatContainer {
+    width: 100%;
+  }
+
   .enterpriseHeading {
     font-size: 2.1rem;
   }
@@ -493,6 +555,11 @@
   .enterpriseBlock {
     width: 94%;
     margin-top: 4rem;
+  }
+
+  .chatContainer {
+    width: 100%;
+    padding: 1rem;
   }
 
   .enterpriseHeading {
@@ -520,6 +587,11 @@
     width: 96%;
     margin-top: 3rem;
     padding: 1.5rem 1rem;
+  }
+
+  .chatContainer {
+    width: 100%;
+    padding: 0.85rem;
   }
 
   .enterpriseHeading {
@@ -572,6 +644,7 @@
     background: linear-gradient(87.88deg, rgba(182, 3, 6, 0.24) 20.98%, rgba(255, 255, 255, 0) 62.82%),
                 linear-gradient(128.03deg, rgba(182, 3, 6, 0.6) 0%, rgba(255, 255, 255, 0) 63.53%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
@@ -717,6 +790,12 @@
     padding: 1.5rem 1rem;
   }
 
+  .chatContainer {
+    width: 100%;
+    max-width: none;
+    padding: 1rem;
+  }
+
   .enterpriseHeading {
     font-size: 1.5rem;
     margin-bottom: 0.6rem;
@@ -748,6 +827,10 @@
   .enterpriseBlock {
     width: 96%;
     padding: 1.25rem 0.75rem;
+  }
+
+  .chatContainer {
+    padding: 0.75rem;
   }
 
   .enterpriseHeading {
