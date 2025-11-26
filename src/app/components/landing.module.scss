@@ -429,17 +429,18 @@
   transition: all 0.3s ease;
   padding: 1.25rem 1.25rem 1.5rem 1.25rem;
   box-sizing: border-box;
-  overflow: hidden; // Add this to contain the flex children
+  overflow: hidden;
 }
 
 .chatContainerActive {
   background: #f8f8f8;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.06);
-  height: 500px; // Fixed height when messages are present
+  height: 500px;
   display: flex;
   flex-direction: column;
-  overflow: hidden; // Ensure overflow is hidden on container
+  overflow: hidden;
+  max-width: 850px; // Increased from inherited 640px
 }
 
 .enterpriseInputWrapper {
@@ -633,6 +634,10 @@
     width: 100%;
   }
 
+  .chatContainerActive {
+    max-width: 750px; // Slightly smaller on tablets
+  }
+
   .enterpriseHeading {
     font-size: 2.1rem;
   }
@@ -652,6 +657,10 @@
   .chatContainer {
     width: 100%;
     padding: 1rem;
+  }
+
+  .chatContainerActive {
+    max-width: 100%; // Full width on mobile
   }
 
   .enterpriseHeading {
