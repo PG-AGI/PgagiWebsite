@@ -31,6 +31,7 @@ export default function Landing() {
     const wsRef = useRef<WebSocket | null>(null);
     const currentBotMessageRef = useRef<string>('');
     const messageListRef = useRef<HTMLDivElement>(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const handleBookCall = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -89,6 +90,10 @@ export default function Landing() {
                             });
                             currentBotMessageRef.current = '';
                             setIsLoading(false);
+                            // Focus textarea after bot completes response
+                            setTimeout(() => {
+                                textareaRef.current?.focus();
+                            }, 100);
                         } else if (data.type === 'tool_execution') {
                             // Handle tool execution if needed (can be ignored or logged)
                             console.log('Tool execution:', data);
@@ -157,6 +162,10 @@ export default function Landing() {
         // Send message via WebSocket
         try {
             wsRef.current.send(JSON.stringify({ message: trimmed }));
+            // Focus textarea after sending message
+            setTimeout(() => {
+                textareaRef.current?.focus();
+            }, 100);
         } catch (error) {
             console.error('Error sending message:', error);
             setIsLoading(false);
@@ -309,6 +318,7 @@ export default function Landing() {
         )}
         <div className={styles.enterpriseInputWrapper}>
             <textarea 
+                ref={textareaRef}
                 placeholder="Tell us what you want to build."
                 className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
                 value={currentMessage}
