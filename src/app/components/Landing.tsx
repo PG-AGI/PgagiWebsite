@@ -332,7 +332,11 @@ export default function Landing() {
                 {isLoading && messages[messages.length - 1]?.type === 'user' && (
                     <div className={`${styles.messageItem} ${styles.botMessage}`}>
                         <p className={styles.messageBody}>
-                            <span className={styles.typingIndicator}>Thinking...</span>
+                            <span className={styles.typingDots}>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
                         </p>
                     </div>
                 )}
