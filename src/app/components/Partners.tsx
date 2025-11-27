@@ -10,6 +10,7 @@ import wcg from '../assets/partners/wcg-logo.png'
 import fomo from '../assets/partners/fomo.png'
 import tvc from '../assets/partners/TVClogo (1).png'
 import Ms from '../assets/partners/logo_final_transparent.png'
+// import Ms from '../assets/partners/Untitled-3_0001_logo_final_transparent.png'
 
 
 import Image from "next/image";

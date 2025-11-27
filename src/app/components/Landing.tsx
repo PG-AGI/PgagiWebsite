@@ -47,7 +47,7 @@ export default function Landing() {
         const connectWebSocket = () => {
             try {
                 const ws = new WebSocket('ws://69.197.164.183:8001/api/chat/123');
-                
+
                 ws.onopen = () => {
                     console.log('WebSocket connected');
                     setIsConnected(true);
@@ -56,18 +56,18 @@ export default function Landing() {
                 ws.onmessage = (event) => {
                     try {
                         const data: WebSocketMessage = JSON.parse(event.data);
-                        
+
                         if (data.type === 'content' && data.content) {
                             // Accumulate content chunks
                             currentBotMessageRef.current += data.content;
-                            
+
                             // Update or create bot message
                             setMessages((prev) => {
                                 const lastMessage = prev[prev.length - 1];
                                 if (lastMessage && lastMessage.type === 'bot' && lastMessage.isStreaming) {
                                     // Update existing streaming message
-                                    return prev.map((msg, idx) => 
-                                        idx === prev.length - 1 
+                                    return prev.map((msg, idx) =>
+                                        idx === prev.length - 1
                                             ? { ...msg, text: currentBotMessageRef.current }
                                             : msg
                                     );
@@ -84,7 +84,7 @@ export default function Landing() {
                         } else if (data.type === 'message_complete') {
                             // Stop streaming and finalize message
                             setMessages((prev) => {
-                                return prev.map((msg) => 
+                                return prev.map((msg) =>
                                     msg.type === 'bot' && msg.isStreaming
                                         ? { ...msg, isStreaming: false }
                                         : msg
@@ -150,7 +150,7 @@ export default function Landing() {
             const { scrollTop, scrollHeight, clientHeight } = messageList;
             const isScrollingDown = e.deltaY > 0;
             const isScrollingUp = e.deltaY < 0;
-            
+
             // Prevent scroll propagation when at boundaries
             if ((isScrollingDown && scrollTop + clientHeight >= scrollHeight) ||
                 (isScrollingUp && scrollTop <= 0)) {
@@ -248,13 +248,13 @@ export default function Landing() {
 
 
             {/* CURVED LINES BACKGROUND (insert BEFORE landingContainer) */}
-<div className={styles.curvedLines}>
-  <div className={styles.line}></div>
-  <div className={styles.line}></div>
-  <div className={styles.line}></div>
-  <div className={styles.line}></div>
-</div>
-            
+            <div className={styles.curvedLines}>
+                <div className={styles.line}></div>
+                <div className={styles.line}></div>
+                <div className={styles.line}></div>
+                <div className={styles.line}></div>
+            </div>
+
             <div className={styles.landingContainer}>
                 {/* <div className={styles.leftSection}>
                     <div className={styles.highlightSpot}>
@@ -294,88 +294,88 @@ export default function Landing() {
                 </div> */}
 
                 <div className={styles.enterpriseBlock}>
-    <h1 className={styles.enterpriseHeading}>
-        Building AI Systems for Enterprises
-    </h1>
+                    <h1 className={styles.enterpriseHeading}>
+                        Building AI Systems for Enterprises
+                    </h1>
 
-    <p className={styles.enterpriseSubtext}>
-        Top 1% Recognized on Upwork{' '}
-        <Image 
-            src="/images/up-arrow.png" 
-            alt="Upwork Link" 
-            width={16} 
-            height={16}
-            className={styles.upWorkLink}
-            onClick={() => {
-                window.open("https://www.upwork.com/agencies/1737467434828361728/", "_blank");
-            }}
-            style={{ cursor: 'pointer', display: 'inline-block', verticalAlign: 'middle' }}
-        />
-    </p>
+                    <p className={styles.enterpriseSubtext}>
+                        Top 1% Recognized on Upwork{' '}
+                        <Image
+                            src="/images/up-arrow.png"
+                            alt="Upwork Link"
+                            width={16}
+                            height={16}
+                            className={styles.upWorkLink}
+                            onClick={() => {
+                                window.open("https://www.upwork.com/agencies/1737467434828361728/", "_blank");
+                            }}
+                            style={{ cursor: 'pointer', display: 'inline-block', verticalAlign: 'middle' }}
+                        />
+                    </p>
 
-    <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''}`}>
-        {hasMessages && (
-            <div className={styles.messageList} ref={messageListRef}>
-                {messages.map((message) => (
-                    <div 
-                        key={message.id} 
-                        className={`${styles.messageItem} ${message.type === 'user' ? styles.userMessage : styles.botMessage}`}
-                    >
-                        <p className={styles.messageBody}>
-                            {message.text}
-                            {message.isStreaming && (
-                                <span className={styles.streamingCursor}>▋</span>
-                            )}
-                        </p>
+                    <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''}`}>
+                        {hasMessages && (
+                            <div className={styles.messageList} ref={messageListRef}>
+                                {messages.map((message) => (
+                                    <div
+                                        key={message.id}
+                                        className={`${styles.messageItem} ${message.type === 'user' ? styles.userMessage : styles.botMessage}`}
+                                    >
+                                        <p className={styles.messageBody}>
+                                            {message.text}
+                                            {message.isStreaming && (
+                                                <span className={styles.streamingCursor}>▋</span>
+                                            )}
+                                        </p>
+                                    </div>
+                                ))}
+                                {isLoading && messages[messages.length - 1]?.type === 'user' && (
+                                    <div className={`${styles.messageItem} ${styles.botMessage}`}>
+                                        <p className={styles.messageBody}>
+                                            <span className={styles.typingDots}>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        <div className={styles.enterpriseInputWrapper}>
+                            <textarea
+                                ref={textareaRef}
+                                placeholder="Tell us what you want to build."
+                                className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
+                                value={currentMessage}
+                                onChange={(event) => setCurrentMessage(event.target.value)}
+                                onKeyDown={handleInputKeyDown}
+                                disabled={!isConnected || isLoading}
+                            />
+                            <Image
+                                src="/images/send-button.png"
+                                alt="Send"
+                                width={28}
+                                height={28}
+                                className={styles.enterpriseSubmitBtn}
+                                onClick={handleSendMessage}
+                                style={{
+                                    cursor: (isConnected && !isLoading) ? 'pointer' : 'not-allowed',
+                                    opacity: (isConnected && !isLoading) ? 1 : 0.5
+                                }}
+                            />
+                        </div>
+                        {!isConnected && (
+                            <div className={styles.connectionStatus}>
+                                Connecting to chat...
+                            </div>
+                        )}
                     </div>
-                ))}
-                {isLoading && messages[messages.length - 1]?.type === 'user' && (
-                    <div className={`${styles.messageItem} ${styles.botMessage}`}>
-                        <p className={styles.messageBody}>
-                            <span className={styles.typingDots}>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </span>
-                        </p>
-                    </div>
-                )}
-            </div>
-        )}
-        <div className={styles.enterpriseInputWrapper}>
-            <textarea 
-                ref={textareaRef}
-                placeholder="Tell us what you want to build."
-                className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
-                value={currentMessage}
-                onChange={(event) => setCurrentMessage(event.target.value)}
-                onKeyDown={handleInputKeyDown}
-                disabled={!isConnected || isLoading}
-            />
-            <Image 
-                src="/images/send-button.png" 
-                alt="Send" 
-                width={28} 
-                height={28}
-                className={styles.enterpriseSubmitBtn}
-                onClick={handleSendMessage}
-                style={{ 
-                    cursor: (isConnected && !isLoading) ? 'pointer' : 'not-allowed',
-                    opacity: (isConnected && !isLoading) ? 1 : 0.5
-                }}
-            />
-        </div>
-        {!isConnected && (
-            <div className={styles.connectionStatus}>
-                Connecting to chat...
-            </div>
-        )}
-    </div>
-</div>
+                </div>
 
                 <div className={styles.rightSection}>
                     {/* Placeholder SVG for animated face/skull */}
-                   
+
                 </div>
             </div>
             <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
