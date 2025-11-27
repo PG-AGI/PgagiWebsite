@@ -1,7 +1,7 @@
 .statsSection {
   background: white;
   padding: clamp(1.5rem, 3vw, 3rem);
-  min-height: 100vh;
+  // min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: flex;
   align-items: center;
@@ -336,7 +336,7 @@
   margin: 0;
 }
 
-.agencyDescription p + p {
+.agencyDescription p+p {
   margin-top: clamp(0.5rem, 0.8vw, 0.8rem);
 }
 
@@ -353,23 +353,23 @@
   .container {
     width: min(85vw, 1600px);
   }
-  
+
   .mainContent {
     gap: clamp(4rem, 6vw, 8rem);
   }
-  
+
   .rightSide {
     gap: clamp(5rem, 5vw, 9rem);
   }
-  
+
   .topRow {
     gap: clamp(5rem, 7vw, 7rem);
   }
-  
+
   .statContent {
     gap: clamp(5rem, 7vw, 9rem);
   }
-  
+
   .agencySection {
     gap: clamp(5rem, 7vw, 7rem);
   }
@@ -380,19 +380,19 @@
   .container {
     width: min(80vw, 1800px);
   }
-  
+
   .leftSide {
     width: clamp(320px, 22vw, 400px);
   }
-  
+
   .rightSide {
     max-width: calc(100% - clamp(320px, 22vw, 400px) - clamp(4rem, 6vw, 8rem));
   }
-  
+
   .statNumber {
     font-size: clamp(4.5rem, 6.5vw, 6rem);
   }
-  
+
   .teamTitle {
     font-size: clamp(2rem, 2.8vw, 2.5rem);
   }
@@ -403,19 +403,19 @@
   .container {
     width: min(75vw, 2000px);
   }
-  
+
   .statsSection {
     padding: clamp(3rem, 5vw, 6rem);
   }
-  
+
   .mainContent {
     margin-top: clamp(3rem, 5vw, 5rem);
   }
-  
+
   .statTitle {
     font-size: clamp(1.8rem, 2.2vw, 2.2rem);
   }
-  
+
   .statDescription {
     font-size: clamp(1rem, 1.2vw, 1.3rem);
   }
@@ -426,15 +426,15 @@
   .statsSection {
     padding: clamp(2.5rem, 4.5vw, 5rem);
   }
-  
+
   .container {
     gap: clamp(3.5rem, 5.5vw, 6rem);
   }
-  
+
   .mainContent {
     gap: clamp(3.5rem, 5.5vw, 7rem);
   }
-  
+
   .rightSide {
     gap: clamp(4.5rem, 6.5vw, 9rem);
   }
@@ -444,15 +444,15 @@
   .statsSection {
     padding: clamp(3rem, 5vw, 6rem);
   }
-  
+
   .container {
     gap: clamp(4rem, 6vw, 7rem);
   }
-  
+
   .mainContent {
     gap: clamp(4rem, 6vw, 8rem);
   }
-  
+
   .rightSide {
     gap: clamp(5rem, 7vw, 10rem);
   }
@@ -462,7 +462,7 @@
 @media (max-width: 1199px) {
   .statsSection {
     padding: clamp(1.5rem, 2.5vw, 2.5rem);
-    min-height: 100vh;
+    // min-height: 100vh;
   }
 
   .container {
@@ -956,7 +956,7 @@
     width: clamp(18px, 2vw, 20px);
     height: clamp(18px, 2vw, 20px);
   }
-} 
+}
 
 
 .toinggButtonContainer {
@@ -970,9 +970,9 @@
   margin: 0;
   padding: 0;
   display: inline;
-  font-size: 1.1rem;    // increase font size for emphasis
-  line-height: 1.3;     // slightly more spacing
-  font-weight: 450;     // make it a bit bolder
+  font-size: 1.1rem; // increase font size for emphasis
+  line-height: 1.3; // slightly more spacing
+  font-weight: 450; // make it a bit bolder
 }
 
 
@@ -993,7 +993,7 @@
   position: relative;
   overflow: hidden;
   border: none;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 
   // subtle diagonal shimmer
   &::before {
@@ -1003,28 +1003,33 @@
     left: -120%;
     width: 120%;
     height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.12), transparent);
     transform: skewX(-20deg);
     animation: shimmer 2.5s infinite;
   }
 
   &:hover {
-    background-color: #555555;  // grey hover
-    color: #fff;                // text stays white
+    background-color: #555555; // grey hover
+    color: #fff; // text stays white
     transform: scale(1.03) translateY(-1px); // reduced hover effect
-    box-shadow: 0 7px 18px rgba(85,85,85,0.35), 0 0 8px rgba(200,200,200,0.15); // softer shadow
+    box-shadow: 0 7px 18px rgba(85, 85, 85, 0.35), 0 0 8px rgba(200, 200, 200, 0.15); // softer shadow
   }
 
   &:active {
     transform: scale(1) translateY(0);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 }
 
 /* shimmer animation */
 @keyframes shimmer {
-  0% { left: -120%; }
-  100% { left: 120%; }
+  0% {
+    left: -120%;
+  }
+
+  100% {
+    left: 120%;
+  }
 }
 
 
@@ -1035,24 +1040,20 @@
   justify-content: flex-start;
   width: 100%;
   gap: 0;
-  
+
   // Target the AnimatedTooltip container
-  > div:first-child {
+  >div:first-child {
     display: flex;
     flex-direction: row;
     align-items: center;
-    
+
     // Create overlapping effect for avatar images
-    > * {
+    >* {
       margin-left: -0.5rem;
-      
+
       &:first-child {
         margin-left: 0;
       }
     }
   }
 }
-
-
-
-
