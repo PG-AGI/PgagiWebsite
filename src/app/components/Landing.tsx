@@ -92,10 +92,8 @@ export default function Landing() {
                             });
                             currentBotMessageRef.current = '';
                             setIsLoading(false);
-                            // Focus textarea after bot completes response
-                            setTimeout(() => {
-                                textareaRef.current?.focus();
-                            }, 100);
+
+
                         } else if (data.type === 'tool_execution') {
                             // Handle tool execution if needed (can be ignored or logged)
                             console.log('Tool execution:', data);
@@ -168,10 +166,8 @@ export default function Landing() {
         // Send message via WebSocket
         try {
             wsRef.current.send(JSON.stringify({ message: trimmed }));
-            // Focus textarea after sending message
-            setTimeout(() => {
-                textareaRef.current?.focus();
-            }, 100);
+
+
         } catch (error) {
             console.error('Error sending message:', error);
             setIsLoading(false);
