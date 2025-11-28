@@ -141,27 +141,9 @@ export default function Landing() {
         }
     }, [messages]);
 
-    // Prevent scroll propagation from message list to page
-    useEffect(() => {
-        const messageList = messageListRef.current;
-        if (!messageList) return;
 
-        const handleWheel = (e: WheelEvent) => {
-            const { scrollTop, scrollHeight, clientHeight } = messageList;
-            const isScrollingDown = e.deltaY > 0;
-            const isScrollingUp = e.deltaY < 0;
 
-            // Prevent scroll propagation when at boundaries
-            if ((isScrollingDown && scrollTop + clientHeight >= scrollHeight) ||
-                (isScrollingUp && scrollTop <= 0)) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        };
 
-        messageList.addEventListener('wheel', handleWheel, { passive: false });
-        return () => messageList.removeEventListener('wheel', handleWheel);
-    }, [hasMessages]);
 
     const handleSendMessage = () => {
         const trimmed = currentMessage.trim();

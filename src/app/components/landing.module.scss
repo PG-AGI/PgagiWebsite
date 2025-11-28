@@ -478,7 +478,8 @@
   gap: 1.2rem;
   box-sizing: border-box;
   touch-action: pan-y; // Allow only vertical scrolling
-  overscroll-behavior: contain; // Prevent scroll chaining
+  overscroll-behavior: auto;
+
 
   /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
@@ -960,7 +961,7 @@
   }
 
   .enterpriseInput {
-    height: 60px;
+    height: 100px;
     padding: 14px 60px 14px 16px;
     font-size: 14px;
     border-radius: 12px;
@@ -968,6 +969,11 @@
     &::placeholder {
       font-size: 14px;
     }
+  }
+
+  .enterpriseInputCompact {
+    height: 60px;
+
   }
 
   .enterpriseSubmitBtn {
