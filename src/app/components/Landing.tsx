@@ -26,10 +26,13 @@ export default function Landing() {
     const [currentMessage, setCurrentMessage] = useState('');
     const [isConnected, setIsConnected] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [conversationStarted, setConversationStarted] = useState(false);
     const { scrollTo } = useSmoothScrollTo();
     const bgRef = useRef<HTMLDivElement>(null);
     const wsRef = useRef<WebSocket | null>(null);
     const currentBotMessageRef = useRef<string>('');
+    const messagesRef = useRef<Message[]>([]);
+    const isProcessingRef = useRef<boolean>(false);
     const messageListRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -61,47 +64,75 @@ export default function Landing() {
                             // Accumulate content chunks
                             currentBotMessageRef.current += data.content;
 
-                            // Update or create bot message
-                            setMessages((prev) => {
-                                const lastMessage = prev[prev.length - 1];
-                                if (lastMessage && lastMessage.type === 'bot' && lastMessage.isStreaming) {
+                            // Use functional update to prevent race conditions
+                            setMessages((prevMessages) => {
+                                const updatedMessages = [...prevMessages];
+                                const lastMessageIndex = updatedMessages.length - 1;
+                                
+                                if (lastMessageIndex >= 0 && 
+                                    updatedMessages[lastMessageIndex].type === 'bot' && 
+                                    updatedMessages[lastMessageIndex].isStreaming) {
                                     // Update existing streaming message
-                                    return prev.map((msg, idx) =>
-                                        idx === prev.length - 1
-                                            ? { ...msg, text: currentBotMessageRef.current }
-                                            : msg
-                                    );
+                                    updatedMessages[lastMessageIndex] = {
+                                        ...updatedMessages[lastMessageIndex],
+                                        text: currentBotMessageRef.current
+                                    };
                                 } else {
                                     // Create new bot message
-                                    return [...prev, {
-                                        id: `bot-${Date.now()}`,
+                                    updatedMessages.push({
+                                        id: `bot-${Date.now()}-${Math.random()}`,
                                         text: currentBotMessageRef.current,
                                         type: 'bot' as const,
                                         isStreaming: true
-                                    }];
+                                    });
                                 }
+                                
+                                // Update ref to keep in sync
+                                messagesRef.current = updatedMessages;
+                                return updatedMessages;
                             });
                         } else if (data.type === 'message_complete') {
-                            // Stop streaming and finalize message
-                            setMessages((prev) => {
-                                return prev.map((msg) =>
-                                    msg.type === 'bot' && msg.isStreaming
-                                        ? { ...msg, isStreaming: false }
-                                        : msg
-                                );
+                            // Stop streaming and finalize message with final content
+                            setMessages((prevMessages) => {
+                                const updatedMessages = [...prevMessages];
+                                const lastMessageIndex = updatedMessages.length - 1;
+                                
+                                if (lastMessageIndex >= 0 && 
+                                    updatedMessages[lastMessageIndex].type === 'bot' && 
+                                    updatedMessages[lastMessageIndex].isStreaming) {
+                                    // Finalize the message with current content
+                                    updatedMessages[lastMessageIndex] = {
+                                        ...updatedMessages[lastMessageIndex],
+                                        text: currentBotMessageRef.current,
+                                        isStreaming: false
+                                    };
+                                }
+                                
+                                // Update ref to keep in sync
+                                messagesRef.current = updatedMessages;
+                                return updatedMessages;
                             });
-                            currentBotMessageRef.current = '';
-                            setIsLoading(false);
+                            
+                            // Clear refs and loading state with delay to ensure state update completes
+                            setTimeout(() => {
+                                currentBotMessageRef.current = '';
+                                setIsLoading(false);
+                                isProcessingRef.current = false;
+                            }, 100);
+                            
                             // Focus textarea after bot completes response
                             setTimeout(() => {
                                 textareaRef.current?.focus();
-                            }, 100);
+                            }, 150);
                         } else if (data.type === 'tool_execution') {
                             // Handle tool execution if needed (can be ignored or logged)
                             console.log('Tool execution:', data);
                         }
                     } catch (error) {
                         console.error('Error parsing WebSocket message:', error);
+                        // Reset processing flag on error
+                        isProcessingRef.current = false;
+                        setIsLoading(false);
                     }
                 };
 
@@ -147,20 +178,32 @@ export default function Landing() {
 
     const handleSendMessage = () => {
         const trimmed = currentMessage.trim();
-        if (!trimmed || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+        if (!trimmed || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN || isProcessingRef.current) {
             if (!isConnected) {
                 alert('WebSocket is not connected. Please wait...');
             }
             return;
         }
 
+        // Set processing flag to prevent concurrent operations
+        isProcessingRef.current = true;
+
+        // Mark conversation as started
+        setConversationStarted(true);
+
         // Add user message to UI
         const userMessage: Message = {
-            id: `user-${Date.now()}`,
+            id: `user-${Date.now()}-${Math.random()}`,
             text: trimmed,
             type: 'user'
         };
-        setMessages((prev) => [...prev, userMessage]);
+        
+        setMessages((prevMessages) => {
+            const updatedMessages = [...prevMessages, userMessage];
+            messagesRef.current = updatedMessages;
+            return updatedMessages;
+        });
+        
         setCurrentMessage('');
         setIsLoading(true);
         currentBotMessageRef.current = '';
@@ -175,6 +218,7 @@ export default function Landing() {
         } catch (error) {
             console.error('Error sending message:', error);
             setIsLoading(false);
+            isProcessingRef.current = false;
         }
     };
 
@@ -295,8 +339,8 @@ export default function Landing() {
                         />
                     </p>
 
-                    <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''}`}>
-                        {hasMessages && (
+                    <div className={`${styles.chatContainer} ${conversationStarted ? styles.chatContainerActive : ''}`}>
+                        {conversationStarted && (
                             <div className={styles.messageList} ref={messageListRef}>
                                 {messages.map((message) => (
                                     <div
@@ -328,7 +372,7 @@ export default function Landing() {
                             <textarea
                                 ref={textareaRef}
                                 placeholder="Tell us what you want to build."
-                                className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
+                                className={`${styles.enterpriseInput} ${conversationStarted ? styles.enterpriseInputCompact : ''}`}
                                 value={currentMessage}
                                 onChange={(event) => setCurrentMessage(event.target.value)}
                                 onKeyDown={handleInputKeyDown}
