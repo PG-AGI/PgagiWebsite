@@ -2,141 +2,94 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 48px;
-    // margin-top: 2rem;
+    // margin-bottom: 48px;
+    background-color: #fff;
+    padding: 2rem 0;
+    width: 100%;
 
     h3 {
-        font-size: 25px;
-        font-weight: 600;
-        color: #fff;
-        margin-bottom: 36px;
+        font-size: 32px;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 40px;
+        text-align: center;
     }
 
-
     .marquee {
-        width: 80%;
+        width: 100%;
         display: flex;
         align-items: center;
         position: relative;
         overflow: hidden;
-    
-        // Mask for disappearing effect
-        mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-        -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-    
-        .marquee-content {
-            display: flex;
-            animation: marquee-scroll 10s linear infinite;
-        }
-    
-        @keyframes marquee-scroll {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(-100%);
-            }
-        }
+
+        // Mask for disappearing effect at edges
+        //     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        //     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     }
-    
-    
-    
+
     .partnerList {
-        width: auto;
+        display: flex;
+        align-items: center;
+        // gap is handled by margin on cards or gap here if marquee supports it well
+        // react-fast-marquee children usually sit side-by-side.
+    }
+
+    .card {
+        background-color: #111; // Black card
+        border-radius: 16px;
+        width: 180px;
+        height: 100px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0 5vw;
-        gap: 10vw;
+        margin: 0 15px; // Gap between cards
+        padding: 20px;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
         img {
             width: auto;
-            height: 50px;
-            &:nth-child(1) {
-                filter: grayscale(10) brightness(250%);
-            }
-
-            &:nth-child(2) {
-                filter: grayscale(10) brightness(250%);
-            }
-
-            &:nth-child(3) {
-                filter: grayscale(10) brightness(150%);
-            }
-
-            &:nth-child(4) {
-                filter: grayscale(10) brightness(200%);
-            }
-
-            &:nth-child(5) {
-                filter: grayscale(10) brightness(650%);
-                height: 40px;
-            }
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            // Make logos white to contrast with black card
+            filter: grayscale(100%) brightness(1000%);
         }
     }
 }
 
-@media (max-width: 478px) {
+@media (max-width: 768px) {
     .partners {
-        display: flex;
-        flex-wrap: wrap;
-        // margin-top: 25%;
-
         h3 {
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            // margin-top: -5%;
+            font-size: 24px;
+            margin-bottom: 30px;
         }
 
-
-
-        .partnerList {
-            gap: 10vw;
-            padding: 0 5vw;
-            align-items: center;
-            justify-content: center;
-            display: flex;
-
-            img {
-                width: auto;
-                height: 30px;
-
-                &:nth-child(1) {
-                    filter: grayscale(10) brightness(250%);
-                }
-
-                &:nth-child(2) {
-                    filter: grayscale(10) brightness(250%);
-                }
-
-                &:nth-child(3) {
-                    filter: grayscale(10) brightness(150%);
-                }
-
-                &:nth-child(4) {
-                    filter: grayscale(10) brightness(200%);
-                }
-
-                &:nth-child(5) {
-                    filter: grayscale(10) brightness(650%);
-                    height: 20px;
-                }
-            }
+        .card {
+            width: 140px;
+            height: 80px;
+            margin: 0 10px;
+            border-radius: 12px;
         }
     }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 480px) {
     .partners {
-        display: flex;
-        flex-wrap: wrap;
-        // margin-top: 25%;
-
         h3 {
-            text-align: center;
-            justify-content: center;
-            font-size: 18px;
-            // margin-top: -5%;
+            font-size: 20px;
+        }
+
+        .card {
+            width: 120px;
+            height: 70px;
+            margin: 0 8px;
+            border-radius: 10px;
+            padding: 15px;
         }
     }
 }
