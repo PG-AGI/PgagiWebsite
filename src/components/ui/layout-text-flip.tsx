@@ -19,6 +19,10 @@ export function LayoutTextFlip({
 }: LayoutTextFlipProps) {
   const prefersReducedMotion = useReducedMotion();
   const wordList = useMemo(() => (words.length ? words : ['']), [words]);
+  const longestWord = useMemo(
+    () => wordList.reduce((longest, word) => (word.length > longest.length ? word : longest), ''),
+    [wordList],
+  );
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -38,15 +42,19 @@ export function LayoutTextFlip({
       className={`${styles.flipRoot} ${prefersReducedMotion ? styles.prefersReducedMotion : ''} ${className}`}
     >
       {text && <span className={styles.staticText}>{text}</span>}
-      <span className={styles.wordWrapper}>
+      <span className={styles.wordWrapper} aria-live="polite">
+        <span className={styles.wordPlaceholder}>{longestWord}</span>
         <AnimatePresence mode="wait">
           <motion.span
             key={wordList[index]}
             className={styles.word}
-            initial={{ rotateX: -90, y: '100%', opacity: 0 }}
-            animate={{ rotateX: 0, y: '0%', opacity: 1 }}
-            exit={{ rotateX: 90, y: '-100%', opacity: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: prefersReducedMotion ? 0 : 0.4,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             {wordList[index]}
           </motion.span>
