@@ -5,6 +5,7 @@ import BookCallModal from './base/bookCallModela';
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
 // import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
 import Image from 'next/image';
+import { LayoutTextFlip } from '@/components/ui/layout-text-flip';
 
 interface Message {
     id: string;
@@ -272,8 +273,11 @@ export default function Landing() {
                 </div> */}
 
                 <div className={styles.enterpriseBlock}>
-                    <h1 className={styles.enterpriseHeading}>
-                        Building AI Systems for Enterprises
+                    <h1 className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}>
+                        <LayoutTextFlip
+                            text="Building AI Systems for"
+                            words={["Enterprises", "Ambitious Teams", "Category Leaders"]}
+                        />
                     </h1>
 
                     <p className={styles.enterpriseSubtext}>

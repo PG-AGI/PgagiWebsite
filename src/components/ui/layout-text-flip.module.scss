@@ -1,0 +1,35 @@
+.flipRoot {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.staticText {
+  color: inherit;
+  padding-right: 0.2rem;
+}
+
+.wordWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 1em;
+  perspective: 900px;
+}
+
+.word {
+  display: inline-block;
+  white-space: nowrap;
+  color: #d60000;
+}
+
+.prefersReducedMotion {
+  perspective: none;
+}
+
+.prefersReducedMotion .word {
+  transform: none !important;
+}
+
