@@ -295,7 +295,7 @@ export default function Landing() {
                     <h1 className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}>
                         <LayoutTextFlip
                             text="Building AI Systems for"
-                            words={["Enterprises", "Ambitious Teams", "Category Leaders"]}
+                            words={["Enterprises", "Start Ups", "Businesses" , "Innovators"]}
                         />
                     </h1>
 
