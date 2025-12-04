@@ -5,6 +5,7 @@ import BookCallModal from './base/bookCallModela';
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
 // import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
 import Image from 'next/image';
+import { LayoutTextFlip } from '@/components/ui/layout-text-flip';
 
 interface Message {
     id: string;
@@ -19,6 +20,14 @@ interface WebSocketMessage {
     conversation_complete?: boolean;
     [key: string]: any;
 }
+
+const shouldAutoResetChat = (text: string) => {
+    const normalized = text.toLowerCase();
+    return (
+        normalized.includes("I appreciate your time, but it seems like this might not be the best moment to discuss your project. Feel free to reach out when you're ready to focus on your requirements. Have a great day! :wave:") ||
+        normalized.includes("Your project details have been successfully captured! Our expert team at PGAGI has received your requirements  ")
+    );
+};
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,6 +91,7 @@ export default function Landing() {
                                 }
                             });
                         } else if (data.type === 'message_complete') {
+                            const finalMessageText = currentBotMessageRef.current;
                             // Stop streaming and finalize message
                             setMessages((prev) => {
                                 return prev.map((msg) =>
@@ -92,6 +102,9 @@ export default function Landing() {
                             });
                             currentBotMessageRef.current = '';
                             setIsLoading(false);
+                            if (finalMessageText && shouldAutoResetChat(finalMessageText)) {
+                                handleResetChat();
+                            }
 
 
                         } else if (data.type === 'tool_execution') {
@@ -142,6 +155,13 @@ export default function Landing() {
 
 
 
+
+    const handleResetChat = () => {
+        setMessages([]);
+        setCurrentMessage('');
+        currentBotMessageRef.current = '';
+        setIsLoading(false);
+    };
 
     const handleSendMessage = () => {
         const trimmed = currentMessage.trim();
@@ -272,8 +292,11 @@ export default function Landing() {
                 </div> */}
 
                 <div className={styles.enterpriseBlock}>
-                    <h1 className={styles.enterpriseHeading}>
-                        Building AI Systems for Enterprises
+                    <h1 className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}>
+                        <LayoutTextFlip
+                            text="Building AI Systems for"
+                            words={["Enterprises", "Start Ups", "Businesses" , "Innovators"]}
+                        />
                     </h1>
 
                     <p className={styles.enterpriseSubtext}>
@@ -292,6 +315,16 @@ export default function Landing() {
                     </p>
 
                     <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''}`}>
+                        {hasMessages && (
+                            <button
+                                type="button"
+                                className={styles.chatCloseButton}
+                                onClick={handleResetChat}
+                                aria-label="Reset chat"
+                            >
+                                ×
+                            </button>
+                        )}
                         {hasMessages && (
                             <div className={styles.messageList} ref={messageListRef}>
                                 {messages.map((message) => (

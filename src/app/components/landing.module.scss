@@ -411,6 +411,15 @@
   margin-bottom: 0.8rem;
 }
 
+.enterpriseHeadingAnimated {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  text-align: center;
+}
+
 .enterpriseSubtext {
   font-size: 1rem;
   color: #555;
@@ -442,6 +451,7 @@
   padding: 1.25rem 1.25rem 1.5rem 1.25rem;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative; // Allows close button positioning
 }
 
 .chatContainerActive {
@@ -449,10 +459,41 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.06);
   height: 500px;
+  padding-top: 3.25rem; // create space for close button
   display: flex;
   flex-direction: column;
   overflow: hidden;
   max-width: 850px; // Increased from inherited 640px
+}
+
+.chatCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    background: #f1f1f1;
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .enterpriseInputWrapper {
