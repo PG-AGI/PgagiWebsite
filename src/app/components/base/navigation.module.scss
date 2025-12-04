@@ -15,6 +15,7 @@
 
   // Zoom level handling
   zoom: reset;
+  transform-origin: 0 0;
   -moz-transform-origin: 0 0;
 
   // Pure glass effect - starts transparent
@@ -98,11 +99,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin: 0;
     padding: 10px;
     text-decoration: none;
     transition: opacity 0.1s ease-in-out, visibility 0s 0.3s;
-    min-width: max-content;
+    min-width: 140px;
+    max-width: 220px;
+    width: min(20vw, 220px);
+    text-align: center;
 
     img {
       width: 50px;
@@ -112,13 +117,14 @@
 
     p {
       font-family: 'Gilroy', sans-serif;
-      font-size: 16px;
+      font-size: clamp(0.9rem, 1vw, 1rem);
       font-weight: 600;
       margin: 5px 0 0;
       color: var(--text-color, #fff);
-      text-align: center;
-      white-space: nowrap;
-      overflow: visible;
+      text-align: inherit;
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     &.logoHidden {
@@ -603,6 +609,9 @@
         gap: 10px;
         margin: 0;
         padding: 0;
+        min-width: auto;
+        max-width: none;
+        width: auto;
 
         &.logoHidden {
           opacity: 1;

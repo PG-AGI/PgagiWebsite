@@ -180,10 +180,8 @@ export default function Landing() {
         // Send message via WebSocket
         try {
             wsRef.current.send(JSON.stringify({ message: trimmed }));
-            // Focus textarea after sending message
-            setTimeout(() => {
-                textareaRef.current?.focus();
-            }, 100);
+
+
         } catch (error) {
             console.error('Error sending message:', error);
             setIsLoading(false);
