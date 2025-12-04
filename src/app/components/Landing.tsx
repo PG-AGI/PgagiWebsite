@@ -47,90 +47,59 @@ export default function Landing() {
 
     // Initialize WebSocket connection
     useEffect(() => {
-        const connectWebSocket = () => {
+        const connectWebSocket = async () => {
             try {
-                const ws = new WebSocket('ws://69.197.164.183:8001/api/chat/123');
+                // 1) Get or create session_id and store in localStorage
+                let sessionId = typeof window !== 'undefined' ? localStorage.getItem('session_id') || '' : '';
+                if (!sessionId) {
+                    const resp = await fetch('http://69.197.164.183:8001/api/chat/generate_session');
+                    const json = await resp.json();
+                    sessionId = json.session_id;
+                    if (sessionId && typeof window !== 'undefined') {
+                        localStorage.setItem('session_id', sessionId);
+                    }
+                }
+
+                // 2) Connect WebSocket using the session_id
+                const ws = new WebSocket(`ws://69.197.164.183:8001/api/chat/${sessionId}`);
 
                 ws.onopen = () => {
                     console.log('WebSocket connected');
                     setIsConnected(true);
                 };
 
-                ws.onmessage = (event) => {
+                ws.onmessage = async (event) => {
                     try {
-                        const data: WebSocketMessage = JSON.parse(event.data);
+                        // Accept only the new plain-text format and render it directly
+                        const raw = event.data;
+                        const text = typeof raw === 'string' ? raw : await (raw as Blob).text();
 
-                        if (data.type === 'content' && data.content) {
-                            // Accumulate content chunks
-                            currentBotMessageRef.current += data.content;
+                        // Ignore heartbeat strings
+                        if (text === 'ping' || text === 'pong') return;
 
-                            // Use functional update to prevent race conditions
-                            setMessages((prevMessages) => {
-                                const updatedMessages = [...prevMessages];
-                                const lastMessageIndex = updatedMessages.length - 1;
-                                
-                                if (lastMessageIndex >= 0 && 
-                                    updatedMessages[lastMessageIndex].type === 'bot' && 
-                                    updatedMessages[lastMessageIndex].isStreaming) {
-                                    // Update existing streaming message
-                                    updatedMessages[lastMessageIndex] = {
-                                        ...updatedMessages[lastMessageIndex],
-                                        text: currentBotMessageRef.current
-                                    };
-                                } else {
-                                    // Create new bot message
-                                    updatedMessages.push({
-                                        id: `bot-${Date.now()}-${Math.random()}`,
-                                        text: currentBotMessageRef.current,
-                                        type: 'bot' as const,
-                                        isStreaming: true
-                                    });
-                                }
-                                
-                                // Update ref to keep in sync
-                                messagesRef.current = updatedMessages;
-                                return updatedMessages;
-                            });
-                        } else if (data.type === 'message_complete') {
-                            // Stop streaming and finalize message with final content
-                            setMessages((prevMessages) => {
-                                const updatedMessages = [...prevMessages];
-                                const lastMessageIndex = updatedMessages.length - 1;
-                                
-                                if (lastMessageIndex >= 0 && 
-                                    updatedMessages[lastMessageIndex].type === 'bot' && 
-                                    updatedMessages[lastMessageIndex].isStreaming) {
-                                    // Finalize the message with current content
-                                    updatedMessages[lastMessageIndex] = {
-                                        ...updatedMessages[lastMessageIndex],
-                                        text: currentBotMessageRef.current,
-                                        isStreaming: false
-                                    };
-                                }
-                                
-                                // Update ref to keep in sync
-                                messagesRef.current = updatedMessages;
-                                return updatedMessages;
-                            });
-                            
-                            // Clear refs and loading state with delay to ensure state update completes
-                            setTimeout(() => {
-                                currentBotMessageRef.current = '';
-                                setIsLoading(false);
-                                isProcessingRef.current = false;
-                            }, 100);
-                            
-                            // Focus textarea after bot completes response
-                            setTimeout(() => {
-                                textareaRef.current?.focus();
-                            }, 150);
-                        } else if (data.type === 'tool_execution') {
-                            // Handle tool execution if needed (can be ignored or logged)
-                            console.log('Tool execution:', data);
-                        }
+                        const botMsg: Message = {
+                            id: `bot-${Date.now()}-${Math.random()}`,
+                            text: text.trim(),
+                            type: 'bot',
+                            isStreaming: false
+                        };
+
+                        setMessages((prev) => {
+                            const updated = [...prev, botMsg];
+                            messagesRef.current = updated;
+                            return updated;
+                        });
+
+                        // Reset flags so UI doesn't stay in loading state
+                        setIsLoading(false);
+                        isProcessingRef.current = false;
+
+                        // Focus input for next message
+                        setTimeout(() => {
+                            textareaRef.current?.focus();
+                        }, 100);
                     } catch (error) {
-                        console.error('Error parsing WebSocket message:', error);
-                        // Reset processing flag on error
+                        console.error('Error handling WebSocket message:', error);
                         isProcessingRef.current = false;
                         setIsLoading(false);
                     }
