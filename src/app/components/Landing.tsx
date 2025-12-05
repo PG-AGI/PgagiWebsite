@@ -53,66 +53,57 @@ export default function Landing() {
 
     // Initialize WebSocket connection
     useEffect(() => {
-        const connectWebSocket = () => {
+        const connectWebSocket = async () => {
             try {
-                const ws = new WebSocket('ws://69.197.164.183:8001/api/chat/123');
+                // Check localStorage for existing session
+                let sessionId = localStorage.getItem('session_id');
+                
+                // If no session, fetch new one from backend
+                if (!sessionId) {
+                    const response = await fetch('http://69.197.164.183:8001/api/chat/generate_session');
+                    const data = await response.json();
+                    sessionId = data.session_id;
+                    if (sessionId) {
+                        localStorage.setItem('session_id', sessionId);
+                    }
+                }
+
+                // Connect WebSocket with session ID
+                const ws = new WebSocket(`ws://69.197.164.183:8001/api/chat/${sessionId || '123'}`);
 
                 ws.onopen = () => {
                     console.log('WebSocket connected');
                     setIsConnected(true);
                 };
 
-                ws.onmessage = (event) => {
+                ws.onmessage = async (event) => {
                     try {
-                        const data: WebSocketMessage = JSON.parse(event.data);
+                        // Convert Blob to text if needed
+                        const text = typeof event.data === 'string'
+                            ? event.data
+                            : await (event.data as Blob).text();
 
-                        if (data.type === 'content' && data.content) {
-                            // Accumulate content chunks
-                            currentBotMessageRef.current += data.content;
+                        // Ignore heartbeat messages
+                        if (text === 'ping' || text === 'pong') return;
+                        if (!text.trim()) return;
 
-                            // Update or create bot message
-                            setMessages((prev) => {
-                                const lastMessage = prev[prev.length - 1];
-                                if (lastMessage && lastMessage.type === 'bot' && lastMessage.isStreaming) {
-                                    // Update existing streaming message
-                                    return prev.map((msg, idx) =>
-                                        idx === prev.length - 1
-                                            ? { ...msg, text: currentBotMessageRef.current }
-                                            : msg
-                                    );
-                                } else {
-                                    // Create new bot message
-                                    return [...prev, {
-                                        id: `bot-${Date.now()}`,
-                                        text: currentBotMessageRef.current,
-                                        type: 'bot' as const,
-                                        isStreaming: true
-                                    }];
-                                }
-                            });
-                        } else if (data.type === 'message_complete') {
-                            const finalMessageText = currentBotMessageRef.current;
-                            // Stop streaming and finalize message
-                            setMessages((prev) => {
-                                return prev.map((msg) =>
-                                    msg.type === 'bot' && msg.isStreaming
-                                        ? { ...msg, isStreaming: false }
-                                        : msg
-                                );
-                            });
-                            currentBotMessageRef.current = '';
-                            setIsLoading(false);
-                            if (finalMessageText && shouldAutoResetChat(finalMessageText)) {
-                                handleResetChat();
-                            }
+                        // Add bot message instantly (no animation)
+                        setMessages(prev => [...prev, {
+                            id: `bot-${Date.now()}`,
+                            text: text,
+                            type: 'bot',
+                            isStreaming: false
+                        }]);
 
+                        setIsLoading(false);
 
-                        } else if (data.type === 'tool_execution') {
-                            // Handle tool execution if needed (can be ignored or logged)
-                            console.log('Tool execution:', data);
+                        // Check if auto-reset is needed
+                        if (shouldAutoResetChat(text)) {
+                            handleResetChat();
                         }
                     } catch (error) {
-                        console.error('Error parsing WebSocket message:', error);
+                        console.error('Error processing WebSocket message:', error);
+                        setIsLoading(false);
                     }
                 };
 
