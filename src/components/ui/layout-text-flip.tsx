@@ -59,21 +59,6 @@ export function LayoutTextFlip({
             {wordList[index]}
           </motion.span>
         </AnimatePresence>
-        {!prefersReducedMotion && (
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={`sparks-${wordList[index]}`}
-              className={styles.sparks}
-              initial={{ opacity: 0, scale: 0.4 }}
-              animate={{ opacity: 0.9, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.6 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className={`${styles.spark} ${styles.sparkPrimary}`} />
-              <span className={`${styles.spark} ${styles.sparkSecondary}`} />
-            </motion.span>
-          </AnimatePresence>
-        )}
       </span>
     </span>
   );

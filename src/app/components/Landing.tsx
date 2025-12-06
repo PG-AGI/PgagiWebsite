@@ -182,6 +182,13 @@ export default function Landing() {
         }
     }, [messages]);
 
+    // Auto-focus textarea when chat becomes active or after bot responds
+    useEffect(() => {
+        if (hasMessages && !isLoading && textareaRef.current) {
+            textareaRef.current.focus();
+        }
+    }, [hasMessages, isLoading]);
+
 
 
 
@@ -325,7 +332,7 @@ export default function Landing() {
                     <h1 className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}>
                         <LayoutTextFlip
                             text="Building AI Systems for"
-                            words={["Enterprises", "Start Ups"]}
+                            words={["Enterprises", "StartUps"]}
                         />
                     </h1>
 
@@ -363,24 +370,18 @@ export default function Landing() {
                                         className={`${styles.messageItem} ${message.type === 'user' ? styles.userMessage : styles.botMessage}`}
                                     >
                                         <p className={styles.messageBody}>
-                                            {message.text}
-                                            {message.isStreaming && (
-                                                <span className={styles.streamingCursor}>▋</span>
+                                            {message.type === 'bot' && message.isStreaming && !message.text ? (
+                                                <span className={styles.typingDots}>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </span>
+                                            ) : (
+                                                message.text
                                             )}
                                         </p>
                                     </div>
                                 ))}
-                                {isLoading && messages[messages.length - 1]?.type === 'user' && (
-                                    <div className={`${styles.messageItem} ${styles.botMessage}`}>
-                                        <p className={styles.messageBody}>
-                                            <span className={styles.typingDots}>
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </span>
-                                        </p>
-                                    </div>
-                                )}
                             </div>
                         )}
                         <div className={styles.enterpriseInputWrapper}>
