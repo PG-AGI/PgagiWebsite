@@ -371,9 +371,6 @@ export default function Landing() {
                                     >
                                         <p className={styles.messageBody}>
                                             {message.text}
-                                            {message.isStreaming && (
-                                                <span className={styles.streamingCursor}>▋</span>
-                                            )}
                                         </p>
                                     </div>
                                 ))}

@@ -567,30 +567,30 @@
   color: inherit;
 }
 
-.streamingCursor {
-  display: inline-block;
-  margin-left: 2px;
-  color: #d60000;
-  animation: blink 1s infinite;
-  font-weight: bold;
-}
+// .streamingCursor {
+//   display: inline-block;
+//   margin-left: 2px;
+//   color: #1a1a1a;
+//   animation: blink 1s infinite;
+//   font-weight: bold;
+// }
 
-.userMessage .streamingCursor {
-  color: #ffffff;
-}
+// .userMessage .streamingCursor {
+//   color: #ffffff;
+// }
 
-@keyframes blink {
+// @keyframes blink {
 
-  0%,
-  50% {
-    opacity: 1;
-  }
+//   0%,
+//   50% {
+//     opacity: 1;
+//   }
 
-  51%,
-  100% {
-    opacity: 0;
-  }
-}
+//   51%,
+//   100% {
+//     opacity: 0;
+//   }
+// }
 
 .typingDots {
   display: inline-flex;
