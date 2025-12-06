@@ -785,7 +785,12 @@
   }
 
   .enterpriseHeading {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .enterpriseHeadingAnimated {
+    white-space: nowrap;
+    overflow: visible;
   }
 
   .enterpriseInput {
