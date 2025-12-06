@@ -370,21 +370,18 @@ export default function Landing() {
                                         className={`${styles.messageItem} ${message.type === 'user' ? styles.userMessage : styles.botMessage}`}
                                     >
                                         <p className={styles.messageBody}>
-                                            {message.text}
+                                            {message.type === 'bot' && message.isStreaming && !message.text ? (
+                                                <span className={styles.typingDots}>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </span>
+                                            ) : (
+                                                message.text
+                                            )}
                                         </p>
                                     </div>
                                 ))}
-                                {isLoading && messages[messages.length - 1]?.type === 'user' && (
-                                    <div className={`${styles.messageItem} ${styles.botMessage}`}>
-                                        <p className={styles.messageBody}>
-                                            <span className={styles.typingDots}>
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </span>
-                                        </p>
-                                    </div>
-                                )}
                             </div>
                         )}
                         <div className={styles.enterpriseInputWrapper}>
