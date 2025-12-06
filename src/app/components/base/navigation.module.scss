@@ -104,9 +104,9 @@
     padding: 10px;
     text-decoration: none;
     transition: opacity 0.1s ease-in-out, visibility 0s 0.3s;
-    min-width: 140px;
-    max-width: 220px;
-    width: min(20vw, 220px);
+    min-width: 80px;
+    max-width: 120px;
+    width: min(10vw, 120px);
     text-align: center;
 
     img {
@@ -135,7 +135,7 @@
   }
 
   .nav {
-    width: 85%;
+    width: 90%;
     min-width: fit-content;
     display: flex;
     align-items: center;
@@ -144,8 +144,8 @@
     transition: opacity 0.1s ease-in-out, visibility 0s 0.3s;
     will-change: transform, opacity;
     z-index: 1900;
-    padding: 0;
-    gap: 40px;
+    padding: 0 20px;
+    gap: 20px;
 
     &.navHidden {
       opacity: 0;
@@ -160,7 +160,7 @@
       align-items: center;
       flex-wrap: nowrap;
       flex: 0 1 auto; // Changed from flex: 1
-      margin: 0 20px;
+      margin: 0 10px;
 
       >a,
       .whatWeDo>a,
