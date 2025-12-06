@@ -87,18 +87,57 @@ export default function Landing() {
                         if (text === 'ping' || text === 'pong') return;
                         if (!text.trim()) return;
 
-                        // Add bot message instantly (no animation)
-                        setMessages(prev => [...prev, {
-                            id: `bot-${Date.now()}`,
-                            text: text,
-                            type: 'bot',
-                            isStreaming: false
-                        }]);
+                        // Parse JSON message
+                        const message = JSON.parse(text);
 
-                        setIsLoading(false);
-
-                        // Check if auto-reset is needed
-                        if (shouldAutoResetChat(text)) {
+                        if (message.type === 'stream_start') {
+                            // Create new bot message with streaming state
+                            const botMessageId = `bot-${Date.now()}`;
+                            setMessages(prev => [...prev, {
+                                id: botMessageId,
+                                text: '',
+                                type: 'bot',
+                                isStreaming: true
+                            }]);
+                            currentBotMessageRef.current = '';
+                            // Store the message ID for subsequent chunks
+                            (ws as any)._currentMessageId = botMessageId;
+                        } else if (message.type === 'chunk' && message.content) {
+                            // Append chunk to current bot message
+                            currentBotMessageRef.current += message.content;
+                            const messageId = (ws as any)._currentMessageId;
+                            
+                            setMessages(prev => prev.map(msg =>
+                                msg.id === messageId
+                                    ? { ...msg, text: currentBotMessageRef.current }
+                                    : msg
+                            ));
+                        } else if (message.type === 'stream_end') {
+                            // Mark streaming as complete
+                            const messageId = (ws as any)._currentMessageId;
+                            setMessages(prev => prev.map(msg =>
+                                msg.id === messageId
+                                    ? { ...msg, isStreaming: false }
+                                    : msg
+                            ));
+                            setIsLoading(false);
+                            
+                            // Check if auto-reset is needed
+                            if (shouldAutoResetChat(currentBotMessageRef.current)) {
+                                handleResetChat();
+                            }
+                        } else if (message.type === 'error') {
+                            // Display error message
+                            setMessages(prev => [...prev, {
+                                id: `bot-${Date.now()}`,
+                                text: message.content || 'An error occurred',
+                                type: 'bot',
+                                isStreaming: false
+                            }]);
+                            setIsLoading(false);
+                        } else if (message.type === 'end_chat') {
+                            // Handle chat end
+                            console.log('Chat ended:', message.content);
                             handleResetChat();
                         }
                     } catch (error) {
