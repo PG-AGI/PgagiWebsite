@@ -182,6 +182,13 @@ export default function Landing() {
         }
     }, [messages]);
 
+    // Auto-focus textarea when chat becomes active or after bot responds
+    useEffect(() => {
+        if (hasMessages && !isLoading && textareaRef.current) {
+            textareaRef.current.focus();
+        }
+    }, [hasMessages, isLoading]);
+
 
 
 
@@ -325,7 +332,7 @@ export default function Landing() {
                     <h1 className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}>
                         <LayoutTextFlip
                             text="Building AI Systems for"
-                            words={["Enterprises", "Start Ups"]}
+                            words={["Enterprises", "StartUps"]}
                         />
                     </h1>
 
