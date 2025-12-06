@@ -393,7 +393,7 @@
 .enterpriseBlock {
   width: 90%;
   // max-width: 850px;
-  margin: 8rem auto 3rem auto;
+  margin: 5rem auto 3rem auto;
   // padding: 2.5rem 1.5rem;
   // background: #ffffff;
   border-radius: 14px;
@@ -443,7 +443,7 @@
 }
 
 .chatContainer {
-  width: 70%;
+  width: 63%;
   // max-width: 640px;
   margin: 0 auto;
   border-radius: 16px;
@@ -458,12 +458,12 @@
   background: #f8f8f8;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.06);
-  height: 500px;
+  height: 65vh;
   padding-top: 3.25rem; // create space for close button
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-width: 850px; // Increased from inherited 640px
+  max-width: 80vw;
 }
 
 .chatCloseButton {
@@ -562,7 +562,7 @@
 
 .messageBody {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   color: inherit;
 }
@@ -716,7 +716,8 @@
   }
 
   .chatContainerActive {
-    max-width: 750px; // Slightly smaller on tablets
+    max-width: 85vw;
+    height: 55vh;
   }
 
   .enterpriseHeading {
@@ -741,8 +742,8 @@
   }
 
   .chatContainerActive {
-    max-width: 100%; // Full width on mobile
-    height: 600px;
+    max-width: 90vw;
+    height: 60vh;
   }
 
   .enterpriseHeading {
