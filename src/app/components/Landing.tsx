@@ -328,7 +328,7 @@ export default function Landing() {
                     </div>
                 </div> */}
 
-                <div className={styles.enterpriseBlock}>
+                <div className={`${styles.enterpriseBlock} ${hasMessages ? styles.chatActive : ''}`}>
                     <h1 className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}>
                         <LayoutTextFlip
                             text="Building AI Systems for"
@@ -351,7 +351,7 @@ export default function Landing() {
                         />
                     </p>
 
-                    <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''}`}>
+                    <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''} ${hasMessages ? styles.chatActive : ''}`}>
                         {hasMessages && (
                             <button
                                 type="button"
