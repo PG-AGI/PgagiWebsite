@@ -182,6 +182,28 @@ export default function Landing() {
         }
     }, [messages]);
 
+    // Prevent scroll propagation from message list to page
+    useEffect(() => {
+        const messageList = messageListRef.current;
+        if (!messageList) return;
+
+        const handleWheel = (e: WheelEvent) => {
+            const { scrollTop, scrollHeight, clientHeight } = messageList;
+            const isScrollingDown = e.deltaY > 0;
+            const isScrollingUp = e.deltaY < 0;
+            const isAtTop = scrollTop === 0;
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+            // Prevent page scroll when scrolling inside bounds
+            if ((isScrollingDown && !isAtBottom) || (isScrollingUp && !isAtTop)) {
+                e.stopPropagation();
+            }
+        };
+
+        messageList.addEventListener('wheel', handleWheel, { passive: false });
+        return () => messageList.removeEventListener('wheel', handleWheel);
+    }, [hasMessages]);
+
     // Auto-focus textarea when chat becomes active or after bot responds
     useEffect(() => {
         if (hasMessages && !isLoading && textareaRef.current) {

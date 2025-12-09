@@ -55,7 +55,7 @@ export default function Projects() {
         window.open("https://cracked.ai/", "_blank");
         break;
       case 1:
-        window.open("https://fomo.fund/", "_blank");
+        // window.open("https://fomo.fund/", "_blank");
         break;
       case 2:
         window.open("https://aione.klinik-x.de/", "_blank");
