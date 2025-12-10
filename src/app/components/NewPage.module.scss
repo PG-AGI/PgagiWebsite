@@ -1,7 +1,7 @@
 .statsSection {
   background: white;
   padding: clamp(1.5rem, 3vw, 3rem);
-  min-height: 100vh;
+  // min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: flex;
   align-items: center;
@@ -19,33 +19,34 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(3rem, 5vw, 5rem);
+  gap: clamp(2rem, 3vw, 3rem);
   align-items: center;
 }
 
 .mainContent {
   display: flex;
   width: 100%;
-  height: 100%;
   position: relative;
-  align-items: stretch;
-  gap: clamp(2rem, 4vw, 4rem);
+  align-items: flex-start;
+  gap: clamp(3rem, 5vw, 6rem);
 }
 
 .leftSide {
-  flex: 0 0 30%;
+  flex: 0 0 35%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: clamp(3rem, 4vw, 4rem);
   padding: 0;
+  justify-content: space-between;
 }
 
 .rightSide {
   flex: 0 0 60%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0;
+  gap: clamp(3rem, 4vw, 4rem);
 }
 
 .statsContainer {
@@ -68,10 +69,9 @@
   display: flex;
   flex-direction: column;
   gap: clamp(0.8rem, 1.2vw, 1.2rem);
-  align-items: center;
-  text-align: center;
-  justify-content: flex-end;
-  height: 100%;
+  align-items: flex-start;
+  text-align: left;
+  margin-top: auto;
 }
 
 .teamTitle {
@@ -104,7 +104,7 @@
   color: #000;
   font-size: clamp(0.7rem, 0.8vw, 0.9rem);
   flex-shrink: 0;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .avatar {
@@ -120,8 +120,44 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: clamp(0.3rem, 0.4vw, 0.4rem);
+  gap: clamp(0.6rem, 0.8vw, 1rem);
   flex-wrap: wrap;
+}
+
+.badgeItem {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 0.8vw, 0.8rem);
+  flex-wrap: nowrap;
+}
+
+.badgeText {
+  font-size: clamp(1rem, 1vw, 1rem);
+  font-weight: 500;
+  color: #333;
+  line-height: 1.3;
+  white-space: wrap;
+}
+
+.imageRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 1.2vw, 1.2rem);
+  flex-wrap: wrap;
+}
+
+.successBadge {
+  width: clamp(25px, 4vw, 40px);
+  height: clamp(25px, 4vw, 40px);
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.topratedBadge {
+  width: clamp(25px, 4vw, 40px);
+  height: clamp(25px, 4vw, 40px);
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .upworkLogo {
@@ -236,11 +272,8 @@
 }
 
 .agencySection {
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(4rem, 6vw, 6rem);
-  margin-top: clamp(1.5rem, 2vw, 2rem);
-  flex-wrap: wrap;
+  width: 100%;
+  margin-top: auto;
 }
 
 .agencyIdentity {
@@ -251,9 +284,9 @@
 }
 
 .agencyDescription {
-  flex: 1;
-  min-width: clamp(400px, 35vw, 500px);
-  max-width: clamp(500px, 45vw, 600px);
+  width: 100%;
+  max-width: 100%;
+  min-width: auto;
 }
 
 .agencyHeader {
@@ -303,28 +336,40 @@
   margin: 0;
 }
 
+.agencyDescription p+p {
+  margin-top: clamp(0.5rem, 0.8vw, 0.8rem);
+}
+
+.productDescription {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  line-height: 1.5;
+  color: #333;
+}
+
 // Desktop and Laptop Optimizations (1200px and above)
 @media (min-width: 1200px) {
   .container {
     width: min(85vw, 1600px);
   }
-  
+
   .mainContent {
     gap: clamp(4rem, 6vw, 8rem);
   }
-  
+
   .rightSide {
     gap: clamp(5rem, 5vw, 9rem);
   }
-  
+
   .topRow {
     gap: clamp(5rem, 7vw, 7rem);
   }
-  
+
   .statContent {
     gap: clamp(5rem, 7vw, 9rem);
   }
-  
+
   .agencySection {
     gap: clamp(5rem, 7vw, 7rem);
   }
@@ -335,19 +380,19 @@
   .container {
     width: min(80vw, 1800px);
   }
-  
+
   .leftSide {
     width: clamp(320px, 22vw, 400px);
   }
-  
+
   .rightSide {
     max-width: calc(100% - clamp(320px, 22vw, 400px) - clamp(4rem, 6vw, 8rem));
   }
-  
+
   .statNumber {
     font-size: clamp(4.5rem, 6.5vw, 6rem);
   }
-  
+
   .teamTitle {
     font-size: clamp(2rem, 2.8vw, 2.5rem);
   }
@@ -358,19 +403,19 @@
   .container {
     width: min(75vw, 2000px);
   }
-  
+
   .statsSection {
     padding: clamp(3rem, 5vw, 6rem);
   }
-  
+
   .mainContent {
     margin-top: clamp(3rem, 5vw, 5rem);
   }
-  
+
   .statTitle {
     font-size: clamp(1.8rem, 2.2vw, 2.2rem);
   }
-  
+
   .statDescription {
     font-size: clamp(1rem, 1.2vw, 1.3rem);
   }
@@ -381,15 +426,15 @@
   .statsSection {
     padding: clamp(2.5rem, 4.5vw, 5rem);
   }
-  
+
   .container {
     gap: clamp(3.5rem, 5.5vw, 6rem);
   }
-  
+
   .mainContent {
     gap: clamp(3.5rem, 5.5vw, 7rem);
   }
-  
+
   .rightSide {
     gap: clamp(4.5rem, 6.5vw, 9rem);
   }
@@ -399,15 +444,15 @@
   .statsSection {
     padding: clamp(3rem, 5vw, 6rem);
   }
-  
+
   .container {
     gap: clamp(4rem, 6vw, 7rem);
   }
-  
+
   .mainContent {
     gap: clamp(4rem, 6vw, 8rem);
   }
-  
+
   .rightSide {
     gap: clamp(5rem, 7vw, 10rem);
   }
@@ -417,7 +462,7 @@
 @media (max-width: 1199px) {
   .statsSection {
     padding: clamp(1.5rem, 2.5vw, 2.5rem);
-    min-height: 100vh;
+    // min-height: 100vh;
   }
 
   .container {
@@ -428,17 +473,18 @@
   .mainContent {
     flex-direction: column;
     gap: clamp(2rem, 3vw, 3rem);
-    align-items: stretch;
   }
 
   .leftSide {
-    flex: 0 0 35%;
+    flex: 0 0 100%;
     order: 1;
+    justify-content: flex-start;
   }
 
   .rightSide {
-    flex: 0 0 65%;
+    flex: 0 0 100%;
     order: 2;
+    justify-content: flex-start;
   }
 
   .statsContainer {
@@ -505,20 +551,17 @@
   }
 
   .teamSection {
-    align-items: center;
-    text-align: center;
-    gap: clamp(0.6rem, 0.8vw, 0.8rem);
+    align-items: flex-start;
+    text-align: left;
+    margin-top: 0;
   }
 
   .teamTitle {
-    font-size: clamp(1.2rem, 1.5vw, 1.4rem);
-    text-align: center;
+    text-align: left;
   }
 
-  .teamAvatars {
-    justify-content: center;
-    align-items: center;
-    gap: clamp(0.3rem, 0.4vw, 0.4rem);
+  .wrapperContainer {
+    justify-content: flex-start;
   }
 
   .agencySection {
@@ -769,7 +812,7 @@
   }
 
   .agencyName {
-    font-size: clamp(1.1rem, 1.3vw, 1.2rem);
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
   }
 
   .agencyTagline {
@@ -785,7 +828,7 @@
   }
 
   .agencyDescription p {
-    font-size: clamp(0.85rem, 0.95vw, 0.9rem);
+    font-size: clamp(0.9rem, 1vw, 0.95rem);
   }
 
   .teamCount {
@@ -913,23 +956,23 @@
     width: clamp(18px, 2vw, 20px);
     height: clamp(18px, 2vw, 20px);
   }
-} 
+}
 
 
 .toinggButtonContainer {
   display: flex;
-  align-items: center;  // keep button and text vertically aligned
-  gap: 0.5rem;          // slightly bigger gap if needed
-  flex-wrap: wrap;      // allows wrapping on small screens
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
 }
 
 .statDescription {
   margin: 0;
   padding: 0;
   display: inline;
-  font-size: 1.1rem;    // increase font size for emphasis
-  line-height: 1.3;     // slightly more spacing
-  font-weight: 450;     // make it a bit bolder
+  font-size: 1.1rem; // increase font size for emphasis
+  line-height: 1.3; // slightly more spacing
+  font-weight: 450; // make it a bit bolder
 }
 
 
@@ -950,7 +993,7 @@
   position: relative;
   overflow: hidden;
   border: none;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 
   // subtle diagonal shimmer
   &::before {
@@ -960,28 +1003,33 @@
     left: -120%;
     width: 120%;
     height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.12), transparent);
     transform: skewX(-20deg);
     animation: shimmer 2.5s infinite;
   }
 
   &:hover {
-    background-color: #555555;  // grey hover
-    color: #fff;                // text stays white
+    background-color: #555555; // grey hover
+    color: #fff; // text stays white
     transform: scale(1.03) translateY(-1px); // reduced hover effect
-    box-shadow: 0 7px 18px rgba(85,85,85,0.35), 0 0 8px rgba(200,200,200,0.15); // softer shadow
+    box-shadow: 0 7px 18px rgba(85, 85, 85, 0.35), 0 0 8px rgba(200, 200, 200, 0.15); // softer shadow
   }
 
   &:active {
     transform: scale(1) translateY(0);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 }
 
 /* shimmer animation */
 @keyframes shimmer {
-  0% { left: -120%; }
-  100% { left: 120%; }
+  0% {
+    left: -120%;
+  }
+
+  100% {
+    left: 120%;
+  }
 }
 
 
@@ -989,12 +1037,23 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-
-  margin-bottom: 2.5rem; // Tailwind mb-10 = 40px
+  justify-content: flex-start;
   width: 100%;
+  gap: 0;
+
+  // Target the AnimatedTooltip container
+  >div:first-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    // Create overlapping effect for avatar images
+    >* {
+      margin-left: -0.5rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
 }
-
-
-
-

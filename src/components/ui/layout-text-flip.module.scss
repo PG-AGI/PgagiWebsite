@@ -1,0 +1,67 @@
+.flipRoot {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+}
+
+.staticText {
+  color: inherit;
+  padding-right: 0.2rem;
+}
+
+.wordWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 1em;
+  perspective: 900px;
+}
+
+.wordPlaceholder {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.word {
+  display: inline-block;
+  white-space: nowrap;
+  color: #d60000;
+  position: absolute;
+  left: 0;
+}
+
+.sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spark {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+  filter: blur(2px);
+  mix-blend-mode: screen;
+}
+
+.sparkPrimary {
+  transform: translate(70%, -30%) scale(1.2);
+  background: radial-gradient(circle, rgba(255, 200, 200, 0.95) 0%, rgba(214, 0, 0, 0.1) 65%);
+}
+
+.sparkSecondary {
+  transform: translate(110%, 20%) scale(0.8);
+}
+
+.prefersReducedMotion {
+  perspective: none;
+}
+
+.prefersReducedMotion .word {
+  transform: none !important;
+}
+

@@ -1,14 +1,48 @@
 'use client'
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from "./landing.module.scss";
 import BookCallModal from './base/bookCallModela';
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
-import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+// import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
+import Image from 'next/image';
+import { LayoutTextFlip } from '@/components/ui/layout-text-flip';
+
+interface Message {
+    id: string;
+    text: string;
+    type: 'user' | 'bot';
+    isStreaming?: boolean;
+}
+
+interface WebSocketMessage {
+    type: string;
+    content?: string;
+    conversation_complete?: boolean;
+    [key: string]: any;
+}
+
+const shouldAutoResetChat = (text: string) => {
+    const normalized = text.toLowerCase();
+    return (
+        normalized.includes("I appreciate your time, but it seems like this might not be the best moment to discuss your project. Feel free to reach out when you're ready to focus on your requirements. Have a great day! :wave:") ||
+        normalized.includes("Your project details have been successfully captured! Our expert team at PGAGI has received your requirements  ")
+    );
+};
 
 export default function Landing() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [currentMessage, setCurrentMessage] = useState('');
+    const [isConnected, setIsConnected] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const { scrollTo } = useSmoothScrollTo();
     const bgRef = useRef<HTMLDivElement>(null);
+    const wsRef = useRef<WebSocket | null>(null);
+    const currentBotMessageRef = useRef<string>('');
+    const messageListRef = useRef<HTMLDivElement>(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const hasMessages = messages.length > 0;
 
     const handleBookCall = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -17,10 +51,219 @@ export default function Landing() {
         window.location.href = "/projects";
     };
 
+    // Initialize WebSocket connection
+    useEffect(() => {
+        const connectWebSocket = async () => {
+            try {
+                // Check localStorage for existing session
+                let sessionId = localStorage.getItem('session_id');
+                
+                // If no session, fetch new one from backend
+                if (!sessionId) {
+                    const response = await fetch('http://69.197.164.183:8001/api/chat/generate_session');
+                    const data = await response.json();
+                    sessionId = data.session_id;
+                    if (sessionId) {
+                        localStorage.setItem('session_id', sessionId);
+                    }
+                }
+
+                // Connect WebSocket with session ID
+                const ws = new WebSocket(`ws://69.197.164.183:8001/api/chat/${sessionId || '123'}`);
+
+                ws.onopen = () => {
+                    console.log('WebSocket connected');
+                    setIsConnected(true);
+                };
+
+                ws.onmessage = async (event) => {
+                    try {
+                        // Convert Blob to text if needed
+                        const text = typeof event.data === 'string'
+                            ? event.data
+                            : await (event.data as Blob).text();
+
+                        // Ignore heartbeat messages
+                        if (text === 'ping' || text === 'pong') return;
+                        if (!text.trim()) return;
+
+                        // Parse JSON message
+                        const message = JSON.parse(text);
+
+                        if (message.type === 'stream_start') {
+                            // Create new bot message with streaming state
+                            const botMessageId = `bot-${Date.now()}`;
+                            setMessages(prev => [...prev, {
+                                id: botMessageId,
+                                text: '',
+                                type: 'bot',
+                                isStreaming: true
+                            }]);
+                            currentBotMessageRef.current = '';
+                            // Store the message ID for subsequent chunks
+                            (ws as any)._currentMessageId = botMessageId;
+                        } else if (message.type === 'chunk' && message.content) {
+                            // Append chunk to current bot message
+                            currentBotMessageRef.current += message.content;
+                            const messageId = (ws as any)._currentMessageId;
+                            
+                            setMessages(prev => prev.map(msg =>
+                                msg.id === messageId
+                                    ? { ...msg, text: currentBotMessageRef.current }
+                                    : msg
+                            ));
+                        } else if (message.type === 'stream_end') {
+                            // Mark streaming as complete
+                            const messageId = (ws as any)._currentMessageId;
+                            setMessages(prev => prev.map(msg =>
+                                msg.id === messageId
+                                    ? { ...msg, isStreaming: false }
+                                    : msg
+                            ));
+                            setIsLoading(false);
+                            
+                            // Check if auto-reset is needed
+                            if (shouldAutoResetChat(currentBotMessageRef.current)) {
+                                handleResetChat();
+                            }
+                        } else if (message.type === 'error') {
+                            // Display error message
+                            setMessages(prev => [...prev, {
+                                id: `bot-${Date.now()}`,
+                                text: message.content || 'An error occurred',
+                                type: 'bot',
+                                isStreaming: false
+                            }]);
+                            setIsLoading(false);
+                        } else if (message.type === 'end_chat') {
+                            // Handle chat end
+                            console.log('Chat ended:', message.content);
+                            handleResetChat();
+                        }
+                    } catch (error) {
+                        console.error('Error processing WebSocket message:', error);
+                        setIsLoading(false);
+                    }
+                };
+
+                ws.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                    setIsConnected(false);
+                };
+
+                ws.onclose = () => {
+                    console.log('WebSocket disconnected');
+                    setIsConnected(false);
+                    // Attempt to reconnect after 3 seconds
+                    setTimeout(connectWebSocket, 3000);
+                };
+
+                wsRef.current = ws;
+            } catch (error) {
+                console.error('Error connecting WebSocket:', error);
+                setIsConnected(false);
+            }
+        };
+
+        connectWebSocket();
+
+        // Cleanup on unmount
+        return () => {
+            if (wsRef.current) {
+                wsRef.current.close();
+            }
+        };
+    }, []);
+
+    // Auto-scroll to bottom when new messages arrive
+    useEffect(() => {
+        if (messageListRef.current) {
+            messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    // Prevent scroll propagation from message list to page
+    useEffect(() => {
+        const messageList = messageListRef.current;
+        if (!messageList) return;
+
+        const handleWheel = (e: WheelEvent) => {
+            const { scrollTop, scrollHeight, clientHeight } = messageList;
+            const isScrollingDown = e.deltaY > 0;
+            const isScrollingUp = e.deltaY < 0;
+            const isAtTop = scrollTop === 0;
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+            // Prevent page scroll when scrolling inside bounds
+            if ((isScrollingDown && !isAtBottom) || (isScrollingUp && !isAtTop)) {
+                e.stopPropagation();
+            }
+        };
+
+        messageList.addEventListener('wheel', handleWheel, { passive: false });
+        return () => messageList.removeEventListener('wheel', handleWheel);
+    }, [hasMessages]);
+
+    // Auto-focus textarea when chat becomes active or after bot responds
+    useEffect(() => {
+        if (hasMessages && !isLoading && textareaRef.current) {
+            textareaRef.current.focus();
+        }
+    }, [hasMessages, isLoading]);
+
+
+
+
+
+    const handleResetChat = () => {
+        setMessages([]);
+        setCurrentMessage('');
+        currentBotMessageRef.current = '';
+        setIsLoading(false);
+    };
+
+    const handleSendMessage = () => {
+        const trimmed = currentMessage.trim();
+        if (!trimmed || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+            if (!isConnected) {
+                alert('WebSocket is not connected. Please wait...');
+            }
+            return;
+        }
+
+        // Add user message to UI
+        const userMessage: Message = {
+            id: `user-${Date.now()}`,
+            text: trimmed,
+            type: 'user'
+        };
+        setMessages((prev) => [...prev, userMessage]);
+        setCurrentMessage('');
+        setIsLoading(true);
+        currentBotMessageRef.current = '';
+
+        // Send message via WebSocket
+        try {
+            wsRef.current.send(JSON.stringify({ message: trimmed }));
+
+
+        } catch (error) {
+            console.error('Error sending message:', error);
+            setIsLoading(false);
+        }
+    };
+
+    const handleInputKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleSendMessage();
+        }
+    };
+
     return (
         <section id="landing" className={styles.landing}>
             {/* HyperSpeed Background */}
-            <div className={styles.hyperspeedBackground} ref={bgRef}>
+            {/* <div className={styles.hyperspeedBackground} ref={bgRef}>
                 <Hyperspeed 
                     effectOptions={{
                         colors: {
@@ -58,10 +301,19 @@ export default function Landing() {
                         carFloorSeparation: [0, 5],
                     }}
                 />
+            </div> */}
+
+
+            {/* CURVED LINES BACKGROUND (insert BEFORE landingContainer) */}
+            <div className={styles.curvedLines}>
+                <div className={styles.line}></div>
+                <div className={styles.line}></div>
+                <div className={styles.line}></div>
+                <div className={styles.line}></div>
             </div>
-            
+
             <div className={styles.landingContainer}>
-                <div className={styles.leftSection}>
+                {/* <div className={styles.leftSection}>
                     <div className={styles.highlightSpot}>
                         <a 
                             href="https://www.upwork.com/agencies/1737467434828361728/" 
@@ -81,7 +333,7 @@ export default function Landing() {
                     and create meaningful impact in the world
                     </h1>
                     <p className={styles.description}>
-                    {/* We engineer purposeful AI products that scales, and create meaningful impact in the world. */}
+                    We engineer purposeful AI products that scales, and create meaningful impact in the world.
                     Creating for the world that’s <span className={styles.coming}> coming </span> 
                     Not the one passing.
                     </p>
@@ -96,10 +348,98 @@ export default function Landing() {
                             View Our Work
                         </button>
                     </div>
+                </div> */}
+
+                <div className={`${styles.enterpriseBlock} ${hasMessages ? styles.chatActive : ''}`}>
+                    <h1 className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}>
+                        <LayoutTextFlip
+                            text="Building AI Systems for"
+                            words={["Enterprises", "StartUps"]}
+                        />
+                    </h1>
+
+                    <p className={styles.enterpriseSubtext}>
+                        Top 1% Recognized on Upwork{' '}
+                        <Image
+                            src="/images/up-arrow.png"
+                            alt="Upwork Link"
+                            width={16}
+                            height={16}
+                            className={styles.upWorkLink}
+                            onClick={() => {
+                                window.open("https://www.upwork.com/agencies/1737467434828361728/", "_blank");
+                            }}
+                            style={{ cursor: 'pointer', display: 'inline-block', verticalAlign: 'middle' }}
+                        />
+                    </p>
+
+                    <div className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''} ${hasMessages ? styles.chatActive : ''}`}>
+                        {hasMessages && (
+                            <button
+                                type="button"
+                                className={styles.chatCloseButton}
+                                onClick={handleResetChat}
+                                aria-label="Reset chat"
+                            >
+                                ×
+                            </button>
+                        )}
+                        {hasMessages && (
+                            <div className={styles.messageList} ref={messageListRef}>
+                                {messages.map((message) => (
+                                    <div
+                                        key={message.id}
+                                        className={`${styles.messageItem} ${message.type === 'user' ? styles.userMessage : styles.botMessage}`}
+                                    >
+                                        <p className={styles.messageBody}>
+                                            {message.type === 'bot' && message.isStreaming && !message.text ? (
+                                                <span className={styles.typingDots}>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </span>
+                                            ) : (
+                                                message.text
+                                            )}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        <div className={styles.enterpriseInputWrapper}>
+                            <textarea
+                                ref={textareaRef}
+                                placeholder="Tell us what you want to build."
+                                className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
+                                value={currentMessage}
+                                onChange={(event) => setCurrentMessage(event.target.value)}
+                                onKeyDown={handleInputKeyDown}
+                                disabled={!isConnected || isLoading}
+                            />
+                            <Image
+                                src="/images/send-button.png"
+                                alt="Send"
+                                width={28}
+                                height={28}
+                                className={styles.enterpriseSubmitBtn}
+                                onClick={handleSendMessage}
+                                style={{
+                                    cursor: (isConnected && !isLoading) ? 'pointer' : 'not-allowed',
+                                    opacity: (isConnected && !isLoading) ? 1 : 0.5
+                                }}
+                            />
+                        </div>
+                        {!isConnected && (
+                            <div className={styles.connectionStatus}>
+                                Connecting to chat...
+                            </div>
+                        )}
+                    </div>
                 </div>
+
                 <div className={styles.rightSection}>
                     {/* Placeholder SVG for animated face/skull */}
-                   
+
                 </div>
             </div>
             <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
