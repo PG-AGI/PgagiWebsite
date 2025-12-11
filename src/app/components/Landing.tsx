@@ -60,7 +60,7 @@ export default function Landing() {
                 
                 // If no session, fetch new one from backend
                 if (!sessionId) {
-                    const response = await fetch('http://69.197.164.183:8001/api/chat/generate_session');
+                    const response = await fetch('https://api.pgagi.in/api/chat/generate_session');
                     const data = await response.json();
                     sessionId = data.session_id;
                     if (sessionId) {
@@ -69,7 +69,7 @@ export default function Landing() {
                 }
 
                 // Connect WebSocket with session ID
-                const ws = new WebSocket(`ws://69.197.164.183:8001/api/chat/${sessionId || '123'}`);
+                const ws = new WebSocket(`wss://api.pgagi.in/api/chat/${sessionId || '123'}`);
 
                 ws.onopen = () => {
                     console.log('WebSocket connected');
