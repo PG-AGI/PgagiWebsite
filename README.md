@@ -1,4 +1,4 @@
-#PGAGI WEBSITE
+#PGAGI WEBSITE.
 
 ### 1. High-Level Optimizations
 
