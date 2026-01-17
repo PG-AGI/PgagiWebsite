@@ -57,10 +57,10 @@ export default function Landing() {
             try {
                 // Check localStorage for existing session
                 let sessionId = localStorage.getItem('session_id');
-                
+
                 // If no session, fetch new one from backend
                 if (!sessionId) {
-                    const response = await fetch('https://api.pgagi.in/api/chat/generate_session');
+                    const response = await fetch('https://pgagi-chatbot-backend-168195082477.europe-west1.run.app/api/chat/generate_session');
                     const data = await response.json();
                     sessionId = data.session_id;
                     if (sessionId) {
@@ -69,7 +69,7 @@ export default function Landing() {
                 }
 
                 // Connect WebSocket with session ID
-                const ws = new WebSocket(`wss://api.pgagi.in/api/chat/${sessionId || '123'}`);
+                const ws = new WebSocket(`wss://pgagi-chatbot-backend-168195082477.europe-west1.run.app/api/chat/${sessionId || '123'}`);
 
                 ws.onopen = () => {
                     console.log('WebSocket connected');
@@ -106,7 +106,7 @@ export default function Landing() {
                             // Append chunk to current bot message
                             currentBotMessageRef.current += message.content;
                             const messageId = (ws as any)._currentMessageId;
-                            
+
                             setMessages(prev => prev.map(msg =>
                                 msg.id === messageId
                                     ? { ...msg, text: currentBotMessageRef.current }
@@ -121,7 +121,7 @@ export default function Landing() {
                                     : msg
                             ));
                             setIsLoading(false);
-                            
+
                             // Check if auto-reset is needed
                             if (shouldAutoResetChat(currentBotMessageRef.current)) {
                                 handleResetChat();
@@ -416,18 +416,76 @@ export default function Landing() {
                                 onKeyDown={handleInputKeyDown}
                                 disabled={!isConnected || isLoading}
                             />
-                            <Image
-                                src="/images/send-button.png"
-                                alt="Send"
-                                width={28}
-                                height={28}
-                                className={styles.enterpriseSubmitBtn}
-                                onClick={handleSendMessage}
-                                style={{
-                                    cursor: (isConnected && !isLoading) ? 'pointer' : 'not-allowed',
-                                    opacity: (isConnected && !isLoading) ? 1 : 0.5
-                                }}
-                            />
+                            <div className={styles.inputActions}>
+                                <div className={styles.leftActions}>
+                                    {/* <button
+                                        className={styles.actionButton}
+                                        aria-label="Add"
+                                        type="button"
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        className={styles.actionButton}
+                                        aria-label="Attach"
+                                        type="button"
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M14.5 7.5L9 13C8.17157 13.8284 6.82843 13.8284 6 13C5.17157 12.1716 5.17157 10.8284 6 10L11.5 4.5C11.8978 4.10218 12.6022 4.10218 13 4.5C13.3978 4.89782 13.3978 5.60218 13 6L7.5 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        className={`${styles.actionButton} ${styles.themeButton}`}
+                                        aria-label="Theme"
+                                        type="button"
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M7 3H13C15.2091 3 17 4.79086 17 7V13C17 15.2091 15.2091 17 13 17H7C4.79086 17 3 15.2091 3 13V7C3 4.79086 4.79086 3 7 3Z" stroke="currentColor" strokeWidth="1.5" />
+                                            <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5" />
+                                        </svg>
+                                        <span className={styles.themeText}>Theme</span>
+                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className={styles.chevron}>
+                                            <path d="M3 5L6 8L9 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div className={styles.rightActions}>
+                                    <button
+                                        className={`${styles.actionButton} ${styles.chatButton}`}
+                                        aria-label="Chat"
+                                        type="button"
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M6 14H14L17 17V5C17 3.89543 16.1046 3 15 3H5C3.89543 3 3 3.89543 3 5V11C3 12.1046 3.89543 13 5 13H6V14Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        <span className={styles.chatText}>Chat</span>
+                                    </button>
+                                    <button
+                                        className={styles.actionButton}
+                                        aria-label="Audio"
+                                        type="button"
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <rect x="4" y="2" width="3" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+                                            <rect x="9" y="5" width="3" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+                                            <rect x="14" y="7" width="3" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+                                        </svg>
+                                    </button> */}
+                                    <button
+                                        className={styles.sendButton}
+                                        onClick={handleSendMessage}
+                                        disabled={!isConnected || isLoading}
+                                        aria-label="Send"
+                                        type="button"
+                                    >
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M10 4V16M10 4L6 8M10 4L14 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         {!isConnected && (
                             <div className={styles.connectionStatus}>
