@@ -45,6 +45,7 @@ export default function RootLayout({
             className={`${poppins.variable} ${alexandria.variable}`}
           >
             <head>
+
               <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
               {/* Preload critical resources for Hyperspeed component */}
               <link rel="preload" href="/api/three" as="script" />
@@ -60,6 +61,9 @@ export default function RootLayout({
                   })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
                 `}
                 </Script>
+
+
+
               )}
 
               {/* Google Analytics */}
@@ -92,6 +96,13 @@ export default function RootLayout({
                     "url": "https://pgagi.in",
                   }),
                 }}
+              />
+              {/* DataFast Analytics */}
+              <Script
+                defer
+                data-website-id="dfid_ScLgcSKCkChuKsrvgG1Pa"
+                data-domain="pgagi.in"
+                src="https://datafa.st/js/script.js"
               />
             </head>
 
