@@ -90,7 +90,7 @@ export default function Navigation() {
 
   return (
     <nav className={clsx(
-      styles.navigation, 
+      styles.navigation,
       isScrolled && styles.scrolled,
       showGlassEffect && styles.glassEffect
     )}>
@@ -142,7 +142,7 @@ export default function Navigation() {
                   <TransitionLink href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Blogs
                   </TransitionLink>
-                 
+
                   <TransitionLink href="/Career" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Careers
                   </TransitionLink>
@@ -153,7 +153,7 @@ export default function Navigation() {
                   }}>
                     Get in touch
                     <ArrowRight size={16} />
-                  </button> 
+                  </button>
                 </div>
               )}
             </>
@@ -179,14 +179,14 @@ export default function Navigation() {
               <TransitionLink href="/whatwethink" className={styles.link}>
                 Blogs
               </TransitionLink>
-             
+
               <TransitionLink href="/Career" className={styles.link}>
                 Careers
               </TransitionLink>
 
               <button className={styles.contact} onClick={() => {
                 // window.open("https://form.pgagi.in/", "_blank");
-                 window.open("https://calendly.com/vivek-_ou/30min", "_blank");
+                window.open("https://calendly.com/vivek-_ou/30min", "_blank");
               }}>
                 Get in touch
                 <ArrowRight size={16} />
@@ -194,6 +194,16 @@ export default function Navigation() {
             </>
           )}
         </div>
+
+        {/* Mobile Header Button - appears next to hamburger */}
+        {isMobile && (
+          <button className={styles.mobileHeaderButton} onClick={() => {
+            window.open("https://calendly.com/vivek-_ou/30min", "_blank");
+          }}>
+            Get in touch
+            <ArrowRight size={14} />
+          </button>
+        )}
 
         <div
           className={clsx(styles.hamburger, isMenuOpen && styles.open)}
