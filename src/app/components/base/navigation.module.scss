@@ -1,6 +1,6 @@
 .navigation {
   position: fixed;
-  top: 32px;
+  top: 5px;
   left: 50%;
   transform: translateX(-50%);
   width: 60%;
@@ -605,8 +605,8 @@
 
       .logo {
         display: flex;
-        flex-direction: row;
-        gap: 10px;
+        // flex-direction: row;
+        gap: 1px;
         margin: 0;
         padding: 0;
         min-width: auto;
@@ -638,6 +638,36 @@
         z-index: 1000;
         position: relative;
       }
+
+      .mobileHeaderButton {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        background: #fff;
+        border: 2px solid #9F0000;
+        font-family: 'Alexandria', sans-serif;
+        font-size: 13px;
+        font-weight: 300;
+        cursor: pointer;
+        transition: all 0.3s ease-out;
+        color: #000;
+        white-space: nowrap;
+        margin-right: 12px;
+        z-index: 1000;
+
+        &:hover {
+          background: #9F0000;
+          color: #fff;
+          transform: scale(1.05);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+
 
       .links {
         position: fixed;
@@ -763,6 +793,14 @@
         }
       }
 
+      .mobileHeaderButton {
+        font-size: 11px;
+        padding: 6px 12px;
+        gap: 4px;
+        margin-right: 8px;
+      }
+
+
       .links {
         padding: 80px 24px 32px 24px;
 
@@ -827,6 +865,14 @@
           white-space: nowrap;
         }
       }
+
+      .mobileHeaderButton {
+        font-size: 10px;
+        padding: 5px 10px;
+        gap: 3px;
+        margin-right: 6px;
+      }
+
 
       .links {
         padding: 60px 16px 24px 16px;

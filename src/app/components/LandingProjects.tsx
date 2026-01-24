@@ -42,14 +42,14 @@ const LandingProjects = React.memo(() => {
   return (
     <section id="trending" className={styles.trending}>
       <div className={styles.projectsButtonContainer}>
-      <button
-        type="button"
-        onClick={() => router.push("/projects")}
-        className={styles.projectsButton}
-      >
-        Projects 
-      </button>
-    </div>
+        <button
+          type="button"
+          onClick={() => router.push("/projects")}
+          className={styles.projectsButton}
+        >
+          Projects
+        </button>
+      </div>
 
       <div className={styles.trendingList}>
         {trendingListOld.map((item, i) => (
@@ -62,7 +62,7 @@ const LandingProjects = React.memo(() => {
               } else if (i === 1) {
                 window.open("https://fomo.fund/", "_blank");
               } else if (i === 2) {
-                window.open("https://onchaintoolkit.com/", "_blank");
+                window.open("https://aim-cube.com/", "_blank");
               } else {
                 handleExpand(item.title);
               }
@@ -81,14 +81,14 @@ const LandingProjects = React.memo(() => {
           >
             <div className={styles.content}>
               <h3>
-                {i === 0 ? "" : 
-                 i === 1 ? "" : 
-                 i === 2 ? "" :
-                 item.title}
+                {i === 0 ? "" :
+                  i === 1 ? "" :
+                    i === 2 ? "" :
+                      item.title}
               </h3>
               {i === 0 ? (
-                <p style={{ 
-                  opacity: isFirstItemHovered ? 1 : 0, 
+                <p style={{
+                  opacity: isFirstItemHovered ? 1 : 0,
                   transition: 'opacity 0.3s ease',
                   textAlign: 'center',
                   fontSize: '1.1rem',
@@ -97,8 +97,8 @@ const LandingProjects = React.memo(() => {
                   Click to View
                 </p>
               ) : i === 1 ? (
-                <p style={{ 
-                  opacity: isSecondItemHovered ? 1 : 0, 
+                <p style={{
+                  opacity: isSecondItemHovered ? 1 : 0,
                   transition: 'opacity 0.3s ease',
                   textAlign: 'center',
                   fontSize: '1.1rem',
@@ -107,8 +107,8 @@ const LandingProjects = React.memo(() => {
                   Click to View
                 </p>
               ) : i === 2 ? (
-                <p style={{ 
-                  opacity: isThirdItemHovered ? 1 : 0, 
+                <p style={{
+                  opacity: isThirdItemHovered ? 1 : 0,
                   transition: 'opacity 0.3s ease',
                   textAlign: 'center',
                   fontSize: '1.1rem',
@@ -165,19 +165,19 @@ const LandingProjects = React.memo(() => {
             ) : i === 2 ? (
               // Third item with optimized video (existing file)
               <div className={styles.gifContainer}>
-                <Image
+                <video
                   className={styles.imgTag}
-                  src="/Landing Projects/Onchain_Toolkit.gif"
-                  alt="Onchain Toolkit"
-                  fill
-                  loading="lazy"
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                  unoptimized={true}
+                  src="/Landing Projects/AIMI .mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
                   style={{
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover"
+                    objectFit: "cover",
+                    willChange: "auto"
                   }}
                 />
               </div>
@@ -211,12 +211,12 @@ const LandingProjects = React.memo(() => {
               an AI communication OS for businesses.
             </p> */}
 
-            
+
           </div>
           <div className={styles.gifContainer}>
             <video
               className={styles.imgTag}
-              src="/Landing Projects/Toingg.webm"
+              src="/Landing Projects/Toingg.mp4"
               autoPlay
               muted
               loop

@@ -61,6 +61,9 @@ export default function Projects() {
         window.open("https://aione.klinik-x.de/", "_blank");
         break;
       case 3:
+        window.open("https://aim-cube.com/", "_blank");
+        break;
+      case 4:
         window.open("https://onchaintoolkit.com/", "_blank");
         break;
 
@@ -94,14 +97,14 @@ export default function Projects() {
       } else {
         setIsRefreshing(true);
       }
-      
+
       try {
         const response = await fetch('/api/case-studies');
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
         const data: CaseStudy[] = await response.json();
-        
+
         // Only update if data has actually changed to prevent unnecessary re-renders
         setCaseStudies(prevData => {
           if (JSON.stringify(prevData) !== JSON.stringify(data)) {
@@ -109,7 +112,7 @@ export default function Projects() {
           }
           return prevData;
         });
-        
+
         setErrorCaseStudies('');
       } catch (error: any) {
         console.error('Error fetching case studies:', error);
@@ -151,7 +154,7 @@ export default function Projects() {
     const cardGap = 30; // Gap between cards
     const totalCardWidth = cardWidth + cardGap;
     const singleLoopWidth = caseStudies.length * totalCardWidth;
-    
+
     let animationSpeed = 1.0; // Optimized speed for ultra-smooth movement
     let currentPosition = 0;
     let lastTime = performance.now();
@@ -159,19 +162,19 @@ export default function Projects() {
     const animateCarousel = (currentTime: number) => {
       const deltaTime = currentTime - lastTime;
       lastTime = currentTime;
-      
+
       // Use delta time for consistent animation regardless of frame rate
       const frameSpeed = animationSpeed * (deltaTime / 16.67); // Normalize to 60fps
 
       if (!isPausedRef.current) {
         currentPosition -= frameSpeed;
-        
+
         // Ultra-smooth modulo-based infinite loop
         // This creates seamless infinite scrolling without any jumps
         if (currentPosition <= -singleLoopWidth) {
           currentPosition += singleLoopWidth; // Smoothly add back one loop width
         }
-        
+
         // Use direct style manipulation for better performance
         if (carouselRef.current) {
           const track = carouselRef.current.querySelector(`.${styles.carouselTrack}`) as HTMLElement;
@@ -229,15 +232,15 @@ export default function Projects() {
   // Memoize the infinite carousel component
   const caseStudiesCarousel = useMemo(() => {
     if (caseStudies.length === 0) return null;
-    
+
     return (
-      <div 
-        className={styles.infiniteCarousel} 
+      <div
+        className={styles.infiniteCarousel}
         ref={carouselRef}
         onMouseEnter={handleCarouselMouseEnter}
         onMouseLeave={handleCarouselMouseLeave}
       >
-        <div 
+        <div
           className={styles.carouselTrack}
           style={{
             transition: 'none', // Remove transition for smoother animation
@@ -292,15 +295,16 @@ export default function Projects() {
         <div className={styles.cardContent}>
           <div className={styles.cardText}>
             <h3>
-              {i === 0 ? "Cracked.AI" : 
-               i === 1 ? "FOMO" : 
-               i === 2 ? "LinkedAI" :
-               i === 3 ? "Onchain Toolkit" :
-               item.title}
+              {i === 0 ? "Cracked.AI" :
+                i === 1 ? "FOMO" :
+                  i === 2 ? "LinkedAI" :
+                    i === 3 ? "Onchain Toolkit" :
+                      i === 4 ? "AIMI" :
+                        item.title}
             </h3>
-            {i <= 3 ? (
-              <p style={{ 
-                opacity: hoveredIndex === i ? 1 : 0, 
+            {i <= 4 ? (
+              <p style={{
+                opacity: hoveredIndex === i ? 1 : 0,
                 transition: 'opacity 0.2s ease',
                 textAlign: 'center',
                 fontSize: '1.1rem',
@@ -344,20 +348,35 @@ export default function Projects() {
               />
             ) : i === 2 ? (
               <Image
-                  className={styles.imgTag}
-                  src="/Landing Projects/LinkedAI.gif"
-                  alt="LinkedAI"
-                  fill
-                  style={{
-                    objectFit: "cover",
-                    animationPlayState: hoveredIndex === i ? "running" : "paused"
-                  }}
-                />
+                className={styles.imgTag}
+                src="/Landing Projects/LinkedAI.gif"
+                alt="LinkedAI"
+                fill
+                style={{
+                  objectFit: "cover",
+                  animationPlayState: hoveredIndex === i ? "running" : "paused"
+                }}
+              />
 
             ) : i === 3 ? (
               <video
                 className={styles.imgTag}
                 src="/Landing Projects/OnchainToolkit.webm"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover"
+                }}
+              />
+            ) : i === 4 ? (
+              <video
+                className={styles.imgTag}
+                src="/Landing Projects/AIMI .mp4"
                 autoPlay
                 muted
                 loop
@@ -398,8 +417,8 @@ export default function Projects() {
         <div className={styles.cardText}>
           <h3>Toingg</h3>
           {hoveredIndex === 3 && (
-            <p style={{ 
-              opacity: 1, 
+            <p style={{
+              opacity: 1,
               transition: 'opacity 0.2s ease',
               textAlign: 'center',
               fontSize: '1.1rem',
@@ -412,7 +431,7 @@ export default function Projects() {
         <div className={styles.cardImage}>
           <video
             className={styles.imgTag}
-            src="/Landing Projects/Toingg.webm"
+            src="/Landing Projects/Toingg.mp4"
             autoPlay
             muted
             loop
@@ -430,32 +449,32 @@ export default function Projects() {
   ), [hoveredIndex, handleMouseEnter, handleMouseLeave]);
 
 
-//added onchaintoolit card
+  //added onchaintoolit card
   const onchainProjectCard = useMemo(() => (
-  <div
-    className={styles.card}
-    onClick={() => window.open("https://onchaintoolkit.com/", "_blank")}
-    onMouseEnter={() => handleMouseEnter(4)}
-    onMouseLeave={handleMouseLeave}
-    style={{ cursor: "pointer" }}
-  >
-    <div className={styles.cardContent}>
-      <div className={styles.cardText}>
-        <h3>Onchain Toolkit</h3>
-        {hoveredIndex === 4 && (
-          <p style={{
-            opacity: 1,
-            transition: 'opacity 0.2s ease',
-            textAlign: 'center',
-            fontSize: '1.1rem',
-            fontWeight: '600'
-          }}>
-            Click to View
-          </p>
-        )}
-      </div>
-      <div className={styles.cardImage}>
-        {/* <video
+    <div
+      className={styles.card}
+      onClick={() => window.open("https://onchaintoolkit.com/", "_blank")}
+      onMouseEnter={() => handleMouseEnter(4)}
+      onMouseLeave={handleMouseLeave}
+      style={{ cursor: "pointer" }}
+    >
+      <div className={styles.cardContent}>
+        <div className={styles.cardText}>
+          <h3>Onchain Toolkit</h3>
+          {hoveredIndex === 4 && (
+            <p style={{
+              opacity: 1,
+              transition: 'opacity 0.2s ease',
+              textAlign: 'center',
+              fontSize: '1.1rem',
+              fontWeight: '600'
+            }}>
+              Click to View
+            </p>
+          )}
+        </div>
+        <div className={styles.cardImage}>
+          {/* <video
           className={styles.imgTag}
           src="/Landing Projects/OnchainToolkit.webm"
           autoPlay
@@ -469,23 +488,68 @@ export default function Projects() {
             objectFit: "cover"
           }}
         /> */}
-        
 
-        <Image
-          className={styles.imgTag}
-          src="/Landing Projects/Onchain_Toolkit.gif"
-          alt="FOMO"
-          fill
-          style={{
-          objectFit: "cover",
-          animationPlayState: hoveredIndex === 4 ? "running" : "paused"
+
+          <Image
+            className={styles.imgTag}
+            src="/Landing Projects/Onchain_Toolkit.gif"
+            alt="FOMO"
+            fill
+            style={{
+              objectFit: "cover",
+              animationPlayState: hoveredIndex === 4 ? "running" : "paused"
             }}
           />
 
+        </div>
       </div>
     </div>
-  </div>
-), [hoveredIndex, handleMouseEnter, handleMouseLeave]);
+  ), [hoveredIndex, handleMouseEnter, handleMouseLeave]);
+
+  const aimiProjectCard = useMemo(() => (
+    <div
+      className={styles.card}
+      onClick={() => window.open("https://aim-cube.com/", "_blank")}
+      onMouseEnter={() => handleMouseEnter(4)}
+      onMouseLeave={handleMouseLeave}
+      style={{ cursor: "pointer" }}
+    >
+      <div className={styles.cardContent}>
+        <div className={styles.cardText}>
+          <h3>AIMI</h3>
+          {hoveredIndex === 4 && (
+            <p style={{
+              opacity: 1,
+              transition: 'opacity 0.2s ease',
+              textAlign: 'center',
+              fontSize: '1.1rem',
+              fontWeight: '600'
+            }}>
+              Click to View
+            </p>
+          )}
+        </div>
+        <div className={styles.cardImage}>
+          <video
+            className={styles.imgTag}
+            src="/Landing Projects/AIMI .mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover"
+            }}
+          />
+
+        </div>
+      </div>
+    </div>
+  ), [hoveredIndex, handleMouseEnter, handleMouseLeave]);
+
 
 
   return (
@@ -502,6 +566,7 @@ export default function Projects() {
           {projectCards}
           {additionalProjectCard}
           {onchainProjectCard}
+          {aimiProjectCard}
         </div>
 
         {/* Case Studies Section - Always Visible */}
