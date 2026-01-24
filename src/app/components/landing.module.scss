@@ -190,10 +190,8 @@
 
 
 .landingContainer {
-  width: 82%;
-  max-width: 82%;
+  max-width: 90%;
   margin: 0 auto;
-  margin-left: 11.1%;
   // margin-top: 6rem;
   display: flex;
   flex-direction: row;
@@ -203,7 +201,6 @@
   min-height: 80vh;
   position: relative;
   z-index: 2;
-  top: 22.5vh;
 }
 
 .leftSection {
@@ -1108,7 +1105,7 @@
 
 @media (max-width: 900px) {
   .curvedLines {
-    // display: none;
+    display: none;
   }
 
   .enterpriseBlock {
