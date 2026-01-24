@@ -192,7 +192,7 @@
 .landingContainer {
   max-width: 90%;
   margin: 0 auto;
-  // margin-top: 6rem;
+  margin-top: 6rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -333,9 +333,14 @@
 }
 
 @media (max-width: 600px) {
+  .landing {
+    min-height: 0;
+  }
+
   .landingContainer {
     padding: 1rem 0.5rem;
     max-width: 100%;
+    margin-top: 0;
   }
 
   .hyperspeedBackground {
@@ -405,7 +410,7 @@
 }
 
 .enterpriseBlock.chatActive {
-  margin: 3.5rem auto 1.5rem auto;
+  margin: 3.5rem auto 0 auto;
 }
 
 .enterpriseHeading {
@@ -460,7 +465,7 @@
 }
 
 .chatContainer.chatActive {
-  margin: 1.5rem auto 2rem auto;
+  margin: 1.5rem auto 0.5rem auto;
 }
 
 .chatContainerActive {
@@ -468,7 +473,8 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.06);
   height: 65vh;
-  max-height: 65vh; // Enforce maximum height
+  // max-height: 65vh;
+  // Enforce maximum height
   // padding-top: 3.25rem; // create space for close button
   display: flex;
   flex-direction: column;
@@ -850,7 +856,7 @@
   .enterpriseBlock {
     width: 92%;
     // padding: 2rem 1.5rem;
-    padding: 2rem 0;
+    padding: 2rem 0 0;
     margin-top: 6rem;
   }
 
@@ -898,7 +904,7 @@
 
   .chatContainerActive {
     max-width: 90vw;
-    height: 60vh;
+    height: 70vh;
   }
 
   .enterpriseHeading {
@@ -945,7 +951,7 @@
     width: 96%;
     margin-top: 3rem;
     // padding: 1.5rem 1rem;
-    padding: 1.5rem 0;
+    padding: 1.5rem 0 0;
   }
 
   .chatContainer {
@@ -1113,7 +1119,7 @@
     max-width: 650px;
     margin-top: 4rem;
     // padding: 2rem 1.5rem;
-    padding: 2rem 0;
+    padding: 2rem 0 0;
   }
 
   .enterpriseHeading {
@@ -1152,9 +1158,14 @@
 }
 
 @media (max-width: 600px) {
+  .landing {
+    min-height: 0;
+  }
+
   .landingContainer {
     padding: 1rem 0.5rem;
     max-width: 100%; // Further increase max-width for small mobile
+    margin-top: 0;
   }
 
   .hyperspeedBackground {
@@ -1197,7 +1208,7 @@
     max-width: none;
     margin-top: 3rem;
     // padding: 1.5rem 1rem;
-    padding: 1.5rem 0;
+    padding: 1.5rem 0 0;
   }
 
   .chatContainer {
@@ -1213,7 +1224,7 @@
 
   .enterpriseSubtext {
     font-size: 0.85rem;
-    margin-bottom: 1.5rem;
+    // margin-bottom: 1.5rem;
   }
 
   .enterpriseInput {
@@ -1261,7 +1272,7 @@
   .enterpriseBlock {
     width: 96%;
     // padding: 1.25rem 0.75rem;
-    padding: 1.25rem 0;
+    padding: 1.25rem 0 0;
   }
 
   .chatContainer {
