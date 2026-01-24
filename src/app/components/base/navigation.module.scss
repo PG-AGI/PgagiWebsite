@@ -1,6 +1,6 @@
 .navigation {
   position: fixed;
-  top: 32px;
+  top: 5px;
   left: 50%;
   transform: translateX(-50%);
   width: 60%;
@@ -605,8 +605,8 @@
 
       .logo {
         display: flex;
-        flex-direction: row;
-        gap: 10px;
+        // flex-direction: row;
+        gap: 1px;
         margin: 0;
         padding: 0;
         min-width: auto;

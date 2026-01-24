@@ -40,7 +40,7 @@ export default function Landing() {
     const wsRef = useRef<WebSocket | null>(null);
     const currentBotMessageRef = useRef<string>('');
     const messageListRef = useRef<HTMLDivElement>(null);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    // const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const hasMessages = messages.length > 0;
 
@@ -205,11 +205,11 @@ export default function Landing() {
     }, [hasMessages]);
 
     // Auto-focus textarea when chat becomes active or after bot responds
-    useEffect(() => {
-        if (hasMessages && !isLoading && textareaRef.current) {
-            textareaRef.current.focus();
-        }
-    }, [hasMessages, isLoading]);
+    // useEffect(() => {
+    //     if (hasMessages && !isLoading && textareaRef.current) {
+    //         textareaRef.current.focus();
+    //     }
+    // }, [hasMessages, isLoading]);
 
 
 
@@ -408,7 +408,7 @@ export default function Landing() {
                         )}
                         <div className={styles.enterpriseInputWrapper}>
                             <textarea
-                                ref={textareaRef}
+                                // ref={textareaRef}
                                 placeholder="Tell us what you want to build."
                                 className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
                                 value={currentMessage}
@@ -495,10 +495,10 @@ export default function Landing() {
                     </div>
                 </div>
 
-                <div className={styles.rightSection}>
-                    {/* Placeholder SVG for animated face/skull */}
+                {/* <div className={styles.rightSection}>
 
-                </div>
+
+                </div> */}
             </div>
             <BookCallModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </section>
