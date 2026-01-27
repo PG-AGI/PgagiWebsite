@@ -14,9 +14,9 @@ export default function Navigation() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [mobileMenuSection, setMobileMenuSection] = useState<
-    null | "main"
-  >(null);
+  const [mobileMenuSection, setMobileMenuSection] = useState<null | "main">(
+    null,
+  );
   const BLOGS = "/whatwethink";
   const ABOUT = "/aboutUs";
   const INDUSTRIES = "/industries";
@@ -40,7 +40,8 @@ export default function Navigation() {
   // Handle scroll to detect when past hero section
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
       setShowGlassEffect(scrollTop > 10); // glass effect after 10px scroll
     };
 
@@ -89,21 +90,25 @@ export default function Navigation() {
   }, [isMenuOpen]);
 
   return (
-    <nav className={clsx(
-      styles.navigation,
-      isScrolled && styles.scrolled,
-      showGlassEffect && styles.glassEffect
-    )}>
+    <nav
+      className={clsx(
+        styles.navigation,
+        isScrolled && styles.scrolled,
+        showGlassEffect && styles.glassEffect,
+      )}
+    >
       <div
         className={clsx(
           styles.nav,
           !navbarVisible && styles.navHidden,
-          isMenuOpen && styles.open
+          isMenuOpen && styles.open,
         )}
-        style={{
-          '--text-color': '#666666',
-          '--text-color-inverse': '#ffffff',
-        } as React.CSSProperties}
+        style={
+          {
+            "--text-color": "#666666",
+            "--text-color-inverse": "#ffffff",
+          } as React.CSSProperties
+        }
       >
         <TransitionLink className={styles.logo} href="/">
           <Image
@@ -123,34 +128,66 @@ export default function Navigation() {
               {/* Mobile Menu Navigation */}
               {mobileMenuSection === "main" && (
                 <div className={styles.mastermenu}>
-                  <TransitionLink href="/" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  <TransitionLink
+                    href="/"
+                    className={styles.mobileMenuItem}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     Home
                   </TransitionLink>
-                  <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  <TransitionLink
+                    href={ABOUT}
+                    className={styles.mobileMenuItem}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     About Us
                   </TransitionLink>
-                  <span className={`${styles.mobileMenuItem} ${styles.comingSoon}`}>
+                  <span
+                    className={`${styles.mobileMenuItem} ${styles.comingSoon}`}
+                  >
                     Industries
                     <div className={styles.tooltip}>Coming Soon</div>
                   </span>
-                  <TransitionLink href="/expertise" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  <TransitionLink
+                    href="/expertise"
+                    className={styles.mobileMenuItem}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     Expertise
                   </TransitionLink>
-                  <TransitionLink href="/projects" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  <TransitionLink
+                    href="/projects"
+                    className={styles.mobileMenuItem}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     Projects
                   </TransitionLink>
-                  <TransitionLink href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  <TransitionLink
+                    href={BLOGS}
+                    className={styles.mobileMenuItem}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     Blogs
                   </TransitionLink>
 
-                  <TransitionLink href="/Career" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  <TransitionLink
+                    href="/Career"
+                    className={styles.mobileMenuItem}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     Careers
                   </TransitionLink>
-                  <button className={styles.mobileContact} onClick={() => {
-                    // window.open("https://form.pgagi.in/", "_blank");   
-                    window.open("https://calendly.com/vivek-_ou/30min", "_blank");                    // setIsMenuOpen(false);
-                    // handleContactUs();
-                  }}>
+                  <button
+                    className={styles.mobileContact}
+                    onClick={() => {
+                      // window.open("https://form.pgagi.in/", "_blank");
+                      window.open(
+                        "https://calendly.com/vivek-_ou/30min",
+                        "_blank",
+                      ); // setIsMenuOpen(false);
+                      // handleContactUs();
+                    }}
+                  >
                     Get in touch
                     <ArrowRight size={16} />
                   </button>
@@ -184,10 +221,13 @@ export default function Navigation() {
                 Careers
               </TransitionLink>
 
-              <button className={styles.contact} onClick={() => {
-                // window.open("https://form.pgagi.in/", "_blank");
-                window.open("https://calendly.com/vivek-_ou/30min", "_blank");
-              }}>
+              <button
+                className={styles.contact}
+                onClick={() => {
+                  // window.open("https://form.pgagi.in/", "_blank");
+                  window.open("https://calendly.com/vivek-_ou/30min", "_blank");
+                }}
+              >
                 Get in touch
                 <ArrowRight size={16} />
               </button>
@@ -197,22 +237,26 @@ export default function Navigation() {
 
         {/* Mobile Header Button - appears next to hamburger */}
         {isMobile && (
-          <button className={styles.mobileHeaderButton} onClick={() => {
-            window.open("https://calendly.com/vivek-_ou/30min", "_blank");
-          }}>
-            Get in touch
-            <ArrowRight size={14} />
-          </button>
+          <div className={styles.mobileRight}>
+            <button
+              className={styles.mobileHeaderButton}
+              onClick={() => {
+                window.open("https://calendly.com/vivek-_ou/30min", "_blank");
+              }}
+            >
+              Get in touch
+              <ArrowRight size={14} />
+            </button>
+            <div
+              className={clsx(styles.hamburger, isMenuOpen && styles.open)}
+              onClick={toggleMenu}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
         )}
-
-        <div
-          className={clsx(styles.hamburger, isMenuOpen && styles.open)}
-          onClick={toggleMenu}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </div>
       {isModalOpen && <ContactUsForm onClose={handleCloseModal} />}
     </nav>
