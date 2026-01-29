@@ -167,7 +167,7 @@ const LandingProjects = React.memo(() => {
               <div className={styles.gifContainer}>
                 <video
                   className={styles.imgTag}
-                  src="/Landing Projects/AIMI .mp4"
+                  src="/Landing Projects/AIMI.mp4"
                   autoPlay
                   muted
                   loop

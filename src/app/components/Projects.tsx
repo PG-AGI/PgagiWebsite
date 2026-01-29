@@ -376,7 +376,7 @@ export default function Projects() {
             ) : i === 4 ? (
               <video
                 className={styles.imgTag}
-                src="/Landing Projects/AIMI .mp4"
+                src="/Landing Projects/AIMI.mp4"
                 autoPlay
                 muted
                 loop
@@ -532,7 +532,7 @@ export default function Projects() {
         <div className={styles.cardImage}>
           <video
             className={styles.imgTag}
-            src="/Landing Projects/AIMI .mp4"
+            src="/Landing Projects/AIMI.mp4"
             autoPlay
             muted
             loop
