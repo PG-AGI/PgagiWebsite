@@ -1,9 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
-import Image from "next/image";
-import styles from "@/app/components/LandingProjects.module.scss";
-import { trendingListOld } from "@/utils/constants";
-import { useRouter } from "next/navigation";
-import React from "react";
+'use client';
+
+import { useEffect, useState, useCallback } from 'react';
+import Image from 'next/image';
+import styles from '@/app/components/LandingProjects.module.scss';
+import { trendingListOld } from '@/utils/constants';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
 const LandingProjects = React.memo(() => {
   const router = useRouter();
@@ -14,17 +16,17 @@ const LandingProjects = React.memo(() => {
 
   const handleExpand = useCallback((title: string) => {
     switch (title) {
-      case "Case Studies":
-        window.open("/whatwethink#case-studies", "_blank");
+      case 'Case Studies':
+        window.open('/whatwethink#case-studies', '_blank');
         break;
-      case "Blogs":
-        window.open("/whatwethink#blogs", "_blank");
+      case 'Blogs':
+        window.open('/whatwethink#blogs', '_blank');
         break;
-      case "AI News":
-        window.open("/whatwethink#ainews", "_blank");
+      case 'AI News':
+        window.open('/whatwethink#ainews', '_blank');
         break;
       default:
-        console.error("URL is not defined");
+        console.error('URL is not defined');
     }
   }, []);
 
@@ -34,7 +36,7 @@ const LandingProjects = React.memo(() => {
     if (hash) {
       const element = document.querySelector(hash);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView({ behavior: 'smooth' });
       }
     }
   }, [router]);
@@ -44,7 +46,7 @@ const LandingProjects = React.memo(() => {
       <div className={styles.projectsButtonContainer}>
         <button
           type="button"
-          onClick={() => router.push("/projects")}
+          onClick={() => router.push('/projects')}
           className={styles.projectsButton}
         >
           Projects
@@ -58,11 +60,11 @@ const LandingProjects = React.memo(() => {
             className={styles.trendingItem}
             onClick={() => {
               if (i === 0) {
-                window.open("https://cracked.ai/", "_blank");
+                window.open('https://cracked.ai/', '_blank');
               } else if (i === 1) {
-                window.open("https://fomo.fund/", "_blank");
+                window.open('https://fomo.fund/', '_blank');
               } else if (i === 2) {
-                window.open("https://aim-cube.com/", "_blank");
+                window.open('https://aim-cube.com/', '_blank');
               } else {
                 handleExpand(item.title);
               }
@@ -77,43 +79,44 @@ const LandingProjects = React.memo(() => {
               else if (i === 1) setIsSecondItemHovered(false);
               else if (i === 2) setIsThirdItemHovered(false);
             }}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           >
             <div className={styles.content}>
-              <h3>
-                {i === 0 ? "" :
-                  i === 1 ? "" :
-                    i === 2 ? "" :
-                      item.title}
-              </h3>
+              <h3>{i === 0 ? '' : i === 1 ? '' : i === 2 ? '' : item.title}</h3>
               {i === 0 ? (
-                <p style={{
-                  opacity: isFirstItemHovered ? 1 : 0,
-                  transition: 'opacity 0.3s ease',
-                  textAlign: 'center',
-                  fontSize: '1.1rem',
-                  fontWeight: '600'
-                }}>
+                <p
+                  style={{
+                    opacity: isFirstItemHovered ? 1 : 0,
+                    transition: 'opacity 0.3s ease',
+                    textAlign: 'center',
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                  }}
+                >
                   Click to View
                 </p>
               ) : i === 1 ? (
-                <p style={{
-                  opacity: isSecondItemHovered ? 1 : 0,
-                  transition: 'opacity 0.3s ease',
-                  textAlign: 'center',
-                  fontSize: '1.1rem',
-                  fontWeight: '600'
-                }}>
+                <p
+                  style={{
+                    opacity: isSecondItemHovered ? 1 : 0,
+                    transition: 'opacity 0.3s ease',
+                    textAlign: 'center',
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                  }}
+                >
                   Click to View
                 </p>
               ) : i === 2 ? (
-                <p style={{
-                  opacity: isThirdItemHovered ? 1 : 0,
-                  transition: 'opacity 0.3s ease',
-                  textAlign: 'center',
-                  fontSize: '1.1rem',
-                  fontWeight: '600'
-                }}>
+                <p
+                  style={{
+                    opacity: isThirdItemHovered ? 1 : 0,
+                    transition: 'opacity 0.3s ease',
+                    textAlign: 'center',
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                  }}
+                >
                   Click to View
                 </p>
               ) : (
@@ -135,10 +138,10 @@ const LandingProjects = React.memo(() => {
                   playsInline
                   preload="metadata"
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    willChange: "auto"
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    willChange: 'auto',
                   }}
                 />
               </div>
@@ -155,10 +158,12 @@ const LandingProjects = React.memo(() => {
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                   unoptimized={true}
                   style={{
-                    objectFit: "cover",
-                    animationPlayState: isSecondItemHovered ? "running" : "paused",
-                    animationDelay: "0s",
-                    willChange: "auto"
+                    objectFit: 'cover',
+                    animationPlayState: isSecondItemHovered
+                      ? 'running'
+                      : 'paused',
+                    animationDelay: '0s',
+                    willChange: 'auto',
                   }}
                 />
               </div>
@@ -174,10 +179,10 @@ const LandingProjects = React.memo(() => {
                   playsInline
                   preload="metadata"
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    willChange: "auto"
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    willChange: 'auto',
                   }}
                 />
               </div>
@@ -198,10 +203,10 @@ const LandingProjects = React.memo(() => {
         ))}
         <div
           className={styles.trendingItem}
-          onClick={() => window.open("https://www.toingg.com/", "_blank")}
+          onClick={() => window.open('https://www.toingg.com/', '_blank')}
           onMouseEnter={() => setIsFourthItemHovered(true)}
           onMouseLeave={() => setIsFourthItemHovered(false)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
         >
           <div className={styles.content}>
             {/* <div className={styles.badge}>Our Own Product</div>
@@ -210,8 +215,6 @@ const LandingProjects = React.memo(() => {
               In year 2023, two founders launched their first product: &quot;Toingg&quot;,
               an AI communication OS for businesses.
             </p> */}
-
-
           </div>
           <div className={styles.gifContainer}>
             <video
@@ -223,10 +226,10 @@ const LandingProjects = React.memo(() => {
               playsInline
               preload="metadata"
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                willChange: "auto"
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                willChange: 'auto',
               }}
             />
           </div>

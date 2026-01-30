@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import Script from "next/script";
+import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Inter, Poppins, Alexandria } from 'next/font/google';
-import "./globals.scss";
-import { AuthProvider } from "@/contexts/AuthContext";
-import Providers from "@/contexts/providers";
-import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
-import Navigation from "@/app/components/base/Navigation";
-import Footer from "@/app/components/Footer";
-import PageTransition from "@/app/components/PageTransition";
+import './globals.scss';
+import { AuthProvider } from '@/contexts/AuthContext';
+import Providers from '@/contexts/providers';
+import { SmoothScrollProvider } from '@/contexts/SmoothScrollContext';
+import Navigation from '@/app/components/base/Navigation';
+import Footer from '@/app/components/Footer';
+import PageTransition from '@/app/components/PageTransition';
 
 // Fonts
 const poppins = Poppins({
@@ -25,10 +25,10 @@ const alexandria = Alexandria({
 });
 
 export const metadata: Metadata = {
-  title: "PGAGI",
+  title: 'PGAGI',
   description:
-    "Your Go-To AI Consultancy For AI Research, AI Products, AI Solutions, AI MVP Design, Idea Validation",
-  icons: "favicon.ico",
+    'Your Go-To AI Consultancy For AI Research, AI Products, AI Solutions, AI MVP Design, Idea Validation',
+  icons: 'favicon.ico',
 };
 
 export default function RootLayout({
@@ -45,11 +45,13 @@ export default function RootLayout({
             className={`${poppins.variable} ${alexandria.variable}`}
           >
             <head>
-
-              <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1, maximum-scale=1"
+              />
               {/* Preload critical resources for Hyperspeed component */}
-              <link rel="preload" href="/api/three" as="script" />
-              <link rel="preload" href="/api/postprocessing" as="script" />
+              {/* <link rel="preload" href="/api/three" as="script" />
+              <link rel="preload" href="/api/postprocessing" as="script" /> */}
               {/* Google Tag Manager */}
               {process.env.NODE_ENV === 'production' && (
                 <Script id="google-tag-manager" strategy="lazyOnload">
@@ -61,9 +63,6 @@ export default function RootLayout({
                   })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
                 `}
                 </Script>
-
-
-
               )}
 
               {/* Google Analytics */}
@@ -90,10 +89,10 @@ export default function RootLayout({
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                   __html: JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "Organization",
-                    "name": "PGAGI",
-                    "url": "https://pgagi.in",
+                    '@context': 'https://schema.org',
+                    '@type': 'Organization',
+                    name: 'PGAGI',
+                    url: 'https://pgagi.in',
                   }),
                 }}
               />
@@ -112,14 +111,18 @@ export default function RootLayout({
                   src="https://www.googletagmanager.com/ns.html?id=GTM-TD3PQLP6"
                   height="0"
                   width="0"
-                  style={{ display: "none", visibility: "hidden" }}
+                  style={{ display: 'none', visibility: 'hidden' }}
                 ></iframe>
               </noscript>
               <Navigation />
-              <main style={{ minHeight: '100vh', paddingTop: '0', position: 'relative' }}>
-                <PageTransition>
-                  {children}
-                </PageTransition>
+              <main
+                style={{
+                  minHeight: '100vh',
+                  paddingTop: '0',
+                  position: 'relative',
+                }}
+              >
+                <PageTransition>{children}</PageTransition>
               </main>
               <Footer />
             </body>
@@ -129,5 +132,3 @@ export default function RootLayout({
     </AuthProvider>
   );
 }
-
-

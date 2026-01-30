@@ -1,49 +1,49 @@
-"use client";
-import { ArrowUpRight } from "lucide-react";
-import styles from "./process.module.scss";
-import Divider from "./Divider";
-import Image from "next/image";
-import { motion } from "framer-motion"; // ✨ import motion
+'use client';
+
+import { ArrowUpRight } from 'lucide-react';
+import styles from './process.module.scss';
+import Divider from './Divider';
+import Image from 'next/image';
+import { motion } from 'framer-motion'; // ✨ import motion
 
 // Images
-import Engineering from "../../../public/Engineering.gif";
-import Strategy from "../../../public/strategy.gif";
-import Launch from "../../../public/launch.gif";
-import initialConsultation from "../../../public/Initial Consultation.jpg";
-import AI1 from "../../../public/1.gif";
-
+import Engineering from '../../../public/Engineering.gif';
+import Strategy from '../../../public/strategy.gif';
+import Launch from '../../../public/launch.gif';
+import initialConsultation from '../../../public/Initial Consultation.jpg';
+import AI1 from '../../../public/1.gif';
 
 // Steps Data
 const steps = [
   {
-    number: "01",
-    title: "Initial Consultation",
+    number: '01',
+    title: 'Initial Consultation',
     description:
-      "We begin with a focused discovery call to align on your product vision, goals, and user needs, setting the foundation for clear planning and initial architecture design.",
+      'We begin with a focused discovery call to align on your product vision, goals, and user needs, setting the foundation for clear planning and initial architecture design.',
     image: AI1,
     reverse: false,
   },
   {
-    number: "02",
-    title: "Strategy",
+    number: '02',
+    title: 'Strategy',
     description:
-      "We craft a comprehensive architecture and detailed proposal, secure approval, and then plan a feature-driven roadmap that prioritizes fast validation and measurable outcomes.",
+      'We craft a comprehensive architecture and detailed proposal, secure approval, and then plan a feature-driven roadmap that prioritizes fast validation and measurable outcomes.',
     image: Strategy,
     reverse: true,
   },
   {
-    number: "03",
-    title: "Engineering",
+    number: '03',
+    title: 'Engineering',
     description:
-      "We move from proof of concept to backend and frontend development, followed by rigorous testing, to deliver a polished MVP ready for real-world use.",
+      'We move from proof of concept to backend and frontend development, followed by rigorous testing, to deliver a polished MVP ready for real-world use.',
     image: Engineering,
     reverse: false,
   },
   {
-    number: "04",
-    title: "Launch",
+    number: '04',
+    title: 'Launch',
     description:
-      "From deployment and user testing to go-to-market and full-scale launch, we ensure your product is market-ready and backed by our end-to-end support.",
+      'From deployment and user testing to go-to-market and full-scale launch, we ensure your product is market-ready and backed by our end-to-end support.',
     image: Launch, // 🚫 No image for Launch
     reverse: true,
   },
@@ -67,11 +67,11 @@ function StepSection({
 }: StepSectionProps) {
   return (
     <motion.div
-      className={`${styles.step} ${reverse ? styles.reverse : ""}`}
+      className={`${styles.step} ${reverse ? styles.reverse : ''}`}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <motion.div
         className={styles.stepText}
@@ -118,7 +118,7 @@ const Process = () => {
         className={styles.card}
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         {/* Header */}
         <div className={styles.header}>
@@ -149,7 +149,7 @@ const Process = () => {
               className={styles.button}
               onClick={() => {
                 // window.open("https://form.pgagi.in/", "_blank");
-                 window.open("https://calendly.com/vivek-_ou/30min", "_blank");
+                window.open('https://calendly.com/vivek-_ou/30min', '_blank');
               }}
             >
               Book a Slot

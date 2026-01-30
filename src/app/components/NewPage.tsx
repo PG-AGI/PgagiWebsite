@@ -1,17 +1,41 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './NewPage.module.scss';
 import { AnimatedTooltip } from './ui/animated-tooltip';
 
-
 const people = [
-
-
-  { id: 1, name: "Vivekjyoti Bhowmik", designation: "Founder", image: "/assets/team/member1.png" },
-  { id: 2, name: "Shibajyoti Bhowmik", designation: "Managing Director", image: "/assets/team/member2Shibasir.jpg" },
-  { id: 3, name: "Pratik Hegde", designation: "Founding Engineer", image: "/assets/team/PRATIK.png" },
-  { id: 4, name: "Abhinav", designation: "Founding Engineer", image: "/assets/team/ABHINAV.png" },
-  { id: 5, name: "Sahil Sinha", designation: "Founding Engineer", image: "/assets/team/member9.png" },
+  {
+    id: 1,
+    name: 'Vivekjyoti Bhowmik',
+    designation: 'Founder',
+    image: '/assets/team/member1.png',
+  },
+  {
+    id: 2,
+    name: 'Shibajyoti Bhowmik',
+    designation: 'Managing Director',
+    image: '/assets/team/member2Shibasir.jpg',
+  },
+  {
+    id: 3,
+    name: 'Pratik Hegde',
+    designation: 'Founding Engineer',
+    image: '/assets/team/PRATIK.png',
+  },
+  {
+    id: 4,
+    name: 'Abhinav',
+    designation: 'Founding Engineer',
+    image: '/assets/team/ABHINAV.png',
+  },
+  {
+    id: 5,
+    name: 'Sahil Sinha',
+    designation: 'Founding Engineer',
+    image: '/assets/team/member9.png',
+  },
   // {id: 6, name: "With", designation: "Team Size of", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
 ];
 
@@ -27,7 +51,7 @@ const AnimatedNumber: React.FC<{ target: number }> = ({ target }) => {
           setHasAnimated(true);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -64,8 +88,8 @@ const AnimatedNumber: React.FC<{ target: number }> = ({ target }) => {
 
 const StatsSection = () => {
   return (
-    <section 
-      id="stats-section" 
+    <section
+      id="stats-section"
       className={styles.statsSection}
       aria-label="Company Statistics and Team Information"
     >
@@ -79,16 +103,19 @@ const StatsSection = () => {
               <h3 className={styles.statTitle}>Our Own Product</h3>
               <div className={styles.separator} aria-hidden="true"></div>
               <div className={styles.toinggButtonContainer}>
-                <button className={styles.toinggButton} onClick={() => {
-                    window.open("https://www.toingg.com/", "_blank");
-                }}>
-                    TOINGG
+                <button
+                  className={styles.toinggButton}
+                  onClick={() => {
+                    window.open('https://www.toingg.com/', '_blank');
+                  }}
+                >
+                  TOINGG
                 </button>
               </div>
               <span className={styles.productDescription}>
                 In year 2023, two founders launched their first product
-                <span style={{ color: "#b60306" }}> Toingg </span>
-                , an AI communication OS for businesses.
+                <span style={{ color: '#b60306' }}> Toingg </span>, an AI
+                communication OS for businesses.
               </span>
             </div>
 
@@ -104,10 +131,15 @@ const StatsSection = () => {
                 <div className={styles.avatar} aria-hidden="true"></div>
               </div> */}
 
-<div className={styles.wrapperContainer}>
-      <AnimatedTooltip items={people} />
-      <div className={styles.teamCount} aria-label="32 plus team members">45+</div>
-    </div>
+              <div className={styles.wrapperContainer}>
+                <AnimatedTooltip items={people} />
+                <div
+                  className={styles.teamCount}
+                  aria-label="32 plus team members"
+                >
+                  45+
+                </div>
+              </div>
             </div>
           </div>
 
@@ -127,22 +159,25 @@ const StatsSection = () => {
               {/* Client Satisfaction Section */}
               <div className={styles.statItem}>
                 <div className={styles.headerRow}>
-                  <h3 className={`${styles.statTitle} ${styles.clientSatisfactionTitle}`}>Client Satisfaction</h3>
-                  <a 
-                    href="https://www.upwork.com/agencies/1737467434828361728/" 
-                    target="_blank" 
+                  <h3
+                    className={`${styles.statTitle} ${styles.clientSatisfactionTitle}`}
+                  >
+                    Client Satisfaction
+                  </h3>
+                  <a
+                    href="https://www.upwork.com/agencies/1737467434828361728/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className={styles.verificationLink}
                     aria-label="View our Upwork profile - opens in new tab"
-                  >
-                  </a>
+                  ></a>
                 </div>
                 <div className={styles.separator} aria-hidden="true"></div>
                 <div className={styles.upworkVerification}>
                   <div className={styles.badgeItem}>
-                    <Image 
-                      src="/images/success.png" 
-                      alt="Success Badge" 
+                    <Image
+                      src="/images/success.png"
+                      alt="Success Badge"
                       width={50}
                       height={50}
                       sizes="(max-width: 480px) 35px, (max-width: 768px) 40px, 50px"
@@ -152,16 +187,18 @@ const StatsSection = () => {
                     <span className={styles.badgeText}>100% Job Success</span>
                   </div>
                   <div className={styles.badgeItem}>
-                    <Image 
-                      src="/images/toprated.png" 
-                      alt="Upwork Top Rated Badge" 
+                    <Image
+                      src="/images/toprated.png"
+                      alt="Upwork Top Rated Badge"
                       width={50}
                       height={50}
                       sizes="(max-width: 480px) 35px, (max-width: 768px) 40px, 50px"
                       className={styles.topratedBadge}
                       priority
                     />
-                    <span className={styles.badgeText}>Top Rated Plus on Upwork</span>
+                    <span className={styles.badgeText}>
+                      Top Rated Plus on Upwork
+                    </span>
                   </div>
                 </div>
               </div>
@@ -171,10 +208,21 @@ const StatsSection = () => {
             <div className={styles.agencySection}>
               <div className={styles.agencyDescription}>
                 <p>
-                  We specialize in engineering <strong style={{ color: "#b60306" }}>full-scale AI applications</strong> from research and product development to scalable deployment.
+                  We specialize in engineering{' '}
+                  <strong style={{ color: '#b60306' }}>
+                    full-scale AI applications
+                  </strong>{' '}
+                  from research and product development to scalable deployment.
                 </p>
                 <p>
-                  Whether you are launching <strong style={{ color: "#b60306" }}>a new AI product</strong> or <strong style={{ color: "#b60306" }}>optimizing an existing one</strong>, we bring together deep tech expertise to drive real-world tangible results.
+                  Whether you are launching{' '}
+                  <strong style={{ color: '#b60306' }}>a new AI product</strong>{' '}
+                  or{' '}
+                  <strong style={{ color: '#b60306' }}>
+                    optimizing an existing one
+                  </strong>
+                  , we bring together deep tech expertise to drive real-world
+                  tangible results.
                 </p>
               </div>
             </div>

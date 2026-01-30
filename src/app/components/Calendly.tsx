@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./calendly.module.scss";
 import { InlineWidget } from "react-calendly";
 import BookCallModal from './base/bookCallModela';

@@ -29,7 +29,9 @@ const BookCalendly: React.FC<BookCalendlyProps> = ({ onClose }) => {
     <div className={styles.calendly}>
       <div className={styles.window}>
         {/* Close button triggering onClose */}
-        <button className={styles.closeButton} onClick={onClose}>×</button>
+        <button className={styles.closeButton} onClick={onClose}>
+          ×
+        </button>
 
         {/* Calendly widget */}
         <div className={styles.widget} ref={widgetRef}>
