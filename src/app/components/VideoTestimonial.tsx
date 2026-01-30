@@ -1,8 +1,6 @@
-
-
-"use client";
-import React, { useState, useEffect, useRef } from "react";
-import styles from "./VideoTestimonial.module.scss";
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
+import styles from './VideoTestimonial.module.scss';
 
 // Video data interface
 interface VideoData {
@@ -38,29 +36,29 @@ const extractYouTubeId = (urlOrId: string): string => {
 
 // Testimonial image data - Images are in /public/images/testimonials/ folder
 const testimonialImages: string[] = [
-  "/images/testimonials/Artboard 1 copy 2.jpg",
-  "/images/testimonials/Artboard 1 copy 3.jpg",
-  "/images/testimonials/Artboard 1 copy 4.jpg",
+  '/images/testimonials/Artboard 1 copy 2.jpg',
+  '/images/testimonials/Artboard 1 copy 3.jpg',
+  '/images/testimonials/Artboard 1 copy 4.jpg',
   // "/images/testimonials/Artboard 1 copy 5.jpg",
   // "/images/testimonials/Artboard 1 copy 6.jpg",
   // "/images/testimonials/Artboard 1 copy 7.jpg",
-  "/images/testimonials/Artboard 1 copy 8.jpg",
+  '/images/testimonials/Artboard 1 copy 8.jpg',
   // "/images/testimonials/Artboard 1 copy 9.jpg",
-  "/images/testimonials/Artboard 1 copy 10.jpg",
-  "/images/testimonials/Artboard 1 copy 11.jpg",
+  '/images/testimonials/Artboard 1 copy 10.jpg',
+  '/images/testimonials/Artboard 1 copy 11.jpg',
   // "/images/testimonials/Artboard 1 copy 12.jpg",
-  "/images/testimonials/Artboard 1 copy 13.jpg",
+  '/images/testimonials/Artboard 1 copy 13.jpg',
   // "/images/testimonials/Artboard 1 copy 14.jpg",
-  "/images/testimonials/FOMO (3).jpg",
-  "/images/testimonials/Artboard 1 copy.jpg",
+  '/images/testimonials/FOMO (3).jpg',
+  '/images/testimonials/Artboard 1 copy.jpg',
   // "/images/testimonials/Artboard 1.jpg",
-  "/images/testimonials/Artboard 1 copy 5.jpg",
-  "/images/testimonials/Artboard 1 copy 6.jpg",
-  "/images/testimonials/Artboard 1 copy 7.jpg",
-  "/images/testimonials/Artboard 1 copy 9.jpg",
-  "/images/testimonials/Artboard 1 copy 12.jpg",
-  "/images/testimonials/Artboard 1 copy 14.jpg",
-  "/images/testimonials/Artboard 1.jpg",
+  '/images/testimonials/Artboard 1 copy 5.jpg',
+  '/images/testimonials/Artboard 1 copy 6.jpg',
+  '/images/testimonials/Artboard 1 copy 7.jpg',
+  '/images/testimonials/Artboard 1 copy 9.jpg',
+  '/images/testimonials/Artboard 1 copy 12.jpg',
+  '/images/testimonials/Artboard 1 copy 14.jpg',
+  '/images/testimonials/Artboard 1.jpg',
 ];
 
 // Video data - Just paste your full YouTube URL here!
@@ -70,18 +68,18 @@ const testimonialImages: string[] = [
 // - Or just the ID: vsuDM890kmU
 const videos: VideoData[] = [
   {
-    thumbnail: "/images/THUMBNAIL.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=vsuDM890kmU", // Paste full YouTube URL here
-    title: "Stunited",
+    thumbnail: '/images/THUMBNAIL.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=vsuDM890kmU', // Paste full YouTube URL here
+    title: 'Stunited',
     description:
-      "Partnering with Toingg, they deployed an advanced, AI-powered communication system. Automated WhatsApp outreach, intelligent AI calls, and seamless CRM integration with Monday.com helped them achieve 1100x ROI effortlessly.",
+      'Partnering with Toingg, they deployed an advanced, AI-powered communication system. Automated WhatsApp outreach, intelligent AI calls, and seamless CRM integration with Monday.com helped them achieve 1100x ROI effortlessly.',
   },
   {
-    thumbnail: "/images/THUMBNAIL2.jpg", // Update with second video thumbnail
-    youtubeUrl: "https://youtu.be/6xaFA25-cc8?si=dlXudFrTusBX7aaJ", // Paste full YouTube URL here
-    title: "Maputo Rides",
+    thumbnail: '/images/THUMBNAIL2.jpg', // Update with second video thumbnail
+    youtubeUrl: 'https://youtu.be/6xaFA25-cc8?si=dlXudFrTusBX7aaJ', // Paste full YouTube URL here
+    title: 'Maputo Rides',
     description:
-      "Using Toingg conversational intelligence, Maputo Rides has transformed passive data into actionable engagement, driving both reactivation and relationship depth at scale.",
+      'Using Toingg conversational intelligence, Maputo Rides has transformed passive data into actionable engagement, driving both reactivation and relationship depth at scale.',
   },
 ];
 
@@ -107,17 +105,17 @@ const VideoTestimonial: React.FC = () => {
   useEffect(() => {
     if (activeVideoIndex === null) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         closeVideo();
       }
     };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, [activeVideoIndex]);
 
   // Helper to get card metrics based on screen width
   const getCardMetrics = () => {
-    if (typeof window === "undefined") return { width: 480, gap: 32 };
+    if (typeof window === 'undefined') return { width: 480, gap: 32 };
     const width = window.innerWidth;
 
     if (width <= 480) {
@@ -141,7 +139,11 @@ const VideoTestimonial: React.FC = () => {
   // Animation loop for auto-scroll
   useEffect(() => {
     const animate = (time: number) => {
-      if (lastTimeRef.current !== 0 && !isHovered && testimonialImages.length > 0) {
+      if (
+        lastTimeRef.current !== 0 &&
+        !isHovered &&
+        testimonialImages.length > 0
+      ) {
         const delta = time - lastTimeRef.current;
         const speed = 0.05; // Pixels per ms
 
@@ -173,14 +175,14 @@ const VideoTestimonial: React.FC = () => {
   }, [isHovered, testimonialImages.length]);
 
   // Manual navigation
-  const scrollCarousel = (direction: "left" | "right") => {
+  const scrollCarousel = (direction: 'left' | 'right') => {
     const { width, gap } = getCardMetrics();
     const totalCardWidth = width + gap;
     const maxScroll = testimonialImages.length * totalCardWidth;
 
     let newPos = positionRef.current;
 
-    if (direction === "left") {
+    if (direction === 'left') {
       newPos -= totalCardWidth;
       // Wrap around logic
       if (newPos < 0) {
@@ -202,9 +204,10 @@ const VideoTestimonial: React.FC = () => {
   };
 
   // Duplicate images for seamless infinite scroll
-  const duplicatedImages = testimonialImages.length > 0
-    ? [...testimonialImages, ...testimonialImages]
-    : [];
+  const duplicatedImages =
+    testimonialImages.length > 0
+      ? [...testimonialImages, ...testimonialImages]
+      : [];
 
   return (
     <section className={styles.videoTestimonialSection}>
@@ -228,9 +231,18 @@ const VideoTestimonial: React.FC = () => {
                 onClick={() => openVideo(index)}
               >
                 <div className={styles.videoThumbnail}>
-                  <img src={video.thumbnail} alt={video.title} className={styles.thumbnailImage} />
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className={styles.thumbnailImage}
+                  />
                   <span className={styles.playButton} aria-hidden>
-                    <svg viewBox="0 0 24 24" width="64" height="64" fill="currentColor">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="64"
+                      height="64"
+                      fill="currentColor"
+                    >
                       <path d="M8 5v14l11-7z" />
                     </svg>
                   </span>
@@ -251,30 +263,39 @@ const VideoTestimonial: React.FC = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Navigation Arrows - Show on hover */}
-          {(
+          {
             <>
               <button
                 type="button"
                 className={`${styles.carouselArrow} ${styles.arrowLeft}`}
-                onClick={() => scrollCarousel("left")}
+                onClick={() => scrollCarousel('left')}
                 aria-label="Previous testimonials"
               >
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                >
                   <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
                 </svg>
               </button>
               <button
                 type="button"
                 className={`${styles.carouselArrow} ${styles.arrowRight}`}
-                onClick={() => scrollCarousel("right")}
+                onClick={() => scrollCarousel('right')}
                 aria-label="Next testimonials"
               >
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                >
                   <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
                 </svg>
               </button>
             </>
-          )
           }
 
           {/* Carousel Track */}
@@ -282,12 +303,20 @@ const VideoTestimonial: React.FC = () => {
             <div
               className={styles.carouselContent}
               style={{
-                transform: carouselPosition !== null ? `translateX(-${carouselPosition}px)` : "translateX(0)",
-                transition: isHovered ? "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
+                transform:
+                  carouselPosition !== null
+                    ? `translateX(-${carouselPosition}px)`
+                    : 'translateX(0)',
+                transition: isHovered
+                  ? 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                  : 'none',
               }}
             >
               {duplicatedImages.map((image, index) => (
-                <div key={`testimonial-${index}`} className={styles.testimonialCard}>
+                <div
+                  key={`testimonial-${index}`}
+                  className={styles.testimonialCard}
+                >
                   <img
                     src={image}
                     alt={`Testimonial ${(index % testimonialImages.length) + 1}`}
@@ -297,14 +326,14 @@ const VideoTestimonial: React.FC = () => {
                       console.error(`Failed to load image: ${image}`);
                       // Show a placeholder or hide the image
                       const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
+                      target.style.display = 'none';
                       // Optionally show a placeholder
                       const parent = target.parentElement;
                       if (parent) {
-                        parent.style.backgroundColor = "#f0f0f0";
-                        parent.style.display = "flex";
-                        parent.style.alignItems = "center";
-                        parent.style.justifyContent = "center";
+                        parent.style.backgroundColor = '#f0f0f0';
+                        parent.style.display = 'flex';
+                        parent.style.alignItems = 'center';
+                        parent.style.justifyContent = 'center';
                         parent.innerHTML = `<span style="color: #999; font-size: 14px;">Image not found</span>`;
                       }
                     }}
@@ -317,8 +346,11 @@ const VideoTestimonial: React.FC = () => {
             </div>
           </div>
           {testimonialImages.length === 0 && (
-            <div style={{ padding: "2rem", textAlign: "center", color: "#999" }}>
-              No testimonial images found. Please add images to /public/images/testimonials/
+            <div
+              style={{ padding: '2rem', textAlign: 'center', color: '#999' }}
+            >
+              No testimonial images found. Please add images to
+              /public/images/testimonials/
             </div>
           )}
         </div>
@@ -362,4 +394,3 @@ const VideoTestimonial: React.FC = () => {
 };
 
 export default VideoTestimonial;
-

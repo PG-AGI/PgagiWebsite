@@ -73,11 +73,13 @@ const LandingProjects = React.memo(() => {
               if (i === 0) setIsFirstItemHovered(true);
               else if (i === 1) setIsSecondItemHovered(true);
               else if (i === 2) setIsThirdItemHovered(true);
+              else if (i == 3) setIsFourthItemHovered(true);
             }}
             onMouseLeave={() => {
               if (i === 0) setIsFirstItemHovered(false);
               else if (i === 1) setIsSecondItemHovered(false);
               else if (i === 2) setIsThirdItemHovered(false);
+              else if (i == 3) setIsFourthItemHovered(false);
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -215,6 +217,18 @@ const LandingProjects = React.memo(() => {
               In year 2023, two founders launched their first product: &quot;Toingg&quot;,
               an AI communication OS for businesses.
             </p> */}
+
+            <p
+              style={{
+                opacity: isFourthItemHovered ? 1 : 0,
+                transition: 'opacity 0.3s ease',
+                textAlign: 'center',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+              }}
+            >
+              Click to View
+            </p>
           </div>
           <div className={styles.gifContainer}>
             <video
