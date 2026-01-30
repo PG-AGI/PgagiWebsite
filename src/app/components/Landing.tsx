@@ -1,16 +1,16 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import styles from "./landing.module.scss";
-import BookCallModal from "./base/bookCallModela";
-import { useSmoothScrollTo } from "@/hooks/useSmoothScrollTo";
+'use client';
+import React, { useState, useRef, useEffect } from 'react';
+import styles from './landing.module.scss';
+import BookCallModal from './base/bookCallModela';
+import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
 // import Hyperspeed from './ui/Hyperspeed/Hyperspeed';
-import Image from "next/image";
-import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
+import Image from 'next/image';
+import { LayoutTextFlip } from '@/components/ui/layout-text-flip';
 
 interface Message {
   id: string;
   text: string;
-  type: "user" | "bot";
+  type: 'user' | 'bot';
   isStreaming?: boolean;
 }
 
@@ -28,21 +28,36 @@ const shouldAutoResetChat = (text: string) => {
       "I appreciate your time, but it seems like this might not be the best moment to discuss your project. Feel free to reach out when you're ready to focus on your requirements. Have a great day! :wave:",
     ) ||
     normalized.includes(
-      "Your project details have been successfully captured! Our expert team at PGAGI has received your requirements  ",
+      'Your project details have been successfully captured! Our expert team at PGAGI has received your requirements  ',
     )
   );
 };
 
+function formatBotMessage(text: string) {
+  let formatted = text;
+
+  // 1. Bold: **text**
+  formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 2. Quoted text: "text"
+  formatted = formatted.replace(/"(.*?)"/g, '<em>“$1”</em>');
+
+  // 3. Dash-separated items → new lines
+  formatted = formatted.replace(/\s-\s/g, '<br />');
+
+  return formatted;
+}
+
 export default function Landing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [currentMessage, setCurrentMessage] = useState("");
+  const [currentMessage, setCurrentMessage] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { scrollTo } = useSmoothScrollTo();
   const bgRef = useRef<HTMLDivElement>(null);
   const wsRef = useRef<WebSocket | null>(null);
-  const currentBotMessageRef = useRef<string>("");
+  const currentBotMessageRef = useRef<string>('');
   const messageListRef = useRef<HTMLDivElement>(null);
   // const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -52,7 +67,7 @@ export default function Landing() {
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleScrollToTestimonials = () => {
-    window.location.href = "/projects";
+    window.location.href = '/projects';
   };
 
   // Initialize WebSocket connection
@@ -60,27 +75,27 @@ export default function Landing() {
     const connectWebSocket = async () => {
       try {
         // Check localStorage for existing session
-        let sessionId = localStorage.getItem("session_id");
+        let sessionId = localStorage.getItem('session_id');
 
         // If no session, fetch new one from backend
         if (!sessionId) {
           const response = await fetch(
-            "https://pgagi-chatbot-backend-168195082477.europe-west1.run.app/api/chat/generate_session",
+            'https://pgagi-chatbot-backend-168195082477.europe-west1.run.app/api/chat/generate_session',
           );
           const data = await response.json();
           sessionId = data.session_id;
           if (sessionId) {
-            localStorage.setItem("session_id", sessionId);
+            localStorage.setItem('session_id', sessionId);
           }
         }
 
         // Connect WebSocket with session ID
         const ws = new WebSocket(
-          `wss://pgagi-chatbot-backend-168195082477.europe-west1.run.app/api/chat/${sessionId || "123"}`,
+          `wss://pgagi-chatbot-backend-168195082477.europe-west1.run.app/api/chat/${sessionId || '123'}`,
         );
 
         ws.onopen = () => {
-          console.log("WebSocket connected");
+          console.log('WebSocket connected');
           setIsConnected(true);
         };
 
@@ -88,45 +103,47 @@ export default function Landing() {
           try {
             // Convert Blob to text if needed
             const text =
-              typeof event.data === "string"
+              typeof event.data === 'string'
                 ? event.data
                 : await (event.data as Blob).text();
 
             // Ignore heartbeat messages
-            if (text === "ping" || text === "pong") return;
+            if (text === 'ping' || text === 'pong') return;
             if (!text.trim()) return;
 
             // Parse JSON message
             const message = JSON.parse(text);
 
-            if (message.type === "stream_start") {
+            if (message.type === 'stream_start') {
               // Create new bot message with streaming state
               const botMessageId = `bot-${Date.now()}`;
               setMessages((prev) => [
                 ...prev,
                 {
                   id: botMessageId,
-                  text: "",
-                  type: "bot",
+                  text: '',
+                  type: 'bot',
                   isStreaming: true,
                 },
               ]);
-              currentBotMessageRef.current = "";
+              currentBotMessageRef.current = '';
               // Store the message ID for subsequent chunks
               (ws as any)._currentMessageId = botMessageId;
-            } else if (message.type === "chunk" && message.content) {
+            } else if (message.type === 'chunk' && message.content) {
               // Append chunk to current bot message
               currentBotMessageRef.current += message.content;
               const messageId = (ws as any)._currentMessageId;
 
+              const formattedText = formatBotMessage(
+                currentBotMessageRef.current,
+              );
+
               setMessages((prev) =>
                 prev.map((msg) =>
-                  msg.id === messageId
-                    ? { ...msg, text: currentBotMessageRef.current }
-                    : msg,
+                  msg.id === messageId ? { ...msg, text: formattedText } : msg,
                 ),
               );
-            } else if (message.type === "stream_end") {
+            } else if (message.type === 'stream_end') {
               // Mark streaming as complete
               const messageId = (ws as any)._currentMessageId;
               setMessages((prev) =>
@@ -140,36 +157,36 @@ export default function Landing() {
               if (shouldAutoResetChat(currentBotMessageRef.current)) {
                 handleResetChat();
               }
-            } else if (message.type === "error") {
+            } else if (message.type === 'error') {
               // Display error message
               setMessages((prev) => [
                 ...prev,
                 {
                   id: `bot-${Date.now()}`,
-                  text: message.content || "An error occurred",
-                  type: "bot",
+                  text: message.content || 'An error occurred',
+                  type: 'bot',
                   isStreaming: false,
                 },
               ]);
               setIsLoading(false);
-            } else if (message.type === "end_chat") {
+            } else if (message.type === 'end_chat') {
               // Handle chat end
-              console.log("Chat ended:", message.content);
+              console.log('Chat ended:', message.content);
               handleResetChat();
             }
           } catch (error) {
-            console.error("Error processing WebSocket message:", error);
+            console.error('Error processing WebSocket message:', error);
             setIsLoading(false);
           }
         };
 
         ws.onerror = (error) => {
-          console.error("WebSocket error:", error);
+          console.error('WebSocket error:', error);
           setIsConnected(false);
         };
 
         ws.onclose = () => {
-          console.log("WebSocket disconnected");
+          console.log('WebSocket disconnected');
           setIsConnected(false);
           // Attempt to reconnect after 3 seconds
           setTimeout(connectWebSocket, 3000);
@@ -177,7 +194,7 @@ export default function Landing() {
 
         wsRef.current = ws;
       } catch (error) {
-        console.error("Error connecting WebSocket:", error);
+        console.error('Error connecting WebSocket:', error);
         setIsConnected(false);
       }
     };
@@ -217,8 +234,8 @@ export default function Landing() {
       }
     };
 
-    messageList.addEventListener("wheel", handleWheel, { passive: false });
-    return () => messageList.removeEventListener("wheel", handleWheel);
+    messageList.addEventListener('wheel', handleWheel, { passive: false });
+    return () => messageList.removeEventListener('wheel', handleWheel);
   }, [hasMessages]);
 
   // Auto-focus textarea when chat becomes active or after bot responds
@@ -230,8 +247,8 @@ export default function Landing() {
 
   const handleResetChat = () => {
     setMessages([]);
-    setCurrentMessage("");
-    currentBotMessageRef.current = "";
+    setCurrentMessage('');
+    currentBotMessageRef.current = '';
     setIsLoading(false);
   };
 
@@ -243,7 +260,7 @@ export default function Landing() {
       wsRef.current.readyState !== WebSocket.OPEN
     ) {
       if (!isConnected) {
-        alert("WebSocket is not connected. Please wait...");
+        alert('WebSocket is not connected. Please wait...');
       }
       return;
     }
@@ -252,18 +269,18 @@ export default function Landing() {
     const userMessage: Message = {
       id: `user-${Date.now()}`,
       text: trimmed,
-      type: "user",
+      type: 'user',
     };
     setMessages((prev) => [...prev, userMessage]);
-    setCurrentMessage("");
+    setCurrentMessage('');
     setIsLoading(true);
-    currentBotMessageRef.current = "";
+    currentBotMessageRef.current = '';
 
     // Send message via WebSocket
     try {
       wsRef.current.send(JSON.stringify({ message: trimmed }));
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error('Error sending message:', error);
       setIsLoading(false);
     }
   };
@@ -271,7 +288,7 @@ export default function Landing() {
   const handleInputKeyDown = (
     event: React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
-    if (event.key === "Enter" && !event.shiftKey) {
+    if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       handleSendMessage();
     }
@@ -367,19 +384,19 @@ export default function Landing() {
                 </div> */}
 
         <div
-          className={`${styles.enterpriseBlock} ${hasMessages ? styles.chatActive : ""}`}
+          className={`${styles.enterpriseBlock} ${hasMessages ? styles.chatActive : ''}`}
         >
           <h1
             className={`${styles.enterpriseHeading} ${styles.enterpriseHeadingAnimated}`}
           >
             <LayoutTextFlip
               text="Building AI Systems for"
-              words={["Enterprises", "StartUps"]}
+              words={['Enterprises', 'StartUps']}
             />
           </h1>
 
           <p className={styles.enterpriseSubtext}>
-            Top 1% Recognized on Upwork{" "}
+            Top 1% Recognized on Upwork{' '}
             <Image
               src="/images/up-arrow.png"
               alt="Upwork Link"
@@ -388,20 +405,20 @@ export default function Landing() {
               className={styles.upWorkLink}
               onClick={() => {
                 window.open(
-                  "https://www.upwork.com/agencies/1737467434828361728/",
-                  "_blank",
+                  'https://www.upwork.com/agencies/1737467434828361728/',
+                  '_blank',
                 );
               }}
               style={{
-                cursor: "pointer",
-                display: "inline-block",
-                verticalAlign: "middle",
+                cursor: 'pointer',
+                display: 'inline-block',
+                verticalAlign: 'middle',
               }}
             />
           </p>
 
           <div
-            className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ""} ${hasMessages ? styles.chatActive : ""}`}
+            className={`${styles.chatContainer} ${hasMessages ? styles.chatContainerActive : ''} ${hasMessages ? styles.chatActive : ''}`}
           >
             {hasMessages && (
               <button
@@ -418,10 +435,10 @@ export default function Landing() {
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`${styles.messageItem} ${message.type === "user" ? styles.userMessage : styles.botMessage}`}
+                    className={`${styles.messageItem} ${message.type === 'user' ? styles.userMessage : styles.botMessage}`}
                   >
-                    <p className={styles.messageBody}>
-                      {message.type === "bot" &&
+                    <div className={styles.messageBody}>
+                      {message.type === 'bot' &&
                       message.isStreaming &&
                       !message.text ? (
                         <span className={styles.typingDots}>
@@ -430,9 +447,11 @@ export default function Landing() {
                           <span></span>
                         </span>
                       ) : (
-                        message.text
+                        <p
+                          dangerouslySetInnerHTML={{ __html: message.text }}
+                        ></p>
                       )}
-                    </p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -441,7 +460,7 @@ export default function Landing() {
               <textarea
                 // ref={textareaRef}
                 placeholder="Tell us what you want to build."
-                className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ""}`}
+                className={`${styles.enterpriseInput} ${hasMessages ? styles.enterpriseInputCompact : ''}`}
                 value={currentMessage}
                 onChange={(event) => setCurrentMessage(event.target.value)}
                 onKeyDown={handleInputKeyDown}
