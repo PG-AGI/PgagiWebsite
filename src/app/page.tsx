@@ -1,5 +1,6 @@
 import Chatbot from './components/chatbot/Chatbot';
 import ChatBotButton from './components/chatbot/ChatBot-Button';
+import Hero from './components/Hero/Hero';
 import Landing from './components/Landing';
 import styles from './page.module.scss';
 // import Segment from "./components/base/Segment";
@@ -190,7 +191,8 @@ export default function Home() {
 					{ id: 'segment', label: 'Services', offset: 80 },
 				]}
 			/> */}
-      <Landing />
+      {/* <Landing /> */}
+      <Hero />
       <Partners />
       <StatsSection />
       <VideoTestimonial />
