@@ -1,3 +1,5 @@
+import Chatbot from './components/chatbot/Chatbot';
+import ChatBotButton from './components/chatbot/ChatBot-Button';
 import Landing from './components/Landing';
 import styles from './page.module.scss';
 // import Segment from "./components/base/Segment";
@@ -21,9 +23,11 @@ const StatsSection = dynamic(() => import('./components/NewPage'), {
 const Process = dynamic(() => import('./components/process'), {
   loading: () => <div>Loading...</div>,
 });
-const LandingProjects = dynamic(() => import('./components/LandingProjects'), {
-  loading: () => <div>Loading...</div>,
-});
+// const LandingProjects = dynamic(() => import('./components/LandingProjects'), {
+//   loading: () => <div>Loading...</div>,
+// });
+
+const Projects = dynamic(() => import('./components/projects/Projects'));
 const ExpertiseSection = dynamic(
   () => import('./components/ExpertiseSection'),
   { loading: () => <div>Loading...</div> },
@@ -191,11 +195,14 @@ export default function Home() {
       <StatsSection />
       <VideoTestimonial />
       <Process />
-      <LandingProjects />
+      <Projects />
+      {/* <LandingProjects /> */}
       <ExpertiseSection />
       <FAQ />
       <TrendingOld />
       <Calendly />
+      <ChatBotButton />
+      <Chatbot />
       {/* <LazyOnVisible><Partners /></LazyOnVisible>
 			<LazyOnVisible><StatsSection /></LazyOnVisible>
 			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>

@@ -1,0 +1,27 @@
+.chatbotButton {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  background: #d60000;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 30px rgba(214, 0, 0, 0.35);
+  transition: all 0.3s ease;
+  z-index: 100;
+
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+
+.open {
+  background: #111;
+  transform: rotate(90deg);
+}
