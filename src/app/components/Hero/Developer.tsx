@@ -11,7 +11,7 @@ const Developer = ({ animationName = 'idle', ...props }) => {
   const group = useRef<Group>(null);
 
   // --- Load base model
-  const { scene } = useGLTF('/models/animations/developer.glb');
+  const { scene } = useGLTF('/models/developer.glb');
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
 
@@ -88,32 +88,48 @@ const Developer = ({ animationName = 'idle', ...props }) => {
         geometry={(nodes.EyeLeft as SkinnedMesh).geometry}
         material={materials.Wolf3D_Eye}
         skeleton={(nodes.EyeLeft as SkinnedMesh).skeleton}
-        morphTargetDictionary={(nodes.EyeLeft as SkinnedMesh).morphTargetDictionary}
-        morphTargetInfluences={(nodes.EyeLeft as SkinnedMesh).morphTargetInfluences}
+        morphTargetDictionary={
+          (nodes.EyeLeft as SkinnedMesh).morphTargetDictionary
+        }
+        morphTargetInfluences={
+          (nodes.EyeLeft as SkinnedMesh).morphTargetInfluences
+        }
       />
       <skinnedMesh
         name="EyeRight"
         geometry={(nodes.EyeRight as SkinnedMesh).geometry}
         material={materials.Wolf3D_Eye}
         skeleton={(nodes.EyeRight as SkinnedMesh).skeleton}
-        morphTargetDictionary={(nodes.EyeRight as SkinnedMesh).morphTargetDictionary}
-        morphTargetInfluences={(nodes.EyeRight as SkinnedMesh).morphTargetInfluences}
+        morphTargetDictionary={
+          (nodes.EyeRight as SkinnedMesh).morphTargetDictionary
+        }
+        morphTargetInfluences={
+          (nodes.EyeRight as SkinnedMesh).morphTargetInfluences
+        }
       />
       <skinnedMesh
         name="Wolf3D_Head"
         geometry={(nodes.Wolf3D_Head as SkinnedMesh).geometry}
         material={materials.Wolf3D_Skin}
         skeleton={(nodes.Wolf3D_Head as SkinnedMesh).skeleton}
-        morphTargetDictionary={(nodes.Wolf3D_Head as SkinnedMesh).morphTargetDictionary}
-        morphTargetInfluences={(nodes.Wolf3D_Head as SkinnedMesh).morphTargetInfluences}
+        morphTargetDictionary={
+          (nodes.Wolf3D_Head as SkinnedMesh).morphTargetDictionary
+        }
+        morphTargetInfluences={
+          (nodes.Wolf3D_Head as SkinnedMesh).morphTargetInfluences
+        }
       />
       <skinnedMesh
         name="Wolf3D_Teeth"
         geometry={(nodes.Wolf3D_Teeth as SkinnedMesh).geometry}
         material={materials.Wolf3D_Teeth}
         skeleton={(nodes.Wolf3D_Teeth as SkinnedMesh).skeleton}
-        morphTargetDictionary={(nodes.Wolf3D_Teeth as SkinnedMesh).morphTargetDictionary}
-        morphTargetInfluences={(nodes.Wolf3D_Teeth as SkinnedMesh).morphTargetInfluences}
+        morphTargetDictionary={
+          (nodes.Wolf3D_Teeth as SkinnedMesh).morphTargetDictionary
+        }
+        morphTargetInfluences={
+          (nodes.Wolf3D_Teeth as SkinnedMesh).morphTargetInfluences
+        }
       />
     </group>
   );
