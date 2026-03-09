@@ -1,12 +1,21 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/utils/mongodb';
-import { ObjectId } from 'mongodb';
+
+const FRAPPE_BASE_URL = process.env.FRAPPE_BASE_URL!;
+const FRAPPE_API_TOKEN = process.env.FRAPPE_API_TOKEN!;
+
+const authHeaders = {
+  Authorization: `token ${FRAPPE_API_TOKEN}`,
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
+};
 
 export async function POST(req: Request) {
   try {
+    // ── 1. Parse the exact same FormData the UI already sends ──────────────
     const formData = await req.formData();
+
     const jobId = formData.get('jobId') as string;
-    const jobTitle = formData.get('jobTitle') as string;
+    const jobTitle = formData.get('jobTitle') as string; // human-readable title
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
     const email = formData.get('email') as string;
@@ -21,123 +30,104 @@ export async function POST(req: Request) {
     const resumeLink = formData.get('resumeLink') as string;
     const educationalInstitute = formData.get('educational_institute') as string;
 
-    const projectDocFile = formData.get('projectDocFile') as File;
-    const demoVideoFile = formData.get('demoVideoFile') as File;
-    const codeBaseFile = formData.get('codeBaseFile') as File;
-
+    // ── 2. Required-field validation (same rules as before) ────────────────
     if (!firstName || !lastName || !email || !phone || !educationalInstitute || !resumeLink) {
       return NextResponse.json(
-        { message: 'First Name, Last Name, Email, Phone Number, Educational Institute, and Resume/CV are required.' },
+        {
+          message:
+            'First Name, Last Name, Email, Phone Number, Educational Institute, and Resume/CV are required.',
+        },
         { status: 400 }
       );
     }
 
-    const fileToBinary = async (file: File | null) => {
-      if (!file) return null;
-      const buffer = await file.arrayBuffer();
-      return new Uint8Array(buffer);
+    const applicantName = `${firstName.trim()} ${lastName.trim()}`;
+
+    // ── 3. Build the custom_external_links child-table array ────────────────
+    // Frappe's Job Applicant has a child table `custom_external_links` where
+    // each row has: link_type, url OR attachment.
+    // We map every URL the user supplied into a row here.
+    const externalLinks: Array<{ link_type: string; url?: string }> = [];
+
+    // Frappe's link_type field only allows: "Resume", "Assignment", "Portfolio", "Other"
+    if (resumeLink) {
+      externalLinks.push({ link_type: 'Resume', url: resumeLink });
+    }
+    if (linkedIn) {
+      // LinkedIn → "Other" (closest allowed type)
+      externalLinks.push({ link_type: 'Other', url: linkedIn });
+    }
+    if (portfolio) {
+      externalLinks.push({ link_type: 'Portfolio', url: portfolio });
+    }
+    if (projectDocUrl) {
+      externalLinks.push({ link_type: 'Assignment', url: projectDocUrl });
+    }
+    if (demoVideoUrl) {
+      externalLinks.push({ link_type: 'Other', url: demoVideoUrl });
+    }
+    if (codeBaseUrl) {
+      externalLinks.push({ link_type: 'Other', url: codeBaseUrl });
+    }
+    if (hostedLink) {
+      externalLinks.push({ link_type: 'Other', url: hostedLink });
+    }
+
+    // ── 4. Build the Job Applicant payload ────────────────────────────────
+    // `job_title` in Frappe Job Applicant is a Link field pointing to Job Opening.
+    // We pass jobId (the HR-OPN-xxx name), NOT the human-readable title.
+    // Custom fields are silently ignored by Frappe if they don't exist on the doctype.
+    const applicantPayload = {
+      applicant_name: applicantName,
+      email_id: email,
+      job_title: jobId,       // HR-OPN-xxx
+      status: 'Open',
+      // Custom fields — gracefully ignored if not on doctype
+      custom_phone: phone || '',
+      custom_cover_letter: coverLetter || '',
+      custom_educational_institute: educationalInstitute || '',
+      // Child table — all links/URLs consolidated here
+      custom_external_links: externalLinks,
     };
 
-    const projectDocBinary = await fileToBinary(projectDocFile);
-    const demoVideoBinary = await fileToBinary(demoVideoFile);
-    const codeBaseBinary = await fileToBinary(codeBaseFile);
+    // ── 5. POST to Frappe Job Applicant ────────────────────────────────────
+    const frappeResponse = await fetch(
+      `${FRAPPE_BASE_URL}/api/resource/Job%20Applicant`,
+      {
+        method: 'POST',
+        headers: authHeaders,
+        body: JSON.stringify(applicantPayload),
+      }
+    );
 
-    const applicantId = new ObjectId();
-    const client = await clientPromise;
-    const session = client.startSession();
+    const frappeResult = await frappeResponse.json();
 
-    try {
-      session.startTransaction();
+    if (!frappeResponse.ok) {
+      const errMsg =
+        frappeResult?.exception ||
+        frappeResult?.message ||
+        `Frappe error: ${frappeResponse.status}`;
+      console.error('Frappe applicant creation error:', frappeResponse.status, frappeResult);
+      return NextResponse.json(
+        { message: 'Failed to submit application', error: errMsg },
+        { status: frappeResponse.status }
+      );
+    }
 
-      // Insert applicant data
-      const jobPostingDb = client.db('jobPosting');
-      const applicantsCollection = jobPostingDb.collection('Applicants');
-
-      const applicantData = {
-        _id: applicantId,
+    // ── 6. Return success — same shape as before so UI toast works ────────
+    return NextResponse.json(
+      {
+        message: 'Application submitted successfully',
+        applicantName,
         jobId,
         jobTitle,
-        firstName,
-        lastName,
-        email,
-        phone: phone || '',
-        linkedIn: linkedIn || '',
-        portfolio: portfolio || '',
-        coverLetter: coverLetter || '',
-        educational_institute: educationalInstitute || '', 
-        applicationDate: new Date(),
-      };
-
-      await applicantsCollection.insertOne(applicantData, { session });
-
-      const applicationDetailsDb = client.db('jobPosting');
-      const assignmentsCollection = applicationDetailsDb.collection('Assignments');
-
-      const assignmentsData = {
-        _id: applicantId,
-        projectDocument: {
-          url: projectDocUrl || '',
-          file: projectDocBinary
-            ? {
-                filename: projectDocFile.name,
-                contentType: projectDocFile.type,
-                data: projectDocBinary,
-              }
-            : null,
-        },
-        demoVideo: {
-          url: demoVideoUrl || '',
-          file: demoVideoBinary
-            ? {
-                filename: demoVideoFile.name,
-                contentType: demoVideoFile.type,
-                data: demoVideoBinary,
-              }
-            : null,
-        },
-        codeBase: {
-          url: codeBaseUrl || '',
-          file: codeBaseBinary
-            ? {
-                filename: codeBaseFile.name,
-                contentType: codeBaseFile.type,
-                data: codeBaseBinary,
-              }
-            : null,
-        },
-        hostedLink: hostedLink || '',
-      };
-
-      await assignmentsCollection.insertOne(assignmentsData, { session });
-
-      const resumesCollection = applicationDetailsDb.collection('Resumes');
-
-      const resumeData = {
-        _id: applicantId,
-        resumeLink, 
-        uploadedAt: new Date(),
-      };
-
-      await resumesCollection.insertOne(resumeData, { session });
-
-      await session.commitTransaction();
-      session.endSession();
-
-      return NextResponse.json(
-        {
-          message: 'Application submitted successfully',
-          applicantId: applicantId.toHexString(),
-        },
-        { status: 201 }
-      );
-    } catch (transactionError) {
-      await session.abortTransaction();
-      session.endSession();
-      throw transactionError;
-    }
+        frappeDocName: frappeResult?.data?.name ?? null,
+      },
+      { status: 201 }
+    );
   } catch (error) {
     const err = error as Error;
-    console.error('Error submitting application:', err.message, err.stack);
+    console.error('Error submitting application to Frappe:', err.message, err.stack);
     return NextResponse.json(
       { message: 'Failed to submit application', error: err.message },
       { status: 500 }

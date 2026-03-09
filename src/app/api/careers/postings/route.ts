@@ -1,131 +1,112 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/utils/mongodb'; 
 
-export const revalidate = 3600; // Revalidate every hour
+const FRAPPE_BASE_URL = process.env.FRAPPE_BASE_URL!;
+const FRAPPE_API_TOKEN = process.env.FRAPPE_API_TOKEN!;
 
-interface Job {
-  id: string;
-  title: string;
-  department: string;
-  location: string;
-  type: string;
-  category: 'technical' | 'non technical';
-  description: string;
-  responsibilities: string[];
-  requirements: string[];
-  numberOfOpenings: number;
-  applicationUrl: string;
-  status: 'active' | 'inactive'; 
+const authHeaders = {
+  Authorization: `token ${FRAPPE_API_TOKEN}`,
+  Accept: 'application/json',
+};
+
+// Fields we request from Frappe Job Opening list endpoint.
+// Only fields that actually exist on the standard doctype are listed here.
+// description, responsibilities, requirements, category are fetched on the detail
+// endpoint (GET /[id]) where the full document is returned regardless.
+const FRAPPE_FIELDS = [
+  'name',
+  'job_title',
+  'status',
+  'department',
+  'location',
+  'employment_type',
+  'vacancies',
+  'custom_assignment_link',
+  'description',
+].join('","');
+
+/**
+ * Safely parse a value that might be a JSON array string, a plain string, or null/undefined.
+ * Returns a string[].
+ */
+function parseArrayField(value: unknown): string[] {
+  if (Array.isArray(value)) return value as string[];
+  if (typeof value === 'string' && value.trim().startsWith('[')) {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) return parsed;
+    } catch {
+      // not JSON — treat as a single paragraph, split by newline
+      return value.split('\n').map((s) => s.trim()).filter(Boolean);
+    }
+  }
+  if (typeof value === 'string' && value.trim()) {
+    return value.split('\n').map((s) => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+/**
+ * Map a raw Frappe Job Opening record to our internal Job interface.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapFrappeJobToJob(raw: any) {
+  const frappeStatus: string = raw.status ?? '';
+  return {
+    id: raw.name as string,
+    title: (raw.job_title as string) ?? '',
+    department: (raw.department as string) ?? '',
+    location: (raw.location as string) ?? '',
+    type: (raw.employment_type as string) ?? '',
+    description: (raw.description as string) ?? '',
+    responsibilities: parseArrayField(raw.custom_responsibilities),
+    requirements: parseArrayField(raw.custom_requirements),
+    numberOfOpenings: typeof raw.vacancies === 'number' ? raw.vacancies : 0,
+    applicationUrl: (raw.custom_assignment_link as string) ?? '',
+    status: frappeStatus === 'Open' ? ('active' as const) : ('inactive' as const),
+    category: (raw.custom_category as 'technical' | 'non technical') ?? 'technical',
+  };
 }
 
 export async function GET(request: Request) {
   try {
-    const client = await clientPromise;
-    const database = client.db('jobPosting');
-    const jobsCollection = database.collection('Postings');
-
     const url = new URL(request.url);
-    const status = url.searchParams.get('status') || 'active'; 
+    const statusParam = url.searchParams.get('status') || 'active';
 
-    const jobs = await jobsCollection.find({ status }).toArray();
+    // Map our internal status back to Frappe status
+    const frappeStatus = statusParam === 'active' ? 'Open' : 'Closed';
 
+    const frappeUrl = new URL(`${FRAPPE_BASE_URL}/api/resource/Job%20Opening`);
+    frappeUrl.searchParams.set('fields', `["${FRAPPE_FIELDS}"]`);
+    frappeUrl.searchParams.set('filters', `[["status","=","${frappeStatus}"]]`);
+    frappeUrl.searchParams.set('limit', '50');
 
-    const formattedJobs: Job[] = jobs.map(job => ({
-      id: job.id,
-      title: job.title,
-      department: job.department,
-      location: job.location,
-      type: job.type,
-      category: job.category, 
-      description: job.description,
-      responsibilities: job.responsibilities,
-      requirements: job.requirements,
-      numberOfOpenings: job.numberOfOpenings,
-      applicationUrl: job.applicationUrl,
-      status: job.status 
-    }));
+    const response = await fetch(frappeUrl.toString(), {
+      headers: authHeaders,
+      // No caching — always get fresh data from Frappe
+      cache: 'no-store',
+    });
 
-    return NextResponse.json(formattedJobs, { status: 200 });
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('Frappe list error:', response.status, errText);
+      return NextResponse.json(
+        { message: 'Failed to fetch job openings from Frappe', error: errText },
+        { status: response.status }
+      );
+    }
+
+    const json = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rawJobs: any[] = json.data ?? [];
+
+    const jobs = rawJobs.map(mapFrappeJobToJob);
+
+    return NextResponse.json(jobs, { status: 200 });
   } catch (error) {
     const err = error as Error;
-    console.error('Error fetching jobs:', err.message, err.stack);
+    console.error('Error fetching jobs from Frappe:', err.message, err.stack);
     return NextResponse.json(
       { message: 'Failed to fetch job postings', error: err.message },
-      { status: 500 }
-    );
-  }
-}
-
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-
-
-    const {
-      id,
-      title,
-      department,
-      location,
-      type,
-      category,
-      description,
-      responsibilities,
-      requirements,
-      numberOfOpenings,
-      applicationUrl
-    } = body;
-
-    if (
-      !id ||
-      !title ||
-      !department ||
-      !location ||
-      !type ||
-      !category ||
-      (category !== 'technical' && category !== 'non technical') ||
-      !description ||
-      !Array.isArray(responsibilities) ||
-      !Array.isArray(requirements) ||
-      numberOfOpenings == null
-    ) {
-      return NextResponse.json(
-        { message: 'Invalid job posting data' },
-        { status: 400 }
-      );
-    }
-    const client = await clientPromise;
-    const database = client.db('jobPosting');
-    const jobsCollection = database.collection('Postings');
-    const newJob: Job = {
-      id,
-      title,
-      department,
-      location,
-      type,
-      category, 
-      description,
-      responsibilities,
-      requirements,
-      numberOfOpenings,
-      applicationUrl,
-      status: 'active'
-    };
-
-    const result = await jobsCollection.insertOne(newJob);
-
-    if (result.acknowledged) {
-      return NextResponse.json(
-        { message: 'Job posting created successfully', job: newJob },
-        { status: 201 }
-      );
-    } else {
-      throw new Error('Failed to insert the job posting');
-    }
-  } catch (error) {
-    const err = error as Error;
-    console.error('Error creating job posting:', err.message, err.stack);
-    return NextResponse.json(
-      { message: 'Failed to create job posting', error: err.message },
       { status: 500 }
     );
   }

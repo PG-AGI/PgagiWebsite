@@ -13,27 +13,27 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
   const [job, setJob] = useState<Job | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const formRef = useRef<HTMLDivElement>(null); 
+  const formRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { jobId } = params;
 
   useEffect(() => {
     async function fetchJobDetails() {
       try {
-        const response = await fetch("/api/careers/postings");
+        // Call the individual detail endpoint — fetches full Frappe document
+        // including description, responsibilities, requirements, etc.
+        const response = await fetch(`/api/careers/postings/${jobId}`);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch job postings");
-        }
-
-        const jobs: Job[] = await response.json();
-        const foundJob = jobs.find((j) => j.id === jobId);
-
-        if (!foundJob) {
+        if (response.status === 404) {
           throw new Error("Job not found");
         }
 
-        setJob(foundJob);
+        if (!response.ok) {
+          throw new Error("Failed to fetch job details");
+        }
+
+        const job: Job = await response.json();
+        setJob(job);
         setIsLoading(false);
       } catch (err) {
         setError(
@@ -97,9 +97,11 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
                 </span>
                 <span className={styles["tag-location"]}>{job.location}</span>
                 <span className={styles["tag-type"]}>{job.type}</span>
-                <span className={`${styles.tag} ${styles["tag-openings"]}`}>
-                  {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
-                </span>
+                {job.numberOfOpenings > 0 && (
+                  <span className={`${styles.tag} ${styles["tag-openings"]}`}>
+                    {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -110,26 +112,6 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
           ></p>
 
           <div className={styles["sections"]}>
-            <div>
-              <h2 className={styles["section-title"]}>
-                Key Responsibilities
-              </h2>
-              <ul className={styles["list"]}>
-                {job.responsibilities.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h2 className={styles["section-title"]}>Requirements</h2>
-              <ul className={styles["list"]}>
-                {job.requirements.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
             <div className={styles["assignment-section"]}>
               <div className={styles["buttons-container"]}>
                 <button

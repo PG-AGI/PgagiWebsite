@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import styles from "./Positions.module.scss";
 import Job from "@/utils/job";
-import ShimmerCard from "./ShimmerCard"; 
+import ShimmerCard from "./ShimmerCard";
 
 export const Positions = () => {
   const router = useRouter();
@@ -92,7 +92,7 @@ export const Positions = () => {
         <div className={styles["positions-grid"]}>
           {[...jobs].reverse().map((job) => {
             const plainDescription = stripHtml(job.description);
-            const truncatedDescription = truncateText(plainDescription, 110); 
+            const truncatedDescription = truncateText(plainDescription, 110);
             return (
               <div key={job.id} className={styles["positions-card"]}>
                 <div className={styles["card-content"]}>
@@ -116,9 +116,11 @@ export const Positions = () => {
                       <span className={`${styles.tag} ${styles["tag-type"]}`}>
                         {job.type}
                       </span>
-                      <span className={`${styles.tag} ${styles["tag-openings"]}`}>
-                        {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
-                      </span>
+                      {job.numberOfOpenings > 0 && (
+                        <span className={`${styles.tag} ${styles["tag-openings"]}`}>
+                          {job.numberOfOpenings} {job.numberOfOpenings > 1 ? "Openings" : "Opening"}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <button onClick={() => handleApply(job.id)} className={styles["apply-button"]}>
