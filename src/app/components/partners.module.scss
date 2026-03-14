@@ -1,99 +1,81 @@
-.partners {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  // margin-bottom: 48px;
-  background-color: #fff;
-  padding: 2rem 0;
-  //   padding-bottom: 2rem;
+/* =====================================================
+   PARTNERS BAR — PG-AGI
+   Dark semi-transparent strip with scrolling partner logos
+   Pinned to the absolute bottom of the hero section
+   NO side fading — logos are fully visible edge-to-edge
+   ===================================================== */
+
+.partnersBar {
   width: 100%;
+  margin: 0;
+  min-height: 100px;
+  padding: 1.5rem 0;
+  /* Increased height and vertical padding */
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 
-  h3 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #000;
-    margin-bottom: 40px;
-    text-align: center;
+  @media (min-width: 768px) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
-  .marquee {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* NO mask-image — full edge-to-edge logos, no fading */
+}
 
-    // Mask for disappearing effect at edges
-    //     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    //     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+/* react-fast-marquee wrapper */
+.marquee {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Individual logo slot */
+.logoItem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(0.75rem, 2vw, 1.5rem);
+  /* Tighter spacing like screenshot */
+  opacity: 1;
+  transition: opacity 0.25s ease;
+
+  &:hover {
+    opacity: 1;
   }
 
-  .partnerList {
-    display: flex;
-    align-items: center;
-    // gap is handled by margin on cards or gap here if marquee supports it well
-    // react-fast-marquee children usually sit side-by-side.
+  img {
+    /* Force white logos on dark background */
+    filter: brightness(0) invert(1);
+    object-fit: contain;
+    /* Dimensions significantly increased for visibility */
+    width: clamp(90px, 12vw, 140px) !important;
+    height: clamp(35px, 6vh, 58px) !important;
+    display: block;
+    margin: 0 10px;
+  }
+}
+
+/* ─── Mobile adjustments ─── */
+@media (max-width: 480px) {
+  .partnersBar {
+    padding: 1rem 0;
+    min-height: 80px;
   }
 
-  .card {
-    background-color: #111; // Black card
-    border-radius: 16px;
-    width: 180px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 15px; // Gap between cards
-    padding: 20px;
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05);
-    }
+  .logoItem {
+    padding: 0 0.8rem;
 
     img {
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      // Make logos white to contrast with black card
-      filter: grayscale(100%) brightness(1000%);
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .partners {
-
-    padding-top: 0;
-    padding-bottom: 35px;
-    h3 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    .card {
-      width: 140px;
-      height: 80px;
-      margin: 0 10px;
-      border-radius: 12px;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .partners {
-    h3 {
-      font-size: 20px;
-    }
-
-    .card {
-      width: 120px;
-      height: 70px;
-      margin: 0 8px;
-      border-radius: 10px;
-      padding: 15px;
+      max-width: 50px;
+      height: 20px !important;
     }
   }
 }

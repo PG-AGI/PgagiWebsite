@@ -102,22 +102,25 @@ export default function Navigation() {
 
   return (
     <nav className={styles.navigation}>
-      {/* <div className={styles.banner}>
-        AI Calling Agent -{" "}
-        <a href="https://www.toingg.com/" target="_blank" rel="noopener noreferrer">
-          Try for Free
-        </a>
-      </div> */}
       <Link className={clsx(styles.logo, !navbarVisible && styles.logoHidden)} href='/'>
         <Image src={logo} alt='Logo' width={60} height={60} />
         <p>PG-AGI</p>
       </Link>
-      <div style={{ backgroundColor: 'yellow' }}
+      <div
         className={clsx(styles.nav, !navbarVisible && styles.navHidden, isMenuOpen && styles.open)}
       >
         <div className={styles.links} >
+          <Link href="/">Home</Link>
+          <Link href="/aboutUs">About Us</Link>
+
           <div className={styles.whatWeDo}>
-            <a>What we do</a>
+            <div className={styles.solutionsLink}>
+              <a>Solutions</a>
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+
             <div className={styles.dropdown}>
               <div className={styles.content}>
                 <span className={styles.background} />
@@ -167,10 +170,16 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-          <Link href="/whatwethink">What we think</Link>
-          <Link href="/aboutUs">Who We Are</Link>
+
+          <Link href="/case-studies">Case studies</Link>
+          <Link href="/blogs">Blogs</Link>
+          <Link href="/careers">Careers</Link>
         </div>
-        <button className={styles.contact} onClick={handleContactUs}>Contact us</button>
+
+        {/* We keep the button in the code but it might be styled as hidden or transparent if needed */}
+        {/* In screenshot 2 it doesn't appear, but screenshot 1 has it. Let's keep it but make it transparent background button */}
+        <button className={styles.contact} onClick={handleContactUs}>Get in touch</button>
+
         <div className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`} onClick={toggleMenu}>
           <span></span>
           <span></span>

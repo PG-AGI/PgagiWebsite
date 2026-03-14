@@ -13,9 +13,7 @@ import dynamic from "next/dynamic";
 // import "postprocessing";
 //import { motion } from 'framer-motion';
 
-const Partners = dynamic(() => import("./components/Partners"), {
-  loading: () => <div>Loading...</div>,
-});
+// Partners is now rendered inside Landing.tsx (pinned to hero bottom)
 const StatsSection = dynamic(() => import("./components/NewPage"), {
   loading: () => <div>Loading...</div>,
 });
@@ -188,7 +186,7 @@ export default function Home() {
 				]}
 			/> */}
       <Landing />
-      <Partners />
+      {/* Partners is rendered inside Landing.tsx, pinned to hero bottom */}
       <StatsSection />
       <VideoTestimonial />
       <Process />

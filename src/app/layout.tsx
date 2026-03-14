@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Inter, Poppins, Alexandria } from 'next/font/google';
+import { Inter, Poppins, Alexandria, Plus_Jakarta_Sans } from 'next/font/google';
 import "./globals.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
@@ -24,6 +24,13 @@ const alexandria = Alexandria({
   display: 'swap',
 });
 
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-plus-jakarta',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: "PGAGI",
   description:
@@ -42,7 +49,7 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <html
             lang="en"
-            className={`${poppins.variable} ${alexandria.variable}`}
+            className={`${poppins.variable} ${alexandria.variable} ${plusJakartaSans.variable}`}
           >
             <head>
 
