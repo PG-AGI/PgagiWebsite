@@ -1,0 +1,257 @@
+.section {
+  background:
+    radial-gradient(
+      130% 82% at 50% 0%,
+      rgba(166, 20, 20, 0.58) 0%,
+      rgba(166, 20, 20, 0.12) 34%,
+      rgba(7, 9, 13, 0) 72%
+    ),
+    #07090d;
+  padding: clamp(2.55rem, 5.2vw, 4.8rem) clamp(0.9rem, 2.5vw, 2rem)
+    clamp(2rem, 4vw, 3.6rem);
+  overflow: hidden;
+}
+
+.container {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+  color: #f2f2f3;
+  font-size: clamp(1.98rem, 4.25vw, 3.35rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+
+  span {
+    color: #c91a0e;
+  }
+}
+
+.visualWrap {
+  position: relative;
+  margin-top: clamp(1.25rem, 2.8vw, 2.2rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  padding: clamp(1.15rem, 2.7vw, 1.95rem) clamp(0.66rem, 2.1vw, 1.6rem)
+    clamp(0.8rem, 2vw, 1.3rem);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      70% 75% at 50% 62%,
+      rgba(180, 20, 16, 0.29) 0%,
+      rgba(180, 20, 16, 0) 56%
+    ),
+    linear-gradient(180deg, rgba(10, 13, 20, 0.72) 0%, rgba(6, 8, 12, 0.96) 100%);
+  isolation: isolate;
+}
+
+.gridBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.22;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.24) 1px,
+    transparent 1.2px
+  );
+  background-size: 28px 28px;
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.98) 40%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
+}
+
+.signalLayer {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  width: min(1360px, 125%);
+  height: clamp(132px, 24vw, 230px);
+  pointer-events: none;
+}
+
+.signalPath {
+  fill: none;
+  stroke: url(#ecosystem-signal-gradient);
+  stroke-width: 2.4;
+  opacity: 0.82;
+}
+
+.signalPathDotted {
+  fill: none;
+  stroke: #ff4333;
+  stroke-width: 2;
+  stroke-dasharray: 2 8;
+  opacity: 0.7;
+}
+
+.signalDot {
+  filter: drop-shadow(0 0 7px rgba(255, 82, 64, 0.95));
+}
+
+.cardsTrack {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(0.8rem, 2.3vw, 1.9rem);
+}
+
+.cardColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardLabel {
+  margin: 0;
+  text-align: center;
+  color: rgba(244, 244, 246, 0.95);
+  font-size: clamp(0.66rem, 0.88vw, 0.85rem);
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.connector {
+  display: block;
+  width: 1px;
+  height: clamp(17px, 2.15vw, 26px);
+  margin: 0.38rem 0 0.7rem;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 107, 92, 0.96) 0%,
+    rgba(255, 76, 60, 0.2) 100%
+  );
+}
+
+.cardFrame {
+  width: min(100%, 332px);
+  border-radius: 16px;
+  padding: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(52, 52, 56, 0.9) 0%, rgba(32, 32, 36, 0.94) 100%);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.4);
+}
+
+.cardImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+@media (max-width: 1080px) {
+  .visualWrap {
+    border-radius: 22px;
+    padding-inline: clamp(0.62rem, 2vw, 1.2rem);
+  }
+
+  .signalLayer {
+    top: 46%;
+    width: min(1300px, 128%);
+  }
+
+  .cardFrame {
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding-top: 2.35rem;
+    padding-bottom: 2rem;
+  }
+
+  .title {
+    text-align: left;
+    font-size: clamp(1.78rem, 7vw, 2.48rem);
+    line-height: 1.1;
+  }
+
+  .visualWrap {
+    margin-top: 1rem;
+    border-radius: 18px;
+    padding: 1rem 0.72rem 1.05rem;
+  }
+
+  .cardsTrack {
+    display: flex;
+    gap: 0.74rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 0.24rem;
+  }
+
+  .cardsTrack::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cardColumn {
+    flex: 0 0 clamp(214px, 72vw, 282px);
+    scroll-snap-align: start;
+  }
+
+  .signalLayer {
+    top: 53%;
+    width: max(920px, 168%);
+    height: 170px;
+  }
+
+  .cardLabel {
+    font-size: 0.66rem;
+  }
+
+  .connector {
+    margin: 0.3rem 0 0.58rem;
+    height: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding-inline: 0.66rem;
+  }
+
+  .visualWrap {
+    border-radius: 15px;
+    padding: 0.82rem 0.62rem 0.95rem;
+  }
+
+  .signalLayer {
+    top: 55%;
+    width: max(900px, 196%);
+    height: 150px;
+  }
+
+  .cardColumn {
+    flex-basis: clamp(206px, 76vw, 250px);
+  }
+
+  .cardFrame {
+    border-radius: 12px;
+    padding: 0.3rem;
+  }
+
+  .cardImage {
+    border-radius: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signalDot {
+    display: none;
+  }
+}
