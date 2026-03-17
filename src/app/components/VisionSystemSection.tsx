@@ -52,26 +52,35 @@ const visionCards: VisionCard[] = [
   },
 ];
 
+const CARD_STICKY_TOP_DESKTOP = 312;
+const CARD_STICKY_TOP_MOBILE = 188;
+
 const VisionSystemSection = () => {
   return (
     <section className={styles.section} id="vision-system">
       <div className={styles.container}>
-        <motion.div
-          className={styles.headingBlock}
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <h2 className={styles.title}>
-            You have the vision
-            <br />
-            We <span>engineer the system</span>
-          </h2>
-          <p className={styles.subtitle}>From idea to scalable AI product.</p>
-        </motion.div>
+        <div className={styles.headingSticky}>
+          <motion.div
+            className={styles.headingBlock}
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h2 className={styles.title}>
+              You have the vision
+              <br />
+              We <span>engineer the system</span>
+            </h2>
+            <p className={styles.subtitle}>From idea to scalable AI product.</p>
+          </motion.div>
+        </div>
 
-        <ScrollStack className={styles.cardStack} stickyTop={140} mobileStickyTop={86}>
+        <ScrollStack
+          className={styles.cardStack}
+          stickyTop={CARD_STICKY_TOP_DESKTOP}
+          mobileStickyTop={CARD_STICKY_TOP_MOBILE}
+        >
           {visionCards.map((card) => (
             <ScrollStackItem key={card.title}>
               <article className={styles.card}>

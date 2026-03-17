@@ -1,19 +1,40 @@
 .section {
+  --vision-heading-sticky-top: calc(clamp(64px, 10vh, 110px) + clamp(14px, 2vh, 24px));
   background: #ffffff;
   padding: clamp(2.8rem, 6vw, 5.75rem) clamp(0.9rem, 2.5vw, 2rem)
     clamp(1.5rem, 3.4vw, 2.8rem);
-  overflow-x: clip;
+  overflow: visible;
+  scroll-margin-top: var(--vision-heading-sticky-top);
 }
 
 .container {
   width: min(1080px, 100%);
   margin: 0 auto;
+  overflow: visible;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+}
+
+.headingSticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--vision-heading-sticky-top);
+  z-index: 6;
+  margin-bottom: clamp(1.25rem, 2.8vw, 2.2rem);
 }
 
 .headingBlock {
   text-align: center;
-  margin-bottom: clamp(1.25rem, 2.8vw, 2.2rem);
+  margin-inline: auto;
+  padding: clamp(0.45rem, 1vw, 0.85rem) clamp(0.6rem, 1.8vw, 1.2rem)
+    clamp(0.9rem, 1.9vw, 1.3rem);
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.97) 68%,
+    rgba(255, 255, 255, 0.84) 86%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(4px);
 }
 
 .title {
@@ -38,6 +59,7 @@
 
 .cardStack {
   position: relative;
+  z-index: 1;
 }
 
 .card {
@@ -110,6 +132,7 @@
 
 @media (max-width: 940px) {
   .section {
+    --vision-heading-sticky-top: 86px;
     padding-top: 2.9rem;
     padding-bottom: 2.2rem;
   }
@@ -130,6 +153,7 @@
 
 @media (max-width: 768px) {
   .section {
+    --vision-heading-sticky-top: 78px;
     padding-inline: 0.72rem;
   }
 
@@ -139,7 +163,8 @@
 
   .headingBlock {
     text-align: center;
-    margin-bottom: 1.05rem;
+    border-radius: 14px;
+    padding-inline: 0.55rem;
   }
 
   .title {
@@ -187,6 +212,7 @@
 
 @media (max-width: 480px) {
   .section {
+    --vision-heading-sticky-top: 72px;
     padding: 2.2rem 0.68rem 2rem;
   }
 
