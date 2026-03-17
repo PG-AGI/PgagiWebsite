@@ -53,7 +53,7 @@
   gap: 1rem;
   cursor: pointer;
   transition: transform 0.2s ease;
-  
+
   &:hover {
     transform: translateX(8px);
   }
@@ -109,9 +109,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4rem 2rem;
+    padding: 150px 2rem;
   }
-  
+
   .container {
     max-width: 1400px;
     width: 100%;
@@ -121,7 +121,7 @@
     margin: 0 auto;
     padding: 0 2rem;
   }
-  
+
   // Top section: Centered heading and description
   .expertiseContent {
     display: flex;
@@ -131,28 +131,28 @@
     gap: 1.5rem;
     margin-bottom: 2rem;
   }
-  
+
   .expertiseHeading {
     font-size: 1.5rem;
     color: #000000;
     font-family: inherit;
     margin: 0;
   }
-  
+
   .expertiseDescription {
     font-size: 1.25rem;
     line-height: 1.4;
     max-width: 800px;
     margin: 0;
   }
-  
+
   // Bottom section: Two-column layout
   .bottomSection {
     display: flex;
     gap: 4rem;
     align-items: flex-start;
   }
-  
+
   .sloganSection {
     display: flex;
     flex-direction: column;
@@ -160,21 +160,21 @@
     flex: 1;
     padding-right: 2rem;
   }
-  
+
   .mainHeading {
     font-size: 2.5rem;
     font-weight: 600;
     line-height: 1.1;
     margin: 0;
   }
-  
+
   .description {
     font-size: 1.125rem;
     line-height: 1.5;
     max-width: 100%;
     margin: 0;
   }
-  
+
   .servicesList {
     display: flex;
     flex-direction: column;
@@ -182,11 +182,11 @@
     flex: 1;
     padding-left: 2rem;
   }
-  
+
   .serviceItem {
     gap: 1.5rem;
     position: relative;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -197,13 +197,13 @@
       background-color: #d3d3d3;
     }
   }
-  
+
   .serviceNumber {
     width: 2.8rem;
     height: 2.8rem;
     font-size: 0.875rem;
   }
-  
+
   .serviceTitle {
     font-size: 1.25rem;
   }
@@ -214,38 +214,38 @@
   .expertiseSection {
     padding: 4.5rem 2.5rem;
   }
-  
+
   .container {
     max-width: 1500px;
     gap: 4.5rem;
     padding: 0 2.5rem;
   }
-  
+
   .expertiseHeading {
     font-size: 1.625rem;
   }
-  
+
   .expertiseDescription {
     font-size: 1.3125rem;
     max-width: 850px;
   }
-  
+
   .bottomSection {
     gap: 4.5rem;
   }
-  
+
   .mainHeading {
     font-size: 2.625rem;
   }
-  
+
   .description {
     font-size: 1.1875rem;
   }
-  
+
   .servicesList {
     gap: 2.75rem;
   }
-  
+
   .serviceTitle {
     font-size: 1.3125rem;
   }
@@ -256,42 +256,42 @@
   .expertiseSection {
     padding: 5rem 3rem;
   }
-  
+
   .container {
     max-width: 1600px;
     gap: 5rem;
     padding: 0 3rem;
   }
-  
+
   .expertiseContent {
     gap: 2rem;
   }
-  
+
   .expertiseHeading {
     font-size: 1.75rem;
   }
-  
+
   .expertiseDescription {
     font-size: 1.375rem;
     max-width: 900px;
   }
-  
+
   .bottomSection {
     gap: 5rem;
   }
-  
+
   .mainHeading {
     font-size: 2.75rem;
   }
-  
+
   .description {
     font-size: 1.25rem;
   }
-  
+
   .servicesList {
     gap: 3rem;
   }
-  
+
   .serviceTitle {
     font-size: 1.375rem;
   }
@@ -302,47 +302,47 @@
   .expertiseSection {
     padding: 6rem 4rem;
   }
-  
+
   .container {
     max-width: 1800px;
     gap: 6rem;
     padding: 0 4rem;
   }
-  
+
   .expertiseContent {
     gap: 2.5rem;
   }
-  
+
   .expertiseHeading {
     font-size: 2rem;
   }
-  
+
   .expertiseDescription {
     font-size: 1.5rem;
     max-width: 1000px;
   }
-  
+
   .bottomSection {
     gap: 6rem;
   }
-  
+
   .sloganSection {
     padding-right: 3rem;
   }
-  
+
   .servicesList {
     padding-left: 3rem;
     gap: 3.5rem;
   }
-  
+
   .mainHeading {
     font-size: 3rem;
   }
-  
+
   .description {
     font-size: 1.375rem;
   }
-  
+
   .serviceTitle {
     font-size: 1.5rem;
   }
@@ -354,23 +354,23 @@
     max-width: 2000px;
     padding: 0 5rem;
   }
-  
+
   .expertiseDescription {
     max-width: 1200px;
   }
-  
+
   .bottomSection {
     gap: 8rem;
   }
-  
+
   .sloganSection {
     padding-right: 4rem;
   }
-  
+
   .servicesList {
     padding-left: 4rem;
   }
-} 
+}
 
 
 
@@ -386,20 +386,25 @@
 .expertiseButton {
   background-color: #ffffff;
   color: #000000;
-  border: 2px solid #b60306;  /* your red */
-  border-radius: 50px;          /* pill shape */
-  padding: 15px 20px;            /* small */
-  font-size: 20px;            /* small text */
+  border: 2px solid #b60306;
+  /* your red */
+  border-radius: 50px;
+  /* pill shape */
+  padding: 15px 20px;
+  /* small */
+  font-size: 20px;
+  /* small text */
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;                     /* space before arrow */
+  gap: 6px;
+  /* space before arrow */
   transition: all 0.25s ease-in-out;
   outline: none;
   text-decoration: none;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
   &:hover {
     background-color: #b60306;

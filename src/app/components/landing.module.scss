@@ -132,17 +132,13 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 100%;
-  /* top padding clears the transparent navbar; bottom clears partners bar */
+  max-width: 82vw; // Targeted 80vw visual width
+  margin: 0 auto; // Center it
   padding:
-    clamp(0.5rem, 4vh, 2rem)
-    /* Moved even higher as requested */
-    clamp(1.5rem, 5vw, 7rem)
-    /* right */
-    clamp(6rem, 12vh, 8rem)
-    /* bottom — clears partners bar */
-    var(--content-x);
-  /* left */
+    clamp(0.5rem, 4vh, 2rem) // top
+    1vw // right
+    clamp(6rem, 12vh, 8rem) // bottom
+    1vw; // left
   display: flex;
   flex-direction: column;
   align-items: flex-start;
