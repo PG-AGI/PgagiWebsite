@@ -23,6 +23,12 @@ const VisionSystemSection = dynamic(
     loading: () => <div>Loading...</div>,
   },
 );
+const SocialOrbitSection = dynamic(
+  () => import("./components/SocialOrbitSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 const Process = dynamic(() => import("./components/process"), {
   loading: () => <div>Loading...</div>,
 });
@@ -195,6 +201,7 @@ export default function Home() {
       {/* Partners is rendered inside Landing.tsx, pinned to hero bottom */}
       <StatsSection />
       <VisionSystemSection />
+      <SocialOrbitSection />
       <VideoTestimonial />
       <Process />
       <LandingProjects />
