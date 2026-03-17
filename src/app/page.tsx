@@ -35,9 +35,12 @@ const EcosystemSection = dynamic(
     loading: () => <div>Loading...</div>,
   },
 );
-const Process = dynamic(() => import("./components/process"), {
-  loading: () => <div>Loading...</div>,
-});
+const ProcessTimelineSection = dynamic(
+  () => import("./components/ProcessTimelineSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 const LandingProjects = dynamic(() => import("./components/LandingProjects"), {
   loading: () => <div>Loading...</div>,
 });
@@ -209,8 +212,8 @@ export default function Home() {
       <VisionSystemSection />
       <SocialOrbitSection />
       <EcosystemSection />
+      <ProcessTimelineSection />
       <VideoTestimonial />
-      <Process />
       <LandingProjects />
       <ExpertiseSection />
       <FAQ />
