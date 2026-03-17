@@ -123,93 +123,95 @@ const ProcessTimelineSection = () => {
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.56, ease: [0.22, 1, 0.36, 1] }}
         >
-          <motion.h2
-            className={styles.title}
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
-          >
-            Process <span>timeline</span>
-          </motion.h2>
+          <div className={styles.contentLayout}>
+            <motion.h2
+              className={styles.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Process <span>timeline</span>
+            </motion.h2>
 
-          <div
-            ref={timelineRef}
-            className={styles.timelineScroller}
-            aria-label="PGAGI process timeline"
-          >
-            {timelineSteps.map((step, index) => {
-              const StepIcon = step.icon;
-              const nextColor =
-                timelineSteps[index + 1]?.color ?? timelineSteps[0].color;
+            <div
+              ref={timelineRef}
+              className={styles.timelineScroller}
+              aria-label="PGAGI process timeline"
+            >
+              {timelineSteps.map((step, index) => {
+                const StepIcon = step.icon;
+                const nextColor =
+                  timelineSteps[index + 1]?.color ?? timelineSteps[0].color;
 
-              return (
-                <article
-                  key={step.title}
-                  className={`${styles.stepCard} ${
-                    activeIndex === index ? styles.active : ""
-                  }`}
-                  data-timeline-card="true"
-                  style={
-                    {
-                      "--step-color": step.color,
-                      "--step-end-color": nextColor,
-                      "--icon-color": step.iconColor,
-                    } as CSSProperties
-                  }
-                >
-                  <div className={styles.copyBlock}>
-                    <h3>{step.title}</h3>
-                    <p>{step.description}</p>
-                  </div>
+                return (
+                  <article
+                    key={step.title}
+                    className={`${styles.stepCard} ${
+                      activeIndex === index ? styles.active : ""
+                    }`}
+                    data-timeline-card="true"
+                    style={
+                      {
+                        "--step-color": step.color,
+                        "--step-end-color": nextColor,
+                        "--icon-color": step.iconColor,
+                      } as CSSProperties
+                    }
+                  >
+                    <div className={styles.copyBlock}>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                    </div>
 
-                  <div className={styles.track} aria-hidden="true">
-                    <svg
-                      className={styles.arc}
-                      viewBox="0 0 220 130"
-                      preserveAspectRatio="none"
-                    >
-                      <path
-                        className={styles.arcPath}
-                        d="M 0 122 C 36 16, 184 16, 220 122"
-                      />
-                      <path
-                        className={styles.arcGlow}
-                        d="M 0 122 C 36 16, 184 16, 220 122"
-                      />
-                      {index === 0 && (
-                        <circle className={styles.startDot} cx="0" cy="122" r="4" />
-                      )}
-                      <circle className={styles.endDot} cx="220" cy="122" r="4" />
-                    </svg>
+                    <div className={styles.track} aria-hidden="true">
+                      <svg
+                        className={styles.arc}
+                        viewBox="0 0 220 130"
+                        preserveAspectRatio="none"
+                      >
+                        <path
+                          className={styles.arcPath}
+                          d="M 0 122 C 36 16, 184 16, 220 122"
+                        />
+                        <path
+                          className={styles.arcGlow}
+                          d="M 0 122 C 36 16, 184 16, 220 122"
+                        />
+                        {index === 0 && (
+                          <circle className={styles.startDot} cx="0" cy="122" r="4" />
+                        )}
+                        <circle className={styles.endDot} cx="220" cy="122" r="4" />
+                      </svg>
 
-                    <motion.span
-                      className={styles.iconBadge}
-                      style={{ x: "-50%", y: "-50%" }}
-                      animate={
-                        shouldReduceMotion
-                          ? undefined
-                          : {
-                              scale: [1, 1.03, 1],
-                            }
-                      }
-                      transition={
-                        shouldReduceMotion
-                          ? undefined
-                          : {
-                              duration: 2.2,
-                              ease: "easeInOut",
-                              repeat: Infinity,
-                              delay: index * 0.12,
-                            }
-                      }
-                    >
-                      <StepIcon size={14} strokeWidth={2.2} />
-                    </motion.span>
-                  </div>
-                </article>
-              );
-            })}
+                      <motion.span
+                        className={styles.iconBadge}
+                        style={{ x: "-50%", y: "-50%" }}
+                        animate={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                scale: [1, 1.03, 1],
+                              }
+                        }
+                        transition={
+                          shouldReduceMotion
+                            ? undefined
+                            : {
+                                duration: 2.2,
+                                ease: "easeInOut",
+                                repeat: Infinity,
+                                delay: index * 0.12,
+                              }
+                        }
+                      >
+                        <StepIcon size={14} strokeWidth={2.2} />
+                      </motion.span>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
 
           <p className={styles.mobileHint}>Swipe horizontally to explore each step.</p>
