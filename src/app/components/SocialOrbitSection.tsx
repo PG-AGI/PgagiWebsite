@@ -59,7 +59,7 @@ const accordionItems: AccordionItem[] = [
   {
     title: "Distribution Systems (Reddit, X, Meta)",
     description:
-      "We design and optimize AI-powered distribution systems across Reddit, X, and Meta to identify demand, target the right audiences, and automate engagement at scale.",
+      "We design and optimize AI-powered distribution systems across Reddit, X, and Meta to identify demand, target the right audiences, and automate engagement at scale. Turn social channels into consistent growth engines.",
   },
   {
     title: "Distribution Systems (Reddit, X, Meta)",
@@ -86,7 +86,7 @@ const iconByPlatform = {
 
 const SocialOrbitSection = () => {
   const shouldReduceMotion = useReducedMotion();
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className={styles.section} id="social-orbit">
@@ -120,7 +120,9 @@ const SocialOrbitSection = () => {
                   <button
                     type="button"
                     className={styles.accordionButton}
-                    onClick={() => setOpenIndex(index)}
+                    onClick={() =>
+                      setOpenIndex((previous) => (previous === index ? null : index))
+                    }
                     aria-expanded={isOpen}
                   >
                     <span>{item.title}</span>
