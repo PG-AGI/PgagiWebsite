@@ -17,6 +17,12 @@ import dynamic from "next/dynamic";
 const StatsSection = dynamic(() => import("./components/NewPage"), {
   loading: () => <div>Loading...</div>,
 });
+const VisionSystemSection = dynamic(
+  () => import("./components/VisionSystemSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 const Process = dynamic(() => import("./components/process"), {
   loading: () => <div>Loading...</div>,
 });
@@ -188,6 +194,7 @@ export default function Home() {
       <Landing />
       {/* Partners is rendered inside Landing.tsx, pinned to hero bottom */}
       <StatsSection />
+      <VisionSystemSection />
       <VideoTestimonial />
       <Process />
       <LandingProjects />
