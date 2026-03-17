@@ -1,0 +1,59 @@
+.stack {
+  position: relative;
+  --stack-overlap: clamp(84px, 13vh, 120px);
+}
+
+.track {
+  position: relative;
+  min-height: clamp(148px, 25vh, 220px);
+}
+
+.track + .track {
+  margin-top: calc(var(--stack-overlap) * -1);
+}
+
+.trackLast {
+  min-height: clamp(178px, 31vh, 268px);
+}
+
+.item {
+  position: sticky;
+  top: var(--stack-top);
+  z-index: var(--stack-z);
+  transform-origin: top center;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 940px) {
+  .stack {
+    --stack-overlap: clamp(68px, 11vh, 96px);
+  }
+
+  .track {
+    min-height: clamp(116px, 20vh, 170px);
+  }
+
+  .trackLast {
+    min-height: clamp(152px, 27vh, 220px);
+  }
+
+  .item {
+    position: sticky;
+    top: var(--stack-top-mobile, var(--stack-top));
+    transform-origin: top center;
+  }
+}
+
+@media (max-width: 640px) {
+  .stack {
+    --stack-overlap: clamp(52px, 9vh, 74px);
+  }
+
+  .track {
+    min-height: clamp(86px, 15vh, 122px);
+  }
+
+  .trackLast {
+    min-height: clamp(122px, 22vh, 176px);
+  }
+}

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import styles from "./VisionSystemSection.module.scss";
+import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 
 type VisionCard = {
   title: string;
@@ -70,54 +71,35 @@ const VisionSystemSection = () => {
           <p className={styles.subtitle}>From idea to scalable AI product.</p>
         </motion.div>
 
-        <div className={styles.cardStack}>
-          {visionCards.map((card, index) => (
-            <motion.article
-              key={card.title}
-              className={styles.card}
-              initial={{ opacity: 0, y: 72 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.28 }}
-              transition={{
-                duration: 0.65,
-                delay: index * 0.15,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <div className={styles.copyBlock}>
-                <h3 className={styles.cardTitle}>{card.title}</h3>
-                <ul className={styles.pointList}>
-                  {card.points.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-                <p className={styles.outcome}>
-                  <span>Outcome:</span> {card.outcome}
-                </p>
-              </div>
+        <ScrollStack className={styles.cardStack} stickyTop={140} mobileStickyTop={86}>
+          {visionCards.map((card) => (
+            <ScrollStackItem key={card.title}>
+              <article className={styles.card}>
+                <div className={styles.copyBlock}>
+                  <h3 className={styles.cardTitle}>{card.title}</h3>
+                  <ul className={styles.pointList}>
+                    {card.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                  <p className={styles.outcome}>
+                    <span>Outcome:</span> {card.outcome}
+                  </p>
+                </div>
 
-              <motion.div
-                className={styles.media}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.15 + index * 0.15,
-                  ease: "easeOut",
-                }}
-              >
-                <Image
-                  src={card.image}
-                  alt={card.imageAlt}
-                  width={420}
-                  height={250}
-                  className={styles.mediaImage}
-                />
-              </motion.div>
-            </motion.article>
+                <div className={styles.media}>
+                  <Image
+                    src={card.image}
+                    alt={card.imageAlt}
+                    width={420}
+                    height={250}
+                    className={styles.mediaImage}
+                  />
+                </div>
+              </article>
+            </ScrollStackItem>
           ))}
-        </div>
+        </ScrollStack>
       </div>
     </section>
   );
