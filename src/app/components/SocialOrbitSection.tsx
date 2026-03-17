@@ -28,7 +28,7 @@ const orbitItems: OrbitConfig[] = [
   {
     sizeClass: "outerRing",
     duration: 30,
-    direction: 1,
+    direction: -1,
     nodes: [
       { platform: "Meta", angle: 6 },
       { platform: "X", angle: 48 },
@@ -43,7 +43,7 @@ const orbitItems: OrbitConfig[] = [
   {
     sizeClass: "innerRing",
     duration: 20,
-    direction: -1,
+    direction: 1,
     nodes: [
       { platform: "Reddit", angle: 18 },
       { platform: "X", angle: 72 },
