@@ -1,0 +1,141 @@
+.section {
+  background: #ffffff;
+  padding: clamp(2.4rem, 5vw, 4.4rem) clamp(0.78rem, 2.2vw, 1.8rem)
+    clamp(2.5rem, 4.6vw, 4rem);
+}
+
+.container {
+  width: min(1060px, 100%);
+  margin: 0 auto;
+  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+  color: #8f1d15;
+  font-size: clamp(2.05rem, 3.95vw, 3.1rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.desktopGrid,
+.mobileGrid {
+  margin-top: clamp(1.25rem, 2.3vw, 2rem);
+  background: #ffffff;
+}
+
+.desktopGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.mobileGrid {
+  display: none;
+}
+
+.metricCard {
+  min-height: clamp(8.2rem, 13vw, 10.2rem);
+  padding: clamp(1.1rem, 1.8vw, 1.4rem) clamp(0.72rem, 1.45vw, 1rem)
+    clamp(1.25rem, 2.1vw, 1.6rem);
+  border-top: 1px solid rgba(157, 58, 48, 0.22);
+  border-left: 1px solid rgba(157, 58, 48, 0.22);
+}
+
+.metricValue {
+  margin: 0;
+  color: #2e2f32;
+  font-size: clamp(2.1rem, 3.25vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.metricDescription {
+  margin: 0.58rem 0 0;
+  color: #4c4d50;
+  font-size: clamp(0.74rem, 0.97vw, 0.92rem);
+  line-height: 1.4;
+  font-weight: 500;
+  max-width: 16ch;
+}
+
+.desktopGrid .metricCard:nth-child(-n + 4) {
+  border-top: 0;
+}
+
+.desktopGrid .metricCard:nth-child(4n + 1) {
+  border-left: 0;
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding-top: 2.2rem;
+    padding-bottom: 2.35rem;
+  }
+
+  .title {
+    font-size: clamp(1.85rem, 6vw, 2.35rem);
+  }
+
+  .desktopGrid {
+    display: none;
+  }
+
+  .mobileGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 20rem;
+    margin-inline: auto;
+  }
+
+  .metricCard {
+    min-height: 7.7rem;
+    padding: 0.92rem 0.62rem 1rem;
+  }
+
+  .metricValue {
+    font-size: clamp(1.9rem, 6.6vw, 2.25rem);
+  }
+
+  .metricDescription {
+    margin-top: 0.44rem;
+    font-size: 0.62rem;
+    line-height: 1.35;
+    max-width: 14ch;
+  }
+
+  .mobileGrid .metricCard:nth-child(-n + 2) {
+    border-top: 0;
+  }
+
+  .mobileGrid .metricCard:nth-child(2n + 1) {
+    border-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .section {
+    padding: 2.05rem 0.62rem 2.2rem;
+  }
+
+  .container {
+    max-width: 340px;
+  }
+
+  .title {
+    max-width: 10ch;
+    margin-inline: auto;
+    line-height: 1.08;
+  }
+
+  .mobileGrid {
+    max-width: 18.3rem;
+  }
+
+  .metricCard {
+    min-height: 7.2rem;
+    padding: 0.82rem 0.56rem 0.9rem;
+  }
+}

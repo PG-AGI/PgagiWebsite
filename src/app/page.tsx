@@ -41,6 +41,12 @@ const WhatMakesUsDifferentSection = dynamic(
     loading: () => <div>Loading...</div>,
   },
 );
+const MeasurableImpactSection = dynamic(
+  () => import("./components/MeasurableImpactSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 const EcosystemSection = dynamic(
   () => import("./components/EcosystemSection"),
   {
@@ -238,6 +244,7 @@ export default function Home() {
       <BuildEcosystemSection />
       <SolutionFitBreakdownSection />
       <WhatMakesUsDifferentSection />
+      <MeasurableImpactSection />
       <VideoTestimonial />
       <LandingProjects />
       <ExpertiseSection />
