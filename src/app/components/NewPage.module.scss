@@ -1,5 +1,6 @@
 .section {
-  background: linear-gradient(180deg, #C5B7AC 0%, #ffffff 100%);
+  position: relative;
+  background: #ffffff;
   padding-top: 150px;
   padding-bottom: 150px;
   min-height: 100vh;
@@ -8,9 +9,27 @@
   align-items: center;
   font-family: 'Inter', -apple-system, sans-serif;
   overflow-x: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 150px;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(180deg, #C5B7AC 0%, #ffffff 100%);
+  }
+
+  @media (max-width: 768px) {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    min-height: unset;
+    &::before { top: 80px; }
+  }
 }
 
 .container {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 82vw;
   margin: 0 auto;
@@ -27,20 +46,24 @@
   margin-bottom: 30px;
   position: relative;
   z-index: 10;
+
+  @media (max-width: 768px) {
+    margin-bottom: 16px;
+  }
 }
 
 .titleContainer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(32.8px);
-  -webkit-backdrop-filter: blur(32.8px);
+  // Removed backdrop-filter: blur — most expensive CSS operation
+  // Replaced with solid semi-transparent background
+  background: rgba(255, 255, 255, 0.72);
   padding: 2px 32px;
   border-radius: 16px;
-  border: 2px solid;
-  border-image-source: linear-gradient(141.62deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 101.33%);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   box-shadow: 14px 14px 16.1px 0px rgba(0, 0, 0, 0.08);
+  transform: translateZ(0);
 }
 
 .title {
@@ -85,49 +108,36 @@
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 50px;
-    padding-top: 40px;
+    gap: 24px;
+    padding-top: 24px;
   }
 }
 
 .card {
   width: 100%;
-  max-width: 680px; // Balanced width for 40px margins and badges
+  max-width: 680px;
   min-height: 693px;
   position: relative;
   display: flex;
   flex-direction: column;
   border-radius: 40px;
   overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 
-  /* CTO Level Glassmorphism Specs */
-  background: #FFFFFF2B;
-  backdrop-filter: blur(32.8px);
-  -webkit-backdrop-filter: blur(32.8px);
+  /* Performant alternative to backdrop-filter:blur — solid bg with border */
+  background: rgba(255, 255, 255, 0.82);
   box-shadow: 4px 4px 18.5px 0px #E8DDD2;
-
-  /* Gradient Border Hack */
-  border: 4px solid transparent;
-  background-clip: padding-box;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    margin: -4px;
-    border-radius: inherit;
-    background: linear-gradient(141.62deg, rgba(255, 255, 255, 0.47) 0%, rgba(255, 255, 255, 0.3) 101.33%);
-  }
+  border: 1.5px solid rgba(255, 255, 255, 0.72);
+  transform: translateZ(0);
 
   &:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px) translateZ(0);
   }
 
   @media (max-width: 768px) {
     max-width: 100%;
-    min-height: auto;
+    min-height: unset;
+    border-radius: 24px;
   }
 }
 
@@ -155,6 +165,16 @@
     margin: 20px;
     width: calc(100% - 40px);
     min-height: auto;
+  }
+
+  @media (max-width: 768px) {
+    margin: 12px;
+    width: calc(100% - 24px);
+    padding: 1rem;
+    border-radius: 20px;
+    min-height: 280px; // Maintain height for the absolute badges
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -194,6 +214,15 @@
 .cardVisualLeft,
 .cardVisualRight {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding-right: 40px; // Make room for badge overlap
+  }
 }
 
 .cardGhostTitle {
@@ -201,6 +230,10 @@
   font-weight: 700;
   color: rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .cardGhostTitleWhite {
@@ -208,6 +241,10 @@
   font-weight: 700;
   color: rgba(255, 255, 255, 0.4);
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .cardTextContent {
@@ -215,6 +252,10 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  @media (max-width: 768px) {
+    padding: 0 18px 24px;
+  }
 }
 
 .labelOverline {
@@ -224,6 +265,11 @@
   color: #666;
   margin-bottom: 12px;
   text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
 }
 
 .mainTitle {
@@ -232,6 +278,11 @@
   line-height: 1.2;
   margin-bottom: 20px;
   color: #111;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
 }
 
 .descriptionText {
@@ -239,6 +290,11 @@
   line-height: 1.6;
   color: #444;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
 }
 
 .pillButton {
@@ -279,13 +335,19 @@
 }
 
 .formulaBox {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
+  // Removed backdrop-filter:blur from formula box
+  background: rgba(255, 255, 255, 0.22);
   padding: 14px 24px;
   border-radius: 16px;
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+    border-radius: 10px;
+    width: 85%; // Shrink slightly to avoid full badge coverage
+  }
 }
 
 .formulaLabel {
@@ -321,8 +383,8 @@
 
 .badgesContainer {
   position: absolute;
-  inset: 0; // Covers the whole header for absolute positioning of children
-  pointer-events: none; // Allows clicks to pass through to formula below
+  inset: 0;
+  pointer-events: none;
   z-index: 10;
 
   @media (max-width: 1200px) {
@@ -334,42 +396,66 @@
     margin-top: 20px;
     height: auto;
   }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 60%;
+    height: 100%;
+    margin-top: 0;
+    display: block; // Reset flex for absolute children
+  }
 }
 
 .badgeStack {
   position: absolute;
   pointer-events: auto;
 
-  /* Shifted Figma Staircase - Starting from 365px from left */
+  /* Staircase - Starting positions */
   &:nth-child(1) {
     top: 0;
-    left: 365px;
-    width: clamp(200px, 15vw, 225.1px);
+    right: 0;
+    width: 180px;
+    z-index: 4;
   }
 
   &:nth-child(2) {
-    top: 42.77px;
-    left: 345px; // 365 - 20 offset
-    width: clamp(210px, 16vw, 245.3px);
+    top: 32px;
+    right: 15px;
+    width: 190px;
+    z-index: 3;
   }
 
   &:nth-child(3) {
-    top: 85.54px;
-    left: 332px; // 365 - 33 offset
-    width: clamp(225px, 18vw, 258.8px);
+    top: 64px;
+    right: 30px;
+    width: 200px;
+    z-index: 2;
   }
 
   &:nth-child(4) {
-    top: 137.31px;
-    left: 307px; // 365 - 58 offset
-    width: clamp(250px, 20vw, 287px);
+    top: 96px;
+    right: 45px;
+    width: 210px;
+    z-index: 1;
   }
 
   @media (max-width: 1200px) {
     position: relative !important;
     top: auto !important;
+    right: auto !important;
     left: auto !important;
     width: auto !important;
+  }
+
+  @media (max-width: 768px) {
+    position: absolute !important;
+    
+    &:nth-child(1) { top: 0; right: 0; width: 140px; }
+    &:nth-child(2) { top: 28px; right: 10px; width: 150px; }
+    &:nth-child(3) { top: 56px; right: 20px; width: 160px; }
+    &:nth-child(4) { top: 84px; right: 30px; width: 170px; }
   }
 }
 
@@ -381,9 +467,16 @@
   align-items: center;
   gap: 12px;
   border: 0.62px solid #EAEAEA;
-  box-shadow: 0px 0px 4.5px 0px rgba(0, 0, 0, 0.1); // #0000001A
+  box-shadow: 0px 0px 4.5px 0px rgba(0, 0, 0, 0.1);
   min-height: clamp(40px, 4vw, 50px);
   width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 6px 10px;
+    gap: 6px;
+    min-height: 36px;
+    border-radius: 8px;
+  }
 }
 
 .badgeIcon {
@@ -393,6 +486,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+  }
 }
 
 .badgeLabel {
@@ -402,6 +502,11 @@
   line-height: 20.1px;
   letter-spacing: 0%;
   color: #1a1a1a;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+    line-height: 1.3;
+  }
 }
 
 /* Cleaned up old badge stack duplicated class */
@@ -440,6 +545,11 @@
   flex-direction: column;
   gap: 12px;
   margin-bottom: 25px;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
 }
 
 .checkRow {

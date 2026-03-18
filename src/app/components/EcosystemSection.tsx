@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
 import styles from "./EcosystemSection.module.scss";
 
 type EcosystemCard = {
@@ -33,28 +32,14 @@ const ecosystemCards: EcosystemCard[] = [
 ];
 
 const EcosystemSection = () => {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className={styles.section} id="ecosystem">
       <div className={styles.container}>
-        <motion.h2
-          className={styles.title}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <h2 className={styles.title}>
           We always build within the <span>ecosystem</span>
-        </motion.h2>
+        </h2>
 
-        <motion.div
-          className={styles.visualWrap}
-          initial={{ opacity: 0, y: 36 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className={styles.visualWrap}>
           <div className={styles.gridBackdrop} aria-hidden="true" />
 
           <svg
@@ -96,44 +81,42 @@ const EcosystemSection = () => {
               d="M -90 214 C 160 140, 350 240, 560 196 S 920 148, 1380 208"
             />
 
-            {!shouldReduceMotion && (
-              <>
-                <circle className={styles.signalDot} r="5.6" fill="#ff503f">
-                  <animateMotion dur="7.8s" repeatCount="indefinite" rotate="auto">
-                    <mpath
-                      href="#ecosystem-path-1"
-                      xlinkHref="#ecosystem-path-1"
-                    />
-                  </animateMotion>
-                </circle>
-                <circle className={styles.signalDot} r="4.8" fill="#ff3f30">
-                  <animateMotion
-                    dur="9.6s"
-                    repeatCount="indefinite"
-                    begin="1.2s"
-                    rotate="auto"
-                  >
-                    <mpath
-                      href="#ecosystem-path-2"
-                      xlinkHref="#ecosystem-path-2"
-                    />
-                  </animateMotion>
-                </circle>
-                <circle className={styles.signalDot} r="4.2" fill="#ff5a45">
-                  <animateMotion
-                    dur="8.4s"
-                    repeatCount="indefinite"
-                    begin="0.6s"
-                    rotate="auto"
-                  >
-                    <mpath
-                      href="#ecosystem-path-3"
-                      xlinkHref="#ecosystem-path-3"
-                    />
-                  </animateMotion>
-                </circle>
-              </>
-            )}
+
+            {/* Animated signal dots — prefers-reduced-motion handled via CSS */}
+            <circle className={styles.signalDot} r="5.6" fill="#ff503f">
+              <animateMotion dur="7.8s" repeatCount="indefinite" rotate="auto">
+                <mpath
+                  href="#ecosystem-path-1"
+                  xlinkHref="#ecosystem-path-1"
+                />
+              </animateMotion>
+            </circle>
+            <circle className={styles.signalDot} r="4.8" fill="#ff3f30">
+              <animateMotion
+                dur="9.6s"
+                repeatCount="indefinite"
+                begin="1.2s"
+                rotate="auto"
+              >
+                <mpath
+                  href="#ecosystem-path-2"
+                  xlinkHref="#ecosystem-path-2"
+                />
+              </animateMotion>
+            </circle>
+            <circle className={styles.signalDot} r="4.2" fill="#ff5a45">
+              <animateMotion
+                dur="8.4s"
+                repeatCount="indefinite"
+                begin="0.6s"
+                rotate="auto"
+              >
+                <mpath
+                  href="#ecosystem-path-3"
+                  xlinkHref="#ecosystem-path-3"
+                />
+              </animateMotion>
+            </circle>
           </svg>
 
           <div className={styles.cardsTrack}>
@@ -149,13 +132,13 @@ const EcosystemSection = () => {
                     width={card.width}
                     height={card.height}
                     className={styles.cardImage}
-                    unoptimized
+                    loading="lazy"
                   />
                 </div>
               </article>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

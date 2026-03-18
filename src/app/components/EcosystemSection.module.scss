@@ -1,21 +1,45 @@
 .section {
-  background:
-    radial-gradient(
-      130% 82% at 50% 0%,
-      rgba(166, 20, 20, 0.58) 0%,
-      rgba(166, 20, 20, 0.12) 34%,
-      rgba(7, 9, 13, 0) 72%
-    ),
-    #07090d;
-  padding: clamp(2.55rem, 5.2vw, 4.8rem) clamp(0.9rem, 2.5vw, 2rem)
-    clamp(2rem, 4vw, 3.6rem);
+  position: relative;
+  padding: 150px 0 150px;
+  background: #ffffff; // The white gap
   overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 150px;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(
+        130% 82% at 50% 0%,
+        rgba(166, 20, 20, 0.58) 0%,
+        rgba(166, 20, 20, 0.12) 34%,
+        rgba(7, 9, 13, 0) 72%
+      ),
+      #07090d;
+  }
+
+  @media (max-width: 768px) {
+    padding: 80px 0 80px;
+    &::before { top: 80px; }
+  }
 }
 
 .container {
-  width: min(1180px, 100%);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 82vw;
   margin: 0 auto;
+  padding: 0 1vw;
+  position: relative;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 0 1.25rem;
+    max-width: 100%;
+  }
 }
 
 .title {
@@ -48,6 +72,7 @@
     ),
     linear-gradient(180deg, rgba(10, 13, 20, 0.72) 0%, rgba(6, 8, 12, 0.96) 100%);
   isolation: isolate;
+  transform: translateZ(0);
 }
 
 .gridBackdrop {
@@ -97,6 +122,11 @@
 
 .signalDot {
   filter: drop-shadow(0 0 7px rgba(255, 82, 64, 0.95));
+  transform: translateZ(0);
+
+  @media (max-width: 768px) {
+    display: none; // Disables complex SVG animation on mobile
+  }
 }
 
 .cardsTrack {
@@ -143,6 +173,7 @@
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: linear-gradient(180deg, rgba(52, 52, 56, 0.9) 0%, rgba(32, 32, 36, 0.94) 100%);
   box-shadow: 0 20px 36px rgba(0, 0, 0, 0.4);
+  transform: translateZ(0);
 }
 
 .cardImage {
@@ -222,7 +253,7 @@
 
 @media (max-width: 640px) {
   .section {
-    padding-inline: 0.66rem;
+    padding-inline: 0;
   }
 
   .visualWrap {
