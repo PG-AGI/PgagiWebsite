@@ -1,13 +1,44 @@
+// ── Keyframes ──────────────────────────────────────────
+// Ring spins on compositor thread — zero JS cost
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+// Counter-spin keeps the icon logos upright while ring rotates
+@keyframes orbit-counter {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
 .section {
   background: #ffffff;
-  padding: clamp(2.3rem, 5vw, 4.6rem) clamp(0.9rem, 2.4vw, 2.2rem)
-    clamp(1.5rem, 3.6vw, 2.6rem);
+  padding: 150px 0 150px;
+  // Reduces paint cost for off-screen content
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+
+  @media (max-width: 1024px) {
+    padding-top: 80px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 80px 0 80px;
+  }
 }
 
 .container {
-  width: min(1160px, 100%);
+  width: 100%;
+  max-width: 82vw;
   margin: 0 auto;
+  padding: 0 1vw;
+  position: relative;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 0 1.25rem;
+    max-width: 100%;
+  }
 }
 
 .sectionTitle {
@@ -35,6 +66,7 @@
       rgba(255, 255, 255, 0) 46%
     ),
     #0d0f14;
+  transform: translateZ(0);
 }
 
 .accordionColumn {
@@ -96,6 +128,13 @@
   font-size: clamp(0.9rem, 0.95vw, 1rem);
   font-weight: 500;
   line-height: 1.45;
+  // CSS transition replaces Framer Motion (no JS overhead)
+  animation: accordionIn 0.2s ease-out both;
+}
+
+@keyframes accordionIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .visualBlock {
@@ -120,6 +159,14 @@
   top: 50%;
   border-radius: 50%;
   border: 1.4px dashed rgba(222, 226, 232, 0.5);
+  // CSS animation runs on compositor — not JS main thread
+  animation: orbit-spin linear infinite;
+  // Duration/direction set via inline style from component
+  will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .outerRing {
@@ -153,6 +200,13 @@
   display: grid;
   place-items: center;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.24));
+  // Counter-rotate to keep icon upright
+  animation: orbit-counter linear infinite;
+  will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .nodeImage {
@@ -235,7 +289,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 1.95rem 0.72rem 0.75rem;
+    padding: 1.95rem 0 0.75rem;
   }
 
   .sectionTitle {
@@ -305,7 +359,7 @@
 
 @media (max-width: 480px) {
   .section {
-    padding: 1.75rem 0.64rem 0.54rem;
+    padding: 1.75rem 0 0.54rem;
   }
 
   .sectionTitle {

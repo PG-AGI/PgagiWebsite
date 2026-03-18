@@ -1,95 +1,93 @@
 .section {
-  background: linear-gradient(180deg, #C5B7AC 0%, #ffffff 100%);
-  padding-top: 100px; // Matching nav bar height (est 80px + margin)
-  padding-bottom: 100px;
+  position: relative;
+  background: #ffffff;
+  padding-top: 150px;
+  padding-bottom: 150px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Inter', -apple-system, sans-serif;
   overflow-x: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 150px;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(180deg, #C5B7AC 0%, #ffffff 100%);
+  }
+
+  @media (max-width: 768px) {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    min-height: unset;
+    &::before { top: 80px; }
+  }
 }
 
 .container {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 40px;
   position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 82vw;
+  margin: 0 auto;
+  padding: 0 1vw;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 0 1.25rem;
+  }
 }
 
-/* Header Styles */
 .header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0;
+  text-align: center;
+  margin-bottom: 30px;
   position: relative;
   z-index: 10;
+
+  @media (max-width: 768px) {
+    margin-bottom: 16px;
+  }
 }
 
-.titleWrapper {
-  position: relative;
-  display: inline-block;
+.titleContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // Removed backdrop-filter: blur — most expensive CSS operation
+  // Replaced with solid semi-transparent background
+  background: rgba(255, 255, 255, 0.72);
+  padding: 2px 32px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 14px 14px 16.1px 0px rgba(0, 0, 0, 0.08);
+  transform: translateZ(0);
 }
 
 .title {
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 750;
-  color: #222;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(30px, 4vw, 40px);
+  line-height: 1.5;
+  letter-spacing: -0.64px;
   margin: 0;
-  background: #fdfaf7;
-  padding: 24px 75px;
-  border-radius: 30px;
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.05),
-    0 2px 4px rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  text-align: center;
+  color: #2C2C2C;
 }
 
-.accentText {
-  color: #b60306; // Specific red from logo
+.highlight {
+  color: #b60306;
 }
 
-.titleAvatars {
-  position: absolute;
-  top: 18px;
-  right: 65px;
-  display: flex;
-  gap: 2px;
-}
-
-.avatarS,
-.avatarA {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 800;
-  color: white;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.avatarS {
-  background-color: #3b82f6;
-}
-
-.avatarA {
-  background-color: #ef4444;
-}
-
-/* SVG Lines Styles - REFINED PIXEL PERFECT */
 .linesContainer {
-  height: 280px;
-  width: 100%;
+  height: 220px;
+  width: calc(50% + 40px);
+  margin: 10px auto -40px;
   position: relative;
-  margin-top: -10px;
-  margin-bottom: -110px; // Pull cards up even more
   z-index: 1;
+  display: flex;
+  justify-content: center;
 
   @media (max-width: 768px) {
     display: none;
@@ -99,169 +97,280 @@
 .svgLines {
   width: 100%;
   height: 100%;
-  // filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.2));
 }
 
-.lineLayerBlack {
-  stroke: #1a1a1a;
-  stroke-width: 10;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.lineLayerBlue {
-  stroke: #2563eb;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-}
-
-.lineLayerRed {
-  stroke: #dc2626;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-}
-
-/* Cards Grid */
 .cardsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  gap: 80px;
   position: relative;
   z-index: 2;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 50px;
-    padding-top: 40px;
+    gap: 24px;
+    padding-top: 24px;
   }
 }
 
 .card {
-  background: #f9f9f9;
-  border-radius: 50px;
-  padding: 10px; // Outer spacing for the border effect
-  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 680px;
+  min-height: 693px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 40px;
+  overflow: hidden;
   transition: transform 0.3s ease;
 
+  /* Performant alternative to backdrop-filter:blur — solid bg with border */
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 4px 4px 18.5px 0px #E8DDD2;
+  border: 1.5px solid rgba(255, 255, 255, 0.72);
+  transform: translateZ(0);
+
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px) translateZ(0);
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    min-height: unset;
+    border-radius: 24px;
   }
 }
 
 .cardHeaderWrapper {
-  background: white;
-  border-radius: 42px;
-  padding: 30px;
   position: relative;
-  min-height: 320px;
-  margin-bottom: 25px;
-  overflow: visible;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+
+  /* Layout Specs */
+  margin: 40px;
+  width: calc(100% - 80px);
+  max-width: 600px; // Widened as requested
+  min-height: 317px;
+
+  border-radius: 32px;
+  background: #738CAE;
+  border: 2px solid #FFFFFF;
+  box-shadow: 9px 9px 14.6px 0px rgba(0, 0, 0, 0.09); // #00000017 translated
+
   display: flex;
-  border: 1px solid #eee;
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.02);
+  overflow: visible;
+  color: #FFFFFF; // White text for the blue background
 
   @media (max-width: 1200px) {
     flex-direction: column;
+    margin: 20px;
+    width: calc(100% - 40px);
     min-height: auto;
-    padding-right: 40px;
+  }
+
+  @media (max-width: 768px) {
+    margin: 12px;
+    width: calc(100% - 24px);
+    padding: 1rem;
+    border-radius: 20px;
+    min-height: 280px; // Maintain height for the absolute badges
+    display: flex;
+    flex-direction: column;
   }
 }
 
-.rightHeaderGradient {
-  background: linear-gradient(135deg, #ff1a55 0%, #ff85a1 100%);
-  border: none;
+/* CTO Directive: Theme-Specific Header Overrides */
+
+.cardFounders .cardHeaderWrapper {
+  background: linear-gradient(180deg, rgba(128, 128, 128, 0.81) 0%, rgba(55, 55, 55, 0) 100%);
+  color: #333333; // Darker text for the light-to-grey gradient
+
+  .cardGhostTitle {
+    color: rgba(0, 0, 0, 0.45); // Darker ghost title
+  }
+
+  .checkRow {
+    color: #555555;
+  }
+
+  .checkIconBox {
+    background: #eef2f6;
+    color: #4CAF50; // Green checkmark as per screenshot
+    border-color: #d1d9e6;
+  }
 }
+
+.cardEnterprises .cardHeaderWrapper {
+  background: linear-gradient(135deg, #ff1a55 0%, #ff85a1 100%);
+  border: none !important;
+  color: #FFFFFF;
+
+  .cardGhostTitle {
+    color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* The headers now share a unified spectral logic with theme-specific overrides */
 
 .cardVisualLeft,
 .cardVisualRight {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding-right: 40px; // Make room for badge overlap
+  }
 }
 
 .cardGhostTitle {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #ddd;
-  margin-bottom: 25px;
+  color: rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .cardGhostTitleWhite {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.35);
-  margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
-.checkRows {
+.cardTextContent {
+  padding: 0 40px 40px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 40px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    padding: 0 18px 24px;
+  }
 }
 
-.checkRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.labelOverline {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #666;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+}
+
+.mainTitle {
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #111;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+}
+
+.descriptionText {
   font-size: 1rem;
-  color: #888;
-  font-weight: 500;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
 }
 
-.rightHeaderGradient .checkRow {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.checkIconBox {
-  width: 26px;
-  height: 26px;
-  background: #f0f4f8;
-  color: #ddd;
-  border-radius: 6px;
+.pillButton {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 10px 10px 10px 30px;
+  border-radius: 60px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  border: 1.5px solid #eee;
+  gap: 15px;
+  cursor: pointer;
+  color: #111;
+  width: fit-content;
+  transition: 0.3s;
+
+  &:hover {
+    background: #f9f9f9;
+    transform: scale(1.02);
+  }
 }
 
-.checkIconWhite {
-  width: 26px;
-  height: 26px;
-  background: rgba(255, 255, 255, 0.2);
+.redArrowCircle {
+  width: 40px;
+  height: 40px;
+  background: #b60306;
   color: white;
-  border-radius: 6px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+}
+
+/* Formula & Badges */
+.formulaArea {
+  margin-top: auto;
+  width: 100%;
 }
 
 .formulaBox {
-  background: rgba(255, 255, 255, 0.85);
-  padding: 16px 24px;
-  border-radius: 18px;
-  backdrop-filter: blur(10px);
-  width: fit-content;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  // Removed backdrop-filter:blur from formula box
+  background: rgba(255, 255, 255, 0.22);
+  padding: 14px 24px;
+  border-radius: 16px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+    border-radius: 10px;
+    width: 85%; // Shrink slightly to avoid full badge coverage
+  }
 }
 
 .formulaLabel {
-  font-size: 0.7rem;
-  color: #999;
-  margin-bottom: 6px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.cardFounders .formulaLabel {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.cardFounders .formulaBox {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .formulaText {
-  font-family: 'JetBrains Mono', Courier, monospace;
-  font-size: 1.2rem;
+  font-family: monospace;
   font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .highlightCyan {
@@ -272,72 +381,142 @@
   color: #f57c00;
 }
 
-/* Badges Styles overlapping pixel perfect */
 .badgesContainer {
   position: absolute;
-  right: -35px;
-  top: 45%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
 
   @media (max-width: 1200px) {
     position: relative;
-    right: 0;
-    top: 0;
-    transform: none;
-    margin-top: 20px;
-    flex-direction: row;
+    pointer-events: auto;
+    display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: 20px;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 60%;
+    height: 100%;
+    margin-top: 0;
+    display: block; // Reset flex for absolute children
   }
 }
 
 .badgeStack {
-  transform: translateX(calc(var(--index) * -12px));
+  position: absolute;
+  pointer-events: auto;
+
+  /* Staircase - Starting positions */
+  &:nth-child(1) {
+    top: 0;
+    right: 0;
+    width: 180px;
+    z-index: 4;
+  }
+
+  &:nth-child(2) {
+    top: 32px;
+    right: 15px;
+    width: 190px;
+    z-index: 3;
+  }
+
+  &:nth-child(3) {
+    top: 64px;
+    right: 30px;
+    width: 200px;
+    z-index: 2;
+  }
+
+  &:nth-child(4) {
+    top: 96px;
+    right: 45px;
+    width: 210px;
+    z-index: 1;
+  }
 
   @media (max-width: 1200px) {
-    transform: none;
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: auto !important;
+  }
+
+  @media (max-width: 768px) {
+    position: absolute !important;
+    
+    &:nth-child(1) { top: 0; right: 0; width: 140px; }
+    &:nth-child(2) { top: 28px; right: 10px; width: 150px; }
+    &:nth-child(3) { top: 56px; right: 20px; width: 160px; }
+    &:nth-child(4) { top: 84px; right: 30px; width: 170px; }
   }
 }
 
 .badgeItem {
-  background: white;
-  padding: 10px 20px;
-  border-radius: 14px;
+  background: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 6.75px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  white-space: nowrap;
-  border-bottom: 3.5px solid transparent;
+  gap: 12px;
+  border: 0.62px solid #EAEAEA;
+  box-shadow: 0px 0px 4.5px 0px rgba(0, 0, 0, 0.1);
+  min-height: clamp(40px, 4vw, 50px);
+  width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 6px 10px;
+    gap: 6px;
+    min-height: 36px;
+    border-radius: 8px;
+  }
 }
 
 .badgeIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+  }
 }
 
 .badgeLabel {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #222;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  font-size: 15.01px;
+  line-height: 20.1px;
+  letter-spacing: 0%;
+  color: #1a1a1a;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+    line-height: 1.3;
+  }
 }
 
+/* Cleaned up old badge stack duplicated class */
+
+
 /* Badge Color Themes */
+/* Badge Color Themes (Icons Only now) */
 .themePink .badgeIcon {
   background: #fff1f2;
   color: #ff3366;
-}
-
-.themePink {
-  border-bottom-color: #ff3366;
 }
 
 .themeCyan .badgeIcon {
@@ -345,17 +524,9 @@
   color: #0891b2;
 }
 
-.themeCyan {
-  border-bottom-color: #0891b2;
-}
-
 .themeYellow .badgeIcon {
   background: #fffbeb;
   color: #d97706;
-}
-
-.themeYellow {
-  border-bottom-color: #d97706;
 }
 
 .themeGreen .badgeIcon {
@@ -363,112 +534,53 @@
   color: #16a34a;
 }
 
-.themeGreen {
-  border-bottom-color: #16a34a;
-}
-
 .themeRed .badgeIcon {
   background: #fef2f2;
   color: #dc2626;
 }
 
-.themeRed {
-  border-bottom-color: #dc2626;
-}
 
-/* Bottom Content */
-.cardTextContent {
-  padding: 20px 40px 40px;
-
-  @media (max-width: 480px) {
-    padding: 10px 20px 30px;
-  }
-}
-
-.labelOverline {
-  font-size: 0.75rem;
-  font-weight: 850;
-  letter-spacing: 2px;
-  color: #444;
-  margin-bottom: 20px;
-  opacity: 0.7;
-  text-transform: uppercase;
-}
-
-.mainTitle {
-  font-size: 2.3rem;
-  font-weight: 850;
-  line-height: 1.1;
-  color: #111;
-  margin-bottom: 25px;
-  letter-spacing: -0.8px;
-
-  @media (max-width: 1024px) {
-    font-size: 1.9rem;
-  }
-}
-
-.descriptionText {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #555;
-  margin-bottom: 40px;
-  max-width: 90%;
-}
-
-.ctaWrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.ctaAvatars {
-  position: absolute;
-  top: -38px;
-  left: 35px;
+.checkRows {
   display: flex;
-  gap: 2px;
-  z-index: 5;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
 }
 
-.pillButton {
-  background: #e5e7eb;
-  border: none;
-  padding: 8px 8px 8px 30px;
-  border-radius: 60px;
-  font-weight: 750;
-  font-size: 0.95rem;
+.checkRow {
   display: flex;
   align-items: center;
-  gap: 15px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  color: #1f2937;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    background: #d1d5db;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-
-    .redArrowCircle {
-      transform: scale(1.05) rotate(45deg);
-      background: #990000;
-    }
-  }
-
-  &:active {
-    transform: translateY(1px);
-  }
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #666;
 }
 
-.redArrowCircle {
-  width: 46px;
-  height: 46px;
-  background: #b60306;
+.cardEnterprises .checkRow {
   color: white;
-  border-radius: 50%;
+}
+
+.checkIconBox,
+.checkIconWhite {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 12px;
+}
+
+.checkIconBox {
+  background: #f0f4f8;
+  color: #ccc;
+}
+
+.checkIconWhite {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
 }

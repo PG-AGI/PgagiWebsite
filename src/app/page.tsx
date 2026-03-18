@@ -6,7 +6,7 @@ import styles from "./page.module.scss";
 // import { segmentList } from "@/utils/constants";
 import { useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-// import LazyOnVisible from "./components/LazyOnVisible";
+import LazyOnVisible from "./components/LazyOnVisible";
 
 // Preload critical imports for faster loading
 // import "three";
@@ -86,12 +86,20 @@ const TrendingOld = dynamic(() => import("./components/trending_old"), {
   loading: () => <div>Loading...</div>,
 });
 const Calendly = dynamic(() => import("./components/Calendly"), {
-  loading: () => <div>Loading...</div>,
+  loading: () => <div style={{ minHeight: '400px' }}>Loading...</div>,
 });
 const ScrollIndicator = dynamic(() => import("./components/ScrollIndicator"), {
   ssr: false,
-  loading: () => <div>Loading...</div>,
+  loading: () => null,
 });
+
+const LazySection = ({ children, height = "600px" }: { children: React.ReactNode; height?: string }) => (
+  <div style={{ minHeight: height }}>
+    <LazyOnVisible rootMargin="300px">
+      {children}
+    </LazyOnVisible>
+  </div>
+);
 
 export default function Home() {
   const segmentRef = useRef<HTMLDivElement>(null);
@@ -99,66 +107,38 @@ export default function Home() {
   const rafRef = useRef<number>();
   const isScrollingRef = useRef(false);
 
-  // Throttled scroll handler using RAF
-  const handleScroll = useCallback(() => {
-    if (isScrollingRef.current) return;
+  // Throttled scroll handler using RAF removed in favor of CSS or GSAP if needed
+  // For the blob animation, we can use simple CSS or a lighter GSAP implementation if critical
+  useEffect(() => {
+    if (!segmentRef.current) return;
+    
+    // Using GSAP for the blob animation is smoother and more efficient
+    const blob = document.querySelector(`.${styles.blob}`) as HTMLDivElement;
+    if (!blob) return;
 
-    isScrollingRef.current = true;
-    rafRef.current = requestAnimationFrame(() => {
-      if (!segmentRef.current || !lottieWindowRef.current) {
-        isScrollingRef.current = false;
-        return;
-      }
-
-      const scroll = window.scrollY;
-      const rectSegment = segmentRef.current.getBoundingClientRect();
-
-      const offset = Math.round(rectSegment.top + scroll);
-      const blob = document.querySelector(`.${styles.blob}`) as HTMLDivElement;
-
-      if (!blob) {
-        isScrollingRef.current = false;
-        return;
-      }
-
-      const segmentSectionHeight = segmentRef.current.scrollHeight * 2;
-      const windowHeight = window.innerHeight;
-
-      const scrollY = (scroll - offset) / windowHeight;
-      const percent = (scrollY - Math.floor(scrollY)) * 100;
-      let pos;
-
-      if (
-        scroll >= offset &&
-        scroll <= offset + segmentSectionHeight - windowHeight
-      ) {
-        if (scrollY <= 1) {
-          pos = 50 - percent / 2;
-        } else if (Math.floor(scrollY % 2) === 0) {
-          pos = 100 - percent;
-        } else {
-          pos = percent;
-        }
-        blob.style.transform = `translate(${Math.min(pos, 100)}%, -50%)`;
-      } else if (scroll > offset + segmentSectionHeight - windowHeight) {
-        blob.style.transform = `translate(100%, -50%)`;
-      }
-
-      isScrollingRef.current = false;
+    import("gsap").then(({ gsap }) => {
+      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const segmentSectionHeight = segmentRef.current!.scrollHeight * 2;
+        
+        ScrollTrigger.create({
+          trigger: segmentRef.current,
+          start: "top center",
+          end: `+=${segmentSectionHeight}`,
+          onUpdate: (self) => {
+            const pos = self.progress * 100;
+            gsap.to(blob, {
+              x: `${Math.min(pos, 100)}%`,
+              y: "-50%",
+              duration: 0.1,
+              overwrite: "auto"
+            });
+          }
+        });
+      });
     });
   }, []);
-
-  useEffect(() => {
-    // Use passive event listener for better performance
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, [handleScroll]);
 
   // Preload critical Hyperspeed dependencies immediately
   // useEffect(() => {
@@ -234,7 +214,6 @@ export default function Home() {
 				]}
 			/> */}
       <Landing />
-      {/* Partners is rendered inside Landing.tsx, pinned to hero bottom */}
       <StatsSection />
       <VisionSystemSection />
       <SocialOrbitSection />

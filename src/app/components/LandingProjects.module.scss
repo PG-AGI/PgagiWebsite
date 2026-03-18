@@ -2,17 +2,19 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 2rem 0;
+    padding: 150px 0 0;
+
     >h3 {
         font-size: 30px;
         font-weight: 500;
         color: #000;
         margin-bottom: 5rem;
-        text-align:center;
+        text-align: center;
         // margin-right: 43rem;
     }
+
     .trendingList {
-      width: 98%;
+        width: 98%;
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto;
@@ -20,6 +22,7 @@
         margin: 0 auto;
         justify-content: center;
         align-items: start;
+
         .trendingItem {
             position: relative;
             display: flex;
@@ -38,28 +41,36 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             z-index: 0;
+
             &:nth-child(1) {
                 height: 650px; // Top-left card - bigger height
             }
+
             &:nth-child(2) {
                 height: 450px; // Top-right card - smaller height
             }
+
             &:nth-child(3) {
                 height: 450px; // Bottom-left card - smaller height
             }
+
             &:nth-child(4) {
                 height: 650px; // Bottom-right card - bigger height
                 margin-top: -12.5rem;
             }
+
             &:hover {
                 box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+
                 .imgTag {
                     transform: scale(1.1);
                 }
+
                 .content {
                     transform: scale(1.05);
                 }
             }
+
             .content {
                 position: relative;
                 width: 100%;
@@ -72,7 +83,8 @@
                 text-align: center;
                 color: #fff;
                 transition: transform 0.3s ease;
-              }
+            }
+
             h3 {
                 font-size: 24px;
                 font-weight: 600;
@@ -80,6 +92,7 @@
                 margin: 0 0 1rem 0;
                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             }
+
             p {
                 color: #fff;
                 font-size: 16px;
@@ -88,6 +101,7 @@
                 text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
                 opacity: 0.9;
             }
+
             .brief {
                 display: none;
                 color: #FFF;
@@ -97,6 +111,7 @@
                 left: 3px;
                 font-weight: 500;
             }
+
             .expandButton {
                 display: none;
                 position: absolute;
@@ -111,10 +126,12 @@
                 color: #000;
                 font-size: 16px;
                 transition: all 0.3s ease;
+
                 &:hover {
                     transform: scale(1.1);
                 }
             }
+
             .imgTag {
                 position: absolute;
                 top: 0;
@@ -127,6 +144,7 @@
         }
     }
 }
+
 .trendingItem {
     position: relative;
     display: flex;
@@ -144,34 +162,39 @@
     cursor: pointer;
     transition: background 0.3s ease, opacity 0.3s ease;
     z-index: 0;
+
     &:hover {
-      .imgTag {
-        transform: scale(1.1);
-      }
+        .imgTag {
+            transform: scale(1.1);
+        }
     }
+
     .content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
+
     h3 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #FFF;
-      margin: 25px 10px 10px 28px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #FFF;
+        margin: 25px 10px 10px 28px;
     }
+
     p {
-      color: #FFF;
-      font-size: 15px;
-      font-weight: 600;
-      margin: 10px 26px 26px 26px;
+        color: #FFF;
+        font-size: 15px;
+        font-weight: 600;
+        margin: 10px 26px 26px 26px;
     }
+
     // .badge {
     //   display: inline-flex;
     //   align-items: center;
@@ -235,58 +258,69 @@
     //   }
     // }
     .brief {
-      display: none;
+        display: none;
     }
+
     .storybrief1 {
-      display: none;
-      opacity: 0;
-      max-height: 0;
-      width: 0;
-      transition: opacity 0.3s ease, bottom 0.3s ease, max-height 0.3s ease, width 0.3s ease;
+        display: none;
+        opacity: 0;
+        max-height: 0;
+        width: 0;
+        transition: opacity 0.3s ease, bottom 0.3s ease, max-height 0.3s ease, width 0.3s ease;
     }
+
     .expandButton {
-      display: none;
-      position: absolute;
-      right: 20px;
-      bottom: 20px;
-      background-color: #8987f800;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 15px;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      &:hover {
-        background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
-        transform: scale(1.4);
-      }
+        display: none;
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        background-color: #8987f800;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
+            transform: scale(1.4);
+        }
     }
-  }
+}
+
 @media (max-width: 768px) and (min-width: 479px) {
     .trending {
         padding: 1.5rem 0;
+
         >h3 {
             font-size: 26px;
             margin-bottom: 3rem;
             margin-right: 2rem;
         }
+
         .trendingList {
             width: 95%;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin: 0 auto;
+
             .trendingItem {
                 height: 350px;
                 padding: 1.5rem;
+
                 &:nth-child(1) {
                     height: 500px;
                 }
+
                 &:nth-child(2) {
                     height: 400px;
                 }
+
                 &:nth-child(3) {
                     height: 400px;
                 }
+
                 &:nth-child(4) {
                     height: 500px;
                     margin-top: -8rem;
@@ -295,11 +329,13 @@
         }
     }
 }
+
 @media (max-width: 478px) {
     .trending {
         display: flex;
         flex-direction: column;
         align-items: center;
+
         // margin-top: 75%;
         >h3 {
             font-size: 23px;
@@ -313,6 +349,7 @@
             text-align: center;
             // color: transparent;
         }
+
         .trendingList {
             width: 95%;
             display: flex;
@@ -322,6 +359,7 @@
             margin: 0 auto;
             justify-content: center;
             align-items: center;
+
             .trendingItem {
                 position: relative;
                 display: flex;
@@ -341,24 +379,26 @@
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 z-index: 0;
                 margin: 0; // Remove any default margins
-                
+
                 // Remove the negative margin that was causing overlap
                 &:nth-child(4) {
                     height: 300px;
                     margin-top: 0;
                 }
-                
+
                 &:hover {
                     transform: translateY(-3px);
                     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+
                     .imgTag {
                         transform: scale(1.1);
                     }
+
                     .content {
                         transform: scale(1.05);
                     }
                 }
-                
+
                 .imgTag {
                     position: absolute;
                     top: 0;
@@ -368,7 +408,7 @@
                     object-fit: cover;
                     transition: all 0.3s ease;
                 }
-                
+
                 .content {
                     position: absolute;
                     top: 0;
@@ -382,20 +422,20 @@
                     align-items: center;
                     text-align: center;
                 }
-                
+
                 h3 {
                     font-size: 18px;
                     color: #FFF;
                     margin: 25px 10px 10px 28px;
                 }
-                
+
                 p {
                     color: #FFF;
                     font-size: 15px;
                     font-weight: 600;
                     margin: 26px;
                 }
-                
+
                 .brief {
                     display: none;
                     color: #FFF;
@@ -405,7 +445,7 @@
                     left: 3px;
                     font-weight: 500;
                 }
-                
+
                 .expandButton {
                     display: none;
                     position: absolute;
@@ -417,6 +457,7 @@
                     padding: 8px 16px;
                     border-radius: 4px;
                     cursor: pointer;
+
                     &:hover {
                         background: linear-gradient(90deg, #050CAF 0%, #070A5D 100%);
                     }
@@ -429,25 +470,30 @@
 // Add small mobile breakpoint
 @media (max-width: 360px) {
     .trending {
+
         // margin-top: 60%;
         >h3 {
             font-size: 20px;
             // margin-top: -40%;
             margin-bottom: 3%;
         }
+
         .trendingList {
             width: 90%;
             gap: 0.8rem;
             padding: 0.8rem 0;
+
             .trendingItem {
                 height: 250px;
                 padding: 1rem;
                 border-radius: 8px;
+
                 .content {
                     h3 {
                         font-size: 16px;
                         margin: 20px 8px 8px 20px;
                     }
+
                     p {
                         font-size: 14px;
                         margin: 20px;
@@ -462,57 +508,63 @@
 
 /* Center the button */
 .projectsButtonContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1.5rem 0 2rem; /* space above/below */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0 2rem;
+    /* space above/below */
 }
 
 /* Small, neat pill button */
 .projectsButton {
-  background-color: #ffffff;
-  color: #000000;
-  border: 2px solid #b60306;  /* your red */
-  border-radius: 50px;          /* pill shape */
-  padding: 15px 20px;            /* small */
-  font-size: 20px;            /* small text */
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;                     /* space before arrow */
-  transition: all 0.25s ease-in-out;
-  outline: none;
-  text-decoration: none;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-
-  &:hover {
-    background-color: #b60306;
+    background-color: #ffffff;
     color: #000000;
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(182, 3, 6, 0.25);
+    border: 2px solid #b60306;
+    /* your red */
+    border-radius: 50px;
+    /* pill shape */
+    padding: 15px 20px;
+    /* small */
+    font-size: 20px;
+    /* small text */
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    /* space before arrow */
+    transition: all 0.25s ease-in-out;
+    outline: none;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
-    .arrow {
-      transform: translateX(3px);
+    &:hover {
+        background-color: #b60306;
+        color: #000000;
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(182, 3, 6, 0.25);
+
+        .arrow {
+            transform: translateX(3px);
+        }
     }
-  }
 
-  &:active {
-    transform: scale(0.97);
-  }
+    &:active {
+        transform: scale(0.97);
+    }
 }
 
 /* Arrow animation */
 .arrow {
-  font-size: 1rem;
-  transition: transform 0.3s ease;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
 }
 
 /* Optional: slightly larger on mobile for touch comfort */
 @media (max-width: 768px) {
-  .projectsButton {
-    padding: 8px 18px;
-    font-size: 1rem;
-  }
+    .projectsButton {
+        padding: 8px 18px;
+        font-size: 1rem;
+    }
 }

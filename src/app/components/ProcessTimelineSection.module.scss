@@ -1,13 +1,27 @@
 .section {
+  position: relative;
   background: #ffffff;
-  padding: clamp(1.6rem, 3.2vw, 2.85rem) clamp(0.9rem, 2.2vw, 1.9rem)
-    clamp(1.4rem, 3vw, 2.8rem);
+  padding: 150px 0 150px;
+
+  @media (max-width: 768px) {
+    padding: 80px 0 80px;
+  }
 }
 
 .container {
-  width: min(1280px, 100%);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 82vw;
   margin: 0 auto;
+  padding: 0 1vw;
+  position: relative;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 0 1.25rem;
+    max-width: 100%;
+  }
 }
 
 .panel {
@@ -26,6 +40,7 @@
     linear-gradient(180deg, #0c1017 0%, #090c12 100%);
   padding: 0;
   // box-shadow: 0 26px 45px rgba(7, 9, 12, 0.2);
+  transform: translateZ(0);
 }
 
 .panel::after {
@@ -172,6 +187,13 @@
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.2),
     0 12px 22px rgba(0, 0, 0, 0.34);
+  // CSS pulse replaces Framer Motion repeat:Infinity — runs on compositor
+  animation: badgePulse 2.2s ease-in-out infinite;
+  will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .mobileHint {
@@ -285,7 +307,7 @@
 
 @media (max-width: 640px) {
   .section {
-    padding-inline: 0.66rem;
+    padding-inline: 0;
     padding-bottom: 1.5rem;
   }
 
@@ -348,4 +370,9 @@
   to {
     stroke-dashoffset: -96;
   }
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%       { transform: translate(-50%, -50%) scale(1.04); }
 }

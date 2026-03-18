@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { Blocks, Gauge, Rocket, Search, Wrench } from "lucide-react";
 import styles from "./ProcessTimelineSection.module.scss";
@@ -59,7 +58,6 @@ const timelineSteps: TimelineStep[] = [
 ];
 
 const ProcessTimelineSection = () => {
-  const shouldReduceMotion = useReducedMotion();
   const timelineRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -116,23 +114,11 @@ const ProcessTimelineSection = () => {
   return (
     <section className={styles.section} id="process-timeline">
       <div className={styles.container}>
-        <motion.div
-          className={styles.panel}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.56, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className={styles.panel}>
           <div className={styles.contentLayout}>
-            <motion.h2
-              className={styles.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <h2 className={styles.title}>
               Process <span>timeline</span>
-            </motion.h2>
+            </h2>
 
             <div
               ref={timelineRef}
@@ -184,29 +170,16 @@ const ProcessTimelineSection = () => {
                         <circle className={styles.endDot} cx="220" cy="122" r="4" />
                       </svg>
 
-                      <motion.span
+                      {/* CSS pulse animation — zero JS, runs on compositor */}
+                      <span
                         className={styles.iconBadge}
-                        style={{ x: "-50%", y: "-50%" }}
-                        animate={
-                          shouldReduceMotion
-                            ? undefined
-                            : {
-                                scale: [1, 1.03, 1],
-                              }
-                        }
-                        transition={
-                          shouldReduceMotion
-                            ? undefined
-                            : {
-                                duration: 2.2,
-                                ease: "easeInOut",
-                                repeat: Infinity,
-                                delay: index * 0.12,
-                              }
-                        }
+                        style={{
+                          transform: "translate(-50%, -50%)",
+                          animationDelay: `${index * 0.12}s`,
+                        }}
                       >
                         <StepIcon size={14} strokeWidth={2.2} />
-                      </motion.span>
+                      </span>
                     </div>
                   </article>
                 );
@@ -215,7 +188,7 @@ const ProcessTimelineSection = () => {
           </div>
 
           <p className={styles.mobileHint}>Swipe horizontally to explore each step.</p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

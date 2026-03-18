@@ -69,15 +69,25 @@
 .heroBg {
   position: absolute;
   inset: 0;
-  background-image: url("/background.png");
+  background-image: url("/background.webp");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   z-index: 0;
   /* Radius moved to parent .hero for perfect clipping */
-  /* Subtle ken-burns zoom for life */
+  /* Subtle ken-burns zoom for life - disabled on mobile for performance */
   animation: kenBurns 20s ease-in-out infinite alternate;
   will-change: transform;
+  transform: translateZ(0);
+
+  @media (max-width: 768px) {
+    animation: none;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 
   /* ─── Morning Sunlight Effect ─── */
   &::after {
@@ -132,17 +142,13 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 100%;
-  /* top padding clears the transparent navbar; bottom clears partners bar */
+  max-width: 82vw; // Targeted 80vw visual width
+  margin: 0 auto; // Center it
   padding:
-    clamp(0.5rem, 4vh, 2rem)
-    /* Moved even higher as requested */
-    clamp(1.5rem, 5vw, 7rem)
-    /* right */
-    clamp(6rem, 12vh, 8rem)
-    /* bottom — clears partners bar */
-    var(--content-x);
-  /* left */
+    clamp(0.5rem, 4vh, 2rem) // top
+    1vw // right
+    clamp(6rem, 12vh, 8rem) // bottom
+    1vw; // left
   display: flex;
   flex-direction: column;
   align-items: flex-start;

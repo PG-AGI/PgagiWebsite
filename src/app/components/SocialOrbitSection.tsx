@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import styles from "./SocialOrbitSection.module.scss";
 
 type OrbitNode = {
@@ -14,7 +13,9 @@ type OrbitNode = {
 
 type OrbitConfig = {
   sizeClass: "outerRing" | "innerRing";
+  // CSS animation duration in seconds
   duration: number;
+  // 1 = clockwise, -1 = counter-clockwise
   direction: 1 | -1;
   nodes: OrbitNode[];
 };
@@ -85,29 +86,14 @@ const iconByPlatform = {
 } as const;
 
 const SocialOrbitSection = () => {
-  const shouldReduceMotion = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className={styles.section} id="social-orbit">
       <div className={styles.container}>
-        <motion.h2
-          className={styles.sectionTitle}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          How we scale your product
-        </motion.h2>
+        <h2 className={styles.sectionTitle}>How we scale your product</h2>
 
-        <motion.div
-          className={styles.panel}
-          initial={{ opacity: 0, y: 48 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className={styles.panel}>
           <div className={styles.accordionColumn}>
             {accordionItems.map((item, index) => {
               const isOpen = openIndex === index;
@@ -130,14 +116,9 @@ const SocialOrbitSection = () => {
                   </button>
 
                   {isOpen && (
-                    <motion.div
-                      className={styles.accordionBody}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.22, ease: "easeOut" }}
-                    >
+                    <div className={styles.accordionBody}>
                       {item.description}
-                    </motion.div>
+                    </div>
                   )}
                 </div>
               );
@@ -146,76 +127,46 @@ const SocialOrbitSection = () => {
 
           <div className={styles.visualBlock}>
             <div className={styles.orbitScene}>
-              {orbitItems.map((ring, ringIndex) => {
-                const rotation = shouldReduceMotion
-                  ? 0
-                  : ring.direction === 1
-                    ? 360
-                    : -360;
-
-                const counterRotation = shouldReduceMotion
-                  ? 0
-                  : ring.direction === 1
-                    ? -360
-                    : 360;
-
-                return (
-                  <motion.div
-                    key={`${ring.sizeClass}-${ringIndex}`}
-                    className={`${styles.orbitRing} ${styles[ring.sizeClass]}`}
-                    style={{ x: "-50%", y: "-50%" }}
-                    animate={{ rotate: rotation }}
-                    transition={
-                      shouldReduceMotion
-                        ? { duration: 0 }
-                        : {
-                            duration: ring.duration,
-                            ease: "linear",
-                            repeat: Infinity,
-                          }
-                    }
-                  >
-                    {ring.nodes.map((node, nodeIndex) => (
+              {orbitItems.map((ring, ringIndex) => (
+                // ⚡ ONE CSS animation per ring instead of 14 Framer Motion nodes
+                // CSS transforms run entirely on the compositor thread — zero JS
+                <div
+                  key={`${ring.sizeClass}-${ringIndex}`}
+                  className={`${styles.orbitRing} ${styles[ring.sizeClass]}`}
+                  style={{
+                    animationDuration: `${ring.duration}s`,
+                    animationDirection: ring.direction === 1 ? "normal" : "reverse",
+                  } as CSSProperties}
+                >
+                  {ring.nodes.map((node, nodeIndex) => (
+                    <div
+                      key={`${node.platform}-${nodeIndex}-${ringIndex}`}
+                      className={styles.nodeAnchor}
+                      style={{ "--node-angle": `${node.angle}deg` } as CSSProperties}
+                    >
+                      {/* Counter-rotate node so icon stays upright while ring spins */}
                       <div
-                        key={`${node.platform}-${nodeIndex}-${ringIndex}`}
-                        className={styles.nodeAnchor}
-                        style={
-                          {
-                            "--node-angle": `${node.angle}deg`,
-                          } as CSSProperties
-                        }
+                        className={styles.orbitNode}
+                        style={{
+                          animationDuration: `${ring.duration}s`,
+                          animationDirection: ring.direction === 1 ? "reverse" : "normal",
+                        } as CSSProperties}
                       >
-                        <motion.div
-                          className={styles.orbitNode}
-                          style={{ x: "-50%", y: "-50%" }}
-                          initial={{ rotate: -node.angle }}
-                          animate={{ rotate: counterRotation - node.angle }}
-                          transition={
-                            shouldReduceMotion
-                              ? { duration: 0 }
-                              : {
-                                  duration: ring.duration,
-                                  ease: "linear",
-                                  repeat: Infinity,
-                                }
-                          }
-                        >
-                          <Image
-                            src={iconByPlatform[node.platform]}
-                            alt={`${node.platform} logo`}
-                            width={64}
-                            height={64}
-                            className={styles.nodeImage}
-                          />
-                        </motion.div>
+                        <Image
+                          src={iconByPlatform[node.platform]}
+                          alt={`${node.platform} logo`}
+                          width={48}
+                          height={48}
+                          className={styles.nodeImage}
+                        />
                       </div>
-                    ))}
-                  </motion.div>
-                );
-              })}
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

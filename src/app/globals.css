@@ -4,28 +4,47 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Performance optimizations for smooth scrolling */
-* {
+/* ── Box-model baseline ─────────────────────────────── */
+*, *::before, *::after {
   box-sizing: border-box;
+  /* ❌ REMOVED global max-width: 100% — caused layout containment issues */
 }
 
+/* ── HTML / Body ────────────────────────────────────── */
 html {
-  /* Remove conflicting scroll-behavior when using Lenis */
-  /* scroll-behavior: smooth; */
   -webkit-overflow-scrolling: touch;
-  /* width: 100%; */
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+  /* ❌ REMOVED: perspective: 1000px — forced 3D stacking context on entire page,
+     compositing every element as a GPU layer. Was the #1 performance killer. */
+  /* ❌ REMOVED: transform: translateZ(0) on body — same issue */
+  /* ❌ REMOVED: backface-visibility: hidden on body — same issue */
   background: rgba(197, 183, 172, 1);
 }
 
-/* Optimize animated elements */
+/* ── Horizontal overflow prevention ─────────────────── */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+  width: 100%;
+}
+
+.container,
+.main,
+.wrapper {
+  /* ❌ REMOVED .section from here — was applying overflow-x:clip to every
+     section element including pinned GSAP containers, breaking pin layout */
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* ── Animated blobs only ─────────────────────────────── */
+/* ❌ REMOVED .section wildcard GPU layer — was promoting every section to its
+   own compositor layer. Apply will-change only where actually needed. */
 .blob,
 [class*="blob"] {
   will-change: transform;
@@ -33,37 +52,12 @@ body {
   backface-visibility: hidden;
 }
 
-/* Optimize video elements */
+/* ── Video elements ──────────────────────────────────── */
 video {
-  will-change: auto;
   transform: translateZ(0);
 }
 
-/* Optimize scroll containers */
-.scroll-container {
-  -webkit-overflow-scrolling: touch;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Force GPU acceleration for scrollable elements */
-.expertiseSection,
-.expertiseSection *,
-.mainContent,
-.leftSide,
-.rightSide,
-.section {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: auto;
-}
-
-/* Optimize sticky positioning */
-.leftSide {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
+/* ── Nav link underline helpers ─────────────────────── */
 .header-links li span {
   position: relative;
   z-index: 0;
@@ -88,6 +82,7 @@ video {
   background-color: #ccc;
 }
 
+/* ── Misc ────────────────────────────────────────────── */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -99,34 +94,6 @@ video {
 
 @media (max-width: 640px) {
   .mobile-full-width {
-    width: 100%;
+    width: 100%
   }
 }
-
-/* Prevent horizontal overflow */
-html,
-body {
-  overflow-x: hidden;
-  max-width: 100%;
-  width: 100%;
-}
-
-/* Additional overflow prevention for all elements */
-* {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* Ensure containers don't overflow */
-.container,
-.main,
-.section,
-.wrapper {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* Disable smooth scrolling when using Lenis to prevent conflicts */
-/* html {
-  scroll-behavior: smooth;
-} */
