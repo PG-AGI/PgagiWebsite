@@ -29,6 +29,12 @@ const SocialOrbitSection = dynamic(
     loading: () => <div>Loading...</div>,
   },
 );
+const SolutionFitBreakdownSection = dynamic(
+  () => import("./components/SolutionFitBreakdownSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 const EcosystemSection = dynamic(
   () => import("./components/EcosystemSection"),
   {
@@ -224,6 +230,7 @@ export default function Home() {
       <ProcessTimelineSection />
       <RevenueSection />
       <BuildEcosystemSection />
+      <SolutionFitBreakdownSection />
       <VideoTestimonial />
       <LandingProjects />
       <ExpertiseSection />
