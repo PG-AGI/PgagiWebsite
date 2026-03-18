@@ -17,9 +17,39 @@ import dynamic from "next/dynamic";
 const StatsSection = dynamic(() => import("./components/NewPage"), {
   loading: () => <div>Loading...</div>,
 });
-const Process = dynamic(() => import("./components/process"), {
+const VisionSystemSection = dynamic(
+  () => import("./components/VisionSystemSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
+const SocialOrbitSection = dynamic(
+  () => import("./components/SocialOrbitSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
+const EcosystemSection = dynamic(
+  () => import("./components/EcosystemSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
+const ProcessTimelineSection = dynamic(
+  () => import("./components/ProcessTimelineSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
+const RevenueSection = dynamic(() => import("./components/RevenueSection"), {
   loading: () => <div>Loading...</div>,
 });
+const BuildEcosystemSection = dynamic(
+  () => import("./components/BuildEcosystemSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 const LandingProjects = dynamic(() => import("./components/LandingProjects"), {
   loading: () => <div>Loading...</div>,
 });
@@ -188,8 +218,13 @@ export default function Home() {
       <Landing />
       {/* Partners is rendered inside Landing.tsx, pinned to hero bottom */}
       <StatsSection />
+      <VisionSystemSection />
+      <SocialOrbitSection />
+      <EcosystemSection />
+      <ProcessTimelineSection />
+      <RevenueSection />
+      <BuildEcosystemSection />
       <VideoTestimonial />
-      <Process />
       <LandingProjects />
       <ExpertiseSection />
       <FAQ />
