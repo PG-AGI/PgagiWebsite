@@ -1,10 +1,21 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 import TransitionLink from "./TransitionLink";
-import { links, socialList, services } from "@/utils/constants";
+import { socialList } from "@/utils/constants";
 import styles from "./footer.module.scss";
-import logo from "../assets/logo.png";
+import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { IconType } from "react-icons";
+
+const getSocialIcon = (url: string, alt: string): IconType => {
+  const source = `${url} ${alt}`.toLowerCase();
+
+  if (source.includes("linkedin")) return FaLinkedin;
+  if (source.includes("instagram")) return FaInstagram;
+  if (source.includes("youtube")) return FaYoutube;
+  if (source.includes("x.com") || source.includes("twitter")) return FaXTwitter;
+
+  return FaLinkedin;
+};
 
 export default function Footer() {
   return (
@@ -16,6 +27,36 @@ export default function Footer() {
           <div className={styles.container}>
             {/* Navigation and Contact */}
             <div className={styles.navigationSection}>
+              {/* Company Column */}
+              <div className={styles.navColumn}>
+                <h6 className={styles.columnHeader}>Company</h6>
+                <ul className={styles.linkList}>
+                  <li>
+                    <TransitionLink href="/aboutUs" className={styles.link}>
+                      About Us 
+                    </TransitionLink>
+                  </li>
+                </ul>
+                <div className={styles.socialLinks}>
+                  {socialList.map((social) => {
+                    const SocialIcon = getSocialIcon(social.url, social.alt);
+
+                    return (
+                      <a
+                        key={social.alt}
+                        href={social.url || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.socialLink}
+                        aria-label={social.alt}
+                      >
+                        <SocialIcon className={styles.socialIcon} aria-hidden="true" />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Services Column */}
               <div className={styles.navColumn}>
                 <h6 className={styles.columnHeader}>Services</h6>
@@ -25,7 +66,7 @@ export default function Footer() {
                       href="/expertise#section-1"
                       className={styles.link}
                     >
-                      AI Research ↗
+                      AI Research 
                     </TransitionLink>
                   </li>
                   <li>
@@ -33,7 +74,7 @@ export default function Footer() {
                       href="/expertise#section-2"
                       className={styles.link}
                     >
-                      AI Architecture ↗
+                      AI Architecture 
                     </TransitionLink>
                   </li>
                   <li>
@@ -41,7 +82,7 @@ export default function Footer() {
                       href="/expertise#section-3"
                       className={styles.link}
                     >
-                      AI Mobile App Development ↗
+                      AI Mobile App Development 
                     </TransitionLink>
                   </li>
                   <li>
@@ -49,7 +90,7 @@ export default function Footer() {
                       href="/expertise#section-4"
                       className={styles.link}
                     >
-                      AI SaaS Development ↗
+                      AI SaaS Development 
                     </TransitionLink>
                   </li>
                 </ul>
@@ -64,7 +105,7 @@ export default function Footer() {
                       href="/whatwethink#blogs"
                       className={styles.link}
                     >
-                      Blogs ↗
+                      Blog
                     </TransitionLink>
                   </li>
                   <li>
@@ -72,7 +113,7 @@ export default function Footer() {
                       href="/whatwethink#ainews"
                       className={styles.link}
                     >
-                      News ↗
+                      News 
                     </TransitionLink>
                   </li>
                   <li>
@@ -80,55 +121,8 @@ export default function Footer() {
                       href="/whatwethink#case-studies"
                       className={styles.link}
                     >
-                      Case Study ↗
+                      Case studies
                     </TransitionLink>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Company Column */}
-              <div className={styles.navColumn}>
-                <h6 className={styles.columnHeader}>Company</h6>
-                <ul className={styles.linkList}>
-                  <li>
-                    <TransitionLink href="/aboutUs" className={styles.link}>
-                      About Us ↗
-                    </TransitionLink>
-                  </li>
-                  <li>
-                    <a
-                      href="https://x.com/PGAGI123?t=hAoqjn4ffAoYXjIp9yt-ug&s=09"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.link}
-                    >
-                      Twitter ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.instagram.com/pgagi_ltd/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.link}
-                    >
-                      Instagram ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.linkedin.com/company/pg-agi/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.link}
-                    >
-                      LinkedIn ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className={styles.link}>
-                      Youtube ↗
-                    </a>
                   </li>
                 </ul>
               </div>
@@ -147,8 +141,20 @@ export default function Footer() {
         </div>
 
         <div className={styles.backgroundText}>
-          <span className="styles.desktopText">Playing God{"\n"}with AGI</span>
-          {/* <span className="styles.mobileText">Playing{'\n'}God{'\n'}with AGI</span> */}
+          <span className={styles.desktopText}>
+            <span className={styles.lightWord}>Playing</span>{" "}
+            <span className={styles.accentWord}>God</span>
+            <br />
+            <span className={styles.lightWord}>with</span>{" "}
+            <span className={styles.accentWord}>AGI</span>
+          </span>
+          <span className={styles.mobileText}>
+            <span className={styles.lightWord}>Playing</span>{" "}
+            <span className={styles.accentWord}>God</span>
+            <br />
+            <span className={styles.lightWord}>with</span>{" "}
+            <span className={styles.accentWord}>AGI</span>
+          </span>
         </div>
         {/* Bottom section with copyright, legal links, and background text */}
         <div className={styles.bottomSection}>
@@ -159,10 +165,10 @@ export default function Footer() {
             </div>
             <div className={styles.legalLinks}>
               <TransitionLink href="#terms" className={styles.legalLink}>
-                Terms of Service ↗
+                Terms of Service 
               </TransitionLink>
               <TransitionLink href="#privacy" className={styles.legalLink}>
-                Privacy Policy ↗
+                Privacy Policy 
               </TransitionLink>
             </div>
           </div>
