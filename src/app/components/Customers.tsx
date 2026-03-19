@@ -7,6 +7,11 @@ import styles from "./Customers.module.scss";
 const quoteText =
   "They followed through on every single thing that they said they would, which made our working experience all the more seamless.";
 
+const testimonialYouTubeUrls = [
+  "https://www.youtube.com/watch?v=vsuDM890kmU",
+  "https://youtu.be/6xaFA25-cc8?si=dlXudFrTusBX7aaJ",
+];
+
 const layout: Array<"video" | "quote"> = [
   "video",
   "quote",
@@ -15,6 +20,31 @@ const layout: Array<"video" | "quote"> = [
   "video",
   "quote",
 ];
+
+const extractYouTubeId = (urlOrId: string): string => {
+  if (!urlOrId.includes("/") && !urlOrId.includes("=")) {
+    return urlOrId;
+  }
+
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+    /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = urlOrId.match(pattern);
+    if (match?.[1]) {
+      return match[1];
+    }
+  }
+
+  return urlOrId;
+};
+
+const getEmbedUrl = (urlOrId: string) => {
+  const videoId = extractYouTubeId(urlOrId);
+  return `https://www.youtube.com/embed/${videoId}?rel=0&playsinline=1&autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}`;
+};
 
 const Customers = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -76,20 +106,25 @@ const Customers = () => {
         <div ref={gridRef} className={styles.grid}>
           {layout.map((type, index) => {
             if (type === "video") {
+              const videoCardIndex = Math.floor(index / 2);
+              const embedUrl = getEmbedUrl(
+                testimonialYouTubeUrls[videoCardIndex % testimonialYouTubeUrls.length],
+              );
+
               return (
                 <article
                   key={`video-${index}`}
                   className={`${styles.card} ${styles.videoCard}`}
                   data-customer-card="true"
                 >
-                  <video
+                  <iframe
                     className={styles.video}
-                    src="/Landing Projects/Toingg.mp4"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
+                    src={embedUrl}
+                    title={`Customer testimonial video ${videoCardIndex + 1}`}
+                    loading="lazy"
+                    allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
                   />
                   <span className={styles.playButton} aria-hidden>
                     <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor">
