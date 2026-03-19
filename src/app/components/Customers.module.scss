@@ -1,0 +1,260 @@
+.section {
+  background: #ffffff;
+  padding: 100px 0 110px;
+}
+
+.container {
+  width: min(1320px, calc(100% - 2rem));
+  margin: 0 auto;
+  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+}
+
+.title {
+  margin: 0 0 1.75rem;
+  text-align: center;
+  color: #2b2c2f;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.pagination {
+  display: none;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #d9d3cd;
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.activeDot {
+  width: 28px;
+  background: #b8ada1;
+}
+
+.card {
+  border-radius: 18px;
+  overflow: hidden;
+  min-height: 320px;
+}
+
+.videoCard {
+  position: relative;
+  background: #d0d0d0;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  display: block;
+  object-fit: cover;
+}
+
+.playButton {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 98px;
+  height: 98px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.72);
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+
+  svg {
+    margin-left: 4px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+  }
+}
+
+.quoteCard {
+  background: #e8e4e0;
+  padding: 1rem 1.05rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quote {
+  margin: 0;
+  color: #505052;
+  font-size: clamp(0.96rem, 1.1vw, 1.12rem);
+  line-height: 1.35;
+  max-width: 30ch;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.avatar {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  object-fit: cover;
+}
+
+.name {
+  margin: 0;
+  color: #1f2022;
+  font-size: 0.95rem;
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.role {
+  margin: 0.16rem 0 0;
+  color: #3f4146;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.logoBadge {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #393b3f;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 1100px) {
+  .section {
+    padding: 84px 0 92px;
+  }
+
+  .container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 70px 0 78px;
+  }
+
+  .title {
+    margin-bottom: 1.25rem;
+    font-size: clamp(1.7rem, 8vw, 2.3rem);
+  }
+
+  .grid {
+    display: flex;
+    gap: 0.85rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0.2rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 0.2rem 0.2rem;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    flex: 0 0 calc(100% - 0.4rem);
+    scroll-snap-align: center;
+    min-height: 280px;
+  }
+
+  .video {
+    min-height: 280px;
+  }
+
+  .playButton {
+    width: 84px;
+    height: 84px;
+  }
+
+  .quoteCard {
+    min-height: 260px;
+    padding: 1rem;
+  }
+
+  .quote {
+    font-size: 0.95rem;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    width: calc(100% - 1rem);
+  }
+
+  .card {
+    min-height: 250px;
+  }
+
+  .video {
+    min-height: 250px;
+  }
+
+  .playButton {
+    width: 76px;
+    height: 76px;
+  }
+
+  .quoteCard {
+    min-height: 230px;
+  }
+
+  .name {
+    font-size: 0.88rem;
+  }
+
+  .role {
+    font-size: 0.72rem;
+  }
+}

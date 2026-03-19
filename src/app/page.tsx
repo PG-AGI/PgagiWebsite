@@ -74,6 +74,9 @@ const CaseStudiesSection = dynamic(
     loading: () => <div>Loading...</div>,
   },
 );
+const Customers = dynamic(() => import("./components/Customers"), {
+  loading: () => <div>Loading...</div>,
+});
 const BuildEcosystemSection = dynamic(
   () => import("./components/BuildEcosystemSection"),
   {
@@ -235,6 +238,7 @@ export default function Home() {
       <BuildEcosystemSection />
       <SolutionFitBreakdownSection />
       <CaseStudiesSection />
+      <Customers />
       <WhatMakesUsDifferentSection />
       <MeasurableImpactSection />
       <ConcentricEllipseSection />
