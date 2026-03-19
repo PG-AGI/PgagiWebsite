@@ -1,10 +1,19 @@
 "use client";
 import TransitionLink from "./TransitionLink";
-import { socialList } from "@/utils/constants";
 import styles from "./footer.module.scss";
 import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IconType } from "react-icons";
+
+const footerSocialLinks = [
+  { alt: "X", url: "https://x.com/PlayingGodAGI" },
+  {
+    alt: "LinkedIn",
+    url: "https://www.linkedin.com/company/pg-agi/posts/?feedView=all",
+  },
+  { alt: "Instagram", url: "https://www.instagram.com/pg_agi_/" },
+  { alt: "YouTube", url: "https://www.youtube.com/@PG-AGI/videos" },
+];
 
 const getSocialIcon = (url: string, alt: string): IconType => {
   const source = `${url} ${alt}`.toLowerCase();
@@ -38,13 +47,13 @@ export default function Footer() {
                   </li>
                 </ul>
                 <div className={styles.socialLinks}>
-                  {socialList.map((social) => {
+                  {footerSocialLinks.map((social) => {
                     const SocialIcon = getSocialIcon(social.url, social.alt);
 
                     return (
                       <a
                         key={social.alt}
-                        href={social.url || "#"}
+                        href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.socialLink}

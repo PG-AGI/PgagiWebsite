@@ -12,14 +12,18 @@ const testimonialYouTubeUrls = [
   "https://youtu.be/6xaFA25-cc8?si=dlXudFrTusBX7aaJ",
 ];
 
-const layout: Array<"video" | "quote"> = [
-  "video",
-  "quote",
-  "video",
-  "quote",
-  "video",
-  "quote",
-];
+const TOTAL_CARDS = 6;
+
+const layout: Array<"video" | "quote"> = Array.from(
+  { length: TOTAL_CARDS },
+  (_, index): "video" | "quote" => {
+    const videoCardIndex = Math.floor(index / 2);
+    const isVideoSlot = index % 2 === 0;
+    return isVideoSlot && videoCardIndex < testimonialYouTubeUrls.length
+      ? "video"
+      : "quote";
+  },
+);
 
 const extractYouTubeId = (urlOrId: string): string => {
   if (!urlOrId.includes("/") && !urlOrId.includes("=")) {
@@ -107,9 +111,7 @@ const Customers = () => {
           {layout.map((type, index) => {
             if (type === "video") {
               const videoCardIndex = Math.floor(index / 2);
-              const embedUrl = getEmbedUrl(
-                testimonialYouTubeUrls[videoCardIndex % testimonialYouTubeUrls.length],
-              );
+              const embedUrl = getEmbedUrl(testimonialYouTubeUrls[videoCardIndex]);
 
               return (
                 <article
