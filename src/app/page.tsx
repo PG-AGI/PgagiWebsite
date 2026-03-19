@@ -15,11 +15,13 @@ import LazyOnVisible from "./components/LazyOnVisible";
 
 // Partners is now rendered inside Landing.tsx (pinned to hero bottom)
 const StatsSection = dynamic(() => import("./components/NewPage"), {
+  ssr: false,
   loading: () => <div>Loading...</div>,
 });
 const VisionSystemSection = dynamic(
   () => import("./components/VisionSystemSection"),
   {
+    ssr: false,
     loading: () => <div>Loading...</div>,
   },
 );
@@ -44,6 +46,7 @@ const WhatMakesUsDifferentSection = dynamic(
 const MeasurableImpactSection = dynamic(
   () => import("./components/MeasurableImpactSection"),
   {
+    ssr: false,
     loading: () => <div>Loading...</div>,
   },
 );
@@ -60,6 +63,7 @@ const ProcessTimelineSection = dynamic(
   },
 );
 const RevenueSection = dynamic(() => import("./components/RevenueSection"), {
+  ssr: false,
   loading: () => <div>Loading...</div>,
 });
 const ConcentricEllipseSection = dynamic(
@@ -71,6 +75,7 @@ const ConcentricEllipseSection = dynamic(
 const CaseStudiesSection = dynamic(
   () => import("./components/CaseStudiesSection"),
   {
+    ssr: false,
     loading: () => <div>Loading...</div>,
   },
 );

@@ -36,19 +36,20 @@
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
-    padding: 0 1.25rem;
+    padding: 80px 0; // Restored standardized padding
     max-width: 100%;
   }
 }
 
 .sectionTitle {
-  margin: 0 0 clamp(1rem, 2.1vw, 1.8rem);
+  margin: 0 0 clamp(2.5rem, 6vw, 4rem);
   text-align: center;
-  color: #26272b;
-  font-size: clamp(2rem, 4.25vw, 3.75rem);
-  line-height: 1.06;
-  letter-spacing: -0.035em;
+  color: #2c2c2c;
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); // 3.5rem = 56px
   font-weight: 700;
+  line-height: 1.34; // 75px / 56px
+  letter-spacing: -0.0125em; // -0.7px / 56px
 }
 
 .panel {
@@ -82,6 +83,8 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: #34363c;
   padding: 0.78rem 0.9rem;
+  /* Needed so the absolutely-positioned body on mobile has a reference */
+  position: relative;
 }
 
 .open {
@@ -107,9 +110,6 @@
   span {
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   svg {
@@ -128,7 +128,6 @@
   font-size: clamp(0.9rem, 0.95vw, 1rem);
   font-weight: 500;
   line-height: 1.45;
-  // CSS transition replaces Framer Motion (no JS overhead)
   animation: accordionIn 0.2s ease-out both;
 }
 
@@ -257,16 +256,19 @@
   }
 
   .visualBlock {
-    min-height: 232px;
+    min-height: 220px;
+    overflow: hidden;
+    position: relative;
   }
 
   .orbitScene {
+    /* Center is placed BELOW the card bottom — only top half (arch) is visible */
+    position: absolute;
     left: 50%;
-    right: auto;
-    top: auto;
-    bottom: 47px;
-    width: min(520px, 122%);
-    transform: translateX(-50%);
+    top: 100%; /* align top of orbitScene with bottom of visualBlock */
+    transform: translate(-50%, -55%); /* pull it up so center sits at card bottom */
+    width: min(560px, 130%);
+    bottom: auto;
   }
 
   .outerRing {
@@ -282,8 +284,8 @@
   }
 
   .orbitNode {
-    width: 50px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
   }
 }
 
@@ -301,16 +303,31 @@
 
   .panel {
     border-radius: 16px;
+    width: 90vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    /* Fixed height prevents resizing when dropdown opens */
+    height: auto;
   }
 
   .accordionColumn {
     padding: 0.82rem 0.74rem 0.66rem;
     gap: 0.56rem;
+    /* Prevent dropdown from growing the panel — body overlays absolutely */
+    flex-shrink: 0;
   }
 
   .accordionItem {
     border-radius: 9px;
     padding: 0.56rem 0.64rem;
+    /* z-index so overlay covers items below */
+    z-index: 2;
+  }
+
+  .open {
+    /* Raise above siblings so absolute body overlays them */
+    z-index: 10;
   }
 
   .accordionButton {
@@ -324,19 +341,38 @@
   }
 
   .accordionBody {
-    margin-top: 0.46rem;
+    /* Overlay absolutely so the panel height doesn't change */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin-top: 0.3rem;
+    z-index: 20;
     padding: 0.66rem 0.62rem;
     font-size: 0.7rem;
     line-height: 1.36;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   }
 
   .visualBlock {
-    min-height: 172px;
+    /* Fixed height so animation area is always the same */
+    height: 180px;
+    min-height: 180px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    /* Spacing between dropdowns and the orbit animation */
+    margin-top: 0.5rem;
   }
 
   .orbitScene {
-    bottom: 32px;
-    width: min(394px, 126%);
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -52%);
+    width: min(420px, 140%);
+    bottom: auto;
+    right: auto;
   }
 
   .outerRing {
@@ -352,8 +388,8 @@
   }
 
   .orbitNode {
-    width: 36px;
-    height: 36px;
+    width: 26px;
+    height: 26px;
   }
 }
 
@@ -369,6 +405,8 @@
 
   .panel {
     border-radius: 15px;
+    width: 90vw;
+    margin: 0 auto;
   }
 
   .accordionColumn {
@@ -390,19 +428,36 @@
   }
 
   .accordionBody {
-    margin-top: 0.42rem;
+    /* Same overlay behavior as 768px */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin-top: 0.25rem;
+    z-index: 20;
     padding: 0.58rem 0.54rem;
     font-size: 0.64rem;
     line-height: 1.33;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   }
 
   .visualBlock {
-    min-height: 158px;
+    height: 168px;
+    min-height: 168px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    margin-top: 0.5rem;
   }
 
   .orbitScene {
-    bottom: 35px;
-    width: min(352px, 126%);
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -52%);
+    width: min(380px, 150%);
+    bottom: auto;
+    right: auto;
   }
 
   .outerRing {
@@ -418,7 +473,7 @@
   }
 
   .orbitNode {
-    width: 34px;
-    height: 34px;
+    width: 24px;
+    height: 24px;
   }
 }

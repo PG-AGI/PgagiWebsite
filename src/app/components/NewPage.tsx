@@ -1,6 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import styles from './NewPage.module.scss';
 import { ArrowRight, Lightbulb, PenTool, Rocket, TrendingUp, Settings, Database, Activity, Target } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { MotionPathPlugin } from 'gsap/dist/MotionPathPlugin';
+import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
+
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const Badge = ({ icon, text, theme, index }: { icon: React.ReactNode, text: string, theme: string, index: number }) => (
   <div className={styles.badgeStack} style={{ '--index': index } as React.CSSProperties}>
@@ -13,8 +19,11 @@ const Badge = ({ icon, text, theme, index }: { icon: React.ReactNode, text: stri
 
 const NewPage = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const { scrollTo } = useSmoothScrollTo();
 
   useEffect(() => {
+    setIsMounted(true);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -22,21 +31,79 @@ const NewPage = () => {
   }, []);
 
   const leftBadges = [
-    { icon: <Lightbulb size={18} />, text: 'Idea & Discovery', theme: 'themePink' },
+    { icon: <Lightbulb size={18} />, text: 'Idea & Discovery', theme: 'themeRed' },
     { icon: <PenTool size={18} />, text: 'Prototype & Develop', theme: 'themeCyan' },
-    { icon: <Rocket size={18} />, text: 'Deploy & Optimize', theme: 'themeYellow' },
+    { icon: <Rocket size={18} />, text: 'Deploy & Optimize', theme: 'themeLime' },
     { icon: <TrendingUp size={18} />, text: 'Scale & Innovate', theme: 'themeGreen' },
   ];
 
   const rightBadges = [
     { icon: <Target size={18} />, text: 'Strategy & Planning', theme: 'themeRed' },
     { icon: <Database size={18} />, text: 'Data Integration', theme: 'themeCyan' },
-    { icon: <Settings size={18} />, text: 'AI Solution Deployment', theme: 'themeYellow' },
+    { icon: <Settings size={18} />, text: 'AI Solution Deployment', theme: 'themeLime' },
     { icon: <Activity size={18} />, text: 'Performance & Optimization', theme: 'themeGreen' },
   ];
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const leftCardRef = useRef<HTMLDivElement>(null);
+  const rightCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isMounted || isMobile) return;
+
+    const ctx = gsap.context(() => {
+      // Use class queries scoped strictly to this component instance to avoid HMR crash
+      const paths = ['.leftPath', '.rightPath'];
+      const dots = ['.leftDot', '.rightDot'];
+      const cards = [leftCardRef.current, rightCardRef.current];
+
+      paths.forEach((selector, i) => {
+        const path = containerRef.current?.querySelector(selector) as SVGPathElement;
+        const dot = containerRef.current?.querySelector(dots[i]) as HTMLDivElement;
+        if (!path || !dot) return;
+
+        gsap.set(dot, { opacity: 0 }); // Start hidden
+
+        // Timeline: Automatic Loop (Plays when in view)
+        const tl = gsap.timeline({
+          repeat: -1,
+          repeatDelay: 1.5, // Brief pause before the next animation cycle
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 70%', // Triggers early as they scroll down
+            toggleActions: 'play pause resume pause', // Auto plays without scrub
+          }
+        });
+
+        tl.set(dot, { opacity: 1, scale: 0 }) 
+          .to(dot, { scale: 1, duration: 0.2, ease: 'back.out(1.7)' })
+          .to(dot, {
+            duration: 1.5,
+            ease: 'power1.inOut',
+            motionPath: {
+              path: path,
+              align: path,
+              alignOrigin: [0.5, 0.5],
+            }
+          })
+          .to(dot, { opacity: 0, scale: 0.5, duration: 0.2 }) // Fade dot when it reaches the end
+          .to(cards[i], {
+            borderColor: 'rgba(211, 69, 81, 0.8)', // Premium border highlight
+            duration: 0.3,
+          }, '<') // Run precisely when dot enters box
+          .to(cards[i], {
+            borderColor: 'rgba(255, 255, 255, 0.5)', // Fade cleanly back to default
+            duration: 0.8,
+            delay: 0.2, 
+          });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [isMobile, isMounted]);
+
   return (
-    <section className={styles.section} id="what-we-build">
+    <section className={styles.section} id="what-we-build" ref={containerRef}>
       <div className={styles.container}>
         {/* Header Section */}
         <div className={styles.header}>
@@ -47,104 +114,47 @@ const NewPage = () => {
           </div>
         </div>
 
-        {/* Dynamic Connecting Lines (Desktop Only) */}
-        {!isMobile && (
+        {/* World-Class Scroll-Animated Connecting Lines */}
+        {(isMounted && !isMobile) && (
           <div className={styles.linesContainer}>
-            <svg width="100%" height="100%" viewBox="0 0 562 220" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.svgLines} preserveAspectRatio="none">
-              <g filter="url(#filter0_577_7628)">
-                <path d="M277.425 2.11426V76.6756L278.619 90.8739C279.496 101.299 288.213 109.314 298.675 109.314H517.119C528.235 109.314 537.246 118.325 537.246 129.441V213.905" stroke="#4B6F95" strokeWidth="10.9784" />
-              </g>
-              <g filter="url(#filter1_577_7628)">
-                <path d="M277.884 0.742188V70.2718V79.5815C277.884 92.2131 288.123 102.453 300.755 102.453H519.865C532.496 102.453 542.736 112.693 542.736 125.325V207.044" stroke="#2C2C2C" strokeWidth="10.9784" />
-              </g>
-              <g filter="url(#filter2_577_7628)">
-                <path d="M277.426 -11.1514V64.8846V73.1771C277.426 85.3035 287.256 95.1338 299.382 95.1338H528.098C540.224 95.1338 550.055 104.964 550.055 117.091V199.725" stroke="#9F0000" strokeWidth="10.9784" />
-              </g>
-              <g filter="url(#filter3_577_7628)">
-                <path d="M280.427 -33.5654V40.9959L279.233 55.1942C278.356 65.6194 269.638 73.6346 259.176 73.6346H40.7324C29.6166 73.6346 20.6055 82.6458 20.6055 93.7616V186.459" stroke="#4B6F95" strokeWidth="10.9784" />
-              </g>
-              <g filter="url(#filter4_577_7628)">
-                <path d="M279.968 -34.9375V34.5921V44.8167C279.968 56.943 270.138 66.7734 258.011 66.7734H37.0719C24.9456 66.7734 15.1152 76.6037 15.1152 88.7301V188.746" stroke="#9F0000" strokeWidth="10.9784" />
-              </g>
-              <g filter="url(#filter5_577_7628)">
-                <path d="M280.426 -46.8311V29.2049V32.9231C280.426 47.5758 268.548 59.4541 253.895 59.4541H34.3279C19.6752 59.4541 7.79688 71.3325 7.79688 85.9852V195.608" stroke="#2C2C2C" strokeWidth="10.9784" />
-              </g>
-              <defs>
-                <filter id="filter0_577_7628" x="268.276" y="0.284532" width="278.118" height="219.11" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                  <feOffset dy="1.82973" />
-                  <feGaussianBlur stdDeviation="1.82973" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_577_7628" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_577_7628" result="shape" />
-                </filter>
-                <filter id="filter1_577_7628" x="268.735" y="-1.08754" width="283.149" height="213.621" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                  <feOffset dy="1.82973" />
-                  <feGaussianBlur stdDeviation="1.82973" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_577_7628" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_577_7628" result="shape" />
-                </filter>
-                <filter id="filter2_577_7628" x="268.276" y="-12.9811" width="290.926" height="218.195" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                  <feOffset dy="1.82973" />
-                  <feGaussianBlur stdDeviation="1.82973" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_577_7628" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_577_7628" result="shape" />
-                </filter>
-                <filter id="filter3_577_7628" x="11.4577" y="-34.4803" width="278.118" height="227.343" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                  <feOffset dy="2.74459" />
-                  <feGaussianBlur stdDeviation="1.82973" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_577_7628" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_577_7628" result="shape" />
-                </filter>
-                <filter id="filter4_577_7628" x="5.9675" y="-35.8524" width="283.149" height="231.002" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                  <feOffset dy="2.74459" />
-                  <feGaussianBlur stdDeviation="1.82973" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_577_7628" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_577_7628" result="shape" />
-                </filter>
-                <filter id="filter5_577_7628" x="-1.35086" y="-47.7459" width="290.926" height="249.757" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                  <feOffset dy="2.74459" />
-                  <feGaussianBlur stdDeviation="1.82973" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_577_7628" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_577_7628" result="shape" />
-                </filter>
-                <clipPath id="clip0_577_7628">
-                  <rect width="562" height="171" fill="white" />
-                </clipPath>
-                <clipPath id="clip1_577_7628">
-                  <rect width="289" height="163" fill="white" transform="translate(270 51)" />
-                </clipPath>
-              </defs>
+            <svg width="100%" height="220" viewBox="0 0 1000 220" fill="none" className={styles.svgLines} preserveAspectRatio="none">
+              {/* Left Path - Stretching perfectly to card center */}
+              <path 
+                className={`leftPath ${styles.scrollPath}`}
+                d="M500 -20V80H2V220" 
+                stroke="#9F0000" 
+                strokeWidth="3" 
+                vectorEffect="non-scaling-stroke"
+              />
+              
+              {/* Right Path - Stretching perfectly to card center */}
+              <path 
+                className={`rightPath ${styles.scrollPath}`}
+                d="M500 -20V80H998V220" 
+                stroke="#9F0000" 
+                strokeWidth="3" 
+                vectorEffect="non-scaling-stroke"
+              />
             </svg>
+            
+            {/* Perfectly circular glowing dots animated via GSAP MotionPath */}
+            <div className={`leftDot ${styles.glowingDot}`}></div>
+            <div className={`rightDot ${styles.glowingDot}`}></div>
           </div>
         )}
 
         {/* Content Grid */}
         <div className={styles.cardsGrid}>
           {/* Left Card: Foundations */}
-          <div className={`${styles.card} ${styles.cardFounders}`}>
+          <div 
+            className={`${styles.card} ${styles.cardFounders}`} 
+            ref={leftCardRef}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              scrollTo('#vision-system', { offset: 80, duration: 1.5 });
+            }}
+          >
             <div className={styles.cardHeaderWrapper}>
               <div className={styles.cardVisualLeft}>
                 <div className={styles.cardGhostTitle}>Build a Custom AI Product —</div>
@@ -162,7 +172,7 @@ const NewPage = () => {
                   <p className={styles.formulaLabel}>AI-generated formula</p>
                   <div className={styles.formulaBox}>
                     <code className={styles.formulaText}>
-                      <span className={styles.highlightCyan}>{"{{"}AI Idea{"}}"}</span>&<span className={styles.highlightOrange}>{"{{"}MVP{"}}"}</span>?
+                      <span className={styles.highlightGreen}>{"{{"}AI Idea{"}}"}</span><span className={styles.ampersand}>&</span><span className={styles.highlightOrangeRed}>{"{{"}MVP{"}}"}</span>?
                     </code>
                   </div>
                 </div>
@@ -176,7 +186,9 @@ const NewPage = () => {
 
             <div className={styles.cardTextContent}>
               <p className={styles.labelOverline}>FOR FOUNDERS / AI PRODUCT BUILDERS</p>
-              <h2 className={styles.mainTitle}>Build a custom AI product — from idea to scale</h2>
+              <h2 className={styles.mainTitle}>
+                Build a custom AI product — <span className={styles.titleBreak}>from idea to scale</span>
+              </h2>
               <p className={styles.descriptionText}>
                 Design, develop, and launch production-ready AI products with a user-first approach and scalable architecture.
               </p>
@@ -192,7 +204,15 @@ const NewPage = () => {
           </div>
 
           {/* Right Card: Enterprises */}
-          <div className={`${styles.card} ${styles.cardEnterprises}`}>
+          <div 
+            className={`${styles.card} ${styles.cardEnterprises}`} 
+            ref={rightCardRef}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              scrollTo('#revenue-system', { offset: 80, duration: 1.5 });
+            }}
+          >
             <div className={`${styles.cardHeaderWrapper} ${styles.rightHeaderGradient}`}>
               <div className={styles.cardVisualRight}>
                 <div className={styles.cardGhostTitleWhite}>Implement AI Into Your Business</div>
@@ -210,7 +230,7 @@ const NewPage = () => {
                   <p className={styles.formulaLabel}>AI-generated formula</p>
                   <div className={styles.formulaBox}>
                     <code className={styles.formulaText}>
-                      <span className={styles.highlightOrange}>{"{{"}Processes{"}}"}</span>&<span className={styles.highlightCyan}>{"{{"}AI Tools{"}}"}</span>?
+                      <span className={styles.highlightOrange}>{"{{"}Processes{"}}"}</span><span className={styles.ampersandWhite}>&</span><span className={styles.highlightCyanNeon}>{"{{"}AI Tools{"}}"}</span>?
                     </code>
                   </div>
                 </div>
@@ -229,7 +249,6 @@ const NewPage = () => {
                 Automate workflows, reduce costs, and improve decision-making by integrating AI into your existing systems — without disrupting operations.
               </p>
               <div className={styles.ctaWrapper}>
-
                 <button className={styles.pillButton}>
                   Let's build together
                   <div className={styles.redArrowCircle}>

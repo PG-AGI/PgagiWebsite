@@ -7,7 +7,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import styles from "./SocialOrbitSection.module.scss";
 
 type OrbitNode = {
-  platform: "Meta" | "Reddit" | "X";
+  platform: "Meta" | "Reddit" | "X" | "LinkedIn";
   angle: number;
 };
 
@@ -31,14 +31,14 @@ const orbitItems: OrbitConfig[] = [
     duration: 30,
     direction: -1,
     nodes: [
-      { platform: "Meta", angle: 6 },
-      { platform: "X", angle: 48 },
-      { platform: "Reddit", angle: 96 },
-      { platform: "Meta", angle: 146 },
-      { platform: "X", angle: 196 },
-      { platform: "Reddit", angle: 246 },
-      { platform: "Meta", angle: 296 },
-      { platform: "X", angle: 342 },
+      { platform: "Meta", angle: 0 },
+      { platform: "X", angle: 45 },
+      { platform: "Reddit", angle: 90 },
+      { platform: "LinkedIn", angle: 135 },
+      { platform: "Meta", angle: 180 },
+      { platform: "X", angle: 225 },
+      { platform: "Reddit", angle: 270 },
+      { platform: "LinkedIn", angle: 315 },
     ],
   },
   {
@@ -46,36 +46,38 @@ const orbitItems: OrbitConfig[] = [
     duration: 20,
     direction: 1,
     nodes: [
-      { platform: "Reddit", angle: 18 },
-      { platform: "X", angle: 72 },
-      { platform: "Meta", angle: 136 },
-      { platform: "Reddit", angle: 204 },
-      { platform: "X", angle: 260 },
-      { platform: "Meta", angle: 320 },
+      { platform: "Reddit", angle: 22.5 },
+      { platform: "LinkedIn", angle: 67.5 },
+      { platform: "X", angle: 112.5 },
+      { platform: "Meta", angle: 157.5 },
+      { platform: "Reddit", angle: 202.5 },
+      { platform: "LinkedIn", angle: 247.5 },
+      { platform: "X", angle: 292.5 },
+      { platform: "Meta", angle: 337.5 },
     ],
   },
 ];
 
 const accordionItems: AccordionItem[] = [
   {
-    title: "Distribution Systems (Reddit, X, Meta)",
+    title: "X Distribution Engine",
     description:
-      "We design and optimize AI-powered distribution systems across Reddit, X, and Meta to identify demand, target the right audiences, and automate engagement at scale. Turn social channels into consistent growth engines.",
+      "We help your product get attention on X through sharp positioning, founder-led content, reply strategy, viral threads, and distribution loops that turn views into qualified interest.",
   },
   {
-    title: "Distribution Systems (Reddit, X, Meta)",
+    title: "LinkedIn Authority Growth",
     description:
-      "We test multiple post formats and hooks, then scale only the variants with measurable pull from real audiences.",
+      "We build LinkedIn distribution systems that turn your product, journey, and insights into trust-building content that attracts founders, operators, buyers, and decision-makers.",
   },
   {
-    title: "Distribution Systems (Reddit, X, Meta)",
+    title: "Reddit Community Reach",
     description:
-      "Each platform gets channel-native messaging, cadence, and workflow so output stays consistent without losing relevance.",
+      "We help distribute your product through high-context Reddit content, problem-led storytelling, and community-native posts that drive real engagement without feeling like ads.",
   },
   {
-    title: "Distribution Systems (Reddit, X, Meta)",
+    title: "Meta Ads & Demand Capture",
     description:
-      "We close the loop with analytics and insight pipelines to continuously improve content performance.",
+      "We create Meta ad flows that capture demand, test offers fast, and push the right audience into your funnel through creative, targeting, and conversion-focused campaigns.",
   },
 ];
 
@@ -83,6 +85,7 @@ const iconByPlatform = {
   Meta: "/svgs/Landing/Meta.svg",
   Reddit: "/svgs/Landing/Reddit.svg",
   X: "/svgs/Landing/X.svg",
+  LinkedIn: "/linkedin.svg",
 } as const;
 
 const SocialOrbitSection = () => {

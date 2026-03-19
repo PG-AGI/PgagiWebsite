@@ -173,7 +173,7 @@ const MeasurableImpactSection = () => {
         <div className={styles.desktopGrid}>
           {desktopOrder.map((metric) => (
             <article key={metric.id} className={styles.metricCard}>
-              <p className={styles.metricValue}>{getDisplayValue(metric)}</p>
+              <p className={styles.metricValue} translate="no">{getDisplayValue(metric)}</p>
               <p className={styles.metricDescription}>{metric.description}</p>
             </article>
           ))}
@@ -182,7 +182,7 @@ const MeasurableImpactSection = () => {
         <div className={styles.mobileGrid}>
           {mobileOrder.map((metric) => (
             <article key={metric.id} className={styles.metricCard}>
-              <p className={styles.metricValue}>{getDisplayValue(metric)}</p>
+              <p className={styles.metricValue} translate="no">{getDisplayValue(metric)}</p>
               <p className={styles.metricDescription}>{metric.description}</p>
             </article>
           ))}

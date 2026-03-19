@@ -1,14 +1,25 @@
 .section {
   position: relative;
   background: #ffffff;
-  padding: clamp(2rem, 5vw, 4rem) 0;
+  padding: 150px 0;
+
+  @media (max-width: 768px) {
+    padding: 80px 0; // Standardized
+  }
 }
 
 .layout {
   --ring-scale: 1;
-  width: min(1280px, calc(100% - 2rem));
+  width: 100%;
+  max-width: 82vw;
   height: calc(458px * var(--ring-scale));
   margin: 0 auto;
+  padding: 0 1vw;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1.25rem;
+  }
 }
 
 .surface {
@@ -104,9 +115,9 @@
 
 .title {
   margin: 0;
-  color: #484848;
-  font-size: clamp(2rem, 4.2vw, 3.02rem);
-  line-height: 1.16;
+  color: #1a1a1a;
+  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  line-height: 1.12;
   letter-spacing: -0.03em;
   font-weight: 700;
   max-width: 17ch;

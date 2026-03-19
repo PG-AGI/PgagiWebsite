@@ -63,7 +63,10 @@ export default function PageTransition({ children }: PageTransitionProps) {
           animate={{ 
             y: 0, 
             opacity: 1,
-            scale: 1
+            scale: 1,
+            transitionEnd: {
+              transform: "none"
+            }
           }}
           exit={{ 
             y: "-100vh", 
@@ -84,11 +87,6 @@ export default function PageTransition({ children }: PageTransitionProps) {
             overflow: "visible"
           }}
           className="motion-div"
-          onAnimationComplete={(definition) => {
-            // Remove transform strictly to prevent CSS 'position: sticky' from breaking globally
-            const el = document.querySelector('.motion-div') as HTMLElement;
-            if (el) el.style.transform = 'none';
-          }}
         >
           {children}
         </motion.div>

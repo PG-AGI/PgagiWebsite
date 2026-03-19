@@ -1,21 +1,31 @@
 .section {
   background: #ffffff;
-  padding: clamp(2.8rem, 6vw, 5.4rem) clamp(0.9rem, 2.5vw, 2rem);
+  padding: 150px 0;
+  
+  @media (max-width: 860px) {
+    padding: 80px 0.9rem; // Standardized
+  }
 }
 
 .container {
-  width: min(1080px, 100%);
+  width: 100%;
+  max-width: 82vw;
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1.25rem;
+  }
 }
 
 .title {
   margin: 0;
   text-align: center;
-  color: #2c2d31;
-  font-size: clamp(2rem, 3.8vw, 3.1rem);
+  color: #1a1a1a;
+  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  line-height: 1.12;
   font-weight: 700;
-  line-height: 1.08;
   letter-spacing: -0.02em;
 
   span {
@@ -26,7 +36,7 @@
 .layout {
   margin-top: clamp(3rem, 3.6vw, 3rem);
   display: grid;
-  grid-template-columns: minmax(280px, 1fr) minmax(330px, 490px);
+  grid-template-columns: 1fr 1fr;
   gap: clamp(1.4rem, 3vw, 2.9rem);
   align-items: start;
 }
@@ -62,25 +72,29 @@
 
 .visualPanel {
   position: relative;
-  width: min(100%, 39rem);
+  width: 100%;
+  max-width: 36rem;
+  margin-left: auto;
   aspect-ratio: 39 / 44;
   border-radius: 2rem;
-  padding: clamp(1.1rem, 2.2vw, 1.9rem);
+  padding: clamp(1.2rem, 2.5vw, 2rem);
   background: #9f0000;
   box-shadow: 0 1.125rem 2.375rem rgba(57, 16, 11, 0.2);
 }
 
 .mainCard {
-  width: min(100%, 31.9375rem);
-  aspect-ratio: 511 / 581;
+  width: 100%;
+  height: 100%;
   background: #f7f7f6;
   border-radius: 1.118125rem;
   padding: clamp(0.75rem, 1.4vw, 1.15rem);
-  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .row {
-  padding: clamp(2rem, 1.1vw, 0.9rem) 0;
+  padding: clamp(0.7rem, 1.5vw, 1.2rem) 0;
   border-bottom: 1px dashed rgba(48, 49, 53, 0.2);
 
   &:last-child {
@@ -106,32 +120,33 @@
 
 .metricsCard {
   position: absolute;
-  right: clamp(0.7rem, 1.8vw, 1.1rem);
-  bottom: clamp(0.7rem, 1.8vw, 1.1rem);
-  width: min(38.9423%, 15.1875rem);
+  right: clamp(-1rem, -1.8vw, -1.5rem);
+  bottom: clamp(1.5rem, 4vw, 3rem);
+  width: clamp(12rem, 18vw, 16.5rem);
   background: #e7ddd1;
   border: 0.0625rem solid rgba(214, 203, 188, 0.88);
   border-radius: 1rem;
-  padding: clamp(0.4rem, 0.9vw, 0.66rem);
+  padding: clamp(0.5rem, 1.1vw, 0.8rem);
   box-shadow: 0 0.75rem 1.375rem rgba(46, 28, 12, 0.2);
   display: flex;
   flex-direction: column;
-  gap: 0.34rem;
+  gap: 0.45rem;
+  z-index: 2;
 }
 
 .metricRow {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  border-radius: 0.5rem;
+  gap: 0.6rem;
+  border-radius: 0.6rem;
   border: 0.0625rem solid #ebe3d8;
   background: #f7f3ee;
   color: #2f3034;
-  font-size: clamp(0.58rem, 0.72vw, 0.79rem);
+  font-size: clamp(0.65rem, 0.8vw, 0.85rem);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  padding: 0.3rem 0.38rem;
+  padding: 0.5rem 0.6rem;
 }
 
 .metricIcon {

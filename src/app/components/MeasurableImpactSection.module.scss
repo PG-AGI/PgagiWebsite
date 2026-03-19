@@ -1,23 +1,32 @@
 .section {
   background: #ffffff;
-  padding: clamp(2.4rem, 5vw, 4.4rem) clamp(0.78rem, 2.2vw, 1.8rem)
-    clamp(2.5rem, 4.6vw, 4rem);
+  padding: 150px 0;
+
+  @media (max-width: 768px) {
+    padding: 80px 0;
+  }
 }
 
 .container {
-  width: min(1060px, 100%);
+  width: 100%;
+  max-width: 82vw;
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1.25rem;
+  }
 }
 
 .title {
   margin: 0;
   text-align: center;
-  color: #8f1d15;
-  font-size: clamp(2.05rem, 3.95vw, 3.1rem);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
+  color: #1a1a1a;
+  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  line-height: 1.12;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .desktopGrid,
@@ -71,8 +80,7 @@
 
 @media (max-width: 900px) {
   .section {
-    padding-top: 2.2rem;
-    padding-bottom: 2.35rem;
+    padding: 80px 0; /* Standardized */
   }
 
   .title {
@@ -117,7 +125,7 @@
 
 @media (max-width: 500px) {
   .section {
-    padding: 2.05rem 0.62rem 2.2rem;
+    padding: 80px 0.62rem; /* Standardized */
   }
 
   .container {

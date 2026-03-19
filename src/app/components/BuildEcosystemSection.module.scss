@@ -28,9 +28,16 @@
 .container {
   position: relative;
   z-index: 1;
-  width: min(1240px, calc(100% - 2rem));
+  width: 100%;
+  max-width: 82vw;
   margin: 0 auto;
+  padding: 0 1vw;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1.25rem;
+  }
 }
 
 .title {

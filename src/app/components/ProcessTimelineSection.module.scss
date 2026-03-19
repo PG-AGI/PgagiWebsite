@@ -110,6 +110,9 @@
 .copyBlock {
   min-height: 118px;
   padding: 0 clamp(0.42rem, 0.95vw, 0.72rem);
+  opacity: 0.4;
+  animation: textHighlight 8s ease-in-out infinite;
+  will-change: opacity, transform;
 
   h3 {
     margin: 0;
@@ -117,6 +120,7 @@
     font-size: clamp(0.98rem, 1.1vw, 1.24rem);
     line-height: 1.2;
     font-weight: 650;
+    transition: color 0.3s ease;
   }
 
   p {
@@ -141,36 +145,42 @@
   width: 100%;
   height: 100%;
   overflow: visible;
+  // Ensure the SVG groups don't clip our glows
+  pointer-events: none;
 }
 
 .arcPath {
   fill: none;
-  stroke: rgba(186, 191, 201, 0.42);
+  stroke: rgba(186, 191, 201, 0.2); // Very dim background path
   stroke-width: 1.36;
-  stroke-dasharray: 2 4.5;
-  animation: arcLineDrift 13s linear infinite;
+  stroke-dasharray: 2 4.2;
 }
 
 .arcGlow {
   fill: none;
   stroke: var(--step-color);
-  stroke-width: 1.36;
+  stroke-width: 2;
   stroke-linecap: round;
-  stroke-dasharray: 2 4.5;
-  opacity: 0.28;
-  animation: arcGlowDrift 6.8s linear infinite;
+  stroke-dasharray: 400; 
+  stroke-dashoffset: 400; 
+  opacity: 0;
+  animation: arcReveal 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  filter: drop-shadow(0 0 4px var(--step-color));
 }
 
-.startDot {
-  fill: var(--step-color);
-  stroke: rgba(255, 255, 255, 0.14);
+.startDot, .endDot {
+  fill: #444; 
+  stroke: rgba(255, 255, 255, 0.1);
   stroke-width: 1.2;
+  opacity: 0.5;
+  animation: dotHighlight 8s ease-out infinite;
+  transform-origin: center;
+  will-change: transform, opacity, fill;
 }
 
 .endDot {
-  fill: var(--step-end-color);
-  stroke: rgba(255, 255, 255, 0.14);
-  stroke-width: 1.2;
+  // endDot of index i is start of arc i+1, handled by delays in JSX
+  filter: drop-shadow(0 0 2px var(--step-end-color));
 }
 
 .iconBadge {
@@ -182,18 +192,25 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--step-color);
-  color: var(--icon-color);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.2),
-    0 12px 22px rgba(0, 0, 0, 0.34);
-  // CSS pulse replaces Framer Motion repeat:Infinity — runs on compositor
-  animation: badgePulse 2.2s ease-in-out infinite;
-  will-change: transform;
+  background: #2a2d32; // grayed background
+  color: rgba(255, 255, 255, 0.4); // grayed icon
+  filter: grayscale(1);
+  opacity: 0.6;
+  box-shadow: none;
+  animation: badgeHighlight 8s ease-in-out infinite;
+  will-change: transform, filter, background, opacity;
+  z-index: 2;
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
+}
+
+@keyframes badgeSeqPulse {
+  0% { transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+  4% { transform: translate(-50%, -50%) scale(1.15); filter: brightness(1.6); box-shadow: 0 0 20px var(--step-color); }
+  12% { transform: translate(-50%, -50%) scale(1); filter: brightness(1); box-shadow: 0 12px 22px rgba(0, 0, 0, 0.34); }
+  100% { transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
 }
 
 .mobileHint {
@@ -202,8 +219,7 @@
 
 @media (max-width: 960px) {
   .section {
-    padding-top: 1.2rem;
-    padding-bottom: 1.85rem;
+    padding: 80px 0; // Standardized
   }
 
   .panel {
@@ -352,13 +368,39 @@
   }
 }
 
-@keyframes arcLineDrift {
+@keyframes arcLineFlow {
   from {
     stroke-dashoffset: 0;
   }
-
   to {
-    stroke-dashoffset: -72;
+    stroke-dashoffset: -124; // Faster flow
+  }
+}
+
+@keyframes dotFlash {
+  0% { transform: scale(1.6); opacity: 1; filter: brightness(2.2); }
+  8% { transform: scale(1); opacity: 1; filter: brightness(1); }
+  100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+}
+
+@keyframes arcTravel {
+  0% {
+    stroke-dashoffset: 500;
+    opacity: 0;
+  }
+  2% {
+    opacity: 1;
+  }
+  18% {
+    opacity: 1;
+  }
+  20% {
+    stroke-dashoffset: -500;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -500;
+    opacity: 0;
   }
 }
 
@@ -375,4 +417,61 @@
 @keyframes badgePulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); }
   50%       { transform: translate(-50%, -50%) scale(1.04); }
+}
+
+@keyframes textHighlight {
+  0%   { opacity: 0.4; transform: translateY(0); }
+  2%   { opacity: 1; transform: translateY(-2px); }
+  6%   { transform: translateY(0); }
+  93.75% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes arcReveal {
+  0%   { stroke-dashoffset: 400; opacity: 0; }
+  1%   { opacity: 1; }
+  18.75% { stroke-dashoffset: 0; opacity: 1; }
+  93.75% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 400; opacity: 0; }
+}
+
+@keyframes dotHighlight {
+  0%   { transform: scale(1); fill: #444; opacity: 0.5; filter: brightness(1); }
+  1%   { transform: scale(1.4); fill: var(--step-color); opacity: 1; filter: brightness(1.8); }
+  5%   { transform: scale(1); fill: var(--step-color); opacity: 1; filter: brightness(1); }
+  93.75% { transform: scale(1); fill: var(--step-color); opacity: 1; filter: brightness(1); }
+  100% { transform: scale(1); fill: #444; opacity: 0.5; }
+}
+
+@keyframes badgeHighlight {
+  0% { 
+    background: #2a2d32; 
+    color: rgba(255, 255, 255, 0.4); 
+    filter: grayscale(1); 
+    opacity: 0.6; 
+    transform: translate(-50%, -50%) scale(1); 
+  }
+  2% { 
+    background: var(--step-color); 
+    color: var(--icon-color); 
+    filter: grayscale(0); 
+    opacity: 1; 
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 20px var(--step-color);
+  }
+  6% { 
+    transform: translate(-50%, -50%) scale(1); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  }
+  93.75% { 
+    background: var(--step-color); 
+    filter: grayscale(0); 
+    opacity: 1;
+  }
+  100% { 
+    background: #2a2d32; 
+    opacity: 0.6; 
+    filter: grayscale(1);
+    box-shadow: none;
+  }
 }

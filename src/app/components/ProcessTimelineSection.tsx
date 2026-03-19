@@ -145,7 +145,10 @@ const ProcessTimelineSection = () => {
                       } as CSSProperties
                     }
                   >
-                    <div className={styles.copyBlock}>
+                    <div
+                      className={styles.copyBlock}
+                      style={{ animationDelay: `${index * 1.5 + 0.6}s` }}
+                    >
                       <h3>{step.title}</h3>
                       <p>{step.description}</p>
                     </div>
@@ -163,11 +166,24 @@ const ProcessTimelineSection = () => {
                         <path
                           className={styles.arcGlow}
                           d="M 0 122 C 36 16, 184 16, 220 122"
+                          style={{ animationDelay: `${index * 1.5}s` }}
                         />
                         {index === 0 && (
-                          <circle className={styles.startDot} cx="0" cy="122" r="4" />
+                          <circle
+                            className={styles.startDot}
+                            cx="0"
+                            cy="122"
+                            r="4"
+                            style={{ animationDelay: `${index * 1.5}s` }}
+                          />
                         )}
-                        <circle className={styles.endDot} cx="220" cy="122" r="4" />
+                        <circle
+                          className={styles.endDot}
+                          cx="220"
+                          cy="122"
+                          r="4"
+                          style={{ animationDelay: `${(index + 1) * 1.5}s` }}
+                        />
                       </svg>
 
                       {/* CSS pulse animation — zero JS, runs on compositor */}
@@ -175,7 +191,7 @@ const ProcessTimelineSection = () => {
                         className={styles.iconBadge}
                         style={{
                           transform: "translate(-50%, -50%)",
-                          animationDelay: `${index * 0.12}s`,
+                          animationDelay: `${index * 1.5 + 0.6}s`,
                         }}
                       >
                         <StepIcon size={14} strokeWidth={2.2} />

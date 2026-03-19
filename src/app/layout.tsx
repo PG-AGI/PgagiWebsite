@@ -50,10 +50,13 @@ export default function RootLayout({
           <html
             lang="en"
             className={`${poppins.variable} ${alexandria.variable} ${plusJakartaSans.variable}`}
+            suppressHydrationWarning
+            translate="no"
           >
             <head>
 
               <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+              <meta name="google" content="notranslate" />
               {/* Preload critical resources for Hyperspeed component */}
               <link rel="preload" href="/api/three" as="script" />
               <link rel="preload" href="/api/postprocessing" as="script" />

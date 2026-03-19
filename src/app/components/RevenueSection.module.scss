@@ -22,6 +22,11 @@ $red: #9f0000;
   padding-top: clamp(140px, 15vh, 160px);
   box-sizing: border-box;
   background: #ffffff; // Fix: Ensure pinning masks previous section content
+
+  @media (max-width: 768px) {
+    padding-top: 0px; // Removed padding to maximize visible space
+    padding-bottom: 20px;
+  }
 }
 
 .container {
@@ -38,6 +43,12 @@ $red: #9f0000;
     max-width: 100%;
     padding: 0 1.2rem;
   }
+
+  @media (max-width: 920px) {
+    padding-top: 80px; // Standardized
+    padding-bottom: 80px;
+    &::before { top: 80px; }
+  }
 }
 
 // ─── Heading ───────────────────────────────────
@@ -45,6 +56,10 @@ $red: #9f0000;
   text-align: center;
   padding: clamp(1rem, 2vh, 1.8rem) 0 clamp(0.7rem, 1.8vh, 1.2rem);
   opacity: 0; // GSAP animates this in
+
+  @media (max-width: 768px) {
+    padding: 0.25rem 0 0.5rem; 
+  }
 }
 
 .title {
@@ -54,6 +69,15 @@ $red: #9f0000;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #1a1a1a;
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.6rem, 6.5vw, 1.9rem);
+    line-height: 1.1;
+  }
+
+  @media (max-width: 380px) {
+    font-size: 1.5rem;
+  }
 
   span {
     color: $red;
@@ -66,6 +90,11 @@ $red: #9f0000;
   font-size: clamp(0.82rem, 1.1vw, 0.98rem);
   font-weight: 500;
   line-height: 1.5;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
 }
 
 // ─── Stack Area ───────────────────────────────────
@@ -122,8 +151,8 @@ $red: #9f0000;
 
   @media (max-width: 600px) {
     border-radius: 18px;
-    padding: 1rem;
-    gap: 1rem;
+    padding: 0.75rem; 
+    gap: 0.5rem; 
   }
 }
 
@@ -139,6 +168,10 @@ $red: #9f0000;
   font-size: clamp(1.25rem, 2.3vw, 1.82rem);
   line-height: 1.2;
   font-weight: 700;
+
+  @media (max-width: 768px) {
+    font-size: 1.15rem; 
+  }
 }
 
 .pointList {
@@ -153,6 +186,12 @@ $red: #9f0000;
   li {
     font-size: clamp(0.78rem, 1vw, 0.95rem);
     line-height: 1.45;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0.4rem 0 0.6rem;
+    gap: 0.25rem;
+    li { font-size: 0.85rem; }
   }
 }
 
@@ -176,12 +215,21 @@ $red: #9f0000;
   border-radius: 18px;
   overflow: hidden;
 
+  @media (max-width: 860px) {
+    padding: 80px 0.9rem; // Standardized vertical
+  }
+
   @media (max-width: 900px) {
     width: 100%;
-    max-width: 100%;
+    max-width: 280px; // Cap width to prevent excessive height on mobile
+    margin: 0 auto;
     flex-basis: auto;
-    align-self: stretch;
+    align-self: center;
     border-radius: 14px;
+  }
+
+  @media (max-height: 700px) {
+    max-width: 240px; // Even smaller on short devices
   }
 }
 

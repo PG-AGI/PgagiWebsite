@@ -115,7 +115,7 @@ const RevenueSection = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top top",
+        start: isMobile ? "top 60px" : "top top",
         end: "+=200%",
         pin: section,
         pinSpacing: true,

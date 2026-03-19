@@ -65,22 +65,6 @@ export default function Landing() {
       <div className={styles.partnersWrapper}>
         <Partners />
       </div>
-
-      {/* Structured data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "PG-AGI",
-            url: "https://pgagi.in",
-            description:
-              "PG-AGI builds production-ready AI systems that automate operations and power better decisions for enterprises and startups.",
-            slogan: "Building AI Systems that Scales to Millions",
-          }),
-        }}
-      />
     </section>
   );
 }
