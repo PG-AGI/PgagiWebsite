@@ -130,14 +130,14 @@ export default function Navigation() {
                     About Us
                   </TransitionLink>
                   <span className={`${styles.mobileMenuItem} ${styles.comingSoon}`}>
-                    Industries
+                    Solutions
                     <div className={styles.tooltip}>Coming Soon</div>
                   </span>
                   <TransitionLink href="/expertise" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Expertise
                   </TransitionLink>
                   <TransitionLink href="/projects" className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Projects
+                    Case Studies
                   </TransitionLink>
                   <TransitionLink href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Blogs
@@ -167,14 +167,14 @@ export default function Navigation() {
                 About Us
               </TransitionLink>
               <span className={`${styles.link} ${styles.comingSoon}`}>
-                Industries
+                Solutions
                 <div className={styles.tooltip}>Coming Soon</div>
               </span>
               <TransitionLink href="/expertise" className={styles.link}>
                 Expertise
               </TransitionLink>
               <TransitionLink href="/projects" className={styles.link}>
-                Projects
+                Case Studies
               </TransitionLink>
               <TransitionLink href="/whatwethink" className={styles.link}>
                 Blogs

@@ -29,7 +29,7 @@ export default function Footer() {
             <div className={styles.navigationSection}>
               {/* Company Column */}
               <div className={styles.navColumn}>
-                <h6 className={styles.columnHeader}>Company</h6>
+                <h6 className={styles.columnHeader}>PGAGI</h6>
                 <ul className={styles.linkList}>
                   <li>
                     <TransitionLink href="/aboutUs" className={styles.link}>
