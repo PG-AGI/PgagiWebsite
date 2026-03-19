@@ -232,18 +232,18 @@ export default function Home() {
       <EcosystemSection />
       <ProcessTimelineSection />
       <RevenueSection />
-      <ConcentricEllipseSection />
-      <CaseStudiesSection />
       <BuildEcosystemSection />
       <SolutionFitBreakdownSection />
+      <CaseStudiesSection />
       <WhatMakesUsDifferentSection />
       <MeasurableImpactSection />
-      <VideoTestimonial />
+      <ConcentricEllipseSection />
+      {/* <VideoTestimonial />
       <LandingProjects />
       <ExpertiseSection />
       <FAQ />
       <TrendingOld />
-      <Calendly />
+      <Calendly /> */}
       {/* <LazyOnVisible><Partners /></LazyOnVisible>
 			<LazyOnVisible><StatsSection /></LazyOnVisible>
 			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>
