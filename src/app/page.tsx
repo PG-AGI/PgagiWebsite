@@ -62,6 +62,12 @@ const ProcessTimelineSection = dynamic(
 const RevenueSection = dynamic(() => import("./components/RevenueSection"), {
   loading: () => <div>Loading...</div>,
 });
+const ConcentricEllipseSection = dynamic(
+  () => import("./components/ConcentricEllipseSection"),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 const CaseStudiesSection = dynamic(
   () => import("./components/CaseStudiesSection"),
   {
@@ -226,6 +232,7 @@ export default function Home() {
       <EcosystemSection />
       <ProcessTimelineSection />
       <RevenueSection />
+      <ConcentricEllipseSection />
       <CaseStudiesSection />
       <BuildEcosystemSection />
       <SolutionFitBreakdownSection />

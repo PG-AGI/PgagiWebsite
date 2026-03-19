@@ -1,0 +1,93 @@
+.section {
+  position: relative;
+  background: #ffffff;
+  padding: clamp(2rem, 5vw, 4rem) 0;
+}
+
+.layout {
+  --ring-scale: 1;
+  width: min(1280px, calc(100% - 2rem));
+  height: calc(458px * var(--ring-scale));
+  margin: 0 auto;
+}
+
+.surface {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(40px * var(--ring-scale));
+  background: #9f0000;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ellipse {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #9f0000 0%, #ff0000 100%);
+}
+
+.ellipseOne {
+  width: calc(1429px * var(--ring-scale));
+  height: calc(1429px * var(--ring-scale));
+  top: calc(-239px * var(--ring-scale));
+  left: calc(-203px * var(--ring-scale));
+  box-shadow:
+    inset 4px 19px 41px 0 rgba(255, 255, 255, 0.35),
+    0 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.ellipseTwo {
+  width: calc(1256px * var(--ring-scale));
+  height: calc(1256px * var(--ring-scale));
+  top: calc(-79px * var(--ring-scale));
+  left: calc(-190px * var(--ring-scale));
+  box-shadow:
+    inset -10px 19px 39.2px 0 rgba(255, 255, 255, 0.32),
+    0 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.ellipseThree {
+  width: calc(876px * var(--ring-scale));
+  height: calc(876px * var(--ring-scale));
+  top: calc(38px * var(--ring-scale));
+  left: calc(10px * var(--ring-scale));
+  box-shadow:
+    inset 4px 19px 39.2px 0 rgba(255, 255, 255, 0.25),
+    0 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.ellipseFour {
+  width: calc(611px * var(--ring-scale));
+  height: calc(611px * var(--ring-scale));
+  top: calc(167px * var(--ring-scale));
+  left: calc(142px * var(--ring-scale));
+  box-shadow:
+    inset -7px 19px 39.2px 0 rgba(255, 255, 255, 0.39),
+    0 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    --ring-scale: 0.76;
+    width: calc(100% - 1.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 1.5rem 0;
+  }
+
+  .layout {
+    --ring-scale: 0.58;
+    width: calc(100% - 1.25rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .layout {
+    --ring-scale: 0.5;
+    width: calc(100% - 1rem);
+  }
+}
