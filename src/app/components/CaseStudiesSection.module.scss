@@ -86,6 +86,21 @@
   transform-origin: top center;
 }
 
+.cardLink {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.92);
+  outline-offset: -6px;
+  border-radius: inherit;
+}
+
 .previewFrame {
   position: relative;
   width: min(90%, 980px);

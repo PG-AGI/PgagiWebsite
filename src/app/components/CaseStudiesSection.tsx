@@ -12,6 +12,8 @@ type CaseStudyCard = {
   id: string;
   title: string;
   brand: string;
+  imageSrc: string;
+  href: string;
   accentStart: string;
   accentEnd: string;
 };
@@ -20,32 +22,40 @@ const caseStudyCards: CaseStudyCard[] = [
   {
     id: "case-study-card-1",
     title:
-      "Transforming customer engagement and lead management with AI-Powered automation",
-    brand: "Cracked.",
+      "Transforming customer engagement and lead management with AI-powered automation",
+    brand: "Cracked AI",
+    imageSrc: "/assets/CaseStudies/CrackedAi.jpg",
+    href: "https://www.cracked.ai/",
     accentStart: "#ddd9ef",
     accentEnd: "#1e1b2a",
   },
   {
     id: "case-study-card-2",
     title:
-      "Transforming customer engagement and lead management with AI-Powered automation",
-    brand: "Cracked.",
+      "Accelerating AI strategy and execution with focused consulting and delivery",
+    brand: "AIM Cube",
+    imageSrc: "/assets/CaseStudies/AIMI.jpg",
+    href: "https://aim-cube.com/",
     accentStart: "#cb6aa1",
     accentEnd: "#250d1b",
   },
   {
     id: "case-study-card-3",
     title:
-      "Transforming customer engagement and lead management with AI-Powered automation",
-    brand: "Cracked.",
+      "Simplifying investor discovery through a high-signal, AI-powered platform",
+    brand: "FOMO Fund",
+    imageSrc: "/assets/CaseStudies/Fomo.jpg",
+    href: "https://fomo.fund/",
     accentStart: "#c3a6b8",
     accentEnd: "#22171f",
   },
   {
     id: "case-study-card-4",
     title:
-      "Transforming customer engagement and lead management with AI-Powered automation",
-    brand: "Cracked.",
+      "Building reliable voice AI experiences for seamless customer interactions",
+    brand: "Toingg",
+    imageSrc: "/assets/CaseStudies/Toingg.jpg",
+    href: "https://www.toingg.com/",
     accentStart: "#a7a3e2",
     accentEnd: "#151529",
   },
@@ -58,7 +68,7 @@ const CaseStudiesSection = () => {
   const pinContainerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const cardRefs = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -66,7 +76,7 @@ const CaseStudiesSection = () => {
     const section = sectionRef.current;
     const pinContainer = pinContainerRef.current;
     const cards = cardRefs.current.filter(
-      (card): card is HTMLDivElement => Boolean(card),
+      (card): card is HTMLElement => Boolean(card),
     );
 
     if (!section || !pinContainer || cards.length === 0) return;
@@ -181,7 +191,7 @@ const CaseStudiesSection = () => {
     };
   }, []);
 
-  const setCardRef = (index: number) => (element: HTMLDivElement | null) => {
+  const setCardRef = (index: number) => (element: HTMLElement | null) => {
     cardRefs.current[index] = element;
   };
 
@@ -207,23 +217,31 @@ const CaseStudiesSection = () => {
                   } as React.CSSProperties
                 }
               >
-                <div className={styles.previewFrame}>
-                  <Image
-                    src="/assets/CaseStudies/CrackedAi.png"
-                    alt={`${card.brand} case study preview`}
-                    fill
-                    sizes="(max-width: 900px) 86vw, 980px"
-                    className={styles.previewImage}
-                    priority={index === 0}
-                  />
-                </div>
+                <a
+                  href={card.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.cardLink}
+                  aria-label={`Open ${card.brand} case study`}
+                >
+                  <div className={styles.previewFrame}>
+                    <Image
+                      src={card.imageSrc}
+                      alt={`${card.brand} case study preview`}
+                      fill
+                      sizes="(max-width: 900px) 86vw, 980px"
+                      className={styles.previewImage}
+                      priority={index === 0}
+                    />
+                  </div>
 
-                <div className={styles.overlay} />
+                  <div className={styles.overlay} />
 
-                <div className={styles.copyBlock}>
-                  <span className={styles.brandPill}>{card.brand}</span>
-                  <p className={styles.cardTitle}>{card.title}</p>
-                </div>
+                  <div className={styles.copyBlock}>
+                    <span className={styles.brandPill}>{card.brand}</span>
+                    <p className={styles.cardTitle}>{card.title}</p>
+                  </div>
+                </a>
               </article>
             ))}
           </div>
