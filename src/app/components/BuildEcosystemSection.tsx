@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./BuildEcosystemSection.module.scss";
 
 type BuildNode = {
@@ -82,6 +85,9 @@ const BuildCard = ({ card, className }: BuildCardProps) => {
 
 const BuildEcosystemSection = () => {
   const shouldReduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   const workspace = getNode("workspace");
   const project = getNode("project");
@@ -89,8 +95,76 @@ const BuildEcosystemSection = () => {
   const communication = getNode("communication");
   const erp = getNode("erp");
 
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const scrollArea = scrollAreaRef.current;
+    const stage = stageRef.current;
+    const section = sectionRef.current;
+
+    if (!scrollArea || !stage || !section) {
+      return;
+    }
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(max-width: 920px)", () => {
+      const getHorizontalDistance = () => {
+        const stageStyles = window.getComputedStyle(stage);
+        const marginLeft = Number.parseFloat(stageStyles.marginLeft) || 0;
+        const marginRight = Number.parseFloat(stageStyles.marginRight) || 0;
+
+        return Math.max(
+          0,
+          stage.scrollWidth + marginLeft + marginRight - scrollArea.clientWidth,
+        );
+      };
+
+      const setMobileDistanceVar = () => {
+        section.style.setProperty(
+          "--mobile-horizontal-distance",
+          `${getHorizontalDistance()}px`,
+        );
+      };
+
+      setMobileDistanceVar();
+
+      if (getHorizontalDistance() <= 0) {
+        section.style.removeProperty("--mobile-horizontal-distance");
+        return undefined;
+      }
+
+      const scrollTween = gsap.to(stage, {
+        x: () => -getHorizontalDistance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: scrollArea,
+          start: "top top",
+          end: () => `+=${getHorizontalDistance()}`,
+          pin: true,
+          pinSpacing: true,
+          scrub: shouldReduceMotion ? false : 0.9,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+          onRefresh: setMobileDistanceVar,
+        },
+      });
+
+      return () => {
+        scrollTween.scrollTrigger?.kill();
+        scrollTween.kill();
+        gsap.set(stage, { clearProps: "transform" });
+        section.style.removeProperty("--mobile-horizontal-distance");
+      };
+    });
+
+    return () => {
+      mm.revert();
+    };
+  }, [shouldReduceMotion]);
+
   return (
-    <section className={styles.section} id="build-ecosystem">
+    <section ref={sectionRef} className={styles.section} id="build-ecosystem">
       <div className={styles.container}>
         <motion.h2
           className={styles.title}
@@ -103,13 +177,14 @@ const BuildEcosystemSection = () => {
         </motion.h2>
 
         <motion.div
+          ref={scrollAreaRef}
           className={styles.scrollArea}
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={styles.stage}>
+          <div ref={stageRef} className={styles.stage}>
             <div className={styles.gridBackdrop} aria-hidden="true" />
             <span className={styles.glowCenter} aria-hidden="true" />
 
