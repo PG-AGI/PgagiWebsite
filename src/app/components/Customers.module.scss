@@ -1,64 +1,236 @@
+/* ─── Section ──────────────────────────────────────────────────────── */
 .section {
   background: #ffffff;
-  padding: 100px 0 110px;
+  padding: 100px 0 120px;
+  overflow: hidden;
 }
 
 .container {
-  width: min(1320px, calc(100% - 1rem));
+  width: min(1320px, calc(100% - 2rem));
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 }
 
-.title {
-  margin: 0 0 1.75rem;
+/* ─── Header ───────────────────────────────────────────────────────── */
+.header {
   text-align: center;
-  color: #2b2c2f;
-  font-size: clamp(2rem, 4vw, 3.35rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.title {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   font-weight: 700;
+
+  em {
+    font-style: italic;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+.subtitle {
+  margin: 0;
+  color: #6b6b6b;
+  font-size: clamp(0.97rem, 1.3vw, 1.08rem);
+  font-weight: 400;
+  max-width: 40ch;
+  line-height: 1.6;
 }
 
-.pagination {
-  display: none;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
+/* ─── Rating badge ─────────────────────────────────────────────────── */
+.ratingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #f7f4f1;
+  border: 1px solid #e8e0d8;
   border-radius: 999px;
-  background: #d9d3cd;
-  transition: width 0.2s ease, background-color 0.2s ease;
+  padding: 0.5rem 1.1rem 0.5rem 0.6rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
-.activeDot {
-  width: 28px;
-  background: #b8ada1;
+.avatarStack {
+  display: flex;
+  align-items: center;
 }
 
+.stackAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  display: inline-block;
+  margin-left: -9px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.ratingText {
+  font-size: 0.86rem;
+  color: #4a4a4a;
+  font-weight: 500;
+  white-space: nowrap;
+
+  strong {
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+}
+
+.highlight {
+  color: #1a1a1a;
+}
+
+.starIcon {
+  color: #f5a623;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* ─── Testimonial card ─────────────────────────────────────────────── */
 .card {
-  border-radius: 18px;
+  height: 100%;
+  background: #faf9f7;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 1.6rem 1.7rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
   overflow: hidden;
-  min-height: 305px;
-}
-
-.videoCard {
   position: relative;
-  background: #d0d0d0;
+
+  /* large decorative quote mark */
+  &::before {
+    content: "\201C";
+    position: absolute;
+    top: 0.6rem;
+    right: 1.25rem;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.045);
+    font-family: Georgia, "Times New Roman", serif;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &:hover {
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 12px 32px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+  }
 }
 
-.video {
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.name {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.role {
+  margin: 0.15rem 0 0;
+  color: #888;
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.nameBlock {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.quote {
+  margin: 0;
+  color: #444;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  font-style: normal;
+  /* clamp to 4 lines so all cards look uniform */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ─── Video facade ─────────────────────────────────────────────────── */
+.facadeWrap {
+  position: relative;
   width: 100%;
   height: 100%;
-  min-height: 305px;
+  cursor: pointer;
   display: block;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #111;
+
+  &:focus-visible {
+    outline: 2px solid #a51610;
+    outline-offset: 2px;
+  }
+
+  &:hover .thumbnail {
+    transform: scale(1.04);
+  }
+
+  &:hover .playButton {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.94);
+  }
+}
+
+.thumbnail {
   object-fit: cover;
+  object-position: center;
+  will-change: transform;
+  transition: transform 0.35s ease;
+}
+
+.videoIframe {
+  width: 100%;
+  height: 100%;
+  display: block;
   border: 0;
 }
 
@@ -66,196 +238,275 @@
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 98px;
-  height: 98px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.72);
-  color: #ffffff;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.8);
+  color: #1a1a1a;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    0 0 0 8px rgba(255, 255, 255, 0.15);
   pointer-events: none;
+  transition: transform 0.25s ease, background 0.25s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
   svg {
     margin-left: 4px;
-    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
   }
 }
 
-.quoteCard {
-  background: #e8e4e0;
-  padding: 1rem 1.05rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* ─── Desktop 3-column grid — uniform row height ───────────────────── */
+.desktopGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* every row is exactly the same height */
+  grid-auto-rows: 280px;
+  gap: 1.25rem;
 }
 
-.quote {
-  margin: 0;
-  color: #505052;
-  font-size: clamp(0.96rem, 1.1vw, 1.12rem);
-  line-height: 1.35;
-  max-width: 30ch;
+/* video cell: facadeWrap fills the whole grid cell */
+.videoCell {
+  .facadeWrap {
+    height: 100%;
+    min-height: unset;
+    border-radius: 20px;
+  }
+
+  .videoIframe {
+    min-height: unset;
+    height: 100%;
+  }
 }
 
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+/* ─── Mobile marquee (hidden on desktop) ───────────────────────────── */
+.mobileMarquee {
+  display: none;
 }
 
-.person {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  min-width: 0;
-}
-
-.avatar {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.avatar img {
-  object-fit: cover;
-}
-
-.name {
-  margin: 0;
-  color: #1f2022;
-  font-size: 0.95rem;
-  line-height: 1.1;
-  font-weight: 600;
-}
-
-.role {
-  margin: 0.16rem 0 0;
-  color: #3f4146;
-  font-size: 0.78rem;
-  line-height: 1.2;
-  font-weight: 500;
-}
-
-.logoBadge {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #393b3f;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
+/* ─── Tablet (≤1100px) ─────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .section {
-    padding: 80px 0; // Standardized
+    padding: 80px 0 100px;
   }
 
-  .container {
-    width: calc(100% - 1.5rem);
-  }
-
-  .grid {
+  .desktopGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 268px;
   }
 }
 
+/* ─── Mobile (≤768px) ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .section {
-    padding: 80px 0; // Standardized
+    padding: 72px 0 88px;
+  }
+
+  .header {
+    margin-bottom: 2.75rem;
   }
 
   .title {
-    margin-bottom: 1.25rem;
-    font-size: clamp(1.7rem, 8vw, 2.3rem);
+    font-size: clamp(2.1rem, 9vw, 2.9rem);
   }
 
-  .grid {
-    display: flex;
-    gap: 0.85rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 0.2rem;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding: 0 0.2rem 0.2rem;
-  }
-
-  .grid::-webkit-scrollbar {
+  .desktopGrid {
     display: none;
   }
 
-  .card {
-    flex: 0 0 calc(100% - 0.4rem);
-    scroll-snap-align: center;
-    min-height: 268px;
-  }
-
-  .video {
-    min-height: 268px;
-  }
-
-  .playButton {
-    width: 84px;
-    height: 84px;
-  }
-
-  .quoteCard {
-    min-height: 248px;
-    padding: 1rem;
-  }
-
-  .quote {
-    font-size: 0.95rem;
-  }
-
-  .pagination {
+  /* ── Marquee ── */
+  .mobileMarquee {
     display: flex;
+    gap: 0.65rem;
+    height: 480px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .marqueeCol {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .marqueeTrack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  /* ── Mobile marquee card: quote-first layout ──
+     Quote is the hero — displayed at the top, large and clear.
+     Avatar + name/role is a tight footer at the bottom.          */
+  .marqueeTrack .card {
+    flex-shrink: 0;
+    height: 196px;
+    padding: 0.9rem 1rem 0.85rem;
+    gap: 0;
+    justify-content: space-between;
+
+    /* hide the big decorative quote mark — quote text speaks for itself */
+    &::before {
+      display: none;
+    }
+  }
+
+  /* Quote goes visually FIRST */
+  .marqueeTrack .quote {
+    order: 1;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    -webkit-line-clamp: 4;
+    color: #2a2a2a;
+    font-weight: 450;
+    flex: 1;
+    margin-bottom: 0.65rem;
+  }
+
+  /* Header (avatar + name/role) goes visually LAST — compact footer */
+  .marqueeTrack .cardHeader {
+    order: 2;
+    flex-shrink: 0;
+    gap: 0.55rem;
+    margin-bottom: 0;
     align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-    margin-top: 0.75rem;
+    /* important: allow truncation */
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .marqueeTrack .nameBlock {
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.3rem;
+    flex-wrap: nowrap;
+  }
+
+  .marqueeTrack .avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.62rem;
+    flex-shrink: 0;
+  }
+
+  /* Name and role on the same line — name · role */
+  .marqueeTrack .name {
+    font-size: 0.76rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+  }
+
+  .marqueeTrack .role {
+    font-size: 0.68rem;
+    color: #999;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 2;
+    margin-top: 0;
+
+    /* dot separator */
+    &::before {
+      content: "·";
+      margin-right: 0.3rem;
+      color: #ccc;
+    }
+  }
+
+  /* fade overlays */
+  .fadeTop,
+  .fadeBottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 90px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .fadeTop {
+    top: 0;
+    background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
+  }
+
+  .fadeBottom {
+    bottom: 0;
+    background: linear-gradient(to top, #ffffff 0%, transparent 100%);
+  }
+
+  /* video card inside marquee — same fixed height as quote cards */
+  .mobileVideoCard {
+    flex-shrink: 0;
+    height: 196px;
+    border-radius: 20px;
+    overflow: hidden;
+
+    .facadeWrap {
+      height: 196px;
+      min-height: unset;
+      border-radius: 20px;
+    }
+
+    .videoIframe {
+      height: 196px;
+      min-height: unset;
+    }
+  }
+
+  .scrollUp {
+    animation: marqueeUp 24s linear infinite;
+  }
+
+  .scrollDown {
+    animation: marqueeDown 24s linear infinite;
   }
 }
 
+/* ─── Pause when video playing ─────────────────────────────────────── */
+.mobileMarquee[data-paused] .scrollUp,
+.mobileMarquee[data-paused] .scrollDown {
+  animation-play-state: paused;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────── */
+@keyframes marqueeUp {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@keyframes marqueeDown {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+/* ─── Small mobile (≤420px) ────────────────────────────────────────── */
 @media (max-width: 420px) {
   .container {
-    width: calc(100% - 1rem);
+    width: calc(100% - 1.25rem);
   }
 
-  .card {
-    min-height: 240px;
+  .mobileMarquee {
+    height: 440px;
   }
 
-  .video {
-    min-height: 240px;
+  .marqueeTrack .card {
+    height: 185px;
+    padding: 0.85rem 0.95rem;
   }
 
-  .playButton {
-    width: 76px;
-    height: 76px;
-  }
-
-  .quoteCard {
-    min-height: 220px;
-  }
-
-  .name {
-    font-size: 0.88rem;
-  }
-
-  .role {
-    font-size: 0.72rem;
+  .mobileVideoCard,
+  .mobileVideoCard .facadeWrap,
+  .mobileVideoCard .videoIframe {
+    height: 185px;
   }
 }

@@ -1,12 +1,18 @@
 import styles from './NewPage.module.scss';
 import { ArrowRight, Lightbulb, PenTool, Rocket, TrendingUp, Settings, Database, Activity, Target } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/dist/MotionPathPlugin';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
-
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+import {
+  FRAMER_EASE,
+  GSAP_EASE,
+  MOBILE_BREAKPOINT,
+  MOTION_DURATION,
+} from '@/lib/motion';
+// Plugins registered in useEffect — NOT at module scope to avoid SSR/import-time side-effects
 
 const Badge = ({ icon, text, theme, index }: { icon: React.ReactNode, text: string, theme: string, index: number }) => (
   <div className={styles.badgeStack} style={{ '--index': index } as React.CSSProperties}>
@@ -21,10 +27,11 @@ const NewPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const { scrollTo } = useSmoothScrollTo();
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     setIsMounted(true);
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -50,6 +57,9 @@ const NewPage = () => {
 
   useEffect(() => {
     if (!isMounted || isMobile) return;
+
+    // Register plugins inside useEffect — never at module scope
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     const ctx = gsap.context(() => {
       // Use class queries scoped strictly to this component instance to avoid HMR crash
@@ -78,8 +88,8 @@ const NewPage = () => {
         tl.set(dot, { opacity: 1, scale: 0 }) 
           .to(dot, { scale: 1, duration: 0.2, ease: 'back.out(1.7)' })
           .to(dot, {
-            duration: 1.5,
-            ease: 'power1.inOut',
+            duration: MOTION_DURATION.cinematic + MOTION_DURATION.fast,
+            ease: GSAP_EASE.smoothInOut,
             motionPath: {
               path: path,
               align: path,
@@ -89,11 +99,11 @@ const NewPage = () => {
           .to(dot, { opacity: 0, scale: 0.5, duration: 0.2 }) // Fade dot when it reaches the end
           .to(cards[i], {
             borderColor: 'rgba(211, 69, 81, 0.8)', // Premium border highlight
-            duration: 0.3,
+            duration: MOTION_DURATION.fast,
           }, '<') // Run precisely when dot enters box
           .to(cards[i], {
             borderColor: 'rgba(255, 255, 255, 0.5)', // Fade cleanly back to default
-            duration: 0.8,
+            duration: MOTION_DURATION.cinematic,
             delay: 0.2, 
           });
       });
@@ -108,9 +118,19 @@ const NewPage = () => {
         {/* Header Section */}
         <div className={styles.header}>
           <div className={styles.titleContainer}>
-            <h1 className={styles.title}>
+            <motion.h1
+              className={styles.title}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: MOTION_DURATION.slow, ease: FRAMER_EASE.premiumOut }
+              }
+            >
               What are we <span className={styles.highlight}>building?</span>
-            </h1>
+            </motion.h1>
           </div>
         </div>
 
@@ -146,9 +166,13 @@ const NewPage = () => {
         {/* Content Grid */}
         <div className={styles.cardsGrid}>
           {/* Left Card: Foundations */}
-          <div 
+          <motion.div 
             className={`${styles.card} ${styles.cardFounders}`} 
             ref={leftCardRef}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 36, scale: 0.97 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.cinematic, ease: FRAMER_EASE.premiumOut, delay: 0.1 }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -193,20 +217,30 @@ const NewPage = () => {
                 Design, develop, and launch production-ready AI products with a user-first approach and scalable architecture.
               </p>
               <div className={styles.ctaWrapper}>
-                <button className={styles.pillButton}>
-                  Let's build together
+                <button
+                  className={styles.pillButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open('https://calendly.com/vivek-_ou/30min', '_blank');
+                  }}
+                >
+                  Let&apos;s build together
                   <div className={styles.redArrowCircle}>
                     <ArrowRight size={22} />
                   </div>
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Card: Enterprises */}
-          <div 
+          <motion.div 
             className={`${styles.card} ${styles.cardEnterprises}`} 
             ref={rightCardRef}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 36, scale: 0.97 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.cinematic, ease: FRAMER_EASE.premiumOut, delay: 0.2 }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -249,15 +283,21 @@ const NewPage = () => {
                 Automate workflows, reduce costs, and improve decision-making by integrating AI into your existing systems — without disrupting operations.
               </p>
               <div className={styles.ctaWrapper}>
-                <button className={styles.pillButton}>
-                  Let's build together
+                <button
+                  className={styles.pillButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open('https://calendly.com/vivek-_ou/30min', '_blank');
+                  }}
+                >
+                  Let&apos;s build together
                   <div className={styles.redArrowCircle}>
                     <ArrowRight size={22} />
                   </div>
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

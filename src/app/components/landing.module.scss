@@ -83,6 +83,8 @@
   @media (max-width: 768px) {
     animation: none;
     transform: none;
+    background-size: auto 100%;
+    background-position: 65% center;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -172,7 +174,7 @@
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 
   /* Entry animation */
-  animation: fadeSlideUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s both;
+  animation: fadeSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 /* ─── Subtitle ─── */
@@ -187,7 +189,7 @@
   max-width: clamp(18rem, 50vw, 540px);
   letter-spacing: 0%;
 
-  animation: fadeSlideUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s both;
+  animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
 }
 
 /* Desktop <br> — hidden on mobile */
@@ -236,7 +238,7 @@
   position: relative;
   overflow: hidden;
 
-  animation: fadeSlideUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.7s both;
+  animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
 
   &:hover {
     transform: translateY(-2px);
@@ -282,16 +284,20 @@
   }
 }
 
-/* ─── Entry animation ─── */
+/* ─── Premium entry animation — blur + slide + fade ─── */
 @keyframes fadeSlideUp {
   from {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(32px);
+    filter: blur(6px);
   }
-
+  60% {
+    filter: blur(0px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0px);
   }
 }
 
@@ -372,6 +378,21 @@
 @media (min-width: 1400px) {
   .hero {
     --content-x: clamp(5rem, 6vw, 8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroHeading,
+  .heroSubtext,
+  .heroCta {
+    animation: none;
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+
+  .heroCta {
+    transition: none;
   }
 }
 

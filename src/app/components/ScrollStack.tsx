@@ -1,191 +1,234 @@
 "use client";
 
-import {
-  Children,
-  useEffect,
-  isValidElement,
-  type CSSProperties,
-  type ReactElement,
-  type ReactNode,
+import React, {
   useRef,
-  useState,
+  useEffect,
+  Children,
+  isValidElement,
+  type ReactNode,
+  type ReactElement,
 } from "react";
-import { motion, type MotionValue, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ScrollStack.module.scss";
+import {
+  GSAP_EASE,
+  MOBILE_MEDIA_QUERY,
+  MOTION_DURATION,
+  MOTION_SCRUB,
+  REDUCED_MOTION_QUERY,
+  SCROLL_REFRESH_DEBOUNCE_MS,
+} from "@/lib/motion";
 
-type ScrollStackProps = {
-  children: ReactNode;
-  className?: string;
-  stickyTop?: number;
-  mobileStickyTop?: number;
-};
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type ScrollStackItemProps = {
   children: ReactNode;
   className?: string;
 };
 
-type StackLayerProps = {
-  index: number;
-  total: number;
-  stickyTop: number;
-  mobileStickyTop: number;
-  trackStep: number;
-  progress: MotionValue<number>;
-  className?: string;
-  onMeasure?: (metrics: { cardHeight: number; trackHeight: number }) => void;
-  children: ReactNode;
-};
-
-export const ScrollStackItem = ({ children }: ScrollStackItemProps) => {
-  return <>{children}</>;
-};
-
-const StackLayer = ({
-  index,
-  total,
-  stickyTop,
-  mobileStickyTop,
-  trackStep,
-  progress,
-  className,
-  onMeasure,
+export const ScrollStackItem = ({
   children,
-}: StackLayerProps) => {
-  const shouldReduceMotion = useReducedMotion();
-  const itemRef = useRef<HTMLDivElement>(null);
-  const stackIndex = index;
-  const isFirstCard = index === 0;
+  className,
+}: ScrollStackItemProps) => <div className={className}>{children}</div>;
 
-  useEffect(() => {
-    if (!onMeasure) {
-      return;
-    }
-
-    const element = itemRef.current;
-    if (!element) {
-      return;
-    }
-
-    const updateHeight = () => {
-      const trackElement = element.parentElement as HTMLElement | null;
-      onMeasure({
-        cardHeight: element.getBoundingClientRect().height,
-        trackHeight: trackElement?.getBoundingClientRect().height ?? 0,
-      });
-    };
-
-    updateHeight();
-
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [onMeasure]);
-
-  // Phase 1: cards arrive one-after-another from below.
-  // Starts are intentionally earlier so card 3 also animates in shorter track heights.
-  const appearStart = 0.04 + index * 0.1;
-  const appearEnd = appearStart + 0.16;
-
-  // Phase 2: after appearing, each card compresses into a tight bunch.
-  const packStart = Math.max(0.34, appearEnd + 0.02);
-  const packEnd = Math.min(0.78, packStart + 0.18);
-
-  // Lift based on track spacing so cards stack tightly without creating extra tail space.
-  const overlapLift = Math.max(72, trackStep * 0.55);
-  const spreadLift = Math.max(54, trackStep * 0.36);
-  const finalY = -stackIndex * overlapLift;
-  const finalScale = 1 - stackIndex * 0.018;
-  const finalOpacity = 1 - stackIndex * 0.07;
-
-  // Wider temporary spacing before compression, so "assemble/disassemble" is clear.
-  const spreadY = -stackIndex * spreadLift;
-  const entryY = 112 + stackIndex * 40;
-
-  const y = useTransform(
-    progress,
-    [appearStart, appearEnd, packStart, packEnd],
-    [entryY, spreadY, spreadY, finalY],
-  );
-  const opacity = useTransform(
-    progress,
-    [appearStart, appearEnd, packStart, packEnd],
-    [0.35, 1, 1, finalOpacity],
-  );
-  const scale = useTransform(
-    progress,
-    [appearStart, appearEnd, packStart, packEnd],
-    [0.94, 1, 1, finalScale],
-  );
-
-  return (
-    <div
-      className={`${styles.track} ${index === total - 1 ? styles.trackLast : ""}`}
-      style={
-        {
-          "--stack-top": `${stickyTop}px`,
-          "--stack-top-mobile": `${mobileStickyTop}px`,
-          "--stack-z": index + 1,
-        } as CSSProperties
-      }
-    >
-      <motion.div
-        ref={itemRef}
-        className={`${styles.item} ${className ?? ""}`.trim()}
-        style={{
-          y: shouldReduceMotion || isFirstCard ? 0 : y,
-          opacity: shouldReduceMotion || isFirstCard ? 1 : opacity,
-          scale: shouldReduceMotion || isFirstCard ? 1 : scale,
-        }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
+type ScrollStackProps = {
+  children: ReactNode;
+  header?: ReactNode;
+  className?: string;
+  id?: string;
+  offset?: number;
+  mobileMode?: "flow" | "pinned";
 };
 
 const ScrollStack = ({
   children,
+  header,
   className,
-  stickyTop = 96,
-  mobileStickyTop = 88,
+  id,
+  offset = 8,
+  mobileMode = "flow",
 }: ScrollStackProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [trackStep, setTrackStep] = useState(220);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 82%", "end 22%"],
-  });
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const items = Children.toArray(children).filter((child) =>
-    isValidElement<ScrollStackItemProps>(child),
-  ) as ReactElement<ScrollStackItemProps>[];
+  const items = Children.toArray(children).filter(
+    (child): child is ReactElement =>
+      isValidElement(child) && child.type === ScrollStackItem,
+  );
+  const count = items.length;
 
-  const handleMeasure = ({ trackHeight }: { cardHeight: number; trackHeight: number }) => {
-    if (trackHeight > 0) {
-      setTrackStep(trackHeight);
-    }
-  };
+  useEffect(() => {
+    const section = sectionRef.current;
+    const cards = cardRefs.current.filter(
+      (el): el is HTMLDivElement => el !== null,
+    );
+
+    if (!section || cards.length < 2) return;
+
+    const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+    const isMobileViewport = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+    const useMobileFlow = mobileMode === "flow" && isMobileViewport;
+    const viewport = window.visualViewport;
+    let refreshTimeout: number | null = null;
+
+    const getViewportHeight = () =>
+      Math.max(window.visualViewport?.height ?? window.innerHeight, 1);
+
+    const requestRefresh = () => {
+      if (refreshTimeout) window.clearTimeout(refreshTimeout);
+      refreshTimeout = window.setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, SCROLL_REFRESH_DEBOUNCE_MS);
+    };
+
+    const ctx = gsap.context(() => {
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: MOTION_DURATION.slow,
+            ease: GSAP_EASE.premiumOut,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 82%",
+              once: true,
+            },
+          },
+        );
+      }
+
+      gsap.set(cards[0], { y: 50, opacity: 0, force3D: true });
+      gsap.to(cards[0], {
+        y: 0,
+        opacity: 1,
+        duration: MOTION_DURATION.cinematic,
+        force3D: true,
+        ease: GSAP_EASE.premiumOut,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 82%",
+          once: true,
+        },
+      });
+
+      if (useMobileFlow) {
+        for (let i = 1; i < cards.length; i++) {
+          gsap.set(cards[i], { y: 24, opacity: 0, scale: 1, force3D: true });
+          gsap.to(cards[i], {
+            y: 0,
+            opacity: 1,
+            duration: MOTION_DURATION.normal,
+            ease: GSAP_EASE.premiumOut,
+            force3D: true,
+            scrollTrigger: {
+              trigger: cards[i],
+              start: "top 88%",
+              once: true,
+            },
+          });
+        }
+        return;
+      }
+
+      for (let i = 1; i < cards.length; i++) {
+        gsap.set(cards[i], { y: getViewportHeight() * 1.1, force3D: true });
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${(count - 1) * 100}%`,
+          pin: true,
+          pinSpacing: true,
+          scrub: prefersReducedMotion ? false : MOTION_SCRUB.stack,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+          preventOverlaps: true,
+          fastScrollEnd: true,
+        },
+      });
+
+      for (let i = 1; i < count; i++) {
+        const position = i - 1;
+
+        tl.to(
+          cards[i],
+          {
+            y: offset * i,
+            ease: GSAP_EASE.smoothInOut,
+            duration: 1,
+            force3D: true,
+          },
+          position,
+        );
+
+        for (let j = 0; j < i; j++) {
+          tl.to(
+            cards[j],
+            {
+              scale: 1 - (i - j) * 0.03,
+              transformOrigin: "top center",
+              ease: GSAP_EASE.smoothInOut,
+              duration: 1,
+              force3D: true,
+            },
+            position,
+          );
+        }
+      }
+    });
+
+    window.addEventListener("resize", requestRefresh);
+    window.addEventListener("orientationchange", requestRefresh);
+    viewport?.addEventListener("resize", requestRefresh);
+
+    return () => {
+      window.removeEventListener("resize", requestRefresh);
+      window.removeEventListener("orientationchange", requestRefresh);
+      viewport?.removeEventListener("resize", requestRefresh);
+      if (refreshTimeout) window.clearTimeout(refreshTimeout);
+      ctx.revert();
+    };
+  }, [count, mobileMode, offset]);
 
   return (
-    <div ref={containerRef} className={`${styles.stack} ${className ?? ""}`.trim()}>
-      {items.map((item, index) => (
-        <StackLayer
-          key={item.key ?? index}
-          index={index}
-          total={items.length}
-          stickyTop={stickyTop}
-          mobileStickyTop={mobileStickyTop}
-          trackStep={trackStep}
-          progress={scrollYProgress}
-          className={item.props.className}
-          onMeasure={index === 0 ? handleMeasure : undefined}
-        >
-          {item.props.children}
-        </StackLayer>
-      ))}
-    </div>
+    <section
+      ref={sectionRef}
+      className={`${styles.section} ${mobileMode === "flow" ? styles.mobileFlow : ""} ${className ?? ""}`}
+      id={id}
+    >
+      <div className={styles.viewport}>
+        <div className={styles.container}>
+          {header && (
+            <div ref={headerRef} className={styles.headerArea}>
+              {header}
+            </div>
+          )}
+          <div className={styles.stackArea}>
+            {items.map((child, i) => (
+              <div
+                key={i}
+                ref={(el) => {
+                  cardRefs.current[i] = el;
+                }}
+                className={styles.cardWrapper}
+                style={{ zIndex: 10 + i }}
+              >
+                {child}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

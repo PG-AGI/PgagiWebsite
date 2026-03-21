@@ -1,67 +1,12 @@
-// ─────────────────────────────────────────────
-// VisionSystemSection — GSAP ScrollTrigger layout
-// ─────────────────────────────────────────────
-
-$nav-height: clamp(60px, 9vh, 90px);
 $card-radius: 26px;
-$card-bg: #fdfbf8;
 $red: #9f0000;
 
 .outerSection {
-  // No padding/height override — GSAP pinSpacing handles scroll space automatically
   background: #ffffff;
   position: relative;
 }
 
-.pinnedViewport {
-  // GSAP will pin this element. It must be exactly 100vh tall.
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding-top: clamp(140px, 15vh, 160px);
-  box-sizing: border-box;
-  background: #ffffff; // Fix: Ensure pinning masks previous section content
-
-  @media (max-width: 768px) {
-    padding-top: 0px; // Removed padding to maximize visible space
-    padding-bottom: 20px; 
-  }
-}
-
-.container {
-  width: 100%;
-  max-width: 82vw;
-  margin: 0 auto;
-  padding: 0 1vw;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
-
-  @media (max-width: 900px) {
-    padding-top: 80px; // Standardized
-    padding-bottom: 80px;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    // padding: 0 1.2rem; // Removed, covered by 900px breakpoint
-  }
-}
-
 // ─── Heading ───────────────────────────────────
-.headingBlock {
-  text-align: center;
-  padding: clamp(1.2rem, 3vh, 2.2rem) 0 clamp(1rem, 2.5vh, 1.8rem);
-  opacity: 0; // GSAP will animate in
-
-  @media (max-width: 768px) {
-    padding: 0.25rem 0 0.5rem; 
-  }
-}
 
 .title {
   margin: 0;
@@ -72,12 +17,12 @@ $red: #9f0000;
   color: #1a1a1a;
 
   @media (max-width: 768px) {
-    font-size: clamp(1.6rem, 6.5vw, 1.9rem); // Scaled down for mobile
+    font-size: clamp(1.6rem, 6.5vw, 1.9rem);
     line-height: 1.1;
   }
 
   @media (max-width: 380px) {
-    font-size: 1.5rem; // Support very small devices
+    font-size: 1.5rem;
   }
 
   span {
@@ -97,54 +42,39 @@ $red: #9f0000;
   }
 }
 
-// ─── Stack Area ───────────────────────────────────
-.stackArea {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-}
+// ─── Cards ────────────────────────────────────
 
-// ─── Cards — all absolutely positioned inside .stackArea ─────
 .card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: clamp(1.5rem, 4vw, 3rem);
-  background: $card-bg;
-  border: 1px solid rgba(0, 0, 0, 0.035);
+  border: 1px solid rgba(0, 0, 0, 0.025);
   border-radius: $card-radius;
   padding: clamp(1.8rem, 3.2vw, 2.8rem);
-  box-shadow:
-    0 2px 12px rgba(0, 0, 0, 0.04),
-    0 8px 32px rgba(0, 0, 0, 0.05);
-  will-change: transform, filter;
-  transform-origin: top center;
 
-  // Each later card sits above in z-order and gets a slightly more elevated shadow
   &.card1 {
-    z-index: 10;
+    background: linear-gradient(180deg, #f7f5f1 0%, #f0eee9 100%);
     box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.04),
-      0 6px 24px rgba(0, 0, 0, 0.05);
-    background: #f5f3ef; // Slightly tinted cream — naturally looks further back
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      0 1px 3px rgba(0, 0, 0, 0.03),
+      0 4px 16px rgba(0, 0, 0, 0.05);
   }
+
   &.card2 {
-    z-index: 11;
+    background: linear-gradient(180deg, #fcfaf7 0%, #f5f3ef 100%);
     box-shadow:
-      0 4px 16px rgba(0, 0, 0, 0.06),
-      0 12px 36px rgba(0, 0, 0, 0.07);
-    background: #faf8f5;
+      inset 0 1px 0 rgba(255, 255, 255, 0.65),
+      0 2px 6px rgba(0, 0, 0, 0.04),
+      0 8px 24px rgba(0, 0, 0, 0.06);
   }
+
   &.card3 {
-    z-index: 12;
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
     box-shadow:
-      0 8px 24px rgba(0, 0, 0, 0.08),
-      0 20px 60px rgba(0, 0, 0, 0.09);
-    background: #fdfbf8; // Brightest — naturally looks frontmost
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 4px 12px rgba(0, 0, 0, 0.05),
+      0 12px 40px rgba(0, 0, 0, 0.07);
   }
 
   @media (max-width: 900px) {
@@ -154,20 +84,15 @@ $red: #9f0000;
     padding: 1.5rem;
   }
 
-  @media (max-width: 640px) {
-    padding-inline: 0;
-    padding-top: 80px;
-    padding-bottom: 80px;
-  }
-
   @media (max-width: 600px) {
     border-radius: 18px;
-    padding: 0.75rem; 
-    gap: 0.5rem; 
+    padding: 1rem 1.2rem;
+    gap: 0.75rem;
   }
 }
 
 // ─── Copy ────────────────────────────────────
+
 .copyBlock {
   flex: 1;
   min-width: 0;
@@ -181,7 +106,7 @@ $red: #9f0000;
   font-weight: 700;
 
   @media (max-width: 768px) {
-    font-size: 1.15rem; 
+    font-size: 1.15rem;
   }
 }
 
@@ -202,7 +127,10 @@ $red: #9f0000;
   @media (max-width: 768px) {
     margin: 0.4rem 0 0.6rem;
     gap: 0.25rem;
-    li { font-size: 0.85rem; }
+
+    li {
+      font-size: 0.85rem;
+    }
   }
 }
 
@@ -219,6 +147,7 @@ $red: #9f0000;
 }
 
 // ─── Media ───────────────────────────────────
+
 .media {
   width: clamp(240px, 33%, 340px);
   flex: 0 0 clamp(240px, 33%, 340px);
@@ -228,15 +157,21 @@ $red: #9f0000;
 
   @media (max-width: 900px) {
     width: 100%;
-    max-width: 280px; // Cap width to prevent excessive height on mobile
+    max-width: 280px;
     margin: 0 auto;
     flex-basis: auto;
     align-self: center;
     border-radius: 14px;
   }
 
+  @media (max-width: 768px) {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 12px;
+  }
+
   @media (max-height: 700px) {
-    max-width: 240px; // Even smaller on short devices
+    max-width: 240px;
   }
 }
 

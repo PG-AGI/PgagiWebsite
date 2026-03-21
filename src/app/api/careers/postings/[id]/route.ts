@@ -1,95 +1,206 @@
 import { NextResponse } from 'next/server';
+import clientPromise from '@/utils/mongodb';
 
-const FRAPPE_BASE_URL = process.env.FRAPPE_BASE_URL!;
-const FRAPPE_API_TOKEN = process.env.FRAPPE_API_TOKEN!;
+export const revalidate = 3600; // Revalidate every hour
 
-const authHeaders = {
-  Authorization: `token ${FRAPPE_API_TOKEN}`,
-  Accept: 'application/json',
-};
-
-/**
- * Safely parse a value that might be a JSON array string, a plain string, or null/undefined.
- */
-function parseArrayField(value: unknown): string[] {
-  if (Array.isArray(value)) return value as string[];
-  if (typeof value === 'string' && value.trim().startsWith('[')) {
-    try {
-      const parsed = JSON.parse(value);
-      if (Array.isArray(parsed)) return parsed;
-    } catch {
-      return value.split('\n').map((s) => s.trim()).filter(Boolean);
-    }
-  }
-  if (typeof value === 'string' && value.trim()) {
-    return value.split('\n').map((s) => s.trim()).filter(Boolean);
-  }
-  return [];
+interface Job {
+  id: string;
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  category: 'technical' | 'non technical';
+  description: string;
+  responsibilities: string[];
+  requirements: string[];
+  numberOfOpenings: number;
+  applicationUrl: string;
+  status: 'active' | 'inactive';
 }
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
   const { id } = params;
 
   try {
-    const frappeUrl = `${FRAPPE_BASE_URL}/api/resource/Job%20Opening/${encodeURIComponent(id)}`;
+    const client = await clientPromise;
+    const database = client.db('jobPosting');
+    const jobsCollection = database.collection('Postings');
 
-    const response = await fetch(frappeUrl, {
-      headers: authHeaders,
-      cache: 'no-store',
-    });
+    const job = await jobsCollection.findOne({ id });
 
-    if (response.status === 404) {
+    if (!job) {
       return NextResponse.json(
         { message: 'Job posting not found' },
         { status: 404 }
       );
     }
 
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error('Frappe detail error:', response.status, errText);
-      return NextResponse.json(
-        { message: 'Failed to fetch job opening from Frappe', error: errText },
-        { status: response.status }
-      );
-    }
-
-    const json = await response.json();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const raw: any = json.data;
-
-    if (!raw) {
-      return NextResponse.json(
-        { message: 'Job posting not found' },
-        { status: 404 }
-      );
-    }
-
-    const frappeStatus: string = raw.status ?? '';
-    const job = {
-      id: raw.name as string,
-      title: (raw.job_title as string) ?? '',
-      department: (raw.department as string) ?? '',
-      location: (raw.location as string) ?? '',
-      type: (raw.employment_type as string) ?? '',
-      description: (raw.description as string) ?? '',
-      responsibilities: parseArrayField(raw.custom_responsibilities),
-      requirements: parseArrayField(raw.custom_requirements),
-      numberOfOpenings: typeof raw.vacancies === 'number' ? raw.vacancies : 0,
-      applicationUrl: (raw.custom_assignment_link as string) ?? '',
-      status: frappeStatus === 'Open' ? ('active' as const) : ('inactive' as const),
-      category: (raw.custom_category as 'technical' | 'non technical') ?? 'technical',
+    const formattedJob: Job = {
+      id: job.id,
+      title: job.title,
+      department: job.department,
+      location: job.location,
+      type: job.type,
+      category: job.category, 
+      description: job.description,
+      responsibilities: job.responsibilities,
+      requirements: job.requirements,
+      numberOfOpenings: job.numberOfOpenings,
+      applicationUrl: job.applicationUrl,
+      status: job.status,
     };
 
-    return NextResponse.json(job, { status: 200 });
+    return NextResponse.json(formattedJob, { status: 200 });
   } catch (error) {
     const err = error as Error;
-    console.error('Error fetching job from Frappe:', err.message, err.stack);
+    console.error('Error fetching job posting:', err.message, err.stack);
     return NextResponse.json(
       { message: 'Failed to fetch job posting', error: err.message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
+  const { id } = params;
+
+  try {
+    const body = await request.json();
+
+    const {
+      title,
+      department,
+      location,
+      type,
+      category, 
+      description,
+      responsibilities,
+      requirements,
+      numberOfOpenings,
+      applicationUrl,
+      status 
+    } = body;
+
+
+    if (
+      !title ||
+      !department ||
+      !location ||
+      !type ||
+      !category ||
+      (category !== 'technical' && category !== 'non technical') ||
+      !description ||
+      !Array.isArray(responsibilities) ||
+      !Array.isArray(requirements) ||
+      numberOfOpenings == null 
+    ) {
+      return NextResponse.json(
+        { message: 'Invalid job posting data' },
+        { status: 400 }
+      );
+    }
+
+    if (status && !['active', 'inactive'].includes(status)) {
+      return NextResponse.json(
+        { message: 'Invalid status value' },
+        { status: 400 }
+      );
+    }
+
+    const client = await clientPromise;
+    const database = client.db('jobPosting');
+    const jobsCollection = database.collection('Postings');
+
+    const updateFields: Partial<Job> = {
+      title: title.trim(),
+      department: department.trim(),
+      location: location.trim(),
+      type: type.trim(),
+      category: category.trim(),
+      description: description.trim(),
+      responsibilities: responsibilities
+        .map((resp: string) => resp.trim())
+        .filter((resp: string) => resp !== ''),
+      requirements: requirements
+        .map((req: string) => req.trim())
+        .filter((req: string) => req !== ''),
+      numberOfOpenings: numberOfOpenings,
+      applicationUrl: applicationUrl.trim(),
+    };
+
+    if (status) {
+      updateFields.status = status;
+    }
+
+    const updateResult = await jobsCollection.updateOne(
+      { id },
+      { $set: updateFields }
+    );
+
+    if (updateResult.matchedCount === 0) {
+      return NextResponse.json(
+        { message: 'Job posting not found' },
+        { status: 404 }
+      );
+    }
+
+    if (updateResult.modifiedCount === 1) {
+      return NextResponse.json(
+        { message: 'Job posting updated successfully' },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { message: 'No changes made to the job posting' },
+        { status: 200 }
+      );
+    }
+  } catch (error) {
+    const err = error as Error;
+    console.error('Error updating job posting:', err.message, err.stack);
+    return NextResponse.json(
+      { message: 'Failed to update job posting', error: err.message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+  const { id } = params;
+
+  try {
+    const client = await clientPromise;
+    const database = client.db('jobPosting');
+    const jobsCollection = database.collection('Postings');
+
+    const updateResult = await jobsCollection.updateOne(
+      { id },
+      { $set: { status: 'inactive' } }
+    );
+
+    if (updateResult.matchedCount === 0) {
+      return NextResponse.json(
+        { message: 'Job posting not found' },
+        { status: 404 }
+      );
+    }
+
+    if (updateResult.modifiedCount === 1) {
+      return NextResponse.json(
+        { message: 'Job posting marked as inactive successfully' },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { message: 'No changes made to the job posting' },
+        { status: 200 }
+      );
+    }
+  } catch (error) {
+    const err = error as Error;
+    console.error('Error marking job posting as inactive:', err.message, err.stack);
+    return NextResponse.json(
+      { message: 'Failed to mark job posting as inactive', error: err.message },
       { status: 500 }
     );
   }

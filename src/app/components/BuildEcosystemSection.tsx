@@ -6,6 +6,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./BuildEcosystemSection.module.scss";
+import {
+  FRAMER_EASE,
+  GSAP_EASE,
+  MOBILE_BREAKPOINT,
+  MOTION_DURATION,
+  MOTION_SCRUB,
+  MOTION_STAGGER,
+} from "@/lib/motion";
 
 type BuildNode = {
   key: string;
@@ -18,6 +26,7 @@ type BuildNode = {
 type BuildCardProps = {
   card: BuildNode;
   className?: string;
+  motionDelay?: number;
 };
 
 const buildNodes: BuildNode[] = [
@@ -68,9 +77,19 @@ const getNode = (key: string) => {
   return node;
 };
 
-const BuildCard = ({ card, className }: BuildCardProps) => {
+const BuildCard = ({ card, className, motionDelay = 0 }: BuildCardProps) => {
   return (
-    <article className={`${styles.integrationCard} ${className ?? ""}`}>
+    <motion.article
+      className={`${styles.integrationCard} ${className ?? ""}`}
+      initial={{ opacity: 0, y: 22, scale: 0.93 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{
+        delay: motionDelay,
+        duration: MOTION_DURATION.normal,
+        ease: FRAMER_EASE.premiumOut,
+      }}
+    >
       <Image
         src={card.src}
         alt={card.alt}
@@ -79,7 +98,7 @@ const BuildCard = ({ card, className }: BuildCardProps) => {
         className={styles.cardImage}
         unoptimized
       />
-    </article>
+    </motion.article>
   );
 };
 
@@ -96,19 +115,16 @@ const BuildEcosystemSection = () => {
   const erp = getNode("erp");
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     const scrollArea = scrollAreaRef.current;
     const stage = stageRef.current;
     const section = sectionRef.current;
 
-    if (!scrollArea || !stage || !section) {
-      return;
-    }
+    if (!scrollArea || !stage || !section) return;
 
+    // Only use GSAP horizontal scroll on tablet and above-mobile.
     const mm = gsap.matchMedia();
 
-    mm.add("(max-width: 920px)", () => {
+    mm.add(`(min-width: ${MOBILE_BREAKPOINT}px) and (max-width: 920px)`, () => {
       const getHorizontalDistance = () => {
         const stageStyles = window.getComputedStyle(stage);
         const marginLeft = Number.parseFloat(stageStyles.marginLeft) || 0;
@@ -136,14 +152,14 @@ const BuildEcosystemSection = () => {
 
       const scrollTween = gsap.to(stage, {
         x: () => -getHorizontalDistance(),
-        ease: "none",
+        ease: GSAP_EASE.smoothInOut,
         scrollTrigger: {
           trigger: scrollArea,
           start: "top top",
           end: () => `+=${getHorizontalDistance()}`,
           pin: true,
           pinSpacing: true,
-          scrub: shouldReduceMotion ? false : 0.9,
+          scrub: shouldReduceMotion ? false : MOTION_SCRUB.cinematic,
           invalidateOnRefresh: true,
           anticipatePin: 1,
           onRefresh: setMobileDistanceVar,
@@ -158,9 +174,7 @@ const BuildEcosystemSection = () => {
       };
     });
 
-    return () => {
-      mm.revert();
-    };
+    return () => mm.revert();
   }, [shouldReduceMotion]);
 
   return (
@@ -171,18 +185,17 @@ const BuildEcosystemSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          transition={{
+            duration: MOTION_DURATION.slow,
+            ease: FRAMER_EASE.premiumOut,
+          }}
         >
           Build inside your <span>ecosystem</span>
         </motion.h2>
 
-        <motion.div
+        <div
           ref={scrollAreaRef}
           className={styles.scrollArea}
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div ref={stageRef} className={styles.stage}>
             <div className={styles.gridBackdrop} aria-hidden="true" />
@@ -195,98 +208,87 @@ const BuildEcosystemSection = () => {
               aria-hidden="true"
             >
               <defs>
-                <linearGradient
-                  id="build-eco-gradient"
-                  x1="0"
-                  y1="0"
-                  x2="1160"
-                  y2="0"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop offset="0" stopColor="#ff5f4d" stopOpacity="0.08" />
-                  <stop offset="0.5" stopColor="#ff3f30" stopOpacity="1" />
-                  <stop offset="1" stopColor="#ff5f4d" stopOpacity="0.08" />
+                <linearGradient id="build-eco-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#ca1e11" stopOpacity="0.4" />
+                  <stop offset="50%" stopColor="#ca1e11" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#ca1e11" stopOpacity="0.4" />
                 </linearGradient>
               </defs>
 
-              <path
-                id="build-link-top-left"
-                className={styles.neutralPath}
-                d="M250 126 C 340 70, 430 250, 520 186"
-              />
-              <path
-                id="build-link-bottom-left"
-                className={styles.neutralPath}
-                d="M250 266 C 360 220, 430 120, 520 194"
-              />
-              <path
-                id="build-link-top-right"
-                className={styles.neutralPath}
-                d="M640 186 C 720 110, 805 86, 910 126"
-              />
-              <path
-                id="build-link-bottom-right"
-                className={styles.neutralPath}
-                d="M640 194 C 730 260, 810 256, 910 266"
-              />
+              {/* Path coordinates recalculated for uniform 240px wide boxes and 120px gaps */}
+              <g className={styles.neutralPaths}>
+                {/* Top wavy connections */}
+                <path className={styles.neutralPath} d="M340 126 C 370 100, 430 210, 460 186" />
+                <path className={styles.neutralPath} d="M700 186 C 730 160, 790 100, 820 126" />
+                
+                {/* Middle connections */}
+                <path className={styles.neutralPath} d="M340 196 Q 400 170, 460 190" />
+                <path className={styles.neutralPath} d="M700 190 Q 760 210, 820 196" />
+                
+                {/* Bottom connections */}
+                <path className={styles.neutralPath} d="M340 266 C 370 280, 430 210, 460 194" />
+                <path className={styles.neutralPath} d="M700 194 C 730 210, 790 280, 820 266" />
+              </g>
 
-              <path
-                id="build-flow-main"
-                className={styles.signalPath}
-                d="M250 196 C 360 160, 450 220, 580 190 C 700 165, 810 235, 910 205"
-              />
-              <path
-                id="build-flow-dotted"
-                className={styles.signalPathDotted}
-                d="M250 208 C 350 180, 450 230, 580 202 C 720 176, 820 246, 910 214"
-              />
-
-              {!shouldReduceMotion && (
-                <>
-                  <circle className={styles.signalDot} r="5.2" fill="#ff4a3a">
-                    <animateMotion dur="7.8s" repeatCount="indefinite" rotate="auto">
-                      <mpath href="#build-flow-main" xlinkHref="#build-flow-main" />
-                    </animateMotion>
-                  </circle>
-
-                  <circle className={styles.signalDotSmall} r="4.2" fill="#ff5d4a">
-                    <animateMotion
-                      dur="9.4s"
-                      repeatCount="indefinite"
-                      rotate="auto"
-                      begin="1.1s"
-                    >
-                      <mpath
-                        href="#build-flow-dotted"
-                        xlinkHref="#build-flow-dotted"
-                      />
-                    </animateMotion>
-                  </circle>
-                </>
-              )}
+              {/* Animated pulses along the paths */}
+              <circle className={styles.signalDot} r="5" fill="#ca1e11">
+                <animateMotion dur="2.8s" repeatCount="indefinite" path="M340 126 C 370 100, 430 210, 460 186" />
+              </circle>
+              <circle className={styles.signalDot} r="5" fill="#ca1e11">
+                <animateMotion dur="3.2s" repeatCount="indefinite" path="M700 186 C 730 160, 790 100, 820 126" />
+              </circle>
+              <circle className={styles.signalDot} r="4" fill="#ca1e11" opacity="0.6">
+                <animateMotion dur="2.5s" repeatCount="indefinite" path="M340 266 C 370 280, 430 210, 460 194" />
+              </circle>
+              <circle className={styles.signalDot} r="4" fill="#ca1e11" opacity="0.6">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M700 194 C 730 210, 790 280, 820 266" />
+              </circle>
             </svg>
 
-            <span className={`${styles.pulseNode} ${styles.nodeLeft}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.nodeCenter}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.nodeRight}`} aria-hidden="true" />
+            <span className={`${styles.pulseNode} ${styles.nodeLeftTop}`} aria-hidden="true" />
+            <span className={`${styles.pulseNode} ${styles.nodeLeftBottom}`} aria-hidden="true" />
+            <span className={`${styles.pulseNode} ${styles.nodeCenterLeft}`} aria-hidden="true" />
+            <span className={`${styles.pulseNode} ${styles.nodeCenterRight}`} aria-hidden="true" />
+            <span className={`${styles.pulseNode} ${styles.nodeRightTop}`} aria-hidden="true" />
+            <span className={`${styles.pulseNode} ${styles.nodeRightBottom}`} aria-hidden="true" />
+
+            {/* Gap midpoint nodes */}
+            <span className={`${styles.pulseNode} ${styles.gapLeft}`} aria-hidden="true" />
+            <span className={`${styles.pulseNode} ${styles.gapRight}`} aria-hidden="true" />
 
             <div className={styles.cardsRail}>
               <div className={styles.leftColumn}>
-                <BuildCard card={workspace} className={styles.workspaceCard} />
-                <BuildCard card={project} className={styles.projectCard} />
+                <BuildCard card={workspace} className={styles.workspaceCard} motionDelay={0} />
+                <BuildCard
+                  card={project}
+                  className={styles.projectCard}
+                  motionDelay={MOTION_STAGGER.normal}
+                />
               </div>
 
               <div className={styles.centerColumn}>
-                <BuildCard card={crm} className={styles.crmCard} />
+                <BuildCard
+                  card={crm}
+                  className={styles.crmCard}
+                  motionDelay={MOTION_STAGGER.normal * 2}
+                />
               </div>
 
               <div className={styles.rightColumn}>
-                <BuildCard card={communication} className={styles.communicationCard} />
-                <BuildCard card={erp} className={styles.erpCard} />
+                <BuildCard
+                  card={communication}
+                  className={styles.communicationCard}
+                  motionDelay={MOTION_STAGGER.normal * 3}
+                />
+                <BuildCard
+                  card={erp}
+                  className={styles.erpCard}
+                  motionDelay={MOTION_STAGGER.normal * 4}
+                />
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

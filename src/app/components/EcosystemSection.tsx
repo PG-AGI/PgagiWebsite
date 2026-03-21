@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./EcosystemSection.module.scss";
+import { GSAP_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 type EcosystemCard = {
   title: string;
@@ -14,19 +17,19 @@ type EcosystemCard = {
 const ecosystemCards: EcosystemCard[] = [
   {
     title: "Google Workspace Ecosystem",
-    image: "/svgs/Ecosystem/First.svg",
+    image: "/svgs/Ecosystem/First (1).jpg",
     width: 331,
     height: 794,
   },
   {
     title: "Microsoft Azure Ecosystem",
-    image: "/svgs/Ecosystem/Second.svg",
+    image: "/svgs/Ecosystem/Second.jpg",
     width: 333,
     height: 735,
   },
   {
     title: "AWS Ecosystem",
-    image: "/svgs/Ecosystem/Third.svg",
+    image: "/svgs/Ecosystem/Third.jpg",
     width: 331,
     height: 618,
   },
@@ -84,75 +87,84 @@ const SignalSVG = ({ className, prefix }: { className: string; prefix: string })
 );
 
 const EcosystemSection = () => {
-  const pinWrapperRef = useRef<HTMLDivElement>(null);
-  const pinInnerRef   = useRef<HTMLDivElement>(null);
-  const sliderRef     = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const cardsTrackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
-    if (window.innerWidth > 768) return;
-
-    let ctx: any;
-    const init = async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-
-      const wrapper = pinWrapperRef.current;
-      const inner   = pinInnerRef.current;
-      const slider  = sliderRef.current;
-      if (!wrapper || !inner || !slider) return;
-
-      ctx = gsap.context(() => {
-        // Timeline for the horizontal slide
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: wrapper,
-            start: "top top",
-            // Scrubs for 2 full viewport heights (one for each slide move)
-            end: () => `+=${window.innerHeight * (ecosystemCards.length - 1)}`,
-            pin: inner,
-            pinSpacing: true, // ⚑ CRITICAL: Closes the gap by pushing following sections
-            scrub: 1,         // Buttery smooth
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              setActiveIndex(Math.round(self.progress * (ecosystemCards.length - 1)));
-            },
-          },
-        });
-
-        // Translate the slider left by the remaining width
-        tl.to(slider, {
-          x: () => -(window.innerWidth * (ecosystemCards.length - 1)),
-          ease: "none",
-        });
-      });
-    };
-
-    init();
-    return () => ctx?.revert();
+  const handleScroll = useCallback(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    const scrollLeft = slider.scrollLeft;
+    const cardWidth = slider.offsetWidth;
+    const index = Math.round(scrollLeft / cardWidth);
+    setActiveIndex(Math.min(index, ecosystemCards.length - 1));
   }, []);
 
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    slider.addEventListener("scroll", handleScroll, { passive: true });
+    return () => slider.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   const jumpToPanel = (index: number) => {
-    if (window.innerWidth > 768) return;
-    const wrapper = pinWrapperRef.current;
-    if (!wrapper) return;
-    const scrollDistance = window.innerHeight * (ecosystemCards.length - 1);
-    const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
-    const targetScroll = wrapperTop + (index / (ecosystemCards.length - 1)) * scrollDistance;
-    window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    const slider = sliderRef.current;
+    if (!slider) return;
+    slider.scrollTo({ left: slider.offsetWidth * index, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const section = sectionRef.current;
+    const title = titleRef.current;
+    const cardsTrack = cardsTrackRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      if (title) {
+        gsap.fromTo(
+          title,
+          { opacity: 0, y: 28, skewY: 1 },
+          {
+            opacity: 1, y: 0, skewY: 0,
+            duration: MOTION_DURATION.slow,
+            ease: GSAP_EASE.premiumOut,
+            scrollTrigger: { trigger: section, start: "top 80%", once: true },
+          },
+        );
+      }
+
+      if (cardsTrack) {
+        const cards = cardsTrack.querySelectorAll("article");
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 40, scale: 0.97 },
+          {
+            opacity: 1, y: 0, scale: 1,
+            duration: MOTION_DURATION.normal,
+            ease: GSAP_EASE.premiumOut,
+            stagger: MOTION_STAGGER.relaxed,
+            scrollTrigger: { trigger: section, start: "top 72%", once: true },
+          },
+        );
+      }
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <>
       {/* ───── Desktop Section (Hidden on Mobile) ───── */}
-      <section className={styles.section} id="ecosystem">
+      <section className={styles.section} id="ecosystem" ref={sectionRef}>
         <div className={styles.container}>
-          <h2 className={styles.title}>We always build within the <span>ecosystem</span></h2>
+          <h2 className={styles.title} ref={titleRef}>We always build within the <span>ecosystem</span></h2>
           <div className={styles.visualWrap}>
             <div className={styles.gridBackdrop} aria-hidden="true" />
             <SignalSVG className={styles.signalLayer} prefix="desk" />
-            <div className={styles.cardsTrack}>
+            <div className={styles.cardsTrack} ref={cardsTrackRef}>
               {ecosystemCards.map((card) => (
                 <article key={card.title} className={styles.cardColumn}>
                   <p className={styles.cardLabel}>{card.title}</p>
@@ -167,9 +179,9 @@ const EcosystemSection = () => {
         </div>
       </section>
 
-      {/* ───── Mobile Pinned Section (Hidden on Desktop) ───── */}
-      <div ref={pinWrapperRef} className={styles.pinWrapper} id="ecosystem-mobile">
-        <div ref={pinInnerRef} className={styles.pinInner}>
+      {/* ───── Mobile Scroll-Snap Carousel (Hidden on Desktop) ───── */}
+      <div className={styles.pinWrapper} id="ecosystem-mobile">
+        <div className={styles.pinInner}>
           <div className={styles.mobileContainer}>
             <h2 className={styles.mobileTitle}>We always build within the <span>ecosystem</span></h2>
             <div className={styles.mobileVisualWrap}>

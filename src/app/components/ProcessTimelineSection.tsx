@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Blocks, Gauge, Rocket, Search, Wrench } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ProcessTimelineSection.module.scss";
+import { GSAP_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 type TimelineStep = {
   title: string;
@@ -58,6 +61,9 @@ const timelineSteps: TimelineStep[] = [
 ];
 
 const ProcessTimelineSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -66,57 +72,116 @@ const ProcessTimelineSection = () => {
     if (!scroller) return;
 
     let frame: number | null = null;
+    let cachedCards: HTMLElement[] = [];
 
     const updateActiveStep = () => {
       frame = null;
-
-      const cards = Array.from(
-        scroller.querySelectorAll<HTMLElement>("[data-timeline-card='true']"),
-      );
-
-      if (!cards.length) return;
+      if (cachedCards.length === 0) {
+        cachedCards = Array.from(
+          scroller.querySelectorAll<HTMLElement>("[data-timeline-card='true']"),
+        );
+      }
+      if (!cachedCards.length) return;
 
       const viewportCenter = scroller.scrollLeft + scroller.clientWidth / 2;
       let nearestIndex = 0;
-      let nearestDistance = Number.POSITIVE_INFINITY;
+      let nearestDistance = Infinity;
 
-      cards.forEach((card, index) => {
+      for (let i = 0; i < cachedCards.length; i++) {
+        const card = cachedCards[i];
         const cardCenter = card.offsetLeft + card.clientWidth / 2;
         const distance = Math.abs(viewportCenter - cardCenter);
 
         if (distance < nearestDistance) {
           nearestDistance = distance;
-          nearestIndex = index;
+          nearestIndex = i;
         }
-      });
+      }
 
       setActiveIndex(nearestIndex);
     };
 
     const onScroll = () => {
       if (frame !== null) return;
-      frame = window.requestAnimationFrame(updateActiveStep);
+      frame = requestAnimationFrame(updateActiveStep);
+    };
+
+    const onResize = () => {
+      cachedCards = []; // Force re-cache
+      onScroll();
     };
 
     updateActiveStep();
     scroller.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
       scroller.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame !== null) {
-        cancelAnimationFrame(frame);
-      }
+      window.removeEventListener("resize", onResize);
+      if (frame !== null) cancelAnimationFrame(frame);
     };
   }, []);
 
+  /* ── Section entrance animations ── */
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const section = sectionRef.current;
+    const title = titleRef.current;
+    const panel = panelRef.current;
+    if (!section) return;
+
+    const ctx = gsap.context(() => {
+      if (title) {
+        gsap.fromTo(
+          title,
+          { opacity: 0, x: -28 },
+          {
+            opacity: 1, x: 0,
+            duration: MOTION_DURATION.slow,
+            ease: GSAP_EASE.premiumOut,
+            scrollTrigger: { trigger: section, start: "top 82%", once: true },
+          },
+        );
+      }
+
+      if (panel) {
+        gsap.fromTo(
+          panel,
+          { opacity: 0, y: 32 },
+          {
+            opacity: 1, y: 0,
+            duration: MOTION_DURATION.cinematic,
+            ease: GSAP_EASE.premiumOut,
+            scrollTrigger: { trigger: section, start: "top 78%", once: true },
+          },
+        );
+
+        const cards = panel.querySelectorAll("[data-timeline-card='true']");
+        if (cards.length) {
+          gsap.fromTo(
+            cards,
+            { opacity: 0, y: 24, scale: 0.96 },
+            {
+              opacity: 1, y: 0, scale: 1,
+              duration: MOTION_DURATION.normal,
+              ease: GSAP_EASE.snappyOut,
+              stagger: MOTION_STAGGER.tight,
+              scrollTrigger: { trigger: section, start: "top 72%", once: true },
+            },
+          );
+        }
+      }
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className={styles.section} id="process-timeline">
+    <section className={styles.section} id="process-timeline" ref={sectionRef}>
       <div className={styles.container}>
-        <div className={styles.panel}>
+        <div className={styles.panel} ref={panelRef}>
           <div className={styles.contentLayout}>
-            <h2 className={styles.title}>
+            <h2 className={styles.title} ref={titleRef}>
               Process <span>timeline</span>
             </h2>
 

@@ -1,6 +1,8 @@
 "use client";
 
 import styles from "./SolutionFitBreakdownSection.module.scss";
+import { motion, useReducedMotion } from "framer-motion";
+import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 const audienceItems = [
   "Founders building AI-native products",
@@ -37,24 +39,64 @@ const analysisItems = [
 ];
 
 const SolutionFitBreakdownSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+  const baseTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { duration: MOTION_DURATION.slow, ease: FRAMER_EASE.premiumOut };
+
   return (
     <section className={styles.section} id="solution-fit-breakdown">
       <div className={styles.container}>
-        <h2 className={styles.title}>
+        <motion.h2
+          className={styles.title}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={baseTransition}
+        >
           Solution fit <span>breakdown</span>
-        </h2>
+        </motion.h2>
 
-        <div className={styles.layout}>
-          <div className={styles.copyBlock}>
+        <motion.div
+          className={styles.layout}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{
+            ...baseTransition,
+            delay: shouldReduceMotion ? 0 : MOTION_STAGGER.tight,
+          }}
+        >
+          <motion.div
+            className={styles.copyBlock}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: -16 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              ...baseTransition,
+              delay: shouldReduceMotion ? 0 : MOTION_STAGGER.normal,
+            }}
+          >
             <h3>Who this is best for</h3>
             <ul className={styles.pointList}>
               {audienceItems.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className={styles.visualPanel}>
+          <motion.div
+            className={styles.visualPanel}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 16, scale: 0.98 }}
+            whileInView={
+              shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, scale: 1 }
+            }
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              ...baseTransition,
+              delay: shouldReduceMotion ? 0 : MOTION_STAGGER.relaxed,
+            }}
+          >
             <div className={styles.mainCard}>
               {solutionRows.map((row) => (
                 <article key={row.title} className={styles.row}>
@@ -74,8 +116,8 @@ const SolutionFitBreakdownSection = () => {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

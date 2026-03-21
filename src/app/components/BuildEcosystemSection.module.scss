@@ -1,30 +1,33 @@
 .section {
   position: relative;
-  background: #ffffff;
-  padding: 150px 0 150px; // 150px white top, then content, then 150px dark bottom
+  background: #090c12; // Deep dark background as requested
+  padding: 150px 0 150px;
+  // Skip painting offscreen content — major scroll performance win
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px;
 
   &::before {
     content: "";
     position: absolute;
-    top: 150px;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 0;
     background:
       radial-gradient(
-        112% 74% at 50% -10%,
-        rgba(169, 20, 14, 0.62) 0%,
-        rgba(169, 20, 14, 0.18) 36%,
-        rgba(8, 11, 17, 0) 72%
+        110% 80% at 50% -10%,
+        rgba(169, 20, 14, 0.45) 0%,
+        rgba(169, 20, 14, 0.12) 40%,
+        rgba(8, 11, 17, 0) 80%
       ),
-      #090c12;
+      #05070a; // Even deeper base
   }
 
   @media (max-width: 920px) {
     padding: 80px 0 80px;
     &::before {
-      top: 80px;
+      top: 0;
       bottom: var(--mobile-horizontal-distance, 0px);
     }
   }
@@ -34,7 +37,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 82vw;
+  max-width: 86vw; // Slightly wider for that spread out feel
   margin: 0 auto;
   padding: 0 1vw;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
@@ -46,10 +49,10 @@
 }
 
 .title {
-  margin: 0;
+  margin: 0 0 60px 0; // More space below title
   text-align: center;
   color: #f2f2f3;
-  font-size: clamp(1.96rem, 4.2vw, 3.3rem);
+  font-size: clamp(2.4rem, 4.8vw, 3.8rem); // Matches target scale better
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -60,23 +63,17 @@
 }
 
 .scrollArea {
-  margin-top: clamp(1.2rem, 2.8vw, 2.4rem);
+  margin-top: 0;
 }
 
 .stage {
   position: relative;
-  min-height: clamp(320px, 35vw, 408px);
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  min-height: clamp(380px, 42vw, 480px); // More height for spread
+  border-radius: 0; // Removed border radius to blend
+  border: none;    // Removed the visible box border
   padding: clamp(1rem, 2.5vw, 2.15rem);
-  overflow: hidden;
-  background:
-    radial-gradient(
-      58% 50% at 50% 52%,
-      rgba(167, 21, 16, 0.36) 0%,
-      rgba(167, 21, 16, 0) 74%
-    ),
-    linear-gradient(180deg, rgba(11, 14, 21, 0.74) 0%, rgba(8, 10, 16, 0.96) 100%);
+  overflow: visible; // Allow glows to bleed out
+  background: transparent; // Blend into the section background
   isolation: isolate;
 }
 
@@ -84,29 +81,29 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.22;
+  opacity: 0.15; // More subtle
   background-image: radial-gradient(
     circle at center,
-    rgba(255, 255, 255, 0.24) 1px,
-    transparent 1.3px
+    rgba(255, 255, 255, 0.35) 0.8px, // Smaller, sharper dots
+    transparent 1px
   );
-  background-size: 28px 28px;
+  background-size: 32px 32px; // Slightly larger grid
 }
 
 .glowCenter {
   position: absolute;
   left: 50%;
-  top: 54%;
-  width: clamp(340px, 44vw, 560px);
-  height: clamp(160px, 20vw, 250px);
+  top: 50%;
+  width: 90vw;
+  height: 60vh;
   transform: translate(-50%, -50%);
   border-radius: 999px;
   background: radial-gradient(
     circle at center,
-    rgba(255, 56, 40, 0.3) 0%,
-    rgba(255, 56, 40, 0) 78%
+    rgba(202, 30, 17, 0.12) 0%,
+    rgba(202, 30, 17, 0) 70%
   );
-  filter: blur(6px);
+  filter: blur(80px); // Massive soft glow
   z-index: 0;
 }
 
@@ -115,116 +112,120 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  opacity: 0.85;
 }
 
 .neutralPath {
   fill: none;
-  stroke: rgba(188, 196, 208, 0.28);
-  stroke-width: 1.65;
+  stroke: rgba(255, 255, 255, 0.08); // Much more subtle
+  stroke-width: 1px;
 }
 
 .signalPath {
   fill: none;
-  stroke: url(#build-eco-gradient);
-  stroke-width: 2.6;
-  opacity: 0.92;
+  stroke: #ca1e11; // Solid vibrant red
+  stroke-width: 2px;
+  opacity: 1;
+  filter: drop-shadow(0 0 5px rgba(202, 30, 17, 0.6));
 }
 
 .signalPathDotted {
   fill: none;
-  stroke: #ff4535;
-  stroke-width: 2.2;
-  stroke-dasharray: 2 9;
-  opacity: 0.78;
+  stroke: #ca1e11;
+  stroke-width: 1.5px;
+  stroke-dasharray: 1 6; // Tighter dots
+  opacity: 0.6;
 }
 
 .signalDot {
-  filter: drop-shadow(0 0 8px rgba(255, 80, 61, 0.95));
+  filter: drop-shadow(0 0 10px #ca1e11);
 }
 
 .signalDotSmall {
-  filter: drop-shadow(0 0 7px rgba(255, 104, 79, 0.88));
+  filter: drop-shadow(0 0 6px #ca1e11);
 }
 
 .pulseNode {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #ff4838;
-  box-shadow: 0 0 14px rgba(255, 76, 57, 0.88);
-  z-index: 2;
-  animation: pulseNode 2.2s ease-in-out infinite;
+  background: #ca1e11;
+  box-shadow: 0 0 12px #ca1e11;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  animation: pulseNode 3s ease-in-out infinite;
 }
 
-.nodeLeft {
-  left: 24.1%;
-  top: 55%;
-}
+.nodeLeftTop { left: 29.3%; top: 35%; }
+.nodeLeftBottom { left: 29.3%; top: 74%; }
+.nodeCenterLeft { left: 39.6%; top: 51.6%; }
+.nodeCenterRight { left: 60.3%; top: 51.6%; }
+.nodeRightTop { left: 70.7%; top: 35%; }
+.nodeRightBottom { left: 70.7%; top: 74%; }
 
-.nodeCenter {
-  left: 50%;
-  top: 50.6%;
-}
-
-.nodeRight {
-  left: 74.5%;
-  top: 54.6%;
-}
+.gapLeft { left: 34.5%; top: 48%; width: 10px; height: 10px; }
+.gapRight { left: 65.5%; top: 53%; width: 10px; height: 10px; }
 
 .cardsRail {
   position: relative;
   z-index: 2;
   height: 100%;
-  display: grid;
-  grid-template-columns: auto minmax(220px, 1fr) auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: clamp(1rem, 4vw, 4.8rem);
-  padding-inline: clamp(0.15rem, 0.8vw, 0.9rem);
-}
-
-.leftColumn,
-.rightColumn {
-  height: 100%;
-  display: grid;
-  align-content: center;
-  gap: clamp(0.82rem, 1.8vw, 1.2rem);
+  padding-inline: 0;
 }
 
 .leftColumn {
-  justify-items: start;
-}
-
-.rightColumn {
-  justify-items: end;
+  margin-left: 8.6%;
+  width: 20.7%; // Right edge hits 29.3%
+  display: grid;
+  align-content: center;
+  gap: 40px;
+  justify-items: center;
 }
 
 .centerColumn {
+  width: 20.7%; // Spans 39.6% to 60.3%
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.rightColumn {
+  margin-right: 8.6%;
+  width: 20.7%; // Left edge hits 70.7%
+  display: grid;
+  align-content: center;
+  gap: 40px;
+  justify-items: center;
+}
+
 .integrationCard {
-  width: clamp(230px, 28vw, 323px);
-  filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.38));
+  width: 100%;
+  max-width: 323px;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+  transition: transform 0.4s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 }
 
 .workspaceCard,
 .projectCard,
 .crmCard,
-.erpCard {
-  width: clamp(230px, 28vw, 323px);
-}
-
+.erpCard,
 .communicationCard {
-  width: clamp(225px, 27vw, 315px);
+  width: clamp(240px, 30vw, 340px); // Larger cards
 }
 
 .cardImage {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 20px; // Ensure smooth edges if SVG allows
 }
 
 @keyframes pulseNode {
@@ -280,26 +281,111 @@
     width: 1080px;
     min-height: 338px;
     margin-inline: 0;
-    border-radius: 20px;
+    border-radius: 0;
+    border: none;
+    background: transparent;
     padding: 1.12rem 1.2rem;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 0 48px;
+    contain-intrinsic-size: auto 520px;
+  }
+
   .title {
-    padding-inline: 0.75rem;
+    text-align: center;
+    max-width: none;
+    margin-bottom: 28px;
+    padding-inline: 1rem;
   }
 
   .scrollArea {
-    padding-inline: 0.75rem;
+    overflow: visible;
+    -webkit-overflow-scrolling: auto;
+    scrollbar-width: auto;
+    touch-action: auto;
+    padding-inline: 1rem;
+    padding-bottom: 0;
+    margin-top: 0;
   }
 
   .stage {
-    width: 1020px;
-    min-height: 316px;
-    margin-inline: 0;
-    border-radius: 16px;
-    padding: 0.95rem 1rem;
+    width: 100%;
+    min-height: auto;
+    padding: 0.75rem 0;
+    margin: 0;
+  }
+
+  .signalLayer {
+    display: none;
+  }
+
+  .pulseNode {
+    display: none;
+  }
+
+  .glowCenter {
+    width: 110vw;
+    height: 100%;
+    filter: blur(50px);
+    animation: mobileAmbientGlow 5s ease-in-out infinite;
+  }
+
+  .gridBackdrop {
+    opacity: 0.06;
+    background-size: 24px 24px;
+  }
+
+  .cardsRail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    justify-items: center;
+    align-items: center;
+    padding: 0;
+    height: auto;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    display: contents;
+  }
+
+  .centerColumn {
+    grid-column: 1 / -1;
+    width: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .integrationCard {
+    max-width: none;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
+  }
+
+  .workspaceCard,
+  .projectCard,
+  .communicationCard,
+  .erpCard,
+  .crmCard {
+    width: clamp(140px, 42vw, 175px);
+  }
+
+  .cardImage {
+    border-radius: 14px;
+  }
+}
+
+@keyframes mobileAmbientGlow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.04);
   }
 }
 

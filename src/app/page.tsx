@@ -1,12 +1,25 @@
 "use client";
 import Landing from "./components/Landing";
 import styles from "./page.module.scss";
-// import Segment from "./components/base/Segment";
-// import GlareBackground from "./components/base/GlareBackground";
-// import { segmentList } from "@/utils/constants";
-import { useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-import LazyOnVisible from "./components/LazyOnVisible";
+
+/* ── Lightweight shimmer placeholder shown while each section loads ── */
+const SectionSkeleton = ({ height = '80vh', lines = 3 }: { height?: string; lines?: number }) => (
+  <div style={{ minHeight: height, padding: '4rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+    {Array.from({ length: lines }).map((_, i) => (
+      <div
+        key={i}
+        className="skeleton-section"
+        style={{
+          height: i === 0 ? '2.5rem' : '100%',
+          flex: i > 0 ? 1 : undefined,
+          opacity: 1 - i * 0.15,
+          borderRadius: '10px',
+        }}
+      />
+    ))}
+  </div>
+);
 
 // Preload critical imports for faster loading
 // import "three";
@@ -16,76 +29,76 @@ import LazyOnVisible from "./components/LazyOnVisible";
 // Partners is now rendered inside Landing.tsx (pinned to hero bottom)
 const StatsSection = dynamic(() => import("./components/NewPage"), {
   ssr: false,
-  loading: () => <div>Loading...</div>,
+  loading: () => <SectionSkeleton height="80vh" lines={3} />,
 });
 const VisionSystemSection = dynamic(
   () => import("./components/VisionSystemSection"),
   {
     ssr: false,
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="100vh" lines={4} />,
   },
 );
 const SocialOrbitSection = dynamic(
   () => import("./components/SocialOrbitSection"),
   {
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="600px" lines={3} />,
   },
 );
 const SolutionFitBreakdownSection = dynamic(
   () => import("./components/SolutionFitBreakdownSection"),
   {
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="600px" lines={3} />,
   },
 );
 const WhatMakesUsDifferentSection = dynamic(
   () => import("./components/WhatMakesUsDifferentSection"),
   {
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="900px" lines={4} />,
   },
 );
 const MeasurableImpactSection = dynamic(
   () => import("./components/MeasurableImpactSection"),
   {
     ssr: false,
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="600px" lines={3} />,
   },
 );
 const EcosystemSection = dynamic(
   () => import("./components/EcosystemSection"),
   {
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="600px" lines={3} />,
   },
 );
 const ProcessTimelineSection = dynamic(
   () => import("./components/ProcessTimelineSection"),
   {
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="600px" lines={2} />,
   },
 );
 const RevenueSection = dynamic(() => import("./components/RevenueSection"), {
   ssr: false,
-  loading: () => <div>Loading...</div>,
+  loading: () => <SectionSkeleton height="100vh" lines={4} />,
 });
 const ConcentricEllipseSection = dynamic(
   () => import("./components/ConcentricEllipseSection"),
   {
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="500px" lines={2} />,
   },
 );
 const CaseStudiesSection = dynamic(
   () => import("./components/CaseStudiesSection"),
   {
     ssr: false,
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="600px" lines={3} />,
   },
 );
 const Customers = dynamic(() => import("./components/Customers"), {
-  loading: () => <div>Loading...</div>,
+  loading: () => <SectionSkeleton height="400px" lines={2} />,
 });
 const BuildEcosystemSection = dynamic(
   () => import("./components/BuildEcosystemSection"),
   {
-    loading: () => <div>Loading...</div>,
+    loading: () => <SectionSkeleton height="600px" lines={3} />,
   },
 );
 const LandingProjects = dynamic(() => import("./components/LandingProjects"), {
@@ -113,53 +126,7 @@ const ScrollIndicator = dynamic(() => import("./components/ScrollIndicator"), {
   loading: () => null,
 });
 
-const LazySection = ({ children, height = "600px" }: { children: React.ReactNode; height?: string }) => (
-  <div style={{ minHeight: height }}>
-    <LazyOnVisible rootMargin="300px">
-      {children}
-    </LazyOnVisible>
-  </div>
-);
-
 export default function Home() {
-  const segmentRef = useRef<HTMLDivElement>(null);
-  const lottieWindowRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>();
-  const isScrollingRef = useRef(false);
-
-  // Throttled scroll handler using RAF removed in favor of CSS or GSAP if needed
-  // For the blob animation, we can use simple CSS or a lighter GSAP implementation if critical
-  useEffect(() => {
-    if (!segmentRef.current) return;
-    
-    // Using GSAP for the blob animation is smoother and more efficient
-    const blob = document.querySelector(`.${styles.blob}`) as HTMLDivElement;
-    if (!blob) return;
-
-    import("gsap").then(({ gsap }) => {
-      import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
-        gsap.registerPlugin(ScrollTrigger);
-        
-        const segmentSectionHeight = segmentRef.current!.scrollHeight * 2;
-        
-        ScrollTrigger.create({
-          trigger: segmentRef.current,
-          start: "top center",
-          end: `+=${segmentSectionHeight}`,
-          onUpdate: (self) => {
-            const pos = self.progress * 100;
-            gsap.to(blob, {
-              x: `${Math.min(pos, 100)}%`,
-              y: "-50%",
-              duration: 0.1,
-              overwrite: "auto"
-            });
-          }
-        });
-      });
-    });
-  }, []);
-
   // Preload critical Hyperspeed dependencies immediately
   // useEffect(() => {
   // 	// Start loading Three.js and postprocessing as soon as possible
@@ -240,12 +207,12 @@ export default function Home() {
       <EcosystemSection />
       <ProcessTimelineSection />
       <RevenueSection />
+      <MeasurableImpactSection />
       <BuildEcosystemSection />
       <SolutionFitBreakdownSection />
       <CaseStudiesSection />
       <Customers />
       <WhatMakesUsDifferentSection />
-      <MeasurableImpactSection />
       <ConcentricEllipseSection />
       {/* <VideoTestimonial />
       <LandingProjects />

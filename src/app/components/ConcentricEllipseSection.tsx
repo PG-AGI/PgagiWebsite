@@ -19,7 +19,11 @@ const ConcentricEllipseSection = () => {
               Architecture first, ROI driven, Built to scale.
             </p>
 
-            <button type="button" className={styles.ctaButton}>
+            <button 
+              type="button" 
+              className={styles.ctaButton}
+              onClick={() => window.open("https://calendly.com/vivek-_ou/30min", "_blank")}
+            >
               <span className={styles.ctaLabel}>Schedule Strategic Consultation</span>
               <span className={styles.arrowCircle} aria-hidden="true">
                 <ArrowRight size={16} strokeWidth={2.3} />

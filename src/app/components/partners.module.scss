@@ -74,8 +74,8 @@
     padding: 0 0.8rem;
 
     img {
-      max-width: 50px;
-      height: 20px !important;
+      width: clamp(70px, 18vw, 100px) !important;
+      height: clamp(26px, 4.5vh, 38px) !important;
     }
   }
 }

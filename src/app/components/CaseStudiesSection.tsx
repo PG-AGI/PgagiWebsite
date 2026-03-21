@@ -4,9 +4,18 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./CaseStudiesSection.module.scss";
+import {
+  FRAMER_EASE,
+  GSAP_EASE,
+  MOBILE_MEDIA_QUERY,
+  MOTION_DURATION,
+  MOTION_SCRUB,
+  REDUCED_MOTION_QUERY,
+} from "@/lib/motion";
 
 type CaseStudyCard = {
   id: string;
@@ -71,132 +80,99 @@ const CaseStudiesSection = () => {
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
+    if (window.matchMedia(MOBILE_MEDIA_QUERY).matches) return;
+
     gsap.registerPlugin(ScrollTrigger);
 
     const section = sectionRef.current;
-    const pinContainer = pinContainerRef.current;
-    const cards = cardRefs.current.filter(
-      (card): card is HTMLElement => Boolean(card),
-    );
+    if (!section) return;
 
-    if (!section || !pinContainer || cards.length === 0) return;
+    const cards = cardRefs.current.filter((card): card is HTMLElement => Boolean(card));
+    if (cards.length === 0) return;
 
-    const isMobile = window.innerWidth < 768;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const peek = isMobile ? 22 : CARD_OFFSET;
+    const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
 
-    gsap.set(cards[0], { y: 50, opacity: 0 });
-    cards.slice(1).forEach((card) => gsap.set(card, { y: "110vh" }));
-
-    gsap.to(cards[0], {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: section,
-        start: "top 82%",
-        once: true,
-      },
-    });
-
-    if (headingRef.current) {
-      gsap.fromTo(
-        headingRef.current,
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.65,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 82%",
-            once: true,
-          },
-        },
-      );
-    }
-
-    if (ctaRef.current) {
-      gsap.fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 18 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 65%",
-            once: true,
-          },
-        },
-      );
-    }
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: `+=${(cards.length - 1) * 100}%`,
-        pin: section,
-        pinSpacing: true,
-        scrub: prefersReducedMotion ? false : isMobile ? 1 : 0.6,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    cards.slice(1).forEach((card, incomingCardIndex) => {
-      const phaseStart = incomingCardIndex;
-
-      tl.to(
-        card,
-        {
-          y: peek * (incomingCardIndex + 1),
-          ease: "power2.inOut",
-          duration: 1,
-        },
-        phaseStart,
+    const ctx = gsap.context(() => {
+      gsap.set(cards[0], { y: 50, opacity: 0 });
+      cards.slice(1).forEach((card) =>
+        gsap.set(card, {
+          y: (window.visualViewport?.height ?? window.innerHeight) * 1.1,
+        }),
       );
 
-      for (let coveredCardIndex = 0; coveredCardIndex <= incomingCardIndex; coveredCardIndex += 1) {
-        const coveredCard = cards[coveredCardIndex];
-        const scaleValue = Math.max(
-          0.89,
-          1 - 0.03 * (incomingCardIndex - coveredCardIndex + 1),
-        );
+      gsap.to(cards[0], {
+        y: 0, opacity: 1, duration: MOTION_DURATION.cinematic, ease: GSAP_EASE.premiumOut, force3D: true,
+        scrollTrigger: { trigger: section, start: "top 82%", once: true },
+      });
 
-        tl.to(
-          coveredCard,
-          {
-            scale: scaleValue,
-            transformOrigin: "top center",
-            ease: "power2.inOut",
-            duration: 1,
-          },
-          phaseStart,
+      if (headingRef.current) {
+        gsap.fromTo(headingRef.current,
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: MOTION_DURATION.slow, ease: GSAP_EASE.premiumOut,
+            scrollTrigger: { trigger: section, start: "top 82%", once: true } },
         );
       }
-    });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === section) trigger.kill();
+      if (ctaRef.current) {
+        gsap.fromTo(ctaRef.current,
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: MOTION_DURATION.normal, ease: GSAP_EASE.premiumOut,
+            scrollTrigger: { trigger: section, start: "top 65%", once: true } },
+        );
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${(cards.length - 1) * 100}%`,
+          pin: section,
+          pinSpacing: true,
+          scrub: prefersReducedMotion ? false : MOTION_SCRUB.stack,
+          invalidateOnRefresh: true,
+          fastScrollEnd: true,
+          preventOverlaps: true,
+        },
       });
-      tl.kill();
-    };
+
+      cards.slice(1).forEach((card, incomingCardIndex) => {
+        const phaseStart = incomingCardIndex;
+        tl.to(card, { y: CARD_OFFSET * (incomingCardIndex + 1), ease: "none", duration: 1, force3D: true }, phaseStart);
+
+        for (let coveredCardIndex = 0; coveredCardIndex <= incomingCardIndex; coveredCardIndex += 1) {
+          const coveredCard = cards[coveredCardIndex];
+          const scaleValue = Math.max(0.89, 1 - 0.03 * (incomingCardIndex - coveredCardIndex + 1));
+          tl.to(coveredCard, { scale: scaleValue, transformOrigin: "top center", ease: "none", duration: 1, force3D: true }, phaseStart);
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   const setCardRef = (index: number) => (element: HTMLElement | null) => {
     cardRefs.current[index] = element;
   };
 
+  const CardArticle = ({ card, index }: { card: CaseStudyCard; index: number }) => (
+    <a href={card.href} target="_blank" rel="noopener noreferrer"
+      className={styles.cardLink} aria-label={`Open ${card.brand} case study`}>
+      <div className={styles.previewFrame}>
+        <Image src={card.imageSrc} alt={`${card.brand} case study preview`}
+          fill sizes="(max-width: 900px) 86vw, 980px"
+          className={styles.previewImage} priority={index === 0} />
+      </div>
+      <div className={styles.overlay} />
+      <div className={styles.copyBlock}>
+        <span className={styles.brandPill}>{card.brand}</span>
+        <p className={styles.cardTitle}>{card.title}</p>
+      </div>
+    </a>
+  );
+
   return (
     <section className={styles.outerSection} id="case-studies-showcase" ref={sectionRef}>
+      {/* Desktop: GSAP pinned card stack */}
       <div className={styles.pinnedViewport} ref={pinContainerRef}>
         <div className={styles.container}>
           <div className={styles.headingBlock} ref={headingRef}>
@@ -205,43 +181,9 @@ const CaseStudiesSection = () => {
 
           <div className={styles.stackArea}>
             {caseStudyCards.map((card, index) => (
-              <article
-                key={card.id}
-                className={styles.card}
-                ref={setCardRef(index)}
-                style={
-                  {
-                    "--accent-start": card.accentStart,
-                    "--accent-end": card.accentEnd,
-                    zIndex: 10 + index,
-                  } as React.CSSProperties
-                }
-              >
-                <a
-                  href={card.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.cardLink}
-                  aria-label={`Open ${card.brand} case study`}
-                >
-                  <div className={styles.previewFrame}>
-                    <Image
-                      src={card.imageSrc}
-                      alt={`${card.brand} case study preview`}
-                      fill
-                      sizes="(max-width: 900px) 86vw, 980px"
-                      className={styles.previewImage}
-                      priority={index === 0}
-                    />
-                  </div>
-
-                  <div className={styles.overlay} />
-
-                  <div className={styles.copyBlock}>
-                    <span className={styles.brandPill}>{card.brand}</span>
-                    <p className={styles.cardTitle}>{card.title}</p>
-                  </div>
-                </a>
+              <article key={card.id} className={styles.card} ref={setCardRef(index)}
+                style={{ "--accent-start": card.accentStart, "--accent-end": card.accentEnd, zIndex: 10 + index } as React.CSSProperties}>
+                <CardArticle card={card} index={index} />
               </article>
             ))}
           </div>
@@ -254,6 +196,36 @@ const CaseStudiesSection = () => {
               </span>
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile: horizontal scroll-snap carousel */}
+      <div className={styles.mobileFlow}>
+        <motion.h2 className={styles.mobileTitle}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: MOTION_DURATION.normal, ease: FRAMER_EASE.premiumOut }}
+        >
+          Case studies
+        </motion.h2>
+
+        <div className={styles.mobileCarousel}>
+          {caseStudyCards.map((card, index) => (
+            <article key={card.id} className={styles.mobileCard}
+              style={{ "--accent-start": card.accentStart, "--accent-end": card.accentEnd } as React.CSSProperties}>
+              <CardArticle card={card} index={index} />
+            </article>
+          ))}
+        </div>
+
+        <div className={styles.mobileCta}>
+          <Link href="/whatwethink#case-studies" className={styles.viewAllButton}>
+            <span className={styles.viewAllLabel}>View all</span>
+            <span className={styles.arrowCircle} aria-hidden="true">
+              <ArrowRight size={22} strokeWidth={2.2} />
+            </span>
+          </Link>
         </div>
       </div>
     </section>

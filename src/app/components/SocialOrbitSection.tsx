@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import styles from "./SocialOrbitSection.module.scss";
+import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 type OrbitNode = {
   platform: "Meta" | "Reddit" | "X" | "LinkedIn";
@@ -90,14 +92,33 @@ const iconByPlatform = {
 
 const SocialOrbitSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const baseTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { duration: MOTION_DURATION.slow, ease: FRAMER_EASE.premiumOut };
 
   return (
     <section className={styles.section} id="social-orbit">
       <div className={styles.container}>
-        <h2 className={styles.sectionTitle}>How we scale your product</h2>
+        <motion.h2
+          className={styles.sectionTitle}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={baseTransition}
+        >
+          How we scale your product
+        </motion.h2>
 
         <div className={styles.panel}>
-          <div className={styles.accordionColumn}>
+          <motion.div
+            className={styles.accordionColumn}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: -24 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ ...baseTransition, delay: shouldReduceMotion ? 0 : MOTION_STAGGER.normal }}
+          >
             {accordionItems.map((item, index) => {
               const isOpen = openIndex === index;
 
@@ -126,9 +147,15 @@ const SocialOrbitSection = () => {
                 </div>
               );
             })}
-          </div>
+          </motion.div>
 
-          <div className={styles.visualBlock}>
+          <motion.div
+            className={styles.visualBlock}
+            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ ...baseTransition, delay: shouldReduceMotion ? 0 : MOTION_STAGGER.relaxed }}
+          >
             <div className={styles.orbitScene}>
               {orbitItems.map((ring, ringIndex) => (
                 // ⚡ ONE CSS animation per ring instead of 14 Framer Motion nodes
@@ -168,7 +195,7 @@ const SocialOrbitSection = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

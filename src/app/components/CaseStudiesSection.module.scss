@@ -16,8 +16,69 @@
   background: #ffffff;
 
   @media (max-width: 768px) {
-    padding-top: 80px; // Standardized
+    display: none;
   }
+}
+
+.mobileFlow {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    padding: 3rem 0 2.5rem;
+  }
+}
+
+.mobileTitle {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    margin: 0 0 1.25rem;
+    padding: 0 1.25rem;
+    font-size: clamp(1.85rem, 7.8vw, 2.35rem);
+    line-height: 1.12;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+  }
+}
+
+.mobileCarousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 1rem;
+  padding: 0 1.25rem;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.mobileCard {
+  flex: 0 0 85%;
+  scroll-snap-align: center;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(
+    180deg,
+    var(--accent-start) 0%,
+    var(--accent-start) 44%,
+    var(--accent-end) 100%
+  );
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.08),
+    0 18px 38px rgba(0, 0, 0, 0.12);
+}
+
+.mobileCta {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
 .container {
@@ -40,6 +101,10 @@
   text-align: center;
   padding: clamp(0.35rem, 0.75vh, 0.7rem) 0 clamp(0.2rem, 0.6vh, 0.45rem);
   opacity: 0;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .title {
@@ -58,6 +123,8 @@
   min-height: 0;
   margin-bottom: clamp(0.55rem, 1vh, 0.85rem);
   overflow: hidden;
+  perspective: 1200px;
+  contain: layout style;
 }
 
 .card {
@@ -84,6 +151,10 @@
   overflow: hidden;
   will-change: transform;
   transform-origin: top center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .cardLink {
@@ -169,6 +240,10 @@
   display: flex;
   justify-content: center;
   opacity: 0;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .viewAllButton {

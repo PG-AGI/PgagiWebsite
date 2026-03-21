@@ -1,6 +1,6 @@
 .section {
   position: relative;
-  background: #C5B7AC; // Match the gradient start color
+  background: #C5B7AC;
   padding-top: 150px;
   padding-bottom: 150px;
   min-height: 100vh;
@@ -9,6 +9,9 @@
   align-items: center;
   font-family: 'Inter', -apple-system, sans-serif;
   overflow-x: hidden;
+  // Skip painting offscreen content — major scroll performance win
+  content-visibility: auto;
+  contain-intrinsic-size: 0 100vh;
 
   &::before {
     content: "";
@@ -699,4 +702,123 @@
 .checkIconWhite {
   background: rgba(255, 255, 255, 0.26);
   color: #ffffff;
+}
+
+/* ── Mobile-only card colour overrides ── */
+@media (max-width: 768px) {
+  .cardFounders {
+    background: #181818;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.1);
+
+    .labelOverline {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .mainTitle {
+      color: #ffffff;
+    }
+
+    .descriptionText {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* Lighter inner-box gradient ending in white */
+    .cardHeaderWrapper {
+      background: linear-gradient(180deg, rgba(190, 190, 190, 0.75) 0%, rgba(255, 255, 255, 0.92) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* Push button lower on mobile */
+    .ctaWrapper {
+      margin-top: auto;
+      padding-top: 10px;
+    }
+
+    /* Plain text link button */
+    .pillButton {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      scale: 1;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      gap: 6px;
+
+      &:hover {
+        background: transparent;
+        transform: none;
+        box-shadow: none;
+      }
+
+      &::after {
+        content: '→';
+        font-size: 1.1rem;
+      }
+    }
+
+    .redArrowCircle {
+      display: none;
+    }
+  }
+
+  .cardEnterprises {
+    background: #64070F;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.1);
+
+    .labelOverline {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .mainTitle {
+      color: #ffffff;
+    }
+
+    .descriptionText {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* Lighter inner-box gradient ending in white */
+    .cardHeaderWrapper {
+      background: linear-gradient(180deg, rgba(255, 155, 165, 0.75) 0%, rgba(255, 255, 255, 0.88) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* Push button lower on mobile */
+    .ctaWrapper {
+      margin-top: auto;
+      padding-top: 10px;
+    }
+
+    /* Plain text link button */
+    .pillButton {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      scale: 1;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      gap: 6px;
+
+      &:hover {
+        background: transparent;
+        transform: none;
+        box-shadow: none;
+      }
+
+      &::after {
+        content: '→';
+        font-size: 1.1rem;
+      }
+    }
+
+    .redArrowCircle {
+      display: none;
+    }
+  }
 }

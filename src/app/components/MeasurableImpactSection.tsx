@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import styles from "./MeasurableImpactSection.module.scss";
+import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 type ImpactMetric = {
   id: string;
@@ -106,6 +108,7 @@ const allMetrics: ImpactMetric[] = [
 const MeasurableImpactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const [displayValues, setDisplayValues] = useState<Record<string, number>>(() =>
     Object.fromEntries(allMetrics.map((metric) => [metric.id, metric.startValue])),
   );
@@ -131,23 +134,23 @@ const MeasurableImpactSection = () => {
   useEffect(() => {
     if (!shouldAnimate) return;
 
-    const duration = 1400;
+    const duration = shouldReduceMotion ? 0 : 1400;
     const startTime = performance.now();
     let rafId = 0;
 
     const animate = (time: number) => {
-      const rawProgress = Math.min((time - startTime) / duration, 1);
+      const rawProgress =
+        duration === 0 ? 1 : Math.min((time - startTime) / duration, 1);
       const easedProgress = 1 - Math.pow(1 - rawProgress, 3);
 
-      const nextValues = Object.fromEntries(
-        allMetrics.map((metric) => {
-          const currentValue =
-            metric.startValue + (metric.value - metric.startValue) * easedProgress;
-          const roundedValue =
-            rawProgress >= 1 ? metric.value : Math.floor(currentValue);
-          return [metric.id, roundedValue];
-        }),
-      );
+      const nextValues: Record<string, number> = {};
+      for (let i = 0; i < allMetrics.length; i++) {
+        const metric = allMetrics[i];
+        const currentValue =
+          metric.startValue + (metric.value - metric.startValue) * easedProgress;
+        nextValues[metric.id] =
+          rawProgress >= 1 ? metric.value : Math.floor(currentValue);
+      }
 
       setDisplayValues(nextValues);
 
@@ -158,7 +161,7 @@ const MeasurableImpactSection = () => {
 
     rafId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafId);
-  }, [shouldAnimate]);
+  }, [shouldAnimate, shouldReduceMotion]);
 
   const getDisplayValue = (metric: ImpactMetric) => {
     const value = displayValues[metric.id] ?? metric.value;
@@ -168,23 +171,65 @@ const MeasurableImpactSection = () => {
   return (
     <section ref={sectionRef} className={styles.section} id="measurable-impact">
       <div className={styles.container}>
-        <h2 className={styles.title}>Delivering measurable impact</h2>
+        <motion.h2
+          className={styles.title}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : { duration: MOTION_DURATION.slow, ease: FRAMER_EASE.premiumOut }
+          }
+        >
+          Delivering measurable impact
+        </motion.h2>
 
         <div className={styles.desktopGrid}>
-          {desktopOrder.map((metric) => (
-            <article key={metric.id} className={styles.metricCard}>
+          {desktopOrder.map((metric, index) => (
+            <motion.article
+              key={metric.id}
+              className={styles.metricCard}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: MOTION_DURATION.normal,
+                      delay: Math.min(index * MOTION_STAGGER.tight, 0.24),
+                      ease: FRAMER_EASE.premiumOut,
+                    }
+              }
+            >
               <p className={styles.metricValue} translate="no">{getDisplayValue(metric)}</p>
               <p className={styles.metricDescription}>{metric.description}</p>
-            </article>
+            </motion.article>
           ))}
         </div>
 
         <div className={styles.mobileGrid}>
-          {mobileOrder.map((metric) => (
-            <article key={metric.id} className={styles.metricCard}>
+          {mobileOrder.map((metric, index) => (
+            <motion.article
+              key={metric.id}
+              className={styles.metricCard}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: MOTION_DURATION.normal,
+                      delay: Math.min(index * MOTION_STAGGER.tight, 0.2),
+                      ease: FRAMER_EASE.premiumOut,
+                    }
+              }
+            >
               <p className={styles.metricValue} translate="no">{getDisplayValue(metric)}</p>
               <p className={styles.metricDescription}>{metric.description}</p>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

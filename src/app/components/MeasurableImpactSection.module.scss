@@ -1,6 +1,9 @@
 .section {
   background: #ffffff;
   padding: 150px 0;
+  // Skip painting offscreen content — major scroll performance win
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
 
   @media (max-width: 768px) {
     padding: 80px 0;

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Fragment } from "react";
 import { motion } from "framer-motion";
 import styles from "./WhatMakesUsDifferentSection.module.scss";
+import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 type CardArt = {
   id: string;
@@ -69,6 +70,42 @@ const mobileOrder: CardArt[] = [
   cardArt.sixth,
 ];
 
+// Animation Variants for performance — shared between children
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: MOTION_STAGGER.relaxed,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1, // Preserve the relative delays from before
+      duration: MOTION_DURATION.slow,
+      ease: FRAMER_EASE.premiumOut
+    }
+  })
+};
+
+const arrowVariants = {
+  hidden: { opacity: 0 },
+  visible: (i: number) => ({
+    opacity: 1,
+    transition: {
+      delay: 0.3 + i * 0.1,
+      duration: 0.5
+    }
+  })
+};
+
 const FlowArrow = ({
   direction,
   className,
@@ -82,35 +119,41 @@ const FlowArrow = ({
     <motion.div 
       className={`${styles.flow} ${styles[direction]} ${className ?? ""}`} 
       aria-hidden
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ delay: 0.3 + delayStep * 0.15, duration: 0.5 }}
+      custom={delayStep}
+      variants={arrowVariants}
     >
       <motion.span 
         className={styles.track} 
-        initial={{ 
-          scaleY: direction === "down" || direction === "up" ? 0 : 1,
-          scaleX: direction === "right" ? 0 : 1,
-          transformOrigin: direction === "down" ? "top" : direction === "up" ? "bottom" : "left"
+        variants={{
+          hidden: { 
+            scaleY: direction === "down" || direction === "up" ? 0 : 1,
+            scaleX: direction === "right" ? 0 : 1,
+            transformOrigin: direction === "down" ? "top" : direction === "up" ? "bottom" : "left"
+          },
+          visible: { 
+            scaleY: 1, 
+            scaleX: 1,
+            transition: {
+              delay: 0.3 + delayStep * MOTION_STAGGER.normal,
+              duration: MOTION_DURATION.slow,
+              ease: FRAMER_EASE.snappyOut,
+            }
+          }
         }}
-        whileInView={{ scaleY: 1, scaleX: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ delay: 0.3 + delayStep * 0.15, duration: 0.6, ease: "easeOut" }}
       />
       <motion.span 
         className={styles.tracer} 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6 + delayStep * 0.15, duration: 0.4 }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { delay: 0.6 + delayStep * 0.1, duration: 0.4 } }
+        }}
       />
       <motion.span 
         className={styles.head} 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6 + delayStep * 0.15, duration: 0.4 }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { delay: 0.6 + delayStep * 0.1, duration: 0.4 } }
+        }}
       />
     </motion.div>
   );
@@ -120,11 +163,12 @@ const ArtCard = ({ card, delayStep = 0 }: { card: CardArt, delayStep?: number })
   return (
     <motion.article 
       className={styles.cardFrame}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ delay: delayStep * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ scale: 1.02, transition: { duration: 0.3, ease: "easeOut" } }}
+      custom={delayStep}
+      variants={cardVariants}
+      whileHover={{
+        scale: 1.02,
+        transition: { duration: MOTION_DURATION.fast, ease: FRAMER_EASE.snappyOut },
+      }}
     >
       <Image
         src={card.src}
@@ -147,17 +191,24 @@ const WhatMakesUsDifferentSection = () => {
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: MOTION_DURATION.slow, ease: FRAMER_EASE.premiumOut }}
         >
           What makes us different
         </motion.h2>
 
         <motion.div 
           className={styles.board}
-          initial={{ opacity: 0, scale: 0.97 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px", amount: 0.15 }}
+          variants={{
+            hidden: { opacity: 0, scale: 0.97 },
+            visible: { 
+              opacity: 1, 
+              scale: 1, 
+              transition: { duration: MOTION_DURATION.cinematic, ease: FRAMER_EASE.premiumOut } 
+            }
+          }}
         >
           <div className={styles.desktopGrid}>
             <div className={styles.leftTop}>
