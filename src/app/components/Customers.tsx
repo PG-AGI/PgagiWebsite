@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import styles from "./Customers.module.scss";
 import { FRAMER_EASE, MOTION_DURATION } from "@/lib/motion";
+import { pgagiClientTestimonials } from "@/data/pgagiClientTestimonials";
 
 /* ─── YouTube helpers ─────────────────────────────────────────────── */
 const testimonialYouTubeUrls = [
@@ -109,99 +110,13 @@ const VideoFacade = ({
   );
 };
 
-/* ─── Testimonials data ───────────────────────────────────────────── */
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Mitchell",
-    role: "Startup Founder",
-    quote:
-      "PG-AGI transformed how we operate. The AI understands our workflows and automates them seamlessly — we cut delivery time in half.",
-    initials: "SM",
-    color: "#7c6fa0",
-  },
-  {
-    id: 2,
-    name: "Tomás Restrepo",
-    role: "Agency Owner",
-    quote:
-      "We use PG-AGI for all our clients now. One conversation sets up their entire workflow. Turnaround went from weeks to hours.",
-    initials: "TR",
-    color: "#2e8b57",
-  },
-  {
-    id: 3,
-    name: "Théo Marchal",
-    role: "E-commerce Brand",
-    quote:
-      "The AI understood our brand perfectly. Our conversion rate improved 3x after deploying the automated campaigns.",
-    initials: "TM",
-    color: "#b84040",
-  },
-  {
-    id: 4,
-    name: "Jordan Ellis",
-    role: "SaaS Founder",
-    quote:
-      "Finally, AI that actually gets our product. The workflows it built look like they came from our senior engineering team.",
-    initials: "JE",
-    color: "#3a7fb5",
-  },
-  {
-    id: 5,
-    name: "Morgan Hayes",
-    role: "Local Business Owner",
-    quote:
-      "I used to spend thousands on consultants. Now I describe what I need and PG-AGI builds it. My costs dropped by 60%.",
-    initials: "MH",
-    color: "#c47f2a",
-  },
-  {
-    id: 6,
-    name: "Sanne de Vries",
-    role: "Coach & Consultant",
-    quote:
-      "I'm not technical at all. PG-AGI handles everything — scheduling, onboarding, follow-ups. It's like having a full team.",
-    initials: "SV",
-    color: "#4a9070",
-  },
-  {
-    id: 7,
-    name: "Anika Patel",
-    role: "Marketing Director",
-    quote:
-      "The intelligence behind PG-AGI is remarkable. It adapts to our brand voice and generates content that actually converts.",
-    initials: "AP",
-    color: "#8b5e9a",
-  },
-  {
-    id: 8,
-    name: "Marcus Chen",
-    role: "Operations Lead",
-    quote:
-      "Deployed across 5 departments in one week. The ROI was visible within the first month. Absolutely outstanding results.",
-    initials: "MC",
-    color: "#4a7fa5",
-  },
-  {
-    id: 9,
-    name: "Lena Hofmann",
-    role: "Product Manager",
-    quote:
-      "PG-AGI cut our planning cycles from days to minutes. It synthesises data, drafts PRDs and flags risks — all in one place.",
-    initials: "LH",
-    color: "#a05030",
-  },
-  {
-    id: 10,
-    name: "David Okafor",
-    role: "CTO, FinTech Startup",
-    quote:
-      "We integrated PG-AGI in a weekend. It handled our compliance checks, reporting pipeline and internal Q&A bot flawlessly.",
-    initials: "DO",
-    color: "#3060a0",
-  },
-];
+/* ─── Testimonials: real reviews (same source as main-branch carousel) ─ */
+const testimonials = pgagiClientTestimonials.map((t, i) => ({
+  id: i + 1,
+  name: t.name.trim() || t.company.trim() || "Client",
+  role: t.projectName.trim(),
+  quote: t.quote.trim(),
+}));
 
 /* ─── Grid items: videos at positions 0 & 4 ──────────────────────── */
 type GridItem =
