@@ -45,28 +45,10 @@ const visionCards = [
 ];
 
 const VisionSystemSection = () => {
-  const refreshTimeoutRef = React.useRef<number | null>(null);
-
-  const handleMediaLoad = React.useCallback(() => {
-    if (typeof window === "undefined") return;
-    if (refreshTimeoutRef.current) window.clearTimeout(refreshTimeoutRef.current);
-    refreshTimeoutRef.current = window.setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 120);
-  }, []);
-
-  React.useEffect(
-    () => () => {
-      if (refreshTimeoutRef.current) {
-        window.clearTimeout(refreshTimeoutRef.current);
-      }
-    },
-    [],
-  );
-
   return (
     <ScrollStack
       id="vision-system"
+      animated={false}
       className={styles.outerSection}
       header={
         <>
@@ -84,7 +66,7 @@ const VisionSystemSection = () => {
           key={card.title}
           className={`${styles.card} ${styles[`card${i + 1}`]}`}
         >
-          <CardContent {...card} priority={i === 0} onMediaLoad={handleMediaLoad} />
+          <CardContent {...card} priority={i === 0} />
         </ScrollStackItem>
       ))}
     </ScrollStack>
@@ -98,7 +80,6 @@ const CardContent = ({
   image,
   imageAlt,
   priority = false,
-  onMediaLoad,
 }: {
   title: string;
   points: string[];
@@ -106,7 +87,6 @@ const CardContent = ({
   image: string;
   imageAlt: string;
   priority?: boolean;
-  onMediaLoad?: () => void;
 }) => (
   <>
     <div className={styles.copyBlock}>
@@ -129,7 +109,6 @@ const CardContent = ({
           height={250}
           className={styles.mediaImage}
           priority={priority}
-          onLoadingComplete={onMediaLoad}
         />
       </div>
     </div>

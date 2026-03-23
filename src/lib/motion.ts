@@ -32,3 +32,21 @@ export const MOBILE_BREAKPOINT = 768;
 export const MOBILE_MEDIA_QUERY = `(max-width: ${MOBILE_BREAKPOINT - 1}px)`;
 export const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 export const SCROLL_REFRESH_DEBOUNCE_MS = 150;
+
+let safeRefreshTimer: number | null = null;
+
+/**
+ * Debounced “safe” ScrollTrigger refresh for layout shifts (e.g. images).
+ * Prefer this over `window.dispatchEvent(new Event("resize"))`, which runs
+ * a full `ScrollTrigger.refresh()` and can blank pinned scrub sections.
+ */
+export function scheduleScrollTriggerSafeRefresh() {
+  if (typeof window === "undefined") return;
+  if (safeRefreshTimer) window.clearTimeout(safeRefreshTimer);
+  safeRefreshTimer = window.setTimeout(() => {
+    safeRefreshTimer = null;
+    void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+      ScrollTrigger.refresh(true);
+    });
+  }, SCROLL_REFRESH_DEBOUNCE_MS);
+}

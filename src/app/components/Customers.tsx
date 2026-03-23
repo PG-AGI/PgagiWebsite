@@ -12,6 +12,14 @@ const testimonialYouTubeUrls = [
   "https://youtu.be/6xaFA25-cc8?si=dlXudFrTusBX7aaJ",
 ];
 
+/** Local posters so full artwork stays visible (not YouTube crops) */
+const videoPosterByIndex: Record<number, string> = {
+  0: "/thumbnail1.png",
+  1: "/thumbnail2.png",
+};
+
+const videoPosterSrc = (videoIndex: number) => videoPosterByIndex[videoIndex];
+
 const extractYouTubeId = (urlOrId: string): string => {
   if (!urlOrId.includes("/") && !urlOrId.includes("=")) return urlOrId;
   const patterns = [
@@ -31,15 +39,25 @@ const getEmbedUrl = (urlOrId: string) =>
 const getThumbnailUrl = (urlOrId: string) =>
   `https://img.youtube.com/vi/${extractYouTubeId(urlOrId)}/hqdefault.jpg`;
 
+/** Deterministic illustrated avatars (same seed → same face across stack + cards) */
+const testimonialAvatarUrl = (seed: string, size: 64 | 128 = 128) =>
+  `https://api.dicebear.com/9.x/lorelei/png?seed=${encodeURIComponent(seed)}&size=${size}`;
+
 /* ─── Video facade ────────────────────────────────────────────────── */
 const VideoFacade = ({
   url,
   title,
   onActivate,
+  thumbnailSrc,
+  posterLoadPriority = false,
 }: {
   url: string;
   title: string;
   onActivate?: () => void;
+  /** When set, replaces the YouTube auto thumbnail */
+  thumbnailSrc?: string;
+  /** When true with a custom poster, use next/image priority (only one LCP candidate) */
+  posterLoadPriority?: boolean;
 }) => {
   const [activated, setActivated] = useState(false);
 
@@ -69,12 +87,16 @@ const VideoFacade = ({
       ) : (
         <>
           <Image
-            src={getThumbnailUrl(url)}
+            src={thumbnailSrc ?? getThumbnailUrl(url)}
             alt={title}
             fill
             sizes="(max-width: 768px) 50vw, 33vw"
-            className={styles.thumbnail}
-            loading="lazy"
+            className={`${styles.thumbnail}${thumbnailSrc ? ` ${styles.thumbnailCustomPoster}` : ""}`}
+            {...(thumbnailSrc
+              ? posterLoadPriority
+                ? { priority: true }
+                : { loading: "eager" as const }
+              : { loading: "lazy" as const })}
           />
           <span className={styles.playButton} aria-hidden>
             <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor">
@@ -198,23 +220,32 @@ const desktopGridItems: GridItem[] = [
   { kind: "quote", testimonial: testimonials[6], key: "q6" },
 ];
 
-/* ─── Rating badge ────────────────────────────────────────────────── */
-const avatarColors = ["#7c6fa0", "#2e8b57", "#b84040", "#3a7fb5"];
+/* ─── Rating badge — same faces as first four testimonial cards ───────── */
+const ratingStackFaces = testimonials.slice(0, 4);
 
 const RatingBadge = () => (
   <div className={styles.ratingBadge}>
-    <div className={styles.avatarStack}>
-      {avatarColors.map((color, i) => (
+    <div className={styles.avatarStack} aria-hidden>
+      {ratingStackFaces.map((t, i) => (
         <span
-          key={i}
+          key={t.id}
           className={styles.stackAvatar}
-          style={{ background: color, zIndex: avatarColors.length - i }}
-        />
+          style={{ zIndex: ratingStackFaces.length - i }}
+          title={t.name}
+        >
+          <Image
+            src={testimonialAvatarUrl(t.name, 64)}
+            alt=""
+            fill
+            sizes="30px"
+            className={styles.stackAvatarImage}
+          />
+        </span>
       ))}
     </div>
     <span className={styles.ratingText}>
       <strong>4.9</strong> /5 from{" "}
-      <strong className={styles.highlight}>500+</strong> clients
+      <strong className={styles.highlight}>100+</strong> clients
     </span>
     <span className={styles.starIcon} aria-hidden>
       ★
@@ -230,11 +261,14 @@ const TestimonialCard = ({
 }) => (
   <div className={styles.card}>
     <div className={styles.cardHeader}>
-      <span
-        className={styles.avatar}
-        style={{ background: testimonial.color }}
-      >
-        {testimonial.initials}
+      <span className={styles.avatar}>
+        <Image
+          src={testimonialAvatarUrl(testimonial.name, 128)}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 28px, 44px"
+          className={styles.avatarImage}
+        />
       </span>
       <div className={styles.nameBlock}>
         <p className={styles.name}>{testimonial.name}</p>
@@ -334,6 +368,8 @@ const Customers = () => {
                 <VideoFacade
                   url={testimonialYouTubeUrls[item.videoIndex]}
                   title={`Customer testimonial video ${item.videoIndex + 1}`}
+                  thumbnailSrc={videoPosterSrc(item.videoIndex)}
+                  posterLoadPriority={item.videoIndex === 0}
                 />
               ) : (
                 <TestimonialCard testimonial={item.testimonial} />
@@ -363,6 +399,8 @@ const Customers = () => {
                       url={testimonialYouTubeUrls[item.videoIndex]}
                       title={`Customer testimonial video ${item.videoIndex + 1}`}
                       onActivate={handleVideoActivate}
+                      thumbnailSrc={videoPosterSrc(item.videoIndex)}
+                      posterLoadPriority={item.videoIndex === 0}
                     />
                   </div>
                 ) : (
@@ -391,6 +429,8 @@ const Customers = () => {
                       url={testimonialYouTubeUrls[item.videoIndex]}
                       title={`Customer testimonial video ${item.videoIndex + 1}`}
                       onActivate={handleVideoActivate}
+                      thumbnailSrc={videoPosterSrc(item.videoIndex)}
+                      posterLoadPriority={item.videoIndex === 0}
                     />
                   </div>
                 ) : (

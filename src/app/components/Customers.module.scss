@@ -63,16 +63,26 @@
 }
 
 .stackAvatar {
+  position: relative;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   border: 2.5px solid #fff;
   display: inline-block;
+  flex-shrink: 0;
   margin-left: -9px;
+  overflow: hidden;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  background: #e8e4e0;
 
   &:first-child {
     margin-left: 0;
   }
+}
+
+.stackAvatarImage {
+  object-fit: cover;
 }
 
 .ratingText {
@@ -143,20 +153,27 @@
   margin-bottom: 1rem;
 }
 
+/* position + overflow required: next/image fill positions against nearest positioned ancestor */
 .avatar {
+  position: relative;
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 44px;
+  max-height: 44px;
   border-radius: 50%;
   flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  display: block;
+  overflow: hidden;
   user-select: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  background: #e8e4e0;
+}
+
+.avatarImage {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .name {
@@ -205,6 +222,11 @@
   border-radius: 20px;
   background: #111;
 
+  /* Letterboxing for local PNG posters (full art visible, not cropped like cover) */
+  &:has(.thumbnailCustomPoster) {
+    background: #f4f4f4;
+  }
+
   &:focus-visible {
     outline: 2px solid #a51610;
     outline-offset: 2px;
@@ -225,6 +247,11 @@
   object-position: center;
   will-change: transform;
   transition: transform 0.35s ease;
+}
+
+.thumbnailCustomPoster {
+  object-fit: contain;
+  object-position: center;
 }
 
 .videoIframe {
@@ -392,7 +419,10 @@
   .marqueeTrack .avatar {
     width: 28px;
     height: 28px;
-    font-size: 0.62rem;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
     flex-shrink: 0;
   }
 

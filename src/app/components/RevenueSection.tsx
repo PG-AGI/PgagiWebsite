@@ -50,28 +50,10 @@ const revenueCards = [
 ];
 
 const RevenueSection = () => {
-  const refreshTimeoutRef = React.useRef<number | null>(null);
-
-  const handleMediaLoad = React.useCallback(() => {
-    if (typeof window === "undefined") return;
-    if (refreshTimeoutRef.current) window.clearTimeout(refreshTimeoutRef.current);
-    refreshTimeoutRef.current = window.setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 120);
-  }, []);
-
-  React.useEffect(
-    () => () => {
-      if (refreshTimeoutRef.current) {
-        window.clearTimeout(refreshTimeoutRef.current);
-      }
-    },
-    [],
-  );
-
   return (
     <ScrollStack
       id="revenue-system"
+      animated={false}
       className={styles.outerSection}
       header={
         <>
@@ -91,7 +73,7 @@ const RevenueSection = () => {
           key={card.title}
           className={`${styles.card} ${styles[`card${i + 1}`]}`}
         >
-          <CardContent {...card} priority={i === 0} onMediaLoad={handleMediaLoad} />
+          <CardContent {...card} priority={i === 0} />
         </ScrollStackItem>
       ))}
     </ScrollStack>
@@ -107,7 +89,6 @@ const CardContent = ({
   imageWidth,
   imageHeight,
   priority = false,
-  onMediaLoad,
 }: {
   title: string;
   points: string[];
@@ -117,7 +98,6 @@ const CardContent = ({
   imageWidth: number;
   imageHeight: number;
   priority?: boolean;
-  onMediaLoad?: () => void;
 }) => (
   <>
     <div className={styles.copyBlock}>
@@ -140,7 +120,6 @@ const CardContent = ({
           height={imageHeight}
           className={styles.mediaImage}
           priority={priority}
-          onLoadingComplete={onMediaLoad}
         />
       </div>
     </div>

@@ -41,6 +41,8 @@ type ScrollStackProps = {
   id?: string;
   offset?: number;
   mobileMode?: "flow" | "pinned";
+  /** When false, no ScrollTrigger/GSAP — static stacked layout (avoids pin/scrub blank states). */
+  animated?: boolean;
 };
 
 const ScrollStack = ({
@@ -50,6 +52,7 @@ const ScrollStack = ({
   id,
   offset = 8,
   mobileMode = "flow",
+  animated = true,
 }: ScrollStackProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -62,6 +65,8 @@ const ScrollStack = ({
   const count = items.length;
 
   useEffect(() => {
+    if (!animated) return;
+
     const section = sectionRef.current;
     const cards = cardRefs.current.filter(
       (el): el is HTMLDivElement => el !== null,
@@ -81,7 +86,7 @@ const ScrollStack = ({
     const requestRefresh = () => {
       if (refreshTimeout) window.clearTimeout(refreshTimeout);
       refreshTimeout = window.setTimeout(() => {
-        ScrollTrigger.refresh();
+        ScrollTrigger.refresh(true);
       }, SCROLL_REFRESH_DEBOUNCE_MS);
     };
 
@@ -197,12 +202,18 @@ const ScrollStack = ({
       if (refreshTimeout) window.clearTimeout(refreshTimeout);
       ctx.revert();
     };
-  }, [count, mobileMode, offset]);
+  }, [animated, count, mobileMode, offset]);
+
+  const layoutClass = animated
+    ? mobileMode === "flow"
+      ? styles.mobileFlow
+      : ""
+    : styles.static;
 
   return (
     <section
       ref={sectionRef}
-      className={`${styles.section} ${mobileMode === "flow" ? styles.mobileFlow : ""} ${className ?? ""}`}
+      className={`${styles.section} ${layoutClass} ${className ?? ""}`}
       id={id}
     >
       <div className={styles.viewport}>

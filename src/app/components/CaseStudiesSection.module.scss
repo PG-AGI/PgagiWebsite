@@ -4,14 +4,15 @@
 }
 
 .pinnedViewport {
-  height: 100vh;
   width: 100%;
-  overflow: hidden;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   padding-top: clamp(140px, 15vh, 160px);
-  padding-bottom: clamp(10px, 1.4vh, 16px);
+  padding-bottom: clamp(1.25rem, 2.5vh, 2rem);
   box-sizing: border-box;
   background: #ffffff;
 
@@ -62,7 +63,7 @@
   position: relative;
   border-radius: 18px;
   overflow: hidden;
-  aspect-ratio: 3 / 4;
+  align-self: flex-start;
   background: linear-gradient(
     180deg,
     var(--accent-start) 0%,
@@ -88,7 +89,7 @@
   padding: 0 1vw;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
@@ -100,7 +101,7 @@
 .headingBlock {
   text-align: center;
   padding: clamp(0.35rem, 0.75vh, 0.7rem) 0 clamp(0.2rem, 0.6vh, 0.45rem);
-  opacity: 0;
+  opacity: 1;
 
   @media (max-width: 768px) {
     display: none;
@@ -119,23 +120,26 @@
 .stackArea {
   position: relative;
   width: 100%;
-  flex: 1;
+  flex: none;
   min-height: 0;
-  margin-bottom: clamp(0.55rem, 1vh, 0.85rem);
-  overflow: hidden;
-  perspective: 1200px;
-  contain: layout style;
+  margin-bottom: clamp(0.65rem, 1.2vh, 1rem);
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vh, 1.35rem);
+  perspective: none;
+  contain: none;
 }
 
 .card {
   --accent-start: #d9d5eb;
   --accent-end: #191724;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
   width: 100%;
-  height: min(680px, calc(100% - 82px));
+  height: auto;
   border-radius: 24px;
   padding: clamp(1rem, 1rem, 1rem);
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -149,11 +153,9 @@
     0 6px 18px rgba(0, 0, 0, 0.08),
     0 18px 38px rgba(0, 0, 0, 0.12);
   overflow: hidden;
-  will-change: transform;
+  will-change: auto;
   transform-origin: top center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
+  transform: none;
   contain: layout style paint;
 }
 
@@ -174,18 +176,24 @@
 
 .previewFrame {
   position: relative;
-  width: min(90%, 980px);
-  height: 92%;
-  margin: clamp(1.1rem, 1.85vw, 1.5rem) auto 0;
+  width: 100%;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: clamp(1.1rem, 1.85vw, 1.5rem);
   border-radius: 2px;
   border: 1px solid rgba(17, 17, 17, 0.08);
   background: #f8f8f8;
   overflow: hidden;
   box-shadow: 0 10px 26px rgba(34, 23, 45, 0.2);
+  line-height: 0;
 }
 
 .previewImage {
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
   object-position: top center;
 }
 
@@ -239,7 +247,7 @@
   z-index: 20;
   display: flex;
   justify-content: center;
-  opacity: 0;
+  opacity: 1;
 
   @media (max-width: 768px) {
     display: none;
@@ -294,12 +302,11 @@
   .card {
     border-radius: 18px;
     padding: 1rem;
-    height: min(620px, calc(100% - 68px));
   }
 
   .previewFrame {
-    width: min(86%, 860px);
-    height: 72%;
+    width: 100%;
+    max-width: 860px;
   }
 
   .cardTitle {
@@ -333,12 +340,10 @@
   .card {
     border-radius: 18px;
     padding: 0.75rem;
-    height: min(530px, calc(100% - 54px));
   }
 
   .previewFrame {
-    width: 90%;
-    height: 70%;
+    width: 100%;
     margin-top: 0.7rem;
   }
 
@@ -370,12 +375,6 @@
   .arrowCircle {
     width: 42px;
     height: 42px;
-  }
-}
-
-@media (max-width: 767px) {
-  .card {
-    height: min(530px, calc(100% - 54px));
   }
 }
 
