@@ -22,7 +22,7 @@ const ConcentricEllipseSection = () => {
             <button 
               type="button" 
               className={styles.ctaButton}
-              onClick={() => window.open("https://calendly.com/vivek-_ou/30min", "_blank")}
+              onClick={() => window.open("https://calendly.com/vivek_01/30min", "_blank")}
             >
               <span className={styles.ctaLabel}>Schedule Strategic Consultation</span>
               <span className={styles.arrowCircle} aria-hidden="true">
