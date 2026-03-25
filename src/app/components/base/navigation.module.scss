@@ -512,7 +512,7 @@
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 24px);
+    width: calc(100% - 32px);
     padding: 0;
     border-radius: 0;
     background: transparent !important;
@@ -760,7 +760,7 @@
 @media (max-width: 568px) {
   .navigation {
     top: 8px;
-    width: calc(100% - 20px);
+    width: calc(100% - 32px);
 
     .mastermenu {
       top: 80px;
@@ -825,7 +825,7 @@
 @media (max-width: 450px) {
   .navigation {
     top: 6px;
-    width: calc(100% - 16px);
+    width: calc(100% - 28px);
 
     .mastermenu {
       top: 70px;
