@@ -48,7 +48,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     company: "",
     country: "USA",
     quote:
-      "PGAGI and the team were excellent. They were fast, thorough, and effective - can't really ask for more than that.",
+      "PGAGI team did a terrific job. The quality of their work was high and communication was great. Schedules were clearly laid out, milestones were met on time, and they exhibited a high degree of cooperation with me throughout the project. Highly recommended.",
     projectName: "Gradio Application",
   },
   {
