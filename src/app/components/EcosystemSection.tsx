@@ -17,19 +17,19 @@ type EcosystemCard = {
 const ecosystemCards: EcosystemCard[] = [
   {
     title: "Google Workspace Ecosystem",
-    image: "/svgs/Ecosystem/First (1).jpg",
+    image: "/svgs/Ecosystem/First.svg",
     width: 331,
     height: 794,
   },
   {
     title: "Microsoft Azure Ecosystem",
-    image: "/svgs/Ecosystem/Second.jpg",
+    image: "/svgs/Ecosystem/Second.svg",
     width: 333,
     height: 735,
   },
   {
     title: "AWS Ecosystem",
-    image: "/svgs/Ecosystem/Third.jpg",
+    image: "/svgs/Ecosystem/Third.svg",
     width: 331,
     height: 618,
   },
@@ -165,12 +165,20 @@ const EcosystemSection = () => {
             <div className={styles.gridBackdrop} aria-hidden="true" />
             <SignalSVG className={styles.signalLayer} prefix="desk" />
             <div className={styles.cardsTrack} ref={cardsTrackRef}>
-              {ecosystemCards.map((card) => (
+              {ecosystemCards.map((card, index) => (
                 <article key={card.title} className={styles.cardColumn}>
                   <p className={styles.cardLabel}>{card.title}</p>
                   <span className={styles.connector} aria-hidden="true" />
                   <div className={styles.cardFrame}>
-                    <Image src={card.image} alt={card.title} width={card.width} height={card.height} className={styles.cardImage} priority />
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      width={card.width}
+                      height={card.height}
+                      className={styles.cardImage}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 332px"
+                      priority={index === 0}
+                    />
                   </div>
                 </article>
               ))}
@@ -189,12 +197,20 @@ const EcosystemSection = () => {
               <SignalSVG className={styles.signalLayer} prefix="mob" />
 
               <div ref={sliderRef} className={styles.mobileCardsSlider}>
-                {ecosystemCards.map((card) => (
+                {ecosystemCards.map((card, index) => (
                   <div key={card.title} className={styles.mobilePanel}>
                     <p className={styles.cardLabel}>{card.title}</p>
                     <span className={styles.connector} aria-hidden="true" />
                     <div className={styles.mobileCardFrame}>
-                      <Image src={card.image} alt={card.title} width={card.width} height={card.height} className={styles.mobileCardImage} />
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        width={card.width}
+                        height={card.height}
+                        className={styles.mobileCardImage}
+                        sizes="100vw"
+                        priority={index === 0}
+                      />
                     </div>
                   </div>
                 ))}
