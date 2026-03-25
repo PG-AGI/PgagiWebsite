@@ -8,6 +8,7 @@ export type PgagiClientReview = {
   country: string;
   quote: string;
   projectName: string;
+  gender?: "male" | "female" | "neutral";
 };
 
 export const pgagiClientTestimonials: PgagiClientReview[] = [
@@ -72,6 +73,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     name: "Lorella Sini",
     company: "Sardina Rentals",
     country: "Italy",
+    gender: "female",
     quote:
       "Great service ,i suggest to collaborate with Vivek and his team ,they are very prepared for everything ,even though you are ignorant like me .",
     projectName: "SMUBOO AI AUTOMATION AGENT",
@@ -80,6 +82,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     name: "Rizwan",
     company: "Mideo Pty Ltd",
     country: "Australia",
+    gender: "male",
     quote:
       "It was great working with the team, very thoughtful guys will work with PGAGI again.",
     projectName: "AI Hypnosis Agent",
@@ -105,6 +108,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     name: "Bally S",
     company: "Social 27",
     country: "USA",
+    gender: "male",
     quote:
       "I had an exceptional experience working with this team. Their professionalism and deep expertise in React, React Flow, and AI were evident throughout the project. They quickly grasped our requirements and executed each task with precision, resulting in a swift and high-quality turnaround. Even when mid-stream changes occurred, they handled them gracefully while consistently meeting every milestone. I highly recommend this team for their technical prowess and commitment to excellence.",
     projectName: "React Flow Execution Graph",
@@ -113,6 +117,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     name: "Nitesh Puchhadiya",
     company: "WebCodeGenie Technology PVT Ltd",
     country: "IN",
+    gender: "male",
     quote:
       " I had a great experience working with PGAGI Consultancy on an AI project. Their team demonstrated strong technical expertise, clear communication, and a proactive approach throughout the engagement. They delivered high-quality work, met deadlines consistently, and were highly responsive to any feedback or adjustments needed. ",
     projectName: "AI powered multi-agent trading system.",
@@ -129,8 +134,27 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     name: "Preska Thomas",
     company: "DebitMyData",
     country: "USA",
+    gender: "female",
     quote:
       "PGAGI Team not only delivered the project on time but exceeded my expectations in every way. Their attention to detail, creativity, and ability to understand my vision were truly remarkable. They communicated clearly throughout the process, kept me updated regularly, and were always open to feedback, making collaboration seamless and enjoyable.",
     projectName: "AI NFT GENERATOR",
+  },
+  {
+    name: "Will Dean",
+    company: "",
+    country: "",
+    gender: "male",
+    quote:
+      "Highly skilled engineers who know how to scale AI applications. Their strategic approach saved us months of development time.",
+    projectName: "Client Review",
+  },
+  {
+    name: "Lorella Sini",
+    company: "",
+    country: "",
+    gender: "female",
+    quote:
+      "Professional, communicative, and technically brilliant. They are our go-to partner for any AI-driven development.",
+    projectName: "Client Review",
   },
 ];

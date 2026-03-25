@@ -7,6 +7,8 @@ import styles from "./Customers.module.scss";
 import { FRAMER_EASE, MOTION_DURATION } from "@/lib/motion";
 import { pgagiClientTestimonials } from "@/data/pgagiClientTestimonials";
 
+type AvatarGender = "male" | "female" | "neutral";
+
 /* ─── YouTube helpers ─────────────────────────────────────────────── */
 const testimonialYouTubeUrls = [
   "https://www.youtube.com/watch?v=vsuDM890kmU",
@@ -40,9 +42,16 @@ const getEmbedUrl = (urlOrId: string) =>
 const getThumbnailUrl = (urlOrId: string) =>
   `https://img.youtube.com/vi/${extractYouTubeId(urlOrId)}/hqdefault.jpg`;
 
-/** Deterministic illustrated avatars (same seed → same face across stack + cards) */
-const testimonialAvatarUrl = (seed: string, size: 64 | 128 = 128) =>
-  `https://api.dicebear.com/9.x/lorelei/png?seed=${encodeURIComponent(seed)}&size=${size}`;
+/** Deterministic illustrated avatars with simple gender-based style selection */
+const testimonialAvatarUrl = (
+  seed: string,
+  gender: AvatarGender = "neutral",
+  size: 64 | 128 = 128
+) => {
+  const style =
+    gender === "female" ? "lorelei" : gender === "male" ? "adventurer" : "bottts";
+  return `https://api.dicebear.com/9.x/${style}/png?seed=${encodeURIComponent(seed)}&size=${size}`;
+};
 
 /* ─── Video facade ────────────────────────────────────────────────── */
 const VideoFacade = ({
@@ -116,6 +125,7 @@ const testimonials = pgagiClientTestimonials.map((t, i) => ({
   name: t.name.trim() || t.company.trim() || "Client",
   role: t.projectName.trim(),
   quote: t.quote.trim(),
+  gender: t.gender ?? "neutral",
 }));
 
 /* ─── Grid items: videos at positions 0 & 4 ──────────────────────── */
@@ -125,14 +135,17 @@ type GridItem =
 
 const desktopGridItems: GridItem[] = [
   { kind: "video", videoIndex: 0, key: "v0" },
-  { kind: "quote", testimonial: testimonials[0], key: "q0" },
-  { kind: "quote", testimonial: testimonials[1], key: "q1" },
-  { kind: "quote", testimonial: testimonials[2], key: "q2" },
+  ...testimonials.slice(0, 4).map((testimonial) => ({
+    kind: "quote" as const,
+    testimonial,
+    key: `q-${testimonial.id}`,
+  })),
   { kind: "video", videoIndex: 1, key: "v1" },
-  { kind: "quote", testimonial: testimonials[3], key: "q3" },
-  { kind: "quote", testimonial: testimonials[4], key: "q4" },
-  { kind: "quote", testimonial: testimonials[5], key: "q5" },
-  { kind: "quote", testimonial: testimonials[6], key: "q6" },
+  ...testimonials.slice(4).map((testimonial) => ({
+    kind: "quote" as const,
+    testimonial,
+    key: `q-${testimonial.id}`,
+  })),
 ];
 
 /* ─── Rating badge — same faces as first four testimonial cards ───────── */
@@ -149,7 +162,7 @@ const RatingBadge = () => (
           title={t.name}
         >
           <Image
-            src={testimonialAvatarUrl(t.name, 64)}
+            src={testimonialAvatarUrl(t.name, t.gender, 64)}
             alt=""
             fill
             sizes="30px"
@@ -178,7 +191,7 @@ const TestimonialCard = ({
     <div className={styles.cardHeader}>
       <span className={styles.avatar}>
         <Image
-          src={testimonialAvatarUrl(testimonial.name, 128)}
+            src={testimonialAvatarUrl(testimonial.name, testimonial.gender, 128)}
           alt=""
           fill
           sizes="(max-width: 768px) 28px, 44px"
@@ -227,13 +240,29 @@ const Customers = () => {
 
   /* Split testimonials into 2 columns for mobile marquee.
      Video 1 goes into col1, Video 2 into col2 as the first item. */
+  const testimonialsByColumn = testimonials.reduce<
+    [(typeof testimonials), (typeof testimonials)]
+  >(
+    (cols, testimonial, index) => {
+      cols[index % 2].push(testimonial);
+      return cols;
+    },
+    [[], []]
+  );
+
   const mobileCol1Items = [
     { kind: "video" as const, videoIndex: 0 },
-    ...testimonials.slice(0, 5).map((t) => ({ kind: "quote" as const, testimonial: t })),
+    ...testimonialsByColumn[0].map((testimonial) => ({
+      kind: "quote" as const,
+      testimonial,
+    })),
   ];
   const mobileCol2Items = [
     { kind: "video" as const, videoIndex: 1 },
-    ...testimonials.slice(5, 10).map((t) => ({ kind: "quote" as const, testimonial: t })),
+    ...testimonialsByColumn[1].map((testimonial) => ({
+      kind: "quote" as const,
+      testimonial,
+    })),
   ];
 
   return (
