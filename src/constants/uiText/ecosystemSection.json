@@ -1,0 +1,16 @@
+{
+  "titlePrefix": "We always build within the",
+  "titleHighlight": "ecosystem",
+  "goToPanelAriaPrefix": "Go to panel",
+  "cards": [
+    {
+      "title": "Google Workspace Ecosystem"
+    },
+    {
+      "title": "Microsoft Azure Ecosystem"
+    },
+    {
+      "title": "AWS Ecosystem"
+    }
+  ]
+}

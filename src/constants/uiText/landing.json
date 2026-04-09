@@ -1,0 +1,21 @@
+{
+  "heroAriaLabel": "PG-AGI Hero — Building AI Systems that Scale to Millions",
+  "verifiedByAriaLabel": "Verified by Clutch and Upwork",
+  "verifiedByLabel": "Verified by",
+  "headingLine1": "Building AI",
+  "headingLine2Prefix": "Systems that",
+  "headingLine3": "Scales to Millions.",
+  "subtext": "Production-ready AI systems that automate operations and power better decisions.",
+  "ctaAriaLabel": "Let's build together — Book a call",
+  "ctaLabel": "Let's build together",
+  "verificationPlatforms": [
+    {
+      "name": "Clutch",
+      "openProfileAriaLabel": "Open Clutch profile in a new tab"
+    },
+    {
+      "name": "Upwork",
+      "openProfileAriaLabel": "Open Upwork profile in a new tab"
+    }
+  ]
+}

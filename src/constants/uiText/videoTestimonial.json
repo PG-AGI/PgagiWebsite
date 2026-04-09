@@ -1,0 +1,18 @@
+{
+  "testimonialLabel": "Testimonials",
+  "subtitle": "See what our clients say",
+  "previousAriaLabel": "Previous testimonials",
+  "nextAriaLabel": "Next testimonials",
+  "noImagesMessage": "No testimonial images found. Please add images to /public/images/testimonials/",
+  "closeVideoAriaLabel": "Close video",
+  "videos": [
+    {
+      "title": "Stunited",
+      "description": "Partnering with Toingg, they deployed an advanced, AI-powered communication system. Automated WhatsApp outreach, intelligent AI calls, and seamless CRM integration with Monday.com helped them achieve 1100x ROI effortlessly."
+    },
+    {
+      "title": "Maputo Rides",
+      "description": "Using Toingg conversational intelligence, Maputo Rides has transformed passive data into actionable engagement, driving both reactivation and relationship depth at scale."
+    }
+  ]
+}

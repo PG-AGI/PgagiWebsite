@@ -1,0 +1,231 @@
+.teamSection {
+    width: 100%;
+    padding: 4rem 2rem;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto; /* center horizontally */
+    // max-width: 1200px; /* contain content for large screens */
+  }
+  
+  /* ===== HEADER ===== */
+  .header {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* left text + right caption */
+    gap: 2rem;
+    align-items: start;
+  
+    .headerLeft {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+  
+      .aboutLabel { 
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #9F0000;
+       margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+        margin-left: 0;
+        font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
+      }
+  
+      .description {
+        font-size: 1.375rem; /* ~22px for readability */
+        line-height: 1.7;
+        font-weight: 400;
+        max-width: 720px;
+        justify-content: end;
+        color: #1a1a1a;
+        // font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
+  
+        b {
+          font-weight: 600;
+          // font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
+        }
+      }
+    }
+  
+    .caption {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #111;
+      text-align: right;
+      align-self:flex-end; /* vertically aligned with description */
+      // font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
+    }
+  }
+  
+  /* ===== TEAM GRID ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Grid responsiveness */
+  @media (max-width: 1200px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* ===== CARD ===== */
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: #f5f5f5;
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  
+    &:hover img {
+      transform: scale(1.05);
+    }
+  
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+  color: #fff;
+  opacity: 1; // always visible
+  padding: 4.75%;
+
+  h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    // font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
+  }
+
+  span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    // font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
+  }
+}
+
+/* Keep image zoom on hover */
+.card img {
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+
+
+  
+    
+  }
+  
+  /* ===== TESTIMONIAL CARD ===== */
+  .testimonial {
+    background: #111;
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    .stars {
+      color: #f5c518;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+  
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+  
+    h4 {
+      margin: 0;
+      font-weight: 600;
+    }
+  
+    span {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-bottom: 1rem;
+    }
+  
+    .link {
+      margin-top: auto;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: underline;
+      transition: opacity 0.2s ease;
+  
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .header {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+  
+      .caption {
+        text-align: left;
+        margin-top: 1rem;
+        align-self: flex-start;
+      }
+    }
+
+    /* Always show name/designation on mobile */
+    .card {
+      img {
+        transition: none;
+      }
+
+      .overlay {
+        opacity: 1 !important; /* override motion initial opacity */
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+      }
+
+      &:hover img {
+        transform: none;
+      }
+
+      &:hover .overlay {
+        opacity: 1;
+      }
+    }
+  }
+  

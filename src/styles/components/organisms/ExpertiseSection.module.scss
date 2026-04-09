@@ -1,0 +1,437 @@
+.expertiseSection {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  // Ensure proper scaling at different zoom levels
+  transform-origin: center;
+  will-change: transform;
+}
+
+.container {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  // max-width: 400px;
+  margin: 0 auto;
+  width: 100vw;
+}
+
+.expertiseContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.expertiseHeading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #666666;
+  margin: 0;
+  font-family: monospace;
+}
+
+.expertiseDescription {
+  font-size: 1rem;
+  color: #000000;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 100%;
+}
+
+.servicesList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.serviceItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateX(8px);
+  }
+}
+
+.serviceNumber {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #d60000;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.serviceTitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #000000;
+}
+
+.sloganSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mainHeading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d60000;
+  line-height: 1.1;
+  margin: 0;
+  text-align: left;
+}
+
+.description {
+  font-size: 1rem;
+  color: #000000;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 100%;
+}
+
+/* Laptop Layout (768px and above) */
+@media (min-width: 768px) {
+  .expertiseSection {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 150px 2rem 100px;
+  }
+
+  .container {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  // Top section: Centered heading and description
+  .expertiseContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .expertiseHeading {
+    font-size: 1.5rem;
+    color: #000000;
+    font-family: inherit;
+    margin: 0;
+  }
+
+  .expertiseDescription {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0;
+  }
+
+  // Bottom section: Two-column layout
+  .bottomSection {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+  }
+
+  .sloganSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+    padding-right: 2rem;
+  }
+
+  .mainHeading {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .description {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .servicesList {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    flex: 1;
+    padding-left: 2rem;
+  }
+
+  .serviceItem {
+    gap: 1.5rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1.25rem;
+      left: 0;
+      width: 100%;
+      height: 0.75px;
+      background-color: #d3d3d3;
+    }
+  }
+
+  .serviceNumber {
+    width: 2.8rem;
+    height: 2.8rem;
+    font-size: 0.875rem;
+  }
+
+  .serviceTitle {
+    font-size: 1.25rem;
+  }
+}
+
+/* Medium Laptop Layout (900px and above) */
+@media (min-width: 900px) {
+  .expertiseSection {
+    padding: 4.5rem 2.5rem;
+  }
+
+  .container {
+    max-width: 1500px;
+    gap: 4.5rem;
+    padding: 0 2.5rem;
+  }
+
+  .expertiseHeading {
+    font-size: 1.625rem;
+  }
+
+  .expertiseDescription {
+    font-size: 1.3125rem;
+    max-width: 850px;
+  }
+
+  .bottomSection {
+    gap: 4.5rem;
+  }
+
+  .mainHeading {
+    font-size: 2.625rem;
+  }
+
+  .description {
+    font-size: 1.1875rem;
+  }
+
+  .servicesList {
+    gap: 2.75rem;
+  }
+
+  .serviceTitle {
+    font-size: 1.3125rem;
+  }
+}
+
+/* Large Desktop Layout (1024px and above) */
+@media (min-width: 1024px) {
+  .expertiseSection {
+    padding: 5rem 3rem;
+  }
+
+  .container {
+    max-width: 1600px;
+    gap: 5rem;
+    padding: 0 3rem;
+  }
+
+  .expertiseContent {
+    gap: 2rem;
+  }
+
+  .expertiseHeading {
+    font-size: 1.75rem;
+  }
+
+  .expertiseDescription {
+    font-size: 1.375rem;
+    max-width: 900px;
+  }
+
+  .bottomSection {
+    gap: 5rem;
+  }
+
+  .mainHeading {
+    font-size: 2.75rem;
+  }
+
+  .description {
+    font-size: 1.25rem;
+  }
+
+  .servicesList {
+    gap: 3rem;
+  }
+
+  .serviceTitle {
+    font-size: 1.375rem;
+  }
+}
+
+/* Extra Large Desktop Layout (1200px and above) */
+@media (min-width: 1200px) {
+  .expertiseSection {
+    padding: 6rem 4rem;
+  }
+
+  .container {
+    max-width: 1800px;
+    gap: 6rem;
+    padding: 0 4rem;
+  }
+
+  .expertiseContent {
+    gap: 2.5rem;
+  }
+
+  .expertiseHeading {
+    font-size: 2rem;
+  }
+
+  .expertiseDescription {
+    font-size: 1.5rem;
+    max-width: 1000px;
+  }
+
+  .bottomSection {
+    gap: 6rem;
+  }
+
+  .sloganSection {
+    padding-right: 3rem;
+  }
+
+  .servicesList {
+    padding-left: 3rem;
+    gap: 3.5rem;
+  }
+
+  .mainHeading {
+    font-size: 3rem;
+  }
+
+  .description {
+    font-size: 1.375rem;
+  }
+
+  .serviceTitle {
+    font-size: 1.5rem;
+  }
+}
+
+/* Ultra Wide Desktop Layout (1440px and above) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 2000px;
+    padding: 0 5rem;
+  }
+
+  .expertiseDescription {
+    max-width: 1200px;
+  }
+
+  .bottomSection {
+    gap: 8rem;
+  }
+
+  .sloganSection {
+    padding-right: 4rem;
+  }
+
+  .servicesList {
+    padding-left: 4rem;
+  }
+}
+
+
+
+/* Center container */
+.expertiseButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+/* Expertise button (same as Projects button) */
+.expertiseButton {
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #b60306;
+  /* your red */
+  border-radius: 50px;
+  /* pill shape */
+  padding: 15px 20px;
+  /* small */
+  font-size: 20px;
+  /* small text */
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  /* space before arrow */
+  transition: all 0.25s ease-in-out;
+  outline: none;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  &:hover {
+    background-color: #b60306;
+    color: #000000;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(182, 3, 6, 0.25);
+
+    .arrow {
+      transform: translateX(3px);
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Arrow animation */
+.arrow {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+/* Optional: slightly larger on mobile for touch comfort */
+@media (max-width: 768px) {
+  .projectsButton {
+    padding: 8px 18px;
+    font-size: 1rem;
+  }
+}

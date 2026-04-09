@@ -1,0 +1,86 @@
+/* =====================================================
+   PARTNERS BAR — PG-AGI
+   Dark semi-transparent strip with scrolling partner logos
+   Pinned to the absolute bottom of the hero section
+   NO side fading — logos are fully visible edge-to-edge
+   ===================================================== */
+
+.partnersBar {
+  width: 100%;
+  margin: 0;
+  min-height: 100px;
+  padding: 1.5rem 0;
+  /* Increased height and vertical padding */
+  background: #00000040;
+  backdrop-filter: blur(3.751030683517456px);
+  -webkit-backdrop-filter: blur(3.751030683517456px);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  @media (min-width: 768px) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* NO mask-image — full edge-to-edge logos, no fading */
+}
+
+/* react-fast-marquee wrapper */
+.marquee {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Individual logo slot */
+.logoItem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(0.75rem, 2vw, 1.5rem);
+  /* Tighter spacing like screenshot */
+  opacity: 1;
+  transition: opacity 0.25s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  img {
+    /* Force white logos on dark background */
+    filter: brightness(0) invert(1);
+    object-fit: contain;
+    /* Dimensions significantly increased for visibility */
+    width: clamp(90px, 12vw, 140px) !important;
+    height: clamp(35px, 6vh, 58px) !important;
+    display: block;
+    margin: 0 10px;
+  }
+}
+
+.logoImage {
+  width: auto;
+  height: clamp(22px, 3.5vh, 36px);
+}
+
+/* ─── Mobile adjustments ─── */
+@media (max-width: 480px) {
+  .partnersBar {
+    padding: 1rem 0;
+    min-height: 80px;
+  }
+
+  .logoItem {
+    padding: 0 0.8rem;
+
+    img {
+      width: clamp(70px, 18vw, 100px) !important;
+      height: clamp(26px, 4.5vh, 38px) !important;
+    }
+  }
+}

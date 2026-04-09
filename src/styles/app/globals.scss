@@ -1,0 +1,106 @@
+:root {
+	--motion-duration-fast: 280ms;
+	--motion-duration-normal: 480ms;
+	--motion-duration-slow: 680ms;
+	--motion-duration-cinematic: 900ms;
+	--motion-stagger-tight: 60ms;
+	--motion-stagger-normal: 100ms;
+	--motion-stagger-relaxed: 160ms;
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	/* Promote html to its own compositing layer for smoother Lenis interpolation */
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+}
+
+html,
+body {
+	width: 100%;
+	min-height: 100%;
+	padding: 0;
+	margin: 0;
+
+	background-color: rgba(197, 183, 172, 1);
+	/* NOTE: Do NOT add scroll-behavior:smooth — Lenis handles smooth scrolling */
+
+	font-family: var(--font-poppins), var(--font-alexandria), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	color: black;
+	box-sizing: border-box;
+	overflow-wrap: normal;
+
+	* {
+		box-sizing: border-box;
+		font-family: inherit;
+	}
+}
+
+/* ─── Shimmer skeleton animation ──────────────────────────────────── */
+@keyframes skeleton-shimmer {
+	0%   { background-position: -400px 0; }
+	100% { background-position: 400px 0; }
+}
+
+.skeleton-section {
+	background: linear-gradient(
+		90deg,
+		rgba(190, 175, 165, 0.18) 0%,
+		rgba(210, 195, 185, 0.32) 40%,
+		rgba(220, 205, 195, 0.4)  50%,
+		rgba(210, 195, 185, 0.32) 60%,
+		rgba(190, 175, 165, 0.18) 100%
+	);
+	background-size: 800px 100%;
+	animation: skeleton-shimmer 1.6s ease-in-out infinite;
+	border-radius: 8px;
+}
+
+/* ─── Global animation performance hints ──────────────────────────── */
+[data-gsap-reveal],
+[data-will-animate] {
+	will-change: transform, opacity;
+}
+
+/* Remove will-change once animation is done (reduces GPU memory) */
+[data-gsap-done] {
+	will-change: auto;
+}
+
+/* ─── Default browser scrollbar - no custom styling ──────────────── */
+
+/* ─── Page Transition Styles ──────────────────────────────────────── */
+.page-transition-container {
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+}
+
+/* Ensure smooth transitions for animated elements only */
+.page-transition-container .motion-div {
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-perspective: 1000px;
+	perspective: 1000px;
+}
+
+.page-transition-motion {
+	width: 100%;
+	min-height: 100vh;
+	position: relative;
+	z-index: 1;
+	overflow: visible;
+}
+
+.gtmNoScriptFrame {
+	display: none;
+	visibility: hidden;
+}
+
+.layoutMain {
+	min-height: 100vh;
+	padding-top: 0;
+	position: relative;
+}

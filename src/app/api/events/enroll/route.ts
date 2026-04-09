@@ -1,0 +1,60 @@
+import clientPromise from '@/utils/mongodb';
+import { NextResponse } from 'next/server';
+
+export async function POST(req: Request) {
+  try {
+    console.log("Request received");
+
+    const formData = await req.json();
+    console.log(formData)
+
+    const client = await clientPromise;
+    const db = client.db('events'); 
+    const collection = db.collection('participants'); 
+
+    console.log("Connected to MongoDB");
+
+    // Insert the data into MongoDB
+    const result = await collection.insertOne({
+      ... formData,
+      enrolledAt: new Date(),
+    });
+
+    console.log("Data inserted successfully:", result);
+
+    return NextResponse.json({ message: 'Data saved successfully', result });
+  } catch (error) {
+    const err = error as Error;
+    console.error("Error in API saveData:", err.message, err.stack);
+    return NextResponse.json({ message: 'Failed to save data', error: err.message }, { status: 500 });
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    const url = new URL(req.url);
+    const email = url.searchParams.get('email');
+    const event_id = url.searchParams.get('event_id');
+
+    if (!email || !event_id) {
+      return NextResponse.json({ message: 'Missing email or event_id' }, { status: 400 });
+    }
+
+    const client = await clientPromise;
+    const db = client.db('events');
+    const collection = db.collection('participants');
+
+    // Check if the user is already registered
+    const existingUser = await collection.findOne({ email, event_id });
+
+    if (existingUser) {
+      return NextResponse.json({ message: 'User email has already registered for this event' }, { status: 400 });
+    } else {
+      return NextResponse.json({ message: 'User can register for the event' }, { status: 200 });
+    }
+  } catch (error) {
+    const err = error as Error;
+    console.error("Error in GET check:", err.message, err.stack);
+    return NextResponse.json({ message: 'Failed to check registration', error: err.message }, { status: 500 });
+  }
+}

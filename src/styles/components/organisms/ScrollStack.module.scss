@@ -1,0 +1,138 @@
+.section {
+  position: relative;
+}
+
+.viewport {
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: clamp(120px, 14vh, 160px);
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding-top: clamp(80px, 11vh, 110px);
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 82vw;
+  margin: 0 auto;
+  padding: 0 1vw;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+.headerArea {
+  text-align: center;
+  padding: clamp(0.8rem, 2vh, 1.6rem) 0 clamp(0.6rem, 1.5vh, 1.2rem);
+  opacity: 0;
+}
+
+/* No GSAP: visible header, normal document flow (fixes blank pinned sections on laptop). */
+.static {
+  .viewport {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding-top: clamp(120px, 14vh, 160px);
+    padding-bottom: clamp(2rem, 5vh, 4rem);
+  }
+
+  .container {
+    height: auto;
+  }
+
+  .headerArea {
+    opacity: 1;
+  }
+
+  .stackArea {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.85rem, 2vh, 1.25rem);
+    padding-bottom: 0.5rem;
+  }
+
+  .cardWrapper {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    transform-origin: center center;
+    will-change: auto;
+  }
+
+  @media (max-width: 768px) {
+    .viewport {
+      padding-top: clamp(72px, 10vh, 104px);
+    }
+  }
+}
+
+.stackArea {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.cardWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform-origin: top center;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .cardWrapper {
+    will-change: transform;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobileFlow {
+    .viewport {
+      height: auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: visible;
+      padding-top: clamp(72px, 10vh, 104px);
+      padding-bottom: 1rem;
+    }
+
+    .container {
+      height: auto;
+    }
+
+    .stackArea {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .cardWrapper {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      transform-origin: center center;
+    }
+  }
+}

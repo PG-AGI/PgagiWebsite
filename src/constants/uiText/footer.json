@@ -1,0 +1,24 @@
+{
+  "companyHeader": "PGAGI",
+  "servicesHeader": "Services",
+  "resourcesHeader": "Resources",
+  "addressLabel": "Address:",
+  "addressText": "Tech37, Plot No.2-A Electronic City 2nd Phase. SY-No. 37 Part Konappana Agrahara Village Begur Hobli, Bengaluru - Chennai Hwy, Taluk, Bengaluru, Karnataka 560100",
+  "backgroundLine1Word1": "Playing",
+  "backgroundLine1Word2": "God",
+  "backgroundLine2Word1": "with",
+  "backgroundLine2Word2": "AGI",
+  "copyright": "©2025 All Rights Reserved by PG-AGI",
+  "terms": "Terms of Service",
+  "privacy": "Privacy Policy",
+  "links": {
+    "aboutUs": "About Us",
+    "aiResearch": "AI Research",
+    "aiArchitecture": "AI Architecture",
+    "aiMobileDevelopment": "AI Mobile App Development",
+    "aiSaasDevelopment": "AI SaaS Development",
+    "blog": "Blog",
+    "news": "News",
+    "caseStudies": "Case studies"
+  }
+}

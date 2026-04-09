@@ -1,0 +1,13 @@
+{
+  "coverImagePlaceholder": "Paste image link from PostImage (https://postimages.org/)",
+  "titlePlaceholder": "Enter title",
+  "readTimePlaceholder": "e.g., 8 min read",
+  "authorNamePlaceholder": "Enter author's name",
+  "authorRolePlaceholder": "Enter author's role",
+  "metaTitlePlaceholder": "Enter meta title",
+  "metaDescriptionPlaceholder": "Enter Meta Description...",
+  "metaKeywordsPlaceholder": "Enter comma(, ) separated values, Example: keyword1, keyword2, keyword3, keyword4, ... ",
+  "metaAuthorPlaceholder": "Enter meta author",
+  "tldrHeadingPlaceholder": "Enter tldr heading",
+  "sectionTitlePlaceholder": "Enter section title"
+}

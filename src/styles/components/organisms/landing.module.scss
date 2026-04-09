@@ -1,0 +1,542 @@
+/* =====================================================
+   LANDING HERO — PG-AGI
+   Fluid, pixel-perfect, mobile-first
+   All values via clamp() for seamless cross-screen scaling
+   ===================================================== */
+
+/* ─── Custom Properties ─── */
+.hero {
+  /* Design tokens */
+  --content-x: clamp(1.5rem, 6vw, 7rem);
+  --content-bottom: clamp(7rem, 14vh, 11rem);
+  /* above the partners bar */
+  --h1-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  /* ~72px at desktop */
+  --body-size: clamp(1rem, 1.5vw, 1.125rem);
+  /* ~18px at desktop */
+  --cta-size: clamp(0.7rem, 1vw, 0.75rem);
+  /* ~12px at desktop */
+  --cta-radius: 9999px;
+  --overlay: linear-gradient(to right,
+      rgba(0, 0, 0, 0.76) 0%,
+      rgba(0, 0, 0, 0.55) 45%,
+      rgba(0, 0, 0, 0.12) 75%,
+      transparent 100%);
+
+  /* Base */
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    height: 100dvh;
+    margin: 0;
+  }
+
+  /* 100dvh: iOS Safari safe */
+  min-height: 540px;
+  overflow: hidden;
+  /* Clips the ken-burns zoom leakage */
+  display: flex;
+  align-items: center;
+  /* vertically center the content block */
+  justify-content: flex-start;
+  background: transparent;
+  /* Let page background show through the gap */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  @media (min-width: 768px) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  /* Force hardware acceleration for flawless radius clipping with scaling children */
+  transform: translateZ(0);
+}
+
+/* ─── Partners bar wrapper — pinned to absolute bottom of hero ─── */
+.partnersWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+/* ─── Background image ─── */
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/background.webp");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  /* Radius moved to parent .hero for perfect clipping */
+  /* Subtle ken-burns zoom for life - disabled on mobile for performance */
+  animation: kenBurns 20s ease-in-out infinite alternate;
+  will-change: transform;
+  transform: translateZ(0);
+
+  @media (max-width: 768px) {
+    animation: none;
+    transform: none;
+    background-size: auto 100%;
+    background-position: 55% center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  /* ─── Morning Sunlight Effect ─── */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Warm sunlight source from top-center/right */
+    background: radial-gradient(circle at 60% 20%,
+        rgba(255, 240, 180, 0.4) 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        transparent 70%);
+    mix-blend-mode: soft-light;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Secondary glow for depth */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%,
+        rgba(255, 225, 100, 0.2) 0%,
+        transparent 60%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+@keyframes kenBurns {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
+}
+
+/* ─── Darkening gradient overlay (left-side) ─── */
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 1;
+}
+
+/* ─── Content area (vertically centered, left-aligned) ─── */
+.heroContent {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 82vw; // Targeted 80vw visual width
+  margin: 0 auto; // Center it
+  padding:
+    clamp(0.5rem, 4vh, 2rem) // top
+    1vw // right
+    clamp(6rem, 12vh, 8rem) // bottom
+    1vw; // left
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.75rem, 2vh, 1.25rem);
+  box-sizing: border-box;
+}
+
+/* ─── H1 ─── */
+.heroTrustBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  max-width: min(100%, 34rem);
+  padding: 0.5rem 0.65rem 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: fadeSlideUp 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.heroTrustLabel {
+  color: rgba(255, 255, 255, 0.94);
+  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.heroTrustPlatforms {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.heroTrustPlatform {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.24rem 0.65rem 0.24rem 0.28rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(159, 0, 0, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: #ffffff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 8px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.9);
+    outline-offset: 2px;
+  }
+}
+
+.heroTrustLogoWrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.heroTrustLogo {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.heroTrustName {
+  color: #171717;
+  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.heroTrustDivider {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.heroHeading {
+  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
+  font-size: var(--h1-size);
+  font-weight: 700;
+  line-height: 1.1;
+  /* ~82px at desktop */
+  color: #ffffff;
+  margin: 0;
+  /* Wide enough for 2-line break like the screenshot */
+  max-width: clamp(20rem, 65vw, 900px);
+  letter-spacing: -0.01em;
+  /* ~ -0.7px at 72px */
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+
+  /* Entry animation */
+  animation: fadeSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+/* ─── Subtitle ─── */
+.heroSubtext {
+  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
+  font-size: var(--body-size);
+  font-weight: 500;
+  line-height: clamp(1.5rem, 2.5vw, 2rem);
+  /* ~32px at desktop */
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  max-width: clamp(18rem, 50vw, 540px);
+  letter-spacing: 0%;
+
+  animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+/* Desktop <br> — hidden on mobile */
+.brDesktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .brDesktop {
+    display: inline;
+  }
+}
+
+/* Mobile-only <br> */
+.brMobile {
+  display: block;
+}
+
+@media (min-width: 481px) {
+  .brMobile {
+    display: none;
+  }
+}
+
+/* ─── CTA Button (Professional Redesign) ─── */
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #9F0000;
+  /* specific dark red as requested */
+  color: #ffffff;
+  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  padding: 4px 4px 4px 28px;
+  /* tighter padding for larger circle */
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 4px 20px rgba(159, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+
+  animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: #b30000;
+    box-shadow: 0 6px 25px rgba(159, 0, 0, 0.4);
+
+    .ctaArrow {
+      transform: translateX(2px);
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px -5px rgba(159, 0, 0, 0.4);
+  }
+}
+
+/* ─── CTA Arrow icon circle ─── */
+.ctaArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  border-radius: 50%;
+  margin-left: 16px;
+  transition: transform 0.2s ease;
+
+  svg {
+    width: 22px;
+    height: 22px;
+
+    path {
+      stroke: #000000 !important;
+      /* black arrow as per screenshot */
+    }
+
+    circle {
+      display: none;
+      /* removed the white circle from SVG as we use CSS circle */
+    }
+  }
+}
+
+/* ─── Premium entry animation — blur + slide + fade ─── */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(6px);
+  }
+  60% {
+    filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+/* =====================================================
+   MOBILE OVERRIDES
+   Mobile-first: below 480px
+   ===================================================== */
+
+@media (max-width: 480px) {
+  .hero {
+    --content-x: 1.25rem;
+    --content-bottom: 6rem;
+    /* slightly less bottom padding on small screens */
+  }
+
+  .heroContent {
+    padding-right: 1.25rem;
+    gap: 1.5rem;
+    /* Increased gap to reduce congestion */
+    padding-top: 6rem;
+    /* Moved down slightly */
+    padding-bottom: 5rem;
+  }
+
+  .heroTrustBadge {
+    gap: 0.55rem;
+    padding: 0.45rem 0.55rem 0.45rem 0.78rem;
+  }
+
+  .heroTrustLabel {
+    font-size: 0.64rem;
+  }
+
+  .heroTrustPlatforms {
+    gap: 0.4rem;
+  }
+
+  .heroTrustPlatform {
+    gap: 0.35rem;
+    padding: 0.22rem 0.5rem 0.22rem 0.25rem;
+  }
+
+  .heroTrustLogoWrap {
+    width: 24px;
+    height: 24px;
+  }
+
+  .heroTrustName {
+    font-size: 0.72rem;
+  }
+
+  .heroTrustDivider {
+    font-size: 0.82rem;
+  }
+
+  .heroHeading {
+    max-width: 100%;
+    font-size: clamp(2.3rem, 9vw, 2.6rem);
+    line-height: 1.25;
+    /* Increased line-height for better breathing room */
+    letter-spacing: -0.01em;
+  }
+
+  .heroSubtext {
+    max-width: 90vw;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    /* Better readability */
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .heroCta {
+    width: auto;
+    max-width: 100%;
+    padding: 2px 2px 2px 20px;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+
+    .ctaArrow {
+      width: 38px;
+      height: 38px;
+      margin-left: 8px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+/* ─── Tablet ─── */
+@media (min-width: 481px) and (max-width: 900px) {
+  .hero {
+    --content-x: clamp(1.5rem, 4vw, 3rem);
+    --content-bottom: clamp(7rem, 12vh, 9rem);
+  }
+
+  .heroHeading {
+    max-width: 75vw;
+  }
+
+  .heroSubtext {
+    max-width: 65vw;
+  }
+}
+
+/* ─── Large screens ─── */
+@media (min-width: 1400px) {
+  .hero {
+    --content-x: clamp(5rem, 6vw, 8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroTrustBadge,
+  .heroHeading,
+  .heroSubtext,
+  .heroCta {
+    animation: none;
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+
+  .heroCta {
+    transition: none;
+  }
+}
+
+/* ─── Mobile landscape: clear fixed navbar ─── */
+@media (orientation: landscape) and (max-height: 600px) {
+  .hero {
+    align-items: flex-start;
+    min-height: 100dvh;
+  }
+
+  .heroContent {
+    padding-top: 5rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+/* ─── iOS Safari safe area support ─── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .heroContent {
+    padding-bottom: calc(var(--content-bottom) + env(safe-area-inset-bottom));
+  }
+}

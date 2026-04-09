@@ -1,0 +1,28 @@
+{
+  "titlePrefix": "Process",
+  "titleHighlight": "timeline",
+  "ariaLabel": "PGAGI process timeline",
+  "mobileHint": "Swipe horizontally to explore each step.",
+  "steps": [
+    {
+      "title": "Discovery",
+      "description": "Understand your business goals, challenges, and high-impact AI opportunities."
+    },
+    {
+      "title": "Architecture",
+      "description": "Design a secure, scalable system aligned with product performance and ROI."
+    },
+    {
+      "title": "Build",
+      "description": "Develop production-ready AI systems using user-first and engineering best practices."
+    },
+    {
+      "title": "Deploy",
+      "description": "Launch, integrate, and validate systems in real-world production environments."
+    },
+    {
+      "title": "Optimize",
+      "description": "Monitor performance, refine models, and continuously improve outcomes."
+    }
+  ]
+}

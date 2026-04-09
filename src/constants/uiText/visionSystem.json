@@ -1,0 +1,41 @@
+{
+  "titleLine1": "You have the vision",
+  "titleHighlight": "engineer the system",
+  "subtitle": "From idea to scalable AI product.",
+  "outcomeLabel": "Outcome:",
+  "cards": [
+    {
+      "title": "Product and market deep dive",
+      "points": [
+        "Pressure-test your idea",
+        "Define real user personas",
+        "Map technical scope",
+        "Identify scaling risks"
+      ],
+      "outcome": "Clear product blueprint",
+      "imageAlt": "Product and market deep dive illustration"
+    },
+    {
+      "title": "Architecture before code",
+      "points": [
+        "High-level system design (HLD)",
+        "Low-level execution plan (LLD)",
+        "Security & compliance built-in",
+        "Scalable cloud infrastructure"
+      ],
+      "outcome": "No rebuild at 1,000 users",
+      "imageAlt": "Product architecture diagram"
+    },
+    {
+      "title": "Build. Launch. Scale.",
+      "points": [
+        "Phase-wise execution",
+        "Production-grade deployment",
+        "Performance optimization",
+        "Analytics embedded from day one"
+      ],
+      "outcome": "AI product engineered to grow",
+      "imageAlt": "Build launch scale illustration"
+    }
+  ]
+}

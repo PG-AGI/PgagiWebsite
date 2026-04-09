@@ -1,0 +1,24 @@
+{
+  "buttonLabel": "Expertise",
+  "description": "We partner with bold founders to build end-to-end AI products that truly matter to users. Our expertise spans from designing and developing AI-driven products to delivering enterprise-grade solutions that scale.",
+  "mainHeading": "Less talk more impact",
+  "subDescription": "No big words. No bloated pitch decks. No five-hour Zoom calls. Just smart strategy, flawless execution and results that actually move the needle.",
+  "services": [
+    {
+      "number": "01",
+      "title": "AI Research"
+    },
+    {
+      "number": "02",
+      "title": "AI Architecture"
+    },
+    {
+      "number": "03",
+      "title": "AI Mobile App Development"
+    },
+    {
+      "number": "04",
+      "title": "AI SAAS Development"
+    }
+  ]
+}

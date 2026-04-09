@@ -1,0 +1,59 @@
+/* ErrorMessage.module.scss */
+
+.errorMessage {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff4b4b;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 300px;
+  max-width: 80%;
+  animation: fadeInOut 0.5s ease-in-out, fadeOut 0.5s ease-in-out 4.5s;
+
+  /* Animation for fading in */
+  @keyframes fadeInOut {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  /* Animation for fading out */
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+.progressBar {
+  width: 100%;
+  height: 5px;
+  background-color: #ffffff90; /* Light color to contrast with red */
+  border-radius: 4px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.innerProgressBar {
+  height: 100%;
+  background-color: white;
+  width: var(--error-progress, 100%);
+  transition: width 0.05s linear; /* Smooth transition for width change */
+}

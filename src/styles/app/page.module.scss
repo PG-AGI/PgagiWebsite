@@ -1,0 +1,153 @@
+.main {
+  --blobSize: 750px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  .segmentSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50vh;
+
+    .lottieWindow {
+      position: sticky;
+      top: 50%;
+      translate: 0 -50%;
+      width: 80vw;
+      height: 70vh;
+      overflow: hidden;
+
+      .blob {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        translate: -50% -50%;
+        width: var(--blobSize);
+        height: var(--blobSize);
+      }
+    }
+
+    .segmentList {
+      margin-top: calc(-120vh);
+    }
+  }
+}
+
+.sectionSkeleton {
+  padding: 4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.skeletonHeight80vh { min-height: 80vh; }
+.skeletonHeight100vh { min-height: 100vh; }
+.skeletonHeight600px { min-height: 600px; }
+.skeletonHeight900px { min-height: 900px; }
+.skeletonHeight500px { min-height: 500px; }
+.skeletonHeight400px { min-height: 400px; }
+
+.skeletonLineTitle {
+  height: 2.5rem;
+  border-radius: 10px;
+}
+
+.skeletonLineBody {
+  height: 100%;
+  flex: 1;
+  border-radius: 10px;
+}
+
+.skeletonOpacity0 { opacity: 1; }
+.skeletonOpacity1 { opacity: 0.85; }
+.skeletonOpacity2 { opacity: 0.7; }
+.skeletonOpacity3 { opacity: 0.55; }
+
+.loadingBlock {
+  min-height: 400px;
+}
+
+@media (max-width: 1024px) {
+  .main .segmentSection {
+    padding-top: 35vh;
+
+    .lottieWindow {
+      width: 85vw;
+      height: 55vh;
+
+      .blob {
+        --blobSize: 600px;
+      }
+    }
+
+    .segmentList {
+      margin-top: calc(-100vh);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    .segmentSection {
+      padding-top: 25vh;
+
+      .lottieWindow {
+        width: 90vw;
+        height: 50vh;
+
+        .blob {
+          --blobSize: 500px;
+        }
+      }
+
+      .segmentList {
+        margin-top: calc(-80vh);
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+  --blobSize: 750px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
+
+  .segmentSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50vh;
+
+    .lottieWindow {
+      position: sticky;
+      top: 50%;
+      translate: 0 -50%;
+      width: 100%; // Changed from 100vw to prevent overflow
+      height: 70vh;
+      overflow: hidden;
+
+      .blob {
+        position: absolute;
+        z-index: 1000000;
+        left: 50%;
+        top: 50%;
+        translate: -50% -50%;
+        
+        width: var(--blobSize);
+        height: var(--blobSize);
+      }
+    }
+
+    .segmentList {
+      margin-top: calc(-120vh);
+    }
+  }
+}
+}

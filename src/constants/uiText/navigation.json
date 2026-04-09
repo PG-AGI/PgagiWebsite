@@ -1,0 +1,23 @@
+{
+  "brand": {
+    "name": "PG-AGI",
+    "logoAlt": "PGAGI Logo"
+  },
+  "links": {
+    "home": "Home",
+    "aboutUs": "About Us",
+    "solutions": "Solutions",
+    "solutionsTooltip": "Coming Soon",
+    "expertise": "Expertise",
+    "caseStudies": "Case Studies",
+    "blogs": "Blogs",
+    "careers": "Careers"
+  },
+  "cta": {
+    "getInTouch": "Get in touch",
+    "contactUrl": "https://calendly.com/vivek_01/30min"
+  },
+  "recommendedPostsTitle": "Recommended Posts",
+  "recommendedCaseStudiesTitle": "Recommended Case Studies",
+  "relatedAINewsTitle": "Related AI News"
+}

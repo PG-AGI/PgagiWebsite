@@ -1,0 +1,35 @@
+{
+  "titlePrefix": "What are we",
+  "titleHighlight": "building?",
+  "leftBadgeTexts": [
+    "Idea & Discovery",
+    "Prototype & Develop",
+    "Deploy & Optimize",
+    "Scale & Innovate"
+  ],
+  "rightBadgeTexts": [
+    "Strategy & Planning",
+    "Data Integration",
+    "AI Solution Deployment",
+    "Performance & Optimization"
+  ],
+  "leftGhostTitle": "Build a Custom AI Product —",
+  "leftChecklist": [
+    "Start with a clear AI product vision",
+    "Build, test, and refine..."
+  ],
+  "rightGhostTitle": "Implement AI Into Your Business",
+  "rightChecklist": [
+    "Identify business processes",
+    "Integrate AI tools with..."
+  ],
+  "formulaLabel": "AI-generated formula",
+  "leftLabelOverline": "FOR FOUNDERS / AI PRODUCT BUILDERS",
+  "leftMainTitlePrefix": "Build a custom AI product —",
+  "leftMainTitleHighlight": "from idea to scale",
+  "leftDescription": "Design, develop, and launch production-ready AI products with a user-first approach and scalable architecture.",
+  "rightLabelOverline": "FOR BUSINESSES & ENTERPRISES",
+  "rightMainTitle": "Implement AI into your business operations",
+  "rightDescription": "Automate workflows, reduce costs, and improve decision-making by integrating AI into your existing systems — without disrupting operations.",
+  "ctaLabel": "Let's build together"
+}

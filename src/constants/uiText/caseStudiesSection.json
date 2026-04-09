@@ -1,0 +1,22 @@
+{
+  "title": "Case studies",
+  "viewAllLabel": "View all",
+  "cards": [
+    {
+      "title": "Transforming customer engagement and lead management with AI-powered automation",
+      "brand": "Cracked AI"
+    },
+    {
+      "title": "Accelerating AI strategy and execution with focused consulting and delivery",
+      "brand": "AIM Cube"
+    },
+    {
+      "title": "Simplifying investor discovery through a high-signal, AI-powered platform",
+      "brand": "FOMO Fund"
+    },
+    {
+      "title": "Building reliable voice AI experiences for seamless customer interactions",
+      "brand": "Toingg"
+    }
+  ]
+}

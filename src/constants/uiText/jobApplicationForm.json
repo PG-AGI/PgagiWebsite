@@ -1,0 +1,13 @@
+{
+  "phonePlaceholder": "Enter your phone number",
+  "phoneTitle": "Phone number must be exactly 10 digits.",
+  "linkedinPlaceholder": "https://www.linkedin.com/in/yourprofile",
+  "portfolioPlaceholder": "https://yourportfolio.com or https://github.com/yourrepo",
+  "educationPlaceholder": "Enter your educational institute",
+  "projectDocPlaceholder": "https://docs.google.com/document/yourdoc",
+  "demoVideoPlaceholder": "https://www.loom.com/share/...",
+  "codeBasePlaceholder": "https://github.com/yourrepo",
+  "hostedLinkPlaceholder": "https://yourproject.com",
+  "resumePlaceholder": "https://yourresume.com/yourresume.pdf",
+  "coverLetterPlaceholder": "Tell us why you're interested in this position..."
+}

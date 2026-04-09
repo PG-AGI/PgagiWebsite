@@ -1,0 +1,25 @@
+const ROUTES = {
+  HOME: '/',
+  EXPERTISE: '/expertise',
+  EXPERTISE_SECTION: (sectionId: number): string => `/expertise#section-${sectionId}`,
+  PROJECTS: '/projects',
+  WHAT_WE_THINK: '/whatwethink',
+  WHAT_WE_THINK_BLOGS: '/whatwethink#blogs',
+  WHAT_WE_THINK_AINEWS: '/whatwethink#ainews',
+  WHAT_WE_THINK_CASE_STUDIES: '/whatwethink#case-studies',
+  CAREER: '/Career',
+  ABOUT_US: '/aboutUs',
+  EVENTS: '/events',
+  AUTH_SIGNIN: '/auth/signin',
+  ADMIN_MANAGEMENT: '/admin/management',
+  AINEWS: '/ainews',
+  AINEWS_SLUG: (slug: string): string => `/ainews/${slug}`,
+  BLOGPOST_SLUG: (slug: string): string => `/blogpost/${slug}`,
+  CASE_STUDY_SLUG: (slug: string): string => `/case-study/${slug}`,
+  WHATWETHINK_SLUG: (slug: string): string => `/whatwethink/${slug}`,
+  JOBS: '/jobs',
+  JOBS_SLUG: (jobId: string): string => `/jobs/${jobId}`,
+  EVENTFORM_ID: (id: string): string => `/eventform/${id}`,
+} as const;
+
+export default ROUTES;

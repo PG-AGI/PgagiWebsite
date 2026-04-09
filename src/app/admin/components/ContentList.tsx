@@ -1,0 +1,123 @@
+// /components/AdminPanel/ContentList.tsx
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import styles from '@/styles/app/admin/management/Admin.module.scss';
+import { ContentSummary, ContentType } from '@/utils/type';
+import Image from 'next/image';
+import { fetchAllContentSummaries } from '@/services/contentService';
+
+interface ContentListProps {
+  onEdit: (content: ContentSummary) => void;
+  onView: (content: ContentSummary) => void;
+  onDelete: (content: ContentSummary, func:()=> void) => void;
+}
+
+const ContentList: React.FC<ContentListProps> = ({ onEdit, onView, onDelete }) => {
+  const [contents, setContents] = useState<ContentSummary[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [filterType, setFilterType] = useState<'all' | ContentType>('all');
+
+  const fetchContents = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      setContents(await fetchAllContentSummaries());
+    } catch (err: unknown) {
+      console.error('Error fetching contents:', err);
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchContents();
+  }, []);
+  // handlign delete
+  const handleDelete = (cs: ContentSummary)=>{
+    onDelete(cs, fetchContents);
+  }
+  const filteredContents = contents.filter((cs) => {
+    if (filterType === 'all') return true;
+    return cs.contentType === filterType;
+  });
+
+  return (
+    <div className={styles.contentList}>
+      <h2>Existing Contents</h2>
+      <div className={styles.filterContainer}>
+        <label htmlFor="filterType">Filter by Type:</label>
+        <select
+          id="filterType"
+          value={filterType}
+          onChange={(e) => setFilterType(e.target.value as 'all' | ContentType)}
+          className={styles.filterSelect}
+        >
+          <option value="all">All</option>
+          <option value="caseStudy">Case Studies</option>
+          <option value="blog">Blogs</option>
+          <option value="ainews">AINEWS</option>
+        </select>
+      </div>
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p className={styles.error}>{error}</p>
+      ) : filteredContents.length === 0 ? (
+        <p>No contents found.</p>
+      ) : (
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Cover Image</th>
+              <th>Title</th>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredContents.map((cs) => (
+              <tr key={cs.slug}>
+                <td>
+                  {/* <img src={cs.coverImage} alt={cs.title} className={styles.coverImage} /> */}
+                  <Image
+                    src={cs.coverImage}
+                    alt={cs.title}
+                    width={100}
+                    height={50}
+                    className={styles.coverImage} />
+                </td>
+                <td>{cs.title}</td>
+                <td>{cs.slug}</td>
+                <td>
+                  {cs.contentType === 'caseStudy'
+                    ? 'Case Study'
+                    : cs.contentType === 'blog'
+                      ? 'Blog'
+                      : 'AINEWS'}
+                </td>
+                <td>
+                  <button onClick={() => onView(cs)} className={styles.viewButton}>
+                    View Details
+                  </button>
+                  <button onClick={() => onEdit(cs)} className={styles.editButton}>
+                    Edit
+                  </button>
+                  <button onClick={()=>{handleDelete(cs)}} className={styles.deleteButton}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default ContentList;

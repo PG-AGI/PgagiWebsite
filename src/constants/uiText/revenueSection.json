@@ -1,0 +1,41 @@
+{
+  "titlePrefix": "AI that scales",
+  "titleHighlight": "business revenue",
+  "subtitleLine1": "Not experiments.",
+  "subtitleLine2": "Production systems tied to ROI.",
+  "outcomeLabel": "Outcome:",
+  "cards": [
+    {
+      "title": "Deep Business Immersion",
+      "points": [
+        "Study workflows (pre-sales, ops, support)",
+        "Identify bottlenecks",
+        "Map high-impact leverage points"
+      ],
+      "outcome": "Clear ROI targets",
+      "imageAlt": "ROI leverage analysis diagram"
+    },
+    {
+      "title": "ROI-Driven System Arch.",
+      "points": [
+        "Modular AI system design",
+        "Cost-aware infrastructure",
+        "Human-in-the-loop control",
+        "Secure, compliant foundation"
+      ],
+      "outcome": "AI that improves margins",
+      "imageAlt": "ROI-driven architecture diagram"
+    },
+    {
+      "title": "Enterprise Implementation",
+      "points": [
+        "Seamless integration with your stack",
+        "Cloud-native deployment",
+        "Performance monitoring",
+        "Continuous optimization"
+      ],
+      "outcome": "AI embedded into operations",
+      "imageAlt": "Enterprise implementation workflow diagram"
+    }
+  ]
+}

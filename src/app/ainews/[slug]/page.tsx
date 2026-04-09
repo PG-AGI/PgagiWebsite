@@ -1,0 +1,50 @@
+import { getMetaTags } from "@/services/apiMetaService";
+import Ainews from "./Ainews";
+import styles from '@/styles/app/ainews/[slug]/Ainews.module.scss';
+
+export default function BlogPostPage() {
+  return (
+    <div className={styles.pageWrapper}>
+      <Ainews />
+    </div>
+  )
+}
+
+// Note: Please don't remove the file structure for BlogPost, CaseStudy or Ainews
+// because this generateMetadata() method requires a Server Side Component.
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const slug = params.slug as string;
+  try {
+    const metaData = await getMetaTags({ contentType: 'ainews', pageId: slug });
+
+    const metaDescription = metaData.metaDescription;
+    const metaKeywords = metaData.metaKeywords;
+    const metaAuthor = metaData.metaAuthor;
+    const appTitle = metaData.metaTitle;
+
+    return {
+      title: appTitle,
+      description: metaDescription,
+      // Add additional meta tags
+      robots: {
+        index: true,
+        follow: true,
+      },
+      appleWebApp: {
+        title: appTitle,
+      },
+      applicationName: appTitle,
+      keywords: metaKeywords.split(/[\s,]+/), // Convert the string to an array
+      // author: metaAuthor,
+      meta: [
+        {
+          name: "author",
+          content: metaAuthor,
+        },
+      ],
+    };
+  }catch(error){
+    return {}
+  }
+
+}

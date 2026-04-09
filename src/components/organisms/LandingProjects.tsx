@@ -1,0 +1,242 @@
+import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
+import styles from "@/styles/components/organisms/LandingProjects.module.scss";
+import { trendingListOld } from "@/utils/constants";
+import { useRouter } from "next/navigation";
+import React from "react";
+import ROUTES from "@/constants/routes";
+
+const LandingProjects = React.memo(() => {
+  const router = useRouter();
+  const [isFirstItemHovered, setIsFirstItemHovered] = useState(false);
+  const [isSecondItemHovered, setIsSecondItemHovered] = useState(false);
+  const [isThirdItemHovered, setIsThirdItemHovered] = useState(false);
+  const [isFourthItemHovered, setIsFourthItemHovered] = useState(false);
+
+  const handleExpand = useCallback((title: string) => {
+    switch (title) {
+      case "Case Studies":
+        window.open(ROUTES.WHAT_WE_THINK_CASE_STUDIES, "_blank");
+        break;
+      case "Blogs":
+        window.open(ROUTES.WHAT_WE_THINK_BLOGS, "_blank");
+        break;
+      case "AI News":
+        window.open(ROUTES.WHAT_WE_THINK_AINEWS, "_blank");
+        break;
+      default:
+        console.error("URL is not defined");
+    }
+  }, []);
+
+  // This will handle scrolling after the route change
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [router]);
+
+  return (
+    <section id="trending" className={styles.trending}>
+      <div className={styles.projectsButtonContainer}>
+        <button
+          type="button"
+          onClick={() => router.push(ROUTES.PROJECTS)}
+          className={styles.projectsButton}
+        >
+          Projects
+        </button>
+      </div>
+
+      <div className={styles.trendingList}>
+        {trendingListOld.map((item, i) => (
+          <div
+            key={i}
+            className={styles.trendingItem}
+            onClick={() => {
+              if (i === 0) {
+                window.open("https://cracked.ai/", "_blank");
+              } else if (i === 1) {
+                window.open("https://fomo.fund/", "_blank");
+              } else if (i === 2) {
+                window.open("https://aim-cube.com/", "_blank");
+              } else {
+                handleExpand(item.title);
+              }
+            }}
+            onMouseEnter={() => {
+              if (i === 0) setIsFirstItemHovered(true);
+              else if (i === 1) setIsSecondItemHovered(true);
+              else if (i === 2) setIsThirdItemHovered(true);
+            }}
+            onMouseLeave={() => {
+              if (i === 0) setIsFirstItemHovered(false);
+              else if (i === 1) setIsSecondItemHovered(false);
+              else if (i === 2) setIsThirdItemHovered(false);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <div className={styles.content}>
+              <h3>
+                {i === 0 ? "" :
+                  i === 1 ? "" :
+                    i === 2 ? "" :
+                      item.title}
+              </h3>
+              {i === 0 ? (
+                <p style={{
+                  opacity: isFirstItemHovered ? 1 : 0,
+                  transition: 'opacity 0.3s ease',
+                  textAlign: 'center',
+                  fontSize: '1.1rem',
+                  fontWeight: '600'
+                }}>
+                  Click to View
+                </p>
+              ) : i === 1 ? (
+                <p style={{
+                  opacity: isSecondItemHovered ? 1 : 0,
+                  transition: 'opacity 0.3s ease',
+                  textAlign: 'center',
+                  fontSize: '1.1rem',
+                  fontWeight: '600'
+                }}>
+                  Click to View
+                </p>
+              ) : i === 2 ? (
+                <p style={{
+                  opacity: isThirdItemHovered ? 1 : 0,
+                  transition: 'opacity 0.3s ease',
+                  textAlign: 'center',
+                  fontSize: '1.1rem',
+                  fontWeight: '600'
+                }}>
+                  Click to View
+                </p>
+              ) : (
+                <>
+                  <p>{item.description}</p>
+                  <p className={styles.brief}>{item.brief}</p>
+                </>
+              )}
+            </div>
+            {i === 0 ? (
+              // First item with optimized video
+              <div className={styles.gifContainer}>
+                <video
+                  className={styles.imgTag}
+                  src="/Landing Projects/CrackedAI.webm"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    willChange: "auto"
+                  }}
+                />
+              </div>
+            ) : i === 1 ? (
+              // Second item retains GIF until WebM is available
+              <div className={styles.gifContainer}>
+                <Image
+                  className={styles.imgTag}
+                  src="/Landing Projects/FOMO.gif"
+                  alt="FOMO"
+                  fill
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                  unoptimized={true}
+                  style={{
+                    objectFit: "cover",
+                    animationPlayState: isSecondItemHovered ? "running" : "paused",
+                    animationDelay: "0s",
+                    willChange: "auto"
+                  }}
+                />
+              </div>
+            ) : i === 2 ? (
+              // Third item with optimized video (existing file)
+              <div className={styles.gifContainer}>
+                <video
+                  className={styles.imgTag}
+                  src="/Landing Projects/AIMI.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    willChange: "auto"
+                  }}
+                />
+              </div>
+            ) : (
+              // Other items with original images
+              <Image
+                className={styles.imgTag}
+                src={item.image}
+                alt={item.title}
+                layout="fill"
+                objectFit="cover"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+              />
+            )}
+          </div>
+        ))}
+        <div
+          className={styles.trendingItem}
+          onClick={() => window.open("https://www.toingg.com/", "_blank")}
+          onMouseEnter={() => setIsFourthItemHovered(true)}
+          onMouseLeave={() => setIsFourthItemHovered(false)}
+          style={{ cursor: "pointer" }}
+        >
+          <div className={styles.content}>
+            {/* <div className={styles.badge}>Our Own Product</div>
+            <h3 className={styles.productTitle}>TOINGG</h3> */}
+            {/* <p className={styles.productSubtitle}>
+              In year 2023, two founders launched their first product: &quot;Toingg&quot;,
+              an AI communication OS for businesses.
+            </p> */}
+
+
+          </div>
+          <div className={styles.gifContainer}>
+            <video
+              className={styles.imgTag}
+              src="/Landing Projects/Toingg.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                willChange: "auto"
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+});
+
+LandingProjects.displayName = 'LandingProjects';
+
+export default LandingProjects;

@@ -1,0 +1,22 @@
+{
+  "backToEventsLabel": "<  Go back to events",
+  "eventOverviewTitle": "Event Overview",
+  "enrollForFreeTitle": "Enroll for FREE!!",
+  "namePlaceholder": "Your Name",
+  "emailPlaceholder": "Your Email",
+  "occupationPlaceholder": "Your Occupation",
+  "enrollNowLabel": "Enroll Now",
+  "verifyOtpTitle": "Verify OTP",
+  "verifyOtpDescription": "An OTP has been sent to your email. Please enter it below:",
+  "otpPlaceholder": "Enter OTP",
+  "verifyingLabel": "Verifying...",
+  "verifyLabel": "Verify",
+  "cancelLabel": "Cancel",
+  "interestedLoadingLabel": "... are interested",
+  "interestedSuffixLabel": "are interested",
+  "eventDetailsTitle": "Event Details",
+  "onlineStreamingLabel": "Online Streaming",
+  "eventInDetailTitle": "Event in Detail",
+  "eventStartsInLabel": "EVENT STARTS IN",
+  "enrollNowCtaLabel": "Enroll Now!"
+}

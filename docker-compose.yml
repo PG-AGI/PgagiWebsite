@@ -1,0 +1,8 @@
+services:
+  pgagi-website:
+    build:
+      context: .
+      dockerfile: dockerfile
+    restart: "always"
+    ports:
+      - "3000:3000"
