@@ -5,6 +5,7 @@ import { trendingListOld } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import React from "react";
 import ROUTES from "@/constants/routes";
+import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 const LandingProjects = React.memo(() => {
   const router = useRouter();
@@ -59,11 +60,11 @@ const LandingProjects = React.memo(() => {
             className={styles.trendingItem}
             onClick={() => {
               if (i === 0) {
-                window.open("https://cracked.ai/", "_blank");
+                window.open(EXTERNAL_LINKS.CRACKED_AI, "_blank");
               } else if (i === 1) {
-                window.open("https://fomo.fund/", "_blank");
+                window.open(EXTERNAL_LINKS.FOMO_FUND, "_blank");
               } else if (i === 2) {
-                window.open("https://aim-cube.com/", "_blank");
+                window.open(EXTERNAL_LINKS.AIM_CUBE, "_blank");
               } else {
                 handleExpand(item.title);
               }
@@ -199,7 +200,7 @@ const LandingProjects = React.memo(() => {
         ))}
         <div
           className={styles.trendingItem}
-          onClick={() => window.open("https://www.toingg.com/", "_blank")}
+          onClick={() => window.open(EXTERNAL_LINKS.TOINGG, "_blank")}
           onMouseEnter={() => setIsFourthItemHovered(true)}
           onMouseLeave={() => setIsFourthItemHovered(false)}
           style={{ cursor: "pointer" }}

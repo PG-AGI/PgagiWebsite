@@ -3,12 +3,13 @@
 import Image from "next/image";
 import styles from "@/styles/components/organisms/base/navigation.module.scss";
 import Link from "next/link";
-import TransitionLink from "../TransitionLink";
+import TransitionLink from "@/components/atoms/TransitionLink";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import ContactUsForm from "./contactUsForm";
 import { ArrowRight, Target } from "lucide-react";
 import ROUTES from "@/constants/routes";
+import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 export default function Navigation() {
   const [navbarVisible] = useState(true);
@@ -21,7 +22,7 @@ export default function Navigation() {
   const BLOGS = ROUTES.WHAT_WE_THINK;
   const ABOUT = ROUTES.ABOUT_US;
   const INDUSTRIES = "/industries";
-  const CONTACT_URL = "https://calendly.com/vivek_01/30min";
+  const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [showGlassEffect, setShowGlassEffect] = useState(false);

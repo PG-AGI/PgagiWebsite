@@ -1,5 +1,5 @@
 "use client";
-import TransitionLink from "./TransitionLink";
+import TransitionLink from "@/components/atoms/TransitionLink";
 import styles from "@/styles/components/organisms/footer.module.scss";
 import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";

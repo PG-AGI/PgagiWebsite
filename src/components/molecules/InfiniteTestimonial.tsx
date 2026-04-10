@@ -7,17 +7,18 @@ import {
   pgagiClientTestimonials,
   type PgagiClientReview,
 } from "@/data/pgagiClientTestimonials";
+import { EXTERNAL_APIS } from "@/constants/externalLinks";
 
 type Testimonial = PgagiClientReview;
 
 const flagImages: { [key: string]: string } = {
-  USA: "https://flagcdn.com/us.svg",
-  UK: "https://flagcdn.com/gb.svg",
-  Canada: "https://flagcdn.com/ca.svg",
-  Australia: "https://flagcdn.com/au.svg",
-  Germany: "https://flagcdn.com/de.svg",
-  IN: "https://flagcdn.com/in.svg",
-  Italy: "https://flagcdn.com/it.svg",
+  USA: `${EXTERNAL_APIS.FLAG_CDN}/us.svg`,
+  UK: `${EXTERNAL_APIS.FLAG_CDN}/gb.svg`,
+  Canada: `${EXTERNAL_APIS.FLAG_CDN}/ca.svg`,
+  Australia: `${EXTERNAL_APIS.FLAG_CDN}/au.svg`,
+  Germany: `${EXTERNAL_APIS.FLAG_CDN}/de.svg`,
+  IN: `${EXTERNAL_APIS.FLAG_CDN}/in.svg`,
+  Italy: `${EXTERNAL_APIS.FLAG_CDN}/it.svg`,
 };
 
 const testimonials: Testimonial[] = pgagiClientTestimonials;
@@ -26,6 +27,8 @@ const TestimonialCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [animatedNumber, setAnimatedNumber] = useState(5);
+  const resetCounterTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resumeAutoplayTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Auto-advance testimonials
   useEffect(() => {
@@ -43,23 +46,50 @@ const TestimonialCarousel: React.FC = () => {
     const counterInterval = setInterval(() => {
       setAnimatedNumber((prev) => {
         if (prev >= 5) {
-          // After reaching 5, wait for 1 second then reset to 1
-          setTimeout(() => setAnimatedNumber(1), 1000);
+          if (!resetCounterTimeoutRef.current) {
+            resetCounterTimeoutRef.current = setTimeout(() => {
+              setAnimatedNumber(1);
+              resetCounterTimeoutRef.current = null;
+            }, 1000);
+          }
           return 5;
         }
         return prev + 1;
       });
     }, 1000); // Change number every 0.1 seconds
-
-    return () => clearInterval(counterInterval);
+ 
+    return () => {
+      clearInterval(counterInterval);
+      if (resetCounterTimeoutRef.current) {
+        clearTimeout(resetCounterTimeoutRef.current);
+        resetCounterTimeoutRef.current = null;
+      }
+    };
   }, []);
 
   const handleDotClick = (index: number) => {
     setCurrentIndex(index);
     setIsAutoPlaying(false);
-    // Resume auto-play after 10 seconds of inactivity
-    setTimeout(() => setIsAutoPlaying(true), 10000);
+    if (resumeAutoplayTimeoutRef.current) {
+      clearTimeout(resumeAutoplayTimeoutRef.current);
+    }
+    resumeAutoplayTimeoutRef.current = setTimeout(() => {
+      setIsAutoPlaying(true);
+      resumeAutoplayTimeoutRef.current = null;
+    }, 10000);
   };
+
+  useEffect(
+    () => () => {
+      if (resumeAutoplayTimeoutRef.current) {
+        clearTimeout(resumeAutoplayTimeoutRef.current);
+      }
+      if (resetCounterTimeoutRef.current) {
+        clearTimeout(resetCounterTimeoutRef.current);
+      }
+    },
+    [],
+  );
 
   const currentTestimonial = testimonials[currentIndex];
 

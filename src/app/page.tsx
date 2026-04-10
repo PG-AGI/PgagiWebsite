@@ -15,12 +15,6 @@ const SectionSkeleton = ({ height = '80vh', lines = 3 }: { height?: string; line
   </div>
 );
 
-// Preload critical imports for faster loading
-// import "three";
-// import "postprocessing";
-//import { motion } from 'framer-motion';
-
-// Partners is now rendered inside Landing.tsx (pinned to hero bottom)
 const StatsSection = dynamic(() => import("@/components/organisms/NewPage"), {
   ssr: false,
   loading: () => <SectionSkeleton height="80vh" lines={3} />,
@@ -95,102 +89,15 @@ const BuildEcosystemSection = dynamic(
     loading: () => <SectionSkeleton height="600px" lines={3} />,
   },
 );
-const LandingProjects = dynamic(() => import("@/components/organisms/LandingProjects"), {
-  loading: () => <div>Loading...</div>,
-});
-const ExpertiseSection = dynamic(
-  () => import("@/components/organisms/ExpertiseSection"),
-  { loading: () => <div>Loading...</div> },
-);
-const VideoTestimonial = dynamic(
-  () => import("@/components/organisms/VideoTestimonial"),
-  { loading: () => <div>Loading...</div> },
-);
-const FAQ = dynamic(() => import("@/components/organisms/FAQ"), {
-  loading: () => <div>Loading...</div>,
-});
-const Calendly = dynamic(() => import("@/components/organisms/Calendly"), {
-  loading: () => <div className={styles.loadingBlock}>Loading...</div>,
-});
-const ScrollIndicator = dynamic(() => import("@/components/organisms/ScrollIndicator"), {
+const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator"), {
   ssr: false,
   loading: () => null,
 });
 
 export default function Home() {
-  // Preload critical Hyperspeed dependencies immediately
-  // useEffect(() => {
-  // 	// Start loading Three.js and postprocessing as soon as possible
-  // 	const preloadHyperspeedDeps = async () => {
-  // 		try {
-  // 			await Promise.all([
-  // 				import('three'),
-  // 				import('postprocessing')
-  // 			]);
-  // 		} catch (error) {
-  // 			console.warn('Failed to preload Hyperspeed dependencies:', error);
-  // 		}
-  // 	};
-
-  // 	preloadHyperspeedDeps();
-  // }, []);
-
-  // useEffect(() => {
-  // 	if (typeof window === 'undefined') return;
-
-  // const preload = () => {
-  // 	const components = [
-  // 		Partners,
-  // 		StatsSection,
-  // 		Process,
-  // 		LandingProjects,
-  // 		ExpertiseSection,
-  // 		VideoTestimonial,
-  // 		FAQ,
-  // 		TrendingOld,
-  // 		Calendly,
-  // 		ScrollIndicator,
-  // 	];
-
-  // 	components.forEach((component) => {
-  // 		(component as any)?.preload?.();
-  // 	});
-  // };
-
-  // let idleHandle: number | null = null;
-  // let timeoutHandle: number | null = null;
-
-  // const requestIdle = (window as any).requestIdleCallback?.bind(window);
-  // const cancelIdle = (window as any).cancelIdleCallback?.bind(window);
-
-  // if (typeof requestIdle === 'function') {
-  // 	idleHandle = requestIdle(preload, { timeout: 1000 });
-  // } else {
-  // 	timeoutHandle = window.setTimeout(preload, 300);
-  // }
-
-  // 	return () => {
-  // 		// if (idleHandle !== null && typeof cancelIdle === 'function') {
-  // 		// 	cancelIdle(idleHandle);
-  // 		// }
-  // 		// if (timeoutHandle !== null) {
-  // 		// 	window.clearTimeout(timeoutHandle);
-  // 		// }
-  // 	};
-  // }, []);
-
   return (
     <main className={styles.main}>
       <ScrollIndicator />
-      {/* <SmoothScrollNav 
-				sections={[
-					{ id: 'landing', label: 'Home', offset: 0 },
-					{ id: 'testimonials-section', label: 'Testimonials', offset: 80 },
-					{ id: 'partners', label: 'Partners', offset: 80 },
-					{ id: 'trending', label: 'Trending', offset: 80 },
-					{ id: 'segment', label: 'Services', offset: 80 },
-				]}
-			/> */}
       <Landing />
       <StatsSection />
       <VisionSystemSection />
@@ -205,21 +112,6 @@ export default function Home() {
       <Customers />
       <WhatMakesUsDifferentSection />
       <ConcentricEllipseSection />
-      {/* <VideoTestimonial />
-      <LandingProjects />
-      <ExpertiseSection />
-      <FAQ />
-      <Calendly /> */}
-      {/* <LazyOnVisible><Partners /></LazyOnVisible>
-			<LazyOnVisible><StatsSection /></LazyOnVisible>
-			<LazyOnVisible><VideoTestimonial /></LazyOnVisible>
-			<LazyOnVisible><Process /></LazyOnVisible>
-			<LazyOnVisible><LandingProjects/></LazyOnVisible>
-			<LazyOnVisible><ExpertiseSection /></LazyOnVisible>
-			{/* <LazyOnVisible><VideoTestimonial /></LazyOnVisible> 
-			<LazyOnVisible><FAQ /></LazyOnVisible>
-			<LazyOnVisible><TrendingOld/></LazyOnVisible>
-			<LazyOnVisible><Calendly /></LazyOnVisible> */}
     </main>
   );
 }

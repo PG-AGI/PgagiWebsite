@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { fetchAllCaseStudies } from '@/services/caseStudyService';
 import ROUTES from '@/constants/routes';
 import { getErrorMessage } from '@/utils/errorUtils';
+import EXTERNAL_LINKS from '@/constants/externalLinks';
 
 type CaseStudy = {
   id: string;
@@ -71,19 +72,19 @@ export default function Projects() {
   const handleCardClick = useCallback((index: number, title: string) => {
     switch (index) {
       case 0:
-        window.open("https://cracked.ai/", "_blank");
+        window.open(EXTERNAL_LINKS.CRACKED_AI, "_blank");
         break;
       case 1:
         // window.open("https://fomo.fund/", "_blank");
         break;
       case 2:
-        window.open("https://aione.klinik-x.de/", "_blank");
+        window.open(EXTERNAL_LINKS.AIONE, "_blank");
         break;
       case 3:
-        window.open("https://aim-cube.com/", "_blank");
+        window.open(EXTERNAL_LINKS.AIM_CUBE, "_blank");
         break;
       case 4:
-        window.open("https://onchaintoolkit.com/", "_blank");
+        window.open(EXTERNAL_LINKS.ONCHAIN_TOOLKIT, "_blank");
         break;
 
       default:
@@ -406,7 +407,7 @@ export default function Projects() {
   const additionalProjectCard = useMemo(() => (
     <div
       className={styles.card}
-      onClick={() => window.open("https://www.toingg.com/", "_blank")}
+      onClick={() => window.open(EXTERNAL_LINKS.TOINGG, "_blank")}
       onMouseEnter={() => handleMouseEnter(3)}
       onMouseLeave={handleMouseLeave}
       style={{ cursor: "pointer" }}
@@ -451,7 +452,7 @@ export default function Projects() {
   const onchainProjectCard = useMemo(() => (
     <div
       className={styles.card}
-      onClick={() => window.open("https://onchaintoolkit.com/", "_blank")}
+      onClick={() => window.open(EXTERNAL_LINKS.ONCHAIN_TOOLKIT, "_blank")}
       onMouseEnter={() => handleMouseEnter(4)}
       onMouseLeave={handleMouseLeave}
       style={{ cursor: "pointer" }}
@@ -507,7 +508,7 @@ export default function Projects() {
   const aimiProjectCard = useMemo(() => (
     <div
       className={styles.card}
-      onClick={() => window.open("https://aim-cube.com/", "_blank")}
+      onClick={() => window.open(EXTERNAL_LINKS.AIM_CUBE, "_blank")}
       onMouseEnter={() => handleMouseEnter(4)}
       onMouseLeave={handleMouseLeave}
       style={{ cursor: "pointer" }}

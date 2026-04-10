@@ -5,6 +5,7 @@ import styles from "@/styles/components/organisms/landing.module.scss";
 import Link from "next/link";
 import Partners from "./Partners";
 import landingText from "@/constants/uiText/landing.json";
+import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 const heroVerificationPlatforms = [
   {
@@ -87,7 +88,7 @@ export default function Landing() {
         </p>
 
         <Link
-          href="https://calendly.com/vivek_01/30min"
+          href={EXTERNAL_LINKS.CALENDLY_BOOKING}
           target="_blank"
           rel="noopener noreferrer"
           className={styles.heroCta}

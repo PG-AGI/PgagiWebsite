@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import styles from "@/styles/components/organisms/ConcentricEllipseSection.module.scss";
 import concentricEllipseText from "@/constants/uiText/concentricEllipse.json";
+import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 const ConcentricEllipseSection = () => {
   return (
@@ -23,7 +24,7 @@ const ConcentricEllipseSection = () => {
             <button 
               type="button" 
               className={styles.ctaButton}
-              onClick={() => window.open("https://calendly.com/vivek_01/30min", "_blank")}
+              onClick={() => window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, "_blank")}
             >
               <span className={styles.ctaLabel}>{concentricEllipseText.ctaLabel}</span>
               <span className={styles.arrowCircle} aria-hidden="true">

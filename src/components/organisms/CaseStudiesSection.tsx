@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import styles from "@/styles/components/organisms/CaseStudiesSection.module.scss";
 import ROUTES from "@/constants/routes";
 import caseStudiesSectionText from "@/constants/uiText/caseStudiesSection.json";
+import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 type CaseStudyCard = {
   id: string;
@@ -25,7 +26,7 @@ const caseStudyCards: CaseStudyCard[] = [
     title: caseStudiesSectionText.cards[0].title,
     brand: caseStudiesSectionText.cards[0].brand,
     imageSrc: "/assets/CaseStudies/CrackedAi.jpg",
-    href: "https://www.cracked.ai/",
+    href: EXTERNAL_LINKS.CRACKED_AI,
     accentStart: "#ddd9ef",
     accentEnd: "#1e1b2a",
   },
@@ -34,7 +35,7 @@ const caseStudyCards: CaseStudyCard[] = [
     title: caseStudiesSectionText.cards[1].title,
     brand: caseStudiesSectionText.cards[1].brand,
     imageSrc: "/assets/CaseStudies/AIMI.jpg",
-    href: "https://aim-cube.com/",
+    href: EXTERNAL_LINKS.AIM_CUBE,
     accentStart: "#cb6aa1",
     accentEnd: "#250d1b",
   },
@@ -43,7 +44,7 @@ const caseStudyCards: CaseStudyCard[] = [
     title: caseStudiesSectionText.cards[2].title,
     brand: caseStudiesSectionText.cards[2].brand,
     imageSrc: "/assets/CaseStudies/Fomo.jpg",
-    href: "https://fomo.fund/",
+    href: EXTERNAL_LINKS.FOMO_FUND,
     accentStart: "#c3a6b8",
     accentEnd: "#22171f",
   },
@@ -52,7 +53,7 @@ const caseStudyCards: CaseStudyCard[] = [
     title: caseStudiesSectionText.cards[3].title,
     brand: caseStudiesSectionText.cards[3].brand,
     imageSrc: "/assets/CaseStudies/Toingg.jpg",
-    href: "https://www.toingg.com/",
+    href: EXTERNAL_LINKS.TOINGG,
     accentStart: "#a7a3e2",
     accentEnd: "#151529",
   },

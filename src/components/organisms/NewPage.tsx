@@ -13,6 +13,7 @@ import {
   MOTION_DURATION,
 } from '@/lib/motion';
 import newPageText from '@/constants/uiText/newPage.json';
+import EXTERNAL_LINKS from '@/constants/externalLinks';
 // Plugins registered in useEffect — NOT at module scope to avoid SSR/import-time side-effects
 
 const Badge = ({ icon, text, theme, index }: { icon: React.ReactNode, text: string, theme: string, index: number }) => (
@@ -222,7 +223,7 @@ const NewPage = () => {
                   className={styles.pillButton}
                   onClick={(e) => {
                     e.stopPropagation();
-                    window.open('https://calendly.com/vivek_01/30min', '_blank');
+                    window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, '_blank');
                   }}
                 >
                   {newPageText.ctaLabel}
@@ -288,7 +289,7 @@ const NewPage = () => {
                   className={styles.pillButton}
                   onClick={(e) => {
                     e.stopPropagation();
-                    window.open('https://calendly.com/vivek_01/30min', '_blank');
+                    window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, '_blank');
                   }}
                 >
                   {newPageText.ctaLabel}

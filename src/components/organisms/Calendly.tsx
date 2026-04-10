@@ -2,6 +2,7 @@ import styles from "@/styles/components/organisms/calendly.module.scss";
 import { InlineWidget } from "react-calendly";
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 export default function Calendly() {
     const widgetRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ export default function Calendly() {
                     <button
                         className={styles.ctaButton}
                         // onClick={() => window.open("https://form.pgagi.in/", "_blank")}
-                         onClick={() => window.open("https://calendly.com/vivek_01/30min", "_blank")}
+                         onClick={() => window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, "_blank")}
                     >
                         Book a Free Consultation
                     </button>

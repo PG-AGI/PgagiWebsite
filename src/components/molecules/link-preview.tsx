@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { EXTERNAL_APIS } from "@/constants/externalLinks";
 
 type LinkPreviewProps = {
   children: React.ReactNode;
@@ -49,7 +50,7 @@ export const LinkPreview = ({
       "viewport.width": width * 3,
       "viewport.height": height * 3,
     });
-    src = `https://api.microlink.io/?${params}`;
+    src = `${EXTERNAL_APIS.MICROLINK}?${params}`;
   } else {
     src = imageSrc;
   }

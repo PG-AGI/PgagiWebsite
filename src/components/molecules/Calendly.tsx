@@ -2,6 +2,7 @@ import styles from "@/styles/components/molecules/calendly.module.scss";
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import calendlyText from "@/constants/uiText/calendly.json";
+import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 export default function Calendly(): JSX.Element {
   const widgetRef = useRef<HTMLDivElement>(null);
@@ -51,7 +52,7 @@ export default function Calendly(): JSX.Element {
 
           <button
             className={styles.ctaButton}
-            onClick={() => window.open("https://calendly.com/vivek_01/30min", "_blank")}
+            onClick={() => window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, "_blank")}
           >
             {calendlyText.ctaButtonLabel}
           </button>
