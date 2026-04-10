@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import Landing from "@/components/organisms/Landing";
 import styles from "@/styles/app/page.module.scss";
 import dynamic from "next/dynamic";
@@ -94,7 +95,44 @@ const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator
   loading: () => null,
 });
 
+// Preload all dynamic section chunks during browser idle time so they are
+// already parsed before the user scrolls to them — eliminates scroll jank
+// caused by on-demand JS fetching + parsing mid-scroll.
+function usePreloadSections() {
+  useEffect(() => {
+    // First 2 sections are immediately below the fold — preload them right away
+    // so the skeleton never shows when the user scrolls down quickly.
+    void import("@/components/organisms/NewPage");
+    void import("@/components/organisms/VisionSystemSection");
+
+    // The rest are deeper — preload during browser idle time
+    const preloadRest = () => {
+      void import("@/components/organisms/SocialOrbitSection");
+      void import("@/components/organisms/SolutionFitBreakdownSection");
+      void import("@/components/organisms/WhatMakesUsDifferentSection");
+      void import("@/components/organisms/MeasurableImpactSection");
+      void import("@/components/organisms/EcosystemSection");
+      void import("@/components/organisms/ProcessTimelineSection");
+      void import("@/components/organisms/RevenueSection");
+      void import("@/components/organisms/ConcentricEllipseSection");
+      void import("@/components/organisms/CaseStudiesSection");
+      void import("@/components/organisms/Customers");
+      void import("@/components/organisms/BuildEcosystemSection");
+    };
+
+    if (typeof requestIdleCallback !== "undefined") {
+      const id = requestIdleCallback(preloadRest, { timeout: 3000 });
+      return () => cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(preloadRest, 500);
+      return () => clearTimeout(id);
+    }
+  }, []);
+}
+
 export default function Home() {
+  usePreloadSections();
+
   return (
     <main className={styles.main}>
       <ScrollIndicator />

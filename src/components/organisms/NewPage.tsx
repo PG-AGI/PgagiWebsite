@@ -26,13 +26,14 @@ const Badge = ({ icon, text, theme, index }: { icon: React.ReactNode, text: stri
 );
 
 const NewPage = () => {
+  // ssr: false — component only ever runs in browser, no hydration mismatch risk.
+  // Initialize isMounted as true to skip the empty → content render cycle.
   const [isMobile, setIsMobile] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = true;
   const { scrollTo } = useSmoothScrollTo();
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    setIsMounted(true);
     const handleResize = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -122,13 +123,12 @@ const NewPage = () => {
           <div className={styles.titleContainer}>
             <motion.h1
               className={styles.title}
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
               transition={
                 shouldReduceMotion
                   ? { duration: 0 }
-                  : { duration: MOTION_DURATION.slow, ease: FRAMER_EASE.premiumOut }
+                  : { duration: MOTION_DURATION.fast, ease: FRAMER_EASE.premiumOut, delay: 0.1 }
               }
             >
               {newPageText.titlePrefix} <span className={styles.highlight}>{newPageText.titleHighlight}</span>
@@ -168,13 +168,12 @@ const NewPage = () => {
         {/* Content Grid */}
         <div className={styles.cardsGrid}>
           {/* Left Card: Foundations */}
-          <motion.div 
-            className={`${styles.card} ${styles.cardFounders}`} 
+          <motion.div
+            className={`${styles.card} ${styles.cardFounders}`}
             ref={leftCardRef}
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 36, scale: 0.97 }}
-            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.cinematic, ease: FRAMER_EASE.premiumOut, delay: 0.1 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.normal, ease: FRAMER_EASE.premiumOut, delay: 0.2 }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -236,13 +235,12 @@ const NewPage = () => {
           </motion.div>
 
           {/* Right Card: Enterprises */}
-          <motion.div 
-            className={`${styles.card} ${styles.cardEnterprises}`} 
+          <motion.div
+            className={`${styles.card} ${styles.cardEnterprises}`}
             ref={rightCardRef}
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 36, scale: 0.97 }}
-            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.cinematic, ease: FRAMER_EASE.premiumOut, delay: 0.2 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.normal, ease: FRAMER_EASE.premiumOut, delay: 0.3 }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

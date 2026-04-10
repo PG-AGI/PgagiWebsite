@@ -73,13 +73,12 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
     }
 
     const lenisInstance = new Lenis({
-      // lerp (linear interpolation) gives true butter-smooth scrolling — each
-      // frame the scroll position closes ~7.5% of the remaining gap. This feels
-      // organic and responsive at any scroll speed, unlike fixed-duration easing
-      // which can feel either sluggish (slow scroll) or clipped (fast flick).
-      lerp: 0.075,
+      // lerp: each frame closes this fraction of the remaining scroll gap.
+      // 0.12 at 120Hz closes ~96% of the gap in ~18 frames (~150ms) — feels
+      // instant and responsive without being mechanical.
+      lerp: 0.12,
       smoothWheel: true,
-      wheelMultiplier: 1.0,
+      wheelMultiplier: 1.4,
       touchMultiplier: 1.8,
       autoRaf: false,
       infinite: false,

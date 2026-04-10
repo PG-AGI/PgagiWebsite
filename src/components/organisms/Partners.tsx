@@ -1,18 +1,20 @@
+import Marquee from "react-fast-marquee";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import styles from "@/styles/components/organisms/partners.module.scss";
+import partnersText from "@/constants/uiText/partners.json";
+
 const ais = '/assets/partners/ais3.png';
 const hx = '/assets/partners/hx.png';
 const social = '/assets/partners/social27.png';
 const ciek = '/assets/partners/ciek2.png';
 const aixl = '/assets/partners/aixl2.png';
-import Marquee from "react-fast-marquee";
 const o = '/assets/partners/o.png';
 const logok = '/assets/partners/logo1.png';
 const wcg = '/assets/partners/wcg-logo.png';
 const fomo = '/assets/partners/fomo.png';
 const tvc = '/assets/partners/TVClogo (1).png';
 const Ms = '/assets/partners/logo_final_transparent.png';
-import Image from "next/image";
-import styles from "@/styles/components/organisms/partners.module.scss";
-import partnersText from "@/constants/uiText/partners.json";
 
 const partners = [
     { src: ais, alt: partnersText.items[0].alt },
@@ -30,7 +32,13 @@ const partners = [
 
 export default function Partners() {
     return (
-        <div className={styles.partnersBar} aria-label={partnersText.sectionAriaLabel}>
+        <motion.div
+            className={styles.partnersBar}
+            aria-label={partnersText.sectionAriaLabel}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+        >
             <Marquee
                 className={styles.marquee}
                 speed={50}
@@ -45,11 +53,11 @@ export default function Partners() {
                             width={120}
                             height={32}
                             className={styles.logoImage}
-                            loading="lazy"
+                            loading="eager"
                         />
                     </div>
                 ))}
             </Marquee>
-        </div>
+        </motion.div>
     );
 }

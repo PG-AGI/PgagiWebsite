@@ -70,29 +70,29 @@ const mobileOrder: CardArt[] = [
   cardArt.sixth,
 ];
 
-// Animation Variants for performance — shared between children
+// Animation Variants — tight stagger, no per-card delay stacking
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: MOTION_STAGGER.relaxed,
-      delayChildren: 0.2
+      staggerChildren: MOTION_STAGGER.tight, // 0.06s — fast waterfall
+      delayChildren: 0.05,
     }
   }
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
+  hidden: { opacity: 0, y: 20 },
+  visible: {
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.1, // Preserve the relative delays from before
-      duration: MOTION_DURATION.slow,
-      ease: FRAMER_EASE.premiumOut
+      // No per-card delay — container stagger handles ordering
+      duration: MOTION_DURATION.fast, // 0.28s — snappy
+      ease: FRAMER_EASE.premiumOut,
     }
-  })
+  }
 };
 
 const arrowVariants = {
@@ -100,8 +100,8 @@ const arrowVariants = {
   visible: (i: number) => ({
     opacity: 1,
     transition: {
-      delay: 0.3 + i * 0.1,
-      duration: 0.5
+      delay: 0.1 + i * 0.06,
+      duration: 0.3,
     }
   })
 };
@@ -122,48 +122,47 @@ const FlowArrow = ({
       custom={delayStep}
       variants={arrowVariants}
     >
-      <motion.span 
-        className={styles.track} 
+      <motion.span
+        className={styles.track}
         variants={{
-          hidden: { 
+          hidden: {
             scaleY: direction === "down" || direction === "up" ? 0 : 1,
             scaleX: direction === "right" ? 0 : 1,
             transformOrigin: direction === "down" ? "top" : direction === "up" ? "bottom" : "left"
           },
-          visible: { 
-            scaleY: 1, 
+          visible: {
+            scaleY: 1,
             scaleX: 1,
             transition: {
-              delay: 0.3 + delayStep * MOTION_STAGGER.normal,
-              duration: MOTION_DURATION.slow,
+              delay: 0.05 + delayStep * 0.06,
+              duration: MOTION_DURATION.fast,
               ease: FRAMER_EASE.snappyOut,
             }
           }
         }}
       />
-      <motion.span 
-        className={styles.tracer} 
+      <motion.span
+        className={styles.tracer}
         variants={{
           hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { delay: 0.6 + delayStep * 0.1, duration: 0.4 } }
+          visible: { opacity: 1, transition: { delay: 0.1 + delayStep * 0.06, duration: 0.2 } }
         }}
       />
-      <motion.span 
-        className={styles.head} 
+      <motion.span
+        className={styles.head}
         variants={{
           hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { delay: 0.6 + delayStep * 0.1, duration: 0.4 } }
+          visible: { opacity: 1, transition: { delay: 0.1 + delayStep * 0.06, duration: 0.2 } }
         }}
       />
     </motion.div>
   );
 };
 
-const ArtCard = ({ card, delayStep = 0 }: { card: CardArt, delayStep?: number }) => {
+const ArtCard = ({ card }: { card: CardArt }) => {
   return (
-    <motion.article 
+    <motion.article
       className={styles.cardFrame}
-      custom={delayStep}
       variants={cardVariants}
       whileHover={{
         scale: 1.02,
@@ -196,54 +195,47 @@ const WhatMakesUsDifferentSection = () => {
           What makes us different
         </motion.h2>
 
-        <motion.div 
+        <motion.div
           className={styles.board}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px", amount: 0.15 }}
-          variants={{
-            hidden: { opacity: 0, scale: 0.97 },
-            visible: { 
-              opacity: 1, 
-              scale: 1, 
-              transition: { duration: MOTION_DURATION.cinematic, ease: FRAMER_EASE.premiumOut } 
-            }
-          }}
+          viewport={{ once: true, margin: "-80px", amount: 0.1 }}
+          variants={containerVariants}
         >
           <div className={styles.desktopGrid}>
             <div className={styles.leftTop}>
-              <ArtCard card={cardArt.first} delayStep={1} />
+              <ArtCard card={cardArt.first} />
             </div>
             <div className={styles.rightTop}>
-              <ArtCard card={cardArt.sixth} delayStep={6} />
+              <ArtCard card={cardArt.sixth} />
             </div>
 
             <FlowArrow direction="down" className={styles.leftFlowOne} delayStep={1} />
             <FlowArrow direction="up" className={styles.rightFlowOne} delayStep={5} />
 
             <div className={styles.leftMiddle}>
-              <ArtCard card={cardArt.second} delayStep={2} />
+              <ArtCard card={cardArt.second} />
             </div>
             <div className={styles.rightMiddle}>
-              <ArtCard card={cardArt.fifth} delayStep={5} />
+              <ArtCard card={cardArt.fifth} />
             </div>
 
             <FlowArrow direction="down" className={styles.leftFlowTwo} delayStep={2} />
             <FlowArrow direction="up" className={styles.rightFlowTwo} delayStep={4} />
 
             <div className={styles.leftBottom}>
-              <ArtCard card={cardArt.third} delayStep={3} />
+              <ArtCard card={cardArt.third} />
             </div>
             <FlowArrow direction="right" className={styles.bottomFlow} delayStep={3} />
             <div className={styles.rightBottom}>
-              <ArtCard card={cardArt.fourth} delayStep={4} />
+              <ArtCard card={cardArt.fourth} />
             </div>
           </div>
 
           <div className={styles.mobileStack}>
             {mobileOrder.map((card, index) => (
               <Fragment key={card.id}>
-                <ArtCard card={card} delayStep={index + 1} />
+                <ArtCard card={card} />
                 {index < mobileOrder.length - 1 && (
                   <FlowArrow direction="down" className={styles.mobileFlow} delayStep={index + 1} />
                 )}

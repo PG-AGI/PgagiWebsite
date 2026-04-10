@@ -12,9 +12,9 @@ html {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
-	/* Promote html to its own compositing layer for smoother Lenis interpolation */
-	-webkit-transform: translateZ(0);
-	transform: translateZ(0);
+	/* ❌ REMOVED: transform:translateZ(0) on html — creates one giant GPU compositor
+	   layer for the entire document, making every scroll tick composite the full page.
+	   Lenis + GSAP ticker handle smooth scroll without this. */
 }
 
 html,
