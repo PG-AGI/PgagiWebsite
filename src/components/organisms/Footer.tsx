@@ -1,6 +1,7 @@
 "use client";
 import TransitionLink from "@/components/atoms/TransitionLink";
 import styles from "@/styles/components/organisms/footer.module.scss";
+import Image from "next/image";
 import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IconType } from "react-icons";
@@ -65,6 +66,15 @@ export default function Footer() {
                       </a>
                     );
                   })}
+                </div>
+                <div className={styles.govLogoWrap}>
+                  <Image
+                    src="/assets/gov-login-img-footer.png"
+                    alt="Government registration logo"
+                    width={160}
+                    height={38}
+                    className={styles.govLogo}
+                  />
                 </div>
               </div>
 

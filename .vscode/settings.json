@@ -3,6 +3,23 @@
         "/^git rev-parse --is-inside-work-tree 2>/dev/null \\|\\| true && ls -1$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "sips": true,
+        "/^python - <<'PY'\nfrom PIL import Image\np='/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite-v2/public/assets/gov-login-img\\.png'\nim=Image\\.open\\(p\\)\nprint\\('mode',im\\.mode,'size',im\\.size\\)\nif 'A' in im\\.getbands\\(\\):\n    a=im\\.getchannel\\('A'\\)\n    mn,mx=a\\.getextrema\\(\\)\n    print\\('alpha',mn,mx\\)\nelse:\n    print\\('no alpha'\\)\n# sample corners\npix=im\\.convert\\('RGBA'\\)\ncoords=\\[\\(0,0\\),\\(10,10\\),\\(100,100\\),\\(im\\.width-1,0\\)\\]\nfor c in coords:\n    print\\(c,pix\\.getpixel\\(c\\)\\)\nPY$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python - <<'PY'\nfrom PIL import Image\nfrom pathlib import Path\nsrc=Path\\('/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite-v2/public/assets/gov-login-img\\.png'\\)\nout=src\\.with_name\\('gov-login-img-footer\\.png'\\)\nim=Image\\.open\\(src\\)\\.convert\\('RGBA'\\)\npix=im\\.load\\(\\)\nW,H=im\\.size\nfor y in range\\(H\\):\n    for x in range\\(W\\):\n        r,g,b,a = pix\\[x,y\\]\n        if a == 0:\n            continue\n        mx=max\\(r,g,b\\); mn=min\\(r,g,b\\)\n        sat = \\(mx-mn\\)/\\(mx\\+1e-6\\)\n        # Remove baked white badge fill\n        if r>240 and g>240 and b>240:\n            pix\\[x,y\\]=\\(255,255,255,0\\)\n            continue\n        # Lift dark neutral tones to off-white for dark footer contrast\n        if mx < 95 and sat < 0\\.22:\n            pix\\[x,y\\]=\\(232,232,232,a\\)\n        elif mx < 140 and sat < 0\\.18:\n            pix\\[x,y\\]=\\(210,210,210,a\\)\n\nim\\.save\\(out\\)\nprint\\('saved', out\\)\nPY$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python - <<'PY'\nfrom PIL import Image\nfrom pathlib import Path\nsrc=Path\\('/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite-v2/public/assets/gov-login-img\\.png'\\)\nout=src\\.with_name\\('gov-login-img-footer\\.png'\\)\nim=Image\\.open\\(src\\)\\.convert\\('RGBA'\\)\np=im\\.load\\(\\); W,H=im\\.size\nfor y in range\\(H\\):\n    for x in range\\(W\\):\n        r,g,b,a=p\\[x,y\\]\n        if a==0:\n            continue\n        mx=max\\(r,g,b\\); mn=min\\(r,g,b\\)\n        sat=\\(mx-mn\\)/\\(mx\\+1e-6\\)\n        lum=0\\.2126\\*r\\+0\\.7152\\*g\\+0\\.0722\\*b\n        # remove light gray/white badge backing\n        if lum>215 and sat<0\\.08:\n            p\\[x,y\\]=\\(255,255,255,0\\)\n            continue\n        # convert dark neutral text/logo to off-white for dark footer\n        if lum<135 and sat<0\\.22:\n            p\\[x,y\\]=\\(232,232,228,a\\)\n\nim\\.save\\(out\\)\nprint\\('saved', out\\)\nPY$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python - <<'PY'\nfrom PIL import Image\nfrom pathlib import Path\nsrc=Path\\('/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite-v2/public/assets/gov-login-img\\.png'\\)\nout=src\\.with_name\\('gov-login-img-footer\\.png'\\)\nim=Image\\.open\\(src\\)\\.convert\\('RGBA'\\)\np=im\\.load\\(\\); W,H=im\\.size\nfor y in range\\(H\\):\n    for x in range\\(W\\):\n        r,g,b,a=p\\[x,y\\]\n        if a==0:\n            continue\n        lum=0\\.2126\\*r\\+0\\.7152\\*g\\+0\\.0722\\*b\n        sat=\\(max\\(r,g,b\\)-min\\(r,g,b\\)\\)/\\(max\\(r,g,b\\)\\+1e-6\\)\n        # strip light badge background\n        if lum>210 and sat<0\\.10:\n            p\\[x,y\\]=\\(255,255,255,0\\)\n            continue\n        # make dark logo text/high-contrast for dark footer\n        if lum<120:\n            p\\[x,y\\]=\\(236,236,232,a\\)\n\nim\\.save\\(out\\)\nprint\\(out\\)\nPY$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }
