@@ -35,6 +35,8 @@ const VisionSystemSection = () => {
     <ScrollStack
       id="vision-system"
       animated={true}
+      preRoll={0.10}
+      scrollMultiplier={1.8}
       className={styles.outerSection}
       header={
         <>

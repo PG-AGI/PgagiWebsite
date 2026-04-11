@@ -311,8 +311,21 @@
     top: var(--icon-anchor-y);
   }
 
+  /* Kill all infinite animations — they're too expensive on low-end mobile */
+  .copyBlock {
+    animation: none;
+    opacity: 0.4;
+    transform: none;
+  }
+
+  .active .copyBlock {
+    opacity: 1;
+  }
+
   .arcGlow {
-    opacity: 0.08;
+    animation: none;
+    opacity: 0;
+    stroke-dashoffset: 0;
     transition: opacity 0.24s ease;
   }
 
@@ -321,7 +334,21 @@
     filter: drop-shadow(0 0 7px var(--step-color));
   }
 
+  .startDot, .endDot {
+    animation: none;
+    opacity: 0.5;
+    fill: #444;
+  }
+
+  .iconBadge {
+    animation: none;
+  }
+
   .active .iconBadge {
+    background: var(--step-color);
+    color: var(--icon-color);
+    filter: grayscale(0);
+    opacity: 1;
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.24),
       0 0 22px var(--step-color);

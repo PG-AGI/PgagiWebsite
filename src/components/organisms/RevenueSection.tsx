@@ -41,6 +41,7 @@ const RevenueSection = () => {
     <ScrollStack
       id="revenue-system"
       animated={true}
+      scrollMultiplier={1.8}
       className={styles.outerSection}
       header={
         <>

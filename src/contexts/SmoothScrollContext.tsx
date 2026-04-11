@@ -73,9 +73,6 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
     }
 
     const lenisInstance = new Lenis({
-      // lerp: each frame closes this fraction of the remaining scroll gap.
-      // 0.12 at 120Hz closes ~96% of the gap in ~18 frames (~150ms) — feels
-      // instant and responsive without being mechanical.
       lerp: 0.12,
       smoothWheel: true,
       wheelMultiplier: 1.4,

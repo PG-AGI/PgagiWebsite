@@ -9,6 +9,8 @@
 .animated {
   /* Desktop: full-screen panel that GSAP will fix-position when pinned */
   .viewport {
+    position: sticky;
+    top: 0;
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
@@ -61,24 +63,38 @@
     z-index: 20;
   }
 
-  /* Mobile: revert to normal flow — no pin, no stacking */
+  /* Mobile pinned: same absolute layout as desktop, smaller padding */
   @media (max-width: 767px) {
     .viewport {
-      height: auto;
-      min-height: 0;
-      overflow: visible;
-      padding-top: clamp(72px, 10vh, 104px);
-      padding-bottom: 1rem;
+      padding-top: clamp(88px, 14vh, 120px);
     }
 
     .container {
-      height: auto;
       max-width: 100%;
       padding: 0 1rem;
     }
 
     .headerArea {
-      opacity: 1;
+      padding: clamp(0.4rem, 1vh, 0.8rem) 0 clamp(0.3rem, 0.8vh, 0.6rem);
+    }
+
+    .footerArea {
+      padding: 0.6rem 0 0.4rem;
+    }
+  }
+}
+
+/* ── Explicit flow mode on mobile (mobileMode="flow") ────────────── */
+.mobileFlow {
+  @media (max-width: 767px) {
+    height: auto !important;
+
+    .viewport {
+      position: relative;
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      padding-bottom: 1rem;
     }
 
     .stackArea {
@@ -94,12 +110,7 @@
       top: auto;
       left: auto;
       right: auto;
-      transform-origin: center center;
       will-change: auto;
-    }
-
-    .footerArea {
-      padding: 1rem 0 0.5rem;
     }
   }
 }

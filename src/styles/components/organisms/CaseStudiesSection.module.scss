@@ -49,6 +49,10 @@
     border-radius: 14px;
     padding: 0.75rem;
   }
+
+  @media (max-width: 767px) {
+    min-height: 58vh;
+  }
 }
 
 /* ── Card content ──────────────────────────────────────────────── */
@@ -85,6 +89,11 @@
     margin-top: 0.7rem;
     max-width: 100%;
   }
+
+  @media (max-width: 767px) {
+    height: calc(58vh - 3.5rem);
+    border-radius: 10px;
+  }
 }
 
 .previewImage {
@@ -93,6 +102,12 @@
   display: block;
   object-fit: contain;
   object-position: top center;
+
+  @media (max-width: 767px) {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 .overlay {

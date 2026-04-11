@@ -91,7 +91,8 @@ const CaseStudiesSection = () => (
   <ScrollStack
     id="case-studies-showcase"
     animated={true}
-    mobileMode="flow"
+    cardOverlap={0.12}
+    scrollMultiplier={1.8}
     className={styles.outerSection}
     header={<h2 className={styles.title}>{caseStudiesSectionText.title}</h2>}
     footer={

@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\('lenis:', p.dependencies['lenis']\\); console.log\\('gsap:', p.dependencies['gsap']\\); console.log\\('framer:', p.dependencies['framer-motion']\\);\")"
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\('lenis:', p.dependencies['lenis']\\); console.log\\('gsap:', p.dependencies['gsap']\\); console.log\\('framer:', p.dependencies['framer-motion']\\);\")",
+      "Read(//Users/utkarshchoudhary/.claude/**)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('/Users/utkarshchoudhary/.claude/settings.json'\\)\\); print\\('Valid JSON'\\)\")",
+      "Bash(sh /Users/utkarshchoudhary/.claude/statusline-command.sh)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(code-review-graph status:*)",
+      "Bash(claude --version)"
+    ],
+    "additionalDirectories": [
+      "/Users/utkarshchoudhary/.claude"
     ]
   }
 }

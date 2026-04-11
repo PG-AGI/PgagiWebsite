@@ -76,6 +76,7 @@ body {
 	position: relative;
 	width: 100%;
 	min-height: 100vh;
+	min-height: 100dvh;
 }
 
 /* Ensure smooth transitions for animated elements only */
@@ -89,6 +90,7 @@ body {
 .page-transition-motion {
 	width: 100%;
 	min-height: 100vh;
+	min-height: 100dvh;
 	position: relative;
 	z-index: 1;
 	overflow: visible;
