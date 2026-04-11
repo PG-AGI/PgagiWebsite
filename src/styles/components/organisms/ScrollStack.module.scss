@@ -1,62 +1,134 @@
+/* ── Base ────────────────────────────────────────────────────────── */
 .section {
   position: relative;
 }
 
-.viewport {
-  min-height: 100vh;
-  min-height: 100dvh;
-  height: 100vh;
-  height: 100dvh;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding-top: clamp(120px, 14vh, 160px);
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    padding-top: clamp(80px, 11vh, 110px);
-  }
-}
-
-.container {
-  width: 100%;
-  max-width: 82vw;
-  margin: 0 auto;
-  padding: 0 1vw;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    padding: 0 1rem;
-  }
-}
-
-.headerArea {
-  text-align: center;
-  padding: clamp(0.8rem, 2vh, 1.6rem) 0 clamp(0.6rem, 1.5vh, 1.2rem);
-  opacity: 0;
-}
-
-/* No GSAP: visible header, normal document flow (fixes blank pinned sections on laptop). */
-.static {
+/* ── Animated — desktop stacking via manual position:fixed pin ────
+   Section height = count×100vh gives scroll room.
+   The viewport div is pinned/unpinned via Lenis scroll events in JS.  */
+.animated {
+  /* Desktop: full-screen panel that GSAP will fix-position when pinned */
   .viewport {
-    height: auto;
-    min-height: 0;
-    overflow: visible;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     padding-top: clamp(120px, 14vh, 160px);
-    padding-bottom: clamp(2rem, 5vh, 4rem);
+    box-sizing: border-box;
   }
 
   .container {
+    width: 100%;
+    max-width: 82vw;
+    margin: 0 auto;
+    padding: 0 1vw;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+  }
+
+  .headerArea {
+    text-align: center;
+    padding: clamp(0.8rem, 2vh, 1.6rem) 0 clamp(0.6rem, 1.5vh, 1.2rem);
+    opacity: 0; /* GSAP animates to 1 */
+  }
+
+  .stackArea {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .cardWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform-origin: top center;
+    z-index: 10;
+    will-change: transform;
+  }
+
+  .footerArea {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    padding: clamp(0.6rem, 1.2vh, 1rem) 0 clamp(0.5rem, 1vh, 0.8rem);
+    position: relative;
+    z-index: 20;
+  }
+
+  /* Mobile: revert to normal flow — no pin, no stacking */
+  @media (max-width: 767px) {
+    .viewport {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      padding-top: clamp(72px, 10vh, 104px);
+      padding-bottom: 1rem;
+    }
+
+    .container {
+      height: auto;
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+
+    .headerArea {
+      opacity: 1;
+    }
+
+    .stackArea {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .cardWrapper {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      transform-origin: center center;
+      will-change: auto;
+    }
+
+    .footerArea {
+      padding: 1rem 0 0.5rem;
+    }
+  }
+}
+
+/* ── Static (animated=false) ─────────────────────────────────────── */
+.static {
+  .viewport {
+    height: auto;
+    overflow: visible;
+    padding-top: clamp(120px, 14vh, 160px);
+    padding-bottom: clamp(2rem, 5vh, 4rem);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 82vw;
+    margin: 0 auto;
+    padding: 0 1vw;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
     height: auto;
   }
 
   .headerArea {
+    text-align: center;
+    padding: clamp(0.8rem, 2vh, 1.6rem) 0 clamp(0.6rem, 1.5vh, 1.2rem);
     opacity: 1;
   }
 
@@ -81,58 +153,10 @@
     .viewport {
       padding-top: clamp(72px, 10vh, 104px);
     }
-  }
-}
-
-.stackArea {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-}
-
-.cardWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  transform-origin: top center;
-  z-index: 10;
-}
-
-@media (min-width: 768px) {
-  .cardWrapper {
-    will-change: transform;
-  }
-}
-
-@media (max-width: 767px) {
-  .mobileFlow {
-    .viewport {
-      height: auto;
-      min-height: 100vh;
-      min-height: 100dvh;
-      overflow: visible;
-      padding-top: clamp(72px, 10vh, 104px);
-      padding-bottom: 1rem;
-    }
 
     .container {
-      height: auto;
-    }
-
-    .stackArea {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      padding-bottom: 0.5rem;
-    }
-
-    .cardWrapper {
-      position: relative;
-      top: auto;
-      left: auto;
-      right: auto;
-      transform-origin: center center;
+      max-width: 100%;
+      padding: 0 1rem;
     }
   }
 }

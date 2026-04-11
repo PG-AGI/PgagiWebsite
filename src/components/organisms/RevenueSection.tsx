@@ -40,7 +40,7 @@ const RevenueSection = () => {
   return (
     <ScrollStack
       id="revenue-system"
-      animated={false}
+      animated={true}
       className={styles.outerSection}
       header={
         <>

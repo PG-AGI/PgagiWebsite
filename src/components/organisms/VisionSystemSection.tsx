@@ -34,7 +34,7 @@ const VisionSystemSection = () => {
   return (
     <ScrollStack
       id="vision-system"
-      animated={false}
+      animated={true}
       className={styles.outerSection}
       header={
         <>

@@ -10,14 +10,13 @@ import React, {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useSmoothScroll } from "@/contexts/SmoothScrollContext";
 import styles from "@/styles/components/organisms/ScrollStack.module.scss";
 import {
   GSAP_EASE,
   MOBILE_MEDIA_QUERY,
   MOTION_DURATION,
-  MOTION_SCRUB,
   REDUCED_MOTION_QUERY,
-  SCROLL_REFRESH_DEBOUNCE_MS,
 } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
@@ -27,36 +26,41 @@ if (typeof window !== "undefined") {
 type ScrollStackItemProps = {
   children: ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 export const ScrollStackItem = ({
   children,
   className,
-}: ScrollStackItemProps) => <div className={className}>{children}</div>;
+  style,
+}: ScrollStackItemProps) => <div className={className} style={style}>{children}</div>;
 
 type ScrollStackProps = {
   children: ReactNode;
   header?: ReactNode;
+  footer?: ReactNode;
   className?: string;
   id?: string;
   offset?: number;
   mobileMode?: "flow" | "pinned";
-  /** When false, no ScrollTrigger/GSAP — static stacked layout (avoids pin/scrub blank states). */
   animated?: boolean;
 };
 
 const ScrollStack = ({
   children,
   header,
+  footer,
   className,
   id,
   offset = 8,
   mobileMode = "flow",
   animated = true,
 }: ScrollStackProps) => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const viewportRef  = useRef<HTMLDivElement>(null);
+  const headerRef    = useRef<HTMLDivElement>(null);
+  const cardRefs     = useRef<(HTMLDivElement | null)[]>([]);
+  const { lenis }    = useSmoothScroll();
 
   const items = Children.toArray(children).filter(
     (child): child is ReactElement =>
@@ -67,156 +71,133 @@ const ScrollStack = ({
   useEffect(() => {
     if (!animated) return;
 
-    const section = sectionRef.current;
-    const cards = cardRefs.current.filter(
-      (el): el is HTMLDivElement => el !== null,
-    );
+    const section  = sectionRef.current;
+    const viewport = viewportRef.current;
+    const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
 
-    if (!section || cards.length < 2) return;
+    if (!section || !viewport || cards.length < 2) return;
 
     const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
-    const isMobileViewport = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
-    const useMobileFlow = mobileMode === "flow" && isMobileViewport;
-    const viewport = window.visualViewport;
-    let refreshTimeout: number | null = null;
+    const isMobileViewport     = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+    const useMobileFlow        = mobileMode === "flow" && isMobileViewport;
 
-    const getViewportHeight = () =>
-      Math.max(window.visualViewport?.height ?? window.innerHeight, 1);
+    const getVH = () => Math.max(window.visualViewport?.height ?? window.innerHeight, 1);
 
-    const requestRefresh = () => {
-      if (refreshTimeout) window.clearTimeout(refreshTimeout);
-      refreshTimeout = window.setTimeout(() => {
-        ScrollTrigger.refresh(true);
-      }, SCROLL_REFRESH_DEBOUNCE_MS);
-    };
-
-    const ctx = gsap.context(() => {
-      if (headerRef.current) {
-        gsap.fromTo(
-          headerRef.current,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: MOTION_DURATION.slow,
-            ease: GSAP_EASE.premiumOut,
-            scrollTrigger: {
-              trigger: section,
-              start: "top 82%",
-              once: true,
+    // ── Mobile: simple scroll-in fade per card ────────────────────
+    if (useMobileFlow || prefersReducedMotion) {
+      if (headerRef.current) gsap.set(headerRef.current, { opacity: 1 });
+      const ctx = gsap.context(() => {
+        cards.forEach((card, i) => {
+          gsap.fromTo(
+            card,
+            { y: 20, opacity: 0 },
+            {
+              y: 0, opacity: 1,
+              duration: MOTION_DURATION.normal,
+              ease: GSAP_EASE.premiumOut,
+              delay: i * 0.08,
+              scrollTrigger: { trigger: card, start: "top 88%", once: true },
             },
-          },
-        );
+          );
+        });
+      });
+      return () => ctx.revert();
+    }
+
+    // ── Desktop: fake-pin via GSAP translateY ────────────────────
+    // Section height = count×100vh provides the scroll room.
+
+    const steps = count - 1;
+
+    // Initial state
+    if (headerRef.current) gsap.set(headerRef.current, { opacity: 0, y: 16 });
+    gsap.set(cards[0], { opacity: 0, y: 32, force3D: true });
+    for (let i = 1; i < cards.length; i++) {
+      gsap.set(cards[i], { y: getVH(), force3D: true });
+    }
+
+    let headerShown = false;
+
+    /** Drive card positions from 0→1 progress across the pinned zone. */
+    const applyProgress = (p: number) => {
+      const clamped = Math.max(0, Math.min(1, p));
+
+      // Slide cards in one-by-one
+      for (let i = 1; i < count; i++) {
+        const segStart = (i - 1) / steps;
+        const segEnd   = i / steps;
+        const seg      = Math.max(0, Math.min(1, (clamped - segStart) / (segEnd - segStart)));
+        const vh       = getVH();
+        gsap.set(cards[i], { y: vh * (1 - seg) + offset * i * seg, force3D: true });
       }
 
-      gsap.set(cards[0], { y: 50, opacity: 0, force3D: true });
-      gsap.to(cards[0], {
-        y: 0,
-        opacity: 1,
-        duration: MOTION_DURATION.cinematic,
-        force3D: true,
-        ease: GSAP_EASE.premiumOut,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 82%",
-          once: true,
-        },
-      });
+      // Scale cards that are being covered
+      for (let j = 0; j < count - 1; j++) {
+        let totalScaleDown = 0;
+        for (let i = j + 1; i < count; i++) {
+          const segStart = (i - 1) / steps;
+          const segEnd   = i / steps;
+          const seg      = Math.max(0, Math.min(1, (clamped - segStart) / (segEnd - segStart)));
+          totalScaleDown += seg * 0.03;
+        }
+        gsap.set(cards[j], { scale: Math.max(0.88, 1 - totalScaleDown), force3D: true });
+      }
+    };
 
-      if (useMobileFlow) {
-        for (let i = 1; i < cards.length; i++) {
-          gsap.set(cards[i], { y: 24, opacity: 0, scale: 1, force3D: true });
-          gsap.to(cards[i], {
-            y: 0,
-            opacity: 1,
-            duration: MOTION_DURATION.normal,
+    const onScroll = ({ scroll }: { scroll: number }) => {
+      // getBoundingClientRect().top + scroll = section's document-relative top.
+      // Correct regardless of positioned ancestors (unlike offsetTop).
+      const sectionTop = section.getBoundingClientRect().top + scroll;
+      const vh         = getVH();
+
+      // Header + first card entrance (fires once, before pin zone starts)
+      if (!headerShown && scroll + vh * 0.85 >= sectionTop) {
+        headerShown = true;
+        if (headerRef.current) {
+          gsap.to(headerRef.current, {
+            opacity: 1, y: 0,
+            duration: MOTION_DURATION.fast,
             ease: GSAP_EASE.premiumOut,
-            force3D: true,
-            scrollTrigger: {
-              trigger: cards[i],
-              start: "top 88%",
-              once: true,
-            },
           });
         }
-        return;
+        gsap.to(cards[0], {
+          y: 0, opacity: 1,
+          duration: MOTION_DURATION.normal,
+          ease: GSAP_EASE.premiumOut,
+        });
       }
 
-      for (let i = 1; i < cards.length; i++) {
-        gsap.set(cards[i], { y: getViewportHeight() * 1.1, force3D: true });
-      }
+      // Clamp viewport translateY to [0, steps×vh] and drive card progress
+      const viewportY = Math.max(0, Math.min(steps * vh, scroll - sectionTop));
+      gsap.set(viewport, { y: viewportY, force3D: true });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: `+=${(count - 1) * 100}%`,
-          pin: true,
-          pinSpacing: true,
-          scrub: prefersReducedMotion ? false : MOTION_SCRUB.stack,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-          preventOverlaps: true,
-          fastScrollEnd: true,
-        },
-      });
+      const rawProgress = (scroll - sectionTop) / (steps * vh);
+      applyProgress(Math.max(0, Math.min(1, rawProgress)));
+    };
 
-      for (let i = 1; i < count; i++) {
-        const position = i - 1;
-
-        tl.to(
-          cards[i],
-          {
-            y: offset * i,
-            ease: GSAP_EASE.smoothInOut,
-            duration: 1,
-            force3D: true,
-          },
-          position,
-        );
-
-        for (let j = 0; j < i; j++) {
-          tl.to(
-            cards[j],
-            {
-              scale: 1 - (i - j) * 0.03,
-              transformOrigin: "top center",
-              ease: GSAP_EASE.smoothInOut,
-              duration: 1,
-              force3D: true,
-            },
-            position,
-          );
-        }
-      }
-    });
-
-    window.addEventListener("resize", requestRefresh);
-    window.addEventListener("orientationchange", requestRefresh);
-    viewport?.addEventListener("resize", requestRefresh);
+    lenis?.on("scroll", onScroll);
 
     return () => {
-      window.removeEventListener("resize", requestRefresh);
-      window.removeEventListener("orientationchange", requestRefresh);
-      viewport?.removeEventListener("resize", requestRefresh);
-      if (refreshTimeout) window.clearTimeout(refreshTimeout);
-      ctx.revert();
+      lenis?.off("scroll", onScroll);
+      gsap.set(viewport, { clearProps: "transform,y" });
+      gsap.set([...cards, headerRef.current].filter(Boolean), {
+        clearProps: "transform,opacity,y,scale",
+      });
     };
-  }, [animated, count, mobileMode, offset]);
+  }, [animated, count, lenis, mobileMode, offset]);
 
-  const layoutClass = animated
-    ? mobileMode === "flow"
-      ? styles.mobileFlow
-      : ""
-    : styles.static;
+  const layoutClass = animated ? styles.animated : styles.static;
 
   return (
     <section
       ref={sectionRef}
       className={`${styles.section} ${layoutClass} ${className ?? ""}`}
       id={id}
+      // Explicit height gives the browser the scroll room at render time.
+      // This component is loaded via dynamic(ssr:false) so no hydration mismatch.
+      style={animated ? { height: `${count * 100}vh` } : undefined}
     >
-      <div className={styles.viewport}>
+      <div ref={viewportRef} className={styles.viewport}>
         <div className={styles.container}>
           {header && (
             <div ref={headerRef} className={styles.headerArea}>
@@ -227,15 +208,18 @@ const ScrollStack = ({
             {items.map((child, i) => (
               <div
                 key={i}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
+                ref={(el) => { cardRefs.current[i] = el; }}
                 className={styles.cardWrapper}
               >
                 {child}
               </div>
             ))}
           </div>
+          {footer && (
+            <div className={styles.footerArea}>
+              {footer}
+            </div>
+          )}
         </div>
       </div>
     </section>
