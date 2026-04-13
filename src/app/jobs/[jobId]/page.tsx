@@ -104,6 +104,28 @@ const JobDetailsPage = ({ params }: { params: { jobId: string } }) => {
           ></p>
 
           <div className={styles["sections"]}>
+            {job.responsibilities && job.responsibilities.length > 0 && (
+              <div className={styles["section"]}>
+                <h2 className={styles["section-title"]}>Responsibilities</h2>
+                <ul className={styles["list"]}>
+                  {job.responsibilities.map((responsibility, index) => (
+                    <li key={index}>{responsibility}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {job.requirements && job.requirements.length > 0 && (
+              <div className={styles["section"]}>
+                <h2 className={styles["section-title"]}>Requirements</h2>
+                <ul className={styles["list"]}>
+                  {job.requirements.map((requirement, index) => (
+                    <li key={index}>{requirement}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className={styles["assignment-section"]}>
               <div className={styles["buttons-container"]}>
                 <button

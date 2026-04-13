@@ -5,6 +5,7 @@ import styles from "@/styles/components/organisms/base/navigation.module.scss";
 import Link from "next/link";
 import TransitionLink from "@/components/atoms/TransitionLink";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import ContactUsForm from "./contactUsForm";
 import { ArrowRight, Target } from "lucide-react";
@@ -12,6 +13,7 @@ import ROUTES from "@/constants/routes";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 export default function Navigation() {
+  const pathname = usePathname();
   const [navbarVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,13 +21,13 @@ export default function Navigation() {
   const [mobileMenuSection, setMobileMenuSection] = useState<
     null | "main"
   >(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [showGlassEffect, setShowGlassEffect] = useState(false);
+
   const BLOGS = ROUTES.WHAT_WE_THINK;
   const ABOUT = ROUTES.ABOUT_US;
   const INDUSTRIES = "/industries";
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
-
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showGlassEffect, setShowGlassEffect] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -90,6 +92,11 @@ export default function Navigation() {
       document.body.style.width = "auto";
     };
   }, [isMenuOpen]);
+
+  // Hide navigation on job detail pages
+  if (pathname.startsWith("/jobs/") && pathname !== "/jobs") {
+    return null;
+  }
 
   return (
     <nav className={clsx(

@@ -40,7 +40,12 @@ const nextConfig = {
     includePaths: ['./src'],
   },
   experimental: {
-    optimizePackageImports: ['@radix-ui/react-hover-card'],
+    optimizePackageImports: [
+      '@radix-ui/react-hover-card',
+      'framer-motion',
+      'gsap',
+      'lenis',
+    ],
   },
 };
 

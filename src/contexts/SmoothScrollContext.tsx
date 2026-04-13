@@ -1,8 +1,6 @@
 'use client'
 import React, { createContext, useContext, useEffect } from 'react';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type Lenis from 'lenis';
 import {
   MOBILE_BREAKPOINT,
   REDUCED_MOTION_QUERY,
@@ -50,38 +48,48 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
   useEffect(() => {
     if (!isPageLoaded) return;
 
-    gsap.registerPlugin(ScrollTrigger);
-    let refreshTimeout: number | null = null;
-    const viewport = window.visualViewport;
+    let isCancelled = false;
+    let teardown: (() => void) | null = null;
 
-    const scheduleRefresh = () => {
-      if (refreshTimeout) window.clearTimeout(refreshTimeout);
-      refreshTimeout = window.setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, SCROLL_REFRESH_DEBOUNCE_MS);
-    };
+    void (async () => {
+      // Dynamically import heavy animation libs — keeps them out of the critical bundle
+      const [{ default: gsap }, { ScrollTrigger }, { default: LenisClass }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+        import('lenis'),
+      ]);
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') scheduleRefresh();
-    };
+      if (isCancelled) return;
 
-    const handlePageShow = () => {
-      scheduleRefresh();
-    };
+      gsap.registerPlugin(ScrollTrigger);
+      let refreshTimeout: number | null = null;
+      const viewport = window.visualViewport;
 
-    window.addEventListener('resize', scheduleRefresh);
-    window.addEventListener('orientationchange', scheduleRefresh);
-    window.addEventListener('pageshow', handlePageShow);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    viewport?.addEventListener('resize', scheduleRefresh);
+      const scheduleRefresh = () => {
+        if (refreshTimeout) window.clearTimeout(refreshTimeout);
+        refreshTimeout = window.setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, SCROLL_REFRESH_DEBOUNCE_MS);
+      };
 
-    const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
-    const prefersReduced = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible') scheduleRefresh();
+      };
 
-    if (prefersReduced || isMobile) {
-      ScrollTrigger.normalizeScroll(false);
-      scheduleRefresh();
-      return () => {
+      const handlePageShow = () => {
+        scheduleRefresh();
+      };
+
+      window.addEventListener('resize', scheduleRefresh);
+      window.addEventListener('orientationchange', scheduleRefresh);
+      window.addEventListener('pageshow', handlePageShow);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      viewport?.addEventListener('resize', scheduleRefresh);
+
+      const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+      const prefersReduced = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+
+      const baseCleanup = () => {
         window.removeEventListener('resize', scheduleRefresh);
         window.removeEventListener('orientationchange', scheduleRefresh);
         window.removeEventListener('pageshow', handlePageShow);
@@ -89,44 +97,51 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
         viewport?.removeEventListener('resize', scheduleRefresh);
         if (refreshTimeout) window.clearTimeout(refreshTimeout);
       };
-    }
 
-    const lenisInstance = new Lenis({
-      lerp: 0.12,
-      smoothWheel: true,
-      wheelMultiplier: 1.4,
-      touchMultiplier: 1.8,
-      autoRaf: false,
-      infinite: false,
-      syncTouch: false,
-      syncTouchLerp: 0.1,
-    });
+      if (prefersReduced || isMobile) {
+        ScrollTrigger.normalizeScroll(false);
+        scheduleRefresh();
+        teardown = baseCleanup;
+        return;
+      }
 
-    setLenis(lenisInstance);
+      const lenisInstance = new LenisClass({
+        lerp: 0.12,
+        smoothWheel: true,
+        wheelMultiplier: 1.4,
+        touchMultiplier: 1.8,
+        autoRaf: false,
+        infinite: false,
+        syncTouch: false,
+        syncTouchLerp: 0.1,
+      });
 
-    // Wire Lenis scroll events to keep ScrollTrigger positions updated
-    lenisInstance.on('scroll', ScrollTrigger.update);
+      setLenis(lenisInstance as Lenis);
 
-    // GSAP ticker drives Lenis — one RAF loop, no conflicts
-    const update = (time: number) => {
-      lenisInstance.raf(time * 1000);
-    };
+      // Wire Lenis scroll events to keep ScrollTrigger positions updated
+      lenisInstance.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
-    scheduleRefresh();
+      // GSAP ticker drives Lenis — one RAF loop, no conflicts
+      const update = (time: number) => {
+        lenisInstance.raf(time * 1000);
+      };
+
+      gsap.ticker.add(update);
+      gsap.ticker.lagSmoothing(0);
+      scheduleRefresh();
+
+      teardown = () => {
+        gsap.ticker.remove(update);
+        lenisInstance.off('scroll', ScrollTrigger.update);
+        lenisInstance.destroy();
+        setLenis(null);
+        baseCleanup();
+      };
+    })();
 
     return () => {
-      gsap.ticker.remove(update);
-      lenisInstance.off('scroll', ScrollTrigger.update);
-      lenisInstance.destroy();
-      setLenis(null);
-      window.removeEventListener('resize', scheduleRefresh);
-      window.removeEventListener('orientationchange', scheduleRefresh);
-      window.removeEventListener('pageshow', handlePageShow);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      viewport?.removeEventListener('resize', scheduleRefresh);
-      if (refreshTimeout) window.clearTimeout(refreshTimeout);
+      isCancelled = true;
+      teardown?.();
     };
   }, [isPageLoaded]);
 

@@ -252,8 +252,8 @@
   /* ~ -0.7px at 72px */
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 
-  /* Entry animation */
-  animation: fadeSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  /* Entry animation — slideUp keeps H1 visible for LCP; no opacity:0 */
+  animation: slideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 /* ─── Subtitle ─── */
@@ -375,6 +375,16 @@
   }
 }
 
+/* ─── LCP-safe slide — no opacity:0, text is immediately visible for LCP ─── */
+@keyframes slideUp {
+  from {
+    transform: translateY(32px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 /* =====================================================
    MOBILE OVERRIDES
    Mobile-first: below 480px
@@ -491,9 +501,9 @@
   .heroHeading,
   .heroSubtext,
   .heroCta {
-    animation: none;
-    transform: none;
-    opacity: 1;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 
   .heroCta {
