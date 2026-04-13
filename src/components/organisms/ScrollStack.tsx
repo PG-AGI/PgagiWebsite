@@ -83,20 +83,9 @@ const ScrollStack = ({
 
     if (!section || !viewport || cards.length < 2) return;
 
-    // Defer GSAP initialization to idle callback with timeout fallback
-    // This prevents blocking the main thread on image loads
-    const startInit = () => {
-      if (typeof requestIdleCallback !== 'undefined') {
-        requestIdleCallback(() => initializeGSAP(), { timeout: 500 });
-      } else {
-        // Fallback for browsers without requestIdleCallback
-        setTimeout(() => initializeGSAP(), 100);
-      }
-    };
-
-    // Start init immediately without waiting for images
-    // Images will load in background; GSAP will recalculate on scroll if needed
-    startInit();
+    // Initialize GSAP immediately without any delays
+    // Don't wait for images or requestIdleCallback
+    initializeGSAP();
 
     function initializeGSAP() {
       const section  = sectionRef.current;

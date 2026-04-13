@@ -2,9 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import styles from "@/styles/components/organisms/VisionSystemSection.module.scss";
 import visionSystemText from "@/constants/uiText/visionSystem.json";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const visionCards = [
   {
@@ -74,10 +80,19 @@ const CardContent = ({
   image: string;
   imageAlt: string;
   priority?: boolean;
-}) => (
-  <>
-    <div className={styles.copyBlock}>
-      <h3 className={styles.cardTitle}>{title}</h3>
+}) => {
+  // When image loads, refresh GSAP scroll trigger calculations
+  const handleImageLoad = () => {
+    if (typeof window !== "undefined") {
+      // Refresh scroll trigger calculations when image finishes loading
+      ScrollTrigger.refresh();
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.copyBlock}>
+        <h3 className={styles.cardTitle}>{title}</h3>
       <ul className={styles.pointList}>
         {points.map((point) => (
           <li key={point}>{point}</li>
@@ -95,12 +110,14 @@ const CardContent = ({
           width={420}
           height={250}
           className={styles.mediaImage}
-          loading="lazy"
-          priority={false}
+          loading="eager"
+          priority={true}
+          onLoad={handleImageLoad}
         />
       </div>
     </div>
-  </>
-);
+    </>
+  );
+};
 
 export default VisionSystemSection;
