@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import bgImage from "../../../public/background.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import partnerStyles from "@/styles/components/organisms/partners.module.scss";
 import Link from "next/link";
@@ -34,10 +35,11 @@ export default function Landing() {
       {/* Hero media is rendered as next/image so the browser can prioritize it immediately for LCP. */}
       <div className={styles.heroBg} aria-hidden="true">
         <Image
-          src="/background.webp"
+          src={bgImage}
           alt=""
           fill
           loading="eager"
+          placeholder="blur"
           sizes="100vw"
           quality={75}
           className={styles.heroBgImage}
