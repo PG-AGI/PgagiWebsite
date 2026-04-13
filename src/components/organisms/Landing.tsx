@@ -37,7 +37,8 @@ export default function Landing() {
           src="/background.webp"
           alt=""
           fill
-          priority
+          loading="eager"
+          fetchPriority="low"
           sizes="100vw"
           quality={85}
           className={styles.heroBgImage}
