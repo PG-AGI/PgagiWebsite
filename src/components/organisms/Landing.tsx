@@ -1,7 +1,7 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import styles from "@/styles/components/organisms/landing.module.scss";
+import partnerStyles from "@/styles/components/organisms/partners.module.scss";
 import Link from "next/link";
 import Partners from "./Partners";
 import landingText from "@/constants/uiText/landing.json";
@@ -31,8 +31,18 @@ export default function Landing() {
       className={styles.hero}
       aria-label={landingText.heroAriaLabel}
     >
-      {/* Background image via CSS (zero layout shift, best LCP) */}
-      <div className={styles.heroBg} aria-hidden="true" />
+      {/* Hero media is rendered as next/image so the browser can prioritize it immediately for LCP. */}
+      <div className={styles.heroBg} aria-hidden="true">
+        <Image
+          src="/background.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          quality={85}
+          className={styles.heroBgImage}
+        />
+      </div>
 
       {/* Left-side gradient overlay for text legibility */}
       <div className={styles.heroOverlay} aria-hidden="true" />
@@ -116,9 +126,15 @@ export default function Landing() {
         </Link>
       </div>
 
-      {/* Partners bar — pinned to bottom of hero */}
+      {/* Partners bar — pinned to bottom of hero. Container rendered via SSR for zero jitter */}
       <div className={styles.partnersWrapper}>
-        <Partners />
+        <div 
+          className={partnerStyles.partnersBar} 
+          role="region" 
+          aria-label="Partner Logos"
+        >
+          <Partners />
+        </div>
       </div>
     </section>
   );

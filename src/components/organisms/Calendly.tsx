@@ -1,3 +1,4 @@
+"use client";
 import styles from "@/styles/components/organisms/calendly.module.scss";
 import { InlineWidget } from "react-calendly";
 import React, { useEffect, useState, useRef } from 'react';

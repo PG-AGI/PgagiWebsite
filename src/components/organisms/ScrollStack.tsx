@@ -83,6 +83,28 @@ const ScrollStack = ({
 
     if (!section || !viewport || cards.length < 2) return;
 
+    // Defer GSAP initialization to idle callback with timeout fallback
+    // This prevents blocking the main thread on image loads
+    const startInit = () => {
+      if (typeof requestIdleCallback !== 'undefined') {
+        requestIdleCallback(() => initializeGSAP(), { timeout: 500 });
+      } else {
+        // Fallback for browsers without requestIdleCallback
+        setTimeout(() => initializeGSAP(), 100);
+      }
+    };
+
+    // Start init immediately without waiting for images
+    // Images will load in background; GSAP will recalculate on scroll if needed
+    startInit();
+
+    function initializeGSAP() {
+      const section  = sectionRef.current;
+      const viewport = viewportRef.current;
+      const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
+
+      if (!section || !viewport || cards.length < 2) return;
+
     const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
     const isMobileViewport     = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
     const useMobileFlow        = mobileMode === "flow" && isMobileViewport;
@@ -240,6 +262,7 @@ const ScrollStack = ({
         clearProps: "transform,opacity,y,scale",
       });
     };
+    }
   }, [animated, cardOverlap, count, lenis, mobileMode, offset, preRoll, scrollMultiplier]);
 
   const layoutClass = animated ? styles.animated : styles.static;

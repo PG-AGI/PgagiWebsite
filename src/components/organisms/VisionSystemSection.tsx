@@ -54,7 +54,7 @@ const VisionSystemSection = () => {
           key={card.title}
           className={`${styles.card} ${styles[`card${i + 1}`]}`}
         >
-          <CardContent {...card} priority={i === 0} />
+          <CardContent {...card} priority={false} />
         </ScrollStackItem>
       ))}
     </ScrollStack>
@@ -67,7 +67,6 @@ const CardContent = ({
   outcome,
   image,
   imageAlt,
-  priority = false,
 }: {
   title: string;
   points: string[];
@@ -96,7 +95,8 @@ const CardContent = ({
           width={420}
           height={250}
           className={styles.mediaImage}
-          priority={priority}
+          loading="lazy"
+          priority={false}
         />
       </div>
     </div>

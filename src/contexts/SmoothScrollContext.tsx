@@ -29,8 +29,27 @@ interface SmoothScrollProviderProps {
 
 export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ children }) => {
   const [lenis, setLenis] = React.useState<Lenis | null>(null);
+  const [isPageLoaded, setIsPageLoaded] = React.useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (document.readyState === 'complete') {
+      setIsPageLoaded(true);
+      return;
+    }
+
+    const onLoad = () => setIsPageLoaded(true);
+    window.addEventListener('load', onLoad, { once: true });
+
+    return () => {
+      window.removeEventListener('load', onLoad);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isPageLoaded) return;
+
     gsap.registerPlugin(ScrollTrigger);
     let refreshTimeout: number | null = null;
     const viewport = window.visualViewport;
@@ -109,7 +128,7 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
       viewport?.removeEventListener('resize', scheduleRefresh);
       if (refreshTimeout) window.clearTimeout(refreshTimeout);
     };
-  }, []);
+  }, [isPageLoaded]);
 
   return (
     <SmoothScrollContext.Provider value={{ lenis }}>

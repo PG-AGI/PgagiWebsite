@@ -8,7 +8,6 @@ import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
 import Navigation from "@/components/organisms/base/Navigation";
 import Footer from "@/components/organisms/Footer";
 import PageTransition from "@/components/organisms/PageTransition";
-import API_ENDPOINTS from "@/constants/apiEndpoints";
 
 // Fonts
 const poppins = Poppins({
@@ -58,9 +57,6 @@ export default function RootLayout({
 
               <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
               <meta name="google" content="notranslate" />
-              {/* Preload critical resources for Hyperspeed component */}
-              <link rel="preload" href={API_ENDPOINTS.THREE_PRELOAD} as="script" />
-              <link rel="preload" href={API_ENDPOINTS.POSTPROCESSING_PRELOAD} as="script" />
               {/* Google Tag Manager */}
               {process.env.NODE_ENV === 'production' && (
                 <Script id="google-tag-manager" strategy="lazyOnload">
@@ -110,7 +106,7 @@ export default function RootLayout({
               />
               {/* DataFast Analytics */}
               <Script
-                defer
+                strategy="lazyOnload"
                 data-website-id="dfid_ScLgcSKCkChuKsrvgG1Pa"
                 data-domain="pgagi.in"
                 src="https://datafa.st/js/script.js"

@@ -1,7 +1,8 @@
+"use client";
 import styles from '@/styles/components/organisms/NewPage.module.scss';
 import { ArrowRight, Lightbulb, PenTool, Rocket, TrendingUp, Settings, Database, Activity, Target } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
@@ -29,11 +30,12 @@ const NewPage = () => {
   // ssr: false — component only ever runs in browser, no hydration mismatch risk.
   // Initialize isMounted as true to skip the empty → content render cycle.
   const [isMobile, setIsMobile] = useState(false);
-  const isMounted = true;
+  const [isMounted, setIsMounted] = useState(false);
   const { scrollTo } = useSmoothScrollTo();
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    setIsMounted(true);
     const handleResize = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -59,7 +61,8 @@ const NewPage = () => {
   const rightCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isMounted || isMobile) return;
+    if (!isMounted) return;
+    if (isMobile) return;
 
     // Register plugins inside useEffect — never at module scope
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -121,59 +124,45 @@ const NewPage = () => {
         {/* Header Section */}
         <div className={styles.header}>
           <div className={styles.titleContainer}>
-            <motion.h1
-              className={styles.title}
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              transition={
-                shouldReduceMotion
-                  ? { duration: 0 }
-                  : { duration: MOTION_DURATION.fast, ease: FRAMER_EASE.premiumOut, delay: 0.1 }
-              }
-            >
+            <h1 className={styles.title}>
               {newPageText.titlePrefix} <span className={styles.highlight}>{newPageText.titleHighlight}</span>
-            </motion.h1>
+            </h1>
           </div>
         </div>
 
         {/* World-Class Scroll-Animated Connecting Lines */}
-        {(isMounted && !isMobile) && (
-          <div className={styles.linesContainer}>
-            <svg width="100%" height="220" viewBox="0 0 1000 220" fill="none" className={styles.svgLines} preserveAspectRatio="none">
-              {/* Left Path - Stretching perfectly to card center */}
-              <path 
-                className={`leftPath ${styles.scrollPath}`}
-                d="M500 -20V80H2V220" 
-                stroke="#9F0000" 
-                strokeWidth="3" 
-                vectorEffect="non-scaling-stroke"
-              />
-              
-              {/* Right Path - Stretching perfectly to card center */}
-              <path 
-                className={`rightPath ${styles.scrollPath}`}
-                d="M500 -20V80H998V220" 
-                stroke="#9F0000" 
-                strokeWidth="3" 
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
+        <div className={styles.linesContainer}>
+          <svg width="100%" height="220" viewBox="0 0 1000 220" fill="none" className={styles.svgLines} preserveAspectRatio="none">
+            {/* Left Path - Stretching perfectly to card center */}
+            <path 
+              className={`leftPath ${styles.scrollPath}`}
+              d="M500 -20V80H2V220" 
+              stroke="#9F0000" 
+              strokeWidth="3" 
+              vectorEffect="non-scaling-stroke"
+            />
             
-            {/* Perfectly circular glowing dots animated via GSAP MotionPath */}
-            <div className={`leftDot ${styles.glowingDot}`}></div>
-            <div className={`rightDot ${styles.glowingDot}`}></div>
-          </div>
-        )}
+            {/* Right Path - Stretching perfectly to card center */}
+            <path 
+              className={`rightPath ${styles.scrollPath}`}
+              d="M500 -20V80H998V220" 
+              stroke="#9F0000" 
+              strokeWidth="3" 
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+          
+          {/* Perfectly circular glowing dots animated via GSAP MotionPath */}
+          <div className={`leftDot ${styles.glowingDot}`}></div>
+          <div className={`rightDot ${styles.glowingDot}`}></div>
+        </div>
 
         {/* Content Grid */}
         <div className={styles.cardsGrid}>
           {/* Left Card: Foundations */}
-          <motion.div
+          <div
             className={`${styles.card} ${styles.cardFounders}`}
             ref={leftCardRef}
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.normal, ease: FRAMER_EASE.premiumOut, delay: 0.2 }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -232,15 +221,12 @@ const NewPage = () => {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Card: Enterprises */}
-          <motion.div
+          <div
             className={`${styles.card} ${styles.cardEnterprises}`}
             ref={rightCardRef}
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: MOTION_DURATION.normal, ease: FRAMER_EASE.premiumOut, delay: 0.3 }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -297,7 +283,7 @@ const NewPage = () => {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

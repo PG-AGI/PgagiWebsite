@@ -8,12 +8,8 @@
 .partnersBar {
   width: 100%;
   margin: 0;
-  min-height: 100px;
-  padding: 1.5rem 0;
-  /* Increased height and vertical padding */
-  background: #00000040;
-  backdrop-filter: blur(3.751030683517456px);
-  -webkit-backdrop-filter: blur(3.751030683517456px);
+  min-height: 82px;
+  background: rgba(0, 0, 0, 0.42);
   padding: 0;
   display: flex;
   align-items: center;
@@ -26,15 +22,31 @@
     border-bottom-right-radius: 0;
   }
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   /* NO mask-image — full edge-to-edge logos, no fading */
 }
 
-/* react-fast-marquee wrapper */
 .marquee {
   width: 100%;
-  display: flex;
+  overflow: hidden;
+}
+
+.marqueeTrack {
+  display: inline-flex;
   align-items: center;
+  width: max-content;
+  animation: partnerMarquee 34s linear infinite;
+  will-change: transform;
+}
+
+@keyframes partnerMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* Individual logo slot */
@@ -82,5 +94,11 @@
       width: clamp(70px, 18vw, 100px) !important;
       height: clamp(26px, 4.5vh, 38px) !important;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
   }
 }

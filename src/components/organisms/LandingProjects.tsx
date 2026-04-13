@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import styles from "@/styles/components/organisms/LandingProjects.module.scss";

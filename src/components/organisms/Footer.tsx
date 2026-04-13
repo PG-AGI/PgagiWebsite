@@ -41,7 +41,6 @@ export default function Footer() {
             <div className={styles.navigationSection}>
               {/* Company Column */}
               <div className={styles.navColumn}>
-                <h6 className={styles.columnHeader}>{footerText.companyHeader}</h6>
                 <ul className={styles.linkList}>
                   <li>
                     <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
@@ -69,10 +68,10 @@ export default function Footer() {
                 </div>
                 <div className={styles.govLogoWrap}>
                   <Image
-                    src="/assets/gov-login-img-footer.png"
+                    src="/assets/gov-login-img.png"
                     alt="Government registration logo"
-                    width={160}
-                    height={38}
+                    width={200}
+                    height={56}
                     className={styles.govLogo}
                   />
                 </div>

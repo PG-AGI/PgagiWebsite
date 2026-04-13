@@ -69,26 +69,24 @@
 .heroBg {
   position: absolute;
   inset: 0;
-  background-image: url("/background.webp");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
   z-index: 0;
-  /* Radius moved to parent .hero for perfect clipping */
-  /* Subtle ken-burns zoom for life - disabled on mobile for performance */
-  animation: kenBurns 20s ease-in-out infinite alternate;
-  will-change: transform;
   transform: translateZ(0);
 
-  @media (max-width: 768px) {
-    animation: none;
-    transform: none;
-    background-size: auto 100%;
-    background-position: 55% center;
+  .heroBgImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    transform: translateZ(0);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
+  @media (max-width: 768px) {
+    .heroBgImage {
+      object-position: 55% center;
+    }
   }
 
   /* ─── Morning Sunlight Effect ─── */
@@ -118,16 +116,6 @@
     mix-blend-mode: overlay;
     pointer-events: none;
     z-index: 1;
-  }
-}
-
-@keyframes kenBurns {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.06);
   }
 }
 
@@ -170,8 +158,6 @@
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   animation: fadeSlideUp 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -382,15 +368,10 @@
   from {
     opacity: 0;
     transform: translateY(32px);
-    filter: blur(6px);
-  }
-  60% {
-    filter: blur(0px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0px);
   }
 }
 
@@ -512,7 +493,6 @@
   .heroCta {
     animation: none;
     transform: none;
-    filter: none;
     opacity: 1;
   }
 

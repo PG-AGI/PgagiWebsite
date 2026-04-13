@@ -1,6 +1,4 @@
-import Marquee from "react-fast-marquee";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import styles from "@/styles/components/organisms/partners.module.scss";
 import partnersText from "@/constants/uiText/partners.json";
 
@@ -30,34 +28,27 @@ const partners = [
     { src: aixl, alt: partnersText.items[10].alt },
 ];
 
+const marqueePartners = [...partners, ...partners];
+
 export default function Partners() {
     return (
-        <motion.div
-            className={styles.partnersBar}
-            aria-label={partnersText.sectionAriaLabel}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-        >
-            <Marquee
-                className={styles.marquee}
-                speed={50}
-                gradient={false}
-                autoFill
-            >
-                {partners.map((p, i) => (
-                    <div key={i} className={styles.logoItem}>
-                        <Image
-                            src={p.src}
-                            alt={p.alt}
-                            width={120}
-                            height={32}
-                            className={styles.logoImage}
-                            loading="eager"
-                        />
-                    </div>
+        <div className={styles.marquee} aria-label={partnersText.sectionAriaLabel}>
+            <div className={styles.marqueeTrack}>
+                {marqueePartners.map((p, i) => (
+                    <div key={`${p.alt}-${i}`} className={styles.logoItem}>
+                    <Image
+                        src={p.src}
+                        alt={p.alt}
+                        width={120}
+                        height={32}
+                        className={styles.logoImage}
+                        sizes="(max-width: 768px) 90px, 120px"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
                 ))}
-            </Marquee>
-        </motion.div>
+            </div>
+        </div>
     );
 }
