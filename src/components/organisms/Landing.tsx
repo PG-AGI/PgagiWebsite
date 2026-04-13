@@ -38,9 +38,8 @@ export default function Landing() {
           alt=""
           fill
           loading="eager"
-          fetchPriority="low"
           sizes="100vw"
-          quality={85}
+          quality={75}
           className={styles.heroBgImage}
         />
       </div>

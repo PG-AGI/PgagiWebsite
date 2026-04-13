@@ -42,8 +42,8 @@
   align-items: center;
   /* vertically center the content block */
   justify-content: flex-start;
-  background: transparent;
-  /* Let page background show through the gap */
+  background: #1a1a18;
+  /* Dark fallback visible instantly while background.webp loads */
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 
