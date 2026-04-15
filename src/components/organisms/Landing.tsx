@@ -2,9 +2,7 @@ import React from "react";
 import Image from "next/image";
 import bgImage from "../../../public/background-fast.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
-import partnerStyles from "@/styles/components/organisms/partners.module.scss";
 import Link from "next/link";
-import Partners from "./Partners";
 import landingText from "@/constants/uiText/landing.json";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
 
@@ -43,6 +41,7 @@ export default function Landing() {
           placeholder="blur"
           sizes="100vw"
           quality={56}
+          unoptimized
           className={styles.heroBgImage}
         />
       </div>
@@ -74,6 +73,7 @@ export default function Landing() {
                       width={platform.width}
                       height={platform.height}
                       className={styles.heroTrustLogo}
+                      unoptimized
                     />
                   </span>
                   <span className={styles.heroTrustName}>{platform.name}</span>
@@ -129,16 +129,6 @@ export default function Landing() {
         </Link>
       </div>
 
-      {/* Partners bar — pinned to bottom of hero. Container rendered via SSR for zero jitter */}
-      <div className={styles.partnersWrapper}>
-        <div 
-          className={partnerStyles.partnersBar} 
-          role="region" 
-          aria-label="Partner Logos"
-        >
-          <Partners />
-        </div>
-      </div>
     </section>
   );
 }

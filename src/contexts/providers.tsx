@@ -2,7 +2,6 @@
 
 'use client';
 
-import { SessionProvider } from "next-auth/react";
 import { PageTransitionProvider } from "./PageTransitionContext";
 
 interface ProvidersProps {
@@ -11,11 +10,9 @@ interface ProvidersProps {
 
 const Providers = ({ children }: ProvidersProps) => {
   return (
-    <SessionProvider>
-      <PageTransitionProvider>
-        {children}
-      </PageTransitionProvider>
-    </SessionProvider>
+    <PageTransitionProvider>
+      {children}
+    </PageTransitionProvider>
   );
 };
 

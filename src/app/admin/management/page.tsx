@@ -2,14 +2,14 @@
 
 'use client';
 
-import { useSession, signOut } from "next-auth/react";
+import { SessionProvider, useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AdminPanel from "./AdminPanel"; 
 import styles from '@/styles/app/admin/management/AdminPage.module.scss'; 
 import ROUTES from '@/constants/routes';
 
-const AdminPage = () => {
+const AdminPageContent = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -36,6 +36,14 @@ const AdminPage = () => {
       </header>
       <AdminPanel />
     </div>
+  );
+};
+
+const AdminPage = () => {
+  return (
+    <SessionProvider>
+      <AdminPageContent />
+    </SessionProvider>
   );
 };
 

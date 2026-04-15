@@ -119,6 +119,7 @@ export default function Navigation() {
             height={60}
             sizes="60px"
             quality={45}
+            unoptimized
           />
           <p>PG-AGI</p>
         </TransitionLink>

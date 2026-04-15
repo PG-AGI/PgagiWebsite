@@ -17,7 +17,6 @@ const poppins = Poppins({
   display: 'swap',
 });
 
-
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-plus-jakarta',

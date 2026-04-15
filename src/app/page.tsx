@@ -8,6 +8,10 @@ const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator
   ssr: false,
   loading: () => null,
 });
+const HomePartnersBar = dynamic(() => import("@/components/organisms/HomePartnersBar"), {
+  ssr: false,
+  loading: () => null,
+});
 
 // All below-fold sections: ssr:false so their CSS ships in async chunks,
 // not in the render-blocking page.css. Reduces blocking CSS from 165KB → ~20KB.
@@ -32,11 +36,14 @@ export default function Home() {
     <main className={styles.main}>
       <ScrollIndicator />
       <Landing />
-      {/* First two sections are near the fold — load eagerly with large rootMargin */}
-      <LazySection minHeight="600px" rootMargin="250px">
+      <LazySection minHeight="82px" rootMargin="100px">
+        <HomePartnersBar />
+      </LazySection>
+      {/* Near-fold sections: lighter preload window to reduce initial JS/network contention. */}
+      <LazySection minHeight="600px" rootMargin="100px">
         <StatsSection />
       </LazySection>
-      <LazySection minHeight="800px" rootMargin="300px">
+      <LazySection minHeight="800px" rootMargin="120px">
         <VisionSystemSection />
       </LazySection>
       <LazySection minHeight="600px">

@@ -9,13 +9,15 @@ interface TransitionLinkProps {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
+  prefetch?: boolean;
 }
 
 export default function TransitionLink({
   href,
   children,
   className,
-  onClick
+  onClick,
+  prefetch = false,
 }: TransitionLinkProps): JSX.Element {
   const router = useRouter();
 
@@ -64,6 +66,7 @@ export default function TransitionLink({
       href={href}
       className={className}
       onClick={handleClick}
+      prefetch={prefetch}
     >
       {children}
     </Link>

@@ -47,6 +47,7 @@ export default function Partners() {
                         fetchPriority={i === 0 ? "high" : "auto"}
                         priority={i === 0}
                         decoding="async"
+                        unoptimized
                     />
                 </div>
                 ))}
