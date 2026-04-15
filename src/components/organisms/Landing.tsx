@@ -40,8 +40,8 @@ export default function Landing() {
           fill
           loading="eager"
           placeholder="blur"
-          sizes="100vw"
-          quality={75}
+          sizes="(max-width: 768px) 100vw, (max-width: 1440px) 100vw, 1440px"
+          quality={60}
           className={styles.heroBgImage}
         />
       </div>

@@ -79,7 +79,7 @@ export default function Footer() {
 
               {/* Services Column */}
               <div className={styles.navColumn}>
-                <h6 className={styles.columnHeader}>{footerText.servicesHeader}</h6>
+                <p className={styles.columnHeader}>{footerText.servicesHeader}</p>
                 <ul className={styles.linkList}>
                   <li>
                     <TransitionLink
@@ -118,7 +118,7 @@ export default function Footer() {
 
               {/* Resources Column */}
               <div className={styles.navColumn}>
-                <h6 className={styles.columnHeader}>{footerText.resourcesHeader}</h6>
+                <p className={styles.columnHeader}>{footerText.resourcesHeader}</p>
                 <ul className={styles.linkList}>
                   <li>
                     <TransitionLink
@@ -149,9 +149,9 @@ export default function Footer() {
 
               {/* Newsletter Signup */}
               <div className={styles.newsletterSection}>
-                <h6 className={`${styles.columnHeader} ${styles.addressText}`}>
-                  <p className={styles.columnHeader}>{footerText.addressLabel}</p>{footerText.addressText}
-                </h6>
+                <p className={`${styles.columnHeader} ${styles.addressText}`}>
+                  <span className={styles.columnHeader}>{footerText.addressLabel}</span>{footerText.addressText}
+                </p>
               </div>
             </div>
           </div>

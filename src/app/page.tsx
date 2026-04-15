@@ -1,6 +1,7 @@
 import Landing from "@/components/organisms/Landing";
 import styles from "@/styles/app/page.module.scss";
 import dynamic from "next/dynamic";
+import LazySection from "@/components/atoms/LazySection";
 
 // ScrollIndicator — UI-only, no SSR needed
 const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator"), {
@@ -10,6 +11,8 @@ const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator
 
 // All below-fold sections: ssr:false so their CSS ships in async chunks,
 // not in the render-blocking page.css. Reduces blocking CSS from 165KB → ~20KB.
+// Wrapped in LazySection so component chunks (incl. GSAP) only download when
+// the section is ~500px from the viewport — avoids loading 391 KiB of GSAP upfront.
 const StatsSection = dynamic(() => import("@/components/organisms/NewPage"), { ssr: false });
 const VisionSystemSection = dynamic(() => import("@/components/organisms/VisionSystemSection"), { ssr: false });
 const SocialOrbitSection = dynamic(() => import("@/components/organisms/SocialOrbitSection"), { ssr: false });
@@ -29,19 +32,46 @@ export default function Home() {
     <main className={styles.main}>
       <ScrollIndicator />
       <Landing />
-      <StatsSection />
-      <VisionSystemSection />
-      <SocialOrbitSection />
-      <EcosystemSection />
-      <ProcessTimelineSection />
-      <RevenueSection />
-      <MeasurableImpactSection />
-      <BuildEcosystemSection />
-      <SolutionFitBreakdownSection />
-      <CaseStudiesSection />
-      <Customers />
-      <WhatMakesUsDifferentSection />
-      <ConcentricEllipseSection />
+      {/* First two sections are near the fold — load eagerly with large rootMargin */}
+      <LazySection minHeight="600px" rootMargin="250px">
+        <StatsSection />
+      </LazySection>
+      <LazySection minHeight="800px" rootMargin="300px">
+        <VisionSystemSection />
+      </LazySection>
+      <LazySection minHeight="600px">
+        <SocialOrbitSection />
+      </LazySection>
+      <LazySection minHeight="700px">
+        <EcosystemSection />
+      </LazySection>
+      <LazySection minHeight="820px">
+        <ProcessTimelineSection />
+      </LazySection>
+      <LazySection minHeight="600px">
+        <RevenueSection />
+      </LazySection>
+      <LazySection minHeight="600px">
+        <MeasurableImpactSection />
+      </LazySection>
+      <LazySection minHeight="700px">
+        <BuildEcosystemSection />
+      </LazySection>
+      <LazySection minHeight="600px">
+        <SolutionFitBreakdownSection />
+      </LazySection>
+      <LazySection minHeight="800px">
+        <CaseStudiesSection />
+      </LazySection>
+      <LazySection minHeight="400px">
+        <Customers />
+      </LazySection>
+      <LazySection minHeight="900px">
+        <WhatMakesUsDifferentSection />
+      </LazySection>
+      <LazySection minHeight="600px">
+        <ConcentricEllipseSection />
+      </LazySection>
     </main>
   );
 }

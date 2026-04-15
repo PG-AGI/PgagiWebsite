@@ -17,21 +17,21 @@ const visionCards = [
     title: visionSystemText.cards[0].title,
     points: visionSystemText.cards[0].points,
     outcome: visionSystemText.cards[0].outcome,
-    image: "/svgs/Landing/First.svg",
+    image: "/svgs/Landing/First.webp",
     imageAlt: visionSystemText.cards[0].imageAlt,
   },
   {
     title: visionSystemText.cards[1].title,
     points: visionSystemText.cards[1].points,
     outcome: visionSystemText.cards[1].outcome,
-    image: "/svgs/Landing/Second.svg",
+    image: "/svgs/Landing/Second.webp",
     imageAlt: visionSystemText.cards[1].imageAlt,
   },
   {
     title: visionSystemText.cards[2].title,
     points: visionSystemText.cards[2].points,
     outcome: visionSystemText.cards[2].outcome,
-    image: "/svgs/Landing/Third.svg",
+    image: "/svgs/Landing/Third.webp",
     imageAlt: visionSystemText.cards[2].imageAlt,
   },
 ];
@@ -60,7 +60,7 @@ const VisionSystemSection = () => {
           key={card.title}
           className={`${styles.card} ${styles[`card${i + 1}`]}`}
         >
-          <CardContent {...card} priority={false} />
+          <CardContent {...card} />
         </ScrollStackItem>
       ))}
     </ScrollStack>
@@ -79,7 +79,6 @@ const CardContent = ({
   outcome: string;
   image: string;
   imageAlt: string;
-  priority?: boolean;
 }) => {
   // When image loads, refresh GSAP scroll trigger calculations
   const handleImageLoad = () => {
@@ -109,9 +108,8 @@ const CardContent = ({
           alt={imageAlt}
           width={420}
           height={250}
+          sizes="(max-width: 768px) 88vw, 420px"
           className={styles.mediaImage}
-          loading="eager"
-          priority={true}
           onLoad={handleImageLoad}
         />
       </div>

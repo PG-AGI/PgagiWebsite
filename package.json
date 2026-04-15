@@ -18,7 +18,7 @@
     "@tabler/icons-react": "^3.26.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.2",
-    "caniuse-lite": "^1.0.30001743",
+    "caniuse-lite": "^1.0.30001788",
     "clientjs": "^0.2.1",
     "clsx": "^2.1.1",
     "firebase": "^11.0.1",
@@ -87,5 +87,20 @@
     "sass-loader": "^16.0.5",
     "style-loader": "^4.0.0",
     "typescript": "^5"
+  },
+  "browserslist": {
+    "production": [
+      "chrome >= 93",
+      "firefox >= 92",
+      "safari >= 15.4",
+      "edge >= 93",
+      "opera >= 79",
+      "not dead"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

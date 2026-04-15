@@ -164,21 +164,21 @@
   stroke: var(--step-color);
   stroke-width: 2;
   stroke-linecap: round;
-  stroke-dasharray: 400; 
-  stroke-dashoffset: 400; 
   opacity: 0;
   animation: arcReveal 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   filter: drop-shadow(0 0 4px var(--step-color));
+  will-change: opacity;
 }
 
 .startDot, .endDot {
-  fill: #444; 
+  fill: var(--step-color);
   stroke: rgba(255, 255, 255, 0.1);
   stroke-width: 1.2;
   opacity: 0.5;
+  filter: grayscale(1) brightness(0.5);
   animation: dotHighlight 8s ease-out infinite;
   transform-origin: center;
-  will-change: transform, opacity, fill;
+  will-change: transform, opacity, filter;
 }
 
 .endDot {
@@ -195,13 +195,12 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #2a2d32; // grayed background
-  color: rgba(255, 255, 255, 0.4); // grayed icon
-  filter: grayscale(1);
+  background: var(--step-color);
+  color: var(--icon-color);
+  filter: grayscale(1) brightness(0.35);
   opacity: 0.6;
-  box-shadow: none;
   animation: badgeHighlight 8s ease-in-out infinite;
-  will-change: transform, filter, background, opacity;
+  will-change: transform, filter, opacity;
   z-index: 2;
 
   @media (prefers-reduced-motion: reduce) {
@@ -325,7 +324,6 @@
   .arcGlow {
     animation: none;
     opacity: 0;
-    stroke-dashoffset: 0;
     transition: opacity 0.24s ease;
   }
 
@@ -337,7 +335,7 @@
   .startDot, .endDot {
     animation: none;
     opacity: 0.5;
-    fill: #444;
+    filter: grayscale(1) brightness(0.5);
   }
 
   .iconBadge {
@@ -345,13 +343,8 @@
   }
 
   .active .iconBadge {
-    background: var(--step-color);
-    color: var(--icon-color);
-    filter: grayscale(0);
+    filter: grayscale(0) brightness(1);
     opacity: 1;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.24),
-      0 0 22px var(--step-color);
   }
 
   .mobileHint {
@@ -471,50 +464,43 @@
 }
 
 @keyframes arcReveal {
-  0%   { stroke-dashoffset: 400; opacity: 0; }
-  1%   { opacity: 1; }
-  18.75% { stroke-dashoffset: 0; opacity: 1; }
-  93.75% { stroke-dashoffset: 0; opacity: 1; }
-  100% { stroke-dashoffset: 400; opacity: 0; }
+  0%     { opacity: 0; }
+  1%     { opacity: 0.3; }
+  18.75% { opacity: 1; }
+  93.75% { opacity: 1; }
+  100%   { opacity: 0; }
 }
 
 @keyframes dotHighlight {
-  0%   { transform: scale(1); fill: #444; opacity: 0.5; filter: brightness(1); }
-  1%   { transform: scale(1.4); fill: var(--step-color); opacity: 1; filter: brightness(1.8); }
-  5%   { transform: scale(1); fill: var(--step-color); opacity: 1; filter: brightness(1); }
-  93.75% { transform: scale(1); fill: var(--step-color); opacity: 1; filter: brightness(1); }
-  100% { transform: scale(1); fill: #444; opacity: 0.5; }
+  0%   { transform: scale(1);   opacity: 0.5; filter: grayscale(1) brightness(0.5); }
+  1%   { transform: scale(1.4); opacity: 1;   filter: grayscale(0) brightness(1.8); }
+  5%   { transform: scale(1);   opacity: 1;   filter: grayscale(0) brightness(1); }
+  93.75% { transform: scale(1); opacity: 1;   filter: grayscale(0) brightness(1); }
+  100% { transform: scale(1);   opacity: 0.5; filter: grayscale(1) brightness(0.5); }
 }
 
 @keyframes badgeHighlight {
-  0% { 
-    background: #2a2d32; 
-    color: rgba(255, 255, 255, 0.4); 
-    filter: grayscale(1); 
-    opacity: 0.6; 
-    transform: translate(-50%, -50%) scale(1); 
+  0% {
+    filter: grayscale(1) brightness(0.35);
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
   }
-  2% { 
-    background: var(--step-color); 
-    color: var(--icon-color); 
-    filter: grayscale(0); 
-    opacity: 1; 
+  2% {
+    filter: grayscale(0) brightness(1.2);
+    opacity: 1;
     transform: translate(-50%, -50%) scale(1.2);
-    box-shadow: 0 0 20px var(--step-color);
   }
-  6% { 
-    transform: translate(-50%, -50%) scale(1); 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  6% {
+    filter: grayscale(0) brightness(1);
+    transform: translate(-50%, -50%) scale(1);
   }
-  93.75% { 
-    background: var(--step-color); 
-    filter: grayscale(0); 
+  93.75% {
+    filter: grayscale(0) brightness(1);
     opacity: 1;
   }
-  100% { 
-    background: #2a2d32; 
-    opacity: 0.6; 
-    filter: grayscale(1);
-    box-shadow: none;
+  100% {
+    filter: grayscale(1) brightness(0.35);
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
   }
 }

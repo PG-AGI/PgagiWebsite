@@ -48,11 +48,16 @@ export default function RootLayout({
             translate="no"
           >
             <head>
+              {/* Preconnect to critical third-party origins */}
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+              <link rel="preconnect" href="https://datafa.st" />
+              <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
-              <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+              <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
               <meta name="google" content="notranslate" />
-              {/* Google Tag Manager */}
-              {process.env.NODE_ENV === 'production' && (
+              {/* Google Tag Manager — only loads when ID is configured */}
+              {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_GTM_ID && (
                 <Script id="google-tag-manager" strategy="lazyOnload">
                   {`
                   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -62,19 +67,16 @@ export default function RootLayout({
                   })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
                 `}
                 </Script>
-
-
-
               )}
 
-              {/* Google Analytics */}
-              {process.env.NODE_ENV === 'production' && (
+              {/* Google Analytics — only loads when ID is configured */}
+              {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID && (
                 <Script
                   src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
                   strategy="lazyOnload"
                 />
               )}
-              {process.env.NODE_ENV === 'production' && (
+              {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID && (
                 <Script id="google-analytics" strategy="lazyOnload">
                   {`
                   window.dataLayer = window.dataLayer || [];
