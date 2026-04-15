@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect , useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-lite';
 import styles from '@/styles/app/aboutUs/aboutus.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -143,7 +143,7 @@ export default function AboutUs() {
     <div className={styles.main}>
       {/* Hero Section */}
       <motion.section
-        className={styles.hero}
+        className={`${styles.hero} top-section-slide-in`}
         initial="hidden"
         whileInView="visible"
         variants={sectionVariants}

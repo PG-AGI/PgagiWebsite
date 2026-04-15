@@ -96,6 +96,35 @@ body {
 	overflow: visible;
 }
 
+@keyframes page-route-enter {
+	0% {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.page-route-enter {
+	animation: page-route-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.page-route-enter {
+		animation: none;
+	}
+}
+
+@supports (view-transition-name: root) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 260ms;
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+}
+
 .gtmNoScriptFrame {
 	display: none;
 	visibility: hidden;
@@ -105,4 +134,25 @@ body {
 	min-height: 100vh;
 	padding-top: 0;
 	position: relative;
+}
+
+@keyframes top-section-slide-in {
+	0% {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.top-section-slide-in {
+	animation: top-section-slide-in 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.top-section-slide-in {
+		animation: none;
+	}
 }

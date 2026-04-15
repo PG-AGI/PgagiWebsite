@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "@/lib/motion-lite";
 import styles from "@/styles/components/molecules/TestimonialCarousel.module.scss";
 import Image from "next/image";
 import {

@@ -8,7 +8,7 @@ export const Hero = ({
   onScrollToBenefits: () => void;
 }) => {
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} top-section-slide-in`}>
       <div className={styles.background}>
         <div className={styles.overlay} />
       </div>

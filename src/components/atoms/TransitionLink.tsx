@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePageTransition } from "@/contexts/PageTransitionContext";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -18,24 +17,46 @@ export default function TransitionLink({
   className,
   onClick
 }: TransitionLinkProps): JSX.Element {
-  const { navigateWithTransition } = usePageTransition();
   const router = useRouter();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
+    const isModifiedClick =
+      e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0;
+
+    if (isModifiedClick) {
+      return;
+    }
 
     // Call any additional onClick handler
     if (onClick) {
       onClick();
     }
 
-    // Only trigger transition for internal links
-    if (href.startsWith('/') && href !== window.location.pathname) {
-      navigateWithTransition(href);
-    } else {
-      // For external links or same page, use regular navigation
-      router.push(href);
+    if (!href.startsWith('/')) {
+      return;
     }
+
+    if (href === window.location.pathname) {
+      e.preventDefault();
+      return;
+    }
+
+    e.preventDefault();
+
+    const navigate = () => {
+      router.push(href);
+    };
+
+    const doc = document as Document & {
+      startViewTransition?: (updateCallback: () => void) => void;
+    };
+
+    if (typeof doc.startViewTransition === "function") {
+      doc.startViewTransition(navigate);
+      return;
+    }
+
+    navigate();
   };
 
   return (

@@ -2,7 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "@/lib/motion-lite";
 import styles from "@/styles/components/organisms/Customers.module.scss";
 import { FRAMER_EASE, MOTION_DURATION } from "@/lib/motion";
 import { pgagiClientTestimonials } from "@/data/pgagiClientTestimonials";

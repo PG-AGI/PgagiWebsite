@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/styles/components/organisms/SolutionFitBreakdownSection.module.scss";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "@/lib/motion-lite";
 import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 const audienceItems = [

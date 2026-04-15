@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-lite';
 import styles from '@/styles/app/whatwethink/blogs.module.scss';
 import { generateSlug } from '@/services/generateSlugService';
 import { getSafeImageUrl } from '@/utils/imageUtils';
@@ -117,7 +117,7 @@ export default function BlogPage() {
   return (
     <div className={styles.main}>
       {/* Page Title */}
-      <div className={styles.pageTitle}>
+      <div className={`${styles.pageTitle} top-section-slide-in`}>
         <span className={styles.category}>{'// Insights'}</span>
         <h1>Discover our latest insights, case studies, and AI innovations</h1>
       </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "@/lib/motion-lite";
 import styles from "@/styles/components/organisms/SocialOrbitSection.module.scss";
 import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 

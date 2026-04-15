@@ -8,7 +8,7 @@ import {
   motion,
   useMotionValue,
   useSpring,
-} from "framer-motion";
+} from "@/lib/motion-lite";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { EXTERNAL_APIS } from "@/constants/externalLinks";

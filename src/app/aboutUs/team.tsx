@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion-lite";
 import Image from "next/image";
 import styles from "@/styles/app/aboutUs/team.module.scss";
 

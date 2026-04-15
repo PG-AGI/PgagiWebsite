@@ -6,7 +6,7 @@ import { remark } from "remark";
 import html from 'remark-html'
 import styles from "@/styles/app/whatwethink/[slug]/blog.module.scss";
 import { ClipLoader } from "react-spinners";
-import { motion } from "framer-motion"; // Import framer-motion
+import { motion } from "@/lib/motion-lite"; // Import framer-motion
 import { fetchBlogMarkdownBySlug } from "@/services/blogService";
 
 const BlogPage = () => {

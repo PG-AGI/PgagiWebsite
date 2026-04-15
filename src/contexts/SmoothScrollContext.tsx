@@ -1,14 +1,16 @@
 'use client'
-import React, { createContext, useContext, useEffect } from 'react';
-import type Lenis from 'lenis';
-import {
-  MOBILE_BREAKPOINT,
-  REDUCED_MOTION_QUERY,
-  SCROLL_REFRESH_DEBOUNCE_MS,
-} from '@/lib/motion';
+import React, { createContext, useContext } from 'react';
+
+type SmoothScrollInstance = {
+  scroll: number;
+  scrollTo: (target: number | string | HTMLElement, options?: { immediate?: boolean; duration?: number; easing?: (t: number) => number }) => void;
+  resize: () => void;
+  on: (event: 'scroll', callback: (...args: any[]) => void) => void;
+  off: (event: 'scroll', callback: (...args: any[]) => void) => void;
+};
 
 interface SmoothScrollContextType {
-  lenis: Lenis | null;
+  lenis: SmoothScrollInstance | null;
 }
 
 const SmoothScrollContext = createContext<SmoothScrollContextType>({ lenis: null });
@@ -26,124 +28,7 @@ interface SmoothScrollProviderProps {
 }
 
 export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ children }) => {
-  const [lenis, setLenis] = React.useState<Lenis | null>(null);
-  const [isPageLoaded, setIsPageLoaded] = React.useState(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    if (document.readyState === 'complete') {
-      setIsPageLoaded(true);
-      return;
-    }
-
-    const onLoad = () => setIsPageLoaded(true);
-    window.addEventListener('load', onLoad, { once: true });
-
-    return () => {
-      window.removeEventListener('load', onLoad);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isPageLoaded) return;
-
-    let isCancelled = false;
-    let teardown: (() => void) | null = null;
-
-    void (async () => {
-      // Dynamically import heavy animation libs — keeps them out of the critical bundle
-      const [{ default: gsap }, { ScrollTrigger }, { default: LenisClass }] = await Promise.all([
-        import('gsap'),
-        import('gsap/ScrollTrigger'),
-        import('lenis'),
-      ]);
-
-      if (isCancelled) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-      let refreshTimeout: number | null = null;
-      const viewport = window.visualViewport;
-
-      const scheduleRefresh = () => {
-        if (refreshTimeout) window.clearTimeout(refreshTimeout);
-        refreshTimeout = window.setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, SCROLL_REFRESH_DEBOUNCE_MS);
-      };
-
-      const handleVisibilityChange = () => {
-        if (document.visibilityState === 'visible') scheduleRefresh();
-      };
-
-      const handlePageShow = () => {
-        scheduleRefresh();
-      };
-
-      window.addEventListener('resize', scheduleRefresh);
-      window.addEventListener('orientationchange', scheduleRefresh);
-      window.addEventListener('pageshow', handlePageShow);
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-      viewport?.addEventListener('resize', scheduleRefresh);
-
-      const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
-      const prefersReduced = window.matchMedia(REDUCED_MOTION_QUERY).matches;
-
-      const baseCleanup = () => {
-        window.removeEventListener('resize', scheduleRefresh);
-        window.removeEventListener('orientationchange', scheduleRefresh);
-        window.removeEventListener('pageshow', handlePageShow);
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-        viewport?.removeEventListener('resize', scheduleRefresh);
-        if (refreshTimeout) window.clearTimeout(refreshTimeout);
-      };
-
-      if (prefersReduced || isMobile) {
-        ScrollTrigger.normalizeScroll(false);
-        scheduleRefresh();
-        teardown = baseCleanup;
-        return;
-      }
-
-      const lenisInstance = new LenisClass({
-        lerp: 0.12,
-        smoothWheel: true,
-        wheelMultiplier: 1.4,
-        touchMultiplier: 1.8,
-        autoRaf: false,
-        infinite: false,
-        syncTouch: false,
-        syncTouchLerp: 0.1,
-      });
-
-      setLenis(lenisInstance as Lenis);
-
-      // Wire Lenis scroll events to keep ScrollTrigger positions updated
-      lenisInstance.on('scroll', ScrollTrigger.update);
-
-      // GSAP ticker drives Lenis — one RAF loop, no conflicts
-      const update = (time: number) => {
-        lenisInstance.raf(time * 1000);
-      };
-
-      gsap.ticker.add(update);
-      gsap.ticker.lagSmoothing(0);
-      scheduleRefresh();
-
-      teardown = () => {
-        gsap.ticker.remove(update);
-        lenisInstance.off('scroll', ScrollTrigger.update);
-        lenisInstance.destroy();
-        setLenis(null);
-        baseCleanup();
-      };
-    })();
-
-    return () => {
-      isCancelled = true;
-      teardown?.();
-    };
-  }, [isPageLoaded]);
+  const lenis = null;
 
   return (
     <SmoothScrollContext.Provider value={{ lenis }}>

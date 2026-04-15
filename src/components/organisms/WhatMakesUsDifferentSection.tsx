@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Fragment } from "react";
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion-lite";
 import styles from "@/styles/components/organisms/WhatMakesUsDifferentSection.module.scss";
 import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 

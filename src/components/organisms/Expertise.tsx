@@ -208,7 +208,7 @@ export default function Expertise() {
     <section className={styles.expertiseSection}>
       <div className={styles.container}>
         {/* Header Section */}
-        <div className={styles.header}>
+        <div className={`${styles.header} top-section-slide-in`}>
           <span className={styles.subtitle}>{'Expertise'}</span>
           <h1 className={styles.mainTitle}>
             <span className={styles.titleLine1}>We partner with bold founders to build end-to-end AI products that truly matter to users.</span>

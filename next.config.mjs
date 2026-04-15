@@ -43,9 +43,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: [
       '@radix-ui/react-hover-card',
-      'framer-motion',
       'gsap',
-      'lenis',
     ],
   },
   headers: async () => [

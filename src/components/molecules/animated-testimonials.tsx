@@ -1,7 +1,7 @@
 "use client";
 
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "@/lib/motion-lite";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import styles from "@/styles/components/molecules/AnimatedTestimonials.module.scss";

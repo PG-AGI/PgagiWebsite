@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "@/lib/motion-lite";
 import { usePathname } from "next/navigation";
 import { usePageTransition } from "@/contexts/PageTransitionContext";
 import { useSmoothScroll } from "@/contexts/SmoothScrollContext";
