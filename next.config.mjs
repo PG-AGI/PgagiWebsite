@@ -41,6 +41,7 @@ const nextConfig = {
     includePaths: ['./src'],
   },
   experimental: {
+    optimizeCss: true,
     optimizePackageImports: [
       '@radix-ui/react-hover-card',
       'gsap',

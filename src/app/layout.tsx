@@ -49,9 +49,6 @@ export default function RootLayout({
           >
             <head>
               {/* Preconnect to critical third-party origins */}
-              <link rel="preconnect" href="https://fonts.googleapis.com" />
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-              <link rel="preconnect" href="https://datafa.st" />
               <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
               <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
@@ -101,12 +98,14 @@ export default function RootLayout({
                 }}
               />
               {/* DataFast Analytics */}
-              <Script
-                strategy="lazyOnload"
-                data-website-id="dfid_ScLgcSKCkChuKsrvgG1Pa"
-                data-domain="pgagi.in"
-                src="https://datafa.st/js/script.js"
-              />
+              {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_DATAFAST_ID && process.env.NEXT_PUBLIC_DATAFAST_DOMAIN && (
+                <Script
+                  strategy="lazyOnload"
+                  data-website-id={process.env.NEXT_PUBLIC_DATAFAST_ID}
+                  data-domain={process.env.NEXT_PUBLIC_DATAFAST_DOMAIN}
+                  src="https://datafa.st/js/script.js"
+                />
+              )}
             </head>
 
             <body>

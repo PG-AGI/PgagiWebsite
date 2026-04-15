@@ -43,7 +43,9 @@ export default function Partners() {
                         height={32}
                         className={styles.logoImage}
                         sizes="(max-width: 768px) 90px, 120px"
-                        loading="lazy"
+                        loading={i === 0 ? "eager" : "lazy"}
+                        fetchPriority={i === 0 ? "high" : "auto"}
+                        priority={i === 0}
                         decoding="async"
                     />
                 </div>

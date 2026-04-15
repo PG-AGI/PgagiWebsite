@@ -13,9 +13,6 @@ import { fetchAllAINews } from '@/services/ainewsService';
 import { fetchAllCaseStudies } from '@/services/caseStudyService';
 import ROUTES from '@/constants/routes';
 import { getErrorMessage } from '@/utils/errorUtils';
-
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Marquee from 'react-fast-marquee';
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import bgImage from "../../../public/background.webp";
+import bgImage from "../../../public/background-fast.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import partnerStyles from "@/styles/components/organisms/partners.module.scss";
 import Link from "next/link";
@@ -38,10 +38,11 @@ export default function Landing() {
           src={bgImage}
           alt=""
           fill
-          loading="eager"
+          priority
+          fetchPriority="high"
           placeholder="blur"
-          sizes="(max-width: 768px) 100vw, (max-width: 1440px) 100vw, 1440px"
-          quality={60}
+          sizes="100vw"
+          quality={56}
           className={styles.heroBgImage}
         />
       </div>

@@ -21,6 +21,7 @@
     "caniuse-lite": "^1.0.30001788",
     "clientjs": "^0.2.1",
     "clsx": "^2.1.1",
+    "critters": "^0.0.23",
     "firebase": "^11.0.1",
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
@@ -48,7 +49,6 @@
     "react-markdown": "^9.0.1",
     "react-modal": "^3.16.3",
     "react-quill": "^2.0.0",
-    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^7.0.1",
     "react-spinners": "^0.14.1",
     "react-toastify": "^10.0.5",
@@ -87,11 +87,11 @@
   },
   "browserslist": {
     "production": [
-      "chrome >= 93",
-      "firefox >= 92",
-      "safari >= 15.4",
-      "edge >= 93",
-      "opera >= 79",
+      "chrome >= 111",
+      "firefox >= 111",
+      "safari >= 16.4",
+      "edge >= 111",
+      "opera >= 97",
       "not dead"
     ],
     "development": [
