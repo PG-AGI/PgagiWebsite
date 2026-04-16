@@ -10,10 +10,13 @@
 }
 
 .progressBar {
-  width: var(--scroll-progress, 0%);
+  width: 100%;
   height: 100%;
   background: linear-gradient(90deg, #03b3c3, #6750a2, #d856bf);
-  transition: width 0.1s ease;
+  transform: scaleX(var(--scroll-progress-fraction, 0));
+  transform-origin: left;
+  transition: transform 0.1s ease;
+  will-change: transform;
   border-radius: 0 2px 2px 0;
   box-shadow: 0 0 10px rgba(3, 179, 195, 0.5);
 }

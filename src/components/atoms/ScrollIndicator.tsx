@@ -48,7 +48,7 @@ const ScrollIndicator: React.FC = () => {
   }, [lenis]);
 
   useEffect(() => {
-    progressRef.current?.style.setProperty("--scroll-progress", `${scrollProgress}%`);
+    progressRef.current?.style.setProperty("--scroll-progress-fraction", `${scrollProgress / 100}`);
   }, [scrollProgress]);
 
   return (

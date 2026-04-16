@@ -48,7 +48,8 @@ export default function RootLayout({
           >
             <head>
               {/* Preconnect to critical third-party origins */}
-              <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+              <link rel="preconnect" href="https://www.googletagmanager.com" />
+              <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
               <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
               <meta name="google" content="notranslate" />
