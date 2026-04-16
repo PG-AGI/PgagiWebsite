@@ -58,6 +58,15 @@
     --text-color-inverse: #ffffff;
   }
 
+  &.overFooter {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
+    --text-color: #333333;
+    --text-color-inverse: #333333;
+  }
+
   // &.nav-dark {
   //   background: rgba(0, 0, 0, 0.95);
   //   --text-color: #ffffff;

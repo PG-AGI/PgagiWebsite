@@ -23,6 +23,7 @@ export default function Navigation() {
   >(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showGlassEffect, setShowGlassEffect] = useState(false);
+  const [isOverFooter, setIsOverFooter] = useState(false);
 
   const BLOGS = ROUTES.WHAT_WE_THINK;
   const ABOUT = ROUTES.ABOUT_US;
@@ -42,16 +43,27 @@ export default function Navigation() {
     };
   }, []);
 
-  // Handle scroll to detect when past hero section
   useEffect(() => {
-    const handleScroll = () => {
+    const check = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      setShowGlassEffect(scrollTop > 10); // glass effect after 10px scroll
+      setShowGlassEffect(scrollTop > 10);
+      const scrollBottom = scrollTop + window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      setIsOverFooter(scrollBottom > docHeight - window.innerHeight * 1.3);
     };
 
-    handleScroll(); // Apply correct state on load
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+
+    // Poll after mount to catch: scroll restoration + lazy sections expanding docHeight
+    const timers = [100, 300, 600, 1000, 1500, 2000].map(ms =>
+      setTimeout(check, ms)
+    );
+
+    return () => {
+      window.removeEventListener("scroll", check);
+      timers.forEach(clearTimeout);
+    };
   }, []);
 
   const handleContactUs = () => {
@@ -98,12 +110,23 @@ export default function Navigation() {
     return null;
   }
 
+  const overFooterStyle = isOverFooter ? {
+    background: '#ffffff',
+    backdropFilter: 'none',
+    WebkitBackdropFilter: 'none',
+    boxShadow: '0 2px 20px rgba(0,0,0,0.1)',
+  } : undefined;
+
   return (
-    <nav className={clsx(
-      styles.navigation,
-      isScrolled && styles.scrolled,
-      showGlassEffect && styles.glassEffect
-    )}>
+    <nav
+      className={clsx(
+        styles.navigation,
+        isScrolled && styles.scrolled,
+        showGlassEffect && styles.glassEffect,
+        isOverFooter && styles.overFooter
+      )}
+      style={overFooterStyle}
+    >
       <div
         className={clsx(
           styles.nav,

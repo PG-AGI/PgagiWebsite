@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  swcMinify: true,
   images: {
     formats: ['image/avif', 'image/webp'],
     // Match real viewport breakpoints so Next.js picks the right srcset candidate

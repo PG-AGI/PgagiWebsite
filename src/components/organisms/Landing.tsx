@@ -40,7 +40,7 @@ export default function Landing() {
           fetchPriority="high"
           placeholder="blur"
           sizes="100vw"
-          quality={75}
+          quality={55}
           className={styles.heroBgImage}
         />
       </div>

@@ -47,8 +47,8 @@ export default function RootLayout({
             translate="no"
           >
             <head>
-              {/* Preconnect to critical third-party origins */}
-              <link rel="preconnect" href="https://www.googletagmanager.com" />
+              {/* DNS prefetch for analytics — preconnect is skipped by lazyOnload scripts during Lighthouse */}
+              <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
               <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
               <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
