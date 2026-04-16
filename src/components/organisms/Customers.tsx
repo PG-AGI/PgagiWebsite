@@ -43,7 +43,7 @@ const getEmbedUrl = (urlOrId: string) =>
 const getThumbnailUrl = (urlOrId: string) =>
   `https://img.youtube.com/vi/${extractYouTubeId(urlOrId)}/hqdefault.jpg`;
 
-/** Deterministic illustrated avatars with simple gender-based style selection */
+/** Deterministic illustrated avatars with simple gender-based style selection (used in rating badge) */
 const testimonialAvatarUrl = (
   seed: string,
   gender: AvatarGender = "neutral",
@@ -53,6 +53,11 @@ const testimonialAvatarUrl = (
     gender === "female" ? "lorelei" : gender === "male" ? "adventurer" : "bottts";
   return `https://api.dicebear.com/9.x/${style}/png?seed=${encodeURIComponent(seed)}&size=${size}`;
 };
+
+const platformLogos = {
+  upwork: { src: "/landing/upwork-icon.webp", name: "Upwork" },
+  clutch: { src: "/landing/clutch.png", name: "Clutch" },
+} as const;
 
 /* ─── Video facade ────────────────────────────────────────────────── */
 const VideoFacade = ({
@@ -127,6 +132,7 @@ const testimonials = pgagiClientTestimonials.map((t, i) => ({
   role: t.projectName.trim(),
   quote: t.quote.trim(),
   gender: t.gender ?? "neutral",
+  platform: t.platform ?? ("upwork" as "upwork" | "clutch"),
 }));
 
 /* ─── Grid items: videos at positions 0 & 4 ──────────────────────── */
@@ -239,26 +245,29 @@ const TestimonialCard = ({
   testimonial,
 }: {
   testimonial: (typeof testimonials)[number];
-}) => (
-  <div className={styles.card}>
-    <div className={styles.cardHeader}>
-      <span className={styles.avatar}>
-        <Image
-            src={testimonialAvatarUrl(testimonial.name, testimonial.gender, 128)}
-          alt=""
-          fill
-          sizes="(max-width: 768px) 28px, 44px"
-          className={styles.avatarImage}
-        />
-      </span>
-      <div className={styles.nameBlock}>
-        <p className={styles.name}>{testimonial.name}</p>
-        <p className={styles.role}>{testimonial.role}</p>
+}) => {
+  const logo = platformLogos[testimonial.platform];
+  return (
+    <div className={styles.card}>
+      <div className={styles.cardHeader}>
+        <span className={styles.avatar}>
+          <Image
+            src={logo.src}
+            alt={logo.name}
+            fill
+            sizes="(max-width: 768px) 28px, 44px"
+            className={styles.avatarImage}
+          />
+        </span>
+        <div className={styles.nameBlock}>
+          <p className={styles.name}>{testimonial.name}</p>
+          <p className={styles.role}>{testimonial.role}</p>
+        </div>
       </div>
+      <p className={styles.quote}>&ldquo;{testimonial.quote}&rdquo;</p>
     </div>
-    <p className={styles.quote}>&ldquo;{testimonial.quote}&rdquo;</p>
-  </div>
-);
+  );
+};
 
 /* ─── Main component ──────────────────────────────────────────────── */
 const Customers = () => {

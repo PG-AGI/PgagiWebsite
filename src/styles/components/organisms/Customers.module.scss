@@ -243,18 +243,21 @@
   min-height: 44px;
   max-width: 44px;
   max-height: 44px;
-  border-radius: 50%;
+  border-radius: 10px;
   flex-shrink: 0;
   display: block;
   overflow: hidden;
   user-select: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
-  background: #e8e4e0;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .avatarImage {
-  object-fit: cover;
-  object-position: center top;
+  object-fit: contain;
+  object-position: center;
+  inset: 4px !important;
+  width: calc(100% - 8px) !important;
+  height: calc(100% - 8px) !important;
 }
 
 .name {
@@ -391,17 +394,11 @@
   }
 }
 
-/* Video keeps 16:9 — row height comes from quote cards, video does not stretch */
+/* Video cell stretches to match the row height set by adjacent quote cards */
 .videoCell {
-  align-self: start;
-
   .facadeWrap {
     width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    min-height: 200px;
-    max-height: min(360px, 50vh);
-    border-radius: 20px;
+    height: 100%;
   }
 
   .videoIframe {
@@ -559,6 +556,7 @@
     max-width: 28px;
     max-height: 28px;
     flex-shrink: 0;
+    border-radius: 7px;
   }
 
   .marqueeTrack .name {
