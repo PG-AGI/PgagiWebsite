@@ -44,18 +44,29 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
+    let prevGlass = false;
+    let prevFooter = false;
+
     const check = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      setShowGlassEffect(scrollTop > 10);
-      const scrollBottom = scrollTop + window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
-      setIsOverFooter(scrollBottom > docHeight - window.innerHeight * 1.3);
+      const newGlass = scrollTop > 10;
+      const newFooter =
+        scrollTop + window.innerHeight >
+        document.documentElement.scrollHeight - window.innerHeight * 1.3;
+
+      if (newGlass !== prevGlass) {
+        prevGlass = newGlass;
+        setShowGlassEffect(newGlass);
+      }
+      if (newFooter !== prevFooter) {
+        prevFooter = newFooter;
+        setIsOverFooter(newFooter);
+      }
     };
 
     check();
     window.addEventListener("scroll", check, { passive: true });
 
-    // Poll after mount to catch: scroll restoration + lazy sections expanding docHeight
     const timers = [100, 300, 600, 1000, 1500, 2000].map(ms =>
       setTimeout(check, ms)
     );
