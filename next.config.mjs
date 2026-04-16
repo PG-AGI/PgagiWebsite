@@ -2,6 +2,9 @@
 const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Match real viewport breakpoints so Next.js picks the right srcset candidate
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       {
         protocol: 'https',
@@ -42,49 +45,46 @@ const nextConfig = {
   },
   experimental: {
     optimizeCss: true,
+    // gsap removed — it's dynamically imported in useEffect, so static tree-shaking has no effect
     optimizePackageImports: [
       '@radix-ui/react-hover-card',
-      'gsap',
     ],
   },
   headers: async () => [
+    // Security headers — all routes
     {
       source: '/:path*',
       headers: [
-        {
-          key: 'X-Frame-Options',
-          value: 'SAMEORIGIN',
-        },
-        {
-          key: 'X-Content-Type-Options',
-          value: 'nosniff',
-        },
-        {
-          key: 'X-XSS-Protection',
-          value: '1; mode=block',
-        },
-        {
-          key: 'Referrer-Policy',
-          value: 'strict-origin-when-cross-origin',
-        },
-        {
-          key: 'Permissions-Policy',
-          value: 'geolocation=(), microphone=(), camera=()',
-        },
+        { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'X-XSS-Protection', value: '1; mode=block' },
+        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        { key: 'Permissions-Policy', value: 'geolocation=(), microphone=(), camera=()' },
       ],
     },
+    // HSTS — production only
     {
       source: '/:path*',
       headers: [
-        {
-          key: 'Strict-Transport-Security',
-          value: 'max-age=31536000; includeSubDomains; preload',
-        },
+        { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
       ],
       missing: [{ type: 'host', value: 'localhost' }],
+    },
+    // Immutable cache for Next.js static chunks (_next/static) — 1 year
+    {
+      source: '/_next/static/:path*',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+      ],
+    },
+    // Long-lived cache for public assets (images, fonts, etc.) — 30 days
+    {
+      source: '/:path*.:ext(png|jpg|jpeg|webp|avif|svg|woff|woff2|ico)',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' },
+      ],
     },
   ],
 };
 
 export default nextConfig;
-  

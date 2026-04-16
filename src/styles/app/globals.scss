@@ -12,9 +12,10 @@ html {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
-	/* ❌ REMOVED: transform:translateZ(0) on html — creates one giant GPU compositor
-	   layer for the entire document, making every scroll tick composite the full page.
-	   Lenis + GSAP ticker handle smooth scroll without this. */
+	/* Native scroll — no JS interception. Browser compositor owns the scroll thread. */
+	scroll-behavior: auto;
+	/* Prevent elastic overscroll paint cost on Chrome/Android */
+	overscroll-behavior: none;
 }
 
 html,
@@ -25,12 +26,16 @@ body {
 	margin: 0;
 
 	background-color: rgba(197, 183, 172, 1);
-	/* NOTE: Do NOT add scroll-behavior:smooth — Lenis handles smooth scrolling */
 
 	font-family: var(--font-plus-jakarta), var(--font-poppins), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 	color: black;
 	box-sizing: border-box;
 	overflow-wrap: normal;
+
+	/* Allow browser to hand vertical scroll to compositor thread immediately */
+	touch-action: pan-y;
+	/* Prevent elastic overscroll */
+	overscroll-behavior-y: none;
 
 	* {
 		box-sizing: border-box;
@@ -59,8 +64,10 @@ body {
 }
 
 /* ─── Global animation performance hints ──────────────────────────── */
-[data-gsap-reveal],
-[data-will-animate] {
+/* will-change only while animation is actively pending — NOT broad-brushed.
+   Broad will-change on many elements creates too many compositor layers and
+   starves GPU memory, making scroll WORSE on low-end devices. */
+[data-gsap-animating] {
 	will-change: transform, opacity;
 }
 

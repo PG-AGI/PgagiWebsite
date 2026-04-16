@@ -97,7 +97,6 @@ const BuildCard = ({ card, className, motionDelay = 0 }: BuildCardProps) => {
         width={card.width}
         height={card.height}
         className={styles.cardImage}
-        unoptimized
       />
     </motion.article>
   );

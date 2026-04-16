@@ -9,6 +9,21 @@ interface LazySectionProps {
   rootMargin?: string;
 }
 
+// Module-level debounce: all 13 LazySection instances share one refresh call.
+// Without this, every section mount fires its own ScrollTrigger.refresh(true),
+// stacking 13 expensive layout recalculations as the user scrolls down.
+let refreshTimer: ReturnType<typeof setTimeout> | null = null;
+
+function scheduleScrollTriggerRefresh() {
+  if (refreshTimer) clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(() => {
+    refreshTimer = null;
+    void import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+      ScrollTrigger.refresh(true);
+    });
+  }, 150);
+}
+
 /**
  * Defers rendering (and thus chunk-loading) of below-fold sections until they
  * approach the viewport. Prevents GSAP and other heavy deps from loading upfront
@@ -26,7 +41,6 @@ export default function LazySection({
     const el = ref.current;
     if (!el) return;
 
-    // If already in view on mount (e.g. user refreshed mid-page), render immediately
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -41,17 +55,26 @@ export default function LazySection({
     return () => obs.disconnect();
   }, [rootMargin]);
 
-  // After content renders, signal layout change so ScrollTrigger recalculates positions
+  // Single debounced refresh shared across all instances — fires once, 150ms
+  // after the last section mounts, not once per section.
   useEffect(() => {
-    if (shouldRender) {
-      requestAnimationFrame(() => {
-        window.dispatchEvent(new Event('resize'));
-      });
-    }
+    if (!shouldRender) return;
+    scheduleScrollTriggerRefresh();
   }, [shouldRender]);
 
   return (
-    <div ref={ref} style={!shouldRender ? { minHeight } : undefined}>
+    <div
+      ref={ref}
+      style={
+        !shouldRender
+          ? { minHeight }
+          : {
+              // Skip paint/layout for off-screen sections entirely
+              contentVisibility: 'auto' as React.CSSProperties['contentVisibility'],
+              containIntrinsicSize: `0 ${minHeight}`,
+            }
+      }
+    >
       {shouldRender ? children : null}
     </div>
   );

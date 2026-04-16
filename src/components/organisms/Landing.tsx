@@ -40,8 +40,7 @@ export default function Landing() {
           fetchPriority="high"
           placeholder="blur"
           sizes="100vw"
-          quality={56}
-          unoptimized
+          quality={75}
           className={styles.heroBgImage}
         />
       </div>
@@ -73,7 +72,6 @@ export default function Landing() {
                       width={platform.width}
                       height={platform.height}
                       className={styles.heroTrustLogo}
-                      unoptimized
                     />
                   </span>
                   <span className={styles.heroTrustName}>{platform.name}</span>

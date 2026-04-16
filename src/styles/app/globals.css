@@ -12,17 +12,18 @@
 
 /* ── HTML / Body ────────────────────────────────────── */
 html {
+  /* Momentum scrolling on iOS — hands scroll to GPU compositor */
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* ❌ REMOVED: perspective: 1000px — forced 3D stacking context on entire page,
-     compositing every element as a GPU layer. Was the #1 performance killer. */
-  /* ❌ REMOVED: transform: translateZ(0) on body — same issue */
-  /* ❌ REMOVED: backface-visibility: hidden on body — same issue */
   background: rgba(197, 183, 172, 1);
+  /* Pan-y: browser compositor handles vertical scroll natively at full refresh rate */
+  touch-action: pan-y;
+  overscroll-behavior-y: none;
 }
 
 /* ── Horizontal overflow prevention ─────────────────── */
