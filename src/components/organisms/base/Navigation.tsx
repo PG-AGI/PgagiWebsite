@@ -43,38 +43,41 @@ export default function Navigation() {
     };
   }, []);
 
+  // Glass effect: driven by scroll position
   useEffect(() => {
-    let prevGlass = false;
-    let prevFooter = false;
-
     const check = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const newGlass = scrollTop > 10;
-      const newFooter =
-        scrollTop + window.innerHeight >
-        document.documentElement.scrollHeight - window.innerHeight * 1.3;
-
-      if (newGlass !== prevGlass) {
-        prevGlass = newGlass;
-        setShowGlassEffect(newGlass);
-      }
-      if (newFooter !== prevFooter) {
-        prevFooter = newFooter;
-        setIsOverFooter(newFooter);
-      }
+      const scrolled = (window.pageYOffset || document.documentElement.scrollTop) > 10;
+      setShowGlassEffect(scrolled);
     };
-
     check();
     window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, []);
 
-    const timers = [100, 300, 600, 1000, 1500, 2000].map(ms =>
-      setTimeout(check, ms)
-    );
+  // Hide nav when footer covers ≥60% of the viewport.
+  // rAF loop guarantees detection on every frame — no dependency on scroll events,
+  // browser restoration timing, or custom scroll containers.
+  useEffect(() => {
+    let rafId: number;
+    let prev = false;
 
-    return () => {
-      window.removeEventListener("scroll", check);
-      timers.forEach(clearTimeout);
+    const loop = () => {
+      const footer = document.querySelector("footer");
+      if (footer) {
+        const rect = footer.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const visiblePx = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+        const next = visiblePx / vh >= 0.6;
+        if (next !== prev) {
+          prev = next;
+          setIsOverFooter(next);
+        }
+      }
+      rafId = requestAnimationFrame(loop);
     };
+
+    rafId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(rafId);
   }, []);
 
   const handleContactUs = () => {
@@ -121,13 +124,6 @@ export default function Navigation() {
     return null;
   }
 
-  const overFooterStyle = isOverFooter ? {
-    background: '#ffffff',
-    backdropFilter: 'none',
-    WebkitBackdropFilter: 'none',
-    boxShadow: '0 2px 20px rgba(0,0,0,0.1)',
-  } : undefined;
-
   return (
     <nav
       className={clsx(
@@ -136,7 +132,6 @@ export default function Navigation() {
         showGlassEffect && styles.glassEffect,
         isOverFooter && styles.overFooter
       )}
-      style={overFooterStyle}
     >
       <div
         className={clsx(
