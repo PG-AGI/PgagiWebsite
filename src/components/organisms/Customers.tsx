@@ -264,6 +264,9 @@ const TestimonialCard = ({
           <p className={styles.role}>{testimonial.role}</p>
         </div>
       </div>
+      <div className={styles.starRating} aria-label="5 out of 5 stars">
+        {"★★★★★"}
+      </div>
       <p className={styles.quote}>&ldquo;{testimonial.quote}&rdquo;</p>
     </div>
   );
