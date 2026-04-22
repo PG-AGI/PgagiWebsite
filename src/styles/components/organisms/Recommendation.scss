@@ -19,62 +19,52 @@
 
 .recommendation-card {
     box-sizing: border-box;
-    border:0.5px solid lightgray;
+    border: 0.5px solid lightgray;
     margin: 1rem;
-    box-sizing: border-box;
-    display: block;
+    display: flex;
+    flex-direction: column;
     background: #fff;
-    border-radius: 0;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease;
-    height: 60%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
     width: 90%;
-    aspect-ratio: 3/4;
-    position: relative;
 
     &:hover {
         transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
     }
 }
 
 .recommendation-image {
     position: relative;
-    align-content: center !important;
-    justify-content: center;
     width: 100%;
-    // height: 280px;
-    height: 70%;
+    aspect-ratio: 16 / 10;
     background-color: #f5f5f5;
-    // margin:10px auto;
-    margin-bottom: none;
+    overflow: hidden;
+    flex-shrink: 0;
 
     img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        object-fit: cover !important;
+        object-position: top center !important;
         transition: transform 0.3s ease;
     }
 
     &:hover img {
-        transform: scale(1.05);
+        transform: scale(1.04);
     }
 
     &::after {
         content: 'Read More';
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3);
+        inset: 0;
+        background: rgba(0, 0, 0, 0.28);
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 500;
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -86,17 +76,18 @@
 }
 
 .recommendation-content {
-    padding: 1.2rem;
-    height: calc(100% - 280px);
+    padding: 1rem 1.2rem 1.2rem;
+    flex: 1;
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
+    min-height: 4.5rem;
 
     h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
-        color: #333;
+        color: #222;
         margin: 0;
-        line-height: 1.4;
+        line-height: 1.45;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         line-clamp: 2;
@@ -104,6 +95,17 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+}
+
+// Make all visible slides stretch to the same height as the tallest
+.swiper-slide {
+  height: auto;
+  display: flex;
+  align-items: stretch;
+
+  .recommendation-card {
+    flex: 1;
+  }
 }
 
 // Swiper custom styles
@@ -163,7 +165,6 @@
   .recommendations {
     padding: 1rem 0;
 
-    
     h2 {
       font-size: 1.8rem;
       margin-bottom: 0.5rem;
@@ -171,22 +172,15 @@
   }
 
   .recommendation-card {
-    width: 80%;
+    width: 88%;
     margin: 0.5rem;
-    height: auto;
-    aspect-ratio: 1/1.2;
-  }
-
-  .recommendation-image {
-    height: 60%;
   }
 
   .recommendation-content {
-    padding: 0.8rem;
-    
+    padding: 0.75rem 1rem 1rem;
+
     h3 {
       font-size: 0.9rem;
-      -webkit-line-clamp: 2;
     }
   }
 }
@@ -195,28 +189,19 @@
 @media (min-width: 481px) and (max-width: 768px) {
   .recommendations {
     padding: 1.5rem 0;
-    
+
     h2 {
       font-size: 2.2rem;
     }
   }
 
   .recommendation-card {
-    width: 85%;
+    width: 88%;
     margin: 0.8rem;
-    aspect-ratio: 3/4;
-  }
-
-  .recommendation-image {
-    height: 65%;
   }
 
   .recommendation-content {
-    padding: 1rem;
-    
-    h3 {
-      font-size: 1rem;
-    }
+    padding: 0.85rem 1.1rem 1.1rem;
   }
 }
 
@@ -224,19 +209,15 @@
 @media (min-width: 769px) and (max-width: 1024px) {
   .recommendations {
     padding: 2rem 0;
-    
+
     h2 {
       font-size: 2.5rem;
     }
   }
 
   .recommendation-card {
-    width: 80%;
+    width: 85%;
     margin: 1rem;
-  }
-
-  .recommendation-content {
-    padding: 1.1rem;
   }
 }
 
@@ -244,7 +225,7 @@
 @media (min-width: 1025px) {
   .recommendations {
     padding: 2.5rem 0;
-    
+
     h2 {
       font-size: 3rem;
     }
