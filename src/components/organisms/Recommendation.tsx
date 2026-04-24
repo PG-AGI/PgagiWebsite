@@ -58,7 +58,6 @@ export default function Recommendation({ currentSlug = '', contentType }: Recomm
         const filteredContent = allContent
           .filter((content: RecommendedContent) => content.slug !== currentSlug)
           .sort(() => Math.random() - 0.5)
-          .slice(0, 6)
         setRecommendedContent(filteredContent)
       } catch (err) {
         console.error(`Error fetching ${contentType} recommendations:`, err)

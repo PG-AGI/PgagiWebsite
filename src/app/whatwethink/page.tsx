@@ -18,6 +18,7 @@ import Marquee from 'react-fast-marquee';
 
 type CaseStudy = {
   id: string;
+  slug: string;
   title: string;
   coverImage: string;
 };
@@ -143,9 +144,9 @@ export default function BlogPage() {
               .slice(0)
               .reverse()
               .slice(0, visibleCount)
-              .map((cs, index) => (
-                <div key={generateSlug(cs.title)} className={styles.card}>
-                  <Link href={`${ROUTES.CASE_STUDY_SLUG(generateSlug(cs.title))}`}>
+              .map((cs) => (
+                <div key={cs.slug} className={styles.card}>
+                  <Link href={`${ROUTES.CASE_STUDY_SLUG(cs.slug)}`}>
                     <div className={styles.cardContent}>
                       <div className={styles.cardText}>
                         <h3>{cs.title}</h3>

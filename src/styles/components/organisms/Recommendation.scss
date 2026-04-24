@@ -110,27 +110,21 @@
 
 // Swiper custom styles
 .swiper {
-  padding: 1rem;
+  padding: 1rem 1rem 3rem 1rem;
   margin: 0 -1rem;
   
   .swiper-button-next,
   .swiper-button-prev {
-    // color: #333;
-    // background-color: rgba(255, 255, 255, 0.9);
-    // padding: 2rem;
-    // border-radius: 50%;
-    // width: 40px;
-    // height: 40px;
     background: rgba(5, 12, 175, 0.8);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s ease, transform 0.3s ease;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, transform 0.3s ease;
     
     &:after {
       font-size: 1.2rem;
@@ -144,7 +138,7 @@
   }
 
   .swiper-pagination {
-    bottom: -5px;
+    bottom: 10px;
   }
 
   .swiper-pagination-bullet {

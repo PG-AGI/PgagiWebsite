@@ -6,7 +6,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from '@/lib/motion-lite';
 import styles from '@/styles/components/organisms/projects.module.scss';
-import { generateSlug } from '@/services/generateSlugService';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 import { trendingListOld } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
@@ -17,6 +16,7 @@ import EXTERNAL_LINKS from '@/constants/externalLinks';
 
 type CaseStudy = {
   id: string;
+  slug: string;
   title: string;
   coverImage: string;
   description?: string;
@@ -248,8 +248,8 @@ export default function Projects() {
           }}
         >
           {memoizedCaseStudies.map((caseStudy, index) => (
-            <div key={`${caseStudy.id}-${index}`} className={styles.caseStudyCard}>
-              <Link href={ROUTES.CASE_STUDY_SLUG(generateSlug(caseStudy.title))}>
+            <div key={`${caseStudy.slug}-${index}`} className={styles.caseStudyCard}>
+              <Link href={ROUTES.CASE_STUDY_SLUG(caseStudy.slug)}>
                 <div className={styles.caseStudyCardContent}>
                   <div className={styles.caseStudyCardImage}>
                     <Image

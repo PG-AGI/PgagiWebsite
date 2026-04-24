@@ -2,7 +2,7 @@ import API_ENDPOINTS from '@/constants/apiEndpoints';
 import type { ContentDetails, ContentSummary, FormValues } from '@/utils/type';
 
 export async function fetchAllCaseStudies(): Promise<ContentSummary[]> {
-  const res = await fetch(API_ENDPOINTS.CASE_STUDIES);
+  const res = await fetch(API_ENDPOINTS.CASE_STUDIES, { cache: 'no-store' });
   if (!res.ok) throw new Error('Failed to fetch case studies');
   return res.json() as Promise<ContentSummary[]>;
 }

@@ -4,8 +4,13 @@ import {NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import clientPromise from '@/utils/mongodb'; 
 import { ObjectId } from 'mongodb';
+import { generateSlug } from '@/services/generateSlugService';
 
 export const revalidate = 3600; // Revalidate every hour
+
+function normalizeSlug(value: string): string {
+  return generateSlug(decodeURIComponent(value ?? '').trim());
+}
 
 interface ContentBlock {
   type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
@@ -51,8 +56,33 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
     const client = await clientPromise;
     const db = client.db(); 
     const collection = db.collection('caseStudies');
+    const requestedSlug = normalizeSlug(slug);
+    const decodedSlug = decodeURIComponent(slug);
+    let caseStudy = await collection.findOne({ slug: slug });
 
-    const caseStudy = await collection.findOne({slug: slug});
+    if (!caseStudy && decodedSlug !== slug) {
+      caseStudy = await collection.findOne({ slug: decodedSlug });
+    }
+
+    if (!caseStudy && requestedSlug !== slug) {
+      caseStudy = await collection.findOne({ slug: requestedSlug });
+    }
+
+    if (!caseStudy) {
+      const allCaseStudies = await collection
+        .find({}, { projection: { slug: 1, title: 1 } })
+        .toArray();
+
+      const matchedCaseStudy = allCaseStudies.find((item) => {
+        const storedSlug = normalizeSlug(String(item.slug ?? ''));
+        const titleBasedSlug = generateSlug(String(item.title ?? ''));
+        return storedSlug === requestedSlug || titleBasedSlug === requestedSlug;
+      });
+
+      if (matchedCaseStudy?._id) {
+        caseStudy = await collection.findOne({ _id: matchedCaseStudy._id });
+      }
+    }
 
     if (!caseStudy) {
       return NextResponse.json(

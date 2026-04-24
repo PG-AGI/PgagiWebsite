@@ -1,0 +1,122 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]:
+      - link "PGAGI Logo PG-AGI" [ref=e4]:
+        - /url: /
+        - img "PGAGI Logo" [ref=e5]
+        - paragraph [ref=e6]: PG-AGI
+      - generic [ref=e7]:
+        - link "Home" [ref=e8]:
+          - /url: /
+        - link "About Us" [ref=e9]:
+          - /url: /aboutUs
+        - generic [ref=e10]: Solutions
+        - link "Expertise" [ref=e11]:
+          - /url: /expertise
+        - link "Case Studies" [ref=e12]:
+          - /url: /projects
+        - link "Blogs" [ref=e13]:
+          - /url: /whatwethink
+        - link "Careers" [ref=e14]:
+          - /url: /Career
+        - button "Get in touch" [ref=e15]:
+          - text: Get in touch
+          - img [ref=e16]
+  - main [ref=e18]:
+    - main [ref=e23]:
+      - heading [level=1] [ref=e27]
+      - generic [ref=e28]:
+        - complementary [ref=e29]:
+          - navigation [ref=e30]:
+            - heading [level=3]
+            - list [ref=e31]:
+              - listitem [ref=e32]:
+                - button [ref=e33]
+              - listitem [ref=e34]:
+                - button [ref=e35]
+              - listitem [ref=e36]:
+                - button [ref=e37]
+              - listitem [ref=e38]:
+                - button [ref=e39]
+              - listitem [ref=e40]:
+                - button [ref=e41]
+            - generic:
+              - heading [level=3]
+        - article [ref=e42]:
+          - generic [ref=e43]:
+            - heading [level=2]
+            - paragraph
+            - paragraph
+            - paragraph
+          - generic [ref=e44]:
+            - heading [level=2]
+            - paragraph
+            - paragraph
+            - paragraph
+          - generic [ref=e45]:
+            - heading [level=2]
+            - paragraph
+            - paragraph
+            - paragraph
+  - contentinfo [ref=e46]:
+    - generic [ref=e47]:
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - list [ref=e52]:
+            - listitem [ref=e53]:
+              - link "About Us" [ref=e54] [cursor=pointer]:
+                - /url: /aboutUs
+          - generic [ref=e55]:
+            - link "X" [ref=e56] [cursor=pointer]:
+              - /url: https://x.com/PlayingGodAGI
+              - img [ref=e57]
+            - link "LinkedIn" [ref=e59] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/pg-agi/posts/?feedView=all
+              - img [ref=e60]
+            - link "Instagram" [ref=e62] [cursor=pointer]:
+              - /url: https://www.instagram.com/pg_agi_/
+              - img [ref=e63]
+            - link "YouTube" [ref=e65] [cursor=pointer]:
+              - /url: https://www.youtube.com/@PG-AGI/videos
+              - img [ref=e66]
+          - img "Government registration logo" [ref=e69]
+        - generic [ref=e70]:
+          - paragraph [ref=e71]: Services
+          - list [ref=e72]:
+            - listitem [ref=e73]:
+              - link "AI Research" [ref=e74] [cursor=pointer]:
+                - /url: /expertise#section-1
+            - listitem [ref=e75]:
+              - link "AI Architecture" [ref=e76] [cursor=pointer]:
+                - /url: /expertise#section-2
+            - listitem [ref=e77]:
+              - link "AI Mobile App Development" [ref=e78] [cursor=pointer]:
+                - /url: /expertise#section-3
+            - listitem [ref=e79]:
+              - link "AI SaaS Development" [ref=e80] [cursor=pointer]:
+                - /url: /expertise#section-4
+        - generic [ref=e81]:
+          - paragraph [ref=e82]: Resources
+          - list [ref=e83]:
+            - listitem [ref=e84]:
+              - link "Blog" [ref=e85] [cursor=pointer]:
+                - /url: /whatwethink#blogs
+            - listitem [ref=e86]:
+              - link "News" [ref=e87] [cursor=pointer]:
+                - /url: /whatwethink#ainews
+            - listitem [ref=e88]:
+              - link "Case studies" [ref=e89] [cursor=pointer]:
+                - /url: /whatwethink#case-studies
+        - paragraph [ref=e91]: Address:Tech37, Plot No.2-A Electronic City 2nd Phase. SY-No. 37 Part Konappana Agrahara Village Begur Hobli, Bengaluru
+      - generic:
+        - generic:
+          - text: Playing God
+          - text: with AGI
+      - generic [ref=e93]:
+        - paragraph [ref=e95]: ©2025 All Rights Reserved by PG-AGI
+        - generic [ref=e96]:
+          - link "Terms of Service" [ref=e97] [cursor=pointer]:
+            - /url: "#terms"
+          - link "Privacy Policy" [ref=e98] [cursor=pointer]:
+            - /url: "#privacy"
+  - alert [ref=e99]

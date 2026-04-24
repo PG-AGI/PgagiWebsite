@@ -1,0 +1,46 @@
+- dialog "Unhandled Runtime Error" [ref=e122]:
+  - generic [ref=e123]:
+    - generic [ref=e124]:
+      - generic [ref=e125]:
+        - navigation [ref=e126]:
+          - button "previous" [disabled] [ref=e127]:
+            - img "previous" [ref=e128]
+          - button "next" [disabled] [ref=e130]:
+            - img "next" [ref=e131]
+          - generic [ref=e133]: 1 of 1 error
+          - generic [ref=e134]:
+            - text: Next.js (14.2.3) is outdated
+            - link "(learn more)" [ref=e136] [cursor=pointer]:
+              - /url: https://nextjs.org/docs/messages/version-staleness
+        - button "Close" [ref=e137] [cursor=pointer]:
+          - img [ref=e139]
+      - heading "Unhandled Runtime Error" [level=1] [ref=e142]
+      - paragraph [ref=e143]:
+        - text: "Error: Invalid src prop (https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&h=750&fit=crop) on `next/image`, hostname \"images.unsplash.com\" is not configured under images in your `next.config.js` See more info:"
+        - link "https://nextjs.org/docs/messages/next-image-unconfigured-host" [ref=e144] [cursor=pointer]:
+          - /url: https://nextjs.org/docs/messages/next-image-unconfigured-host
+    - generic [ref=e145]:
+      - heading "Call Stack" [level=2] [ref=e146]
+      - generic [ref=e147]:
+        - heading "defaultLoader" [level=3] [ref=e148]
+        - generic [ref=e150]: webpack:/src/shared/lib/image-loader.ts
+      - generic [ref=e151]:
+        - heading "loader" [level=3] [ref=e152]
+        - generic [ref=e154]: webpack:/src/shared/lib/get-img-props.ts
+      - generic [ref=e155]:
+        - heading "Array.map" [level=3] [ref=e156]
+        - generic [ref=e158]: <anonymous>
+      - generic [ref=e159]:
+        - heading "map" [level=3] [ref=e160]
+        - generic [ref=e162]: webpack:/src/shared/lib/get-img-props.ts
+      - generic [ref=e163]:
+        - heading "generateImgAttrs" [level=3] [ref=e164]
+        - generic [ref=e166]: webpack:/src/shared/lib/get-img-props.ts
+      - generic [ref=e167]:
+        - heading "props" [level=3] [ref=e168]
+        - generic [ref=e170]: webpack:/src/client/image-component.tsx
+      - group [ref=e171]:
+        - generic "React" [ref=e172] [cursor=pointer]:
+          - img [ref=e173]
+          - img [ref=e175]
+          - text: React

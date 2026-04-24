@@ -19,11 +19,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'api.microlink.io',
       },
-      {
-        protocol: 'https',
-        hostname: 'via.placeholder.com',
-      },
-      {
+{
         protocol: 'https',
         hostname: 'drive.google.com',
       },
@@ -38,6 +34,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'api.dicebear.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
       },
     ],
   },
