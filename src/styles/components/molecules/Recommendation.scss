@@ -108,17 +108,11 @@
 
 // Swiper custom styles
 .swiper {
-  padding: 1rem;
+  padding: 1rem 1rem 3rem 1rem;
   margin: 0 -1rem;
   
   .swiper-button-next,
   .swiper-button-prev {
-    // color: #333;
-    // background-color: rgba(255, 255, 255, 0.9);
-    // padding: 2rem;
-    // border-radius: 50%;
-    // width: 40px;
-    // height: 40px;
     background: rgba(5, 12, 175, 0.8);
   border: none;
   border-radius: 50%;
@@ -142,7 +136,7 @@
   }
 
   .swiper-pagination {
-    bottom: -5px;
+    bottom: 5px;
   }
 
   .swiper-pagination-bullet {

@@ -1,0 +1,58 @@
+
+> landing-page@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.3
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · optimizeCss
+
+ ✓ Starting...
+ ✓ Ready in 1118ms
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ○ Compiling /case-study/[slug] ...
+The user aborted a request.
+
+Retrying 1/3...
+ ✓ Compiled /case-study/[slug] in 5.5s (1279 modules)
+ GET /case-study/brainify-edtech-platform 200 in 7637ms
+ ✓ Compiled /api/case-studies/[slug] in 247ms (708 modules)
+ ✓ Compiled /favicon.ico in 221ms (735 modules)
+ GET /favicon.ico 200 in 267ms
+ GET /api/case-studies/brainify-edtech-platform 200 in 1557ms
+ GET /api/case-studies/brainify-edtech-platform 200 in 98ms
+ ✓ Compiled /api/case-studies in 90ms (737 modules)
+ GET /api/case-studies 200 in 162ms
+ GET /api/case-studies 200 in 414ms
+ GET /case-study/brainify-edtech-platform 200 in 1892ms
+ GET /api/case-studies/brainify-edtech-platform 200 in 85ms
+ GET /api/case-studies/brainify-edtech-platform 200 in 49ms
+ GET /api/case-studies 200 in 48ms
+ GET /api/case-studies 200 in 301ms
+ ✓ Compiled /whatwethink in 398ms (1186 modules)
+ ✓ Compiled /api/ainews in 67ms (716 modules)
+ ✓ Compiled (720 modules)
+ GET /api/case-studies 200 in 227ms
+ GET /api/ainews 200 in 229ms
+ GET /api/case-studies 200 in 231ms
+ GET /api/ainews 200 in 48ms
+ GET /api/blogs 200 in 1230ms
+ GET /api/blogs 200 in 39ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1278ms (1586 modules)
+ GET /api/blogs 200 in 90ms
+ GET /api/ainews 200 in 91ms
+ GET /api/case-studies 200 in 92ms
+ GET /api/case-studies 200 in 93ms
+ GET /api/blogs 200 in 43ms
+ GET /api/ainews 200 in 45ms
+ ✓ Compiled /api/case-studies/[slug] in 170ms (840 modules)
+ GET /api/case-studies/email-love-ai-powered-email-template-generation-and-repair 200 in 265ms
+ GET /api/case-studies/email-love-ai-powered-email-template-generation-and-repair 200 in 44ms
+ GET /api/case-studies 200 in 41ms
+ GET /api/case-studies 200 in 42ms
+ GET /api/case-studies/ai-marketing-assistant 200 in 170ms
+ GET /api/case-studies 200 in 41ms
+ GET /api/case-studies 200 in 42ms
+ GET /api/case-studies/ai-marketing-assistant 200 in 81ms
