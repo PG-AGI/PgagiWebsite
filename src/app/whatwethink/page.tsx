@@ -21,6 +21,7 @@ type CaseStudy = {
   slug: string;
   title: string;
   coverImage: string;
+  description?: string;
 };
 type Blog = {
   id: string;
@@ -150,7 +151,7 @@ export default function BlogPage() {
                     <div className={styles.cardContent}>
                       <div className={styles.cardText}>
                         <h3>{cs.title}</h3>
-                        <p>Discover how we helped transform this project with innovative AI solutions and strategic insights.</p>
+                        <p>{cs.description || "Advancing industry standards with bespoke AI integrations and high-performance system architectures."}</p>
                         <span className={styles.viewProject}>View Project →</span>
                       </div>
                       <div className={styles.cardImage}>
@@ -159,14 +160,23 @@ export default function BlogPage() {
                           src={getSafeImageUrl(cs.coverImage)}
                           alt={cs.title}
                           layout="fill"
-                        objectFit="contain"
+                          objectFit="cover"
                           priority
                           onError={(e) => {
-                            // Fallback to placeholder if image fails to load
                             const target = e.target as HTMLImageElement;
                             target.src = '/images/aboutus.png';
                           }}
                         />
+                        <div className={styles.logoOverlay}>
+                          <Image 
+                            src="/landing/PGAGI-logo.png" 
+                            alt="PG-AGI Logo" 
+                            width={40} 
+                            height={40} 
+                            className={styles.overlayLogo}
+                          />
+                        </div>
+                        <div className={styles.premiumGradient} />
                       </div>
                     </div>
                   </Link>

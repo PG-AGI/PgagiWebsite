@@ -276,17 +276,56 @@
     }
 
     .imgTag {
-      transition: none;
+      transition: transform 0.5s ease;
       filter: none;
       transform: none;
       object-position: center center;
-      object-fit: contain;
+      object-fit: cover;
       border-radius: 10px;
     }
 
-    &:hover .imgTag {
-      transform: none;
-      filter: none;
+    .logoOverlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(224, 30, 47, 0.2);
+      transition: all 0.3s ease;
+
+      .overlayLogo {
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      }
+    }
+
+    .premiumGradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 40%,
+        rgba(224, 30, 47, 0.05) 100%
+      );
+      pointer-events: none;
+      z-index: 5;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+      .imgTag {
+        transform: scale(1.05);
+      }
+      .logoOverlay {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(224, 30, 47, 0.2);
+      }
     }
 
     &.parallax {

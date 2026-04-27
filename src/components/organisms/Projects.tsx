@@ -263,13 +263,23 @@ export default function Projects() {
                         target.src = '/images/aboutus.png';
                       }}
                     />
+                    <div className={styles.logoOverlay}>
+                      <Image 
+                        src="/landing/PGAGI-logo.png" 
+                        alt="PG-AGI Logo" 
+                        width={28} 
+                        height={28} 
+                        className={styles.overlayLogo}
+                      />
+                    </div>
+                    <div className={styles.premiumGradient} />
                     <div className={styles.caseStudyCardOverlay}>
                       <span className={styles.viewProject}>View Project</span>
                     </div>
                   </div>
                   <div className={styles.caseStudyCardText}>
                     <h3>{caseStudy.title}</h3>
-                    <p>Discover how we helped transform this project with innovative AI solutions and strategic insights.</p>
+                    <p>{caseStudy.description || "Empowering innovation through AI-driven strategic solutions and digital transformation."}</p>
                   </div>
                 </div>
               </Link>

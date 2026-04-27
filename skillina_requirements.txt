@@ -1,0 +1,2189 @@
+Skillina: Talent Marketplace Product Requirements
+Summary of Requirements
+Candidate Experience
+	•	Acquisition: 
+	•	List generic job titles on platforms like LinkedIn and Indeed
+	•	Referral System:
+	•	Invite candidates and recruiters via email and website
+	•	Referral fee for successful placements
+	•	Homepage Design: Default page for candidates includes job functions with call-to-action buttons
+	•	Sign-up & Profile Creation:
+	•	Two-step flow: Upload resume and take interview
+	•	Resume upload available in logged-out state
+	•	Candidates sign up via LinkedIn 
+	•	Profile includes name, location, LinkedIn profile, and blocked employer domains
+	•	Resume can be edited after upload
+	•	Target job titles auto-filled from resume
+	•	Interview Process:
+	•	Gating system for interviews based on candidate qualifications
+	•	Payment option for candidates who want immediate interview access
+	•	15-minute AI interviews based on job function
+	•	Audio check before interview
+	•	Post-interview score provided with option to retake for a fee
+	•	Candidate Hub:
+	•	Central location to edit pre-filled information
+	•	Shows interview status for different job functions
+	•	Resume update capability
+	•	FAQs section
+	•	Settings for contact preferences and account management
+Employer Experience
+	•	Sign-up & Profile Setup:
+	•	Login using LinkedIn
+	•	Form captures name, company email, company name, and LinkedIn profile
+	•	Admin approval process to access account (within 24 hours)
+	•	Candidate Search:
+	•	Search via job description, Boolean search, or other criteria
+	•	Post Job 
+	•	Filtering by past companies, experience, location, and job function
+	•	Five candidate buckets: Introduced, AI Interviewed, Resume matched, AI External Search, Not assigned AI interview
+	•	Anonymized Candidate details show ID, summary, interview scores, and match score
+	•	Get Introduced Flow:
+	•	Candidate receives introduction email to recruiter
+	•	Recruiter receives candidate details
+	•	Employer Hub:
+	•	Start new searches
+	•	View active job searches
+	•	Track candidate status
+	•	Active Job Searches:
+	•	Lists all past searches with status (Active, Paused, Completed)
+	•	Shows date initiated and candidate metrics
+	•	Actions include starting new search, updating, pausing, or marking completed
+	•	Hiring Process:
+	•	Employers report hires through the platform
+	•	Required information includes offer letter, job title, candidate details, and compensation
+Admin Section
+	•	Post Jobs
+	•	No Code Self service Interview management tools including ability to list new interviews, edit interview prompts, provide feedback to calibrate interview reports, and curate interview reports.
+	•	Interview volume gating controls
+	•	Candidate management (assign, retake, block)
+	•	Refund capabilities for candidates
+	•	Candidate Pricing controls
+	•	Search ranking thresholds
+	•	Referral
+	•	Approve recruiter access
+	•	Recruiter Pricing Control
+	•	Reporting Dashboards
+V2 , Fast Follow: AI sourcer
+
+Emails: 
+Candidate Emails
+	•	Candidate Free Interview Invite Email
+	•	Candidate Free Interview Reminder Email
+	•	Candidate Paid Interview Reminder Email (10 days after upload if no invite)
+	•	Candidate Paid Retake Interview Email
+	•	Candidate Introduction to Recruiter Email
+	•	Post-Interview Completion Email
+	•	Referral Invitation Email (for candidates)
+	•	Referral Success Email
+	•	Candidate Invitation Email
+Recruiter/Employer Emails
+	•	Recruiter Account Approval Email
+	•	Recruiter Account Rejection Email
+	•	Pricing Confirmation Email
+	•	Candidate Introduction to Recruiter Email
+	•	Interview Completion Notification to Recruiter
+	•	Curated Candidates Email
+Administrative Emails
+	•	Refund Confirmation Email
+V2 Emails:  
+	•	Job Search External Sourcing Confirmation Email
+	•	Weekly Candidate Updates Email
+	•	Hiring Confirmation Email
+
+
+
+System requirements:
+	•	All text in the system should be stored in editable csv files and not hard coded. This way text can be easily edited without needing to push code.
+	•	Platform should be deployed on AWS or GCP, and be on auto scale.
+	•	We will need help post launch to make code changes in future. 
+	•	Code should be checked in to GitHub so that we can edit it as required.
+	•	Data management should be GDPR and CCPA compliant
+	•	Code copyrights will be owned by us.
+	•	Overall cost per candidate for Voice AI Interviews, generating reports and employer matching should be lowest.
+	•	Do not use inline coding
+	•	Ensure all components are loosely coupled as microservices and not have big blobs of code
+
+Colors: Mostly, white with #3b82F6
+Font: https://fonts.google.com/specimen/Montserrat 
+Logo
+
+
+
+—
+Detailed Requirements
+Candidate Experience
+Acquire Candidates:
+	•	List generic job titles on LinkedIn, Indeed, etc. Eg: Product Manager, Senior Product Manager, Principal Product Manager, Director of Product Management, VP of Product Management.
+	•	Featured Jobs on Skillina
+	•	Once a user clicks on apply, it lands a candidate on the sign up and profile creation page.
+Homepage Design
+Prototype: https://preview--skillina-spark-interview.lovable.app/ 
+Edit Link: https://lovable.dev/projects/da78ca32-a290-48b0-a0d7-1d93770fbe31?utm_source=gpt-engineer-badge 
+Github: https://github.com/rhodolea/skillina-spark-interview 
+
+	•	Default page is for Candidates. /candidates
+	•	Has job functions listed with CTA to Apply
+	•	Secondary CTA for employers that leads to /employer homepage\
+
+See https://underdog.io/ 
+
+Oct 3: 
+Lovable Prompt:
+
+Candidates page
+	•	Change Header tagline from Skillina AI - Interview Once, Get Hired Faster to Skillina AI - Land AI Native Roles Faster
+	•	Change Skip the resume pile. Showcase real skills. To “Land High-Paying AI Native Jobs”
+	•	Replace High-paying fractional/consulting gigs with Demonstrate Your AI Expertise & Core Skills
+	•	Replace Full-time roles at top companies with Full-time AI Native roles at top companies
+	•	Put this tagline in small at the top in a noticeable color, but still sticking to brand colors => AI won't take your job, but someone using AI will
+
+Employers page
+	•	Change Headline to 2 lines. Reduce Headline font size a bit. 
+	•	Your Competitors Are Already AI-Native. Are You? 
+	•	Hire Elite AI Talent with Skillina. (this is a bit small size font)
+	•	Remove problem solution result section. Replace with the below check marked value props
+	•	Skip Resumes and Costly Hiring Pipelines. AI Interviews Validate Real Functional and AI Skills Upfront.
+	•	Pay only when you hire. Zero risk.
+	•	Change Search Candidates CTA to “Search AI Native Candidates”
+
+
+
+
+Skip the resume pile. Showcase real functional and AI skills.
+Tired of endless applications with no response? Take one 15-minute standardized AI voice interview with Skillina. Companies apply to you based on assessed skills and AI proficiency. 
+Tired of needing referrals to get noticed? Get noticed based on your skills and not on "who you know".
+Fed up with bias killing your chances? Employers see your skills first to make objective assessments. We hide your identity until they're already impressed and want to hire you.
+Interview now. Take control. Make companies chase your skills.
+Apply NOW
+
+
+
+Get Noticed with Standardized Skills Assessment using AI Interviews
+	•	Tired of the same applications and interviews across companies? Once you interview with Skillina, companies apply to you.
+	•	Still relying on referrals to get your resume noticed? With Skillina, you let your skills get you in the door and not rely on who you know.
+	•	Frustrated you did not get the call because the manager does not look like you? With Skillina, our unbiased AI interviews showcase your skills, not how you look. We hide your name, picture and only conduct voice interviews from potential employers until they get introduced to you. 
+
+How it works?
+	•	Upload resume
+	•	Get your functional skills assessed using AI Interview
+	•	Sit back and get introduced to companies
+
+
+
+
+
+
+
+
+OLD Candidate HOmepage
+Candidates    Employers   Featured Jobs                                                             
+Candidate Sign in
+Skip the resume pile. Showcase real skills.
+One 15-minute AI voice interview. Companies compete for YOU.
+✓ No referrals needed—your skills speak first ✓ Full-time roles at top companies ✓ High-paying fractional/consulting gigs
+Interview now. Take control. Make companies chase your skills.
+Apply Now
+Hiring Now
+
+Product Managers
+
+Product Marketing
+
+Account Executive - Sales
+
+B2B Marketing
+
+Consumer Marketing
+
+Apply Now
+
+How it works?
+	•	Upload resume
+	•	Get your functional skills assessed using AI Interview
+	•	Sit back and get introduced to companies
+Why Interview with Skillina
+
+
+Interview Once
+Second Chances to Win
+Reduce biases in hiring
+Find the right role for you
+Match with Confidential Roles
+[IMAGE]
+[IMAGE]
+[IMAGE]
+[IMAGE]
+[IMAGE]
+Apply and interview only once and get introduced to recruiters for relevant roles.
+Didn't do well in your interview?
+You can interview again with Skillina and better your score!
+Get noticed based on your skills, and not based on who you know or look like.
+
+Our AI skills interview helps find the right fit for you, which is difficult with human interviews.
+Get introduced to recruiters for relevant roles that are not yet public on LinkedIn.
+
+Employers - Source Highest Skilled Candidates Fast
+​​Resumes are not good enough to gauge a candidate’s skills. Get introduced to pre-screened, high skilled candidates using AI interviews for FREE and pay only when you make a hire.
+Search Candidates (no credit card required)
+Featured Jobs
+
+
+Product Manager 
+ 
+
+US 
+
+Apply Now
+Account Executive - SAAS 
+ 
+US 
+
+Apply Now
+Pre Sales Engineer
+
+
+US 
+
+Apply Now
+
+Product Manager 
+ 
+
+US 
+
+Apply Now
+Account Executive - SAAS 
+ 
+US 
+
+Apply Now
+Pre Sales Engineer
+
+
+US 
+
+Apply Now
+
+
+
+
+Employer HomePage
+
+
+Candidates    Employers    Featured Jobs  
+Employer Sign In
+Hire AI-Native 10x Talent
+The Problem: Resumes and interviews don't vet skills. Agencies send unvetted candidates.
+The Solution: Standardized AI interviews reveal real functional and AI skills.
+The Result: Pre-screened, AI-native candidates who actually perform.
+Pay only when you hire. Zero risk.
+
+Search Candidates (no credit card required)
+	•	Post Job - FREE
+	•	Search for Candidates - FREE
+	•	Assign AI Interviews to Candidates - FREE
+	•	Get Introduced to Candidates - FREE
+Search Candidates (no credit card required)
+
+
+Hire GTM and Product roles
+
+Product Managers
+
+Product Marketing
+
+Account Executive - Sales
+
+B2B Marketing
+
+Consumer Marketing
+
+Search Candidates
+WHY HIRE WITH SKILLINA
+
+Free to use, No risk
+Pre-vetted Functional Skills
+Unearth Value Talent
+Super Fast Sourcing 
+Reduce Hiring Bias
+[PHOTO]
+[PHOTO]
+[PHOTO]
+[PHOTO]
+[PHOTO]
+Free to post jobs, assign AI interviews, search for candidates and get introduced to candidates. Only pay when you successfully hire. 
+Resumes reveal little about how candidates actually work. Pre-vetted functional skills dramatically reduce hiring mistakes.
+Don’t overpay for Elite talent. Discover highly skilled talent at lower costs.
+Cut sourcing time from months to days. We pre-match candidate resumes and skills to your roles.
+AI Interviews reduce bias, helping you objectively hire the best.
+
+Pricing: First Hire: $10,000 flat fee. 18% of first year’s cash compensation from there on per hire.
+
+How to hire with SKILLINA?
+	•	Post Jobs 
+	•	Skillina initiates a candidate search  
+	•	Skillina conducts functional skills assessments using AI interviews, and rates candidates as Elite, Pro, Moderate or Basic.
+	•	Search for Candidates 
+	•	Get Introduced to candidates that match your job using candidate resume and skills assessment
+
+Example screen from competitor: Do not copy.  https://www.novatalent.com/hire-novas  
+
+
+Search for Pre-vetted Candidates for the following roles
+
+Product Manager - Consumer
+ 
+
+US (Remote)
+
+Hire Now
+Product Manager - SAAS
+ 
+US (Remote)
+
+Hire Now
+Pre Sales Engineer
+
+
+US (Remote)
+
+Hire Now
+
+Consumer Marketer
+ 
+
+US (Remote)
+
+Hire Now
+B2B Sales Leader
+ 
+US (Remote)
+
+Hire Now
+Product Marketer
+
+
+US (Remote)
+
+Hire Now
+
+
+
+
+
+Featured Jobs Page
+
+Filters:
+	•	Job Function
+	•	Location
+
+Sort by
+	•	Date Posted
+
+Job details page
+Simple page with job title, location, Job type, and Job function mentioned at the top. 
+Job description below it. 
+
+Apply Now CTA.
+
+Sign-up & Profile Creation
+
+	•	If the user first uploads a resume and then signs in, then follow the usual flow.
+	•	If the user signs in without uploading a resume, then show the profile page so that the user can upload a resume. 
+	•	⁠If the user is already signed up with profile updated (including resume), then don't show profile page again after signing in. If the profile is missing mandatory fields then show the profile page. 
+
+2 Steps highlighted in the flow at the bottom at all times in this flow.
+	•	Upload resume
+	•	Take interview
+Upload Resume
+3 Steps in the upload resume flow
+	•	Upload resume
+	•	Sign in/up
+	•	Update Profile
+
+
+If the candidate has already uploaded a resume, skip this step.
+Upload resume screen: 
+	•	No need to login to upload resume.
+	•	The user simple needs to upload resume. No other CTA or action on this page.
+
+A candidate might directly land on this page after clicking a job opportunity say on LinkedIn. So, if there is a job in the referrer, there needs to be space at the top to show that the candidate is applying for that job. Eg: Job Title: Principal Product Manager - SAAS. If no job in referrer, then can remove the Job Title field. 
+	•	If the candidate came via a referral link, then register the referral code as the acquisition code next to the candidate’s resume/id.
+<Below is Mercor screen. Please do not copy this>
+
+	•	Sign up/in page: Candidates sign up/in using LinkedIn. Keep candidate logged in forever. https://learn.microsoft.com/en-us/linkedin/shared/authentication/getting-access 
+Change in flow. Now, User clicks Sign in with LinkedIn and is then directly taken to Pay for interview screen. Skip Profile to after the interview is taken, scheduled or skipped. So, basically updating profile is the last step in the sign up process. Reason: Because most of the profile info is anyways prefilled from LinkedIn. 
+Profile screen: Move this to last step in the process after AI interview.
+	•	Upload resume page
+	•	Resume: Uploaded resume can be edited
+	•	Your Name (autofilled from resume/LinkedIn), can be edited, Required:
+	•	Location: City, State, Country (autofilled from resume/LinkedIn), Zip code can be edited, Required.
+	•	Your LinkedIn Profile (autofilled from LinkedIn), can be edited, Required
+	•	Primary Job Function: List Interview Job Functions available, and and other option. Eg:
+	•	Product
+	•	Sales - Account Executive
+	•	Product Marketing
+	•	Consumer Marketing
+	•	Other 
+	•	Primary Current Job Type
+	•	Individual Contributor
+	•	Manager
+	•	Manager of Managers 
+	•	Executive Level
+	•	Blocked Employer Email Domain: Select from a list of company domain names you do not want to see your profile. Clearly tell the user that recruiters with work email as blocked won’t be able to see your profile and interviews. Make this a text field for now. Optional
+	•	“Blocked Employer Email Domain: Select the employer domain names that will not have access to your profile such as your existing employer. Example: google.com, salesforce.com, microsoft.com”
+	•	Are you open to fractional/consulting/part time opportunities? Yes/No
+	•	Accept terms
+
+Gate Interview
+If the candidate’s resume indicates they might not be a top match for a certain set of jobs (which can be modified in Admin), then show a page to the candidate that asks for paying to interview or skip the interview for now.
+If the candidate has already interviewed for this specific job function interview or already applied to this specific job function, then skip this step and show the Already Applied Message: 
+Interview Gate Screen:
+Interview Now To Get Introduced To Actively Hiring Companies
+Complete your Skillina AI Interview to get your skills assessed. Stop waiting—make employers come to you with proven skills.
+Interview Now with Skillina. Take control. Get hired faster.
+Skillina AI Interview is
+	•	Fast: Only 15 minutes. 
+	•	Little preparation needed: Based primarily on a case study or role play. 
+	•	Nominal Fee: $1.95 to help us cover some of the costs of voice AI interview and present your profile to recruiters.
+ Take the AI Interview for $1.95
+Schedule the AI interview for $1.95
+Skip the AI interview for now > 
+Take interview: Ask user to pay, and then take them to Take Interview screen
+Schedule interview: Ask users to pay, and then take them to Schedule Interview screen.
+Uploaded resume, but not interviewed message
+If the user has already uploaded resume, but not interviewed, they land directly on the Interview Gate Screen shown above.
+Already uploaded resume and Interviewed Message: 
+User has already uploaded resume and completed job function interview.
+
+Thank you for applying
+Thank you for applying. We have reused your prior Resume and Product Management interview scores to apply. 
+	•	Your Product Management Interview Rating: Pro - Highly skilled performance, meeting or exceeding job or skill requirements effectively. <There should be a way for the candidate to click on Pro and see the Rating Rubric without the %.>
+	•	Not happy with your interview performance? Retake the interview for $x.
+What’s Next?
+	•	We will introduce you to recruiters over email once they express interest in you. This could take time depending on your profile, interview feedback, and available jobs. 
+	•	If you get hired by an employer who got introduced via Skillina, you are required to report your employment within 7 days of joining to candidate@
+	•	Please ensure your resume is always updated on Skillina. 
+                    Continue to Candidate Hub
+Retake the AI interview for $4.95
+Skip the AI interview for now screen
+
+Interview To Get Introduced To Actively Hiring Companies
+You have chosen to skip the AI interview for now.
+What’s Next?
+	•	We will be unable to introduce you to recruiters until you interview on Skillina. 
+	•	You might receive interview invites when there is a potential match with a role.
+	•	You can pay and take the interview from Candidate Hub any time.
+                    Continue to Candidate Hub
+
+
+
+Rating Definitions
+
+Score Range
+Rating
+Description
+>80%
+Elite
+Very rare, exceptional performance, far surpassing role requirements. 
+60–80%
+Pro
+Highly skilled performance, meeting or exceeding role requirements.
+40–60%
+Moderate
+Moderate skills present, shows potential but requires further development in skills.
+<40%
+Basic
+Foundational skills present, with significant growth needed to meet role requirements.
+
+If candidate clicks Continue to candidate hub, take candidate to candidate hub and show a message by directly taking candidate to Candidate Hub page with a popup saying
+	•	“What’s Next?”
+	•	We will introduce you to recruiters over email once they express interest in you and invite you to the interview process. This could take time depending on your profile and available jobs. 
+	•	You are required to report to candidate@Skillina.ai if you get hired by an employer who reached out to you via Skillina. 
+	•	Please ensure your resume is always updated on Skillina. 
+Email Reminder: Send candidates an email after 10 days if the candidate has not yet interviewed on the platform. The message should ask the candidate to pay to interview.
+See Admin section for Gating Interviews for how interview gating should work.
+
+Take Interview 
+	•	Ensure there is Recaptcha protection for bots  and rate limiter to avoid getting DDOS
+	•	Interview ready screen: Candidate can choose which job function they are interviewing for, preselected based on which job they clicked on. 
+	•	Select Interview: Message at the top: “Select Interview:” Options
+	•	Account Executive - Sales
+	•	Product Management
+	•	Product Marketing
+	•	Not ready to take the interview? Schedule your interview to take it later. <Have a calendly link that schedules an interview for the candidate>. The candidate is brought to this same page on clicking the link in the invite. 
+	•	Honor Code: I confirm that I will complete this interview without any AI assistance and I understand that Skillina’s detection systems might report any violations to employers. <checkbox>
+	•	Interview Tips: 
+	•	This is a real interview that will be reviewed by potential employers.
+	•	Think aloud, always. 
+	•	Make reasonable assumptions to answer questions.
+	•	Answer every question in detail, working through every angle.
+	•	Use standard frameworks to structure your responses.
+	•	Audio check: Same as below screenshot. I am having issues link opens a form to report the issue. Candidate can choose to continue with the interview or schedule later. Log the report.
+
+During the interview
+	•	Read the interview prompt and questions from the csv configured in Toinng
+	•	Show Case Study Prompt on the Interview Screen
+	•	Show Skillina female image on screen representing Skillina
+	•	No mention of Toinng on the screen or url during the interview.
+	•	Don’t show network connection unless it is failing
+
+	•	
+Mercor issue screen. Do not copy
+Post Interview
+	•	Open the Candidate Hub page
+	•	Show candidate a successful pop up message 
+	•	Conduct a survey on the experience
+
+Users should be able to upload a LOOM video showing their AI stack. This video is viewable by employers. We can use it for rating AI Native as well.
+Congratulations, you have completed your interview.
+	•	Your Product Management Interview Rating: 
+Pro - Excellent performance, meeting or exceeding job or skill requirements effectively. 
+<Pro links to see the Rating Rubric definitions without the %.>
+	•	Not happy with your interview performance? Retake the interview for $x.
+What’s Next?
+	•	We will introduce you to recruiters over email once they express interest in you. This could take time depending on your profile, interview feedback, and available jobs. 
+	•	If you get hired by an employer who got introduced via Skillina, you are required to report your employment within 7 days of joining to candidate@
+	•	Please ensure your resume is always updated on Skillina.
+
+Tell us about your interview experience
+	•	Did the interview ratings meet your expectations?
+Options
+	•	Yes, the interview ratings seem satisfactory.
+	•	No, the interview ratings seem below my expectations.
+	•	No, the interview ratings exceed my expectations.
+
+	•	How was your interview experience: 
+Rating Options => Bad, Good, Excellent
+	•	Comments
+Text Box
+
+
+
+	•	Retake Interview will accept user payment and then take them to the Take Interview screen. The previous interview will be deleted once the user completes the new interview. Transcript will be retained.
+	•	Candidates cannot take the same interview twice without paying for it.
+
+Candidate Hub
+This is where candidate’s pre-filled information can be edited. 
+	•	Interviews: Here candidates can interview for specific job functions that are not covered by the introduction.
+	•	This already shows which job functions candidates have already interviewed for. Next to them there is the Interview Score and Retake Interview Button
+	•	Have a Take Interview for $1.95 button next to each interview candidate has not taken. 
+What’s Next? 
+	•	Complete your relevant Skillina AI interviews to get your skills assessed, if you have already not completed it. 
+	•	Retake your interview to improve your scores.
+	•	We will introduce you to recruiters over email once they express interest in you. 
+	•	Please ensure your resume is always updated on Skillina.
+
+	•	Resume: 
+	•	Candidate can update their resume and profile. Same fields as introduction.
+	•	In Profile, there is an additional field to track candidate job search status
+	•	Actively Looking
+	•	Passively looking
+	•	Not open to new opportunities for 6 months
+When a candidate uploads resume, updates resume, or takes an interview, this status automatically changes to Actively Looking for 6 months. If a candidate has not taken any action on Skillina including applying for job or updating resume in the last 6 months, then this automatically changes to Passively Looking status. If a candidate marks status as Not open to new opportunities, then mark status as Not open to new opportunities for 6 months, after which it automatically switches back to Passively Looking. 
+	•	FAQs
+	•	List of FAQs 
+	•	Settings
+	•	Contact Preferences: User can edit phone and email that are imported via resume
+	•	Account: Delete Account button that deletes the user’s account and data.
+	•	Sign out
+
+There needs to be a link to “Featured Jobs” page. 
+Employer Interaction
+	•	When an employer clicks “Get introduced” on a candidate, the candidate receives an email with an introduction to the recruiter over email from Skillina. 
+Offer & Hiring
+	•	Once an employer has decided to hire the candidate, they mark the candidate as Hired, and upload the offer letter.  
+
+Privacy Policy Requirements:
+Privacy policy link
+	•	Set Up Privacy Request Process:
+	•	Monitor privacy@skillina.ai for privacy requests
+	•	Create a simple email template for responding to requests
+	•	Set up a 30-day reminder system for request responses
+Create data access process that provides:
+	•	Account information (name, email, profile data)
+	•	Basic assessment scores/results
+	•	Usage data and preferences
+But excludes:
+	•	Detailed interview transcripts
+	•	Proprietary evaluation reports
+	•	Internal scoring methodologies
+	•	Account Deletion Process:
+	•	Implement a "Delete Account" button in user settings
+	•	Create automated data deletion workflow (30-day timeline)
+	•	Ensure deletion covers all systems (database, backups, third-party services)
+	•	Email Opt-Out Mechanism:
+	•	Add unsubscribe links to all marketing emails
+	•	Create an opt-out preference center
+	•	Honor opt-out requests immediately
+	•	Data Mapping:
+	•	Document exactly what data you collect and where it's stored
+	•	Create a process to respond to "Right to Know" requests
+	•	Prepare to export user data in a readable format
+5. Privacy Policy Display:
+	•	Link to privacy policy in website footer
+	•	Include privacy policy link in signup flow
+	•	Make policy easily accessible and readable
+	6. Age compliance process:
+	•	Monitor for obviously underage users
+	•	Have deletion process ready if underage user discovered
+
+
+
+
+Employer Experience
+Step 1: Sign-up & Profile Setup
+Flow: 
+	•	Request Access to Skillina: 
+	•	Show message below saying: Already signed up? Employer Sign In 
+	•	Have Accept terms and conditions on the Request Access page.
+	•	When approved, Recruiter receives an email at their work email address to verify email and login. Recruiter can login using LinkedIn. 
+	•	Sign in using Linkedin: 
+	•	Once work email is verified, show option to login.
+	•	If employer logs in using LinkedIn and access is not approved, show message that approval in pending.
+	•	Message: “We have received your request to access our candidate pool. We will review your request and get back to you.”
+	•	If employer logs in using LinkedIn, access is approved but work email is not verified, show message to verify work email.
+	•	Message: “Your request to access Skillina is approved. Please click the link on your work email to verify your account and get access to Skillina. 
+	•	If you would like to receive verification email again, request verification email.
+	•	If employer logs in using LinkedIn and account was not created, show Request to access screen in logged in state.
+	•	On Login screen, there is accept terms and conditions. Once Logged in, recruiter has already accepted pricing terms and goes directly to Candidate search page to search for candidates.
+	•	On Employer Sign in page, show a message at the bottom: Not an employer? Candidates sign in here.
+	•	If there are custom pricing contracts, we should be able to generate custom terms and conditions for that employer. That custom pricing contract then applies to all recruiters from that company domain and supersedes standard contract. Existing signed up recruiters from that company receive an email informing them of updated pricing. No change in UX for custom terms.
+	•	If there is change in standard pricing, Existing signed up recruiters on standard contracts receive an email informing them of updated pricing.
+
+
+
+
+	•	Employers (Hiring managers and recruiters) can directly sign up on Skillina using LinkedIn. 
+	•	Your Name: auto filled from LinkedIn
+	•	Work Email (will be verified): 
+	•	Employer Name: 
+	•	Your LinkedIn Profile Link: auto filled from LinkedIn
+	•	Job Link or Description
+		(We will use this information to source and assess relevant candidates. Your company name will not be disclosed to the candidates until you explicitly ask to Get Introduced to the candidate).
+	•	Add a page that accepts standard Terms and Conditions
+
+	
+Request Employer Access to Skillina
+
+	•	Your Name:
+	•	Work Email (will be verified): 
+	•	Employer Name: 
+	•	LinkedIn Profile Link: auto filled from LinkedIn
+	•	Job Link or Description: 
+(We will use this information to source and assess relevant candidates. Your company name will not be disclosed to the candidates until you explicitly ask to Get Introduced to the candidate).
+	•	Accept terms and conditions
+
+Submit
+
+
+No need of pricing screen for now. Default Pricing will be included in the Terms and Conditions. 
+If a non-default pricing already exists for the recruiter’s domain, then after sign up, we do need to assign pricing contract to the recruiter based on their domain and send them Price Change Email. 
+
+Skillina Pricing
+
+	•	Posting jobs, searching for candidates, assigning interviews and getting introduced to candidates is FREE on Skillina.
+	•	You pay only when you hire a candidate sourced via Skillina.
+	•	Accept Terms and conditions 
+	•	Skillina Pricing (based on total cash compensation for the first year including base, commissions,and bonus)
+	•	First hire: $10,000 flat fee.
+	•	IC Product Managers: 18%
+	•	Account Executives: 18%
+	•	Pre Sales Engineers: 18%
+	•	10% discount per hired candidate if more than 5 candidates are hired by your company before Dec 31, 2025
+
+If you have any questions, please contact recruiter@skillina.ai.
+
+I accept
+
+
+
+
+
+Step 2: Candidate search
+
+Rough Prototype (Many details are missing and are inaccurate): https://preview--skillina-candidate-seeker.lovable.app/ 
+
+
+Grading Rubric: 
+Rating
+Description
+Elite
+Very rare, exceptional performance, far surpassing job or skill requirements. 
+Pro
+Highly skilled performance, meeting or exceeding job or skill requirements effectively.
+Moderate
+Moderate skills present, shows potential but requires further development in job or skill.
+Basic
+Foundational skills present, with significant growth needed to meet job or skill requirements.
+
+
+Flow:
+The candidate search url should be shareable to other recruiters
+	•	Recruiters enter job name
+	•	Recruiters enter a job description, job link, Must Have Qualifications, Interview Function
+	•	Hit Search to start searching for candidates. 
+	•	All searches with the same job description link are uniquely saved. All searches with the same job name created within the last 60 days from the same recruiter are uniquely saved and not duplicated.
+	•	Only create new jobs when the job link changes from the same recruiter OR job name is not the same as any jobs created from the recruiter in the past 60 days. Before creating a new job, confirm with the Recruiter if this is a new search or updating the last search.
+	•	As search begins, Recruiters see a list of search activities (like Perplexity shows)
+	•	Searching for relevant AI Interviewed Candidates
+	•	Assigning interviews to relevant candidates that are not yet interviewed
+	•	Posting job details to source relevant candidates 
+	Once these activities are done, change status to
+	•	Introduced Candidates: 0 
+	•	Relevant AI Interviewed Candidates: 7. Get Introduced to these candidates now!
+	•	Assigned Interviews to Resume Matched Candidates: 50. We will let you know as these candidates complete their interviews.
+	•	Not Assigned Interviews: 23. Lower resume fit with the job description. You can choose to manually assign interviews to these candidates.
+	•	External Search: We will initiate external candidate search to get you more relevant candidates. 
+	•	Can filter candidates by
+	•	Interview Job Function: Account Executive, Pre-Sales Engineer, Product Manager, Marketing. Self select based on job description, but employer can edit.
+	•	A separate location field where employer can select multiple locations (City, State, Area (SF bay area), Remote) 
+	•	Past Companies
+	•	Min experience 
+	•	Job Search Status: Actively Looking, Passively Looking, Not open to new opportunities, All
+	•	Default sort Search results show ranked candidates based on Overall Fit Score.
+	•	Overall Fit Score = % match between job requirements and candidate’s resume *0.5 + Function specific interview score as a % *0.5
+	•	Resume Fit Score = % match between job requirements and candidate’s resume
+	•	Basically, interview scores are weighted same as resume in overall fit score.
+	•	Sort Options 
+	•	Overall Fit Score (Resume and Skills) [default]
+	•	Skills Fit Score
+	•	Resume Fit Score
+	•	5 buckets of candidates:
+	•	Introduced Candidates: Candidates that are already introduced to the recruiter for this job. Initially it will be empty.
+	•	Relevant AI Interviewed candidates: These candidates have been matched to the job based on resume and scored high in the interview for specific job function. Only candidate with Overall Fit Pro and ELite shown. Internally candidates are ranked by their fit scores..
+	•	Resume matched, Assigned AI interview: These candidates automatically receive an invite to interview for free. They have not interviewed in the past. Invite them only for free when the resume fit score to job description is Elite. If resume fit score is between Pro, then send an email to candidates to interview for a fee. Only Pro and Elite Candidates shown here. Only assign interviews to max 50 candidates per search. This number is editable from admin. 
+	•	Not assigned AI interview: Show next 50 candidates who did not meet the threshold to automatically receive an interview invite. Recruiter can manually Assign Interview to these candidates using the “Assign Interview” button. These could include Moderate and Basic candidates too, but prioritize Pro and ELite candidates first. 
+	•	Recruiter invites for Pro, Basic and MOderate candidates is paid. Recruiter invites for ELite candidate is free.
+	•	External Search: In v1, we will simply post the job on the job board and promote on LinkedIn/Indeed to source more candidates. In v2, we will do targeted sourcing using AI agents.
+	•	The goal is to return at least 5 relevant Elite (Overall Fit Score > 80%) candidates to the recruiter. 
+	•	Assign Interviews and post jobs only 30 minutes after the recruiter leaves session. Recruiter can edit the search criteria in Active Job Searches section.
+	•	We need to obfuscate candidate details so that employer cannot find the candidate off the platform and message them directly. The search result snippet shows the following
+	•	Candidate ID: This is a numeric candidate id for each candidate. It is searchable. So, recruiters can save candidate IDs in a notepad and enter that candidate id in search to find the candidate. 
+	•	A pre-computed 2 line summary of candidate’s profile that lists years of experience and key differentiators. Example Prompt to model:
+	•	“summarize this resume in 2 sentences in a way that nobody can find out the identity of the individual using Linkedin or online search. Eg: Hide Name, where candidate studied, where candidate worked. However, it should still be interesting enough that people look to hire this person
+	•	Overall Interview Scores and score by factor
+	•	A Overall Fit Score in a big circle next to the summary. 
+	•	Employers can:
+	•	“Get Introduced”: Candidate receives an email with an introduction to the recruiter over email from Skillina. 
+	•	“Interview Reports”: For functions, the candidate has interviewed, employer can click on the function name and score, to see a detailed pdf report for that interview. Candidate name should not be displayed in the report. 
+	•	Assign AI Interview (free): 
+	•	Recruiter can assign AI interview to a candidate, if the candidate has not been interviewed. The flow is exactly the same as the Take Interview screen. Once the candidate has taken the interview, recruiter receives an email saying the candidate they assigned interview has taken interview with link to report.  
+	•	For candidates who have already taken the specific job function interview, there is no option to Assign more interviews section for now. 
+	•	Mark candidate as Not Interested: This will not show the candidate to the specific employer for this job only, For other jobs the candidate should be visible to the employer.
+	•	Introduced Candidates: Shows list of candidates introduced. Show candidate fullname, list of past employers, Fit Score, interview scores, and link to resume. Show date and time when candidate was introduced. 
+	•	Dont show candidates with recruiter’s blocked domain
+
+Candidate Searches, Recruiter Jobs and Public Jobs 
+There are 3 tables here
+	•	Candidate Searches: This is basically a log of all searches initiated by the recruiter, including changing filters. Each of these Candidate Searches has a recruiter job id associated with it.
+	•	Recruiter Jobs: There are candidate searches that are initiated by recruiters that need to be stored uniquely as internal jobs. 
+	•	How to determine which searches map to the same Recruiter job? 
+	•	All searches with the same job description link are uniquely saved. 
+	•	All searches with the same job name created within the last 60 days from the same recruiter are uniquely saved and not duplicated.
+	•	Before creating a new job, confirm with the Recruiter if this is a new search or updating the last search
+	•	These jobs are visible in the Employer Hub to the recruiter.
+	•	Public Jobs: There are public job posts that admin creates from the recruiter jobs. 
+	•	A page where admin can see all the jobs created by recruiters, ordered by date. This includes the job name, job link, description, date searched, company name, recruiter name, # of relevant candidates found (Relevant AI Interviewed candidates, Resume Matched - Not Interviewed). Each job has a status that can be edited: “Not Posted, Actively Posted, Paused, Completed”.
+	•	Post Job page: 
+	•	Admin can take the job description manually, scrub out the company details and obfuscate it. Create a job posting in the admin section. 
+	•	Job Location
+	•	The job posting can be Featured or not.
+	•	The job posting can be evergreen or come with an expiration date. After expiration date, job is Paused and unlisted. 
+	•	Each job is mapped to an interview that needs to be taken for the job.
+	•	Featured jobs are posted on the Featured Jobs section.
+	•	From there the admin can post the job on social websites to source candidates.
+
+Sept 2025 Edits: 
+	•	Make the Must Haves Field just one text box spanning 2 lines. Weight is 0.7. Change description to below.
+	•	High Priority Qualifications (Include comma separated keywords that are most important in your search. Eg: Security Software, Enterprise Sales, AWS)
+	•	Remove Preferred Qualifications 
+	•	Include Location (Country, State, Metro Area, City). 
+	•	All should be included from a prepared list and not something users can enter on their own. This should be easily editable by super admin.
+	•	Include Other as an option for City Names.
+	•	For candidates, all fields are required. 
+	•	For employer search, only country is required.
+
+List of Metro Areas in US
+
+	•	New York City Metropolitan Area
+	•	Los Angeles Metropolitan Area
+	•	Chicago Metropolitan Area
+	•	Dallas-Fort Worth Metroplex
+	•	Houston Metropolitan Area
+	•	Washington DC Metropolitan Area
+	•	Philadelphia Metropolitan Area
+	•	Miami-Fort Lauderdale-West Palm Beach Area
+	•	Atlanta Metropolitan Area
+	•	Boston Metropolitan Area
+	•	Phoenix Metropolitan Area
+	•	San Francisco Bay Area
+	•	Detroit Metropolitan Area
+	•	Greater Seattle Area
+	•	Minneapolis-St. Paul Area
+	•	San Diego Metropolitan Area
+	•	Tampa-St. Petersburg-Clearwater Area
+	•	Denver Metropolitan Area
+	•	St. Louis Metropolitan Area
+	•	Baltimore Metropolitan Area
+	•	Charlotte Metropolitan Area
+	•	Orlando Metropolitan Area
+	•	San Antonio Metropolitan Area
+	•	Portland Metropolitan Area
+	•	Sacramento Metropolitan Area
+	•	Pittsburgh Metropolitan Area
+	•	Las Vegas Metropolitan Area
+	•	Cincinnati Metropolitan Area
+	•	Austin Metropolitan Area
+	•	Kansas City Metropolitan Area
+	•	Columbus Metropolitan Area
+	•	Indianapolis Metropolitan Area
+	•	Cleveland Metropolitan Area
+	•	Nashville Metropolitan Area
+	•	Virginia Beach-Norfolk Area (Hampton Roads)
+	•	Providence Metropolitan Area
+	•	Milwaukee Metropolitan Area
+	•	Jacksonville Metropolitan Area
+	•	Raleigh-Durham Area (Research Triangle)
+	•	Oklahoma City Metropolitan Area
+	•	Memphis Metropolitan Area
+	•	Richmond Metropolitan Area
+	•	New Orleans Metropolitan Area
+	•	Louisville Metropolitan Area
+	•	Salt Lake City Metropolitan Area
+	•	Hartford Metropolitan Area
+	•	Buffalo-Niagara Area
+	•	Birmingham Metropolitan Area
+	•	Grand Rapids Metropolitan Area
+	•	Other
+
+To the valid concern you mentioned last week whether candidates who do not belong to a function, should they show up in search results. My recommendation:
+	•	Filter candidates by job function. Basically, don't show candidates who are not interested in a specific job function. Eg: If I am in product management, I don't want to receive invites to take sales interview.
+	•	We do need to expand the job functions candidate is considered for by doing the below
+	•	In candidate profile, there is a primary job function already. Add another field which says "Other Job Functions you want to be considered for". This is basically a check list of the interviews and job functions available on Skillina. So, users can select multple job functions.
+	•	Also, if a candidate takes a specific interview, then add that interview job function automatically to candidate profile. Eg: If my primary job function is product management, and I take a product marketing interview, then automatically add product marketing as another job function.
+	•	In employer search, match the job function of the job with all of candidates job functions (not just the primary job function)
+
+Introduced Candidate Result module:
+
+Put a stamp like this on every candidate to inform that we have already introduced the candidate.
+
+Greg Paulson |  Overall Fit (Resume and Skills): Elite (4.5/5)
+Actions
+Resume Fit: Pro (4/5)  
+Marketplace Product Manager with >15 years experience in consumer growth 
+Past Employers: Amazon, Stripe, Ping
+View Resume
+Skills Assessed
+Product: Elite 
+AI powered: Pro 
+Systems Thinking: Moderate
+View Interview Reports
+
+
+AI Interviewed Candidates Result module:
+
+Candidate ID: 2010 |  Overall Fit (Resume and Skills): Pro (4/5)
+Actions
+Resume Fit: Pro (4/5)
+Marketplace Product Manager with >15 years experience in consumer growth 
+Get Introduced
+
+View Interview Reports
+Skills Assessed
+Product: Elite 
+AI powered: Pro 
+Systems Thinking: Moderate
+Systems Thinking: Basic
+
+
+
+
+
+
+
+
+Resume Matched, Assigned Interview Result module:
+
+Candidate ID: 2010 |  Overall Fit (Resume, Not Interviewed): Pro (4/5)
+Actions
+Resume Fit: Pro (4/5)
+Marketplace Product Manager with >15 years experience in consumer growth 
+Get Introduced
+Skills Assessed
+Product: Assigned
+
+
+
+Not Assigned Interview Result module:
+
+Candidate ID: 2010 |  Overall Fit (Resume, Not Interviewed): Pro (4/5)
+Overall FIt: Pro (⅘)
+Actions
+Resume Fit: Pro (4/5)
+Marketplace Product Manager with >15 years experience in consumer growth 
+Resume Fit: Pro (⅘)
+Get Introduced
+Skills Assessed
+Product: Not Assigned Interview
+Product: 
+Assign interview
+
+
+
+
+
+
+
+
+
+
+Report Format
+
+https://preview--skillina-spark-report-gen.lovable.app/ 
+
+	•	Open report in a new tab always
+	•	Populate following fields using database
+	•	Candidate: 
+	•	If introduced, then show candidate full name
+	•	If not introduced, then show candidate id
+	•	Interview Type
+	•	Skills Tested
+	•	Case Study Topic
+	•	Rating Definitions
+	•	Populate following fields using model returned using json
+	•	Summary Ratings
+	•	2-sentence summary highlighting strengths and performance across major categories
+	•	Detailed Ratings
+	•	Final Comments: Strengths and Opportunities for Growth
+
+
+Skillina Logo                                                             Print
+
+Skillina <Interview Name>  Interview Report
+Candidate: [Name] Interview Type: <Interview Name>
+Skills Tested: <Skills Tested in the Interview> Case Study Topic: [Insert case study title or description]
+Summary Ratings
+Product Management: [Elite/Pro/Moderate/Basic] Systems Thinking: [Level Name] ([Elite/Pro/Moderate/Basic]) Builder: [Elite/Pro/Moderate/Basic] AI Native: [Elite/Pro/Moderate/Basic]
+[2-sentence summary highlighting strengths and performance across major categories.]
+Detailed Ratings
+Skill Category
+What It Measures
+Rating
+Candidate Example
+Evaluator Comment
+Diagnostic Thinking
+<What it Measures>
+Pro
+"[Quote from candidate]"
+[Evaluator comment]
+User-Centric Thinking
+Uncovers user pain points deeply and validates them
+Pro
+...
+...
+...
+...
+...
+...
+...
+📌 Final Comments
+Strengths:
+	•	[Strengths list]
+Opportunities for Growth:
+	•	[Development areas list]
+
+ Rating Definitions
+
+Rating
+Description
+Elite
+Very rare, exceptional performance, far surpassing job or skill requirements.
+Pro
+Highly skilled performance, meeting or exceeding job or skill requirements.
+Moderate
+Moderate skills present, shows potential but requires further development.
+Basic
+Foundational skills present, with significant growth needed.
+
+Systems Thinking Rating Definitions
+Level Name
+Mapped Rating
+Description
+Ecosystem Orchestrator
+Elite
+Influences entire industries, ecosystems, and drives macro-level change
+Competitive Strategist
+Pro
+Shapes long-term business strategy and market positioning
+Business Integrator
+Moderate
+Connects different functions to solve cross-functional challenges
+Process Optimizer
+Basic
+
+Improves workflows and efficiency within a defined scope
+Task Executor
+Basic
+Focused on completing specific tasks with clear instructions
+
+
+JSON Format for Sales Interview: Each interview will have different skill categories
+{
+  "case_study_topic": "[Insert case study prompt verbatim]",
+  "summary_ratings": {
+    "sales": "[Elite/Pro/Moderate/Basic]",
+    "ai_native": "[Elite/Pro/Moderate/Basic]",
+    "summary_comment": "[2-sentence summary highlighting strengths and performance across major categories.]"
+  },
+  "detailed_ratings": [
+    {
+      "skill_category": "Prospecting",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    },
+    {
+      "skill_category": "Discovery",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    },
+    {
+      "skill_category": "Solution Selling",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    },
+    {
+      "skill_category": "Objection Handling",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    },
+    {
+      "skill_category": "Closing & Negotiation",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    },
+    {
+      "skill_category": "Account Expansion",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    },
+    {
+      "skill_category": "Communication",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    },
+    {
+      "skill_category": "AI Powered",
+      "what_it_measures": "[What It Measures]",
+      "rating": "[Elite/Pro/Moderate/Basic]",
+      "candidate_example": "[Quote from candidate]",
+      "evaluator_comment": "[Evaluator comment]"
+    }
+  ],
+  "final_comments": {
+    "strengths": [
+      "[Strengths list item 1]",
+      "[Strengths list item 2]",
+      "[Strengths list item 3]"
+    ],
+    "opportunities_for_growth": [
+      "[Development area 1]",
+      "[Development area 2]"
+    ]
+  }
+}
+
+
+Step 4: Employer Hub 
+	•	Candidate Search: Employer can post jobs and search for candidates
+	•	Jobs (Homepage for employer if there are active searches): Employer can post new jobs. Employer can select the name of the past search. The experience is the same as the search page prepopulated with the saved search parameters and shows active status of the Employer can modify the search terms and update this search. Employer can also pause the job search. 
+	•	Hire: This is a page for employers to report hired employees via Skillina introductions and also lists past hired employees.
+	•	Settings: The same fields that recruiter entered while onboarding.
+	•	If work email is changed, verify the email again. Eg: when recruiter changes employer.
+	•	Employers will have 2 email addresses in Settings. 1) Their work email, 2) Their Linkedin Account email which will be personal email. We should send all messages to their work email. So, next to work email there needs to be a message that says “Skillina will only reach out to you using your work email” 
+
+Step 5: Jobs page
+Initial screen: Lists all past searches, recruiter has initiated. For each job, there is Status (Active, Paused, Completed), Date Initiated, Number of Interviewed Candidates, Number of Assigned Interview Candidates, Number of Introduced candidates. Each of the numbers are links that take the employer to the search page with the list of candidates. Employer can select the name of the past search to go to the prefilled search page in a new tab.
+
+Job Search Status definitions:
+	•	Active: Initiated within the past 60 days
+	•	Eligible Actions: Update, Pause, Mark Completed
+	•	Paused: No new interview invites are being sent.
+	•	Eligible Actions: Update, Unpause, Mark Completed
+	•	Completed: Search is marked completed by the recruiter because a role is closed. No new interview invites are being sent. 
+	•	Eligible Actions: Restart Search
+
+Actions:
+	•	Start New Search: Opens Search page in a new tab.
+	•	Update: Opens prefilled search page in a new tab.
+	•	Pause: No new interview invites will be sent. Status is changed to Paused.
+	•	Mark Completed: Status is Marked as Completed. No new interview invites are being sent. 
+	•	Restart Search: same as update, Opens prefilled search page in a new tab. The search moves to Active status.
+
+
+Active Job Searches
+
+
+Start New Search
+Click here to start searching for candidates for a new role.
+
+
+Status of your job searches
+
+Job Name
+Status
+Date Initiated
+Candidates Introduced
+Candidates Interviewed
+Assigned Interviews
+Take Action
+Consumer Marketplaces Product Manger
+Active
+March 25, 2025
+3
+12
+47
+Update 
+Pause
+Mark Completed
+Security SAAS Account Executive
+Paused
+March 20, 2025
+3
+12
+47
+Update 
+Pause
+Mark Completed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Step 6: Hire
+Once an employer has made an offer to a candidate that is accepted (outside of Skillina). There is a page called Hire.
+
+
+Hired someone introduced via Skillina? 
+Fill out the form below and we will send out an invoice to your email in a few days.
+	•	Upload Offer letter
+	•	Enter Job Title
+	•	Candidate Name 
+	•	Enter candidate email
+	•	Total first year compensation (including bonus)
+Past Hired Employees:
+Same candidate module as in Introduced candidates, without the action to assign interviews. 
+
+
+	Future: Automatically calculate amount to be paid and offer payment options
+	•	Calculate amount employer will pay Skillina 
+	•	Payment options
+
+Step 7: Pay Skillina
+	•	Use an accounting software such as https://www.zoho.com/us/invoice/ or https://www.freshbooks.com/invoice to create invoices manually and send to the employer. We will do this manually right now.
+Get Introduced Flow: 
+Once employer clicks on “Get introduced”, the following needs to happen
+	•	Candidate receives an email with an introduction to the recruiter over email from Skillina. 
+	•	Sample text: “Hi <Candidate First Name>, Skillina has been working hard for you in the background to help you land your next role. We are pleased to introduce you to <Recruiter Full Name with Linkedin profile link>, who is interested in chatting with you about a specific role. I will leave it to both of you to connect and discuss opportunities. Best, Skillina. PS: <Candidate First Name>, Please remember that if this introduction leads to employment in the future, you are required to report the employment to Skillina immediately at candidate@skillina.ai. 
+	•	Recruiter receives an email that has the candidate details including candidate fullname, list of past employers, Match Score, interview scores, link to resume and audio interview. 
+	•	Sample text: “Hi <Recruiter First Name>, Thank you for using Skillina to find your perfect candidate. We have introduced <Candidate Full Name> to you over a separate email. Please respond to that email within the next 24 hours and schedule a call with the candidate. Here are the candidate details, which are also available in the Employer Hub on Skillina <link to search result>. Show candidate fullname, list of past employers, Fit Score, interview scores, link to resume and audio interview. <Recruiter First Name>, please remember that if this introduction leads to employment in the future, you are required to report the employment to Skillina immediately under the “Hire” section on Skillina. For any questions, please email to recruiter@skillina.ai
+
+Admin Section
+
+2 Admin Profiles:
+	•	SuperAdmin: Access to all the below admin functionality
+	•	Operator: Access to only the following sections
+	•	Post Jobs
+	•	Assign interviews, Retake and Block candidates
+	•	Provide Refunds
+	•	Recruiter Sign Up Approval 
+	•	Can generate referral links and send to relevant people
+
+Admin should be able to
+	•	See Internal Jobs/Searches
+	•	Employers on the platform
+	•	See Reports
+	•	Create Pricing and assign to employer domains
+
+Cannot See:
+	•	Candidates
+	•	Post External Jobs
+	•	Referral
+	•	Admin settings
+
+1. Post Jobs
+	•	A page where admin can see all the jobs created by recruiters, ordered by date. This includes the job name, job link, description, date searched, company name, recruiter name, # of relevant candidates found (Relevant AI Interviewed candidates, Resume Matched - Not Interviewed). Each job has a status that can be edited: “Not Posted, Actively Posted, Paused, Completed”.
+	•	Post Job page: 
+	•	Admin can take the job description manually, scrub out the company details and obfuscate it. Create a job posting in the admin section. 
+	•	Job Location
+	•	The job posting can be Featured or not.
+	•	The job posting can be evergreen or come with an expiration date. After expiration date, job is Paused and unlisted.
+	•	Each job is mapped to an interview that needs to be taken for the job.
+	•	Featured jobs are posted on the Featured Jobs section.
+	•	From there the admin can post the job on social websites to source candidates.
+2. No Code Deploy Interviews and Grading
+There needs to be admin section to self manage interviews. Only All Access admin can add new interviews or edit interviews.
+
+Every interview has the following fields:
+	•	Interview name
+	•	Grading model ARN: Every interview has a different grading prompt.
+	•	Each Interview has a set of skills mapped to it that is shown in UI to the recruiter. Eg: A product management interview has the following skills assessed: Product Management, Systems Thinking, AI powered, Builder.  The grading model will return specific scores for each skill defined here. These set of skills per interview should be editable by Admin. 
+	•	Interview report template: Define an interview report template that takes the output of the grading model sent using json format and structures it in a html format. The report is displayed in a new screen. For introduced candidates the name is shown. For all other candidates, only candidate ID is shown in the report.  The interview report template should be editable by admin per interview type. Prefer to have a global template, that gets customized per interview. 
+
+Cost savings is the main goal here, given the number of calls and size of tokens. To give you a sense of the costs and why this architecture is important:
+	•	For every job search initiated by the recruiter, we will need to check resume fit of each candidate with the job description.
+	•	For every interview, we will need to generate the grade. 
+
+Grading
+Size of Tokens: 
+Transcript word count: 1700
+Resume word count: 1200
+Prompt word count: 2869
+
+Total Input word count	: 5769
+Total Output word count: 750
+
+Monthly Grading calls: 50,000
+
+Cost with 4o mini: ~$100/month
+Cost with 4o: $3000/month
+
+We can use 4o-mini. Cheap, fast, and get the jobs done with a tight prompt. 
+Resume Fit: 
+
+Resume Fit
+
+resume word count
+1200
+Output
+10
+
+
+Resume Fit Monthly calls
+
+Number of candidates
+100,000
+Job search per employer per month
+5
+Number of employers
+200
+Total resume fit calls
+100,000,000
+
+Cost: $26,715,000 per month using 4o-mini. 
+We need to architect resume fit in a way so that we are not calling OpenAI, but use a semantic similarity model with the resume and job description already having embeddings. So, generate embeddings for resume and job description, and then do cosine similarity. 
+Resume Summary:
+	•	A pre-computed 2 line summary of candidate’s profile that lists years of experience and key differentiators. Example Prompt to model:
+	•	“summarize this resume in 2 sentences in a way that nobody can find out the identity of the individual using Linkedin or online search. Eg: Hide Name, where candidate studied, where candidate worked. However, it should still be interesting enough that people look to hire this person
+—----------------
+
+Architecture Options for the Grading LLM layer: 
+See Grok Chat - https://grok.com/chat/06f89b38-7df8-400f-b79f-fcd230496b6d 
+	•	OpenAI API: Send prompt and inputs(transcript, resume) with every call to OpenAI. You could lock a model in the API call. Starting 250 tokens anything is different than cache purges with openAI api.
+	•	Fine tune a model: Send only inputs (transcript, resume) with every call.
+	•	Responses API: Create an Assistant. Send only inputs (transcript, resume) with every call.
+	•	Just need to use a new thread for each call to Responses API so that the request is stateless. "Stateless Across API Calls: If you use a new thread for each API call, the assistant’s response is based solely on the current input and its predefined instructions, ensuring no influence from previous information outside the thread."
+Need to evaluate cost (token usage) and latency for each option and compare them. 
+
+
+Option
+Model
+Monthly Cost (50,000 requests)
+Latency per Request
+Pros
+Cons
+Prompt + Inputs Every Call
+gpt-4o
+$2,700.00
+203–204s
+No setup cost; simple implementation
+Highest cost; slowest
+
+gpt-4o-mini
+$88.49
+41–42s
+Low cost; no setup
+More tokens than other options
+Fine-Tuned Model
+gpt-4o-mini
+$1,735.57 (first), $87.49 after
+41–42s
+Lowest ongoing cost; token-efficient
+Training cost/setup effort
+Assistants API
+gpt-4o
+$2,666.93
+203–204s
+No training; reusable instructions
+High cost with gpt-4o
+
+gpt-4o-mini
+$87.67
+41–42s
+Low cost; minimal setup
+Minor storage fees; API complexity
+
+
+
+Maybe not needed based on how we architect:
+	•	Change interview prompts
+	•	Every interview will have a field to enter the grading LLM API Access keys
+	•	
+	•	Evaluations: There should be the ability to give feedback to the foundational model on calibrating interview scores by external experts. 
+	•	Each skill has grading terminology mapped to % score levels. Admin should be able to change the score levels and name of grades for each skill.	
+	•	Interview Prompts should be only accessible to admin and stored in encrypted form. Basically, these are like exam papers that should not be leaked, ever. So, security is important here. <Probably we don’t need this here and architect as Custom GPT access keys.
+
+
+Example of skill grading terminology:
+
+Level
+What It Represents
+Example Response (all combined answers)
+Basic (<40%)
+• Restates the prompt without refining (“We have low feature usage”).
+
+• Doesn’t distinguish symptom from possible cause.
+“Our engagement on collaboration tools is down, so I’d ask engineering to fix bugs or refresh the UI—something is broken.”
+
+Emerging (40–60%)
+• Raises a few clarifying questions (“Is this a one-time dip or trend? Which feature specifically?”).
+
+• Starts separating symptom from potential root drivers but remains at a surface level.
+“I’d check usage logs to see if it’s just polls or all features, and I’d ask whether mid-sized teams are hitting a performance issue. Maybe it’s seasonality, or maybe the UI is confusing.”
+
+Strong (60–80%)
+• Quickly scopes to a clear statement: “Feature-usage is down month-over-month among mid-sized teams.”
+
+• Lays out a hypothesis structure (“Quantify drop → validate with user feedback → isolate root causes”).
+
+
+• Uses multiple responses in the interview to refine this framing.
+“First, I’d confirm which in-meeting tools have the steepest adoption decline—polls dropped 25 % in six months at mid-sized accounts—and check if that correlates with churn risk. Then I’d surface potential drivers (e.g., UX discoverability, performance lag, or shifting user behavior) and build root-cause hypotheses we can test.”
+
+Elite (>80%)
+• Anticipates downstream impacts on retention and revenue pipeline (“This drop risks a 10 % retention loss in Q3”).
+
+• Frames root causes in broader context (e.g., competitor moves, market shifts) while still focusing on the current problem scope.
+
+
+• Integrates signals from multiple questions (qualitative, quantitative, long-term vision) to produce a crisp, single‐sentence problem statement with 1–2 testable hypotheses.
+“I’d frame the core problem as: ‘Mid-market teams are abandoning collaboration features because they don’t see immediate ROI—reflected by a 30 % drop in polls over six months—which is driving a 12 % lift in churn-scored support tickets. This likely stems from both a UX disconnect (feature hidden) and a behavior shift where competitors’ solutions auto-suggest collaboration. Our hypothesis: if we optimize discoverability and reintroduce in-session coaching, we should see a ≥20 % adoption lift and mitigate churn risk.”
+
+
+3. Gating Interview Volume
+
+By Default, Candidate Interviews are Gated i.e. Candidates need to pay for interviews. 
+
+Global Allow List:
+Candidates who are not in the allow list here never receive a free interview invite even if their Resume Fit is high.
+	•	Allowed Job Functions: Candidate’s primary job function is in allowed job functions for which interview is available. List of allowed job functions is mentioned by admin here.
+	•	Allowed Locations: Candidate’s location. Options to allow based off City, State, Country, and Metro Area.
+	•	Allowed IP Locations: Candidate’s IP is not from a specific country and state.
+Eg: Only allow Product Management candidates in SF Bay Area to receive free interview invites.
+Resume Fit Definition: 
+For Must Have Semantic mapping, remove the below stopwords from the Must Have query before matching
+STOPWORDS_MUST_HAVES = {
+    'experience', 'background', 'knowledge', 'expertise', 'skills',
+    'proficiency', 'familiarity', 'understanding', 'ability',
+    'strong', 'excellent', 'good', 'solid', 'proven', 'demonstrated',
+    'deep', 'extensive', 'advanced', 'basic',
+    'years', 'year', 'plus', 'minimum', 'at', 'least', 'required', 'preferred',
+    'working', 'managing', 'leading', 'handling', 'developing', 'building',
+    'with', 'in', 'of', 'the', 'and', 'or', 'a', 'an', 'for', 'to'
+}
+
+def clean_must_have(text):
+    words = text.lower().split()
+    filtered = [w for w in words if w not in STOPWORDS_MUST_HAVES]
+    return ' '.join(filtered)
+ 
+	•	First filter resumes based off Job Function and Location
+
+If employer has not entered past companies:
+Calculate resume fit for the filtered candidates based on
+	•	Semantic similarity of resume with each job’s must have (high priority qualification) field: Weight 70%
+	•	Semantic similarity of resume with entire job description+Job Name: Weight 30%
+In candidate search, make job description as mandatory as well. 
+Text: Job Description* (include job responsibilities and qualifications)
+Resume Fit = Must Have Score * 0.7 + Overall Resume Match Score * Overall Resume Weight 30%
+If employer has entered past companies:
+
+Optional field in candidate search
+Text: Past Employers (Please enter comma separated names of employers. Candidates that have worked at these employers will be scored higher. If you don’t have a very targeted list of employers, then please leave this blank.)
+Calculate resume fit for the filtered candidates based on
+	•	Semantic similarity of resume with each job’s must have (high priority qualification) field: Weight 70%
+	•	Match Candidate’s Past Employers field with each company in the Past Employers field from the employer search (high priority qualification) field: Weight 20% (Fuzzy Matching) 
+	•	Basically match each employer in the search to the candidate’s past employer field
+	•	If fuzzy match score >0.7 for any employer then boost Past Employer match score as 1. If not, return 0
+	•	Semantic similarity of resume with entire job description+Job Name: Weight 30%
+Make Past Employer field mandatory for candidates
+Resume Fit = Must Have Score * 0.7 + Overall Resume Match Score * Overall Resume Weight 30% + Past Employer Score * 20% 
+
+—---------------
+
+
+Thresholds:
+"thresholds": {
+    "elite": 0.58,
+    "pro": 0.51,
+    "moderate": 0.3
+    “Basic”: 0
+  },
+  "mapping_range": {
+    "min": 0.6,
+    "max": 0.83
+  },
+  }
+
+[(Must Have #1 Match Score * Weight #1 + Must Have #2 Match Score * Weight #1 + …. )/(Weight #1 + Weight #2 + Weight #3 + Weight #4 + Weight #5) * Overall Must Have Weight 70%] +  [Overall Resume Match Score * Overall Resume Weight 30%]
+Resume Fit Thresholds
+Candidate A Resume (Product) = Job Description 1 Elite
+OR
+Candidate A Resume = Job Description 2 Elite
+OR
+Candidate A Resume = Job Description 3 Elite
+How it was implemented:
+Resume Fit Calculation: We have run similarity between job and resume vector and filtered top 100 because calculating resume fit score against the whole database(1000+ candidates) seemed to be a waste of resources. The 100 profiles are re-ranked after calculating resume fit-score. By finding the top 100 similar profiles first, we only provide the most relevant candidates to the employer for his/her search. This value can be changed easily, however the employer might not find the extra results useful at all. We can also change the logic to calculate weighted similarity only and then fetch top 100. However, the current method is faster(it uses ANN to fetch similar profiles) and takes into account the importance of the job vector(job description, job function, company name). 
+Gate Interview Logic:
+Batch job:
+	•	Select all candidates who signed up in the last 7 days
+	•	Calculate resume fit with all jobs posted in L90days 
+	•	If Resume Fit is Elite, send invite for free interview
+	•	Send only 1 free per job function per candidate ever
+
+Candidates receive free interview invite ONLY when
+	•	Candidate’s resume fit with the recruiter job posted within L90 days is Elite AND Job Location matches with candidate location 
+	•	Candidate’s resume fit with Admin defined job description is Elite and and Job Location matches with  candidate location.
+
+Match Candidate and Job based on the same job function only. No need to match all jobs with every candidate.
+
+Candidates receives paid interview invite ONLY when
+	•	Candidate’s resume fit with the recruiter job is Pro AND Job Location matches with candidate location.
+	•	Candidate’s resume fit with Admin defined job description is Pro and Job Location matches with  candidate location. 
+Admin Jobs:
+	•	Admin jobs could be posted with a dummy recruiter admin account or created with admin <discuss with PGAGI>. Ok to have dummy recruiter admin account to start with.
+	•	Admin jobs could be non-public non-featured jobs. 
+	•	Admin jobs could be evergreen or have an expiration date
+4. Assign interviews, Retake and Block candidates
+	•	See list of all candidates who have uploaded resume
+	•	Assign to candidates for free or paid who have uploaded their resume but not taken interview. 
+	•	Invite to retake interviews for free for candidates who might complain about interview taking issues for free.
+	•	Same search functionality and UX as a recruiter. 
+	•	For Admin: Show candidate names, resume and interview scores. Can assign, retake, or block candidates for free.
+	•	For Operator: Obfuscate candidate name and do not show resume. Can only assign interview for free.
+	•	Can select multiple candidates to assign interviews with one click
+
+Block candidates:
+	•	Block candidates who seem fraudulent so that they do not get in front of recruiters
+	•	Block candidates who we think have conducted AI cheating while interviewing
+5. Provide Refunds
+	•	If a candidate submits a request for refund or if we did not deliver on promise, there needs to be ability to refund a transaction to a candidate.
+6. Pricing for candidates
+	•	Take interview Price
+	•	Retake interview Price
+
+Once updated here, it should reflect in all emails and website.
+7. Search Ranking thresholds
+	•	Admin should be able to define how many total candidates can receive free interview invites based on a certain minimum Resume Fit score (Elite, Pro, Moderate, Basic). So, a rule of (Pro, 75) would mean assign free interviews to max 75 candidates in descending order of Resume Fit (start assigning to Elite first, and then go down to Pro until limit hit).
+	•	Admin should be able to define how many total candidates can receive a paid invite based on a certain minimum  Resume Fit score (Elite, Pro, Moderate, Basic). To represent no limit on candidates, the field can be left blank. Examples:
+	•	(Moderate, 100): assign paid interviews to max 100 candidates in descending order of Resume Fit (start assigning to Elite first, and then go down to Pro until limit hit).
+	•	(Pro): assign paid interviews to all candidates with Elite or Pro Resume Fit.
+8. Referral 
+Referral to attract candidates. 
+
+Only SuperAdmin can create referral contracts with the following fields: 
+	•	Promotion Name
+	•	Referral Fee
+	•	Max Hires Per Link
+	•	Valid Until: Date 
+	•	A referral fee is paid only once per hired candidate during the lifetime of the candidate on the platform.
+
+Default Candidate Referral Contract:
+	•	Fee Amount: $100
+	•	Max Hires Per Link: 1 
+	•	Valid Until: 90 days since account creation, after which it renews with same link for 90 days automatically.  
+
+Marketing of Referrals:
+	•	Auto Generate a referral link per candidate based on default candidate referral contract 
+	•	Include on Interviews Page above What’s Next
+	•	Include in Settings page.
+Text: 
+Your Referral Link: skillina.ai/candidate/referralcode . Earn a $100 Amazon Gift Card when your referred candidate gets hired through Skillina. Limit: [1] hire per referral link. Valid until [Date]. Full terms <link to candidate terms and conditions>.
+	•	SuperAdmin can assign upgraded referral contracts  to existing candidate accounts. Once assigned, the candidate receives the Referral Invitation Email with their new referral link and the new referral link is also available in their Candidate Console. Do not delete old referral links that were given to the candidate as that might be needed for tracking future hires. 
+	•	SuperAdmin can type in multiple email ids and assign a referral contract to them. This generates a unique referral link for each email id and sends the referral link to them. The email id might not be an existing candidate account and could be potential candidates, recruiters or influencers.
+	•	 Post Interview, if the candidate mentioned their experience with Interview was Good/Excellent, then show a message saying Post your experience on LinkedIn and tag @skillina to receive refund on your interview cost. Also, here’s your referral link where you can Earn a $100 Amazon Gift Card when your referred candidate gets hired through Skillina. Limit: [1] hire per referral link. Valid until [Date]. Full terms <link to candidate terms and conditions>.
+
+Generate monthly report of who needs to be paid for the hires made in the month. The payouts will happen as a batch job (Need to figure out how the payouts will be done).
+
+Invite candidates with free interview: 
+	•	Admin/Super Admin should be able to invite candidates who do not have an account to Skillina with a free first interview for a job function using an email address. If the user already has an account, then still send the email and assign free interview to candidate.
+	•	Candidate receives the Candidate Invitation Email, signs up using LinkedIn, the same email is linked in LinkedIn, and the invite is a free interview for the job function. 
+
+9. Recruiter Sign Up Approval
+
+Operator Access
+	•	Review a list of recruiter sign ups with their LinkedIn
+	•	Assign Pricing Contract to the recruiter. 
+	•	Approve or Reject access
+	•	If approved, then send an email to recruiter to verify work email and login
+	•	If access is rejected, then send an email to the recruiter that their access was rejected. 
+	•	Rejected applicants can be reinstated by admin.
+
+9.1. Recruiter Pricing Contracts
+Operator Access
+	•	Ability to create new pricing contracts that are negotiated with employers
+	•	Each Pricing Contract has following fields
+	•	Discounted Price for first hire: 
+	•	Price per Hire Per Job Function (can be described in % and $)
+	•	Min value: 15% and $10,000 for Operator Access. No min value for All Access Admin.
+	•	Bulk Hire Discounts can also be included. Fields for Bulk hire contract
+	•	% discount
+	•	Number of candidates
+	•	Bulk Hire Contract Start Date
+	•	End date of Contract: this is the date by when candidate needs to be hired. 
+Max value for Bulk Discount: 20% for Operator Access. No max value for All Access Admin.
+
+	•	Pricing contracts can be mentioned as default or not. If default, it is the default contract assigned to every approved recruiter unless changes. 
+
+Example:
+Discounted price for first hire: $10,000 flat fee.
+
+• IC Product Managers: 18% 
+• Account Executives: 18% 
+• Pre Sales Engineers: 18% 
+• Product Marketing: 18% 
+• Consumer Marketing: 18% 
+
+• 20% discount per hired candidate if more than 5 candidates are hired by your company before Dec 31, 2025
+
+There is a list of all recruiters on the platform and recruiters from a specific company domain can be assigned a new custom contract.
+10. Reporting Dashboards
+
+Filters: 
+	•	Time: Past Day, Past Week, Past Month, Past 6 months, Forever
+	•	Job function
+	•	Location
+	•	Candidate Interview Rating per job function
+
+Metrics:
+	•	Funnel Metrics:
+	•	Candidate
+	•	Visit to homepage or job page
+	•	Uploaded resume
+	•	Eligible for Interview
+	•	Completed Interview
+	•	Got Introduced
+	•	Employer
+	•	Request to Access
+	•	Registered
+	•	Posted Job
+	•	Got Introduced to candidate
+	•	Cohort metrics
+	•	Candidate: Cohort based off uploaded resume date
+	•	Uploaded resume
+	•	Eligible for Interview
+	•	Completed Interview
+	•	Got Introduced
+	•	Employer: Cohort based off Registered
+	•	Registered
+	•	Posted Job
+	•	Got Introduced to candidate
+	•	Referral Spend
+
+
+11. Curated Marketing Email Candidate List Generation
+
+Use case: Operator or SuperAdmin want to invite potential recruiters to Skillina. They goto a public job description, put it in skillina and get a list of 3 relevant candidates. We send this to recruiters and TA leaders asking them to sign up. 
+
+Input: 
+	•	Job link and Must Haves
+	•	Return format:
+	
+Candidate 1:
+Overall Fit (Resume and Skills): Pro 
+Resume Highlights: [Brief Resume Highlight]
+Interview Scores: [Product Management - Elite, AI-Native - Pro]
+Resume Fit: Elite
+
+Candidate 2:
+Overall Fit (Resume and Skills): Pro 
+Resume Highlights: [Brief Resume Highlight]
+Interview Scores: [Product Management - Elite, AI-Native - Pro]
+Resume Fit: Elite
+
+Candidate 3:
+Overall Fit (Resume and Skills): Pro 
+Resume Highlights: [Brief Resume Highlight]
+Interview Scores: [Product Management - Elite, AI-Native - Pro]
+Resume Fit: Elite
+
+—-------------End Admin Section—-------
+Referral Experience
+Referral Marketing: 
+
+	•	Admin is able to generate a personalized referral link and message that can be forwarded in bulk over whatsapp or LinkedIn or email personally to their connections based on whatsapp contact, email address, or LinkedIn messaging. The message says
+	
+	“Hi - I am starting up a platform that helps assess the skills of candidates using Voice AI. I am looking to seed the marketplace platform with top PMs. I’d greatly appreciate it if you can post the below message on your LinkedIn with your personal referral link www.skillina.ai/referral/kjwq123 . As a token of appreciation, I’d be happy to give you $x if your referrals get hired, up to a maximum of 3 hires in the next 6 months. Thank you!”
+
+Message to post:
+Product Managers - Get Noticed Based on Pre-Vetted Skills And Not Just Experience.
+
+Tired of applying to jobs and doing the same interviews with every company?
+
+One of my friends has created Skillina where you apply and interview once with an AI interviewer. Skillina does the hard work to assess your skills, and find that perfect job for you based on your skills and experience. 
+
+ You can use my referral link www.skillina.ai/referral/kjwq123 to sign up.
+
+	•	Admin is able to select registered top candidates, hired candidates, and recruiters who can receive a referral link to invite other top candidates. Referral link is sent via email.
+	•	Referrals and personalized message can also be generated using a public link, which people can request for referral code. Will set this up as a form as needed and then approve referral codes accordingly.
+
+Post hire payment:
+	•	The person who refers gets paid a referral fee if the candidate who signed up and interviewed due to their referral link, gets a job using Skillina. During sign up, referral code is assigned to the candidate.
+	•	Once a month, a process runs to give out the referral fee. 
+
+Drive Employer Adoption
+Do this only after candidates are seeded
+
+V1:
+	•	Get a list of recruiter emails
+	•	Send them an email every two weeks explaining how they can find best candidates who are already interviewed immediately
+	•	Put 3 curated candidates across functions in the email
+
+Future
+	•	Run a query every week, that finds top 3 candidates per role. Only send if the candidate Fit Score is greater than x
+	•	Send the candidates per role to recruiters from that company via email.
+
+
+
+Employer Invitation Model e2e Experience
+v1
+	•	Employer can configure a unique white labeled link with employer logo and link. Eg: https://app.skillina.ai/pgagi . This link takes the candidate to the sign in page (not upload resume) with pgagi as the referrer employer (new field). 
+	•	Employer sends out invite to interview to all candidates using their ATS and their Skillina link clearly mentioning which interview to take. 
+	•	Candidate gets first interview free on Skillina, any job function, if they sign up using the employer link. Candidate needs to pay to retake interview. Interview is free only for 30 days after the candidate signs up.
+	•	If candidate is already signed up on Skillina previously and comes to Skillina using employer link
+	•	Offer free first interview for 30 days after sign in for any interview the candidate has not interviewed for in the past
+	•	Do not offer free retake at any point. 
+	•	Employer can login into Skillina. There is a new tab on the employer side saying “Skill Reports”. In Skill reports, employer can upload a candidate list using their emails with “Upload Candidates” CTA for a specific role. Once employer selects a job function, Employer sees an interview report table of all candidates that  
+	•	Have interviewed using the employers link and taken that interview AND
+	•	Uploaded candidate emails by employer.
+For each candidate, show their overall interview scores, date they took the interview, job function interview taken, Candidate Source (Sign Up, Upload). Employers can filter candidate by Candidate Source and Sort by Overall interview scores,
+
+Potential issue: The candidate email from employer needs to map to a unique id on Skillina. All is good, when the candidate uses same email to apply at recruiter and their Linkedin account email (which Skillina uses). What if it is different?
+	•	Add a new field on Skillina Candidate Profile page. “Email address on resume (if this is different from your LinkedIn email”. We can use this field as well to match candidates uploaded by employer. 
+
+
+Emails Required for Skillina Talent Marketplace
+
+Marketing vs Transactional Emails:
+TRANSACTIONAL EMAILS (No unsubscribe needed):
+Candidate Emails:
+	•	✅ Candidate Free Interview Invite Email - Direct response to user action
+	•	✅ Candidate Free Interview Reminder Email - Service reminder for scheduled interview
+	•	✅ Candidate Introduction to Recruiter Email - Core service delivery
+	•	✅ Post-Interview Completion Email - Service confirmation/next steps
+	•	✅ Referral Success Email - Transaction confirmation
+	•	Candidate Post-Introduction Follow-up Email
+Recruiter/Employer Emails:
+	•	✅ Recruiter Account Approval Email - Account status notification
+	•	✅ Recruiter Account Rejection Email - Account status notification
+	•	✅ Pricing Confirmation Email - Payment/subscription confirmation
+	•	✅ Candidate Introduction to Recruiter Email - Core service delivery
+	•	✅ Interview Completion Notification to Recruiter - Service update
+	•	Recruiter Post-Job Creation Follow-up Email
+Administrative:
+	•	✅ Refund Confirmation Email - Transaction confirmation
+MARKETING EMAILS (Need unsubscribe):
+Candidate Emails:
+	•	Candidate Paid Interview Reminder Email (10 days after upload if no invite) - This is promotional, encouraging paid service
+	•	Candidate Paid Retake Interview Email - Promoting additional paid service
+	•	Referral Invitation Email - Promotional, asking for referrals
+	•	Curated Candidates Email - Promotional content to recruiters
+	•	Candidate Invitation Email
+ 
+Candidate Emails
+Send from: candidate@skillina.ai
+	•	Candidate Free (or paid) Interview Invite Email
+	•	When to send: When candidate is invited for interview by admin or recruiter search
+	•	Subject: You've been invited to interview on Skillina
+Copy:  Hi [Candidate First Name],
+
+Congratulations! A recruiter has found your profile to be relevant on Skillina and would like you to complete a 15-minute AI interview for [Job Function] role for free <or for a nominal fee of $1.95>. Please complete this interview as soon as possible within the next 7 days.
+
+Taking this interview will significantly increase your chances of being contacted by recruiters from top companies, saving you the effort of applying and interviewing at every company.
+
+[BUTTON: Take Interview Now]
+
+Your interview will be based on a case study or role play related to your job function.
+
+If you're not ready to take the interview now, you can schedule it for later by clicking below:
+[BUTTON: Schedule Interview]
+
+Best regards,
+Skillina AI 
+Footer:  © 2025 Skillina AI LLC. All rights reserved. 
+	•	Candidate Free (or paid) Interview Reminder Email
+	•	When to send: When candidate has not taken the interview 7 days after the initial invite.
+	•	Subject: You've been invited to interview on Skillina
+Copy:  Hi [Candidate First Name],
+
+Reminder! A recruiter has found your profile to be relevant on Skillina and would like you to complete a 15-minute AI interview for [Job Function] role for free  <or for a nominal fee of $1.95>. Please complete this interview as soon as possible within the next few days.
+
+Taking this interview will significantly increase your chances of being contacted by recruiters from top companies, saving you the effort of applying and interviewing at every company.
+
+[BUTTON: Take Interview Now]
+
+Your interview will be based on a case study or role play related to your job function.
+
+If you're not ready to take the interview now, you can schedule it for later by clicking below:
+[BUTTON: Schedule Interview]
+
+Best regards,
+Skillina AI 
+Footer:  © 2025 Skillina AI LLC. All rights reserved.
+	•	To unsubscribe from these emails, click here. 
+	•	Candidate Interview Reminder Email (10 days after upload if no invite)
+	•	Subject: Complete your AI interview on Skillina
+Copy:  Hi [Candidate First Name],
+
+We noticed you uploaded your resume to Skillina but haven't completed your AI interview yet.
+
+Taking the 15-minute AI interview will significantly increase your chances of being matched with recruiters from top companies.
+
+[BUTTON: Take Interview for $1.95]
+
+The payment helps us cover the costs of conducting the interview and presenting your profile to relevant recruiters.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Candidate Introduction to Recruiter Email
+	•	Subject: You've been matched with a recruiter on Skillina
+Copy:  Hi [Candidate First Name],
+
+Skillina has been working hard for you in the background to help you land your next role. We are pleased to introduce you to [Recruiter Full Name] (CCed) from [Company Name], who is interested in chatting with you about a specific role.
+
+Recruiter LinkedIn: [Recruiter LinkedIn profile link]
+
+I will leave it to both of you to connect and discuss opportunities.
+
+Best,
+Skillina AI
+
+	•	PS: [Candidate First Name], please remember that if this introduction leads to employment in the future, you are required to report the employment to Skillina immediately at candidate@Skillina.ai.  
+	•	Footer: Same as above
+
+	•	Post-Interview Completion Email
+	•	Subject: Your Skillina AI interview results are ready
+Copy:  Hi [Candidate First Name],
+
+Congratulations on completing your [Job Function] interview on Skillina!
+
+Your [Job Function] Interview Rating: [Rating]
+
+Not happy with your interview performance? You can retake the interview for $[x].
+
+[BUTTON: Retake Interview]
+
+What's Next?
+We will introduce you to recruiters over email once they express interest in you. This could take time depending on your profile, interview feedback, and available jobs.
+
+Please ensure your resume is always updated on Skillina.
+
+Remember: If you get hired by an employer who was introduced via Skillina, you are required to report your employment within 7 days of joining to candidate@Skillina.ai with subject as “HIRED”.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Referral Invitation Email
+	•	Subject: Invite your network to Skillina and earn referral fees
+Copy:  Hi [Candidate First Name],
+
+Thanks for being part of the Skillina talent community! We'd like to invite you to refer other top professionals to our platform.
+
+You will earn a $100 Amazon Gift Card when your referred candidate gets hired through Skillina. Limit: [1] hire per referral link. Valid until [Date]. Full terms <link to candidate terms and conditions>.
+
+Share your unique referral link with qualified candidates:
+[Referral Link]
+
+How it works:
+1. Share your link with qualified professionals
+2. They sign up and complete an AI interview
+3. If they get hired through Skillina, you earn $[amount]
+
+Thanks for helping us grow the Skillina community!
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Referral Success Email
+	•	Subject: Your Skillina referral was successful!
+Copy:  Hi [Candidate First Name],
+
+Great news! [Referred Candidate First Name], whom you referred to Skillina, has been hired through our platform.
+
+We will process your referral reward soon. 
+
+Thank you for helping us connect top talent with great opportunities!
+
+[BUTTON: Refer More Candidates]
+
+Best regards,
+	•	Skillina 
+	•	Footer: Same as above
+
+	•	Candidate Post-Introduction Follow-up Email (60 days after introduction)
+Subject: How did your Skillina introduction go?
+Hi [Candidate First Name],
+It's been 60 days since we introduced you to [Recruiter First Name] at [Company Name] through Skillina. We hope the connection was valuable for you!
+We'd love to hear about your experience to help us improve our service. Could you take a moment to let us know:
+**Did you interview with [Company Name]?**
+☐ Yes, I interviewed with them
+☐ No, I didn't interview with them
+☐ We're still in the process of scheduling
+**What was the outcome?**
+☐ I was hired by this company
+☐ I received an offer but declined
+☐ I wasn't selected for the role
+☐ The process is still ongoing
+☐ The recruiter never contacted me
+
+**How satisfied were you with this introduction?**
+☐ Very satisfied
+☐ Satisfied
+☐ Neutral
+☐ Dissatisfied
+☐ Very dissatisfied
+[BUTTON: Complete Quick Survey]
+**Important Reminder:** If you were hired by [Company Name] or any other company introduced through Skillina, please report your employment immediately at candidate@skillina.ai with Subject as “HIRED”. This helps us continue providing our service to other candidates.
+Your feedback is invaluable in helping us connect top talent with great opportunities. Thank you for being part of the Skillina community!
+Best regards,
+The Skillina Team
+P.S. Still looking for opportunities? Update your profile and we'll continue working to find your perfect match.
+
+	•	Candidate Invitation Email
+	•	Subject: Skillina AI: Land High-Paying AI Native Jobs
+Copy:  Hi, 
+Introducing Skillina AI - an exclusive community of vetted Elite Sales professionals. I want you to be one of the first candidates on the platform by offering you a free first interview.
+Take a free ~15-minute AI audio interview in the next 7 days. It tests how you operate and use AI through a real case study - no prep needed. 
+Then? Companies compete for you. We use your interview results and resume to match you with jobs. You can retake the interview any time. 
+Claim Your Free 15-Min Interview
+Seriously, 15 minutes today could change your job search tomorrow for free. 
+You in?
+
+Best regards,
+Skillina AI
+
+Recruiter/Employer Emails
+	•	Recruiter Account Approval Email
+	•	Subject: Your Skillina account has been approved
+Copy:  Hi [Recruiter First Name],
+
+Great news! Your request to access Skillina's talent marketplace has been approved.
+
+To complete your account setup, please verify your email address by clicking the button below:
+
+[BUTTON: Verify Email]
+
+Once verified, you'll be able to Login using LinkedIn and access our pool of pre-vetted candidates.
+
+With Skillina, you can:
+- Post Jobs
+- Search for pre-vetted AI native candidates 
+- Get introduced to candidates that match your requirements
+- Pay only when you hire
+
+If you have any questions, please contact recruiter@Skillina.ai.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Recruiter Account Rejection Email
+	•	Subject: Update on your Skillina account request
+Copy:  Hi [Recruiter First Name],
+
+Thank you for your interest in accessing Skillina's talent marketplace.
+
+After reviewing your application, we're unable to approve your recruiter account access at this time. If you were looking to sign up as a candidate, please Sign up as a Candidate
+
+If you believe this decision was made in error or if you'd like to provide additional information, please contact recruiter@Skillina.ai.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Price Change Email
+Subject: Your Skillina pricing has changed
+Copy:  Hi [Recruiter First Name],
+
+Your pricing terms have been changed. Below is your new pricing on Skillina AI.
+
+**Skillina Pricing**
+
+1. Posting jobs, searching for candidates, and sourcing candidates is **FREE** on Skillina.
+2. You pay only when you hire a candidate sourced via Skillina.
+
+**Your Pricing Structure:**
+• IC Product Managers: 15%
+• Account Executives: 20%
+• Pre Sales Engineers: 25%
+• 15% per hired candidate if more than 3 candidates are hired within 12 months using Skillina
+
+This pricing will apply to all your hires made through the Skillina platform. You'll receive an invoice after each successful placement.
+
+Ready to start hiring? Log in to your account and begin searching for top talent:
+
+[BUTTON: Start Searching]
+
+If you have any questions about your pricing or need assistance, please contact recruiter@skillina.ai.
+
+Best regards,
+Skillina AI
+
+
+	•	Candidate Introduction to Recruiter Email
+	•	Subject: Your candidate introduction on Skillina
+Copy:  Hi [Recruiter First Name],
+
+Thank you for using Skillina AI to find your perfect candidate. We have introduced [Candidate Full Name] to you over a separate email.
+
+Please respond to that email within the next 24 hours and schedule a call with the candidate.
+
+Here are the candidate details, which are also available in the "Candidate Search" page on Skillina:
+
+Candidate: [Candidate Full Name]
+Overall Fit Score: Pro
+Past Employers: [List of past employers]
+Resume Fit Score: Pro 
+Interview Scores: [Product Management - Elite, AI-Native - Pro]
+
+[BUTTON: View Resume]
+[BUTTON: View Interview Report]
+
+Please remember that if this introduction leads to employment in the future, you are required to report the employment to Skillina immediately under the "Hire" section on Skillina.
+
+For any questions, please email recruiter@Skillina.ai.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Interview Completion Notification to Recruiter
+When to send? 
+Send to all candidates who have been assigned interview based on recruiter search whether automated or manually.
+	•	Subject: Candidate completed AI interview on Skillina
+Copy:  Hi [Recruiter First Name],
+
+Good news! The candidate you assigned an interview to has completed their [Job Function] interview on Skillina.
+
+Candidate ID: [Candidate ID]
+<Interview Name> Interview Scores: [Product Management - Elite, AI-Native - Pro]
+Overall Fit Score: Pro
+
+[BUTTON: View Interview Report]
+
+This candidate has been added to your "AI Interviewed Candidates" list for your [Job Title] search.
+
+If you'd like to connect with this candidate, click "Get Introduced" on their profile.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Candidate Search Initiate Confirmation Email
+	When to send: 6 hours after the recruiter starts a new search and leaves session.
+	•	Subject: We are working hard to find you Elite Candidates
+Copy:  Hi [Recruiter First Name],
+
+Thank you for initiating the below search with Skillina AI.
+
+Job Title: [Job Title]
+
+Here's what we're doing to help you find the perfect candidate:
+
+1. We've assigned AI interviews to [Number] candidates with relevant resumes on Skillina
+2. We've initiated an External Search for candidates not on our platform
+
+We'll keep you updated as relevant candidates complete their AI interviews.
+
+Want to modify your search criteria? Click below:
+[BUTTON: Modify Search]
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Recruiter Post-Job Creation Follow-up Email (30 days after job creation)
+	•	Subject: Update on your [Job Title] search on Skillina
+Hi [Recruiter First Name],
+It's been 30 days since you started your search for [Job Title] on Skillina. We hope our platform has been helpful in finding quality candidates for your role!
+We'd appreciate a quick update on your hiring progress:
+**Have you filled the [Job Title] position?**
+☐ Yes, we hired someone
+☐ No, we're still hiring
+☐ We've paused the search
+☐ We've cancelled the search
+
+**If you hired someone, was the candidate introduced by Skillina?**
+☐ Yes, we hired a candidate introduced by Skillina
+☐ No, we hired someone from another source
+☐ We haven't made a hire yet
+**If you hired a Skillina candidate, have you reported the hire?**
+☐ Yes, I've already reported the hire
+☐ No, I need to report the hire now
+☐ Not applicable
+	[BUTTON: Search Candidates]
+[BUTTON: Report a Hire]
+
+**Your Current Search Stats:**
+- Candidates introduced: [Number]
+- Total candidates viewed: [Number]
+- Active candidates in pipeline: [Number]
+
+**Need Help?**
+If you're still hiring, we can help you:
+- Assign more AI interviews to expand your candidate pool
+- Refine your search criteria
+- Source additional external candidates
+
+[BUTTON: Search Candidates]
+
+**Important Reminder:** If you hired a candidate introduced through Skillina, please report the hire under the "Hire" section on your dashboard or contact recruiter@skillina.ai with subject “HIRED”. This ensures proper invoicing and helps us improve our service.
+Thank you for choosing Skillina to find your next great hire!
+Best regards,
+The Skillina Team
+
+	•	FUTURE: Weekly Candidate Updates Email
+	•	Subject: Your weekly candidate updates from Skillina
+Copy:  Hi [Recruiter First Name],
+
+Here's your weekly update on your active job searches on Skillina:
+
+[Job Title 1]:
+- New interviewed candidates: [Number]
+- New assigned interviews: [Number]
+- Total candidates available: [Number]
+
+[Job Title 2]:
+- New interviewed candidates: [Number]
+- New assigned interviews: [Number]
+- Total candidates available: [Number]
+
+[BUTTON: View All Candidates]
+
+
+Best regards,
+	•	Skillina 
+	•	Footer: Same as above
+
+	•	Curated Candidates Email
+	•	Marketing email, configure on email platform such as hubspot or Linkedin
+	•	Subject: Top candidates for [Job Function] roles on Skillina
+Copy:  Hi [Recruiter First Name],
+
+We've curated some candidates for [Job Function] roles that might be perfect for your company.
+
+Candidate 1:
+Overall Fit (Resume and Skills): Pro 
+Resume Highlights: [Brief Resume Highlight]
+Interview Scores: [Product Management - Elite, AI-Native - Pro]
+Resume Fit: Elite
+
+Candidate 2:
+Overall Fit (Resume and Skills): Pro 
+Resume Highlights: [Brief Resume Highlight]
+Interview Scores: [Product Management - Elite, AI-Native - Pro]
+Resume Fit: Elite
+
+Candidate 3:
+Overall Fit (Resume and Skills): Pro 
+Resume Highlights: [Brief Resume Highlight]
+Interview Scores: [Product Management - Elite, AI-Native - Pro]
+Resume Fit: Elite
+
+[BUTTON: See All Relevant Candidates]
+
+Remember, on Skillina you only pay when you hire!
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+	•	Hiring Confirmation Email
+	•	Subject: Invoice for your recent hire on Skillina
+Copy:  Hi [Recruiter First Name],
+
+Thank you for reporting your recent hire through Skillina. We're delighted that we could help you find the perfect candidate!
+
+Here's a summary of the reported hire:
+
+Candidate: [Candidate Name]
+Job Title: [Job Title]
+Start Date: [Start Date]
+
+Your invoice will be sent separately to your email address within the next few business days.
+
+If you have any questions about your invoice or payment, please contact recruiter@Skillina.ai.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+Administrative Emails
+15.  Refund Confirmation Email
+	•	Subject: Your Skillina refund has been processed
+Copy:  Hi [Candidate First Name],
+
+We have processed a refund for you.
+
+Amount: $[amount]
+Transaction ID: [Transaction ID]
+Payment Method: [Payment Method]
+
+The refund should appear in your account within [timeframe], depending on your financial institution.
+
+If you have any questions about this refund, please contact candidate@Skillina.ai.
+
+Best regards,
+Skillina AI 
+	•	Footer: Same as above
+
+
+
+

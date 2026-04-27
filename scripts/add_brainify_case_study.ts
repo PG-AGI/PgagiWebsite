@@ -12,7 +12,7 @@ async function run() {
     const caseStudy = {
       slug: 'brainify-edtech-platform',
       contentType: 'Technical Architecture Report',
-      coverImage: '/assets/CaseStudies/brainify-cover.png',
+      coverImage: '/images/cs_edtech_brainify_v3.png',
       title: 'Ed Tech Platform (brAInify) : AI-Powered Gamified Learning Platform',
       publishDate: 'April 25, 2026',
       readTime: '6 min read',
@@ -36,11 +36,11 @@ async function run() {
             },
             {
               type: 'paragraph',
-              content: 'The platform will initially support six independent learning paths:\n- AI Path\n- Creator Path\n- Trader Path\n- Crypto Path\n- Financial Literacy Path\n- Youth Path'
+              content: 'The platform will initially support six independent learning paths: AI Path, Creator Path, Trader Path, Crypto Path, Financial Literacy Path, and Youth Path.'
             },
             {
               type: 'paragraph',
-              content: 'Each learning path follows a strict progression hierarchy:\n- 3 Levels per Path\n- Foundational\n- Builder\n- Mastery\n- 8–10 Units per Level'
+              content: 'Each learning path follows a strict progression hierarchy, including 3 Levels per Path (Foundational, Builder, Mastery) and 8–10 Units per Level.'
             },
             {
               type: 'paragraph',
@@ -102,7 +102,43 @@ async function run() {
             },
             {
               type: 'paragraph',
-              content: 'Core user actions supported in this layer include:\n- Account registration and login\n- Invite-based course/path unlocking\n- Daily lesson participation\n- AI-assisted answer review\n- XP and reward collection\n- Streak maintenance\n- Learning path progression\n- Revision and recommendation interactions\n- Feedback / review submissions'
+              content: 'Core user actions supported in this layer include:'
+            },
+            {
+              type: 'paragraph',
+              content: '• Account registration and login'
+            },
+            {
+              type: 'paragraph',
+              content: '• Invite-based course/path unlocking'
+            },
+            {
+              type: 'paragraph',
+              content: '• Daily lesson participation'
+            },
+            {
+              type: 'paragraph',
+              content: '• AI-assisted answer review'
+            },
+            {
+              type: 'paragraph',
+              content: '• XP and reward collection'
+            },
+            {
+              type: 'paragraph',
+              content: '• Streak maintenance'
+            },
+            {
+              type: 'paragraph',
+              content: '• Learning path progression'
+            },
+            {
+              type: 'paragraph',
+              content: '• Revision and recommendation interactions'
+            },
+            {
+              type: 'paragraph',
+              content: '• Feedback / review submissions'
             },
             {
               type: 'highlight',
@@ -118,7 +154,27 @@ async function run() {
             },
             {
               type: 'paragraph',
-              content: 'Primary frontend modules include:\n\n**Onboarding & Access Interfaces**\n- Invite code entry screens\n- Registration / login screens\n- Session restoration and persistent authentication\n- Initial course unlock and entitlement flows\n\n**Learning Experience Interfaces**\n- Dashboard and continue-learning view\n- Path / level / unit navigation screens\n- Lesson content and interaction screens\n- Answer submission and evaluation UI\n- AI feedback / explanation views\n\n**Gamification Interfaces**\n- XP gain animations\n- Streak indicators\n- Progress bars\n- Reward / celebration screens\n- Level completion / milestone popups\n\n**Progress & Review Interfaces**\n- User progress summaries\n- Weak area review prompts\n- Suggested revision lessons\n- Learning history views\n\n**Admin / Internal Analytics Interfaces**\n- Internal dashboard views\n- Course performance monitoring\n- User progression visualization\n- Review / feedback moderation'
+              content: 'Primary frontend modules include:'
+            },
+            {
+              type: 'paragraph',
+              content: 'Onboarding & Access Interfaces: Invite code entry screens, Registration / login screens, Session restoration and persistent authentication, and Initial course unlock and entitlement flows.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Learning Experience Interfaces: Dashboard and continue-learning view, Path / level / unit navigation screens, Lesson content and interaction screens, Answer submission and evaluation UI, and AI feedback / explanation views.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Gamification Interfaces: XP gain animations, Streak indicators, Progress bars, Reward / celebration screens, and Level completion / milestone popups.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Progress & Review Interfaces: User progress summaries, Weak area review prompts, Suggested revision lessons, and Learning history views.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Admin / Internal Analytics Interfaces: Internal dashboard views, Course performance monitoring, User progression visualization, and Review / feedback moderation.'
             },
             {
               type: 'paragraph',
@@ -134,7 +190,15 @@ async function run() {
             },
             {
               type: 'paragraph',
-              content: '**Authentication Responsibilities**\n- User registration and account creation\n- Login / logout handling\n- Password reset / recovery\n- Token issuance and refresh flows\n- Session expiration handling\n\n**Authorization Responsibilities**\n- Secure route / API protection\n- Role-based permission enforcement\n- Admin vs learner access segmentation\n- Internal dashboard access control\n\n**Identity Mapping Responsibilities**\n- Link progress to authenticated user\n- Link entitlements to account\n- Maintain user profile metadata\n- Persist language and personalization preferences'
+              content: 'Authentication Responsibilities: User registration and account creation, Login / logout handling, Password reset / recovery, Token issuance and refresh flows, and Session expiration handling.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Authorization Responsibilities: Secure route / API protection, Role-based permission enforcement, Admin vs learner access segmentation, and Internal dashboard access control.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Identity Mapping Responsibilities: Link progress to authenticated user, Link entitlements to account, Maintain user profile metadata, and Persist language and personalization preferences.'
             },
             {
               type: 'highlight',
@@ -278,7 +342,7 @@ async function run() {
             },
             {
               type: 'paragraph',
-              content: 'Core Metrics Tracked:\n- Total Platform Users\n- Users Per Course\n- Course Enrollment Distribution\n- Progress by Path / Level / Unit / Lesson\n- Completion Rates\n- XP Velocity\n- Accuracy Trends\n- Lesson Drop-Off Points\n- Feedback / Review Data'
+              content: 'Core Metrics Tracked: Total Platform Users, Users Per Course, Course Enrollment Distribution, Progress by Path / Level / Unit / Lesson, Completion Rates, XP Velocity, Accuracy Trends, Lesson Drop-Off Points, and Feedback / Review Data.'
             },
             {
               type: 'paragraph',
@@ -291,39 +355,39 @@ async function run() {
           content: [
             {
               type: 'paragraph',
-              content: '**Week 1 — Product Foundation & Architecture**\nFinalize learning hierarchy and gamification rules. Lock user flow and architecture. Initialize frontend/backend projects.'
+              content: 'Week 1 — Product Foundation & Architecture: Finalize learning hierarchy and gamification rules. Lock user flow and architecture. Initialize frontend/backend projects.'
             },
             {
               type: 'paragraph',
-              content: '**Week 2 — Authentication & Invite Access**\nAuth system implementation. Invite code validation service. Onboarding UI and entitlement flows.'
+              content: 'Week 2 — Authentication & Invite Access: Auth system implementation. Invite code validation service. Onboarding UI and entitlement flows.'
             },
             {
               type: 'paragraph',
-              content: '**Week 3 — Dashboard & Learning Structure**\nLearning hierarchy engine. Dashboard UI. Path / Level / Unit progression APIs.'
+              content: 'Week 3 — Dashboard & Learning Structure: Learning hierarchy engine. Dashboard UI. Path / Level / Unit progression APIs.'
             },
             {
               type: 'paragraph',
-              content: '**Week 4 — Core Lesson Experience**\nLesson engine. Lesson APIs. Learning screens. Core learning loop integration.'
+              content: 'Week 4 — Core Lesson Experience: Lesson engine. Lesson APIs. Learning screens. Core learning loop integration.'
             },
             {
               type: 'paragraph',
-              content: '**Week 5 — Gamification Systems**\nXP engine. Streak tracking. Rewards UI. Level unlock logic.'
+              content: 'Week 5 — Gamification Systems: XP engine. Streak tracking. Rewards UI. Level unlock logic.'
             },
             {
               type: 'paragraph',
-              content: '**Week 6 — AI Learning Intelligence**\nAI evaluation pipeline. Adaptive difficulty engine. Revision recommendation logic.'
+              content: 'Week 6 — AI Learning Intelligence: AI evaluation pipeline. Adaptive difficulty engine. Revision recommendation logic.'
             },
             {
               type: 'paragraph',
-              content: '**Week 7–8 — Analytics & Admin Dashboard**\nActivity logging. Aggregation pipelines. Admin dashboard frontend/backend.'
+              content: 'Week 7–8 — Analytics & Admin Dashboard: Activity logging. Aggregation pipelines. Admin dashboard frontend/backend.'
             },
             {
               type: 'paragraph',
-              content: '**Week 9 — Platform Hardening**\nPerformance optimization. Security validation. Multi-path support. Future extensibility hooks.'
+              content: 'Week 9 — Platform Hardening: Performance optimization. Security validation. Multi-path support. Future extensibility hooks.'
             },
             {
               type: 'paragraph',
-              content: '**Week 10 — QA & Final Delivery**\nEnd-to-end testing. Edge-case validation. Bug fixing. Final demo. Documentation & handover.'
+              content: 'Week 10 — QA & Final Delivery: End-to-end testing. Edge-case validation. Bug fixing. Final demo. Documentation & handover.'
             }
           ]
         },
@@ -332,11 +396,23 @@ async function run() {
           content: [
             {
               type: 'paragraph',
-              content: 'Upon final delivery, the following will be included:\n\n**Documentation Deliverables**\n- System Architecture Documentation\n- API Documentation\n- Database Schema References\n- Deployment Guides\n- Environment Setup Instructions\n- Troubleshooting Guides\n\n**Security Deliverables**\n- Secure credential handling\n- Environment variable management\n- Secret rotation before handover\n- Removal of hardcoded credentials\n\n**Code Handover**\n- GitHub / Private Repository Transfer\n- Full Version History\n- Structured Branch Strategy\n- Production-Ready Codebase'
+              content: 'Upon final delivery, the following will be included:'
             },
             {
               type: 'paragraph',
-              content: '**IP Ownership**\nFull intellectual property ownership of: Source Code, Learning Systems, Architecture, AI Logic, Platform Workflows. Transferred to client upon final settlement.'
+              content: 'Documentation Deliverables: System Architecture Documentation, API Documentation, Database Schema References, Deployment Guides, Environment Setup Instructions, and Troubleshooting Guides.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Security Deliverables: Secure credential handling, Environment variable management, Secret rotation before handover, and Removal of hardcoded credentials.'
+            },
+            {
+              type: 'paragraph',
+              content: 'Code Handover: GitHub / Private Repository Transfer, Full Version History, Structured Branch Strategy, and Production-Ready Codebase.'
+            },
+            {
+              type: 'paragraph',
+              content: 'IP Ownership: Full intellectual property ownership of Source Code, Learning Systems, Architecture, AI Logic, and Platform Workflows. Transferred to client upon final settlement.'
             }
           ]
         },

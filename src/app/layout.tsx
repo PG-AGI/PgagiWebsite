@@ -47,6 +47,8 @@ export default function RootLayout({
             translate="no"
           >
             <head>
+              <link rel="icon" href="/landing/PGAGI-logo.png" type="image/png" />
+              <link rel="apple-touch-icon" href="/landing/PGAGI-logo.png" />
               {/* DNS prefetch for analytics — preconnect is skipped by lazyOnload scripts during Lighthouse */}
               <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
               <link rel="dns-prefetch" href="https://www.google-analytics.com" />
