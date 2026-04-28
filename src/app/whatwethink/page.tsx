@@ -72,7 +72,8 @@ export default function BlogPage() {
       setErrorCaseStudies('');
       try {
         const data = (await fetchAllCaseStudies()) as unknown as CaseStudy[];
-        setCaseStudies(data);
+        const filteredData = data.filter(cs => cs.slug !== 'ai-asr-doctor-clinical-documentation-platform');
+        setCaseStudies(filteredData);
       } catch (error: unknown) {
         setErrorCaseStudies(getErrorMessage(error));
       } finally {
