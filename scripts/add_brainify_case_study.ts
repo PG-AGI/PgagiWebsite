@@ -20,6 +20,7 @@ async function run() {
         name: 'PG-AGI',
         role: 'Engineering Team',
       },
+      description: 'An AI-powered gamified learning platform designed to help users build practical real-world skills through structured, interactive educational journeys.',
       metaDescription: 'A technical architecture report for brAInify, an AI-powered gamified learning platform.',
       metaKeywords: 'EdTech, brAInify, AI, Gamification, Technical Architecture, Learning Platform',
       metaAuthor: 'PG-AGI',
