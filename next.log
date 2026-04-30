@@ -275,3 +275,7 @@ Import trace for requested module:
  ○ Compiling /api/case-studies ...
  ✓ Compiled /api/case-studies in 784ms (875 modules)
  GET /api/case-studies 200 in 1192ms
+ ✓ Compiled in 2.9s (845 modules)
+ ✓ Compiled in 741ms (1644 modules)
+ ✓ Compiled in 4.6s (1644 modules)
+ ✓ Compiled in 9.1s (1644 modules)

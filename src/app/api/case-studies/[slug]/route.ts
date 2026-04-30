@@ -6,7 +6,9 @@ import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
 import { generateSlug } from '@/services/generateSlugService';
 
-export const revalidate = 3600; // Revalidate every hour
+// export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic';
+
 
 function normalizeSlug(value: string): string {
   return generateSlug(decodeURIComponent(value ?? '').trim());
@@ -37,10 +39,11 @@ interface CaseStudy {
     name: string;
     role: string;
   };
-  metaDescription: string,
-  metaKeywords: string,
-  metaAuthor: string,
-  metaTitle: string,
+  metaDescription: string;
+  description: string;
+  metaKeywords: string;
+  metaAuthor: string;
+  metaTitle: string;
   sections: Section[];
   createdAt: Date;
   updatedAt: Date;
@@ -232,6 +235,7 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         role: data.authorRole,
       },
       metaDescription: data.metaDescription,
+      description: data.metaDescription,
       metaKeywords: data.metaKeywords,
       metaAuthor: data.metaAuthor,
       metaTitle: data.metaTitle,

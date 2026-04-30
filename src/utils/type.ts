@@ -42,6 +42,7 @@ export type ContentSummary = {
   title: string;
   coverImage: string;
   contentType: ContentType;
+  description?: string;
 };
 
 export type ContentDetails = {

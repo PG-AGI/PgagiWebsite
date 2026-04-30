@@ -32,16 +32,19 @@ interface CaseStudy {
     name: string;
     role: string;
   };
-  metaDescription: string,
-  metaKeywords: string,
-  metaAuthor: string,
-  metaTitle: string,
+  metaDescription: string;
+  description: string;
+  metaKeywords: string;
+  metaAuthor: string;
+  metaTitle: string;
   sections: Section[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-export const revalidate = 3600; // Revalidate every hour
+// export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic';
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -168,6 +171,7 @@ export async function POST(request: NextRequest) {
         role: data.authorRole,
       },
       metaDescription: data.metaDescription,
+      description: data.metaDescription,
       metaKeywords: data.metaKeywords,
       metaAuthor: data.metaAuthor,
       metaTitle: data.metaTitle,
@@ -214,11 +218,12 @@ export async function GET(request: NextRequest) {
     const client = await clientPromise;
     const db = client.db();
     const collection = db.collection('caseStudies');
-    const caseStudies = await collection.find({}, { projection: { slug: 1, title: 1, coverImage: 1 } }).toArray();
+    const caseStudies = await collection.find({}, { projection: { slug: 1, title: 1, coverImage: 1, description: 1, metaDescription: 1 } }).toArray();
     const response = caseStudies.map((caseStudy) => ({
       slug: caseStudy.slug,
       title: caseStudy.title,
       coverImage: caseStudy.coverImage,
+      description: caseStudy.metaDescription || caseStudy.description,
     }));
 
     return NextResponse.json(response, { status: 200 });

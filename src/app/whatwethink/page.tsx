@@ -153,6 +153,7 @@ export default function BlogPage() {
                       <div className={styles.cardText}>
                         <h3>{cs.title}</h3>
                         <p>{cs.description || "Advancing industry standards with bespoke AI integrations and high-performance system architectures."}</p>
+
                         <span className={styles.viewProject}>View Project →</span>
                       </div>
                       <div className={styles.cardImage}>
