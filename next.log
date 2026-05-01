@@ -423,3 +423,5 @@ Import trace for requested module:
 Time 2.015125
  GET / 200 in 207ms
  GET / 200 in 65ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/.next/cache/webpack/server-development/1.pack.gz_' -> '/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/.next/cache/webpack/server-development/1.pack.gz'
+ GET / 200 in 968ms

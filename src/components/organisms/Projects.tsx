@@ -462,15 +462,6 @@ export default function Projects() {
                               target.src = '/images/aboutus.png';
                             }}
                           />
-                          <div className={whatWeThinkStyles.logoOverlay}>
-                            <Image
-                              src="/landing/PGAGI-logo.png"
-                              alt="PG-AGI Logo"
-                              width={40}
-                              height={40}
-                              className={whatWeThinkStyles.overlayLogo}
-                            />
-                          </div>
                           <div className={whatWeThinkStyles.premiumGradient} />
                         </div>
                       </div>
