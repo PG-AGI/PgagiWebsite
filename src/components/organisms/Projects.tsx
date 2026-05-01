@@ -22,6 +22,9 @@ type CaseStudy = {
   description?: string;
 };
 
+const AI2MD_SLUG = 'ai-mobile-doc';
+const AI2MD_PROJECT_IMAGE = '/case-studies/ChatGPT Image May 1, 2026, 04_10_45 PM.png';
+
 export default function Projects() {
   const router = useRouter();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -453,8 +456,14 @@ export default function Projects() {
                           className={`${whatWeThinkStyles.cardImage} ${styles.projectCaseCardImage}`}
                         >
                           <Image
-                            className={`${whatWeThinkStyles.imgTag} ${styles.projectCaseCardImgTag}`}
-                            src={getSafeImageUrl(caseStudy.coverImage)}
+                            className={`${whatWeThinkStyles.imgTag} ${styles.projectCaseCardImgTag} ${
+                              caseStudy.slug === AI2MD_SLUG ? styles.ai2mdProjectCaseCardImgTag : ''
+                            }`}
+                            src={getSafeImageUrl(
+                              caseStudy.slug === AI2MD_SLUG
+                                ? AI2MD_PROJECT_IMAGE
+                                : caseStudy.coverImage
+                            )}
                             alt={caseStudy.title}
                             fill
                             onError={(e) => {

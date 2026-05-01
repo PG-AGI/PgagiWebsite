@@ -25,7 +25,6 @@ export default function Navigation() {
   const [showGlassEffect, setShowGlassEffect] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
 
-  const BLOGS = ROUTES.WHAT_WE_THINK;
   const ABOUT = ROUTES.ABOUT_US;
   const INDUSTRIES = "/industries";
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
@@ -174,10 +173,6 @@ export default function Navigation() {
                   <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Case Studies
                   </TransitionLink>
-                  <TransitionLink href={BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Blogs
-                  </TransitionLink>
-
                   <TransitionLink href={ROUTES.CAREER} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Careers
                   </TransitionLink>
@@ -211,10 +206,6 @@ export default function Navigation() {
               <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
                 Case Studies
               </TransitionLink>
-              <TransitionLink href={ROUTES.WHAT_WE_THINK} className={styles.link}>
-                Blogs
-              </TransitionLink>
-
               <TransitionLink href={ROUTES.CAREER} className={styles.link}>
                 Careers
               </TransitionLink>
