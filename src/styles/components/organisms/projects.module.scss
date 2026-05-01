@@ -723,6 +723,40 @@
   }
 }
 
+/* /projects-only overrides for case-study cards reused from /whatwethink */
+.projectCaseCard {
+  border-radius: 20px !important;
+  overflow: hidden;
+}
+
+.projectCaseCardContent {
+  min-height: 520px !important;
+  align-items: stretch !important;
+}
+
+.projectCaseCardImage {
+  height: 100% !important;
+  min-height: 520px !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+}
+
+.projectCaseCardImgTag {
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+@media (max-width: 768px) {
+  .projectCaseCardContent {
+    min-height: auto !important;
+  }
+
+  .projectCaseCardImage {
+    min-height: 340px !important;
+  }
+}
+
 /* Additional animations - optimized for performance */
 @keyframes fadeInUp {
   0% {

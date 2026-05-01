@@ -1,11 +1,11 @@
 
 'use client';
 
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from '@/lib/motion-lite';
 import styles from '@/styles/components/organisms/projects.module.scss';
+import whatWeThinkStyles from '@/styles/app/whatwethink/blogs.module.scss';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 import { trendingListOld } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
@@ -24,20 +24,11 @@ type CaseStudy = {
 
 export default function Projects() {
   const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
   const [loadingCaseStudies, setLoadingCaseStudies] = useState<boolean>(false);
   const [errorCaseStudies, setErrorCaseStudies] = useState<string>('');
-  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-  const [carouselPosition, setCarouselPosition] = useState<number>(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number>();
-  const isPausedRef = useRef<boolean>(false);
-
-  // Memoize handlers to prevent unnecessary re-renders
-  const handleBookCall = useCallback(() => setIsModalOpen(true), []);
-  const handleCloseModal = useCallback(() => setIsModalOpen(false), []);
+  const [visibleCount, setVisibleCount] = useState(4);
 
   // Memoize the trending list to prevent unnecessary re-renders
   const memoizedTrendingList = useMemo(() => trendingListOld, []);
@@ -92,43 +83,24 @@ export default function Projects() {
     }
   }, [handleExpand]);
 
-  // Optimized case studies fetching with better error handling and reduced frequency
   useEffect(() => {
-    const fetchCaseStudies = async (isInitialFetch = false) => {
-      if (isInitialFetch) {
-        setLoadingCaseStudies(true);
-      } else {
-        setIsRefreshing(true);
-      }
-
+    const fetchCaseStudiesData = async () => {
+      setLoadingCaseStudies(true);
+      setErrorCaseStudies('');
       try {
-        const data = await fetchAllCaseStudies();
-
-        // Only update if data has actually changed to prevent unnecessary re-renders
-        setCaseStudies(prevData => {
-          if (JSON.stringify(prevData) !== JSON.stringify(data)) {
-            return data;
-          }
-          return prevData;
-        });
-
-        setErrorCaseStudies('');
+        const data = (await fetchAllCaseStudies()) as unknown as CaseStudy[];
+        const filteredData = data.filter(
+          (cs) => cs.slug !== 'ai-asr-doctor-clinical-documentation-platform'
+        );
+        setCaseStudies(filteredData);
       } catch (error: unknown) {
-        console.error('Error fetching case studies:', error);
         setErrorCaseStudies(getErrorMessage(error));
       } finally {
         setLoadingCaseStudies(false);
-        setIsRefreshing(false);
       }
     };
 
-    // Initial fetch
-    fetchCaseStudies(true);
-
-    // Reduced polling frequency from 60s to 120s to improve performance
-    const intervalId = setInterval(() => fetchCaseStudies(false), 120000);
-
-    return () => clearInterval(intervalId);
+    fetchCaseStudiesData();
   }, []);
 
   // Optimized scroll handling
@@ -144,151 +116,6 @@ export default function Projects() {
       }
     }
   }, [router]);
-
-  // Enhanced infinite carousel animation with ultra-smooth infinite loop
-  useEffect(() => {
-    if (caseStudies.length === 0) return;
-
-    const cardWidth = 280; // Width of each card
-    const cardGap = 30; // Gap between cards
-    const totalCardWidth = cardWidth + cardGap;
-    const singleLoopWidth = caseStudies.length * totalCardWidth;
-
-    let animationSpeed = 1.0; // Optimized speed for ultra-smooth movement
-    let currentPosition = 0;
-    let lastTime = performance.now();
-
-    const animateCarousel = (currentTime: number) => {
-      const deltaTime = currentTime - lastTime;
-      lastTime = currentTime;
-
-      // Use delta time for consistent animation regardless of frame rate
-      const frameSpeed = animationSpeed * (deltaTime / 16.67); // Normalize to 60fps
-
-      if (!isPausedRef.current) {
-        currentPosition -= frameSpeed;
-
-        // Ultra-smooth modulo-based infinite loop
-        // This creates seamless infinite scrolling without any jumps
-        if (currentPosition <= -singleLoopWidth) {
-          currentPosition += singleLoopWidth; // Smoothly add back one loop width
-        }
-
-        // Use direct style manipulation for better performance
-        if (carouselRef.current) {
-          const track = carouselRef.current.querySelector(`.${styles.carouselTrack}`) as HTMLElement;
-          if (track) {
-            track.style.transform = `translateX(${currentPosition}px)`;
-          }
-        }
-      }
-
-      animationRef.current = requestAnimationFrame(animateCarousel);
-    };
-
-    // Start animation
-    animationRef.current = requestAnimationFrame(animateCarousel);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [caseStudies.length]);
-
-  // Pause carousel on hover with smooth transition
-  const handleCarouselMouseEnter = useCallback(() => {
-    isPausedRef.current = true;
-    // Add a subtle visual indicator that carousel is paused
-    if (carouselRef.current) {
-      carouselRef.current.style.opacity = '0.95';
-      carouselRef.current.setAttribute('data-paused', 'true');
-    }
-  }, []);
-
-  const handleCarouselMouseLeave = useCallback(() => {
-    isPausedRef.current = false;
-    // Restore full opacity
-    if (carouselRef.current) {
-      carouselRef.current.style.opacity = '1';
-      carouselRef.current.removeAttribute('data-paused');
-    }
-  }, []);
-
-  // Memoize case studies for carousel to prevent unnecessary re-renders
-  const memoizedCaseStudies = useMemo(() => {
-    if (caseStudies.length === 0) return [];
-    // Create smooth infinite loop structure with sufficient buffer
-    // We need at least 3 full sets to ensure ultra-smooth transitions
-    // [A, B, C, A, B, C, A, B, C] - provides buffer for seamless looping
-    const repeatedArray = [];
-    for (let i = 0; i < 4; i++) { // 3 sets for ultra-smooth infinite loop
-      repeatedArray.push(...caseStudies);
-    }
-    return repeatedArray;
-  }, [caseStudies]);
-
-  // Memoize the infinite carousel component
-  const caseStudiesCarousel = useMemo(() => {
-    if (caseStudies.length === 0) return null;
-
-    return (
-      <div
-        className={styles.infiniteCarousel}
-        ref={carouselRef}
-        onMouseEnter={handleCarouselMouseEnter}
-        onMouseLeave={handleCarouselMouseLeave}
-      >
-        <div
-          className={styles.carouselTrack}
-          style={{
-            transition: 'none', // Remove transition for smoother animation
-            willChange: 'transform', // Optimize for transform changes
-            transformStyle: 'preserve-3d' // Force GPU compositing
-          }}
-        >
-          {memoizedCaseStudies.map((caseStudy, index) => (
-            <div key={`${caseStudy.slug}-${index}`} className={styles.caseStudyCard}>
-              <Link href={ROUTES.CASE_STUDY_SLUG(caseStudy.slug)}>
-                <div className={styles.caseStudyCardContent}>
-                  <div className={styles.caseStudyCardImage}>
-                    <Image
-                      src={getSafeImageUrl(caseStudy.coverImage)}
-                      alt={caseStudy.title}
-                      layout="fill"
-                      objectFit="cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = '/images/aboutus.png';
-                      }}
-                    />
-                    <div className={styles.logoOverlay}>
-                      <Image 
-                        src="/landing/PGAGI-logo.png" 
-                        alt="PG-AGI Logo" 
-                        width={28} 
-                        height={28} 
-                        className={styles.overlayLogo}
-                      />
-                    </div>
-                    <div className={styles.premiumGradient} />
-                    <div className={styles.caseStudyCardOverlay}>
-                      <span className={styles.viewProject}>View Project</span>
-                    </div>
-                  </div>
-                  <div className={styles.caseStudyCardText}>
-                    <h3>{caseStudy.title}</h3>
-                    <p>{caseStudy.description || "Empowering innovation through AI-driven strategic solutions and digital transformation."}</p>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }, [memoizedCaseStudies, caseStudies.length, handleCarouselMouseEnter, handleCarouselMouseLeave]);
 
   // Memoize project cards to prevent unnecessary re-renders
   const projectCards = useMemo(() => {
@@ -582,20 +409,17 @@ export default function Projects() {
         <section className={styles.caseStudiesSection}>
           <div className={styles.caseStudiesHeader}>
             <h2>Case Studies</h2>
-            {isRefreshing && (
-              <div className={styles.refreshIndicator}>
-                <span>🔄</span>
-              </div>
-            )}
           </div>
           {loadingCaseStudies ? (
-            <div className={styles.caseStudiesSkeleton}>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div key={index} className={styles.caseStudyCardSkeleton}>
-                  <div className={styles.skeletonImage} />
-                  <div className={styles.skeletonContent}>
-                    <div className={styles.skeletonTitle} />
-                    <div className={styles.skeletonDescription} />
+            <div className={whatWeThinkStyles.cardsContainer}>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className={whatWeThinkStyles.cardSkeleton}>
+                  <div className={whatWeThinkStyles.skeletonContent}>
+                    <div className={whatWeThinkStyles.skeletonText}>
+                      <div className={whatWeThinkStyles.skeletonTitle} />
+                      <div className={whatWeThinkStyles.skeletonDescription} />
+                    </div>
+                    <div className={whatWeThinkStyles.skeletonImage} />
                   </div>
                 </div>
               ))}
@@ -603,8 +427,66 @@ export default function Projects() {
           ) : errorCaseStudies ? (
             <p className={styles.error}>{errorCaseStudies}</p>
           ) : caseStudies.length > 0 ? (
-            <div className={styles.carouselContainer}>
-              {caseStudiesCarousel}
+            <div className={whatWeThinkStyles.cardsContainer}>
+              {caseStudies
+                .slice(0)
+                .reverse()
+                .slice(0, visibleCount)
+                .map((caseStudy) => (
+                  <div
+                    key={caseStudy.slug}
+                    className={`${whatWeThinkStyles.card} ${styles.projectCaseCard}`}
+                  >
+                    <Link href={ROUTES.CASE_STUDY_SLUG(caseStudy.slug)}>
+                      <div
+                        className={`${whatWeThinkStyles.cardContent} ${styles.projectCaseCardContent}`}
+                      >
+                        <div className={`${whatWeThinkStyles.cardText} ${styles.projectCaseCardText}`}>
+                          <h3>{caseStudy.title}</h3>
+                          <p>
+                            {caseStudy.description ||
+                              'Advancing industry standards with bespoke AI integrations and high-performance system architectures.'}
+                          </p>
+                          <span className={whatWeThinkStyles.viewProject}>View Project →</span>
+                        </div>
+                        <div
+                          className={`${whatWeThinkStyles.cardImage} ${styles.projectCaseCardImage}`}
+                        >
+                          <Image
+                            className={`${whatWeThinkStyles.imgTag} ${styles.projectCaseCardImgTag}`}
+                            src={getSafeImageUrl(caseStudy.coverImage)}
+                            alt={caseStudy.title}
+                            fill
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = '/images/aboutus.png';
+                            }}
+                          />
+                          <div className={whatWeThinkStyles.logoOverlay}>
+                            <Image
+                              src="/landing/PGAGI-logo.png"
+                              alt="PG-AGI Logo"
+                              width={40}
+                              height={40}
+                              className={whatWeThinkStyles.overlayLogo}
+                            />
+                          </div>
+                          <div className={whatWeThinkStyles.premiumGradient} />
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              {visibleCount < caseStudies.length && (
+                <div className={whatWeThinkStyles.loadMoreWrapper}>
+                  <button
+                    className={whatWeThinkStyles.loadMoreBtn}
+                    onClick={() => setVisibleCount(caseStudies.length)}
+                  >
+                    Load More
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <p>No case studies found.</p>
