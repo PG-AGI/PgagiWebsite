@@ -279,3 +279,4 @@ Import trace for requested module:
  ✓ Compiled in 741ms (1644 modules)
  ✓ Compiled in 4.6s (1644 modules)
  ✓ Compiled in 9.1s (1644 modules)
+ GET / 200 in 1070ms
