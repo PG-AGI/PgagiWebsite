@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import bgImage from "../../../public/background-fast.webp";
+import bgImage from "../../../public/background.png";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import Link from "next/link";
 import landingText from "@/constants/uiText/landing.json";
@@ -40,7 +40,7 @@ export default function Landing() {
           fetchPriority="high"
           placeholder="blur"
           sizes="100vw"
-          quality={55}
+          quality={90}
           className={styles.heroBgImage}
         />
       </div>
