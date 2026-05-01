@@ -264,7 +264,8 @@
     position: relative;
     height: 600px; // Increased from 500px to increase card height
     overflow: hidden;
-    background: #f8f8f8; // Light grey background
+    background: #ffffff; // White background for letterboxing
+    padding: 20px; // Add bars padding
     // Keep original container size, but zoom the image inside
     // width: 60rem;
     margin-left: 0;
@@ -280,7 +281,7 @@
       filter: none;
       transform: none;
       object-position: center center;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 10px;
     }
 
@@ -320,7 +321,7 @@
 
     &:hover {
       .imgTag {
-        transform: scale(1.05);
+        // removed scale to prevent clipping
       }
       .logoOverlay {
         transform: translateY(-5px);

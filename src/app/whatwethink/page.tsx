@@ -161,8 +161,8 @@ export default function BlogPage() {
                           className={styles.imgTag}
                           src={getSafeImageUrl(cs.coverImage)}
                           alt={cs.title}
-                          layout="fill"
-                          objectFit="cover"
+                          fill
+                          style={{ objectFit: 'contain' }}
                           priority
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
