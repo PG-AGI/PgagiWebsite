@@ -26,7 +26,7 @@ export default function Projects() {
   const router = useRouter();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
-  const [loadingCaseStudies, setLoadingCaseStudies] = useState<boolean>(false);
+  const [loadingCaseStudies, setLoadingCaseStudies] = useState<boolean>(true);
   const [errorCaseStudies, setErrorCaseStudies] = useState<string>('');
   const [visibleCount, setVisibleCount] = useState(4);
 
