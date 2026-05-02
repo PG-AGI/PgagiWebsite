@@ -430,3 +430,59 @@ Time 2.015125
  ✓ Compiled /_not-found in 1826ms (1338 modules)
  GET / 404 in 2480ms
  ✓ Compiled in 2.1s (753 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 710ms (630 modules)
+ ⨯ TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/.next/server/webpack-runtime.js:33:42)
+    at JSON.parse (<anonymous>)
+digest: "2184752067"
+TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/.next/server/webpack-runtime.js:33:42)
+    at require (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:19604)
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108279
+    at eo (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108464)
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:110693
+    at Object._fromJSON (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:111249)
+    at JSON.parse (<anonymous>)
+    at eu (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108958)
+    at en (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108026)
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115168
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115185
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115218
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115235
+    at t (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115458)
+ ⨯ TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/.next/server/webpack-runtime.js:33:42)
+    at require (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:19604)
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108279
+    at eo (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108464)
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:110693
+    at Object._fromJSON (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:111249)
+    at JSON.parse (<anonymous>)
+    at eu (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108958)
+    at en (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108026)
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115168
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115185
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115218
+    at /Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115235
+    at t (/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115458) {
+  page: '/'
+}
+ ✓ Compiled /_error in 100ms (1337 modules)
+Time 1.275042
+ GET / 500 in 1314ms
+ GET / 200 in 113ms
+ ✓ Compiled /_not-found in 97ms (1340 modules)
+ GET /_next/static/css/app/page.css?v=1777661900411 404 in 179ms
+ GET /_next/static/css/app/layout.css?v=1777661900411 404 in 182ms
+ GET /_next/static/chunks/main-app.js?v=1777661900411 404 in 180ms
+ GET / 200 in 395ms
+ GET /_next/static/css/app/layout.css?v=1777701526662 404 in 22ms
+ GET /_next/static/css/app/page.css?v=1777701526662 404 in 25ms
+ GET /_next/static/chunks/main-app.js?v=1777701526662 404 in 24ms
+ GET / 200 in 111ms
+ GET /_next/static/css/app/layout.css?v=1777701791438 404 in 57ms
+ GET /_next/static/css/app/page.css?v=1777701791438 404 in 84ms
+ GET /_next/static/chunks/main-app.js?v=1777701791438 404 in 54ms
+ GET / 200 in 84ms
+ GET / 200 in 44ms

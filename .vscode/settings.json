@@ -20,7 +20,8 @@
         "/^python - <<'PY'\nfrom PIL import Image\nfrom pathlib import Path\nsrc=Path\\('/Users/utkarshchoudhary/Documents/Projects/PgagiWebsite-v2/public/assets/gov-login-img\\.png'\\)\nout=src\\.with_name\\('gov-login-img-footer\\.png'\\)\nim=Image\\.open\\(src\\)\\.convert\\('RGBA'\\)\np=im\\.load\\(\\); W,H=im\\.size\nfor y in range\\(H\\):\n    for x in range\\(W\\):\n        r,g,b,a=p\\[x,y\\]\n        if a==0:\n            continue\n        lum=0\\.2126\\*r\\+0\\.7152\\*g\\+0\\.0722\\*b\n        sat=\\(max\\(r,g,b\\)-min\\(r,g,b\\)\\)/\\(max\\(r,g,b\\)\\+1e-6\\)\n        # strip light badge background\n        if lum>210 and sat<0\\.10:\n            p\\[x,y\\]=\\(255,255,255,0\\)\n            continue\n        # make dark logo text/high-contrast for dark footer\n        if lum<120:\n            p\\[x,y\\]=\\(236,236,232,a\\)\n\nim\\.save\\(out\\)\nprint\\(out\\)\nPY$/": {
             "approve": true,
             "matchCommandLine": true
-        }
+        },
+        "npx ts-node": true
     },
     "postman.settings.dotenv-detection-notification-visibility": false
 }

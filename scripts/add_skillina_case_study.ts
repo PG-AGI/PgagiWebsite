@@ -12,7 +12,7 @@ async function run() {
     const caseStudy = {
       slug: 'skillina-talent-marketplace',
       contentType: 'Product Requirements & Technical Architecture',
-      coverImage: '/images/cs_skillina_v3.png',
+      coverImage: '/case-studies/ChatGPT Image May 2, 2026, 12_10_48 AM.png',
       title: 'Skillina: Talent Marketplace',
       publishDate: 'April 27, 2026',
       readTime: '7 min read',
