@@ -31,5 +31,7 @@
   "rightLabelOverline": "FOR BUSINESSES & ENTERPRISES",
   "rightMainTitle": "Implement AI into your business operations",
   "rightDescription": "Automate workflows, reduce costs, and improve decision-making by integrating AI into your existing systems — without disrupting operations.",
-  "ctaLabel": "Let's build together"
+  "ctaLabel": "Let's build together",
+  "foundersTabLabel": "For founders / AI product builders",
+  "enterprisesTabLabel": "For Businesses & Enterprises"
 }

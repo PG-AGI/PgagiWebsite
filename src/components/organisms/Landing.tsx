@@ -5,23 +5,34 @@ import styles from "@/styles/components/organisms/landing.module.scss";
 import Link from "next/link";
 import landingText from "@/constants/uiText/landing.json";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
+import {
+  AnnouncementBar,
+  type AnnouncementProject,
+} from "./text-flipping-board";
 
-const heroVerificationPlatforms = [
-  {
-    name: "Clutch",
-    src: "/landing/clutch.png",
-    href: "https://clutch.co/profile/pgagi-private",
-    width: 22,
-    height: 22,
-  },
-  {
-    name: "Upwork",
-    src: "/landing/upwork-icon.webp",
-    href: "https://www.upwork.com/agencies/1737467434828361728/",
-    width: 22,
-    height: 22,
-  },
-] as const;
+const LIVE_PROJECTS: AnnouncementProject[] = [
+  { name: "SKILLINA", activeUsers: 12847 },
+  { name: "DIGITAL TWIN", activeUsers: 5230 },
+  { name: "AIMI", activeUsers: 8941 },
+  { name: "AI2MD", activeUsers: 3624 },
+];
+
+const ArrowRightIcon = ({ stroke = "#000" }: { stroke?: string }) => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M9.33 3C9.33 3.43 9.76 4.08 10.19 4.62C10.75 5.32 11.42 5.93 12.18 6.4C12.75 6.75 13.44 7.08 14 7.08M14 7.08C13.44 7.08 12.75 7.42 12.18 7.77C11.42 8.23 10.75 8.85 10.19 9.54C9.76 10.09 9.33 10.73 9.33 11.17M14 7.08L0 7.08"
+      stroke={stroke}
+      strokeWidth="1"
+    />
+  </svg>
+);
 
 export default function Landing() {
   return (
@@ -30,6 +41,10 @@ export default function Landing() {
       className={styles.hero}
       aria-label={landingText.heroAriaLabel}
     >
+      <div className={styles.announcementBarWrap}>
+        <AnnouncementBar projects={LIVE_PROJECTS} intervalMs={4500} />
+      </div>
+
       {/* Hero media is rendered as next/image so the browser can prioritize it immediately for LCP. */}
       <div className={styles.heroBg} aria-hidden="true">
         <Image
@@ -40,7 +55,7 @@ export default function Landing() {
           fetchPriority="high"
           placeholder="blur"
           sizes="100vw"
-          quality={90}
+          quality={100}
           className={styles.heroBgImage}
         />
       </div>
@@ -50,53 +65,13 @@ export default function Landing() {
 
       {/* Hero content — bottom-left aligned */}
       <div className={styles.heroContent}>
-        <div
-          className={styles.heroTrustBadge}
-          aria-label={landingText.verifiedByAriaLabel}
-        >
-          <span className={styles.heroTrustLabel}>{landingText.verifiedByLabel}</span>
-          <div className={styles.heroTrustPlatforms}>
-            {heroVerificationPlatforms.map((platform, index) => (
-              <React.Fragment key={platform.name}>
-                <a
-                  href={platform.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.heroTrustPlatform}
-                  aria-label={landingText.verificationPlatforms[index]?.openProfileAriaLabel ?? `Open ${platform.name} profile in a new tab`}
-                >
-                  <span className={styles.heroTrustLogoWrap}>
-                    <Image
-                      src={platform.src}
-                      alt={`${platform.name} logo`}
-                      width={platform.width}
-                      height={platform.height}
-                      className={styles.heroTrustLogo}
-                    />
-                  </span>
-                  <span className={styles.heroTrustName}>{platform.name}</span>
-                </a>
-                {index < heroVerificationPlatforms.length - 1 ? (
-                  <span className={styles.heroTrustDivider} aria-hidden>
-                    &amp;
-                  </span>
-                ) : null}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-
         <h1 className={styles.heroHeading}>
           {landingText.headingLine1}
-          <br className={styles.brMobile} />
-          {" "}{landingText.headingLine2Prefix}
           <br />
-          {landingText.headingLine3}
+          {landingText.headingLine2Prefix}
         </h1>
 
-        <p className={styles.heroSubtext}>
-          {landingText.subtext}
-        </p>
+        <p className={styles.heroSubtext}>{landingText.subtext}</p>
 
         <Link
           href={EXTERNAL_LINKS.CALENDLY_BOOKING}
@@ -127,6 +102,45 @@ export default function Landing() {
         </Link>
       </div>
 
+      {/* Glass cards row pinned to the bottom of the hero */}
+      <div className={styles.heroCards} aria-label="Verticals">
+        {/* Card 1 — AI x IoT Engineering (wide) */}
+        <article className={`${styles.glassCard} ${styles.cardWide}`}>
+          <h2 className={styles.cardTitle}>
+            {landingText.verticalCard.titlePrefix}{" "}
+            <span className={styles.cardTitleAccent}>
+              {landingText.verticalCard.titleSuffix}
+            </span>
+          </h2>
+          <p className={styles.cardDescription}>
+            {landingText.verticalCard.description}
+          </p>
+          <Link
+            href="#"
+            className={styles.cardCta}
+            aria-label={landingText.verticalCard.ctaAriaLabel}
+          >
+            <span>{landingText.verticalCard.ctaLabel}</span>
+            <span className={styles.cardCtaArrow} aria-hidden="true">
+              <ArrowRightIcon />
+            </span>
+          </Link>
+        </article>
+
+        {/* Card 2 — Capabilities grid (narrow) */}
+        <article
+          className={`${styles.glassCard} ${styles.cardGrid}`}
+          aria-label="Capabilities"
+        >
+          <ul className={styles.capabilityGrid}>
+            {landingText.capabilities.map((label) => (
+              <li key={label} className={styles.capabilityCell}>
+                {label}
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
     </section>
   );
 }
