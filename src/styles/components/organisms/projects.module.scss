@@ -272,23 +272,15 @@ $content-pad-mobile: 20px;
 }
 
 .csRight {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  background: #e8e8f0;          /* subtle blue-gray tint behind screenshot */
+  position: relative;          /* fill-image anchor */
+  overflow: hidden;
+  background: #e8e8f0;
   min-height: 360px;
 
   @media (max-width: 900px) {
     order: 1;
     min-height: 240px;
   }
-}
-
-.csImgWrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  flex: 1;
 }
 
 .csImg {
@@ -510,19 +502,10 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skeletonRight {
-  display: flex;
-  align-items: stretch;
-  background: #e8e8f0;
+  background: $sk-bg;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
   min-height: 360px;
-
-  &::after {
-    content: '';
-    display: block;
-    flex: 1;
-    background: $sk-bg;
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
 
   @media (max-width: 900px) {
     order: 1;
