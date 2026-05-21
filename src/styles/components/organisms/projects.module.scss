@@ -272,7 +272,8 @@ $content-pad-mobile: 20px;
 }
 
 .csRight {
-  position: relative;          /* fill-image anchor */
+  /* Grid cell — its height comes from .csLeft content via grid row stretching */
+  position: relative;
   overflow: hidden;
   background: #e8e8f0;
   min-height: 360px;
@@ -281,6 +282,14 @@ $content-pad-mobile: 20px;
     order: 1;
     min-height: 240px;
   }
+}
+
+/* Fills .csRight wall-to-wall via absolute positioning.
+   This gives the Next.js fill Image a concrete bounding box. */
+.csImgWrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
 
 .csImg {
@@ -502,10 +511,19 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skeletonRight {
-  background: $sk-bg;
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  position: relative;
+  overflow: hidden;
+  background: #e8e8f0;
   min-height: 360px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: $sk-bg;
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
 
   @media (max-width: 900px) {
     order: 1;

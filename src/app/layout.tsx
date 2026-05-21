@@ -5,7 +5,7 @@ import "@/styles/app/globals.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
 import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
-import Navigation from "@/components/organisms/base/Navigation";
+import NavWrapper from "@/components/organisms/base/NavWrapper";
 import Footer from "@/components/organisms/Footer";
 import PageTransition from "@/components/organisms/PageTransition";
 
@@ -119,7 +119,7 @@ export default function RootLayout({
                   className="gtmNoScriptFrame"
                 ></iframe>
               </noscript>
-              <Navigation />
+              <NavWrapper />
               <main className="layoutMain">
                 <PageTransition>
                   {children}

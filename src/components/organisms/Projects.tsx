@@ -204,14 +204,16 @@ export default function Projects() {
 
                   {/* Right — image panel */}
                   <div className={styles.csRight}>
-                    <Image
-                      src={getSafeImageUrl(img)}
-                      alt={cs.title}
-                      fill
-                      className={styles.csImg}
-                      style={{ objectFit: 'cover', objectPosition: cs.slug === AI2MD_SLUG ? 'center' : 'center top' }}
-                      onError={(e) => { (e.target as HTMLImageElement).src = '/images/aboutus.png'; }}
-                    />
+                    <div className={styles.csImgWrap}>
+                      <Image
+                        src={getSafeImageUrl(img)}
+                        alt={cs.title}
+                        fill
+                        className={styles.csImg}
+                        style={{ objectFit: 'cover', objectPosition: cs.slug === AI2MD_SLUG ? 'center' : 'center top' }}
+                        onError={(e) => { (e.target as HTMLImageElement).src = '/images/aboutus.png'; }}
+                      />
+                    </div>
                   </div>
                 </div>
               );
