@@ -34,16 +34,19 @@
   --card-bg: rgba(0, 0, 0, 0.22);
   --card-shadow: -6px -6px 15.5px 0px rgba(255, 255, 255, 0.34);
   --overlay: linear-gradient(to right,
-      rgba(0, 0, 0, 0.76) 0%,
-      rgba(0, 0, 0, 0.55) 45%,
-      rgba(0, 0, 0, 0.12) 75%,
+      rgba(0, 0, 0, 0.281) 0%,
+      rgba(0, 0, 0, 0.233) 45%,
+      rgba(0, 0, 0, 0.233) 75%,
       transparent 100%);
 
   position: relative;
   width: 100%;
   min-height: 100dvh;
   margin: 0;
-  overflow: hidden;
+  /* Allow the section to grow taller than 100dvh on tiny screens so content
+     never gets clipped behind the fixed nav; only block horizontal overflow. */
+  overflow-x: hidden;
+  overflow-y: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,25 +57,29 @@
 
 /* ─── Background ─── */
 .heroBg {
+  /* Spans the full hero section (including the below-fold cards area) */
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;       /* clips image to hero bounds */
   transform: translateZ(0);
 
   .heroBgImage {
+    /* Exactly the settings requested: full-vw, natural height, no crop */
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: auto;
+    max-width: none;       /* prevent Next.js intrinsic-size capping */
     display: block;
-    object-fit: cover;
-    object-position: center center;
+    color: transparent;    /* Next.js placeholder colour */
     transform: translateZ(0);
   }
 
   @media (max-width: 768px) {
     .heroBgImage {
-      object-position: 55% center;
+      /* on mobile shift the focal point slightly right so the figures stay visible */
+      left: -10%;
     }
   }
 }
@@ -84,32 +91,32 @@
   z-index: 1;
 }
 
-/* ─── Inner container — constrains content/cards to 1280px centered while bg fills 100% ─── */
+/* ─── Inner container ─── */
 .heroInner {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 1280px;
+  width: 90vw;
   padding: 0 var(--content-x);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  /* No flex: 1 — heroContent drives the height via min-height: 100dvh */
 }
 
-/* ─── Hero content (lower-left aligned — pushed to bottom of flex cell, just above the cards) ─── */
+/* ─── Hero content — occupies the entire first viewport ─── */
 .heroContent {
   width: 100%;
-  /* Top padding is a minimum clearance for the announcement bar + fixed nav (~120px).
-     Content sits at the bottom of this cell via justify-content: flex-end. */
-  padding: clamp(7rem, 14vh, 10rem) 0 clamp(2.5rem, 5vh, 4rem);
+  /* First screen: heading + subtext + CTA fills at least one full viewport.
+     Announcement bar (60px) + nav (68px) = ~128px fixed chrome — 8rem clears it. */
+  padding: clamp(8rem, 16vh, 11rem) 0 clamp(3rem, 6vh, 5rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: clamp(0.85rem, 1.6vh, 1.5rem);
-  flex: 1;
-  min-height: 0;
+  /* Takes up exactly one viewport height minimum so cards start below the fold */
+  min-height: 100dvh;
+  flex: 0 0 auto;
   box-sizing: border-box;
 }
 
@@ -119,8 +126,9 @@
   font-weight: 700;
   line-height: var(--h1-line);
   letter-spacing: -0.7px;
+  margin: 0%;
+  margin-top: 15vh;
   color: #ffffff;
-  margin: 0;
   max-width: 900px;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
   animation: slideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
@@ -193,7 +201,8 @@
    ===================================================== */
 .heroCards {
   width: 100%;
-  padding: 0 0 clamp(1.5rem, 0.5rem + 2vw, 2.5rem);
+  /* Cards are below the fold — give them vertical breathing room */
+  padding: clamp(2rem, 4vh, 4rem) 0 clamp(2.5rem, 5vh, 4rem);
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 1.26fr) minmax(0, 1fr);
@@ -405,10 +414,12 @@
   .glassCard { min-height: 13.5rem; }
 }
 
-/* Graceful fallback for very narrow viewports (extreme zoom on small laptops) */
+/* Graceful fallback for very narrow viewports (extreme zoom on small laptops).
+   Announcement bar (36px on mobile) + nav pill at top: 60px + ~65px pill height = ~125px.
+   Use 9rem (144px) as the minimum top clearance so heading never hides under the nav. */
 @media (max-width: 600px) {
   .heroContent {
-    padding-top: 7rem;
+    padding-top: clamp(9rem, 22vh, 11rem);
     padding-bottom: 1.5rem;
     gap: 1.25rem;
   }
@@ -416,6 +427,13 @@
   .heroHeading {
     line-height: 1.15;
     letter-spacing: -0.4px;
+  }
+}
+
+/* Extra-small phones — bump clearance a touch more as chrome is proportionally larger */
+@media (max-width: 400px) {
+  .heroContent {
+    padding-top: clamp(9.5rem, 24vh, 12rem);
   }
 }
 

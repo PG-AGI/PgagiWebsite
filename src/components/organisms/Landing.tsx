@@ -50,7 +50,6 @@ export default function Landing() {
         <Image
           src={bgImage}
           alt=""
-          fill
           priority
           fetchPriority="high"
           placeholder="blur"

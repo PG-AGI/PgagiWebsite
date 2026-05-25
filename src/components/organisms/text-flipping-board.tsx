@@ -13,11 +13,11 @@ interface AccentColor {
 }
 
 const ACCENT_COLORS: AccentColor[] = [
-  { top: "#ef4444", bottom: "#dc2626", text: "#ffffff" },
-  { top: "#fbbf24", bottom: "#f59e0b", text: "#171717" },
-  { top: "#10b981", bottom: "#059669", text: "#ffffff" },
-  { top: "#0ea5e9", bottom: "#0284c7", text: "#ffffff" },
-  { top: "#8b5cf6", bottom: "#7c3aed", text: "#ffffff" },
+  // { top: "#ef4444", bottom: "#dc2626", text: "#ffffff" },
+  // { top: "#ef4444", bottom: "#dc2626", text: "#171717" },
+  // { top: "#ef4444", bottom: "#dc2626", text: "#ffffff" },
+  // { top: "#ef4444", bottom: "#dc2626", text: "#ffffff" },
+  // { top: "#ef4444", bottom: "#dc2626", text: "#ffffff" },
 ];
 
 // ── Individual Split-Flap Character ───────────────────────────────────

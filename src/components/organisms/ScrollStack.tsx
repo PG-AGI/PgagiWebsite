@@ -83,9 +83,8 @@ const ScrollStack = ({
 
     if (!section || !viewport || cards.length < 2) return;
 
-    // Initialize GSAP immediately without any delays
-    // Don't wait for images or requestIdleCallback
-    initializeGSAP();
+    // FIX: return the cleanup so React actually calls it on unmount / dep change.
+    return initializeGSAP();
 
     function initializeGSAP() {
       const section  = sectionRef.current;
@@ -94,167 +93,181 @@ const ScrollStack = ({
 
       if (!section || !viewport || cards.length < 2) return;
 
-    const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
-    const isMobileViewport     = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
-    const useMobileFlow        = mobileMode === "flow" && isMobileViewport;
+      const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+      const isMobileViewport     = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+      const useMobileFlow        = mobileMode === "flow" && isMobileViewport;
 
-    const getVH = () => Math.max(window.innerHeight, 1);
+      const getVH = () => Math.max(window.innerHeight, 1);
 
-    // ── Mobile: simple scroll-in fade per card ────────────────────
-    if (useMobileFlow || prefersReducedMotion) {
-      if (headerRef.current) gsap.set(headerRef.current, { opacity: 1 });
-      const ctx = gsap.context(() => {
-        cards.forEach((card, i) => {
-          gsap.fromTo(
-            card,
-            { y: 20, opacity: 0 },
-            {
-              y: 0, opacity: 1,
-              duration: MOTION_DURATION.normal,
-              ease: GSAP_EASE.premiumOut,
-              delay: i * 0.08,
-              scrollTrigger: { trigger: card, start: "top 88%", once: true },
-            },
-          );
+      // ── Mobile: simple scroll-in fade per card ────────────────────
+      if (useMobileFlow || prefersReducedMotion) {
+        if (headerRef.current) gsap.set(headerRef.current, { opacity: 1 });
+        const ctx = gsap.context(() => {
+          cards.forEach((card, i) => {
+            gsap.fromTo(
+              card,
+              { y: 20, opacity: 0 },
+              {
+                y: 0, opacity: 1,
+                duration: MOTION_DURATION.normal,
+                ease: GSAP_EASE.premiumOut,
+                delay: i * 0.08,
+                scrollTrigger: { trigger: card, start: "top 88%", once: true },
+              },
+            );
+          });
         });
-      });
-      return () => ctx.revert();
-    }
-
-    // ── Stacking animation — pin is handled by CSS position:sticky ───
-    // Section height = count×100vh provides the scroll room.
-
-    const steps = count - 1;
-
-    // Initial state
-    if (headerRef.current) gsap.set(headerRef.current, { opacity: 0, y: 16 });
-    gsap.set(cards[0], { opacity: 0, y: 32, force3D: true });
-    for (let i = 1; i < cards.length; i++) {
-      gsap.set(cards[i], { y: getVH(), force3D: true });
-    }
-
-    let headerShown = false;
-
-    // On mobile: cards land at y:0 (no stacking offset) and anchor to viewport bottom.
-    // On desktop: offset stagger gives the "deck" peek.
-    const landingOffset = isMobileViewport ? 0 : offset;
-
-    /** Drive card positions from 0→1 progress across the pinned zone. */
-    const applyProgress = (p: number) => {
-      const clamped = Math.max(0, Math.min(1, p));
-      // preRoll: scroll past sectionTop before any card starts moving.
-      // Shifting all segments right by preRoll also reduces the end dead zone.
-      const scrollP = Math.max(0, clamped - preRoll);
-
-      const segLen    = 1 / steps;
-      const getSegment = (i: number) => {
-        const shift = cardOverlap * segLen * (i - 1);
-        return [
-          Math.max(0, (i - 1) * segLen - shift),
-          Math.min(1, i * segLen - shift),
-        ] as const;
-      };
-      // Desktop (Lenis): ease-in-out — slow start, smooth peak, gentle landing.
-      // Mobile (native scroll): linear — responds immediately to finger movement.
-      const easeSeg = (r: number) =>
-        lenis
-          ? r < 0.5 ? 2 * r * r : 1 - (-2 * r + 2) ** 2 / 2
-          : r;
-
-      // Slide cards in one-by-one
-      for (let i = 1; i < count; i++) {
-        const [segStart, segEnd] = getSegment(i);
-        const rawSeg = Math.max(0, Math.min(1, (scrollP - segStart) / (segEnd - segStart)));
-        const seg    = easeSeg(rawSeg);
-        const vh     = getVH();
-        gsap.set(cards[i], { y: vh * (1 - seg) + landingOffset * i * seg, force3D: true });
+        return () => ctx.revert();
       }
 
-      // Scale cards that are being covered
-      for (let j = 0; j < count - 1; j++) {
-        let totalScaleDown = 0;
-        for (let i = j + 1; i < count; i++) {
+      // ── Stacking animation ────────────────────────────────────────
+      const steps = count - 1;
+
+      // Initial state
+      if (headerRef.current) gsap.set(headerRef.current, { opacity: 0, y: 16 });
+      gsap.set(cards[0], { opacity: 0, y: 32, force3D: true });
+      for (let i = 1; i < cards.length; i++) {
+        gsap.set(cards[i], { y: getVH(), force3D: true });
+      }
+
+      let headerShown = false;
+      const landingOffset = isMobileViewport ? 0 : offset;
+
+      /** Drive card positions from 0→1 progress across the pinned zone. */
+      const applyProgress = (p: number) => {
+        const clamped = Math.max(0, Math.min(1, p));
+        const scrollP = Math.max(0, clamped - preRoll);
+
+        const segLen     = 1 / steps;
+        const getSegment = (i: number) => {
+          const shift = cardOverlap * segLen * (i - 1);
+          return [
+            Math.max(0, (i - 1) * segLen - shift),
+            Math.min(1, i * segLen - shift),
+          ] as const;
+        };
+        const easeSeg = (r: number) =>
+          lenis
+            ? r < 0.5 ? 2 * r * r : 1 - (-2 * r + 2) ** 2 / 2
+            : r;
+
+        for (let i = 1; i < count; i++) {
           const [segStart, segEnd] = getSegment(i);
           const rawSeg = Math.max(0, Math.min(1, (scrollP - segStart) / (segEnd - segStart)));
-          totalScaleDown += easeSeg(rawSeg) * 0.03;
+          const seg    = easeSeg(rawSeg);
+          const vh     = getVH();
+          gsap.set(cards[i], { y: vh * (1 - seg) + landingOffset * i * seg, force3D: true });
         }
-        gsap.set(cards[j], { scale: Math.max(0.88, 1 - totalScaleDown), force3D: true });
+
+        for (let j = 0; j < count - 1; j++) {
+          let totalScaleDown = 0;
+          for (let i = j + 1; i < count; i++) {
+            const [segStart, segEnd] = getSegment(i);
+            const rawSeg = Math.max(0, Math.min(1, (scrollP - segStart) / (segEnd - segStart)));
+            totalScaleDown += easeSeg(rawSeg) * 0.03;
+          }
+          gsap.set(cards[j], { scale: Math.max(0.88, 1 - totalScaleDown), force3D: true });
+        }
+      };
+
+      // ── sectionTop cache ─────────────────────────────────────────
+      // Cached to avoid BCR reflow in the hot scroll path, but MUST stay
+      // accurate when content above the section changes height (e.g. images
+      // loading, accordion opens, etc.).
+      let cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
+
+      const refreshSectionTop = () => {
+        cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
+      };
+
+      // Resize (viewport changes)
+      window.addEventListener("resize", refreshSectionTop, { passive: true });
+
+      // FIX: ResizeObserver on the section's parent catches any layout shift
+      // caused by images or other content loading above this section.
+      let ro: ResizeObserver | null = null;
+      if (typeof ResizeObserver !== "undefined" && section.parentElement) {
+        ro = new ResizeObserver(refreshSectionTop);
+        ro.observe(section.parentElement);
       }
-    };
 
-    // Cache sectionTop so we never call getBoundingClientRect() inside the hot
-    // scroll/RAF path — every BCR call forces a layout reflow, causing jitter.
-    let cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
-    const refreshSectionTop = () => {
-      cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
-    };
-    window.addEventListener("resize", refreshSectionTop, { passive: true });
+      // FIX: Also refresh once the whole page has fully loaded (images etc.)
+      const onWindowLoad = () => refreshSectionTop();
+      window.addEventListener("load", onWindowLoad);
 
-    const onScroll = ({ scroll }: { scroll: number }) => {
-      const sectionTop = cachedSectionTop;
-      const vh         = getVH();
+      // FIX: Belt-and-suspenders — refresh at 200 ms and 800 ms after mount.
+      // Covers cases where images are already cached (load fires before we
+      // listen) but the layout still settles on the next paint.
+      const t1 = setTimeout(refreshSectionTop, 200);
+      const t2 = setTimeout(refreshSectionTop, 800);
 
-      // Header + first card entrance (fires once, before pin zone starts)
-      if (!headerShown && scroll + vh * 0.85 >= sectionTop) {
-        headerShown = true;
-        if (headerRef.current) {
-          gsap.to(headerRef.current, {
-            opacity: 1, y: 0,
-            duration: MOTION_DURATION.fast,
+      // ── Scroll handler ───────────────────────────────────────────
+      const onScroll = ({ scroll }: { scroll: number }) => {
+        const sectionTop = cachedSectionTop;
+        const vh         = getVH();
+
+        if (!headerShown && scroll + vh * 0.85 >= sectionTop) {
+          headerShown = true;
+          if (headerRef.current) {
+            gsap.to(headerRef.current, {
+              opacity: 1, y: 0,
+              duration: MOTION_DURATION.fast,
+              ease: GSAP_EASE.premiumOut,
+            });
+          }
+          gsap.to(cards[0], {
+            y: 0, opacity: 1,
+            duration: MOTION_DURATION.normal,
             ease: GSAP_EASE.premiumOut,
           });
         }
-        gsap.to(cards[0], {
-          y: 0, opacity: 1,
-          duration: MOTION_DURATION.normal,
-          ease: GSAP_EASE.premiumOut,
-        });
-      }
 
-      // position:sticky handles the pin — JS only drives card progress
-      const rawProgress = (scroll - sectionTop) / (steps * vh * scrollMultiplier);
-      applyProgress(Math.max(0, Math.min(1, rawProgress)));
-    };
+        const rawProgress = (scroll - sectionTop) / (steps * vh * scrollMultiplier);
+        applyProgress(Math.max(0, Math.min(1, rawProgress)));
+      };
 
-    // RAF loop for mobile: syncs with display refresh cycle, no layout-thrashing
-    // event handlers. Only calls onScroll when scrollY actually changes.
-    let rafId: number;
-    let lastScrollY = -1;
-    let rafRunning = true;
+      let rafId: number;
+      let lastScrollY = -1;
+      let rafRunning  = true;
 
-    const nativeTick = () => {
-      if (!rafRunning) return;
-      const scrollY = window.scrollY;
-      if (scrollY !== lastScrollY) {
-        lastScrollY = scrollY;
-        onScroll({ scroll: scrollY });
-      }
-      rafId = requestAnimationFrame(nativeTick);
-    };
+      const nativeTick = () => {
+        if (!rafRunning) return;
+        const scrollY = window.scrollY;
+        if (scrollY !== lastScrollY) {
+          lastScrollY = scrollY;
+          onScroll({ scroll: scrollY });
+        }
+        rafId = requestAnimationFrame(nativeTick);
+      };
 
-    if (lenis) {
-      lenis.on("scroll", onScroll);
-    } else {
-      onScroll({ scroll: window.scrollY }); // initial state
-      rafId = requestAnimationFrame(nativeTick);
-    }
-
-    return () => {
-      window.removeEventListener("resize", refreshSectionTop);
       if (lenis) {
-        lenis.off("scroll", onScroll);
+        lenis.on("scroll", onScroll);
       } else {
-        rafRunning = false;
-        cancelAnimationFrame(rafId);
+        onScroll({ scroll: window.scrollY });
+        rafId = requestAnimationFrame(nativeTick);
       }
-      gsap.set([...cards, headerRef.current].filter(Boolean), {
-        clearProps: "transform,opacity,y,scale",
-      });
-    };
+
+      // ── Cleanup ──────────────────────────────────────────────────
+      return () => {
+        window.removeEventListener("resize", refreshSectionTop);
+        window.removeEventListener("load", onWindowLoad);
+        ro?.disconnect();
+        clearTimeout(t1);
+        clearTimeout(t2);
+        if (lenis) {
+          lenis.off("scroll", onScroll);
+        } else {
+          rafRunning = false;
+          cancelAnimationFrame(rafId);
+        }
+        gsap.set([...cards, headerRef.current].filter(Boolean), {
+          clearProps: "transform,opacity,y,scale",
+        });
+      };
     }
   }, [animated, cardOverlap, count, lenis, mobileMode, offset, preRoll, scrollMultiplier]);
 
-  const layoutClass = animated ? styles.animated : styles.static;
+  const layoutClass    = animated ? styles.animated : styles.static;
   const mobileFlowClass = mobileMode === "flow" ? styles.mobileFlow : "";
 
   return (
@@ -262,8 +275,6 @@ const ScrollStack = ({
       ref={sectionRef}
       className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${className ?? ""}`.trim()}
       id={id}
-      // Explicit height gives the browser the scroll room at render time.
-      // This component is loaded via dynamic(ssr:false) so no hydration mismatch.
       style={animated ? { height: `${count * 100 * scrollMultiplier}vh` } : undefined}
     >
       <div ref={viewportRef} className={styles.viewport}>

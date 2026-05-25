@@ -67,71 +67,83 @@ export default function Projects() {
   return (
     <div className={styles.projectsPage}>
 
-      {/* ── Hero header with stats ── */}
-      <div className={styles.heroHeader}>
-        <div className={styles.heroLeft}>
-          <h1 className={styles.heroTitle}>
-            Live AI products
-            <br />
-            Proven at scale
-          </h1>
-          <p className={styles.heroDesc}>
-            Real AI products built for real business outcomes.
-            Explore how we help founders and enterprises turn complex
-            ideas into scalable, production-ready systems.
-          </p>
-        </div>
-        <div className={styles.heroStats}>
-          {STATS.map((s) => (
-            <div key={s.value} className={styles.statItem}>
-              <span className={styles.statValue}>{s.value}</span>
-              <span className={styles.statLabel}>
-                <span className={styles.statLine}>{s.line1}</span>
-                <span className={styles.statLine}>{s.line2}</span>
-              </span>
-            </div>
-          ))}
+      {/* ── Hero section ── */}
+      <div className={styles.heroOuter}>
+        <div className={styles.heroHeader}>
+          <div className={styles.heroLeft}>
+            <h1 className={styles.heroTitle}>
+              Live AI products
+              <br />
+              Proven at scale
+            </h1>
+            <p className={styles.heroDesc}>
+              Real AI products built for real business outcomes.
+              Explore how we help founders and enterprises turn complex
+              ideas into scalable, production-ready systems.
+            </p>
+          </div>
+          <div className={styles.heroStats}>
+            {STATS.map((s) => (
+              <div key={s.value} className={styles.statItem}>
+                <span className={styles.statValue}>{s.value}</span>
+                <span className={styles.statLabel}>
+                  <span className={styles.statLine}>{s.line1}</span>
+                  <span className={styles.statLine}>{s.line2}</span>
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* ── Filter bar ── */}
-      <div className={styles.filterSection}>
-        <div className={styles.filterRow}>
-          {FILTER_TABS.slice(0, 4).map((tab) => (
-            <button
-              key={tab}
-              className={`${styles.filterBtn} ${activeTab === tab ? styles.filterBtnActive : ''}`}
-              onClick={() => { setActiveTab(tab); setVisibleCount(4); }}
-            >
-              {tab}
-            </button>
-          ))}
-          <div className={styles.categoryWrap}>
-            <span className={styles.categoryPill}>Category for:</span>
-            <select
-              className={styles.categorySelect}
-              value={activeCategory}
-              onChange={(e) => { setActiveCategory(e.target.value); setVisibleCount(4); }}
-            >
-              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-            <span className={styles.selectArrow}>▾</span>
+      {/* ── Filter section ── */}
+      <div className={styles.filterOuter}>
+        <div className={styles.filterSection}>
+          <div className={styles.filterRow}>
+            {FILTER_TABS.slice(0, 4).map((tab) => (
+              <button
+                key={tab}
+                className={`${styles.filterBtn} ${activeTab === tab ? styles.filterBtnActive : ''}`}
+                onClick={() => { setActiveTab(tab); setVisibleCount(4); }}
+              >
+                {tab}
+              </button>
+            ))}
+            <div className={styles.categoryWrap}>
+              <span className={styles.categoryPill}>Category for:</span>
+              <div className={styles.categorySelectContainer}>
+                <select
+                  className={styles.categorySelect}
+                  value={activeCategory}
+                  onChange={(e) => { setActiveCategory(e.target.value); setVisibleCount(4); }}
+                >
+                  {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+                {/* Fix 2: SVG chevron for a crisp, consistent arrow */}
+                <span className={styles.selectArrow} aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="#444" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className={styles.filterRow}>
-          {FILTER_TABS.slice(4).map((tab) => (
-            <button
-              key={tab}
-              className={`${styles.filterBtn} ${activeTab === tab ? styles.filterBtnActive : ''}`}
-              onClick={() => { setActiveTab(tab); setVisibleCount(4); }}
-            >
-              {tab}
-            </button>
-          ))}
+          <div className={styles.filterRow}>
+            {FILTER_TABS.slice(4).map((tab) => (
+              <button
+                key={tab}
+                className={`${styles.filterBtn} ${activeTab === tab ? styles.filterBtnActive : ''}`}
+                onClick={() => { setActiveTab(tab); setVisibleCount(4); }}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* ── Case study cards ── */}
+      <div className={styles.cardsOuter}>
       <div className={styles.cardsList}>
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => (
@@ -228,6 +240,27 @@ export default function Projects() {
             )}
           </>
         )}
+      </div>
+      </div>{/* /cardsOuter */}
+
+      {/* ── Fix 5: CTA section — before footer ── */}
+      <div className={styles.ctaSection}>
+        <h2 className={styles.ctaTitle}>
+          See what your AI product<br />could become
+        </h2>
+        <p className={styles.ctaSubtitle}>
+          Work with a team focused on architecture,<br />
+          execution, and scalable AI systems.
+        </p>
+        <div className={styles.ctaButtons}>
+          <a href="/contact" className={styles.ctaBtnPrimary}>
+            Start Your Project
+            <span className={styles.ctaBtnArrow}>→</span>
+          </a>
+          <a href="/contact" className={styles.ctaBtnSecondary}>
+            Book a Strategy Call
+          </a>
+        </div>
       </div>
     </div>
   );

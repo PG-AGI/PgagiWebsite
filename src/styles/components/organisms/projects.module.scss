@@ -10,11 +10,62 @@
 }
 
 /* ── Shared content-width limiter ── */
-/* Applied to heroHeader, filterSection, cardsList so all columns line up */
-$content-max: 1520px;
-$content-pad-desktop: clamp(48px, 5.5vw, 100px);
-$content-pad-tablet: 5vw;
-$content-pad-mobile: 20px;
+$content-max: 1620px;
+
+/* ─────────────────────────────────────────────────────────────────
+   SECTION OUTER WRAPPERS
+   These own ALL vertical rhythm via vh-based padding.
+   Inner containers (heroHeader / filterSection / cardsList) only
+   handle horizontal containment: width in vw + max-width + margin:auto.
+   This way every laptop / PC screen sees the exact same proportions.
+   ───────────────────────────────────────────────────────────────── */
+
+/* Hero — nav pill ends at ≈104px (top:16px + ~88px height).
+   22vh gives the title room to breathe ~30% down the viewport,
+   matching the generous whitespace in the Figma design.            */
+.heroOuter {
+  width: 100%;
+  padding-top: 22vh;     /* ≈198px on 900px screen — clear nav + air */
+  padding-bottom: 10vh;  /* generous gap before filter pills          */
+  box-sizing: border-box;
+
+  @media (max-width: 900px) {
+    padding-top: 20vh;
+    padding-bottom: 9vh;
+  }
+
+  @media (max-width: 600px) {
+    padding-top: 18vh;
+    padding-bottom: 8vh;
+  }
+}
+
+/* Filter pills section — space before cards */
+.filterOuter {
+  width: 100%;
+  padding-bottom: 7vh;
+  box-sizing: border-box;
+
+  @media (max-width: 900px) { padding-bottom: 6vh; }
+  @media (max-width: 600px) { padding-bottom: 5vh; }
+}
+
+/* Cards list + footer breathing room */
+.cardsOuter {
+  width: 100%;
+  padding-bottom: 12vh;
+  box-sizing: border-box;
+
+  @media (max-width: 900px) { padding-bottom: 10vh; }
+  @media (max-width: 600px) { padding-bottom: 8vh; }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   INNER CONTENT CONTAINERS
+   Width = vw percentage so horizontal margins scale proportionally.
+   On large monitors max-width caps the line length.
+   NO top/bottom padding here — outer wrapper owns that.
+   ───────────────────────────────────────────────────────────────── */
 
 /* ── Hero header ── */
 .heroHeader {
@@ -22,22 +73,21 @@ $content-pad-mobile: 20px;
   align-items: flex-start;
   justify-content: space-between;
   max-width: $content-max;
-  width: 100%;
+  width: 88vw;         /* 6vw margin each side on desktop */
   margin: 0 auto;
-  padding: clamp(110px, 12vw, 180px) $content-pad-desktop clamp(56px, 6vw, 80px);
-  gap: 48px;
+  gap: 4vw;
   flex-wrap: wrap;
   box-sizing: border-box;
 
   @media (max-width: 900px) {
-    padding: 100px $content-pad-tablet 48px;
     flex-direction: column;
-    gap: 36px;
+    gap: 5vw;
+    width: 90vw;       /* 5vw margin each side on tablet */
   }
 
   @media (max-width: 600px) {
-    padding: 80px $content-pad-mobile 40px;
-    gap: 28px;
+    width: 92vw;       /* 4vw margin each side on mobile */
+    gap: 7vw;
   }
 }
 
@@ -59,22 +109,22 @@ $content-pad-mobile: 20px;
   font-size: clamp(0.9rem, 1.1vw, 1.05rem);
   color: #555;
   line-height: 1.7;
-  margin: 14px 0 0;
+  margin: 28px 0 0;
   max-width: 460px;
 }
 
 .heroStats {
   display: flex;
-  gap: clamp(28px, 4vw, 56px);
+  gap: clamp(36px, 5vw, 72px);
   flex-wrap: wrap;
   flex-shrink: 0;
-  padding-top: 8px;
+  padding-top: 36px;  /* internal offset so numbers align with mid-title */
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .statValue {
@@ -99,20 +149,21 @@ $content-pad-mobile: 20px;
 /* ── Filter section ── */
 .filterSection {
   max-width: $content-max;
-  width: 100%;
+  width: 88vw;
   margin: 0 auto;
-  padding: 0 $content-pad-desktop clamp(28px, 3vw, 40px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;           /* gap between the two pill rows */
   box-sizing: border-box;
 
   @media (max-width: 900px) {
-    padding: 0 $content-pad-tablet 28px;
+    width: 90vw;
+    gap: 16px;
   }
 
   @media (max-width: 600px) {
-    padding: 0 $content-pad-mobile 20px;
+    width: 92vw;
+    gap: 14px;
   }
 }
 
@@ -120,15 +171,15 @@ $content-pad-mobile: 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 
   @media (max-width: 600px) {
-    gap: 8px;
+    gap: 10px;
   }
 }
 
 .filterBtn {
-  padding: 9px 22px;
+  padding: 10px 26px;
   border-radius: 100px;
   border: 1.5px solid #d4d4d4;
   background: #fff;
@@ -145,7 +196,7 @@ $content-pad-mobile: 20px;
   }
 
   @media (max-width: 600px) {
-    padding: 7px 16px;
+    padding: 8px 18px;
   }
 }
 
@@ -177,7 +228,7 @@ $content-pad-mobile: 20px;
 }
 
 .categoryPill {
-  padding: 9px 16px;
+  padding: 10px 18px;
   background: #9F0000;
   color: #fff;
   font-size: clamp(0.78rem, 0.9vw, 0.9rem);
@@ -186,10 +237,15 @@ $content-pad-mobile: 20px;
   flex-shrink: 0;
 }
 
+.categorySelectContainer {
+  background: #9f0000;
+}
+
 .categorySelect {
-  padding: 9px 36px 9px 14px;
+  padding: 10px 36px 10px 14px;
   border: none;
-  background: transparent;
+  border-radius: 30px;
+  background: #ffffff;
   font-size: clamp(0.78rem, 0.9vw, 0.9rem);
   font-weight: 500;
   color: #222;
@@ -202,6 +258,7 @@ $content-pad-mobile: 20px;
 
 .selectArrow {
   position: absolute;
+  top: 12px;
   right: 12px;
   color: #444;
   font-size: 0.75rem;
@@ -211,72 +268,78 @@ $content-pad-mobile: 20px;
 /* ── Cards list ── */
 .cardsList {
   max-width: $content-max;
-  width: 100%;
+  width: 88vw;
   margin: 0 auto;
-  padding: 0 $content-pad-desktop clamp(64px, 7vw, 100px);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5vw;          /* vw-based gap scales with screen width */
   box-sizing: border-box;
 
   @media (max-width: 900px) {
-    padding: 0 $content-pad-tablet 60px;
-    gap: 16px;
+    width: 90vw;
+    gap: 3vw;
   }
 
   @media (max-width: 600px) {
-    padding: 0 $content-pad-mobile 48px;
-    gap: 14px;
+    width: 92vw;
+    gap: 4vw;
   }
 }
 
 /* ── Individual case study card ── */
 .csCard {
   display: grid;
-  grid-template-columns: 2fr 3fr;       /* 40 / 60 split */
+  grid-template-columns: 2.5fr 3fr;
+  align-items: stretch;           /* Fix 1: explicit stretch so right panel
+                                     always fills the full row height       */
   width: 100%;
-  min-height: 420px;
+  min-height: 520px;
+  height: 80vh;
   background: #f2f2f3;
-  border-radius: 20px;
+  border-radius: 16px;            /* Fix 4: reduced from 24px → matches Figma */
   overflow: hidden;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.05);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.09);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.11);
   }
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     min-height: auto;
-    border-radius: 16px;
+    border-radius: 14px;
   }
 }
 
 .csLeft {
-  padding: clamp(36px, 4vw, 60px) clamp(32px, 3.5vw, 52px);
+  padding: clamp(44px, 4.5vw, 64px) clamp(40px, 4vw, 60px);  /* Fix 3 */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 18px;
+  justify-content: flex-start;
+  gap: 20px;                      /* Fix 3: reduced gap */
 
   @media (max-width: 900px) {
-    padding: 32px 5vw 24px;
+    padding: 36px 5vw 28px;
     order: 2;
-    gap: 14px;
+    gap: 16px;
   }
 
   @media (max-width: 500px) {
-    padding: 28px $content-pad-mobile;
+    padding: 28px 20px;
+    gap: 14px;
   }
 }
 
 .csRight {
-  /* Grid cell — its height comes from .csLeft content via grid row stretching */
   position: relative;
   overflow: hidden;
-  background: #e8e8f0;
-  min-height: 360px;
+  background: #f2f2f3;
+  /* Fix 1: height:100% ensures the grid cell always gives absolute children
+     a concrete bounding box, even on intermediate viewport widths            */
+  height: 100%;
+  min-height: 400px;
 
   @media (max-width: 900px) {
     order: 1;
@@ -284,12 +347,12 @@ $content-pad-mobile: 20px;
   }
 }
 
-/* Fills .csRight wall-to-wall via absolute positioning.
-   This gives the Next.js fill Image a concrete bounding box. */
+/* Image inset 20px all sides — "card within a card" Figma effect */
 .csImgWrap {
   position: absolute;
-  inset: 0;
+  inset: 20px;
   overflow: hidden;
+  border-radius: 10px;            /* Fix 4: reduced from 14px → matches Figma */
 }
 
 .csImg {
@@ -302,7 +365,7 @@ $content-pad-mobile: 20px;
 
 /* ── Text ── */
 .csTitle {
-  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+  font-size: clamp(1.4rem, 1.9vw, 2rem);  /* Fix 3: pulled back from 2.2rem */
   font-weight: 700;
   color: #111;
   line-height: 1.18;
@@ -311,9 +374,9 @@ $content-pad-mobile: 20px;
 }
 
 .csDesc {
-  font-size: clamp(0.85rem, 0.95vw, 0.975rem);
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);  /* Fix 3: slightly smaller */
   color: #666;
-  line-height: 1.65;
+  line-height: 1.68;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -329,10 +392,10 @@ $content-pad-mobile: 20px;
 }
 
 .techPill {
-  padding: 5px 14px;
+  padding: 6px 14px;                              /* Fix 3 */
   border-radius: 100px;
   border: 1.5px solid #ddd;
-  font-size: clamp(0.72rem, 0.82vw, 0.82rem);
+  font-size: clamp(0.72rem, 0.82vw, 0.82rem);    /* Fix 3 */
   font-weight: 500;
   color: #555;
   background: #fff;
@@ -353,7 +416,7 @@ $content-pad-mobile: 20px;
 }
 
 .metricNum {
-  font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);   /* Fix 3: reduced from 3.2rem */
   font-weight: 800;
   color: #111;
   line-height: 1;
@@ -361,14 +424,14 @@ $content-pad-mobile: 20px;
 }
 
 .metricLbl {
-  font-size: clamp(0.72rem, 0.82vw, 0.82rem);
+  font-size: clamp(0.72rem, 0.82vw, 0.82rem);  /* Fix 3 */
   color: #888;
   font-weight: 400;
 }
 
 /* ── Highlight ── */
 .highlightText {
-  font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);  /* Fix 3 */
   font-weight: 700;
   color: #9F0000;
   margin: 0;
@@ -378,16 +441,16 @@ $content-pad-mobile: 20px;
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .btnPrimary {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 11px 24px;
+  gap: 8px;
+  padding: 12px 24px;                           /* Fix 3: slightly smaller */
   background: #9F0000;
   color: #fff;
   border-radius: 100px;
@@ -409,7 +472,7 @@ $content-pad-mobile: 20px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 22px;
+  padding: 11px 22px;                           /* Fix 3 */
   background: #fff;
   color: #222;
   border-radius: 100px;
@@ -418,6 +481,127 @@ $content-pad-mobile: 20px;
   font-weight: 600;
   text-decoration: none;
   transition: border-color 0.18s, color 0.18s, transform 0.18s;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #9F0000;
+    color: #9F0000;
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   FIX 2: Category capsule — polished chevron & sizing
+   ───────────────────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────────────
+   FIX 5: CTA Section — "See what your AI product could become"
+   ───────────────────────────────────────────────────────────────── */
+.ctaSection {
+  width: 100%;
+  padding: 10vh 0 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  box-sizing: border-box;
+
+  @media (max-width: 900px) {
+    padding: 8vh 5vw 10vh;
+    gap: 18px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 7vh 6vw 9vh;
+    gap: 16px;
+  }
+}
+
+.ctaTitle {
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-weight: 800;
+  color: #111;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  max-width: 720px;
+  margin: 0;
+
+  @media (max-width: 600px) {
+    font-size: clamp(1.7rem, 6vw, 2.4rem);
+  }
+}
+
+.ctaSubtitle {
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  color: #666;
+  line-height: 1.65;
+  max-width: 500px;
+  margin: 0;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.ctaBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px 14px 28px;
+  background: #9F0000;
+  color: #fff;
+  border-radius: 100px;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background: #7a0000;
+    transform: translateY(-2px);
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+/* Circle arrow on the right side of the primary CTA button */
+.ctaBtnArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 1rem;
+  flex-shrink: 0;
+  transition: background 0.2s;
+
+  .ctaBtnPrimary:hover & {
+    background: rgba(255, 255, 255, 0.28);
+  }
+}
+
+.ctaBtnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: #fff;
+  color: #222;
+  border-radius: 100px;
+  border: 1.5px solid #d4d4d4;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
   white-space: nowrap;
 
   &:hover {
@@ -441,7 +625,7 @@ $content-pad-mobile: 20px;
 .loadMoreWrap {
   display: flex;
   justify-content: center;
-  padding: 48px 0 0;
+  padding: 4vh 0 0;
 }
 
 .loadMoreBtn {
@@ -484,16 +668,17 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 
 .cardSkeleton {
   display: grid;
-  grid-template-columns: 2fr 3fr;
-  min-height: 420px;
+  grid-template-columns: 2.5fr 3fr;
+  align-items: stretch;
+  min-height: 520px;
   background: #f2f2f3;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     min-height: auto;
-    border-radius: 16px;
+    border-radius: 14px;
   }
 }
 
@@ -513,8 +698,8 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 .skeletonRight {
   position: relative;
   overflow: hidden;
-  background: #e8e8f0;
-  min-height: 360px;
+  background: #e2e2e4;
+  min-height: 420px;
 
   &::after {
     content: '';

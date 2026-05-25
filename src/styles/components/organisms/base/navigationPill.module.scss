@@ -6,7 +6,7 @@
   top: 16px;
   left: 50%;
   transform: translateX(-50%);
-  width: auto;
+  width: 75vw;               /* 70-80% of viewport width */
   max-width: calc(100% - 32px);
   min-width: 0;
   display: flex;
@@ -41,7 +41,7 @@
   .logo {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;       /* centres "PG-AGI" text under the icon */
     justify-content: center;
     margin: 0;
     padding: 4px 0;
@@ -49,7 +49,7 @@
     transition: opacity 0.1s ease-in-out;
     min-width: 0;
     width: auto;
-    gap: 1px;
+    gap: 4px;
 
     img {
       width: 36px;
@@ -59,10 +59,11 @@
 
     p {
       font-family: 'Gilroy', 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 400;
       margin: 0;
       color: var(--text-color, #111);
+      text-align: center;
       white-space: nowrap;
       letter-spacing: 0.04em;
     }
@@ -76,17 +77,18 @@
 
   /* ─── Inner pill container ────────────────── */
   .nav {
-    width: auto;
+    width: 100%;               /* fills the 75vw outer wrapper */
     min-width: 0;
+    position: relative;        /* anchor for absolute-centred links */
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;   /* logo pins to left */
     cursor: default;
     transition: opacity 0.1s ease-in-out, visibility 0s 0.3s, box-shadow 0.25s ease;
     will-change: transform, opacity;
     z-index: 1900;
-    padding: 10px 28px 10px 16px;
-    gap: 32px;
+    padding: 10px 5vw;        /* equal breathing room on both sides */
+    gap: 0;
     background: #f2f2f2;
     border-radius: 50px;
 
@@ -95,77 +97,33 @@
       visibility: hidden;
     }
 
-    /* ─── Nav links ──────────────────────────── */
+    /* ─── Nav links — truly centred across the full pill width ──── */
     .links {
-      position: relative;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       gap: 32px;
-      justify-content: flex-end;
       align-items: center;
       flex-wrap: nowrap;
-      flex: 0 1 auto;
-      margin-left: auto;
+      white-space: nowrap;
+      pointer-events: auto;
 
-      > a,
-      .whatWeDo > a,
-      .whatWeDo span {
-        position: relative;
+      > a {
         font-family: 'Plus Jakarta Sans', 'Alexandria', sans-serif;
         font-size: 0.95rem;
         font-weight: 500;
-        font-style: normal;
         line-height: 1;
         letter-spacing: 0;
-        vertical-align: middle;
         padding: 6px 4px;
         cursor: pointer;
         text-decoration: none;
         color: var(--text-color);
         white-space: nowrap;
-        overflow: visible;
         opacity: 0.85;
         transition: opacity 0.2s ease, color 0.2s ease;
 
-        &::after {
-          content: '';
-          position: absolute;
-          left: 50%;
-          right: 50%;
-          bottom: -2px;
-          height: 1.5px;
-          background: rgba(0, 0, 0, 0.55);
-          transition: left 0.25s ease, right 0.25s ease, opacity 0.25s ease;
-          opacity: 0;
-        }
-
-        &:hover {
-          opacity: 1;
-          &::after {
-            left: 0;
-            right: 0;
-            opacity: 1;
-          }
-        }
-      }
-
-      .solutionsLink {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      .solutionsCaret {
-        margin-left: 2px;
-        opacity: 0.7;
-      }
-
-      .whatWeDo {
-        display: flex;
-        flex-direction: column;
-
-        &:hover .dropdown {
-          display: flex;
-        }
+        &:hover { opacity: 1; }
       }
     }
 
@@ -332,40 +290,22 @@
 
 @media (max-width: 1200px) {
   .navigation .nav {
-    padding: 10px 24px 10px 14px;
-    gap: 24px;
-
-    .links {
-      gap: 24px;
-      > a, .whatWeDo > a, .whatWeDo span {
-        font-size: 0.9rem;
-        padding: 6px 2px;
-      }
-    }
+    padding: 10px 28px;
+    .links { gap: 24px; > a { font-size: 0.9rem; } }
   }
 }
 
 @media (max-width: 1000px) {
   .navigation .nav {
-    padding: 9px 20px 9px 12px;
-    gap: 18px;
-
-    .links {
-      gap: 18px;
-      > a, .whatWeDo > a, .whatWeDo span { font-size: 0.85rem; }
-    }
+    padding: 9px 22px;
+    .links { gap: 20px; > a { font-size: 0.85rem; } }
   }
 }
 
 @media (max-width: 900px) {
   .navigation .nav {
-    padding: 8px 16px 8px 10px;
-    gap: 14px;
-
-    .links {
-      gap: 14px;
-      > a, .whatWeDo > a, .whatWeDo span { font-size: 0.82rem; }
-    }
+    padding: 8px 18px;
+    .links { gap: 16px; > a { font-size: 0.82rem; } }
   }
 }
 

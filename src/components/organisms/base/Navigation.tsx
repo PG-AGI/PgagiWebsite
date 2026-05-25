@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import ContactUsForm from "./contactUsForm";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ROUTES from "@/constants/routes";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
 
@@ -183,12 +183,11 @@ export default function Navigation() {
                   <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     About Us
                   </TransitionLink>
-                  <span className={`${styles.mobileMenuItem} ${styles.comingSoon}`}>
-                    Solutions
-                    <div className={styles.tooltip}>Coming Soon</div>
-                  </span>
                   <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Case studies
+                  </TransitionLink>
+                  <TransitionLink href={ROUTES.EXPERTISE} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Expertise
                   </TransitionLink>
                   <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Blogs
@@ -208,12 +207,11 @@ export default function Navigation() {
               <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
                 About Us
               </TransitionLink>
-              <span className={`${styles.link} ${styles.solutionsLink}`}>
-                Solutions
-                <ChevronDown size={14} strokeWidth={2.2} className={styles.solutionsCaret} />
-              </span>
               <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
                 Case studies
+              </TransitionLink>
+              <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
+                Expertise
               </TransitionLink>
               <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.link}>
                 Blogs

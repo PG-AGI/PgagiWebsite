@@ -1,16 +1,47 @@
 $card-radius: 26px;
 $red: #9f0000;
 
-.outerSection {
+// ─── Outer wrapper (holds intro + scroll stack) ─────────────────
+
+.outerWrapper {
   background: #ffffff;
   position: relative;
+}
+
+// ─── Static intro (heading → subtitle → image) ──────────────────
+
+.introSection {
+  width: 100%;
+  padding-top: clamp(100px, 12vh, 155px);
+  padding-bottom: clamp(1.5rem, 3vh, 3rem);
+  text-align: center;
+  overflow: hidden; /* keeps 90vw image from causing horizontal scroll */
+
+  @media (max-width: 767px) {
+    padding-top: clamp(80px, 12vh, 110px);
+    padding-bottom: 2vh;
+  }
+}
+
+// Narrow copy block: title + subtitle only
+.introCopy {
+  width: 62vw;
+  margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    width: 75vw;
+  }
+
+  @media (max-width: 767px) {
+    width: 88vw;
+  }
 }
 
 // ─── Heading ───────────────────────────────────
 
 .title {
   margin: 0;
-  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  font-size: clamp(2.9rem, 3.8vw, 3.1rem);
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -31,16 +62,37 @@ $red: #9f0000;
 }
 
 .subtitle {
-  margin: 0.5rem 0 0;
+  margin: 2vh 0 0;
   color: #606060;
-  font-size: clamp(0.82rem, 1.1vw, 0.98rem);
+  font-size: clamp(1.2rem, 2.1vw, 1.5rem);
   font-weight: 500;
   line-height: 1.5;
 
   @media (max-width: 768px) {
     font-size: 0.85rem;
-    margin-top: 0.25rem;
+    margin-top: 0.5vh;
   }
+}
+
+// Wide banner image — intentionally wider than the text block
+.headerImageWrapper {
+  width: 80vw;
+  margin: 5vh auto 0;
+  border-radius: 1.5vw;
+  overflow: hidden;
+  line-height: 0; /* eliminates inline-element gap under image */
+
+  @media (max-width: 767px) {
+    width: 92vw;
+    border-radius: 3vw;
+    margin-top: 2vh;
+  }
+}
+
+.headerImage {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 // ─── Cards ────────────────────────────────────
