@@ -346,7 +346,7 @@ const Customers = () => {
           }
         >
           <h2 className={styles.title}>
-            {customersText.titlePrefix} <em>{customersText.titleEmphasis}</em>
+            {customersText.titlePrefix}
           </h2>
           <p className={styles.subtitle}>
             {customersText.subtitle}
