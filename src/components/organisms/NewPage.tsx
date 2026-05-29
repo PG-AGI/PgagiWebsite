@@ -85,6 +85,7 @@ const NewPage = () => {
           <div className={styles.textColumn}>
             <p className={styles.labelOverline}>{tabContent.overline}</p>
             <h2 className={styles.mainTitle}>{tabContent.title}</h2>
+            <p className={styles.descriptionText}>{tabContent.description}</p>
             <div className={styles.ctaWrapper}>
               <button
                 type="button"
@@ -97,7 +98,6 @@ const NewPage = () => {
                 </div>
               </button>
             </div>
-            <p className={styles.descriptionText}>{tabContent.description}</p>
           </div>
 
           <div className={styles.imageColumn}>
