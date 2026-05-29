@@ -200,16 +200,17 @@ $red: #9f0000;
 // ─── Media ───────────────────────────────────
 
 .media {
-  width: clamp(240px, 33%, 340px);
-  flex: 0 0 clamp(240px, 33%, 340px);
+  width: clamp(300px, 39%, 420px);
+  flex: 0 0 clamp(300px, 39%, 420px);
+  min-height: clamp(300px, 30vw, 360px);
   align-self: center;
-  border-radius: 18px;
+  border-radius: 22px;
   overflow: hidden;
   background: #E2D5C4;
 
   @media (max-width: 900px) {
     width: 100%;
-    max-width: 280px;
+    max-width: 320px;
     margin: 0 auto;
     flex-basis: auto;
     align-self: center;
@@ -220,10 +221,7 @@ $red: #9f0000;
     max-width: 100%;
     width: 100%;
     border-radius: 12px;
-  }
-
-  @media (max-height: 700px) {
-    max-width: 240px;
+    min-height: unset;
   }
 }
 

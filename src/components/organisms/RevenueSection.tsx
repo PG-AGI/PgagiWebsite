@@ -107,17 +107,6 @@ const CardContent = ({
   priority?: boolean;
 }) => (
   <>
-    <div className={styles.copyBlock}>
-      <h3 className={styles.cardTitle}>{title}</h3>
-      <ul className={styles.pointList}>
-        {points.map((point) => (
-          <li key={point}>{point}</li>
-        ))}
-      </ul>
-      <p className={styles.outcome}>
-        <span>{revenueSectionText.outcomeLabel}</span> {outcome}
-      </p>
-    </div>
     <div className={styles.media}>
       <div className={styles.imageInner}>
         <Image
@@ -129,6 +118,17 @@ const CardContent = ({
           priority={priority}
         />
       </div>
+    </div>
+    <div className={styles.copyBlock}>
+      <h3 className={styles.cardTitle}>{title}</h3>
+      <ul className={styles.pointList}>
+        {points.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
+      <p className={styles.outcome}>
+        <span>{revenueSectionText.outcomeLabel}</span> {outcome}
+      </p>
     </div>
   </>
 );
