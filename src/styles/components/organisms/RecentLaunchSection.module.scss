@@ -109,7 +109,7 @@
 /* ── Card inner: two-column layout ── */
 .card {
   background: #f5f5f7;
-  border-radius: 20px;
+  // border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: clamp(380px, 48vh, 520px);
