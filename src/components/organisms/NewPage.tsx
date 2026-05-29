@@ -85,7 +85,7 @@ const NewPage = () => {
           <div className={styles.textColumn}>
             <p className={styles.labelOverline}>{tabContent.overline}</p>
             <h2 className={styles.mainTitle}>{tabContent.title}</h2>
-             <div className={styles.ctaWrapper}>
+            <div className={styles.ctaWrapper}>
               <button
                 type="button"
                 className={styles.pillButton}
