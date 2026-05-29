@@ -68,9 +68,9 @@ export default function Home() {
       <LazySection minHeight="1200px">
         <RecentLaunchSection />
       </LazySection>
-      <LazySection minHeight="800px">
+      {/* <LazySection minHeight="800px">
         <CaseStudiesSection />
-      </LazySection>
+      </LazySection> */}
       <LazySection minHeight="400px">
         <Customers />
       </LazySection>
