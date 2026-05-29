@@ -53,9 +53,6 @@ export default function Home() {
       <LazySection minHeight="600px">
         <RevenueSection />
       </LazySection>
-      <LazySection minHeight="600px">
-        <MeasurableImpactSection />
-      </LazySection>
       <LazySection minHeight="700px">
         <BuildEcosystemSection />
       </LazySection>
@@ -76,6 +73,9 @@ export default function Home() {
       </LazySection>
       <LazySection minHeight="900px">
         <WhatMakesUsDifferentSection />
+      </LazySection>
+       <LazySection minHeight="600px">
+        <MeasurableImpactSection />
       </LazySection>
       <LazySection minHeight="600px">
         <ConcentricEllipseSection />
