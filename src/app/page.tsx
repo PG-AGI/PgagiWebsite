@@ -35,51 +35,53 @@ export default function Home() {
       <ScrollIndicator />
       <Landing />
       {/* Near-fold sections: lighter preload window to reduce initial JS/network contention. */}
-      <LazySection minHeight="600px" rootMargin="100px">
-        <StatsSection />
-      </LazySection>
-      <LazySection minHeight="800px" rootMargin="120px">
-        <VisionSystemSection />
-      </LazySection>
-      <LazySection minHeight="600px">
-        <SocialOrbitSection />
-      </LazySection>
-      <LazySection minHeight="700px">
-        <EcosystemSection />
-      </LazySection>
-      <LazySection minHeight="820px">
-        <ProcessTimelineSection />
-      </LazySection>
-      <LazySection minHeight="600px">
-        <RevenueSection />
-      </LazySection>
-      <LazySection minHeight="700px">
-        <BuildEcosystemSection />
-      </LazySection>
-      <LazySection minHeight="600px">
-        <SolutionFitBreakdownSection />
-      </LazySection>
-      <LazySection minHeight="500px">
-        <TrustedPartnersSection />
-      </LazySection>
-      <LazySection minHeight="1200px">
-        <RecentLaunchSection />
-      </LazySection>
-      {/* <LazySection minHeight="800px">
-        <CaseStudiesSection />
-      </LazySection> */}
-      <LazySection minHeight="400px">
-        <Customers />
-      </LazySection>
-      <LazySection minHeight="900px">
-        <WhatMakesUsDifferentSection />
-      </LazySection>
-       <LazySection minHeight="600px">
-        <MeasurableImpactSection />
-      </LazySection>
-      <LazySection minHeight="600px">
-        <ConcentricEllipseSection />
-      </LazySection>
+      <div className={styles.sectionsWrapper}>
+        <LazySection minHeight="600px" rootMargin="100px">
+          <StatsSection />
+        </LazySection>
+        <LazySection minHeight="800px" rootMargin="120px">
+          <VisionSystemSection />
+        </LazySection>
+        <LazySection minHeight="600px">
+          <SocialOrbitSection />
+        </LazySection>
+        <LazySection minHeight="700px">
+          <EcosystemSection />
+        </LazySection>
+        <LazySection minHeight="820px">
+          <ProcessTimelineSection />
+        </LazySection>
+        <LazySection minHeight="600px">
+          <RevenueSection />
+        </LazySection>
+        <LazySection minHeight="700px">
+          <BuildEcosystemSection />
+        </LazySection>
+        <LazySection minHeight="600px">
+          <SolutionFitBreakdownSection />
+        </LazySection>
+        <LazySection minHeight="500px">
+          <TrustedPartnersSection />
+        </LazySection>
+        <LazySection minHeight="1200px">
+          <RecentLaunchSection />
+        </LazySection>
+        {/* <LazySection minHeight="800px">
+          <CaseStudiesSection />
+        </LazySection> */}
+        <LazySection minHeight="400px">
+          <Customers />
+        </LazySection>
+        <LazySection minHeight="900px">
+          <WhatMakesUsDifferentSection />
+        </LazySection>
+        <LazySection minHeight="600px">
+          <MeasurableImpactSection />
+        </LazySection>
+        <LazySection minHeight="600px">
+          <ConcentricEllipseSection />
+        </LazySection>
+      </div>
     </main>
   );
 }
