@@ -10,9 +10,43 @@ export type PgagiClientReview = {
   projectName: string;
   gender?: "male" | "female" | "neutral";
   platform?: "upwork" | "clutch";
+  memberImage?: string;
 };
 
 export const pgagiClientTestimonials: PgagiClientReview[] = [
+  {
+    name: "Pascal",
+    company: "",
+    country: "France",
+    platform: "upwork",
+    gender: "male",
+    memberImage: "/assets/Customers/Member1.png",
+    quote:
+      "I am so happy with this company. I am very happy I found them. I will do many many more optimizations and automations for my e-commerce business with them hopefully.",
+    projectName: "AI System for E-commerce market place",
+  },
+  {
+    name: "Nidaa",
+    company: "Signato LLC",
+    country: "",
+    platform: "upwork",
+    gender: "female",
+    memberImage: "/assets/Customers/Member3.png",
+    quote:
+      "I loved working with this team. Extremely dedicated, constant communication and proactive in solving things. The best part is whenever i got a crazy idea and needed it to be implemented, they always found a way.",
+    projectName: "Brainify",
+  },
+  {
+    name: "Nidaa",
+    company: "Signato LLC",
+    country: "",
+    platform: "upwork",
+    gender: "female",
+    memberImage: "/assets/Customers/Member6.png",
+    quote:
+      "I loved working with this team. Extremely dedicated, constant communication and proactive in solving things. The best part is whenever i got a crazy idea and needed it to be implemented, they always found a way.",
+    projectName: "Brainify",
+  },
   {
     name: "Bernard",
     company: "",
@@ -117,11 +151,12 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     projectName: "RAG implementation for smart contact code",
   },
   {
-    name: "Bally S",
+    name: "Bally S Kehel",
     company: "Social 27",
     country: "USA",
     gender: "male",
     platform: "upwork",
+    memberImage: "/assets/Customers/Member4.png",
     quote:
       "I had an exceptional experience working with this team. Their professionalism and deep expertise in React, React Flow, and AI were evident throughout the project. They quickly grasped our requirements and executed each task with precision, resulting in a swift and high-quality turnaround. Even when mid-stream changes occurred, they handled them gracefully while consistently meeting every milestone. I highly recommend this team for their technical prowess and commitment to excellence.",
     projectName: "React Flow Execution Graph",
@@ -132,6 +167,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     country: "IN",
     gender: "male",
     platform: "upwork",
+    memberImage: "/assets/Customers/Member5.png",
     quote:
       " I had a great experience working with PGAGI Consultancy on an AI project. Their team demonstrated strong technical expertise, clear communication, and a proactive approach throughout the engagement. They delivered high-quality work, met deadlines consistently, and were highly responsive to any feedback or adjustments needed. ",
     projectName: "AI powered multi-agent trading system.",
@@ -161,9 +197,10 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     country: "",
     gender: "male",
     platform: "upwork",
+    memberImage: "/assets/Customers/Member2.png",
     quote:
       "Highly skilled engineers who know how to scale AI applications. Their strategic approach saved us months of development time.",
-    projectName: "Client Review",
+    projectName: "Cracked.ai",
   },
   {
     name: "Lorella Sini",

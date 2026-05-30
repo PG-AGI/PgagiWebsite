@@ -28,12 +28,6 @@
   line-height: 1.02;
   letter-spacing: -0.035em;
   font-weight: 700;
-
-  em {
-    font-style: italic;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
 }
 
 .subtitle {
@@ -78,10 +72,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   background: #e8e4e0;
 
-  &:first-child {
-    margin-left: 0;
-  }
-
+  &:first-child { margin-left: 0; }
   &:nth-child(1) { z-index: 4; }
   &:nth-child(2) { z-index: 3; }
   &:nth-child(3) { z-index: 2; }
@@ -90,6 +81,7 @@
 
 .stackAvatarImage {
   object-fit: cover;
+  object-position: center top;
 }
 
 .ratingText {
@@ -99,15 +91,10 @@
   white-space: nowrap;
   line-height: 1.25;
 
-  strong {
-    color: #1a1a1a;
-    font-weight: 700;
-  }
+  strong { color: #1a1a1a; font-weight: 700; }
 }
 
-.highlight {
-  color: #1a1a1a;
-}
+.highlight { color: #1a1a1a; }
 
 .starIcon {
   color: #f5a623;
@@ -115,6 +102,7 @@
   line-height: 1;
 }
 
+/* ─── Verification panel ───────────────────────────────────────────── */
 .verificationPanel {
   display: inline-flex;
   align-items: center;
@@ -149,11 +137,9 @@
   gap: 0.2rem;
   color: inherit;
   text-decoration: none;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease;
 
-  &:hover {
-    transform: translateY(-1px);
-  }
+  &:hover { transform: translateY(-1px); }
 
   &:focus-visible {
     outline: 2px solid rgba(138, 96, 64, 0.45);
@@ -192,30 +178,14 @@
   background: #faf9f7;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 20px;
-  padding: 1.6rem 1.7rem 1.5rem;
+  padding: 1.6rem 1.7rem 1.4rem;
   display: flex;
   flex-direction: column;
-  gap: 0;
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.04),
     0 4px 16px rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   overflow: hidden;
-  position: relative;
-
-  /* large decorative quote mark */
-  &::before {
-    content: "\201C";
-    position: absolute;
-    top: 0.6rem;
-    right: 1.25rem;
-    font-size: 5rem;
-    line-height: 1;
-    color: rgba(0, 0, 0, 0.045);
-    font-family: Georgia, "Times New Roman", serif;
-    pointer-events: none;
-    user-select: none;
-  }
 
   &:hover {
     box-shadow:
@@ -225,495 +195,211 @@
   }
 }
 
-.cardHeader {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-  margin-bottom: 1rem;
-  min-width: 0;
-  width: 100%;
+.quote {
+  margin: 0 0 1.1rem;
+  color: #2a2a2a;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-/* position + overflow required: next/image fill positions against nearest positioned ancestor */
-.avatar {
+.caseStudyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  align-self: flex-start;
+  padding: 0.38rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: transparent;
+  color: #1a1a1a;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 1.1rem;
+  white-space: nowrap;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.28);
+  }
+}
+
+.cardDivider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.cardPerson {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.85rem;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.personAvatar {
   position: relative;
   width: 44px;
   height: 44px;
   min-width: 44px;
-  min-height: 44px;
-  max-width: 44px;
-  max-height: 44px;
-  border-radius: 10px;
-  flex-shrink: 0;
-  display: block;
+  border-radius: 50%;
   overflow: hidden;
-  user-select: none;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  background: #e8e4e0;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
 }
 
-.avatarImage {
-  object-fit: contain;
-  object-position: center;
-  inset: 4px !important;
-  width: calc(100% - 8px) !important;
-  height: calc(100% - 8px) !important;
-}
-
-.name {
-  margin: 0;
-  color: #1a1a1a;
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.35;
-  white-space: normal;
-  overflow: visible;
-}
-
-.role {
-  margin: 0.15rem 0 0;
-  color: #888;
-  font-size: 0.78rem;
-  font-weight: 400;
-  line-height: 1.35;
-  white-space: normal;
-  overflow: visible;
+.personAvatarImg {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .nameBlock {
   min-width: 0;
   flex: 1;
-  overflow: visible;
 }
 
-.name,
-.role {
+.name {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.starRating {
-  color: #f5a623;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.55rem;
-  line-height: 1;
-  user-select: none;
+.company {
+  margin: 0.1rem 0 0;
+  color: #888;
+  font-size: 0.76rem;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
-.quote {
-  margin: 0;
-  color: #444;
-  font-size: 0.9rem;
-  line-height: 1.65;
-  font-style: normal;
-  flex: 1;
-  min-height: 0;
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   min-width: 0;
-  overflow: visible;
+  flex-shrink: 0;
 }
 
-/* ─── Video facade ─────────────────────────────────────────────────── */
-.facadeWrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
+.footerPlatform {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.footerLogo {
   display: block;
-  overflow: hidden;
-  border-radius: 20px;
-  background: #111;
-
-  /* Letterboxing for local PNG posters (full art visible, not cropped like cover) */
-  &:has(.thumbnailCustomPoster) {
-    background: #f4f4f4;
-  }
-
-  &:focus-visible {
-    outline: 2px solid #a51610;
-    outline-offset: 2px;
-  }
-
-  &:hover .thumbnail {
-    transform: scale(1.04);
-  }
-
-  &:hover .playButton {
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.94);
-  }
-}
-
-.thumbnail {
-  object-fit: cover;
-  object-position: center;
-  will-change: transform;
-  transition: transform 0.35s ease;
-}
-
-.thumbnailCustomPoster {
+  height: 18px;
+  width: auto;
   object-fit: contain;
-  object-position: center;
 }
 
-.videoIframe {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border: 0;
-}
-
-.playButton {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
+.footerProject {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.8);
-  color: #1a1a1a;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.25),
-    0 0 0 8px rgba(255, 255, 255, 0.15);
-  pointer-events: none;
-  transition: transform 0.25s ease, background 0.25s ease;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  gap: 0.2rem;
+  color: #888;
+  font-size: 0.72rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 
-  svg {
-    margin-left: 4px;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-  }
+  svg { flex-shrink: 0; opacity: 0.7; }
 }
 
-/* ─── Desktop 3-column grid — row height follows tallest card (no clipped text) */
-.desktopGrid {
+/* ─── 3-column grid ────────────────────────────────────────────────── */
+.grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: minmax(280px, auto);
-  align-items: stretch;
   gap: 1.25rem;
 
-  /* Let columns shrink so long names/roles wrap instead of clipping (grid default min-width: auto) */
   > * {
     min-width: 0;
+    display: flex;
+    flex-direction: column;
   }
-}
-
-/* Video cell stretches to match the row height set by adjacent quote cards */
-.videoCell {
-  .facadeWrap {
-    width: 100%;
-    height: 100%;
-  }
-
-  .videoIframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    min-height: unset;
-  }
-}
-
-/* ─── Mobile marquee (hidden on desktop) ───────────────────────────── */
-.mobileMarquee {
-  display: none;
 }
 
 /* ─── Tablet (≤1100px) ─────────────────────────────────────────────── */
 @media (max-width: 1100px) {
-  .section {
-    padding: 80px 0 100px;
-  }
+  .section { padding: 80px 0 100px; }
 
-  .desktopGrid {
+  .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: minmax(268px, auto);
   }
 }
 
 /* ─── Mobile (≤768px) ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .section {
-    padding: 72px 0 88px;
-  }
+  .section { padding: 72px 0 88px; }
 
-  .header {
-    margin-bottom: 2.75rem;
-  }
+  .header { margin-bottom: 2.75rem; }
 
-  .title {
-    font-size: clamp(2.1rem, 9vw, 2.9rem);
-  }
+  .title { font-size: clamp(2.1rem, 9vw, 2.9rem); }
 
   .ratingBadge {
     gap: 0.58rem;
     padding: 0.48rem 0.95rem 0.48rem 0.58rem;
   }
 
-  .stackAvatar {
-    width: 28px;
-    height: 28px;
-  }
+  .stackAvatar { width: 28px; height: 28px; }
 
-  .ratingText {
-    font-size: 0.82rem;
-  }
+  .ratingText { font-size: 0.82rem; }
 
-  .verificationPanel {
-    gap: 0.45rem;
-  }
+  .verificationPanel { gap: 0.45rem; }
 
-  .platformRow {
-    gap: 0.55rem;
-  }
+  .platformRow { gap: 0.55rem; }
 
-  .platformItem {
-    gap: 0.18rem;
-  }
+  .verificationEyebrow { font-size: 0.68rem; }
 
-  .verificationEyebrow {
-    font-size: 0.68rem;
-  }
-
-  .desktopGrid {
-    display: none;
-  }
-
-  /* ── Marquee ── */
-  .mobileMarquee {
-    display: flex;
-    gap: 0.65rem;
-    height: 480px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .marqueeCol {
-    flex: 1 1 0;
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  .marqueeTrack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-  }
-
-  /* ── Mobile marquee card: quote-first layout ──
-     Quote is the hero — displayed at the top, large and clear.
-     Avatar + name/role is a tight footer at the bottom.          */
-  .marqueeTrack .card {
-    flex-shrink: 0;
-    min-height: 220px;
-    height: auto;
-    padding: 0.9rem 1rem 0.85rem;
-    gap: 0;
-    justify-content: space-between;
-
-    /* hide the big decorative quote mark — quote text speaks for itself */
-    &::before {
-      display: none;
-    }
-  }
-
-  /* Quote goes visually FIRST */
-  .marqueeTrack .quote {
-    order: 1;
-    font-size: 0.82rem;
-    line-height: 1.55;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
-    overflow: hidden;
-    color: #2a2a2a;
-    font-weight: 450;
-    flex: 1;
-    margin-bottom: 0.65rem;
-  }
-
-  /* Header (avatar + name/role) goes visually LAST */
-  .marqueeTrack .cardHeader {
-    order: 2;
-    flex-shrink: 0;
-    gap: 0.55rem;
-    margin-bottom: 0;
-    align-items: flex-start;
-    min-width: 0;
-    overflow: visible;
-  }
-
-  .marqueeTrack .nameBlock {
-    min-width: 0;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.2rem;
-  }
-
-  .marqueeTrack .avatar {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    min-height: 28px;
-    max-width: 28px;
-    max-height: 28px;
-    flex-shrink: 0;
-    border-radius: 7px;
-  }
-
-  .marqueeTrack .name {
-    font-size: 0.76rem;
-    font-weight: 600;
-    line-height: 1.35;
-    white-space: normal;
-    overflow: visible;
-    width: 100%;
-  }
-
-  .marqueeTrack .role {
-    font-size: 0.68rem;
-    color: #999;
-    line-height: 1.35;
-    white-space: normal;
-    overflow: visible;
-    width: 100%;
-    margin-top: 0;
-  }
-
-  /* fade overlays */
-  .fadeTop,
-  .fadeBottom {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 90px;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .fadeTop {
-    top: 0;
-    background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
-  }
-
-  .fadeBottom {
-    bottom: 0;
-    background: linear-gradient(to top, #ffffff 0%, transparent 100%);
-  }
-
-  /* video card inside marquee — same fixed height as quote cards */
-  .mobileVideoCard {
-    flex-shrink: 0;
-    height: 196px;
-    border-radius: 20px;
-    overflow: hidden;
-
-    .facadeWrap {
-      height: 196px;
-      min-height: unset;
-      border-radius: 20px;
-    }
-
-    .videoIframe {
-      height: 196px;
-      min-height: unset;
-    }
-  }
-
-  .scrollUp {
-    animation: marqueeUp 24s linear infinite;
-  }
-
-  .scrollDown {
-    animation: marqueeDown 24s linear infinite;
+  .grid {
+    grid-template-columns: 1fr;
   }
 }
 
-/* ─── Pause when video playing ─────────────────────────────────────── */
+/* ─── Small mobile (≤520px) ───────────────────────────────────────── */
 @media (max-width: 520px) {
   .ratingBadge {
     gap: 0.5rem;
     padding: 0.46rem 0.82rem 0.46rem 0.54rem;
   }
 
-  .stackAvatar {
-    width: 26px;
-    height: 26px;
-  }
+  .stackAvatar { width: 26px; height: 26px; }
 
-  .ratingText {
-    font-size: 0.78rem;
-  }
+  .ratingText { font-size: 0.78rem; }
 
-  .platformRow {
-    gap: 0.48rem;
-  }
+  .platformRow { gap: 0.48rem; }
 
-  .platformItem {
-    gap: 0.15rem;
-  }
+  .platformSeparator { margin-top: 0.38rem; font-size: 0.86rem; }
 
-  .platformSeparator {
-    margin-top: 0.38rem;
-    font-size: 0.86rem;
-  }
+  .platformLogo { width: 30px; height: 30px; }
 
-  .platformLogo {
-    width: 30px;
-    height: 30px;
-  }
-
-  .platformName {
-    font-size: 0.64rem;
-  }
+  .platformName { font-size: 0.64rem; }
 }
 
-.mobileMarquee[data-paused] .scrollUp,
-.mobileMarquee[data-paused] .scrollDown {
-  animation-play-state: paused;
-}
-
-/* ─── Keyframes ────────────────────────────────────────────────────── */
-@keyframes marqueeUp {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
-
-@keyframes marqueeDown {
-  from { transform: translateY(-50%); }
-  to   { transform: translateY(0); }
-}
-
-/* ─── Small mobile (≤420px) ────────────────────────────────────────── */
+/* ─── Very small (≤420px) ─────────────────────────────────────────── */
 @media (max-width: 420px) {
-  .container {
-    width: calc(100% - 1.25rem);
-  }
-
-  .verificationPanel {
-    gap: 0.4rem;
-  }
-
-  .mobileMarquee {
-    height: 440px;
-  }
-
-  .marqueeTrack .card {
-    min-height: 200px;
-    height: auto;
-    padding: 0.85rem 0.95rem;
-  }
-
-  .mobileVideoCard,
-  .mobileVideoCard .facadeWrap,
-  .mobileVideoCard .videoIframe {
-    height: 185px;
-  }
+  .container { width: calc(100% - 1.25rem); }
+  .verificationPanel { gap: 0.4rem; }
 }
