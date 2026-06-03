@@ -51,12 +51,12 @@
   display: inline-flex;
   align-items: center;
   margin: 0 auto 50px;
-  padding: 4px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  padding: 8px;
+  background:#F5EFEA;
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 100px;
   backdrop-filter: blur(32.8px);
-  box-shadow: 14px 14px 16.1px 0px rgba(0, 0, 0, 0.08);
+  // box-shadow: 14px 14px 16.1px 0px rgba(0, 0, 0, 0.08);
   transform: translateZ(0);
 
   @media (max-width: 768px) {
@@ -68,12 +68,12 @@
 }
 
 .tab {
-  padding: 14px 32px;
+  padding: 24px 32px;
   border-radius: 100px;
   border: none;
   background: transparent;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   font-size: clamp(0.85rem, 1.1vw, 1rem);
   color: #2C2C2C;
   cursor: pointer;
@@ -209,20 +209,24 @@
 .pillButton {
   background: #9F0000;
   border: none;
-  padding: 9px 15px;
+  padding: 6px 7px;
   border-radius: 100px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   font-size: clamp(0.9rem, 1vw, 1rem);
   line-height: 1;
   display: flex;
   align-items: center;
   gap: 14px;
+  padding-right: 2px;
+  padding-left: 14px;
+  padding-top: 2px;
+  padding-bottom: 2px;
   cursor: pointer;
   color: #ffffff;
   width: fit-content;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 18px 18px 30px rgba(159, 0, 0, 0.18);
+  // box-shadow: 18px 18px 30px rgba(159, 0, 0, 0.18);
 
   @media (max-width: 768px) {
     padding: 6px 6px 6px 18px;
