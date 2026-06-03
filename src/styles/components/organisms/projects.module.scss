@@ -296,7 +296,7 @@ $content-max: 1620px;
   min-height: 520px;
   height: 80vh;
   background: #f2f2f3;
-  border-radius: 16px;            /* Fix 4: reduced from 24px → matches Figma */
+  border-radius: 10px;            /* Fix 4: reduced from 24px → matches Figma */
   overflow: hidden;
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.05);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
