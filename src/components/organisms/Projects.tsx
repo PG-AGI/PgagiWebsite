@@ -11,6 +11,12 @@ import ROUTES from '@/constants/routes';
 import { getErrorMessage } from '@/utils/errorUtils';
 import caseStudyMeta, { FILTER_TABS, CATEGORIES, type FilterTab } from '@/data/caseStudyMeta';
 
+const ArrowUpRight = () => (
+  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+    <path d="M2 11L11 2M11 2H5M11 2V8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 type CaseStudy = {
   id: string;
   slug: string;
@@ -203,12 +209,12 @@ export default function Projects() {
 
                     <div className={styles.actions}>
                       <Link href={ROUTES.CASE_STUDY_SLUG(cs.slug)} className={styles.btnPrimary}>
-                        View case study <span>↗</span>
+                        View case study <ArrowUpRight />
                       </Link>
                       {meta?.liveUrl && (
                         <a href={meta.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
                           <span className={styles.greenDot} />
-                          View Live Product
+                          View Live Product <ArrowUpRight />
                         </a>
                       )}
                     </div>
