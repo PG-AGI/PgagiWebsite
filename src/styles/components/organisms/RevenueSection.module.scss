@@ -116,6 +116,11 @@ $red: #9f0000;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   }
 
+  /* Alternating layout: card2 flips image to right */
+  &.card2 {
+    flex-direction: row-reverse;
+  }
+
   @media (max-width: 900px) {
     flex-direction: column;
     align-items: stretch;
