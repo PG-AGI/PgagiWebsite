@@ -64,6 +64,7 @@
   overflow: hidden;       /* clips image to hero bounds */
   transform: translateZ(0);
 
+
   .heroBgImage {
     position: absolute;
     inset: 0;
@@ -79,7 +80,8 @@
 
   @media (max-width: 768px) {
     .heroBgImage {
-      object-position: 60% top;
+      object-position: 62% 15%;
+      transform: translateZ(0);
     }
   }
 }
@@ -408,24 +410,54 @@
 @media (max-width: 992px) {
   .heroCards {
     grid-template-columns: 1fr;
-    gap: 0.875rem;
+    gap: 0;
   }
-  .glassCard { height: auto; min-height: 13.5rem; }
+  .glassCard { height: auto; min-height: unset; }
+
+  /* Merge cards into one unit — round only outer corners */
+  .cardWide { border-radius: 24px 24px 0 0; }
+  .cardGrid  { border-radius: 0 0 24px 24px; }
 }
 
-/* Graceful fallback for very narrow viewports (extreme zoom on small laptops).
-   Announcement bar (36px on mobile) + nav pill at top: 60px + ~65px pill height = ~125px.
-   Use 9rem (144px) as the minimum top clearance so heading never hides under the nav. */
 @media (max-width: 600px) {
   .heroContent {
-    padding-top: clamp(9rem, 22vh, 11rem);
+    padding-top: clamp(6rem, 16vh, 9rem);
     padding-bottom: 1.5rem;
     gap: 1.25rem;
+    min-height: unset; /* let content height be natural on mobile */
+  }
+
+  .heroCards {
+    margin-top: 2rem; /* no negative margin on mobile — avoid overlap */
   }
 
   .heroHeading {
+    font-size: clamp(2rem, 8.5vw, 2.6rem);
     line-height: 1.15;
     letter-spacing: -0.4px;
+  }
+
+  /* Capabilities grid on mobile */
+  .capabilityGrid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: unset;
+    padding: 0;
+  }
+
+  .capabilityCell {
+    padding: 12px 14px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    border-right: 1px solid rgba(197, 181, 169, 0.27);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+    &:nth-child(2n) { border-right: none; }
+    &:nth-last-child(-n+2) { border-bottom: none; }
+  }
+
+  /* Seamless merge — match backgrounds so there's no visible join */
+  .cardWide {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 }
 
