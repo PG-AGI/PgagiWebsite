@@ -65,21 +65,21 @@
   transform: translateZ(0);
 
   .heroBgImage {
-    /* Exactly the settings requested: full-vw, natural height, no crop */
     position: absolute;
     inset: 0;
-    width: 100vw;
-    height: auto;
-    max-width: none;       /* prevent Next.js intrinsic-size capping */
+    width: 100%;
+    height: 100%;
+    max-width: none;
     display: block;
-    color: transparent;    /* Next.js placeholder colour */
+    object-fit: cover;
+    object-position: center top;
+    color: transparent;
     transform: translateZ(0);
   }
 
   @media (max-width: 768px) {
     .heroBgImage {
-      /* on mobile shift the focal point slightly right so the figures stay visible */
-      left: -10%;
+      object-position: 60% top;
     }
   }
 }
@@ -201,8 +201,8 @@
    ===================================================== */
 .heroCards {
   width: 100%;
-  /* Cards are below the fold — give them vertical breathing room */
-  padding: clamp(2rem, 4vh, 4rem) 0 clamp(2.5rem, 5vh, 4rem);
+  margin-top: clamp(-8rem, -10vh, -4rem);
+  padding-bottom: clamp(2.5rem, 5vh, 4rem);
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 1.26fr) minmax(0, 1fr);
@@ -217,9 +217,8 @@
 
 .glassCard {
   position: relative;
-  min-height: clamp(13.5rem, 11rem + 5vw, 17.5rem);
-  height: auto;
-  border-radius: var(--card-radius);
+  height: clamp(14rem, 11rem + 6vw, 17.1875rem); /* 17.1875rem = 275px at 16px base */
+  border-radius: 24px;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
   overflow: hidden;
@@ -411,7 +410,7 @@
     grid-template-columns: 1fr;
     gap: 0.875rem;
   }
-  .glassCard { min-height: 13.5rem; }
+  .glassCard { height: auto; min-height: 13.5rem; }
 }
 
 /* Graceful fallback for very narrow viewports (extreme zoom on small laptops).
