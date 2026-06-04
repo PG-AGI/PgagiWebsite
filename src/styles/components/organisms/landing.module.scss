@@ -421,20 +421,21 @@
 
 @media (max-width: 600px) {
   .heroContent {
-    padding-top: clamp(6rem, 16vh, 9rem);
+    padding-top: clamp(4rem, 10vh, 6rem);
     padding-bottom: 1.5rem;
     gap: 1.25rem;
-    min-height: unset; /* let content height be natural on mobile */
+    min-height: unset;
   }
 
   .heroCards {
-    margin-top: 2rem; /* no negative margin on mobile — avoid overlap */
+    margin-top: 2rem;
   }
 
   .heroHeading {
-    font-size: clamp(2rem, 8.5vw, 2.6rem);
-    line-height: 1.15;
+    font-size: clamp(2.4rem, 9.5vw, 3rem);
+    line-height: 1.12;
     letter-spacing: -0.4px;
+    margin-top: 0;
   }
 
   /* Capabilities grid on mobile */
