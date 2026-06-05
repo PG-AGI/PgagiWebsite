@@ -80,6 +80,26 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['UI/UX', 'Research'],
     category: 'E-commerce/AI/ML',
   },
+  'two-point-correlation-function-spatial-clustering': {
+    techStack: ['Python', 'NumPy', 'SciPy', 'Astropy', '+2'],
+    metrics: [
+      { value: '40%', label: 'Faster Processing' },
+      { value: '99%', label: 'Statistical Accuracy' },
+    ],
+    highlight: 'Two-point correlation applied to real SDSS survey data',
+    tags: ['Research'],
+    category: 'Research/Science',
+  },
+  'cosmological-model-parameter-extraction': {
+    techStack: ['Python', 'NumPy', 'SciPy', 'Matplotlib', '+2'],
+    metrics: [
+      { value: '97%', label: 'Model Fit Confidence' },
+      { value: '3x', label: 'Faster Parameter Extraction' },
+    ],
+    highlight: 'Lambda-CDM parameters extracted from Type Ia supernova datasets',
+    tags: ['Research'],
+    category: 'Research/Science',
+  },
 };
 
 export const FILTER_TABS = [
@@ -102,6 +122,7 @@ export const CATEGORIES = [
   'EdTech/AI/ML',
   'E-commerce/AI/ML',
   'LegalTech/AI/ML',
+  'Research/Science',
 ] as const;
 
 export default caseStudyMeta;
