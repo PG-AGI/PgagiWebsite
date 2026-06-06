@@ -76,14 +76,14 @@ $red: #9f0000;
 
 // Wide banner image — intentionally wider than the text block
 .headerImageWrapper {
-  width: 70vw;
+  width: 80vw;
   margin: 5vh auto 0;
   border-radius: 24px;
   overflow: hidden;
   line-height: 0;
 
   @media (max-width: 767px) {
-    width: 94vw;
+    width: 97vw;
     border-radius: 16px;
     margin-top: 2vh;
   }
@@ -92,7 +92,7 @@ $red: #9f0000;
 .headerImage {
   width: 100%;
   height: auto;
-  max-height: 50vh;
+  max-height: 75vh;
   object-fit: cover;
   object-position: top;
   display: block;
