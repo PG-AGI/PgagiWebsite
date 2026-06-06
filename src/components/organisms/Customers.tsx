@@ -2,6 +2,7 @@
 
 import { Fragment } from "react";
 import Image from "next/image";
+import { FiExternalLink } from "react-icons/fi";
 import { motion, useReducedMotion } from "@/lib/motion-lite";
 import styles from "@/styles/components/organisms/Customers.module.scss";
 import { FRAMER_EASE, MOTION_DURATION } from "@/lib/motion";
@@ -114,9 +115,7 @@ const TestimonialCard = ({ t }: { t: (typeof featuredTestimonials)[number] }) =>
         </span>
         <span className={styles.footerProject}>
           {t.role}&nbsp;
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden>
-            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <FiExternalLink size={13} aria-hidden />
         </span>
       </div>
     </div>
