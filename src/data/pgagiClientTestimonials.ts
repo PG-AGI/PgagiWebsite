@@ -163,7 +163,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
   },
   {
     name: "Nitesh Puchhadiya",
-    company: "WebCodeGenie",
+    company: "",
     country: "IN",
     gender: "male",
     platform: "upwork",
