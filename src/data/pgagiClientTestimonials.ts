@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Real client reviews — single source of truth (aligned with `main` branch
  * InfiniteTestimonial carousel). Import from here for Customers wall, carousel, etc.
  */
@@ -26,15 +26,15 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     projectName: "AI System for E-commerce market place",
   },
   {
-    name: "Nidaa",
-    company: "Signato LLC",
+    name: "Will Dean",
+    company: "",
     country: "",
+    gender: "male",
     platform: "upwork",
-    gender: "female",
-    memberImage: "/assets/Customers/Member3.png",
+    memberImage: "/assets/Customers/Member2.png",
     quote:
-      "I loved working with this team. Extremely dedicated, constant communication and proactive in solving things. The best part is whenever i got a crazy idea and needed it to be implemented, they always found a way.",
-    projectName: "Brainify",
+      "Highly skilled engineers who know how to scale AI applications. Their strategic approach saved us months of development time.",
+    projectName: "Cracked.ai",
   },
   {
     name: "Nidaa",
@@ -42,9 +42,9 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     country: "",
     platform: "upwork",
     gender: "female",
-    memberImage: "/assets/Customers/Member6.png",
+    memberImage: "/assets/Customers/Member3.png",
     quote:
-      "I loved working with this team. Extremely dedicated, constant communication and proactive in solving things. The best part is whenever i got a crazy idea and needed it to be implemented, they always found a way.",
+      "I loved working with this team. Extremely dedicated, constant communication and proactive in solving things. The best part is whenever i got a crazy idea ....",
     projectName: "Brainify",
   },
   {
@@ -173,6 +173,17 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     projectName: "AI powered multi-agent trading system.",
   },
   {
+    name: "Nidaa",
+    company: "Signato LLC",
+    country: "",
+    platform: "upwork",
+    gender: "female",
+    memberImage: "/assets/Customers/Member6.png",
+    quote:
+      "I loved working with this team. Extremely dedicated, constant communication and proactive in solving things. The best part is whenever i got a crazy idea....",
+    projectName: "Brainify",
+  },
+  {
     name: "Mike Giuffrida",
     company: "",
     country: "USA",
@@ -190,17 +201,6 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     quote:
       "PGAGI Team not only delivered the project on time but exceeded my expectations in every way. Their attention to detail, creativity, and ability to understand my vision were truly remarkable. They communicated clearly throughout the process, kept me updated regularly, and were always open to feedback, making collaboration seamless and enjoyable.",
     projectName: "AI NFT GENERATOR",
-  },
-  {
-    name: "Will Dean",
-    company: "",
-    country: "",
-    gender: "male",
-    platform: "upwork",
-    memberImage: "/assets/Customers/Member2.png",
-    quote:
-      "Highly skilled engineers who know how to scale AI applications. Their strategic approach saved us months of development time.",
-    projectName: "Cracked.ai",
   },
   {
     name: "Lorella Sini",
