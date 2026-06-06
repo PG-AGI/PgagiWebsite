@@ -9,7 +9,7 @@ import { pgagiClientTestimonials } from "@/data/pgagiClientTestimonials";
 import customersText from "@/constants/uiText/customers.json";
 
 const platformLogos = {
-  upwork: { src: "/landing/upwork-icon.webp", name: "Upwork" },
+  upwork: { src: "/assets/Upwork%20(2).png", name: "Upwork" },
   clutch: { src: "/landing/clutch.png", name: "Clutch" },
 } as const;
 
@@ -110,7 +110,7 @@ const TestimonialCard = ({ t }: { t: (typeof featuredTestimonials)[number] }) =>
 
       <div className={styles.cardFooter}>
         <span className={styles.footerPlatform}>
-          <Image src={logo.src} alt={logo.name} width={60} height={18} className={styles.footerLogo} />
+          <Image src={logo.src} alt={logo.name} width={72} height={22} className={styles.footerLogo} />
         </span>
         <span className={styles.footerProject}>
           {t.role}&nbsp;
