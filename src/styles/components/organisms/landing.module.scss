@@ -78,10 +78,22 @@
     transform: translateZ(0);
   }
 
+  .heroBgDesktop {
+    display: block;
+  }
+
+  .heroBgMobile {
+    display: none;
+  }
+
   @media (max-width: 768px) {
-    .heroBgImage {
-      object-position: 62% 15%;
-      transform: translateZ(0);
+    .heroBgDesktop {
+      display: none;
+    }
+
+    .heroBgMobile {
+      display: block;
+      object-position: center top;
     }
   }
 }

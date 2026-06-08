@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import bgImage from "../../../public/background.png";
+import bgImageMobile from "../../../public/background-mobile.png";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import Link from "next/link";
 import landingText from "@/constants/uiText/landing.json";
@@ -55,7 +56,17 @@ export default function Landing() {
           placeholder="blur"
           sizes="100vw"
           quality={100}
-          className={styles.heroBgImage}
+          className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
+        />
+        <Image
+          src={bgImageMobile}
+          alt=""
+          priority
+          fetchPriority="high"
+          placeholder="blur"
+          sizes="100vw"
+          quality={100}
+          className={`${styles.heroBgImage} ${styles.heroBgMobile}`}
         />
       </div>
 
