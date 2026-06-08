@@ -175,10 +175,10 @@
 .card {
   height: 100%;
   min-width: 0;
-  background: #faf9f7;
+  background: #F5EFEA;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
-  padding: 1.6rem 1.7rem 1.4rem;
+  border-radius: 24px;
+  padding: 1.6rem 2rem 1.4rem;
   display: flex;
   flex-direction: column;
   box-shadow:
@@ -333,6 +333,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem;
+  padding: 0 clamp(1rem, 4vw, 3.5rem);
 
   > * {
     min-width: 0;
@@ -375,6 +376,7 @@
 
   .grid {
     grid-template-columns: 1fr;
+    padding: 0;
   }
 }
 
