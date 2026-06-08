@@ -38,7 +38,7 @@ const revenueCards = [
 
 const RevenueSection = () => {
   return (
-    <div className={styles.outerWrapper}>
+    <div className={styles.outerWrapper} id="revenue-section">
       {/* ── Static intro: scrolls past normally ─────────────── */}
       <div className={styles.introSection}>
         {/* Narrow text block */}

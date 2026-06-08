@@ -75,7 +75,7 @@ const NewPage = () => {
             role="tab"
             aria-selected={activeTab === 'enterprises'}
             className={`${styles.tab} ${activeTab === 'enterprises' ? styles.tabActive : ''}`}
-            onClick={() => scrollTo('#revenue-system', { offset: 80, duration: 1.5 })}
+            onClick={() => { setActiveTab('enterprises'); scrollTo('#revenue-section', { offset: 80, duration: 1.5 }); }}
           >
             {newPageText.enterprisesTabLabel}
           </button>
