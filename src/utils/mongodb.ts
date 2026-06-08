@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const uri = 'mongodb+srv://sahil:jGkcD58oin2tjwx7@pgagiwebsite.wzf6u.mongodb.net/?retryWrites=true&w=majority'; // MongoDB URI directly in code
+const uri = process.env.MONGODB_URI;
 const options = {};
 
 let client;
@@ -11,7 +11,7 @@ declare global {
 }
 
 if (!uri) {
-  throw new Error('MongoDB URI is not defined.');
+  throw new Error('MONGODB_URI is not defined in environment variables.');
 }
 
 if (process.env.NODE_ENV === 'development') {

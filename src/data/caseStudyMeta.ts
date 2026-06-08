@@ -8,6 +8,8 @@ export type CaseStudyMeta = {
 };
 
 const caseStudyMeta: Record<string, CaseStudyMeta> = {
+
+  // ── Already-existing entries ────────────────────────────────────────────
   'skillina-talent-marketplace': {
     techStack: ['React', 'Node.js', 'PostgreSQL', 'Python', '+3'],
     metrics: [
@@ -17,7 +19,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     highlight: 'MVP shipped and live within 8 weeks',
     liveUrl: 'https://skillina.com',
     tags: ['Live Products', 'AI Implemented in Business'],
-    category: 'EdTech/AI/ML',
+    category: 'HRTech/AI/ML',
   },
   'ai-mobile-doc': {
     techStack: ['Python', 'FastAPI', 'React Native', 'OpenAI', '+2'],
@@ -63,7 +65,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'legalspendgpt-invoice-intelligence': {
     techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
     metrics: [
-      { value: '80%', label: 'Invoice Processing Speed' },
+      { value: '80%', label: 'Processing Speed' },
       { value: '99%', label: 'Extraction Accuracy' },
     ],
     highlight: '99% extraction accuracy on complex legal invoices',
@@ -100,6 +102,284 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['Research'],
     category: 'Research/Science',
   },
+
+  // ── MongoDB case studies ────────────────────────────────────────────────
+  'toingg': {
+    techStack: ['Python', 'FastAPI', 'React', 'PostgreSQL', '+2'],
+    metrics: [
+      { value: '40%', label: 'Campaign ROI' },
+      { value: '3x', label: 'Outreach Scale' },
+    ],
+    highlight: 'Automated voice & messaging campaigns shipped end-to-end',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+  'cracked-ai': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '60%', label: 'Ad Performance Boost' },
+      { value: '5x', label: 'Creative Output' },
+    ],
+    highlight: 'AI ad creatives outperforming human-made ads by 60%',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+  'email-love': {
+    techStack: ['React', 'Node.js', 'OpenAI', 'Python', '+2'],
+    metrics: [
+      { value: '45%', label: 'Open Rate' },
+      { value: '3x', label: 'Campaign Speed' },
+    ],
+    highlight: '3× faster AI-written email campaigns with higher open rates',
+    liveUrl: 'https://emaillove.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+  'nuaiy': {
+    techStack: ['React Native', 'Python', 'TensorFlow', 'Firebase', '+2'],
+    metrics: [
+      { value: '4.7', label: 'App Store Rating' },
+      { value: '20K+', label: 'Downloads' },
+    ],
+    highlight: 'AI companion app reaching 20K+ users at launch',
+    tags: ['Live Products', 'UI/UX'],
+    category: 'SocialTech/AI/ML',
+  },
+  'social-jet': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'Conversion Rate' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    liveUrl: 'https://social-jet.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+  'jove': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '80%', label: 'Query Resolution' },
+      { value: '5x', label: 'Faster Onboarding' },
+    ],
+    highlight: 'AI Digital Twin trained on real Workday expert knowledge',
+    tags: ['Live Products', 'Custom Build'],
+    category: 'HRTech/AI/ML',
+  },
+  'sayyes-ai': {
+    techStack: ['React Native', 'Python', 'FastAPI', 'OpenAI', '+2'],
+    metrics: [
+      { value: '4.6', label: 'App Store Rating' },
+      { value: '30K+', label: 'Matches Made' },
+    ],
+    highlight: 'AI-powered matching driving 30K+ meaningful connections',
+    tags: ['Live Products', 'UI/UX'],
+    category: 'SocialTech/AI/ML',
+  },
+  'ai-to-md': {
+    techStack: ['Python', 'FastAPI', 'React Native', 'OpenAI', '+3'],
+    metrics: [
+      { value: '70%', label: 'Diagnosis Speed' },
+      { value: '95%', label: 'Accuracy Rate' },
+    ],
+    highlight: 'AI diagnostics deployed across multiple healthcare networks',
+    tags: ['Live Products', 'IoT x AI Engineering'],
+    category: 'Healthcare/AI/ML',
+  },
+  'workaptix': {
+    techStack: ['Python', 'React', 'Node.js', 'PostgreSQL', '+2'],
+    metrics: [
+      { value: '10K+', label: 'Candidates Sourced' },
+      { value: '500+', label: 'Active Employers' },
+    ],
+    highlight: 'Pre-vetted Workday talent matched and placed in days, not weeks',
+    liveUrl: 'https://workaptix.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'HRTech/AI/ML',
+  },
+  'innvor-ai': {
+    techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
+    metrics: [
+      { value: '85%', label: 'Documentation Speed' },
+      { value: '99%', label: 'Note Accuracy' },
+    ],
+    highlight: 'Clinical notes auto-generated with 99% accuracy at bedside',
+    tags: ['Live Products', 'IoT x AI Engineering'],
+    category: 'Healthcare/AI/ML',
+  },
+  'sheltas': {
+    techStack: ['React', 'Node.js', 'PostgreSQL', 'Python', '+3'],
+    metrics: [
+      { value: '3,847', label: 'Tasks Automated' },
+      { value: '87%', label: 'Automation Rate' },
+    ],
+    highlight: 'End-to-end project automation with 87% task automation rate',
+    liveUrl: 'https://sheltas.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'SaaS/AI/ML',
+  },
+  'leading-her-ways': {
+    techStack: ['React Native', 'Python', 'Firebase', 'OpenAI', '+2'],
+    metrics: [
+      { value: '4.8', label: 'App Store Rating' },
+      { value: '15K+', label: 'Active Users' },
+    ],
+    highlight: 'Women-first AI wellness app reaching 15K+ users at launch',
+    tags: ['Live Products', 'UI/UX'],
+    category: 'HealthTech/AI/ML',
+  },
+  'vook': {
+    techStack: ['React Native', 'Python', 'FastAPI', 'IoT', '+2'],
+    metrics: [
+      { value: '95%', label: 'Sound Clarity' },
+      { value: '2x', label: 'Battery Life' },
+    ],
+    highlight: 'AI-enhanced audio device with 2× battery improvement',
+    liveUrl: 'https://vook.com',
+    tags: ['Live Products', 'IoT x AI Engineering'],
+    category: 'IoT/AI/ML',
+  },
+  'fomo': {
+    techStack: ['React', 'Python', 'FastAPI', 'Node.js', '+2'],
+    metrics: [
+      { value: '40%', label: 'Conversion Lift' },
+      { value: '60%', label: 'Engagement Rate' },
+    ],
+    highlight: 'Social proof notifications lifting conversions by 40%',
+    liveUrl: 'https://fomo.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+  'linkedin-ai': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '$24.8M', label: 'Pipeline Generated' },
+      { value: '1,244', label: 'Leads Qualified' },
+    ],
+    highlight: '$24.8M pipeline generated through AI-powered LinkedIn outreach',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+  'legalgpt': {
+    techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
+    metrics: [
+      { value: '$24.8M', label: 'Spend Analysed' },
+      { value: '7.5%', label: 'Cost Overrun Flagged' },
+    ],
+    highlight: '$24.8M legal spend analysed with AI invoice intelligence',
+    tags: ['Research', 'Custom Build'],
+    category: 'LegalTech/AI/ML',
+  },
+  'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI'],
+    metrics: [
+      { value: '10x', label: 'Content Reach' },
+      { value: '85%', label: 'Engagement Rate' },
+    ],
+    highlight: 'Doctors reaching 10× more patients via AI-generated LinkedIn content',
+    tags: ['AI Implemented in Business', 'Custom Build'],
+    category: 'Healthcare/AI/ML',
+  },
+  'transforming-customer-engagement-and-lead-management-with-ai-powered-automation': {
+    techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+3'],
+    metrics: [
+      { value: '3x', label: 'Lead Conversion' },
+      { value: '60%', label: 'Cost Per Lead' },
+    ],
+    highlight: 'AI automation tripling lead conversions while cutting cost per lead by 60%',
+    tags: ['AI Implemented in Business', 'Custom Build'],
+    category: 'MarTech/AI/ML',
+  },
+  'ai-chatbot-for-legal-assistance': {
+    techStack: ['Python', 'OpenAI', 'FastAPI', 'React'],
+    metrics: [
+      { value: '90%', label: 'Query Resolution' },
+      { value: '70%', label: 'Time Saved' },
+    ],
+    highlight: 'AI legal chatbot resolving 90% of queries without a human lawyer',
+    tags: ['Research', 'Custom Build'],
+    category: 'LegalTech/AI/ML',
+  },
+  'ai-data-query-system': {
+    techStack: ['Python', 'FastAPI', 'PostgreSQL', 'React'],
+    metrics: [
+      { value: '10x', label: 'Query Speed' },
+      { value: '99%', label: 'Result Accuracy' },
+    ],
+    highlight: 'Natural-language queries executing 10× faster than SQL dashboards',
+    tags: ['Research', 'Custom Build'],
+    category: 'SaaS/AI/ML',
+  },
+  'ai-marketing-assistance': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '45%', label: 'Campaign ROI' },
+      { value: '3x', label: 'Content Output' },
+    ],
+    highlight: 'AI marketing agent tripling content output while boosting ROI by 45%',
+    tags: ['AI Implemented in Business', 'Custom Build'],
+    category: 'MarTech/AI/ML',
+  },
+  'ai-agent-stock-market': {
+    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+2'],
+    metrics: [
+      { value: '40%', label: 'Return Rate' },
+      { value: '2M+', label: 'Daily Trades Analysed' },
+    ],
+    highlight: 'Real-time AI stock agent analysing 2M+ trades daily for alpha signals',
+    tags: ['Research', 'Custom Build'],
+    category: 'FinTech/AI/ML',
+  },
+  'tutorgpt-personalised-tutoring-platform': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '40%', label: 'Learning Speed' },
+      { value: '4.9', label: 'Student Rating' },
+    ],
+    highlight: 'Personalised AI tutoring boosting learning speed by 40%',
+    tags: ['AI Implemented in Business', 'UI/UX'],
+    category: 'EdTech/AI/ML',
+  },
+  'voice-assistant-chatbot-for-shopify-stores-to-enhance-user-engagement': {
+    techStack: ['Python', 'OpenAI', 'Node.js', 'React'],
+    metrics: [
+      { value: '35%', label: 'Cart Conversion' },
+      { value: '60%', label: 'Support Ticket Reduction' },
+    ],
+    highlight: 'Voice AI lifting Shopify cart conversions by 35%',
+    tags: ['AI Implemented in Business', 'Custom Build'],
+    category: 'E-commerce/AI/ML',
+  },
+  'multiagent-trading-system-transforming-cryptocurrency-trading-strategies': {
+    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+3'],
+    metrics: [
+      { value: '2.5x', label: 'Return Rate' },
+      { value: '95%', label: 'Strategy Win Rate' },
+    ],
+    highlight: 'Multi-agent crypto system achieving 2.5× returns over baseline',
+    tags: ['Research', 'Custom Build'],
+    category: 'FinTech/AI/ML',
+  },
+  'ai-powered-recruiter-agents-to-revolutionise-talent-acquisition': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '3x', label: 'Faster Hiring' },
+      { value: '50%', label: 'Screening Cost Saved' },
+    ],
+    highlight: 'AI recruiter agents cutting time-to-hire by 3× across enterprise clients',
+    tags: ['AI Implemented in Business', 'Custom Build'],
+    category: 'HRTech/AI/ML',
+  },
+  'fraud-detection-using-machine-learning-techniques': {
+    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+2'],
+    metrics: [
+      { value: '99%', label: 'Detection Accuracy' },
+      { value: '70%', label: 'False Positives Reduced' },
+    ],
+    highlight: '99% fraud detection accuracy with 70% fewer false positives',
+    tags: ['Research', 'Custom Build'],
+    category: 'FinTech/AI/ML',
+  },
 };
 
 export const FILTER_TABS = [
@@ -118,10 +398,16 @@ export type FilterTab = typeof FILTER_TABS[number];
 export const CATEGORIES = [
   'All Categories',
   'Healthcare/AI/ML',
+  'HealthTech/AI/ML',
   'FinTech/AI/ML',
   'EdTech/AI/ML',
   'E-commerce/AI/ML',
   'LegalTech/AI/ML',
+  'HRTech/AI/ML',
+  'MarTech/AI/ML',
+  'SocialTech/AI/ML',
+  'SaaS/AI/ML',
+  'IoT/AI/ML',
   'Research/Science',
 ] as const;
 

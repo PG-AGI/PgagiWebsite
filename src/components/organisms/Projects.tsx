@@ -48,6 +48,7 @@ export default function Projects() {
         const filtered = (data as unknown as CaseStudy[]).filter(
           (cs) => cs.slug !== 'ai-asr-doctor-clinical-documentation-platform'
         );
+        console.log('[SLUGS]', filtered.map((cs) => `"${cs.slug}": "${cs.title}"`).join('\n'));
         setCaseStudies(filtered);
       })
       .catch((e) => setError(getErrorMessage(e)))
