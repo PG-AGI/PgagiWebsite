@@ -314,9 +314,10 @@
   .navigation {
     position: fixed;
     top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
     padding: 0;
     border-radius: 0;
     background: transparent !important;
@@ -472,7 +473,7 @@
 @media (max-width: 568px) {
   .navigation {
     top: 8px;
-    width: calc(100% - 32px);
+    width: 100%;
 
     .nav {
       padding: 12px 16px;
@@ -488,7 +489,7 @@
 @media (max-width: 450px) {
   .navigation {
     top: 6px;
-    width: calc(100% - 28px);
+    width: 100%;
 
     .nav {
       padding: 10px 12px;
