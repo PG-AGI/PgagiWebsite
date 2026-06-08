@@ -420,6 +420,10 @@
 }
 
 @media (max-width: 600px) {
+  .cardGrid {
+    display: none;
+  }
+
   .heroContent {
     padding-top: clamp(4rem, 10vh, 6rem);
     padding-bottom: 1.5rem;
