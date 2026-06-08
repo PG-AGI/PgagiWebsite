@@ -91,8 +91,6 @@ const TestimonialCard = ({ t }: { t: (typeof featuredTestimonials)[number] }) =>
         View case study <span aria-hidden>→</span>
       </button>
 
-      <div className={styles.cardDivider} />
-
       <div className={styles.cardPerson}>
         <span className={styles.personAvatar}>
           <Image
@@ -108,6 +106,8 @@ const TestimonialCard = ({ t }: { t: (typeof featuredTestimonials)[number] }) =>
           {t.company && <p className={styles.company}>{t.company}</p>}
         </div>
       </div>
+
+      <div className={styles.cardDivider} />
 
       <div className={styles.cardFooter}>
         <span className={styles.footerPlatform}>
