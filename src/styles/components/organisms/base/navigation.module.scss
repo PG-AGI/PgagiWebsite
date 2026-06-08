@@ -243,10 +243,11 @@
 @media (max-width: 850px) {
   .navigation {
     position: fixed;
-    // top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
+    top: 10px;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
     padding: 0;
     border-radius: 0;
     background: transparent !important;
@@ -359,7 +360,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      // padding: 15px 20px;
+      padding: 12px 16px;
       // background: rgba(52, 65, 85, 0.88);
       // backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -447,7 +448,7 @@
 @media (max-width: 568px) {
   .navigation {
     top: 8px;
-    width: calc(100% - 32px);
+    width: 100%;
 
     .mastermenu {
       top: 72px;
@@ -494,7 +495,7 @@
 @media (max-width: 450px) {
   .navigation {
     top: 6px;
-    width: calc(100% - 28px);
+    width: 100%;
 
     .mastermenu {
       top: 68px;
