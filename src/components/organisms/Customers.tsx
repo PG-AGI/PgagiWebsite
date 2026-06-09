@@ -14,7 +14,6 @@ const platformLogos = {
   clutch: { src: "/landing/clutch.png", name: "Clutch" },
 } as const;
 
-/* ─── Only the 6 featured testimonials (those with a real member photo) ─ */
 const allTestimonials = pgagiClientTestimonials.map((t, i) => ({
   id: i + 1,
   name: t.name.trim() || t.company.trim() || "Client",
@@ -81,7 +80,9 @@ const VerificationPanel = () => (
 );
 
 /* ─── Testimonial card ──────────────────────────────────────────────── */
-const TestimonialCard = ({ t }: { t: (typeof featuredTestimonials)[number] }) => {
+type CardTestimonial = (typeof allTestimonials)[number];
+
+const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
   const logo = platformLogos[t.platform];
   return (
     <div className={styles.card}>
@@ -93,13 +94,19 @@ const TestimonialCard = ({ t }: { t: (typeof featuredTestimonials)[number] }) =>
 
       <div className={styles.cardPerson}>
         <span className={styles.personAvatar}>
-          <Image
-            src={t.memberImage}
-            alt={t.name}
-            fill
-            sizes="48px"
-            className={styles.personAvatarImg}
-          />
+          {t.memberImage ? (
+            <Image
+              src={t.memberImage}
+              alt={t.name}
+              fill
+              sizes="48px"
+              className={styles.personAvatarImg}
+            />
+          ) : (
+            <span className={styles.personInitials} aria-hidden>
+              {t.name.charAt(0).toUpperCase()}
+            </span>
+          )}
         </span>
         <div className={styles.nameBlock}>
           <p className={styles.name}>{t.name}</p>
@@ -126,6 +133,9 @@ const TestimonialCard = ({ t }: { t: (typeof featuredTestimonials)[number] }) =>
 const Customers = () => {
   const shouldReduceMotion = useReducedMotion();
 
+  const row1 = allTestimonials;
+  const row2 = [...allTestimonials].reverse();
+
   return (
     <section className={styles.section} id="customers">
       <div className={styles.container}>
@@ -145,27 +155,30 @@ const Customers = () => {
           <RatingBadge />
           <VerificationPanel />
         </motion.div>
+      </div>
 
-        <div className={styles.grid}>
-          {featuredTestimonials.map((t, i) => (
-            <motion.div
-              key={t.id}
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={
-                shouldReduceMotion
-                  ? { duration: 0 }
-                  : {
-                      duration: MOTION_DURATION.normal,
-                      delay: Math.min((i % 3) * 0.08 + Math.floor(i / 3) * 0.05, 0.3),
-                      ease: FRAMER_EASE.premiumOut,
-                    }
-              }
-            >
-              <TestimonialCard t={t} />
-            </motion.div>
-          ))}
+      {/* Full-width marquee rows outside the constrained container */}
+      <div className={styles.marqueeWrapper} aria-hidden>
+        <div className={styles.marqueeRow}>
+          <div
+            className={styles.marqueeTrack}
+            style={shouldReduceMotion ? { animationPlayState: "paused" } : undefined}
+          >
+            {[...row1, ...row1].map((t, i) => (
+              <TestimonialCard key={`r1-${i}`} t={t} />
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.marqueeRow}>
+          <div
+            className={`${styles.marqueeTrack} ${styles.marqueeTrackReverse}`}
+            style={shouldReduceMotion ? { animationPlayState: "paused" } : undefined}
+          >
+            {[...row2, ...row2].map((t, i) => (
+              <TestimonialCard key={`r2-${i}`} t={t} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
