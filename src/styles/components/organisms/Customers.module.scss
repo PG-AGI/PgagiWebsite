@@ -376,11 +376,11 @@
   display: flex;
   gap: 1.25rem;
   width: max-content;
-  animation: marqueeLeft 50s linear infinite;
+  animation: marqueeLeft 90s linear infinite;
 }
 
 .marqueeTrackReverse {
-  animation: marqueeRight 65s linear infinite;
+  animation: marqueeRight 110s linear infinite;
 }
 
 @keyframes marqueeLeft {
