@@ -383,7 +383,20 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // ── Slug aliases — MongoDB documents use longer / differently-spelled slugs ──
 
-  'email-love-ai-powered-email-template-generation-and-autonomous-repair': {
+  // Jove's MongoDB slug is 'digital-twin-ai-powered-expert-knowledge-platform'
+  'digital-twin-ai-powered-expert-knowledge-platform': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '80%', label: 'Query Resolution' },
+      { value: '5x', label: 'Faster Onboarding' },
+    ],
+    highlight: 'AI Digital Twin trained on real Workday expert knowledge',
+    tags: ['Live Products', 'Custom Build'],
+    category: 'HRTech/AI/ML',
+  },
+
+  // Email Love: slug ends with '-and-repair' not '-and-autonomous-repair'
+  'email-love-ai-powered-email-template-generation-and-repair': {
     techStack: ['React', 'Node.js', 'OpenAI', 'Python', '+2'],
     metrics: [
       { value: '45%', label: 'Open Rate' },
@@ -395,7 +408,8 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'MarTech/AI/ML',
   },
 
-  'sayyes-ai-the-ai-wedding-companion-for-modern-brides': {
+  // SayYes.AI: MongoDB slug is 'sayyesai-...' (no hyphen between sayyes and ai)
+  'sayyesai-the-ai-wedding-companion-for-modern-brides': {
     techStack: ['React Native', 'Python', 'FastAPI', 'OpenAI', '+2'],
     metrics: [
       { value: '4.6', label: 'App Store Rating' },
