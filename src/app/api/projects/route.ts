@@ -47,10 +47,11 @@ export async function GET(request: NextRequest) {
       }];
     });
 
-    const filtered =
+    const filtered = (
       category && VALID_TABS.includes(category)
         ? projects.filter((p) => p.tab === category)
-        : projects;
+        : projects
+    ).slice(0, 3);
 
     return NextResponse.json(filtered, { status: 200 });
   } catch (error) {
