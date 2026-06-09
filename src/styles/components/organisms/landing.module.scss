@@ -16,10 +16,10 @@
 .hero {
   /* Design tokens — rem + vw hybrid clamps scale with both viewport width AND browser zoom */
   --content-x:       clamp(1.25rem, 0.5rem + 3.5vw, 5rem);       /* 20 → 80px gutter */
-  --h1-size:         clamp(1.25rem, 0.9rem + 2.5vw, 3.5rem);     /* 36 → 72px */
-  --h1-line:         clamp(2.6rem, 1.1rem + 4vw, 5.125rem);      /* 42 → 82px */
-  --body-size:       clamp(0.75rem, 0.6rem + 0.25vw, 1rem);   /* 15 → 20px */
-  --body-line:       clamp(1.45rem, 1.2rem + 0.9vw, 2rem);       /* 23 → 32px */
+  --h1-size:         clamp(2rem, 1rem + 3vw, 4.5rem);            /* 32 → 72px */
+  --h1-line:         clamp(2.75rem, 1.3rem + 4.2vw, 5.5rem);     /* 44 → 88px */
+  --body-size:       clamp(0.9375rem, 0.75rem + 0.45vw, 1.25rem); /* 15 → 20px */
+  --body-line:       clamp(1.55rem, 1.3rem + 0.95vw, 2.1rem);    /* 24.8 → 33.6px */
   --cta-size:        clamp(0.8125rem, 0.7rem + 0.3vw, 1rem);     /* 13 → 16px */
   --cta-pad-x:       clamp(1.25rem, 0.9rem + 1vw, 1.75rem);      /* 20 → 28px */
   --cta-arrow:       clamp(2rem, 1.6rem + 0.7vw, 2.25rem);       /* 32 → 36px */
@@ -109,7 +109,7 @@
 .heroInner {
   position: relative;
   z-index: 2;
-  width: 90vw;
+  width: 100%;
   padding: 0 var(--content-x);
   box-sizing: border-box;
   display: flex;
@@ -132,6 +132,8 @@
   min-height: 100dvh;
   flex: 0 0 auto;
   box-sizing: border-box;
+  margin-top: 4rem;
+  margin-left:2rem;
 }
 
 .heroHeading {
@@ -140,8 +142,7 @@
   font-weight: 700;
   line-height: var(--h1-line);
   letter-spacing: -0.7px;
-  margin: 0%;
-  margin-top: 15vh;
+  margin: 0;
   color: #ffffff;
   max-width: 900px;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
