@@ -172,7 +172,7 @@ export default function Projects() {
         ) : (
           <>
             {filteredStudies.slice(0, visibleCount).map((cs) => {
-              const meta = caseStudyMeta[cs.slug];
+              const meta = caseStudyMeta[cs.slug] ?? caseStudyMeta[cs.slug?.toLowerCase().trim()];
               const img = cs.slug === AI2MD_SLUG ? AI2MD_PROJECT_IMAGE : cs.coverImage;
 
               return (

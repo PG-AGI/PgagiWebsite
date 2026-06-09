@@ -380,6 +380,101 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['Research', 'Custom Build'],
     category: 'FinTech/AI/ML',
   },
+
+  // ── Slug aliases — MongoDB documents use longer / differently-spelled slugs ──
+
+  'email-love-ai-powered-email-template-generation-and-autonomous-repair': {
+    techStack: ['React', 'Node.js', 'OpenAI', 'Python', '+2'],
+    metrics: [
+      { value: '45%', label: 'Open Rate' },
+      { value: '3x', label: 'Campaign Speed' },
+    ],
+    highlight: '3× faster AI-written email campaigns with higher open rates',
+    liveUrl: 'https://emaillove.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+
+  'sayyes-ai-the-ai-wedding-companion-for-modern-brides': {
+    techStack: ['React Native', 'Python', 'FastAPI', 'OpenAI', '+2'],
+    metrics: [
+      { value: '4.6', label: 'App Store Rating' },
+      { value: '30K+', label: 'Matches Made' },
+    ],
+    highlight: 'AI-powered matching driving 30K+ meaningful connections',
+    tags: ['Live Products', 'UI/UX'],
+    category: 'SocialTech/AI/ML',
+  },
+
+  // 'assistance' in meta but MongoDB title uses 'assistant'
+  'ai-marketing-assistant': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '45%', label: 'Campaign ROI' },
+      { value: '3x', label: 'Content Output' },
+    ],
+    highlight: 'AI marketing agent tripling content output while boosting ROI by 45%',
+    tags: ['AI Implemented in Business', 'Custom Build'],
+    category: 'MarTech/AI/ML',
+  },
+
+  // 'ai-agent-stock-market' in meta but MongoDB title has 'for'
+  'ai-agent-for-stock-market': {
+    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+2'],
+    metrics: [
+      { value: '40%', label: 'Return Rate' },
+      { value: '2M+', label: 'Daily Trades Analysed' },
+    ],
+    highlight: 'Real-time AI stock agent analysing 2M+ trades daily for alpha signals',
+    tags: ['Research', 'Custom Build'],
+    category: 'FinTech/AI/ML',
+  },
+
+  // MongoDB uses American spelling 'personalized' and full blog-style slug
+  'tutorgpt-personalized-tutoring-platform': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '40%', label: 'Learning Speed' },
+      { value: '4.9', label: 'Student Rating' },
+    ],
+    highlight: 'Personalised AI tutoring boosting learning speed by 40%',
+    tags: ['AI Implemented in Business', 'UI/UX'],
+    category: 'EdTech/AI/ML',
+  },
+  'tutorgpt-ai-personalized-tutoring-platform-to-make-education-accessible-and-seamless': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '40%', label: 'Learning Speed' },
+      { value: '4.9', label: 'Student Rating' },
+    ],
+    highlight: 'Personalised AI tutoring boosting learning speed by 40%',
+    tags: ['AI Implemented in Business', 'UI/UX'],
+    category: 'EdTech/AI/ML',
+  },
+
+  // 'multiagent' in meta but MongoDB title uses 'multi-agent' (with hyphen)
+  'multi-agent-trading-system-transforming-cryptocurrency-trading-strategies': {
+    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+3'],
+    metrics: [
+      { value: '2.5x', label: 'Return Rate' },
+      { value: '95%', label: 'Strategy Win Rate' },
+    ],
+    highlight: 'Multi-agent crypto system achieving 2.5× returns over baseline',
+    tags: ['Research', 'Custom Build'],
+    category: 'FinTech/AI/ML',
+  },
+
+  // 'revolutionise' (British) in meta but MongoDB title uses 'revolutionize' (American)
+  'ai-powered-recruiter-agents-to-revolutionize-talent-acquisition': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '3x', label: 'Faster Hiring' },
+      { value: '50%', label: 'Screening Cost Saved' },
+    ],
+    highlight: 'AI recruiter agents cutting time-to-hire by 3× across enterprise clients',
+    tags: ['AI Implemented in Business', 'Custom Build'],
+    category: 'HRTech/AI/ML',
+  },
 };
 
 export const FILTER_TABS = [
