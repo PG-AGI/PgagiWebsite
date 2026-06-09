@@ -34,24 +34,28 @@ const ProjectCard = ({ project }: { project: Project }) => (
       <p className={styles.cardDescription}>{project.description}</p>
 
       {/* Tech stack tags */}
-      <ul className={styles.techStack} aria-label="Tech stack">
-        {project.techStack.map((tag) => (
-          <li key={tag} className={styles.techTag}>{tag}</li>
-        ))}
-      </ul>
+      {project.techStack && project.techStack.length > 0 && (
+        <ul className={styles.techStack} aria-label="Tech stack">
+          {project.techStack.map((tag) => (
+            <li key={tag} className={styles.techTag}>{tag}</li>
+          ))}
+        </ul>
+      )}
 
       {/* Stats */}
-      <div className={styles.statsRow}>
-        {project.metrics.map((m) => (
-          <div key={m.label} className={styles.statBlock}>
-            <span className={styles.statValue}>{m.value}</span>
-            <span className={styles.statLabel}>{m.label}</span>
-          </div>
-        ))}
-      </div>
+      {project.metrics && project.metrics.length > 0 && (
+        <div className={styles.statsRow}>
+          {project.metrics.map((m) => (
+            <div key={m.label} className={styles.statBlock}>
+              <span className={styles.statValue}>{m.value}</span>
+              <span className={styles.statLabel}>{m.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Highlight */}
-      <p className={styles.highlight}>{project.highlight}</p>
+      {project.highlight && <p className={styles.highlight}>{project.highlight}</p>}
 
       {/* CTA buttons */}
       <div className={styles.ctaRow}>
@@ -68,7 +72,7 @@ const ProjectCard = ({ project }: { project: Project }) => (
           </span>
         )}
 
-        {project.liveUrl && (
+        {project.liveUrl != null && (
           <a
             href={project.liveUrl}
             target="_blank"
