@@ -2,14 +2,14 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-inline: clamp(0.75rem, 3vw, 3rem);
+  padding-inline: clamp(2.5rem, 7vw, 9rem);
 
   @media (max-width: 768px) {
-    padding-inline: clamp(0.5rem, 2vw, 1.5rem);
+    padding-inline: clamp(1.5rem, 4vw, 3rem);
   }
 
   @media (max-width: 480px) {
-    padding-inline: 0.75rem;
+    padding-inline: 1rem;
   }
 }
 
