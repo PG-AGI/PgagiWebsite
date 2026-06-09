@@ -1,12 +1,14 @@
 // src/app/api/projects/route.ts
 // GET /api/projects?category=ai-product|ai-business|ai-iot
-// Fetches all case studies from MongoDB and filters by tab if provided.
-// MongoDB field mapping: slug → caseStudySlug, coverImage → screenshot.
-// Docs without a tab field appear in all categories.
+// MongoDB (caseStudies) → title, description, coverImage, slug
+// caseStudyMeta.ts     → techStack, metrics, highlight, liveUrl
+// projects.ts          → tab categorisation (PROJECT_TAB)
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import type { TabId, Project } from '@/data/projects';
+import { PROJECT_TAB } from '@/data/projects';
+import caseStudyMeta from '@/data/caseStudyMeta';
 import clientPromise from '@/utils/mongodb';
 
 export const dynamic = 'force-dynamic';
@@ -22,23 +24,32 @@ export async function GET(request: NextRequest) {
     const db = client.db('test');
     const docs = await db.collection('caseStudies').find({}).toArray();
 
-    const projects: Project[] = docs.map((doc) => ({
-      id:            doc._id.toString(),
-      title:         doc.title        as string,
-      description:   doc.description  as string | undefined,
-      techStack:     doc.techStack    as string[] | undefined,
-      metrics:       doc.metrics      as { value: string; label: string }[] | undefined,
-      highlight:     doc.highlight    as string | undefined,
-      screenshot:    doc.coverImage   as string,   // coverImage → screenshot
-      caseStudySlug: doc.slug         as string ?? null,
-      liveUrl:       doc.liveUrl      as string | null | undefined,
-      tab:           doc.tab          as TabId | undefined,
-    }));
+    const projects: Project[] = docs.flatMap((doc) => {
+      const slug = doc.slug as string | undefined;
+      if (!slug) return [];
 
-    // If category requested: include docs that match OR have no tab (unclassified)
+      const tab = PROJECT_TAB[slug];
+      if (!tab) return []; // not listed in PROJECT_TAB — skip
+
+      const meta = caseStudyMeta[slug];
+
+      return [{
+        id:            doc._id.toString(),
+        title:         doc.title                                          as string,
+        description:   (doc.metaDescription ?? doc.description)          as string | undefined,
+        techStack:     meta?.techStack,
+        metrics:       meta?.metrics,
+        highlight:     meta?.highlight,
+        screenshot:    doc.coverImage                                     as string,
+        caseStudySlug: slug,
+        liveUrl:       meta?.liveUrl ?? (doc.liveUrl as string | null | undefined),
+        tab,
+      }];
+    });
+
     const filtered =
       category && VALID_TABS.includes(category)
-        ? projects.filter((p) => !p.tab || p.tab === category)
+        ? projects.filter((p) => p.tab === category)
         : projects;
 
     return NextResponse.json(filtered, { status: 200 });
