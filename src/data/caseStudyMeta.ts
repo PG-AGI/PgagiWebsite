@@ -383,6 +383,56 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // ── Slug aliases — MongoDB documents use longer / differently-spelled slugs ──
 
+  // Workaptix: MongoDB slug is the full descriptive slug
+  'workaptix-ai-sourcing-validation-verification': {
+    techStack: ['Python', 'React', 'Node.js', 'PostgreSQL', '+2'],
+    metrics: [
+      { value: '10K+', label: 'Candidates Sourced' },
+      { value: '500+', label: 'Active Employers' },
+    ],
+    highlight: 'Pre-vetted Workday talent matched and placed in days, not weeks',
+    liveUrl: 'https://workaptix.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'HRTech/AI/ML',
+  },
+
+  // Nuaiy full slug
+  'nuaiy-ai-driven-multilingual-gamified-learning-platform': {
+    techStack: ['React Native', 'Python', 'TensorFlow', 'Firebase', '+2'],
+    metrics: [
+      { value: '4.7', label: 'App Store Rating' },
+      { value: '20K+', label: 'Downloads' },
+    ],
+    highlight: 'AI companion app reaching 20K+ users at launch',
+    tags: ['Live Products', 'UI/UX'],
+    category: 'SocialTech/AI/ML',
+  },
+
+  // SocialJet full slug
+  'socialjet-ai-influencer-marketing-os': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'Conversion Rate' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    liveUrl: 'https://social-jet.com',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+
+  // Cracked.ai full slug
+  'cracked-ai-growth-platform': {
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    metrics: [
+      { value: '60%', label: 'Ad Performance Boost' },
+      { value: '5x', label: 'Creative Output' },
+    ],
+    highlight: 'AI ad creatives outperforming human-made ads by 60%',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+
   // Jove's MongoDB slug is 'digital-twin-ai-powered-expert-knowledge-platform'
   'digital-twin-ai-powered-expert-knowledge-platform': {
     techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
