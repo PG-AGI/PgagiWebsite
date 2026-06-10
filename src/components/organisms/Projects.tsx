@@ -38,8 +38,7 @@ export default function Projects() {
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [visibleCount, setVisibleCount] = useState(4);
-  const [activeTab, setActiveTab] = useState<FilterTab>('Recent');
+  const [activeTab, setActiveTab] = useState<FilterTab>('Show All');
   const [activeCategory, setActiveCategory] = useState('All Categories');
 
   useEffect(() => {
@@ -111,7 +110,7 @@ export default function Projects() {
               <button
                 key={tab}
                 className={`${styles.filterBtn} ${activeTab === tab ? styles.filterBtnActive : ''}`}
-                onClick={() => { setActiveTab(tab); setVisibleCount(4); }}
+                onClick={() => setActiveTab(tab)}
               >
                 {tab}
               </button>
@@ -122,7 +121,7 @@ export default function Projects() {
                 <select
                   className={styles.categorySelect}
                   value={activeCategory}
-                  onChange={(e) => { setActiveCategory(e.target.value); setVisibleCount(4); }}
+                  onChange={(e) => { setActiveCategory(e.target.value); }}
                 >
                   {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
@@ -140,7 +139,7 @@ export default function Projects() {
               <button
                 key={tab}
                 className={`${styles.filterBtn} ${activeTab === tab ? styles.filterBtnActive : ''}`}
-                onClick={() => { setActiveTab(tab); setVisibleCount(4); }}
+                onClick={() => { setActiveTab(tab); }}
               >
                 {tab}
               </button>
@@ -171,7 +170,7 @@ export default function Projects() {
           <p className={styles.emptyMsg}>No case studies match this filter.</p>
         ) : (
           <>
-            {filteredStudies.slice(0, visibleCount).map((cs) => {
+            {filteredStudies.map((cs) => {
               const meta = caseStudyMeta[cs.slug] ?? caseStudyMeta[cs.slug?.toLowerCase().trim()];
               const img = cs.slug === AI2MD_SLUG ? AI2MD_PROJECT_IMAGE : cs.coverImage;
 
@@ -238,13 +237,6 @@ export default function Projects() {
               );
             })}
 
-            {visibleCount < filteredStudies.length && (
-              <div className={styles.loadMoreWrap}>
-                <button className={styles.loadMoreBtn} onClick={() => setVisibleCount(filteredStudies.length)}>
-                  Load More
-                </button>
-              </div>
-            )}
           </>
         )}
       </div>
