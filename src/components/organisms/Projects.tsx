@@ -25,8 +25,6 @@ type CaseStudy = {
   description?: string;
 };
 
-const AI2MD_SLUG = 'ai-mobile-doc';
-const AI2MD_PROJECT_IMAGE = '/case-studies/ChatGPT Image May 1, 2026, 04_10_45 PM.png';
 
 const STATS = [
   { value: '85+', line1: 'AI Products', line2: 'shipped' },
@@ -172,7 +170,6 @@ export default function Projects() {
           <>
             {filteredStudies.map((cs) => {
               const meta = caseStudyMeta[cs.slug] ?? caseStudyMeta[cs.slug?.toLowerCase().trim()];
-              const img = cs.slug === AI2MD_SLUG ? AI2MD_PROJECT_IMAGE : cs.coverImage;
 
               return (
                 <div key={cs.slug} className={styles.csCard}>
@@ -224,11 +221,11 @@ export default function Projects() {
                   <div className={styles.csRight}>
                     <div className={styles.csImgWrap}>
                       <Image
-                        src={getSafeImageUrl(img)}
+                        src={getSafeImageUrl(cs.coverImage)}
                         alt={cs.title}
                         fill
                         className={styles.csImg}
-                        style={{ objectFit: 'cover', objectPosition: cs.slug === AI2MD_SLUG ? 'center' : 'center top' }}
+                        style={{ objectFit: 'cover', objectPosition: 'center top' }}
                         onError={(e) => { (e.target as HTMLImageElement).src = '/images/aboutus.png'; }}
                       />
                     </div>
