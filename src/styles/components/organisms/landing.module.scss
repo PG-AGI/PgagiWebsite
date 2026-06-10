@@ -130,10 +130,10 @@
   gap: clamp(0.85rem, 1.6vh, 1.5rem);
   /* Takes up exactly one viewport height minimum so cards start below the fold */
   min-height: 100dvh;
-  flex: 0 0 auto;
+  flex: 0 0 auto;   /* mobile overrides this to flex:1 via heroInner min-height strategy */
   box-sizing: border-box;
   margin-top: 4rem;
-  margin-left:2rem;
+  margin-left: clamp(0rem, 1.5vw, 2rem);
 }
 
 .heroHeading {
@@ -432,27 +432,67 @@
   .cardGrid  { border-radius: 0 0 24px 24px; }
 }
 
+/* ─── Tablet + Mobile ─── */
+@media (max-width: 768px) {
+  /* heroInner owns the first-viewport height; heroContent grows to fill it */
+  .heroInner {
+    min-height: 100svh;
+  }
+
+  .heroContent {
+    /* Grow to fill heroInner's 100svh so centering has real space to work with */
+    flex: 1 1 auto;
+    min-height: unset;
+    margin-left: 0;
+    margin-top: 0;
+    justify-content: center;
+    /* Top padding = announcement bar (~2.5rem) + nav (~4rem) + breathing room */
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+    gap: 1.1rem;
+  }
+
+  .heroHeading {
+    font-size: clamp(2rem, 6vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .heroSubtext {
+    max-width: 100%;
+    font-size: clamp(0.9rem, 2.4vw, 1.1rem);
+  }
+
+  .heroCards {
+    margin-top: 0;
+    padding-bottom: 2rem;
+  }
+}
+
 @media (max-width: 600px) {
   .cardGrid {
     display: none;
   }
 
   .heroContent {
-    padding-top: clamp(4rem, 10vh, 6rem);
-    padding-bottom: 1.5rem;
+    padding-top: 7.5rem;
+    padding-bottom: 2.5rem;
     gap: 1.25rem;
-    min-height: unset;
   }
 
   .heroCards {
-    margin-top: 2rem;
+    margin-top: 0;
   }
 
   .heroHeading {
-    font-size: clamp(2.4rem, 9.5vw, 3rem);
+    font-size: clamp(2rem, 8.5vw, 2.75rem);
     line-height: 1.12;
     letter-spacing: -0.4px;
     margin-top: 0;
+  }
+
+  .heroSubtext {
+    font-size: clamp(0.875rem, 3.5vw, 1rem);
+    max-width: 100%;
   }
 
   /* Capabilities grid on mobile */
@@ -479,10 +519,19 @@
   }
 }
 
-/* Extra-small phones — bump clearance a touch more as chrome is proportionally larger */
+/* Extra-small phones */
 @media (max-width: 400px) {
   .heroContent {
-    padding-top: clamp(9.5rem, 24vh, 12rem);
+    padding-top: clamp(4.5rem, 14vh, 6rem);
+    margin-left: 0;
+  }
+
+  .heroHeading {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  }
+
+  .heroCta {
+    font-size: 0.8125rem;
   }
 }
 
