@@ -18,12 +18,19 @@ export type Project = {
   tab: TabId;
 };
 
-// Maps each MongoDB slug to its Recent Launch tab.
-// Add a slug here to make it appear in the section.
+// Top 3 projects shown per tab in Recent Launch — ordered, exact.
+export const RECENT_LAUNCH_TOP3: Record<TabId, string[]> = {
+  'ai-product':  ['brainify-edtech-platform', 'cracked-ai-growth-platform', 'aimi-brain-real-time-financial-intelligence'],
+  'ai-business': ['socialjet-ai-influencer-marketing-os', 'legalspendgpt-invoice-intelligence'],
+  'ai-iot':      ['ai-mobile-doc', 'two-point-correlation-function-spatial-clustering', 'cosmological-model-parameter-extraction'],
+};
+
+// Full tab membership map (used by other parts of the app).
 export const PROJECT_TAB: Record<string, TabId> = {
   // ── AI Product ────────────────────────────────────────────────────
-  'aimi-brain-real-time-financial-intelligence':                   'ai-product',
   'brainify-edtech-platform':                                      'ai-product',
+  'cracked-ai-growth-platform':                                    'ai-product',
+  'aimi-brain-real-time-financial-intelligence':                   'ai-product',
   'digital-twin-ai-powered-expert-knowledge-platform':             'ai-product',
   'ai-agent-for-stock-market':                                     'ai-product',
   'ai-marketing-assistant':                                        'ai-product',
@@ -32,15 +39,14 @@ export const PROJECT_TAB: Record<string, TabId> = {
   'skillina-talent-marketplace':                                   'ai-product',
   'workaptix-ai-sourcing-validation-verification':                 'ai-product',
   'nuaiy-ai-driven-multilingual-gamified-learning-platform':       'ai-product',
-  'socialjet-ai-influencer-marketing-os':                         'ai-product',
-  'cracked-ai-growth-platform':                                    'ai-product',
 
   // ── AI Implemented in Business ────────────────────────────────────
+  'socialjet-ai-influencer-marketing-os':                         'ai-business',
+  'multi-agent-trading-system-transforming-cryptocurrency-trading-strategies': 'ai-business',
   'legalspendgpt-invoice-intelligence':                            'ai-business',
   'transforming-customer-engagement-and-lead-management-with-ai-powered-automation': 'ai-business',
   'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin': 'ai-business',
   'ai-powered-recruiter-agents-to-revolutionize-talent-acquisition': 'ai-business',
-  'multi-agent-trading-system-transforming-cryptocurrency-trading-strategies': 'ai-business',
   'voice-assistant-chatbot-for-shopify-stores-to-enhance-user-engagement': 'ai-business',
   'tutorgpt-ai-personalized-tutoring-platform-to-make-education-accessible-and-seamless': 'ai-business',
   'ai-data-query-system':                                          'ai-business',
@@ -48,9 +54,9 @@ export const PROJECT_TAB: Record<string, TabId> = {
 
   // ── AI × IoT Engineering ──────────────────────────────────────────
   'ai-mobile-doc':                                                 'ai-iot',
+  'two-point-correlation-function-spatial-clustering':             'ai-iot',
+  'cosmological-model-parameter-extraction':                       'ai-iot',
   'ai-asr-doctor-clinical-documentation-platform':                 'ai-iot',
   'mirror-me-ai-virtual-try-on':                                   'ai-iot',
   'ai-ecommerce-arbitrage-platform':                               'ai-iot',
-  'cosmological-model-parameter-extraction':                       'ai-iot',
-  'two-point-correlation-function-spatial-clustering':             'ai-iot',
 };
