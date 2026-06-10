@@ -8,7 +8,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { MOBILE_BREAKPOINT } from '@/lib/motion';
-import { useSmoothScrollTo } from '@/hooks/useSmoothScrollTo';
 import newPageText from '@/constants/uiText/newPage.json';
 import EXTERNAL_LINKS from '@/constants/externalLinks';
 
@@ -18,7 +17,6 @@ const NewPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>('founders');
-  const { scrollTo } = useSmoothScrollTo();
   const shouldReduceMotion = useReducedMotion();
   void shouldReduceMotion;
 
@@ -75,7 +73,7 @@ const NewPage = () => {
             role="tab"
             aria-selected={activeTab === 'enterprises'}
             className={`${styles.tab} ${activeTab === 'enterprises' ? styles.tabActive : ''}`}
-            onClick={() => { setActiveTab('enterprises'); scrollTo('#revenue-section', { offset: 80, duration: 1.5 }); }}
+            onClick={() => { setActiveTab('enterprises'); document.getElementById('revenue-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
           >
             {newPageText.enterprisesTabLabel}
           </button>
