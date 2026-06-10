@@ -51,9 +51,7 @@ export default function Home() {
         <LazySection minHeight="820px">
           <ProcessTimelineSection />
         </LazySection>
-        <LazySection minHeight="600px">
-          <RevenueSection />
-        </LazySection>
+        <RevenueSection />
         <LazySection minHeight="700px">
           <BuildEcosystemSection />
         </LazySection>
