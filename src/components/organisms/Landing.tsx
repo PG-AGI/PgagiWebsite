@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import bgImage from "../../../public/background.png";
 import bgImageMobile from "../../../public/background-mobile.png";
@@ -37,13 +36,6 @@ const ArrowRightIcon = ({ stroke = "#000" }: { stroke?: string }) => (
 );
 
 export default function Landing() {
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  const handleExploreClick = () => {
-    setShowTooltip(true);
-    setTimeout(() => setShowTooltip(false), 2000);
-  };
-
   return (
     <section
       id="landing"
@@ -135,20 +127,18 @@ export default function Landing() {
             <p className={styles.cardDescription}>
               {landingText.verticalCard.description}
             </p>
-            <button
-              type="button"
-              className={styles.cardCta}
-              aria-label={landingText.verticalCard.ctaAriaLabel}
-              onClick={handleExploreClick}
-            >
-              <span>{landingText.verticalCard.ctaLabel}</span>
-              <span className={styles.cardCtaArrow} aria-hidden="true">
-                <ArrowRightIcon />
-              </span>
-              {showTooltip && (
-                <span className={styles.comingSoonTooltip}>Coming Soon</span>
-              )}
-            </button>
+            <div className={styles.cardCtaWrapper}>
+              <button
+                type="button"
+                className={styles.cardCta}
+                aria-label={landingText.verticalCard.ctaAriaLabel}
+              >
+                <span>{landingText.verticalCard.ctaLabel}</span>
+                <span className={styles.cardCtaArrow} aria-hidden="true">
+                  <ArrowRightIcon />
+                </span>
+              </button>
+            </div>
           </article>
 
           {/* Card 2 — Capabilities grid (narrow) */}
