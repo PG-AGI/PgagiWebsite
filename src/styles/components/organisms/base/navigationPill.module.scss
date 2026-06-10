@@ -318,6 +318,7 @@
     right: 0;
     transform: none;
     width: 100%;
+    max-width: 100%;
     padding: 0;
     border-radius: 0;
     background: transparent !important;
@@ -343,8 +344,8 @@
       justify-content: flex-start;
       align-items: center;
       position: relative;
-      margin-top: 80px;
-      width: 88%;
+      margin: 80px auto 0;
+      width: calc(100% - 48px);
       max-width: 380px;
       padding: 8px 16px 20px;
       background: rgba(255, 255, 255, 0.6);
