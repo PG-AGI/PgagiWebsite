@@ -562,6 +562,17 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
 
+  'sentlogic-instagram-engagement-revenue-attribution': {
+    techStack: ['Python', 'FastAPI', 'Next.js', 'pgvector', '+3'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid growth — 1K users in 7 days',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'MarTech/AI/ML',
+  },
+
   'hermayhem-leading-her-ways-cycle-aware-ai-productivity': {
     techStack: ['Python', 'FastAPI', 'React Native', 'Gemini AI', '+2'],
     metrics: [
