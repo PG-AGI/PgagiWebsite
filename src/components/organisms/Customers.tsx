@@ -133,8 +133,8 @@ const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
 const Customers = () => {
   const shouldReduceMotion = useReducedMotion();
 
-  const row1 = allTestimonials;
-  const row2 = [...allTestimonials].reverse();
+  const row1 = [...allTestimonials].sort((a, b) => (b.memberImage ? 1 : 0) - (a.memberImage ? 1 : 0));
+  const row2 = [...row1].reverse();
 
   return (
     <section className={styles.section} id="customers">
