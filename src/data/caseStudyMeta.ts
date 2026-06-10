@@ -539,6 +539,39 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['AI Implemented in Business', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
+
+  'innvor-ai-clinical-engagement-documentation-platform': {
+    techStack: ['Python', 'FastAPI', 'Healthcare AI', 'NLP', '+2'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid growth - 1K users in 7 days',
+    tags: ['Live Products', 'Healthcare AI'],
+    category: 'Healthcare/AI/ML',
+  },
+
+  'sheltas-health-dataset-annotation-platform': {
+    techStack: ['Python', 'FastAPI', 'React', 'JavaScript', '+2'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid growth - 1K users in 7 days',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'Healthcare/AI/ML',
+  },
+
+  'hermayhem-leading-her-ways-cycle-aware-ai-productivity': {
+    techStack: ['Python', 'FastAPI', 'React Native', 'Gemini AI', '+2'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid early growth - 11 clients in 7 days',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'WellTech/AI/ML',
+  },
 };
 
 export const FILTER_TABS = [
@@ -567,6 +600,7 @@ export const CATEGORIES = [
   'SocialTech/AI/ML',
   'SaaS/AI/ML',
   'IoT/AI/ML',
+  'WellTech/AI/ML',
   'Research/Science',
 ] as const;
 
