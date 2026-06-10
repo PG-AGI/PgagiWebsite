@@ -30,13 +30,13 @@ $content-max: 1620px;
   box-sizing: border-box;
 
   @media (max-width: 900px) {
-    padding-top: 20vh;
-    padding-bottom: 9vh;
+    padding-top: 16vh;
+    padding-bottom: 6vh;
   }
 
   @media (max-width: 600px) {
-    padding-top: 18vh;
-    padding-bottom: 8vh;
+    padding-top: 12vh;
+    padding-bottom: 3vh;
   }
 }
 
@@ -46,8 +46,8 @@ $content-max: 1620px;
   padding-bottom: 7vh;
   box-sizing: border-box;
 
-  @media (max-width: 900px) { padding-bottom: 6vh; }
-  @media (max-width: 600px) { padding-bottom: 5vh; }
+  @media (max-width: 900px) { padding-bottom: 4vh; }
+  @media (max-width: 600px) { padding-bottom: 3vh; }
 }
 
 /* Cards list + footer breathing room */
@@ -73,7 +73,7 @@ $content-max: 1620px;
   align-items: flex-start;
   justify-content: space-between;
   max-width: $content-max;
-  width: 88vw;         /* 6vw margin each side on desktop */
+  width: 88vw;
   margin: 0 auto;
   gap: 4vw;
   flex-wrap: wrap;
@@ -81,19 +81,25 @@ $content-max: 1620px;
 
   @media (max-width: 900px) {
     flex-direction: column;
-    gap: 5vw;
-    width: 90vw;       /* 5vw margin each side on tablet */
+    gap: 24px;
+    width: 90vw;
   }
 
   @media (max-width: 600px) {
-    width: 92vw;       /* 4vw margin each side on mobile */
-    gap: 7vw;
+    width: 92vw;
+    gap: 20px;
   }
 }
 
 .heroLeft {
   flex: 1 1 320px;
   min-width: 260px;
+
+  @media (max-width: 900px) {
+    flex: 0 0 auto;
+    min-width: 0;
+    width: 100%;
+  }
 }
 
 .heroTitle {
@@ -111,6 +117,10 @@ $content-max: 1620px;
   line-height: 1.7;
   margin: 28px 0 0;
   max-width: 460px;
+
+  @media (max-width: 900px) {
+    margin-top: 16px;
+  }
 }
 
 .heroStats {
@@ -118,7 +128,11 @@ $content-max: 1620px;
   gap: clamp(36px, 5vw, 72px);
   flex-wrap: wrap;
   flex-shrink: 0;
-  padding-top: 36px;  /* internal offset so numbers align with mid-title */
+  padding-top: 36px;  /* internal offset so numbers align with mid-title on desktop */
+
+  @media (max-width: 900px) {
+    padding-top: 0;   /* stacked layout — no alignment offset needed */
+  }
 }
 
 .statItem {
@@ -290,13 +304,12 @@ $content-max: 1620px;
 .csCard {
   display: grid;
   grid-template-columns: 2.5fr 3fr;
-  align-items: stretch;           /* Fix 1: explicit stretch so right panel
-                                     always fills the full row height       */
+  align-items: stretch;
   width: 100%;
   min-height: 520px;
   height: 80vh;
   background: #f2f2f3;
-  border-radius: 10px;            /* Fix 4: reduced from 24px → matches Figma */
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.05);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -308,6 +321,7 @@ $content-max: 1620px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    height: auto;       /* remove fixed 80vh so stacked content is never clipped */
     min-height: auto;
     border-radius: 14px;
   }
@@ -336,14 +350,17 @@ $content-max: 1620px;
   position: relative;
   overflow: hidden;
   background: #f2f2f3;
-  /* Fix 1: height:100% ensures the grid cell always gives absolute children
-     a concrete bounding box, even on intermediate viewport widths            */
   height: 100%;
   min-height: 400px;
 
   @media (max-width: 900px) {
     order: 1;
-    min-height: 240px;
+    height: 280px;     /* explicit height so absolute-positioned image has a concrete box */
+    min-height: unset;
+  }
+
+  @media (max-width: 500px) {
+    height: 220px;
   }
 }
 
