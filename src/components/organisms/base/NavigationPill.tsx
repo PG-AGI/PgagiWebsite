@@ -125,9 +125,9 @@ export default function NavigationPill() {
                   <TransitionLink href={ROUTES.EXPERTISE} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Expertise
                   </TransitionLink>
-                  <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                  {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Blogs
-                  </TransitionLink>
+                  </TransitionLink> */}
                   <TransitionLink href={ROUTES.CAREER} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Careers
                   </TransitionLink>
@@ -148,9 +148,9 @@ export default function NavigationPill() {
               <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
                 Expertise
               </TransitionLink>
-              <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.link}>
+              {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.link}>
                 Blogs
-              </TransitionLink>
+              </TransitionLink> */}
               <TransitionLink href={ROUTES.CAREER} className={styles.link}>
                 Careers
               </TransitionLink>
