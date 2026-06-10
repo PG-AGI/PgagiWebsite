@@ -212,12 +212,12 @@ export default function Projects() {
                       <Link href={ROUTES.CASE_STUDY_SLUG(cs.slug)} className={styles.btnPrimary}>
                         View case study <ArrowUpRight />
                       </Link>
-                      {meta?.liveUrl && (
+                      {/* {meta?.liveUrl && (
                         <a href={meta.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
                           <span className={styles.greenDot} />
                           View Live Product <ArrowUpRight />
                         </a>
-                      )}
+                      )} */}
                     </div>
                   </div>
 
