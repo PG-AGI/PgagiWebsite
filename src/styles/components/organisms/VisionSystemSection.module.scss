@@ -71,7 +71,7 @@ $red: #9f0000;
     }
 
     @media (max-width: 768px) {
-      flex-direction: column;
+      flex-direction: column-reverse;
 
       .copyBlock {
         padding-left: 0;
@@ -80,7 +80,7 @@ $red: #9f0000;
   }
 
   @media (max-width: 768px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: stretch;
     gap: 1.4rem;
     padding: 1.5rem;
@@ -156,6 +156,14 @@ $red: #9f0000;
   font-size: clamp(1.1rem, 1.5vw, 1.5rem);
   font-weight: 700;
   line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
 
   span {
     font-weight: 800;
@@ -171,25 +179,20 @@ $red: #9f0000;
   align-self: center;
   border-radius: 22px;
   overflow: hidden;
-  background: #6B8FCC;
+  background: transparent;
 
   @media (max-width: 768px) {
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
+    width: 70%;
+    max-width: 260px;
     flex-basis: auto;
-    align-self: center;
-    border-radius: 14px;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    width: 100%;
+    min-height: auto;
+    margin: 0 auto;
     border-radius: 12px;
   }
 
-  @media (max-height: 700px) {
-    max-width: 240px;
+  @media (max-width: 480px) {
+    width: 65%;
+    max-width: 220px;
   }
 }
 
