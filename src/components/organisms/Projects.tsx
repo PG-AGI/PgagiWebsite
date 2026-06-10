@@ -8,6 +8,7 @@ import styles from '@/styles/components/organisms/projects.module.scss';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 import { fetchAllCaseStudies } from '@/services/caseStudyService';
 import ROUTES from '@/constants/routes';
+import EXTERNAL_LINKS from '@/constants/externalLinks';
 import { getErrorMessage } from '@/utils/errorUtils';
 import caseStudyMeta, { FILTER_TABS, CATEGORIES, type FilterTab } from '@/data/caseStudyMeta';
 
@@ -249,11 +250,11 @@ export default function Projects() {
           execution, and scalable AI systems.
         </p>
         <div className={styles.ctaButtons}>
-          <a href="/contact" className={styles.ctaBtnPrimary}>
+          <a href={EXTERNAL_LINKS.CALENDLY_BOOKING} target="_blank" rel="noopener noreferrer" className={styles.ctaBtnPrimary}>
             Start Your Project
             <span className={styles.ctaBtnArrow}>→</span>
           </a>
-          <a href="/contact" className={styles.ctaBtnSecondary}>
+          <a href={EXTERNAL_LINKS.CALENDLY_BOOKING} target="_blank" rel="noopener noreferrer" className={styles.ctaBtnSecondary}>
             Book a Strategy Call
           </a>
         </div>
