@@ -118,12 +118,12 @@ $red: #9f0000;
     flex-direction: row-reverse;
 
     @media (max-width: 900px) {
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
   }
 
   @media (max-width: 900px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: stretch;
     gap: 1.4rem;
     padding: 1.5rem;
@@ -215,19 +215,19 @@ $red: #9f0000;
   background: #E2D5C4;
 
   @media (max-width: 900px) {
-    width: 100%;
-    max-width: 320px;
+    width: 70%;
+    max-width: 260px;
     margin: 0 auto;
     flex-basis: auto;
     align-self: center;
+    min-height: unset;
     border-radius: 14px;
   }
 
-  @media (max-width: 768px) {
-    max-width: 100%;
-    width: 100%;
+  @media (max-width: 480px) {
+    width: 65%;
+    max-width: 220px;
     border-radius: 12px;
-    min-height: unset;
   }
 }
 
