@@ -47,28 +47,30 @@ export default function Landing() {
       </div>
 
       {/* Hero media is rendered as next/image so the browser can prioritize it immediately for LCP. */}
-      <div className={styles.heroBg} aria-hidden="true">
-        <Image
-          src={bgImage}
-          alt=""
-          priority
-          fetchPriority="high"
-          placeholder="blur"
-          sizes="100vw"
-          quality={100}
-          className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
-        />
-        <Image
-          src={bgImageMobile}
-          alt=""
-          priority
-          fetchPriority="high"
-          placeholder="blur"
-          sizes="100vw"
-          quality={100}
-          className={`${styles.heroBgImage} ${styles.heroBgMobile}`}
-        />
-      </div>
+  <div className={styles.heroBg} aria-hidden="true">
+    {/* Desktop — hidden below 768px via CSS, not downloaded on mobile */}
+    <Image
+      src={bgImage}
+      alt=""
+      priority
+      fetchPriority="high"
+      placeholder="blur"
+      sizes="(max-width: 768px) 0px, 100vw"
+      quality={75}
+      className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
+    />
+    {/* Mobile — hidden above 768px via CSS, not downloaded on desktop */}
+    <Image
+      src={bgImageMobile}
+      alt=""
+      priority
+      fetchPriority="high"
+      placeholder="blur"
+      sizes="(min-width: 769px) 0px, 100vw"
+      quality={75}
+      className={`${styles.heroBgImage} ${styles.heroBgMobile}`}
+    />
+  </div>
 
       {/* Left-side gradient overlay for text legibility */}
       <div className={styles.heroOverlay} aria-hidden="true" />
