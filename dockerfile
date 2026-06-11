@@ -1,23 +1,26 @@
-# Use the official Node.js 18 image as the base image
-FROM node:18-alpine
+# Use Node.js 20 (required by react-router@7.9.4)
+FROM node:20-alpine
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json files to the container
+# Copy dependency files first (layer cache optimization)
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies (deterministic, faster than npm install)
+RUN npm ci
 
-# Copy the rest of the application code to the container
+# Copy application source
 COPY . .
+
+# Disable Next.js telemetry at build time
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Build the Next.js application
 RUN npm run build
 
-# Expose port 3000
+# Expose port
 EXPOSE 3000
 
-# Start the Next.js application
+# Start the application
 CMD ["npm", "start"]
