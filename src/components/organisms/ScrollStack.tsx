@@ -95,7 +95,7 @@ const ScrollStack = ({
     cleanup?.();
   };
 
-  function initializeGSAP(gsap: import("gsap").gsap) {
+  function initializeGSAP(gsap: typeof import("gsap").default) {
     const section  = sectionRef.current;
     const viewport = viewportRef.current;
     const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
