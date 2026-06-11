@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import ContactUsForm from "./contactUsForm";
-import { ArrowRight, Target } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ROUTES from "@/constants/routes";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
 
@@ -28,6 +28,25 @@ export default function Navigation() {
   const ABOUT = ROUTES.ABOUT_US;
   const INDUSTRIES = "/industries";
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
+
+  // The hero on the home page renders an announcement bar fixed at the top
+  // of the viewport. Until the user scrolls past it, the nav sits below.
+  const isHome = pathname === ROUTES.HOME;
+  const [pastAnnouncement, setPastAnnouncement] = useState(false);
+  useEffect(() => {
+    if (!isHome) {
+      setPastAnnouncement(false);
+      return;
+    }
+    const check = () => {
+      const y = window.pageYOffset || document.documentElement.scrollTop;
+      setPastAnnouncement(y > 48);
+    };
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, [isHome]);
+  const offsetForBanner = isHome && !pastAnnouncement;
 
   useEffect(() => {
     const handleResize = () => {
@@ -129,7 +148,8 @@ export default function Navigation() {
         styles.navigation,
         isScrolled && styles.scrolled,
         showGlassEffect && styles.glassEffect,
-        isOverFooter && styles.overFooter
+        isOverFooter && styles.overFooter,
+        offsetForBanner && styles.withBanner
       )}
     >
       <div
@@ -163,27 +183,18 @@ export default function Navigation() {
                   <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     About Us
                   </TransitionLink>
-                  <span className={`${styles.mobileMenuItem} ${styles.comingSoon}`}>
-                    Solutions
-                    <div className={styles.tooltip}>Coming Soon</div>
-                  </span>
+                  <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Case studies
+                  </TransitionLink>
                   <TransitionLink href={ROUTES.EXPERTISE} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Expertise
                   </TransitionLink>
-                  <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Case Studies
-                  </TransitionLink>
+                  {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                    Blogs
+                  </TransitionLink> */}
                   <TransitionLink href={ROUTES.CAREER} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                     Careers
                   </TransitionLink>
-                  <button className={styles.mobileContact} onClick={() => {
-                    // window.open("https://form.pgagi.in/", "_blank");   
-                    window.open(CONTACT_URL, "_blank");                    // setIsMenuOpen(false);
-                    // handleContactUs();
-                  }}>
-                    Get in touch
-                    <ArrowRight size={16} />
-                  </button>
                 </div>
               )}
             </>
@@ -196,27 +207,18 @@ export default function Navigation() {
               <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
                 About Us
               </TransitionLink>
-              <span className={`${styles.link} ${styles.comingSoon}`}>
-                Solutions
-                <div className={styles.tooltip}>Coming Soon</div>
-              </span>
+              <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
+                Case studies
+              </TransitionLink>
               <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
                 Expertise
               </TransitionLink>
-              <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
-                Case Studies
-              </TransitionLink>
+              {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.link}>
+                Blogs
+              </TransitionLink> */}
               <TransitionLink href={ROUTES.CAREER} className={styles.link}>
                 Careers
               </TransitionLink>
-
-              <button className={styles.contact} onClick={() => {
-                // window.open("https://form.pgagi.in/", "_blank");
-                window.open(CONTACT_URL, "_blank");
-              }}>
-                Get in touch
-                <ArrowRight size={16} />
-              </button>
             </>
           )}
         </div>

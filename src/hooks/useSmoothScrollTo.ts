@@ -8,7 +8,7 @@ export const useSmoothScrollTo = () => {
     offset?: number;
     duration?: number;
   }) => {
-    const element = typeof target === 'string' 
+    const element = typeof target === 'string'
       ? document.querySelector(target) as HTMLElement
       : target;
 
@@ -21,7 +21,6 @@ export const useSmoothScrollTo = () => {
     const duration = options?.duration || 1.2;
 
     if (lenis) {
-      // Calculate absolute position relative to document top
       const rect = element.getBoundingClientRect();
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const targetPosition = rect.top + scrollTop - offset;
@@ -31,11 +30,10 @@ export const useSmoothScrollTo = () => {
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     } else {
-      // Fallback for mobile or when lenis is not initialized
       const rect = element.getBoundingClientRect();
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const targetPosition = rect.top + scrollTop - offset;
-      
+
       window.scrollTo({
         top: targetPosition,
         behavior: 'smooth'
@@ -44,4 +42,4 @@ export const useSmoothScrollTo = () => {
   }, [lenis]);
 
   return { scrollTo };
-}; 
+};

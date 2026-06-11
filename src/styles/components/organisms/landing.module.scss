@@ -1,125 +1,103 @@
 /* =====================================================
    LANDING HERO — PG-AGI
-   Fluid, pixel-perfect, mobile-first
-   All values via clamp() for seamless cross-screen scaling
+   Pixel-tuned to design spec (72/82 headline, glass cards)
    ===================================================== */
 
-/* ─── Custom Properties ─── */
+/* ─── Announcement Bar (above navigation) ─── */
+.announcementBarWrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  pointer-events: auto;
+}
+
 .hero {
-  /* Design tokens */
-  --content-x: clamp(1.5rem, 6vw, 7rem);
-  --content-bottom: clamp(7rem, 14vh, 11rem);
-  /* above the partners bar */
-  --h1-size: clamp(2.5rem, 5.5vw, 4.5rem);
-  /* ~72px at desktop */
-  --body-size: clamp(1rem, 1.5vw, 1.125rem);
-  /* ~18px at desktop */
-  --cta-size: clamp(0.7rem, 1vw, 0.75rem);
-  /* ~12px at desktop */
-  --cta-radius: 9999px;
+  /* Design tokens — rem + vw hybrid clamps scale with both viewport width AND browser zoom */
+  --content-x:       clamp(1.25rem, 0.5rem + 3.5vw, 5rem);       /* 20 → 80px gutter */
+  --h1-size:         clamp(2rem, 1rem + 3vw, 4.5rem);            /* 32 → 72px */
+  --h1-line:         clamp(2.75rem, 1.3rem + 4.2vw, 5.5rem);     /* 44 → 88px */
+  --body-size:       clamp(0.9375rem, 0.75rem + 0.45vw, 1.25rem); /* 15 → 20px */
+  --body-line:       clamp(1.55rem, 1.3rem + 0.95vw, 2.1rem);    /* 24.8 → 33.6px */
+  --cta-size:        clamp(0.8125rem, 0.7rem + 0.3vw, 1rem);     /* 13 → 16px */
+  --cta-pad-x:       clamp(1.25rem, 0.9rem + 1vw, 1.75rem);      /* 20 → 28px */
+  --cta-arrow:       clamp(2rem, 1.6rem + 0.7vw, 2.25rem);       /* 32 → 36px */
+  --card-title-size: clamp(1.25rem, 0.85rem + 1vw, 1.75rem);     /* 20 → 28px */
+  --card-desc-size:  clamp(0.8125rem, 0.75rem + 0.3vw, 1rem);    /* 13 → 16px */
+  --card-cta-arrow:  clamp(2.25rem, 1.8rem + 1vw, 2.75rem);      /* 36 → 44px */
+  --cap-size:        clamp(0.8125rem, 0.7rem + 0.4vw, 1rem);     /* 13 → 16px */
+  --cap-pad-x:       clamp(0.875rem, 0.6rem + 0.8vw, 1.5rem);    /* 14 → 24px */
+  --card-pad:        clamp(1.125rem, 0.7rem + 1.4vw, 2rem);      /* 18 → 32px */
+  --cards-gap:       clamp(0.75rem, 0.5rem + 0.6vw, 1.5rem);     /* 12 → 24px */
+  --card-radius:     clamp(1rem, 0.7rem + 0.6vw, 1.5rem);        /* 16 → 24px */
+  --card-bg: rgba(0, 0, 0, 0.52);
+  --card-shadow: -6px -6px 15.5px 0px rgba(255, 255, 255, 0.34);
   --overlay: linear-gradient(to right,
-      rgba(0, 0, 0, 0.76) 0%,
-      rgba(0, 0, 0, 0.55) 45%,
-      rgba(0, 0, 0, 0.12) 75%,
+      rgba(0, 0, 0, 0.281) 0%,
+      rgba(0, 0, 0, 0.233) 45%,
+      rgba(0, 0, 0, 0.233) 75%,
       transparent 100%);
 
-  /* Base */
   position: relative;
   width: 100%;
-  height: 100dvh;
+  min-height: 100dvh;
   margin: 0;
-
-  @media (max-width: 768px) {
-    height: 100dvh;
-    margin: 0;
-  }
-
-  /* 100dvh: iOS Safari safe */
-  min-height: 540px;
-  overflow: hidden;
-  /* Clips the ken-burns zoom leakage */
+  /* Allow the section to grow taller than 100dvh on tiny screens so content
+     never gets clipped behind the fixed nav; only block horizontal overflow. */
+  overflow-x: hidden;
+  overflow-y: visible;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  /* vertically center the content block */
-  justify-content: flex-start;
+  box-sizing: border-box;
   background: #1a1a18;
-  /* Dark fallback visible instantly while background.webp loads */
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-
-  @media (min-width: 768px) {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  /* Force hardware acceleration for flawless radius clipping with scaling children */
   transform: translateZ(0);
 }
 
-/* ─── Partners bar wrapper — pinned to absolute bottom of hero ─── */
-.partnersWrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 3;
-}
-
-/* ─── Background image ─── */
+/* ─── Background ─── */
 .heroBg {
+  /* Spans the full hero section (including the below-fold cards area) */
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;       /* clips image to hero bounds */
   transform: translateZ(0);
+
 
   .heroBgImage {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    max-width: none;
     display: block;
     object-fit: cover;
-    object-position: center center;
+    object-position: center top;
+    color: transparent;
     transform: translateZ(0);
   }
 
+  .heroBgDesktop {
+    display: block;
+  }
+
+  .heroBgMobile {
+    display: none;
+  }
+
   @media (max-width: 768px) {
-    .heroBgImage {
-      object-position: 55% center;
+    .heroBgDesktop {
+      display: none;
     }
-  }
 
-  /* ─── Morning Sunlight Effect ─── */
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    /* Warm sunlight source from top-center/right */
-    background: radial-gradient(circle at 60% 20%,
-        rgba(255, 240, 180, 0.4) 0%,
-        rgba(255, 255, 255, 0.1) 30%,
-        transparent 70%);
-    mix-blend-mode: soft-light;
-    opacity: 0.8;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Secondary glow for depth */
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 50% 0%,
-        rgba(255, 225, 100, 0.2) 0%,
-        transparent 60%);
-    mix-blend-mode: overlay;
-    pointer-events: none;
-    z-index: 1;
+    .heroBgMobile {
+      display: block;
+      object-position: center top;
+    }
   }
 }
 
-/* ─── Darkening gradient overlay (left-side) ─── */
 .heroOverlay {
   position: absolute;
   inset: 0;
@@ -127,206 +105,88 @@
   z-index: 1;
 }
 
-/* ─── Content area (vertically centered, left-aligned) ─── */
-.heroContent {
+/* ─── Inner container ─── */
+.heroInner {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 82vw; // Targeted 80vw visual width
-  margin: 0 auto; // Center it
-  padding:
-    clamp(0.5rem, 4vh, 2rem) // top
-    1vw // right
-    clamp(6rem, 12vh, 8rem) // bottom
-    1vw; // left
+  padding: 0 var(--content-x);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* No flex: 1 — heroContent drives the height via min-height: 100dvh */
+}
+
+/* ─── Hero content — occupies the entire first viewport ─── */
+.heroContent {
+  width: 100%;
+  /* First screen: heading + subtext + CTA fills at least one full viewport.
+     Announcement bar (60px) + nav (68px) = ~128px fixed chrome — 8rem clears it. */
+  padding: clamp(8rem, 16vh, 11rem) 0 clamp(3rem, 6vh, 5rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: clamp(0.75rem, 2vh, 1.25rem);
+  justify-content: flex-start;
+  gap: clamp(0.85rem, 1.6vh, 1.5rem);
+  /* Takes up exactly one viewport height minimum so cards start below the fold */
+  min-height: 100dvh;
+  flex: 0 0 auto;   /* mobile overrides this to flex:1 via heroInner min-height strategy */
   box-sizing: border-box;
-}
-
-/* ─── H1 ─── */
-.heroTrustBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  max-width: min(100%, 34rem);
-  padding: 0.5rem 0.65rem 0.5rem 1rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
-  animation: fadeSlideUp 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.heroTrustLabel {
-  color: rgba(255, 255, 255, 0.94);
-  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.heroTrustPlatforms {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  flex-wrap: wrap;
-}
-
-.heroTrustPlatform {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.42rem;
-  padding: 0.24rem 0.65rem 0.24rem 0.28rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(159, 0, 0, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  color: inherit;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    background: #ffffff;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.8),
-      0 8px 18px rgba(0, 0, 0, 0.12);
-  }
-
-  &:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.9);
-    outline-offset: 2px;
-  }
-}
-
-.heroTrustLogoWrap {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  overflow: hidden;
-}
-
-.heroTrustLogo {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  object-fit: contain;
-}
-
-.heroTrustName {
-  color: #171717;
-  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.heroTrustDivider {
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1;
+  margin-top: 4rem;
+  margin-left: clamp(0rem, 1.5vw, 2rem);
 }
 
 .heroHeading {
-  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--h1-size);
   font-weight: 700;
-  line-height: 1.1;
-  /* ~82px at desktop */
-  color: #ffffff;
+  line-height: var(--h1-line);
+  letter-spacing: -0.7px;
   margin: 0;
-  /* Wide enough for 2-line break like the screenshot */
-  max-width: clamp(20rem, 65vw, 900px);
-  letter-spacing: -0.01em;
-  /* ~ -0.7px at 72px */
+  color: #ffffff;
+  max-width: 900px;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-
-  /* Entry animation — slideUp keeps H1 visible for LCP; no opacity:0 */
   animation: slideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
-/* ─── Subtitle ─── */
 .heroSubtext {
-  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--body-size);
-  font-weight: 500;
-  line-height: clamp(1.5rem, 2.5vw, 2rem);
-  /* ~32px at desktop */
-  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  line-height: var(--body-line);
+  color: rgba(255, 255, 255, 0.95);
   margin: 0;
-  max-width: clamp(18rem, 50vw, 540px);
-  letter-spacing: 0%;
-
+  max-width: 560px;
+  letter-spacing: 0;
   animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
 }
 
-/* Desktop <br> — hidden on mobile */
-.brDesktop {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .brDesktop {
-    display: inline;
-  }
-}
-
-/* Mobile-only <br> */
-.brMobile {
-  display: block;
-}
-
-@media (min-width: 481px) {
-  .brMobile {
-    display: none;
-  }
-}
-
-/* ─── CTA Button (Professional Redesign) ─── */
+/* ─── Primary CTA ─── */
 .heroCta {
   display: inline-flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   background: #9F0000;
-  /* specific dark red as requested */
   color: #ffffff;
-  font-family: var(--font-plus-jakarta), "Poppins", "Inter", system-ui, sans-serif;
-  font-size: 0.85rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  font-size: var(--cta-size);
   font-weight: 500;
   line-height: 1;
   text-decoration: none;
-  padding: 4px 4px 4px 28px;
-  /* tighter padding for larger circle */
+  padding: 4px 4px 4px var(--cta-pad-x);
   border-radius: 50px;
   border: none;
   box-shadow: 0 4px 20px rgba(159, 0, 0, 0.3);
   transition: all 0.3s ease;
   cursor: pointer;
   white-space: nowrap;
-  position: relative;
-  overflow: hidden;
-
   animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
 
   &:hover {
     transform: translateY(-2px);
     background: #b30000;
     box-shadow: 0 6px 25px rgba(159, 0, 0, 0.4);
-
-    .ctaArrow {
-      transform: translateX(2px);
-    }
+    .ctaArrow { transform: translateX(2px); }
   }
 
   &:active {
@@ -335,198 +195,385 @@
   }
 }
 
-/* ─── CTA Arrow icon circle ─── */
 .ctaArrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: var(--cta-arrow);
+  height: var(--cta-arrow);
   background: #ffffff;
   border-radius: 50%;
-  margin-left: 16px;
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 
-  svg {
-    width: 22px;
-    height: 22px;
-
-    path {
-      stroke: #000000 !important;
-      /* black arrow as per screenshot */
-    }
-
-    circle {
-      display: none;
-      /* removed the white circle from SVG as we use CSS circle */
-    }
-  }
-}
-
-/* ─── Premium entry animation — blur + slide + fade ─── */
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ─── LCP-safe slide — no opacity:0, text is immediately visible for LCP ─── */
-@keyframes slideUp {
-  from {
-    transform: translateY(32px);
-  }
-  to {
-    transform: translateY(0);
-  }
+  svg { width: 55%; height: 55%; }
 }
 
 /* =====================================================
-   MOBILE OVERRIDES
-   Mobile-first: below 480px
+   GLASS CARDS ROW (pinned to bottom of hero)
+   Positioned via left/right (no transform-based centering)
+   so the entry animation can use transform freely.
+   ===================================================== */
+.heroCards {
+  width: 100%;
+  margin-top: clamp(-4rem, -8vh, -2rem);
+  padding-bottom: clamp(2.5rem, 5vh, 4rem);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.26fr) minmax(0, 1fr);
+  gap: var(--cards-gap);
+  animation: cardsEntry 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+}
+
+@keyframes cardsEntry {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.glassCard {
+  position: relative;
+  height: clamp(14rem, 11rem + 6vw, 17.1875rem); /* 17.1875rem = 275px at 16px base */
+  border-radius: 24px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-sizing: border-box;
+
+  /* radial gradient border using mask trick */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(136.36% 527.24% at 4.36% -3.09%,
+        #44FF40 0%,
+        rgba(255, 255, 255, 0) 100%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* subtle green ambient glow inside the card */
+  &::after {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(68, 255, 64, 0.32);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* Card 1 — wide */
+.cardWide {
+  padding: var(--card-pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(0.5rem, 0.35rem + 0.3vw, 0.875rem);
+
+  &::after {
+    left: -120px;
+    bottom: -120px;
+  }
+}
+
+/* Card 2 — grid */
+.cardGrid {
+  padding: 0;
+
+  &::after {
+    right: -120px;
+    top: -120px;
+  }
+}
+
+.cardTitle {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--card-title-size);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.cardTitleAccent {
+  color: #C3FFC2;
+  font-weight: 700;
+}
+
+.cardDescription {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  max-width: 520px;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  font-size: var(--card-desc-size);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cardCta {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 4px 4px 4px var(--cta-pad-x);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  font-size: var(--cta-size);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  transition: background 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.26);
+    transform: translateY(-1px);
+
+    .cardCtaArrow { transform: translateX(2px); }
+  }
+}
+
+.cardCtaWrapper {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+
+  &::after {
+    content: "Coming Soon";
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: rgba(0, 0, 0, 0.82);
+    color: #fff;
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+.cardCtaArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--card-cta-arrow);
+  height: var(--card-cta-arrow);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: inset 0 -4px 4px rgba(255, 255, 255, 0.25),
+              inset -2px 4px 4px rgba(255, 255, 255, 0.25);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+
+  svg { width: 38%; height: 38%; }
+}
+
+/* Capabilities grid (2 cols x 3 rows) */
+.capabilityGrid {
+  position: relative;
+  z-index: 2;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.capabilityCell {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--cap-pad-x);
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  font-size: var(--cap-size);
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.1px;
+  line-height: 1.25;
+  border-right: 1px solid rgba(197, 181, 169, 0.27);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  min-width: 0;
+  white-space: normal;
+
+  &:nth-child(2n) {
+    border-right: none;
+  }
+  &:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+/* ─── Animations ─── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { transform: translateY(32px); }
+  to   { transform: translateY(0); }
+}
+
+/* =====================================================
+   RESPONSIVE
    ===================================================== */
 
-@media (max-width: 480px) {
-  .hero {
-    --content-x: 1.25rem;
-    --content-bottom: 6rem;
-    /* slightly less bottom padding on small screens */
+/* Cards stack at ~992px so 1920×1080 @ 200% zoom (effective ~960px) shows them legibly */
+@media (max-width: 992px) {
+  .heroCards {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .glassCard { height: auto; min-height: unset; }
+
+  /* Merge cards into one unit — round only outer corners */
+  .cardWide { border-radius: 24px 24px 0 0; }
+  .cardGrid  { border-radius: 0 0 24px 24px; }
+}
+
+/* ─── Tablet + Mobile ─── */
+@media (max-width: 768px) {
+  /* heroInner owns the first-viewport height; heroContent grows to fill it */
+  .heroInner {
+    min-height: 100svh;
   }
 
   .heroContent {
-    padding-right: 1.25rem;
-    gap: 1.5rem;
-    /* Increased gap to reduce congestion */
-    padding-top: 6rem;
-    /* Moved down slightly */
-    padding-bottom: 5rem;
-  }
-
-  .heroTrustBadge {
-    gap: 0.55rem;
-    padding: 0.45rem 0.55rem 0.45rem 0.78rem;
-  }
-
-  .heroTrustLabel {
-    font-size: 0.64rem;
-  }
-
-  .heroTrustPlatforms {
-    gap: 0.4rem;
-  }
-
-  .heroTrustPlatform {
-    gap: 0.35rem;
-    padding: 0.22rem 0.5rem 0.22rem 0.25rem;
-  }
-
-  .heroTrustLogoWrap {
-    width: 24px;
-    height: 24px;
-  }
-
-  .heroTrustName {
-    font-size: 0.72rem;
-  }
-
-  .heroTrustDivider {
-    font-size: 0.82rem;
+    /* Grow to fill heroInner's 100svh so centering has real space to work with */
+    flex: 1 1 auto;
+    min-height: unset;
+    margin-left: 0;
+    margin-top: 0;
+    justify-content: center;
+    /* Top padding = announcement bar (~2.5rem) + nav (~4rem) + breathing room */
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+    gap: 1.1rem;
   }
 
   .heroHeading {
-    max-width: 100%;
-    font-size: clamp(2.3rem, 9vw, 2.6rem);
-    line-height: 1.25;
-    /* Increased line-height for better breathing room */
-    letter-spacing: -0.01em;
+    font-size: clamp(2rem, 6vw, 3rem);
+    line-height: 1.15;
   }
 
   .heroSubtext {
-    max-width: 90vw;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    /* Better readability */
-    color: rgba(255, 255, 255, 0.85);
+    max-width: 100%;
+    font-size: clamp(0.9rem, 2.4vw, 1.1rem);
+  }
+
+  .heroCards {
+    margin-top: 0;
+    padding-bottom: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .cardGrid {
+    display: none;
+  }
+
+  .heroContent {
+    padding-top: 7.5rem;
+    padding-bottom: 2.5rem;
+    gap: 1.25rem;
+  }
+
+  .heroCards {
+    margin-top: 0;
+  }
+
+  .heroHeading {
+    font-size: clamp(2rem, 8.5vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.4px;
+    margin-top: 0;
+  }
+
+  .heroSubtext {
+    font-size: clamp(0.875rem, 3.5vw, 1rem);
+    max-width: 100%;
+  }
+
+  /* Capabilities grid on mobile */
+  .capabilityGrid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: unset;
+    padding: 0;
+  }
+
+  .capabilityCell {
+    padding: 12px 14px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    border-right: 1px solid rgba(197, 181, 169, 0.27);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+    &:nth-child(2n) { border-right: none; }
+    &:nth-last-child(-n+2) { border-bottom: none; }
+  }
+
+  /* cardGrid hidden — cardWide is now the only card, restore all 4 corners */
+  .cardWide {
+    border-radius: 24px;
+    border-bottom: none;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 400px) {
+  .heroContent {
+    padding-top: clamp(4.5rem, 14vh, 6rem);
+    margin-left: 0;
+  }
+
+  .heroHeading {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
   }
 
   .heroCta {
-    width: auto;
-    max-width: 100%;
-    padding: 2px 2px 2px 20px;
-    gap: 0.75rem;
-    font-size: 0.8rem;
-
-    .ctaArrow {
-      width: 38px;
-      height: 38px;
-      margin-left: 8px;
-
-      svg {
-        width: 18px;
-        height: 18px;
-      }
-    }
-  }
-}
-
-/* ─── Tablet ─── */
-@media (min-width: 481px) and (max-width: 900px) {
-  .hero {
-    --content-x: clamp(1.5rem, 4vw, 3rem);
-    --content-bottom: clamp(7rem, 12vh, 9rem);
-  }
-
-  .heroHeading {
-    max-width: 75vw;
-  }
-
-  .heroSubtext {
-    max-width: 65vw;
-  }
-}
-
-/* ─── Large screens ─── */
-@media (min-width: 1400px) {
-  .hero {
-    --content-x: clamp(5rem, 6vw, 8rem);
+    font-size: 0.8125rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .heroTrustBadge,
   .heroHeading,
   .heroSubtext,
-  .heroCta {
+  .heroCta,
+  .heroCards {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
   }
-
-  .heroCta {
-    transition: none;
-  }
-}
-
-/* ─── Mobile landscape: clear fixed navbar ─── */
-@media (orientation: landscape) and (max-height: 600px) {
-  .hero {
-    align-items: flex-start;
-    min-height: 100dvh;
-  }
-
-  .heroContent {
-    padding-top: 5rem;
-    padding-bottom: 3.5rem;
-  }
-}
-
-/* ─── iOS Safari safe area support ─── */
-@supports (padding: env(safe-area-inset-bottom)) {
-  .heroContent {
-    padding-bottom: calc(var(--content-bottom) + env(safe-area-inset-bottom));
-  }
+  .heroCta { transition: none; }
 }

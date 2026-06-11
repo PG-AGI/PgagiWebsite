@@ -1,0 +1,156 @@
+/* ================================================
+   TRUSTED PARTNERS SECTION
+   Open grid layout — label → divider → logo
+   No card borders, no box shadows, no outlines
+   White background, grayscale logos
+   ================================================ */
+
+.section {
+  background: #ffffff;
+  padding: 90px 0 110px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 580px;
+
+  @media (max-width: 860px) {
+    padding: 64px 0 80px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 48px 0 60px;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 82vw;
+  margin: 0 auto;
+  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1.4rem;
+  }
+}
+
+/* ── Section heading — bold, left-aligned ── */
+.heading {
+  margin: 0 0 clamp(2.8rem, 5vw, 4.5rem);
+  font-size: clamp(1.25rem, 1.75vw, 1.6rem);
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-align: left;
+}
+
+/* ── Partners grid: 4 open columns, no column separators ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: clamp(1.5rem, 3vw, 2.5rem);
+  row-gap: 0; /* row spacing is handled by logoWrap padding-bottom */
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+  }
+}
+
+/* ─────────────────────────────────────────
+   Individual partner cell
+   NO border, NO background, NO box-shadow
+   Pure open layout
+───────────────────────────────────────── */
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  /* Vertical breathing room between rows:
+     top padding = space from previous row's logo to this label */
+  padding-top: clamp(2rem, 4vw, 3rem);
+
+  /* First row of cells gets no top padding — heading already has margin */
+  &:nth-child(-n + 4) {
+    padding-top: 0;
+  }
+
+  @media (max-width: 900px) {
+    &:nth-child(-n + 4) {
+      padding-top: clamp(2rem, 4vw, 3rem);
+    }
+    &:nth-child(-n + 2) {
+      padding-top: 0;
+    }
+  }
+}
+
+/* ── 1. Partner name label ── */
+.partnerName {
+  display: block;
+  font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+  font-weight: 400;
+  color: #9b9b9b;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+
+  /* Tight gap: label sits just above the divider */
+  margin-bottom: 0.55rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ── 2. Full-width horizontal divider — spans the full column ── */
+.divider {
+  display: block;
+  border: none;
+  border-top: 1px solid #d8d8d8;
+  width: 100%;
+  margin: 0;
+
+  /* Space between divider and logo — gives logo room to breathe */
+  margin-bottom: clamp(1.4rem, 2.8vw, 2.2rem);
+}
+
+/* ── 3. Logo wrapper — uniform height for all logos ── */
+.logoWrap {
+  width: 100%;
+  /* Fixed height so every logo sits on the same baseline */
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  /* Bottom space — largest gap, separates this logo from the next row's label */
+  padding-bottom: clamp(1.8rem, 3.5vw, 2.8rem);
+
+  @media (max-width: 480px) {
+    height: 44px;
+  }
+}
+
+/* ── 4. Logo image — uniform size, grayscale ── */
+.logo {
+  /* All logos rendered at identical height; width stays proportional */
+  width: auto !important;
+  height: 52px !important;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+
+  /* Greyscale with slight brightness pull to look less washed-out */
+  filter: grayscale(100%) brightness(0.75);
+
+  @media (max-width: 480px) {
+    height: 40px !important;
+  }
+}
+

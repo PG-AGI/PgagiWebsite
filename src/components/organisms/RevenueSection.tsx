@@ -38,33 +38,52 @@ const revenueCards = [
 
 const RevenueSection = () => {
   return (
-    <ScrollStack
-      id="revenue-system"
-      animated={true}
-      scrollMultiplier={1.8}
-      className={styles.outerSection}
-      header={
-        <>
+    <div className={styles.outerWrapper} id="revenue-section">
+      {/* ── Static intro: scrolls past normally ─────────────── */}
+      <div className={styles.introSection}>
+        {/* Narrow text block */}
+        <div className={styles.introCopy}>
           <h2 className={styles.title}>
-            {revenueSectionText.titlePrefix} <span>{revenueSectionText.titleHighlight}</span>
+            {revenueSectionText.titlePrefix}{" "}
+            <span>{revenueSectionText.titleHighlight}</span>
           </h2>
           <p className={styles.subtitle}>
             {revenueSectionText.subtitleLine1}
             <br />
             {revenueSectionText.subtitleLine2}
           </p>
-        </>
-      }
-    >
-      {revenueCards.map((card, i) => (
-        <ScrollStackItem
-          key={card.title}
-          className={`${styles.card} ${styles[`card${i + 1}`]}`}
-        >
-          <CardContent {...card} priority={i === 0} />
-        </ScrollStackItem>
-      ))}
-    </ScrollStack>
+        </div>
+
+        {/* Wide banner image */}
+        <div className={styles.headerImageWrapper}>
+          <Image
+            src="/assets/RevenueSection.gif"
+            alt="Revenue section banner"
+            width={1400}
+            height={700}
+            className={styles.headerImage}
+            priority
+            unoptimized
+          />
+        </div>
+      </div>
+
+      {/* ── Animated card stack starts after intro ───────────── */}
+      <ScrollStack
+        id="revenue-system"
+        animated={true}
+        scrollMultiplier={1.8}
+      >
+        {revenueCards.map((card, i) => (
+          <ScrollStackItem
+            key={card.title}
+            className={`${styles.card} ${styles[`card${i + 1}`]}`}
+          >
+            <CardContent {...card} priority={i === 0} />
+          </ScrollStackItem>
+        ))}
+      </ScrollStack>
+    </div>
   );
 };
 
@@ -88,17 +107,6 @@ const CardContent = ({
   priority?: boolean;
 }) => (
   <>
-    <div className={styles.copyBlock}>
-      <h3 className={styles.cardTitle}>{title}</h3>
-      <ul className={styles.pointList}>
-        {points.map((point) => (
-          <li key={point}>{point}</li>
-        ))}
-      </ul>
-      <p className={styles.outcome}>
-        <span>{revenueSectionText.outcomeLabel}</span> {outcome}
-      </p>
-    </div>
     <div className={styles.media}>
       <div className={styles.imageInner}>
         <Image
@@ -110,6 +118,17 @@ const CardContent = ({
           priority={priority}
         />
       </div>
+    </div>
+    <div className={styles.copyBlock}>
+      <h3 className={styles.cardTitle}>{title}</h3>
+      <ul className={styles.pointList}>
+        {points.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
+      <p className={styles.outcome}>
+        <span>{revenueSectionText.outcomeLabel}</span> {outcome}
+      </p>
     </div>
   </>
 );

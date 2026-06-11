@@ -25,11 +25,13 @@
   ],
   "formulaLabel": "AI-generated formula",
   "leftLabelOverline": "FOR FOUNDERS / AI PRODUCT BUILDERS",
-  "leftMainTitlePrefix": "Build a custom AI product —",
+  "leftMainTitlePrefix": "Build a custom AI product",
   "leftMainTitleHighlight": "from idea to scale",
-  "leftDescription": "Design, develop, and launch production-ready AI products with a user-first approach and scalable architecture.",
+  "leftDescription": "We design, develop, and launch production-ready AI products with a user-first approach and scalable architecture.",
   "rightLabelOverline": "FOR BUSINESSES & ENTERPRISES",
   "rightMainTitle": "Implement AI into your business operations",
   "rightDescription": "Automate workflows, reduce costs, and improve decision-making by integrating AI into your existing systems — without disrupting operations.",
-  "ctaLabel": "Let's build together"
+  "ctaLabel": "Let's build together",
+  "foundersTabLabel": "For founders / AI product builders",
+  "enterprisesTabLabel": "For Businesses & Enterprises"
 }

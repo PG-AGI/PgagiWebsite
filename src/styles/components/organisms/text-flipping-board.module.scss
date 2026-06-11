@@ -1,0 +1,363 @@
+/* =====================================================
+   ANNOUNCEMENT BAR — Split-Flap text flipping
+   ===================================================== */
+
+.bar {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(to right, #050a1f 0%, #0b1838 50%, #050a1f 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+}
+
+.topHairline {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(110, 231, 183, 0.45),
+    transparent
+  );
+}
+
+.bottomHairline {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+.glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    55% 95% at 50% 0%,
+    rgba(68, 255, 140, 0.16),
+    transparent 70%
+  );
+}
+
+.row {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  height: 9vh;
+  max-width: 1440px;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 32px;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter",
+    system-ui, sans-serif;
+
+  @media (max-width: 850px) {
+    height: 36px;
+    gap: 12px;
+    padding: 0 14px;
+  }
+}
+
+/* ─── LIVE indicator ─── */
+.live {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.dotWrap {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+.dotPing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #4ade80;
+  opacity: 0.75;
+  animation: liveBarPing 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.dotCore {
+  position: relative;
+  display: flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.85);
+}
+
+@keyframes liveBarPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.liveLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #6ee7b7;
+
+  @media (max-width: 850px) {
+    font-size: 10px;
+  }
+}
+
+/* ─── Dividers & labels ─── */
+.divider {
+  display: block;
+  height: 14px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.servingLabel {
+  display: inline;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.countGroup {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.activeLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  white-space: nowrap;
+
+  @media (max-width: 850px) {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+}
+
+.activeLabelLong {
+  display: inline;
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.activeLabelShort {
+  display: none;
+  @media (max-width: 640px) {
+    display: inline;
+  }
+}
+
+/* ─── Text strip + flap cells ─── */
+.strip {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.cellWrap {
+  width: 14px;
+
+  @media (max-width: 1024px) {
+    width: 13px;
+  }
+  @media (max-width: 768px) {
+    width: 11px;
+  }
+  @media (max-width: 480px) {
+    width: 10px;
+  }
+}
+
+.cell {
+  display: flex;
+  aspect-ratio: 1 / 2;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.stage {
+  position: relative;
+  flex: 1;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.staticHalf {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: calc(50% - 0.5px);
+  overflow: hidden;
+}
+
+.staticTop {
+  top: 0;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  background: #262626;
+}
+
+.staticBottom {
+  bottom: 0;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background: #171717;
+}
+
+/* Accent backgrounds (set inline via style for dynamic accent color). */
+
+.flapText {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: clamp(8px, 0.95vw, 13px);
+  line-height: 1;
+  height: 200%;
+  color: #f5f5f5;
+}
+
+.flapTextTop {
+  top: 0;
+}
+
+.flapTextBottom {
+  bottom: 0;
+}
+
+.flippingTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: calc(50% - 0.5px);
+  transform-origin: bottom;
+  overflow: hidden;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  background: #262626;
+}
+
+.flippingBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: calc(50% - 0.5px);
+  transform-origin: top;
+  overflow: hidden;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  background: #171717;
+}
+
+.shadowDrop {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+}
+
+.shadowRise {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.staticShine {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6) 0%,
+    transparent 60%
+  );
+}
+
+.splitLine {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-0.5px);
+}

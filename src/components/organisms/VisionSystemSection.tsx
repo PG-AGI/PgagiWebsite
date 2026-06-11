@@ -90,30 +90,31 @@ const CardContent = ({
 
   return (
     <>
+      <div className={styles.media}>
+        <div className={styles.imageInner}>
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={520}
+            height={350}
+            sizes="(max-width: 768px) 88vw, 420px"
+            className={styles.mediaImage}
+            onLoad={handleImageLoad}
+          />
+        </div>
+      </div>
+
       <div className={styles.copyBlock}>
         <h3 className={styles.cardTitle}>{title}</h3>
-      <ul className={styles.pointList}>
-        {points.map((point) => (
-          <li key={point}>{point}</li>
-        ))}
-      </ul>
-      <p className={styles.outcome}>
-        <span>{visionSystemText.outcomeLabel}</span> {outcome}
-      </p>
-    </div>
-    <div className={styles.media}>
-      <div className={styles.imageInner}>
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={420}
-          height={250}
-          sizes="(max-width: 768px) 88vw, 420px"
-          className={styles.mediaImage}
-          onLoad={handleImageLoad}
-        />
+        <ul className={styles.pointList}>
+          {points.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
+        <p className={styles.outcome}>
+          <span>{visionSystemText.outcomeLabel}</span> {outcome}
+        </p>
       </div>
-    </div>
     </>
   );
 };

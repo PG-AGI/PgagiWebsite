@@ -2,9 +2,9 @@
   "heroAriaLabel": "PG-AGI Hero — Building AI Systems that Scale to Millions",
   "verifiedByAriaLabel": "Verified by Clutch and Upwork",
   "verifiedByLabel": "Verified by",
-  "headingLine1": "Building AI",
-  "headingLine2Prefix": "Systems that",
-  "headingLine3": "Scales to Millions.",
+  "headingLine1": "Building AI Systems",
+  "headingLine2Prefix": "that Scales to Millions.",
+  "headingLine3": "",
   "subtext": "Production-ready AI systems that automate operations and power better decisions.",
   "ctaAriaLabel": "Let's build together — Book a call",
   "ctaLabel": "Let's build together",
@@ -17,5 +17,20 @@
       "name": "Upwork",
       "openProfileAriaLabel": "Open Upwork profile in a new tab"
     }
+  ],
+  "verticalCard": {
+    "titlePrefix": "AI x IoT",
+    "titleSuffix": "Engineering.",
+    "description": "We embed intelligence into physical devices — edge inference, sensor fusion, and real-time decision systems built for the real world. No cloud dependency. No round-trips. Just hardware that thinks",
+    "ctaLabel": "Explore this vertical",
+    "ctaAriaLabel": "Explore the AI x IoT Engineering vertical"
+  },
+  "capabilities": [
+    "Edge AI Inference",
+    "Embedded Systems",
+    "Sensor Fusion",
+    "Real-Time Decision",
+    "Firmware + AI Stack",
+    "Connected Platforms"
   ]
 }

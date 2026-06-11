@@ -40,6 +40,7 @@ export default function TransitionLink({
 
     if (href === window.location.pathname) {
       e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
