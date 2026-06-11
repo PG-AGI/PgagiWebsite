@@ -2,7 +2,7 @@ let gsapLoaded = false;
 let scrollTriggerLoaded = false;
 
 // Store the result so subsequent calls get the same instance
-let gsapInstance: Awaited<ReturnType<typeof import('gsap')>>['default'] | null = null;
+let gsapInstance: any = null;
 
 export const loadGsap = async () => {
   if (gsapLoaded && gsapInstance) return gsapInstance;
