@@ -226,6 +226,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     gender: "male",
     platform: "clutch",
     memberImage: "/assets/Customers/Member11.png",
+    caseStudyUrl: "/case-study/sheltas-health-dataset-annotation-platform",
     quote:
       "PGAGI PRIVATE LIMITED has been an excellent, professional team — they deliver project milestones on time and with excellent work quality. Moreover, the team is technically efficient, very collaborative, and willing to course-correct if needed.",
     projectName: "Sheltas Healthcare AI System",
