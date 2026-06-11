@@ -76,10 +76,12 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     projectName: "MULTI-AGENT AI CRYPTO TRADING SYSTEM",
   },
   {
-    name: "",
-    company: "Soulful Humans ",
+    name: "Lauren Fernandez",
+    company: "Soulful Humans",
     country: "USA",
+    gender: "female",
     platform: "upwork",
+    memberImage: "/assets/Customers/Member8.png",
     quote:
       "I highly recommend PGAGI. They are highly communicative, talented, and a great team. I will work with them again!",
     projectName: "AI System to Convert Performance Data into Company",
