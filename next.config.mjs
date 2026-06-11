@@ -49,7 +49,7 @@ const nextConfig = {
     includePaths: ['./src'],
   },
   experimental: {
-    optimizeCss: true,
+    //optimizeCss: true,
     // gsap removed — it's dynamically imported in useEffect, so static tree-shaking has no effect
     optimizePackageImports: [
       '@radix-ui/react-hover-card',
