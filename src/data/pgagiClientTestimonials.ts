@@ -120,7 +120,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     country: "Italy",
     gender: "female",
     platform: "clutch",
-    memberImage: "/assets/Customers/Member9.png",
+    memberImage: "/assets/Customers/Member10.png",
     quote:
       "Great service ,i suggest to collaborate with Vivek and his team ,they are very prepared for everything ,even though you are ignorant like me .",
     projectName: "SMUBOO AI AUTOMATION AGENT",
