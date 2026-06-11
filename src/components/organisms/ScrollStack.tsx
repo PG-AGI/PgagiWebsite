@@ -8,8 +8,7 @@ import React, {
   type ReactNode,
   type ReactElement,
 } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { loadScrollTrigger } from "@/lib/gsapLoader";
 import { useSmoothScroll } from "@/contexts/SmoothScrollContext";
 import styles from "@/styles/components/organisms/ScrollStack.module.scss";
 import {
@@ -19,9 +18,7 @@ import {
   REDUCED_MOTION_QUERY,
 } from "@/lib/motion";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+
 
 type ScrollStackItemProps = {
   children: ReactNode;
@@ -74,198 +71,195 @@ const ScrollStack = ({
   );
   const count = items.length;
 
-  useEffect(() => {
-    if (!animated) return;
+ useEffect(() => {
+  if (!animated) return;
 
+  const section  = sectionRef.current;
+  const viewport = viewportRef.current;
+  const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
+
+  if (!section || !viewport || cards.length < 2) return;
+
+  let cleanup: (() => void) | undefined;
+  let cancelled = false;
+
+  loadScrollTrigger().then((result) => {
+    // Component may have unmounted while GSAP was loading
+    if (cancelled || !result) return;
+    const { gsap } = result;
+    cleanup = initializeGSAP(gsap);
+  });
+
+  return () => {
+    cancelled = true;
+    cleanup?.();
+  };
+
+  function initializeGSAP(gsap: import("gsap").gsap) {
     const section  = sectionRef.current;
     const viewport = viewportRef.current;
     const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
 
     if (!section || !viewport || cards.length < 2) return;
 
-    // FIX: return the cleanup so React actually calls it on unmount / dep change.
-    return initializeGSAP();
+    const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
+    const isMobileViewport     = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+    const useMobileFlow        = mobileMode === "flow" && isMobileViewport;
 
-    function initializeGSAP() {
-      const section  = sectionRef.current;
-      const viewport = viewportRef.current;
-      const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
+    const getVH = () => Math.max(window.innerHeight, 1);
 
-      if (!section || !viewport || cards.length < 2) return;
-
-      const prefersReducedMotion = window.matchMedia(REDUCED_MOTION_QUERY).matches;
-      const isMobileViewport     = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
-      const useMobileFlow        = mobileMode === "flow" && isMobileViewport;
-
-      const getVH = () => Math.max(window.innerHeight, 1);
-
-      // ── Mobile: simple scroll-in fade per card ────────────────────
-      if (useMobileFlow || prefersReducedMotion) {
-        if (headerRef.current) gsap.set(headerRef.current, { opacity: 1 });
-        const ctx = gsap.context(() => {
-          cards.forEach((card, i) => {
-            gsap.fromTo(
-              card,
-              { y: 20, opacity: 0 },
-              {
-                y: 0, opacity: 1,
-                duration: MOTION_DURATION.normal,
-                ease: GSAP_EASE.premiumOut,
-                delay: i * 0.08,
-                scrollTrigger: { trigger: card, start: "top 88%", once: true },
-              },
-            );
-          });
+    // ── Mobile: simple scroll-in fade per card ────────────────────
+    if (useMobileFlow || prefersReducedMotion) {
+      if (headerRef.current) gsap.set(headerRef.current, { opacity: 1 });
+      const ctx = gsap.context(() => {
+        cards.forEach((card, i) => {
+          gsap.fromTo(
+            card,
+            { y: 20, opacity: 0 },
+            {
+              y: 0, opacity: 1,
+              duration: MOTION_DURATION.normal,
+              ease: GSAP_EASE.premiumOut,
+              delay: i * 0.08,
+              scrollTrigger: { trigger: card, start: "top 88%", once: true },
+            },
+          );
         });
-        return () => ctx.revert();
+      });
+      return () => ctx.revert();
+    }
+
+    // ── Stacking animation ────────────────────────────────────────
+    const steps = count - 1;
+
+    if (headerRef.current) gsap.set(headerRef.current, { opacity: 0, y: 16 });
+    gsap.set(cards[0], { opacity: 0, y: 32, force3D: true });
+    for (let i = 1; i < cards.length; i++) {
+      gsap.set(cards[i], { y: getVH(), force3D: true });
+    }
+
+    let headerShown = false;
+    const landingOffset = isMobileViewport ? 0 : offset;
+
+    const applyProgress = (p: number) => {
+      const clamped = Math.max(0, Math.min(1, p));
+      const scrollP = Math.max(0, clamped - preRoll);
+
+      const segLen     = 1 / steps;
+      const getSegment = (i: number) => {
+        const shift = cardOverlap * segLen * (i - 1);
+        return [
+          Math.max(0, (i - 1) * segLen - shift),
+          Math.min(1, i * segLen - shift),
+        ] as const;
+      };
+      const easeSeg = (r: number) =>
+        lenis
+          ? r < 0.5 ? 2 * r * r : 1 - (-2 * r + 2) ** 2 / 2
+          : r;
+
+      for (let i = 1; i < count; i++) {
+        const [segStart, segEnd] = getSegment(i);
+        const rawSeg = Math.max(0, Math.min(1, (scrollP - segStart) / (segEnd - segStart)));
+        const seg    = easeSeg(rawSeg);
+        const vh     = getVH();
+        gsap.set(cards[i], { y: vh * (1 - seg) + landingOffset * i * seg, force3D: true });
       }
 
-      // ── Stacking animation ────────────────────────────────────────
-      const steps = count - 1;
-
-      // Initial state
-      if (headerRef.current) gsap.set(headerRef.current, { opacity: 0, y: 16 });
-      gsap.set(cards[0], { opacity: 0, y: 32, force3D: true });
-      for (let i = 1; i < cards.length; i++) {
-        gsap.set(cards[i], { y: getVH(), force3D: true });
-      }
-
-      let headerShown = false;
-      const landingOffset = isMobileViewport ? 0 : offset;
-
-      /** Drive card positions from 0→1 progress across the pinned zone. */
-      const applyProgress = (p: number) => {
-        const clamped = Math.max(0, Math.min(1, p));
-        const scrollP = Math.max(0, clamped - preRoll);
-
-        const segLen     = 1 / steps;
-        const getSegment = (i: number) => {
-          const shift = cardOverlap * segLen * (i - 1);
-          return [
-            Math.max(0, (i - 1) * segLen - shift),
-            Math.min(1, i * segLen - shift),
-          ] as const;
-        };
-        const easeSeg = (r: number) =>
-          lenis
-            ? r < 0.5 ? 2 * r * r : 1 - (-2 * r + 2) ** 2 / 2
-            : r;
-
-        for (let i = 1; i < count; i++) {
+      for (let j = 0; j < count - 1; j++) {
+        let totalScaleDown = 0;
+        for (let i = j + 1; i < count; i++) {
           const [segStart, segEnd] = getSegment(i);
           const rawSeg = Math.max(0, Math.min(1, (scrollP - segStart) / (segEnd - segStart)));
-          const seg    = easeSeg(rawSeg);
-          const vh     = getVH();
-          gsap.set(cards[i], { y: vh * (1 - seg) + landingOffset * i * seg, force3D: true });
+          totalScaleDown += easeSeg(rawSeg) * 0.03;
         }
-
-        for (let j = 0; j < count - 1; j++) {
-          let totalScaleDown = 0;
-          for (let i = j + 1; i < count; i++) {
-            const [segStart, segEnd] = getSegment(i);
-            const rawSeg = Math.max(0, Math.min(1, (scrollP - segStart) / (segEnd - segStart)));
-            totalScaleDown += easeSeg(rawSeg) * 0.03;
-          }
-          gsap.set(cards[j], { scale: Math.max(0.88, 1 - totalScaleDown), force3D: true });
-        }
-      };
-
-      // ── sectionTop cache ─────────────────────────────────────────
-      // Cached to avoid BCR reflow in the hot scroll path, but MUST stay
-      // accurate when content above the section changes height (e.g. images
-      // loading, accordion opens, etc.).
-      let cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
-
-      const refreshSectionTop = () => {
-        cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
-      };
-
-      // Resize (viewport changes)
-      window.addEventListener("resize", refreshSectionTop, { passive: true });
-
-      // FIX: ResizeObserver on the section's parent catches any layout shift
-      // caused by images or other content loading above this section.
-      let ro: ResizeObserver | null = null;
-      if (typeof ResizeObserver !== "undefined" && section.parentElement) {
-        ro = new ResizeObserver(refreshSectionTop);
-        ro.observe(section.parentElement);
+        gsap.set(cards[j], { scale: Math.max(0.88, 1 - totalScaleDown), force3D: true });
       }
+    };
 
-      // FIX: Also refresh once the whole page has fully loaded (images etc.)
-      const onWindowLoad = () => refreshSectionTop();
-      window.addEventListener("load", onWindowLoad);
+    let cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
 
-      // FIX: Belt-and-suspenders — refresh at 200 ms and 800 ms after mount.
-      // Covers cases where images are already cached (load fires before we
-      // listen) but the layout still settles on the next paint.
-      const t1 = setTimeout(refreshSectionTop, 200);
-      const t2 = setTimeout(refreshSectionTop, 800);
+    const refreshSectionTop = () => {
+      cachedSectionTop = section.getBoundingClientRect().top + window.scrollY;
+    };
 
-      // ── Scroll handler ───────────────────────────────────────────
-      const onScroll = ({ scroll }: { scroll: number }) => {
-        const sectionTop = cachedSectionTop;
-        const vh         = getVH();
+    window.addEventListener("resize", refreshSectionTop, { passive: true });
 
-        if (!headerShown && scroll + vh * 0.85 >= sectionTop) {
-          headerShown = true;
-          if (headerRef.current) {
-            gsap.to(headerRef.current, {
-              opacity: 1, y: 0,
-              duration: MOTION_DURATION.fast,
-              ease: GSAP_EASE.premiumOut,
-            });
-          }
-          gsap.to(cards[0], {
-            y: 0, opacity: 1,
-            duration: MOTION_DURATION.normal,
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined" && section.parentElement) {
+      ro = new ResizeObserver(refreshSectionTop);
+      ro.observe(section.parentElement);
+    }
+
+    const onWindowLoad = () => refreshSectionTop();
+    window.addEventListener("load", onWindowLoad);
+
+    const t1 = setTimeout(refreshSectionTop, 200);
+    const t2 = setTimeout(refreshSectionTop, 800);
+
+    const onScroll = ({ scroll }: { scroll: number }) => {
+      const sectionTop = cachedSectionTop;
+      const vh         = getVH();
+
+      if (!headerShown && scroll + vh * 0.85 >= sectionTop) {
+        headerShown = true;
+        if (headerRef.current) {
+          gsap.to(headerRef.current, {
+            opacity: 1, y: 0,
+            duration: MOTION_DURATION.fast,
             ease: GSAP_EASE.premiumOut,
           });
         }
-
-        const rawProgress = (scroll - sectionTop) / (steps * vh * scrollMultiplier);
-        applyProgress(Math.max(0, Math.min(1, rawProgress)));
-      };
-
-      let rafId: number;
-      let lastScrollY = -1;
-      let rafRunning  = true;
-
-      const nativeTick = () => {
-        if (!rafRunning) return;
-        const scrollY = window.scrollY;
-        if (scrollY !== lastScrollY) {
-          lastScrollY = scrollY;
-          onScroll({ scroll: scrollY });
-        }
-        rafId = requestAnimationFrame(nativeTick);
-      };
-
-      if (lenis) {
-        lenis.on("scroll", onScroll);
-      } else {
-        onScroll({ scroll: window.scrollY });
-        rafId = requestAnimationFrame(nativeTick);
+        gsap.to(cards[0], {
+          y: 0, opacity: 1,
+          duration: MOTION_DURATION.normal,
+          ease: GSAP_EASE.premiumOut,
+        });
       }
 
-      // ── Cleanup ──────────────────────────────────────────────────
-      return () => {
-        window.removeEventListener("resize", refreshSectionTop);
-        window.removeEventListener("load", onWindowLoad);
-        ro?.disconnect();
-        clearTimeout(t1);
-        clearTimeout(t2);
-        if (lenis) {
-          lenis.off("scroll", onScroll);
-        } else {
-          rafRunning = false;
-          cancelAnimationFrame(rafId);
-        }
-        gsap.set([...cards, headerRef.current].filter(Boolean), {
-          clearProps: "transform,opacity,y,scale",
-        });
-      };
+      const rawProgress = (scroll - sectionTop) / (steps * vh * scrollMultiplier);
+      applyProgress(Math.max(0, Math.min(1, rawProgress)));
+    };
+
+    let rafId: number;
+    let lastScrollY = -1;
+    let rafRunning  = true;
+
+    const nativeTick = () => {
+      if (!rafRunning) return;
+      const scrollY = window.scrollY;
+      if (scrollY !== lastScrollY) {
+        lastScrollY = scrollY;
+        onScroll({ scroll: scrollY });
+      }
+      rafId = requestAnimationFrame(nativeTick);
+    };
+
+    if (lenis) {
+      lenis.on("scroll", onScroll);
+    } else {
+      onScroll({ scroll: window.scrollY });
+      rafId = requestAnimationFrame(nativeTick);
     }
-  }, [animated, cardOverlap, count, lenis, mobileMode, offset, preRoll, scrollMultiplier]);
+
+    return () => {
+      window.removeEventListener("resize", refreshSectionTop);
+      window.removeEventListener("load", onWindowLoad);
+      ro?.disconnect();
+      clearTimeout(t1);
+      clearTimeout(t2);
+      if (lenis) {
+        lenis.off("scroll", onScroll);
+      } else {
+        rafRunning = false;
+        cancelAnimationFrame(rafId);
+      }
+      gsap.set([...cards, headerRef.current].filter(Boolean), {
+        clearProps: "transform,opacity,y,scale",
+      });
+    };
+  }
+}, [animated, cardOverlap, count, lenis, mobileMode, offset, preRoll, scrollMultiplier]);
 
   const layoutClass    = animated ? styles.animated : styles.static;
   const mobileFlowClass = mobileMode === "flow" ? styles.mobileFlow : "";
