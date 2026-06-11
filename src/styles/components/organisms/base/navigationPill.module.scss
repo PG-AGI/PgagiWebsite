@@ -550,3 +550,22 @@
     border-bottom: 4px solid rgba(0, 0, 0, 0.9);
   }
 }
+// Desktop links — hidden on mobile
+.desktopLinks {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// Mobile-only elements — hidden on desktop
+.mobileOnly {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}

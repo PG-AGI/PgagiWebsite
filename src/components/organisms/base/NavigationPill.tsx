@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import styles from "@/styles/components/organisms/base/navigationPill.module.scss";
-import Link from "next/link";
 import TransitionLink from "@/components/atoms/TransitionLink";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
@@ -15,55 +14,46 @@ export default function NavigationPill() {
   const [navbarVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuSection, setMobileMenuSection] = useState<null | "main">(null);
   const [showGlassEffect, setShowGlassEffect] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
 
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+  // ─── Glass effect on scroll ─────────────────────────────────────
   useEffect(() => {
     const check = () => {
-      const scrolled = (window.pageYOffset || document.documentElement.scrollTop) > 10;
-      setShowGlassEffect(scrolled);
+      setShowGlassEffect(
+        (window.pageYOffset || document.documentElement.scrollTop) > 10
+      );
     };
     check();
     window.addEventListener("scroll", check, { passive: true });
     return () => window.removeEventListener("scroll", check);
   }, []);
 
+  // ─── Footer overlap — IntersectionObserver replaces rAF loop ────
+  // FIXED: Removed requestAnimationFrame loop that called
+  // getBoundingClientRect() 60x/second forcing layout recalculation
+  // every frame. IntersectionObserver fires only on threshold crossing.
   useEffect(() => {
-    let rafId: number;
-    let prev = false;
-    const loop = () => {
-      const footer = document.querySelector("footer");
-      if (footer) {
-        const rect = footer.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const visiblePx = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-        const next = visiblePx / vh >= 0.6;
-        if (next !== prev) { prev = next; setIsOverFooter(next); }
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsOverFooter(entry.intersectionRatio >= 0.6);
+      },
+      {
+        threshold: [0, 0.6, 1.0],
       }
-      rafId = requestAnimationFrame(loop);
-    };
-    rafId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(rafId);
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
   }, []);
 
-  const handleCloseModal = () => setIsModalOpen(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    if (!isMenuOpen) setMobileMenuSection("main");
-  };
-
+  // ─── Mobile menu body scroll lock ───────────────────────────────
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -81,6 +71,15 @@ export default function NavigationPill() {
     };
   }, [isMenuOpen]);
 
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => {
+      if (!prev) setMobileMenuSection("main");
+      return !prev;
+    });
+  };
+
   return (
     <nav
       className={clsx(
@@ -96,6 +95,7 @@ export default function NavigationPill() {
           isMenuOpen && styles.open
         )}
       >
+        {/* ── Logo ── */}
         <TransitionLink className={styles.logo} href={ROUTES.HOME}>
           <Image
             src="/landing/PGAGI-logo.png"
@@ -104,67 +104,86 @@ export default function NavigationPill() {
             height={60}
             sizes="60px"
             quality={80}
+            priority
+            fetchPriority="high"
           />
           <p>PG-AGI</p>
         </TransitionLink>
 
         <div className={styles.links}>
-          {isMobile ? (
-            <>
-              {mobileMenuSection === "main" && (
-                <div className={styles.mastermenu}>
-                  <TransitionLink href={ROUTES.HOME} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Home
-                  </TransitionLink>
-                  <TransitionLink href={ROUTES.ABOUT_US} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    About Us
-                  </TransitionLink>
-                  <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Case studies
-                  </TransitionLink>
-                  <TransitionLink href={ROUTES.EXPERTISE} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Expertise
-                  </TransitionLink>
-                  {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Blogs
-                  </TransitionLink> */}
-                  <TransitionLink href={ROUTES.CAREER} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Careers
-                  </TransitionLink>
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              <TransitionLink href={ROUTES.HOME} className={styles.link}>
+          {/* ── Desktop links — hidden on mobile via CSS ── */}
+          {/* FIXED: Removed isMobile useState+useEffect+resize listener.
+              CSS handles visibility — no hydration mismatch. */}
+          <div className={styles.desktopLinks}>
+            <TransitionLink href={ROUTES.HOME} className={styles.link}>
+              Home
+            </TransitionLink>
+            <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
+              About Us
+            </TransitionLink>
+            <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
+              Case studies
+            </TransitionLink>
+            <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
+              Expertise
+            </TransitionLink>
+            <TransitionLink href={ROUTES.CAREER} className={styles.link}>
+              Careers
+            </TransitionLink>
+          </div>
+
+          {/* ── Mobile menu — rendered only when open ── */}
+          {isMenuOpen && (
+            <div className={styles.mastermenu}>
+              <TransitionLink
+                href={ROUTES.HOME}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Home
               </TransitionLink>
-              <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
+              <TransitionLink
+                href={ROUTES.ABOUT_US}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 About Us
               </TransitionLink>
-              <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
+              <TransitionLink
+                href={ROUTES.PROJECTS}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Case studies
               </TransitionLink>
-              <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
+              <TransitionLink
+                href={ROUTES.EXPERTISE}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Expertise
               </TransitionLink>
-              {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.link}>
-                Blogs
-              </TransitionLink> */}
-              <TransitionLink href={ROUTES.CAREER} className={styles.link}>
+              <TransitionLink
+                href={ROUTES.CAREER}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Careers
               </TransitionLink>
-            </>
+            </div>
           )}
         </div>
 
-        {isMobile && (
-          <button className={styles.mobileHeaderButton} onClick={() => window.open(CONTACT_URL, "_blank")}>
-            Get in touch
-            <ArrowRight size={14} />
-          </button>
-        )}
+        {/* ── Mobile CTA — hidden on desktop via CSS ── */}
+        <button
+          className={clsx(styles.mobileHeaderButton, styles.mobileOnly)}
+          onClick={() => window.open(CONTACT_URL, "_blank")}
+        >
+          Get in touch
+          <ArrowRight size={14} />
+        </button>
 
+        {/* ── Hamburger ── */}
         <div
           className={clsx(styles.hamburger, isMenuOpen && styles.open)}
           onClick={toggleMenu}
@@ -174,6 +193,7 @@ export default function NavigationPill() {
           <span></span>
         </div>
       </div>
+
       {isModalOpen && <ContactUsForm onClose={handleCloseModal} />}
     </nav>
   );
