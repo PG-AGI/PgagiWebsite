@@ -82,12 +82,12 @@ const ScrollStack = ({
 
   let cleanup: (() => void) | undefined;
   let cancelled = false;
-
+  const currentLenis = lenis;
   loadScrollTrigger().then((result) => {
     // Component may have unmounted while GSAP was loading
     if (cancelled || !result) return;
     const { gsap } = result;
-    cleanup = initializeGSAP(gsap);
+    cleanup = initializeGSAP(gsap, currentLenis);
   });
 
   return () => {
@@ -95,7 +95,7 @@ const ScrollStack = ({
     cleanup?.();
   };
 
-  function initializeGSAP(gsap: typeof import("gsap").default) {
+  function initializeGSAP(gsap: typeof import("gsap").default,currentLenis: typeof lenis) {
     const section  = sectionRef.current;
     const viewport = viewportRef.current;
     const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
@@ -154,7 +154,7 @@ const ScrollStack = ({
         ] as const;
       };
       const easeSeg = (r: number) =>
-        lenis
+        currentLenis
           ? r < 0.5 ? 2 * r * r : 1 - (-2 * r + 2) ** 2 / 2
           : r;
 
@@ -235,8 +235,8 @@ const ScrollStack = ({
       rafId = requestAnimationFrame(nativeTick);
     };
 
-    if (lenis) {
-      lenis.on("scroll", onScroll);
+    if (currentLenis) {
+      currentLenis.on("scroll", onScroll);
     } else {
       onScroll({ scroll: window.scrollY });
       rafId = requestAnimationFrame(nativeTick);
@@ -248,8 +248,8 @@ const ScrollStack = ({
       ro?.disconnect();
       clearTimeout(t1);
       clearTimeout(t2);
-      if (lenis) {
-        lenis.off("scroll", onScroll);
+      if (currentLenis) {
+        currentLenis.off("scroll", onScroll);
       } else {
         rafRunning = false;
         cancelAnimationFrame(rafId);
