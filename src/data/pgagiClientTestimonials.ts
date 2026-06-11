@@ -219,4 +219,15 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
       "Professional, communicative, and technically brilliant. They are our go-to partner for any AI-driven development.",
     projectName: "Client Review",
   },
+  {
+    name: "Odunayo Talabi",
+    company: "Sheltas Healthcare",
+    country: "",
+    gender: "male",
+    platform: "clutch",
+    memberImage: "/assets/Customers/Member11.png",
+    quote:
+      "PGAGI PRIVATE LIMITED has been an excellent, professional team — they deliver project milestones on time and with excellent work quality. Moreover, the team is technically efficient, very collaborative, and willing to course-correct if needed.",
+    projectName: "Sheltas Healthcare AI System",
+  },
 ];
