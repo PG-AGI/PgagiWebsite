@@ -7,12 +7,15 @@ jobs:
   build-docker-compose:
     runs-on: self-hosted
     steps:
-      # Step 1: Checkout the code from the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-      # Step 2: Build the services defined in docker-compose.yml
+
       - name: Build Docker Compose Services
+        env:
+          DOCKER_BUILDKIT: 1
         run: docker compose -p pgagi-website-pre-pod -f docker-compose-prepod.yml up --build -d
-      # Step 2: Cleaning up docker services
-      - name: Build Docker Compose Services
-        run: docker system prune -f
+
+      - name: Cleanup (preserve build cache)
+        run: |
+          docker container prune -f
+          docker image prune -f --filter "until=48h"
