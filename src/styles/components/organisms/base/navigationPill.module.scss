@@ -109,7 +109,8 @@
       white-space: nowrap;
       pointer-events: auto;
 
-      > a {
+      > a,
+      .desktopLinks a {
         font-family: 'Plus Jakarta Sans', 'Alexandria', sans-serif;
         font-size: 0.95rem;
         font-weight: 500;
@@ -291,21 +292,21 @@
 @media (max-width: 1200px) {
   .navigation .nav {
     padding: 10px 28px;
-    .links { gap: 24px; > a { font-size: 0.9rem; } }
+    .links { gap: 24px; > a, .desktopLinks a { font-size: 0.9rem; } }
   }
 }
 
 @media (max-width: 1000px) {
   .navigation .nav {
     padding: 9px 22px;
-    .links { gap: 20px; > a { font-size: 0.85rem; } }
+    .links { gap: 20px; > a, .desktopLinks a { font-size: 0.85rem; } }
   }
 }
 
 @media (max-width: 900px) {
   .navigation .nav {
     padding: 8px 18px;
-    .links { gap: 16px; > a { font-size: 0.82rem; } }
+    .links { gap: 16px; > a, .desktopLinks a { font-size: 0.82rem; } }
   }
 }
 
@@ -554,7 +555,7 @@
 .desktopLinks {
   display: flex;
   align-items: center;
-  gap: inherit;
+  gap: 32px;
 
   @media (max-width: 768px) {
     display: none;
