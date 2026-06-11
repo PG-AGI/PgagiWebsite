@@ -11,6 +11,7 @@ export type PgagiClientReview = {
   gender?: "male" | "female" | "neutral";
   platform?: "upwork" | "clutch";
   memberImage?: string;
+  caseStudyUrl?: string;
 };
 
 export const pgagiClientTestimonials: PgagiClientReview[] = [
@@ -199,6 +200,7 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
     gender: "female",
     platform: "upwork",
     memberImage: "/assets/Customers/Member7.png",
+    caseStudyUrl: "https://debitmydata.com/",
     quote:
       "PGAGI Team not only delivered the project on time but exceeded my expectations in every way. Their attention to detail, creativity, and ability to understand my vision were truly remarkable. They communicated clearly throughout the process, kept me updated regularly, and were always open to feedback, making collaboration seamless and enjoyable.",
     projectName: "AI NFT GENERATOR",

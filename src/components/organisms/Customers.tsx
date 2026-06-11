@@ -22,6 +22,7 @@ const allTestimonials = pgagiClientTestimonials.map((t, i) => ({
   quote: t.quote.trim(),
   platform: (t.platform ?? "upwork") as "upwork" | "clutch",
   memberImage: t.memberImage ?? "",
+  caseStudyUrl: t.caseStudyUrl ?? "",
 }));
 
 const featuredTestimonials = allTestimonials.filter((t) => t.memberImage);
@@ -88,9 +89,20 @@ const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
     <div className={styles.card}>
       <p className={styles.quote}>&ldquo;{t.quote}&rdquo;</p>
 
-      <button className={styles.caseStudyBtn} type="button">
-        View case study <span aria-hidden>→</span>
-      </button>
+      {t.caseStudyUrl ? (
+        <a
+          href={t.caseStudyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.caseStudyBtn}
+        >
+          View case study <span aria-hidden>→</span>
+        </a>
+      ) : (
+        <button className={styles.caseStudyBtn} type="button">
+          View case study <span aria-hidden>→</span>
+        </button>
+      )}
 
       <div className={styles.cardPerson}>
         <span className={styles.personAvatar}>
