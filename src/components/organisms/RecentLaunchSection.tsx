@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/components/organisms/RecentLaunchSection.module.scss";
@@ -107,13 +107,20 @@ const RecentLaunchSection = () => {
   const [activeTab, setActiveTab] = useState<TabId>("ai-product");
   const [projects,  setProjects]  = useState<Project[]>([]);
   const [loading,   setLoading]   = useState(true);
+  const cache = useRef<Partial<Record<TabId, Project[]>>>({});
 
   const fetchProjects = useCallback(async (tab: TabId) => {
+    if (cache.current[tab]) {
+      setProjects(cache.current[tab]!);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch(`/api/projects?category=${tab}`);
       if (!res.ok) throw new Error("Failed to fetch projects");
       const data: Project[] = await res.json();
+      cache.current[tab] = data;
       setProjects(data);
     } catch (err) {
       console.error("[RecentLaunchSection]", err);
@@ -154,7 +161,26 @@ const RecentLaunchSection = () => {
 
       {/* ── Cards stack ── */}
       {loading ? (
-        <div className={styles.loadingRow}>Loading projects…</div>
+        <div className={styles.cardsStack}>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className={styles.stickyCard}
+              style={{ top: `${CARD_STICKY_TOP + i * CARD_STACK_OFFSET}px`, zIndex: i + 1 }}
+            >
+              <div className={styles.cardSkeleton}>
+                <div className={styles.skeletonLeft}>
+                  <div className={styles.skTitle} />
+                  <div className={styles.skText} />
+                  <div className={styles.skTags} />
+                  <div className={styles.skMetrics} />
+                  <div className={styles.skBtns} />
+                </div>
+                <div className={styles.skeletonRight} />
+              </div>
+            </div>
+          ))}
+        </div>
       ) : projects.length === 0 ? (
         <div className={styles.emptyState}>No projects found in this category.</div>
       ) : (
