@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import bgImage from "../../../public/background.png";
+import bgImage from "../../../public/start-background.webp";
 import bgImageMobile from "../../../public/background-mobile.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import Link from "next/link";
