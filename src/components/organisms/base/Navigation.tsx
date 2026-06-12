@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import styles from "@/styles/components/organisms/base/navigation.module.scss";
-import Link from "next/link";
 import TransitionLink from "@/components/atoms/TransitionLink";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -17,108 +16,69 @@ export default function Navigation() {
   const [navbarVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [mobileMenuSection, setMobileMenuSection] = useState<
-    null | "main"
-  >(null);
+  const [mobileMenuSection, setMobileMenuSection] = useState<null | "main">(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showGlassEffect, setShowGlassEffect] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
 
   const ABOUT = ROUTES.ABOUT_US;
-  const INDUSTRIES = "/industries";
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
 
-  // The hero on the home page renders an announcement bar fixed at the top
-  // of the viewport. Until the user scrolls past it, the nav sits below.
+  // ─── Announcement bar offset (home page only) ───────────────────
   const isHome = pathname === ROUTES.HOME;
   const [pastAnnouncement, setPastAnnouncement] = useState(false);
+
   useEffect(() => {
     if (!isHome) {
       setPastAnnouncement(false);
       return;
     }
     const check = () => {
-      const y = window.pageYOffset || document.documentElement.scrollTop;
-      setPastAnnouncement(y > 48);
+      setPastAnnouncement(
+        (window.pageYOffset || document.documentElement.scrollTop) > 48
+      );
     };
     check();
     window.addEventListener("scroll", check, { passive: true });
     return () => window.removeEventListener("scroll", check);
   }, [isHome]);
+
   const offsetForBanner = isHome && !pastAnnouncement;
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  // Glass effect: driven by scroll position
+  // ─── Glass effect on scroll ─────────────────────────────────────
   useEffect(() => {
     const check = () => {
-      const scrolled = (window.pageYOffset || document.documentElement.scrollTop) > 10;
-      setShowGlassEffect(scrolled);
+      setShowGlassEffect(
+        (window.pageYOffset || document.documentElement.scrollTop) > 10
+      );
     };
     check();
     window.addEventListener("scroll", check, { passive: true });
     return () => window.removeEventListener("scroll", check);
   }, []);
 
-  // Hide nav when footer covers ≥60% of the viewport.
-  // rAF loop guarantees detection on every frame — no dependency on scroll events,
-  // browser restoration timing, or custom scroll containers.
+  // ─── Footer overlap — IntersectionObserver replaces rAF loop ────
+  // FIXED: Previous rAF loop called getBoundingClientRect() 60x/second
+  // forcing layout recalculation every frame causing forced reflow.
+  // IntersectionObserver fires only when threshold is crossed.
   useEffect(() => {
-    let rafId: number;
-    let prev = false;
+    const footer = document.querySelector("footer");
+    if (!footer) return;
 
-    const loop = () => {
-      const footer = document.querySelector("footer");
-      if (footer) {
-        const rect = footer.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const visiblePx = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-        const next = visiblePx / vh >= 0.6;
-        if (next !== prev) {
-          prev = next;
-          setIsOverFooter(next);
-        }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsOverFooter(entry.intersectionRatio >= 0.6);
+      },
+      {
+        threshold: [0, 0.6, 1.0],
       }
-      rafId = requestAnimationFrame(loop);
-    };
+    );
 
-    rafId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(rafId);
+    observer.observe(footer);
+    return () => observer.disconnect();
   }, []);
 
-  const handleContactUs = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    console.log("Closing modal...");
-    setIsModalOpen(false);
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    if (!isMenuOpen) {
-      setMobileMenuSection("main"); // Start with main menu in mobile view
-    }
-  };
-
-  const backToMenu = () => {
-    setMobileMenuSection("main");
-  };
-
-  // Prevent body scroll when mobile menu is open
+  // ─── Mobile menu body scroll lock ───────────────────────────────
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -129,13 +89,23 @@ export default function Navigation() {
       document.body.style.position = "static";
       document.body.style.width = "auto";
     }
-
     return () => {
       document.body.style.overflow = "auto";
       document.body.style.position = "static";
       document.body.style.width = "auto";
     };
   }, [isMenuOpen]);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => {
+      if (!prev) setMobileMenuSection("main");
+      return !prev;
+    });
+  };
 
   // Hide navigation on job detail pages
   if (pathname.startsWith("/jobs/") && pathname !== "/jobs") {
@@ -159,6 +129,7 @@ export default function Navigation() {
           isMenuOpen && styles.open
         )}
       >
+        {/* ── Logo — priority loaded for LCP ── */}
         <TransitionLink className={styles.logo} href={ROUTES.HOME}>
           <Image
             src="/landing/PGAGI-logo.png"
@@ -167,72 +138,87 @@ export default function Navigation() {
             height={60}
             sizes="60px"
             quality={80}
+            priority
+            fetchPriority="high"
           />
           <p>PG-AGI</p>
         </TransitionLink>
 
         <div className={styles.links}>
-          {isMobile ? (
-            <>
-              {/* Mobile Menu Navigation */}
-              {mobileMenuSection === "main" && (
-                <div className={styles.mastermenu}>
-                  <TransitionLink href={ROUTES.HOME} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Home
-                  </TransitionLink>
-                  <TransitionLink href={ABOUT} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    About Us
-                  </TransitionLink>
-                  <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Case studies
-                  </TransitionLink>
-                  <TransitionLink href={ROUTES.EXPERTISE} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Expertise
-                  </TransitionLink>
-                  {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Blogs
-                  </TransitionLink> */}
-                  <TransitionLink href={ROUTES.CAREER} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                    Careers
-                  </TransitionLink>
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              {/* Desktop Navigation */}
-              <TransitionLink href={ROUTES.HOME} className={styles.link}>
+          {/* ── Desktop links — hidden on mobile via CSS ── */}
+          {/* FIXED: Removed isMobile useState+useEffect+resize listener.
+              Was causing hydration mismatch and extra re-renders.
+              CSS handles visibility — both variants exist in DOM from SSR. */}
+          <div className={styles.desktopLinks}>
+            <TransitionLink href={ROUTES.HOME} className={styles.link}>
+              Home
+            </TransitionLink>
+            <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
+              About Us
+            </TransitionLink>
+            <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
+              Case studies
+            </TransitionLink>
+            <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
+              Expertise
+            </TransitionLink>
+            <TransitionLink href={ROUTES.CAREER} className={styles.link}>
+              Careers
+            </TransitionLink>
+          </div>
+
+          {/* ── Mobile menu — rendered only when open ── */}
+          {isMenuOpen && (
+            <div className={styles.mastermenu}>
+              <TransitionLink
+                href={ROUTES.HOME}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Home
               </TransitionLink>
-              <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
+              <TransitionLink
+                href={ABOUT}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 About Us
               </TransitionLink>
-              <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
+              <TransitionLink
+                href={ROUTES.PROJECTS}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Case studies
               </TransitionLink>
-              <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
+              <TransitionLink
+                href={ROUTES.EXPERTISE}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Expertise
               </TransitionLink>
-              {/* <TransitionLink href={ROUTES.WHAT_WE_THINK_BLOGS} className={styles.link}>
-                Blogs
-              </TransitionLink> */}
-              <TransitionLink href={ROUTES.CAREER} className={styles.link}>
+              <TransitionLink
+                href={ROUTES.CAREER}
+                className={styles.mobileMenuItem}
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Careers
               </TransitionLink>
-            </>
+            </div>
           )}
         </div>
 
-        {/* Mobile Header Button - appears next to hamburger */}
-        {isMobile && (
-          <button className={styles.mobileHeaderButton} onClick={() => {
-            window.open(CONTACT_URL, "_blank");
-          }}>
-            Get in touch
-            <ArrowRight size={14} />
-          </button>
-        )}
+        {/* ── Mobile CTA — hidden on desktop via CSS ── */}
+        <button
+          className={clsx(styles.mobileHeaderButton, styles.mobileOnly)}
+          onClick={() => window.open(CONTACT_URL, "_blank")}
+        >
+          Get in touch
+          <ArrowRight size={14} />
+        </button>
 
+        {/* ── Hamburger ── */}
         <div
           className={clsx(styles.hamburger, isMenuOpen && styles.open)}
           onClick={toggleMenu}
@@ -242,6 +228,7 @@ export default function Navigation() {
           <span></span>
         </div>
       </div>
+
       {isModalOpen && <ContactUsForm onClose={handleCloseModal} />}
     </nav>
   );

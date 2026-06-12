@@ -14,6 +14,7 @@ $red: #9f0000;
   width: 100%;
   padding-top: clamp(100px, 12vh, 155px);
   padding-bottom: clamp(1.5rem, 3vh, 3rem);
+  min-height: 600px;
   text-align: center;
   overflow: hidden; /* keeps 90vw image from causing horizontal scroll */
 

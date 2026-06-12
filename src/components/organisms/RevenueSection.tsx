@@ -56,15 +56,19 @@ const RevenueSection = () => {
 
         {/* Wide banner image */}
         <div className={styles.headerImageWrapper}>
-          <Image
-            src="/assets/RevenueSection.gif"
-            alt="Revenue section banner"
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
             width={1400}
             height={700}
             className={styles.headerImage}
-            priority
-            unoptimized
-          />
+            aria-label="Revenue section banner"
+          >
+        <source src="/assets/RevenueSection.webm" type="video/webm" />
+        <source src="/assets/RevenueSection.mp4" type="video/mp4" />
+</video>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import bgImage from "../../../public/background.png";
-import bgImageMobile from "../../../public/background-mobile.png";
+import bgImageMobile from "../../../public/background-mobile.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import Link from "next/link";
 import landingText from "@/constants/uiText/landing.json";
@@ -47,28 +47,32 @@ export default function Landing() {
       </div>
 
       {/* Hero media is rendered as next/image so the browser can prioritize it immediately for LCP. */}
-      <div className={styles.heroBg} aria-hidden="true">
-        <Image
-          src={bgImage}
-          alt=""
-          priority
-          fetchPriority="high"
-          placeholder="blur"
-          sizes="100vw"
-          quality={100}
-          className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
-        />
-        <Image
-          src={bgImageMobile}
-          alt=""
-          priority
-          fetchPriority="high"
-          placeholder="blur"
-          sizes="100vw"
-          quality={100}
-          className={`${styles.heroBgImage} ${styles.heroBgMobile}`}
-        />
-      </div>
+  <div className={styles.heroBg} aria-hidden="true">
+    {/* Desktop — hidden below 768px via CSS, not downloaded on mobile */}
+{/* Desktop */}
+<Image
+  src={bgImage}
+  alt=""
+  priority
+  fetchPriority="high"
+  placeholder="blur"
+  sizes="100vw"
+  quality={75}
+  className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
+/>
+
+{/* Mobile */}
+<Image
+  src={bgImageMobile}
+  alt=""
+  priority
+  fetchPriority="high"
+  placeholder="blur"
+  sizes="100vw"
+  quality={75}
+  className={`${styles.heroBgImage} ${styles.heroBgMobile}`}
+/>
+  </div>
 
       {/* Left-side gradient overlay for text legibility */}
       <div className={styles.heroOverlay} aria-hidden="true" />

@@ -318,14 +318,89 @@
   aspect-ratio: 16 / 10;
 }
 
-/* ── Loading state ── */
-.loadingRow {
+/* ── Skeleton loading ── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+$sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
+
+.cardSkeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: clamp(380px, 48vh, 520px);
+  background: #f5f5f7;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+}
+
+.skeletonLeft {
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.8rem, 3.5vw, 3rem);
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  min-height: 320px;
-  color: #999999;
-  font-size: 0.95rem;
+  gap: clamp(1rem, 1.8vw, 1.4rem);
+}
+
+.skeletonRight {
+  background: $sk-bg;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+
+  @media (max-width: 900px) {
+    min-height: 200px;
+  }
+}
+
+.skTitle {
+  height: 36px;
+  width: 55%;
+  border-radius: 6px;
+  background: $sk-bg;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skText {
+  height: 64px;
+  width: 90%;
+  border-radius: 6px;
+  background: $sk-bg;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skTags {
+  height: 28px;
+  width: 65%;
+  border-radius: 100px;
+  background: $sk-bg;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skMetrics {
+  height: 54px;
+  width: 50%;
+  border-radius: 6px;
+  background: $sk-bg;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skBtns {
+  height: 40px;
+  width: 60%;
+  border-radius: 100px;
+  background: $sk-bg;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
 }
 
 /* ── Empty state ── */
