@@ -332,7 +332,7 @@ export function AnnouncementBar({
 
         <span className={styles.divider} aria-hidden />
 
-        <span className={styles.servingLabel}>Live Projects</span>
+        <span className={styles.servingLabel}>Live Products</span>
 
         <TextStrip text={current.name} length={nameLen} align="center" />
 
