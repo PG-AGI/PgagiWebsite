@@ -638,6 +638,24 @@
   }
 }
 
+// Active nav link — underline highlight below text
+.activeLink {
+  position: relative;
+  color: #ffffff !important;
+  opacity: 1 !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+  }
+}
+
 // Mobile-only elements — hidden on desktop
 .mobileOnly {
   display: none;
