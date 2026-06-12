@@ -9,7 +9,7 @@ import type { Project, TabId } from "@/data/projects";
 
 // ── Filter tab definitions ────────────────────────────────────────────
 const TABS: { id: TabId; label: string }[] = [
-  { id: "ai-product",  label: "AI Product." },
+  { id: "ai-product",  label: "AI Product" },
   { id: "ai-business", label: "AI Implemented in Business" },
   { id: "ai-iot",      label: "AI X IoT Engineering" },
 ];
