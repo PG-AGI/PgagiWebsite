@@ -102,25 +102,102 @@ const ProjectCard = ({ project }: { project: Project }) => (
   </div>
 );
 
+// ── Cache helpers ─────────────────────────────────────────────────────
+const DEVICE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+type DeviceEntry = { data: Project[]; ts: number };
+
+const getDeviceId = (): string => {
+  try {
+    let id = localStorage.getItem("pgagi_device_id");
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem("pgagi_device_id", id);
+    }
+    return id;
+  } catch {
+    return "fallback";
+  }
+};
+
+const SESSION_KEY = (tab: TabId) => `pgagi_projects_${tab}`;
+const DEVICE_KEY  = (tab: TabId) => `pgagi_projects_${getDeviceId()}_${tab}`;
+
+const readSession = (tab: TabId): Project[] | null => {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY(tab));
+    return raw ? (JSON.parse(raw) as Project[]) : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeSession = (tab: TabId, data: Project[]) => {
+  try { sessionStorage.setItem(SESSION_KEY(tab), JSON.stringify(data)); } catch {}
+};
+
+const readDevice = (tab: TabId): Project[] | null => {
+  try {
+    const raw = localStorage.getItem(DEVICE_KEY(tab));
+    if (!raw) return null;
+    const entry: DeviceEntry = JSON.parse(raw);
+    if (Date.now() - entry.ts > DEVICE_TTL_MS) {
+      localStorage.removeItem(DEVICE_KEY(tab));
+      return null;
+    }
+    return entry.data;
+  } catch {
+    return null;
+  }
+};
+
+const writeDevice = (tab: TabId, data: Project[]) => {
+  try {
+    const entry: DeviceEntry = { data, ts: Date.now() };
+    localStorage.setItem(DEVICE_KEY(tab), JSON.stringify(entry));
+  } catch {}
+};
+
 // ── Main section ──────────────────────────────────────────────────────
 const RecentLaunchSection = () => {
   const [activeTab, setActiveTab] = useState<TabId>("ai-product");
   const [projects,  setProjects]  = useState<Project[]>([]);
   const [loading,   setLoading]   = useState(true);
-  const cache = useRef<Partial<Record<TabId, Project[]>>>({});
+  const memCache = useRef<Partial<Record<TabId, Project[]>>>({});
 
   const fetchProjects = useCallback(async (tab: TabId) => {
-    if (cache.current[tab]) {
-      setProjects(cache.current[tab]!);
+    // Layer 1 — in-memory (component lifetime)
+    if (memCache.current[tab]) {
+      setProjects(memCache.current[tab]!);
       setLoading(false);
       return;
     }
+    // Layer 2 — sessionStorage (survives page navigation)
+    const sessionCached = readSession(tab);
+    if (sessionCached) {
+      memCache.current[tab] = sessionCached;
+      setProjects(sessionCached);
+      setLoading(false);
+      return;
+    }
+    // Layer 3 — localStorage with device ID (survives across sessions, 24h TTL)
+    const deviceCached = readDevice(tab);
+    if (deviceCached) {
+      memCache.current[tab] = deviceCached;
+      writeSession(tab, deviceCached);
+      setProjects(deviceCached);
+      setLoading(false);
+      return;
+    }
+    // Layer 4 — network fetch
     setLoading(true);
     try {
       const res = await fetch(`/api/projects?category=${tab}`);
       if (!res.ok) throw new Error("Failed to fetch projects");
       const data: Project[] = await res.json();
-      cache.current[tab] = data;
+      memCache.current[tab] = data;
+      writeSession(tab, data);
+      writeDevice(tab, data);
       setProjects(data);
     } catch (err) {
       console.error("[RecentLaunchSection]", err);
