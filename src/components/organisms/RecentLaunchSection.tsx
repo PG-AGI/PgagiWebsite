@@ -102,26 +102,10 @@ const ProjectCard = ({ project }: { project: Project }) => (
   </div>
 );
 
-// ── Cache helpers ─────────────────────────────────────────────────────
-const DEVICE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
-
-type DeviceEntry = { data: Project[]; ts: number };
-
-const getDeviceId = (): string => {
-  try {
-    let id = localStorage.getItem("pgagi_device_id");
-    if (!id) {
-      id = crypto.randomUUID();
-      localStorage.setItem("pgagi_device_id", id);
-    }
-    return id;
-  } catch {
-    return "fallback";
-  }
-};
-
+// ── Session-storage cache helpers ────────────────────────────────────
+// sessionStorage is cleared when the tab/session closes, so users always
+// get fresh data on a new visit — no stale project risk.
 const SESSION_KEY = (tab: TabId) => `pgagi_projects_${tab}`;
-const DEVICE_KEY  = (tab: TabId) => `pgagi_projects_${getDeviceId()}_${tab}`;
 
 const readSession = (tab: TabId): Project[] | null => {
   try {
@@ -134,28 +118,6 @@ const readSession = (tab: TabId): Project[] | null => {
 
 const writeSession = (tab: TabId, data: Project[]) => {
   try { sessionStorage.setItem(SESSION_KEY(tab), JSON.stringify(data)); } catch {}
-};
-
-const readDevice = (tab: TabId): Project[] | null => {
-  try {
-    const raw = localStorage.getItem(DEVICE_KEY(tab));
-    if (!raw) return null;
-    const entry: DeviceEntry = JSON.parse(raw);
-    if (Date.now() - entry.ts > DEVICE_TTL_MS) {
-      localStorage.removeItem(DEVICE_KEY(tab));
-      return null;
-    }
-    return entry.data;
-  } catch {
-    return null;
-  }
-};
-
-const writeDevice = (tab: TabId, data: Project[]) => {
-  try {
-    const entry: DeviceEntry = { data, ts: Date.now() };
-    localStorage.setItem(DEVICE_KEY(tab), JSON.stringify(entry));
-  } catch {}
 };
 
 // ── Main section ──────────────────────────────────────────────────────
@@ -172,7 +134,7 @@ const RecentLaunchSection = () => {
       setLoading(false);
       return;
     }
-    // Layer 2 — sessionStorage (survives page navigation)
+    // Layer 2 — sessionStorage (survives page navigation, clears on session end)
     const sessionCached = readSession(tab);
     if (sessionCached) {
       memCache.current[tab] = sessionCached;
@@ -180,16 +142,7 @@ const RecentLaunchSection = () => {
       setLoading(false);
       return;
     }
-    // Layer 3 — localStorage with device ID (survives across sessions, 24h TTL)
-    const deviceCached = readDevice(tab);
-    if (deviceCached) {
-      memCache.current[tab] = deviceCached;
-      writeSession(tab, deviceCached);
-      setProjects(deviceCached);
-      setLoading(false);
-      return;
-    }
-    // Layer 4 — network fetch
+    // Layer 3 — network fetch
     setLoading(true);
     try {
       const res = await fetch(`/api/projects?category=${tab}`);
@@ -197,7 +150,6 @@ const RecentLaunchSection = () => {
       const data: Project[] = await res.json();
       memCache.current[tab] = data;
       writeSession(tab, data);
-      writeDevice(tab, data);
       setProjects(data);
     } catch (err) {
       console.error("[RecentLaunchSection]", err);
