@@ -1,14 +1,11 @@
 // app/api/case-studies/[id]/route.ts
-
-import {NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import clientPromise from '@/utils/mongodb'; 
-import { ObjectId } from 'mongodb';
+import clientPromise from '@/utils/mongodb';
+import { revalidateTag } from 'next/cache';
 import { generateSlug } from '@/services/generateSlugService';
 
-// export const revalidate = 3600; // Revalidate every hour
-export const dynamic = 'force-dynamic';
-
+export const revalidate = 3600;
 
 function normalizeSlug(value: string): string {
   return generateSlug(decodeURIComponent(value ?? '').trim());
@@ -20,7 +17,7 @@ interface ContentBlock {
   src?: string;
   alt?: string;
   caption?: string;
-  title?: string; 
+  title?: string;
 }
 
 interface Section {
@@ -49,7 +46,10 @@ interface CaseStudy {
   updatedAt: Date;
 }
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
   const { slug } = params;
   if (!slug) {
     return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
@@ -57,10 +57,11 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
 
   try {
     const client = await clientPromise;
-    const db = client.db(); 
+    const db = client.db();
     const collection = db.collection('caseStudies');
     const requestedSlug = normalizeSlug(slug);
     const decodedSlug = decodeURIComponent(slug);
+
     let caseStudy = await collection.findOne({ slug: slug });
 
     if (!caseStudy && decodedSlug !== slug) {
@@ -95,12 +96,7 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
     }
 
     const { _id, ...rest } = caseStudy;
-    const response = {
-      id: _id.toString(),
-      ...rest,
-    };
-
-    return NextResponse.json(response, { status: 200 });
+    return NextResponse.json({ id: _id.toString(), ...rest }, { status: 200 });
   } catch (error) {
     console.error('Error fetching case study:', error);
     return NextResponse.json(
@@ -110,7 +106,10 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
   const { slug } = params;
 
   if (!slug) {
@@ -156,7 +155,6 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
             { status: 400 }
           );
         }
-        // Additional validations based on block type
         switch (block.type) {
           case 'paragraph':
           case 'quote':
@@ -170,25 +168,26 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
               );
             }
             break;
-            case 'box':
-              if (!block.content || 
-                  typeof block.content !== 'object' || 
-                  !block.content.heading || 
-                  !block.content.text) {
-                return NextResponse.json(
-                  { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires heading and text.` },
-                  { status: 400 }
-                );
-              }
-              break;
-          case 'image':
+          case 'box':
+            if (
+              !block.content ||
+              typeof block.content !== 'object' ||
+              !block.content.heading ||
+              !block.content.text
+            ) {
+              return NextResponse.json(
+                { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires heading and text.` },
+                { status: 400 }
+              );
+            }
+            break;
+          case 'image': {
             if (!block.src || !block.alt) {
               return NextResponse.json(
                 { message: `Image block ${blockIndex + 1} in section ${sectionIndex + 1} requires src and alt.` },
                 { status: 400 }
               );
             }
-   
             const imageUrlPattern = /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/;
             if (!imageUrlPattern.test(block.src)) {
               return NextResponse.json(
@@ -197,14 +196,14 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
               );
             }
             break;
-          case 'video':
+          }
+          case 'video': {
             if (!block.src) {
               return NextResponse.json(
                 { message: `Video block ${blockIndex + 1} in section ${sectionIndex + 1} requires src.` },
                 { status: 400 }
               );
             }
-            // Optional: Validate YouTube embed URL format
             const youtubeEmbedRegex = /^https?:\/\/(www\.)?(youtube\.com\/embed\/|youtu\.be\/).+$/;
             if (!youtubeEmbedRegex.test(block.src)) {
               return NextResponse.json(
@@ -213,6 +212,7 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
               );
             }
             break;
+          }
           default:
             return NextResponse.json(
               { message: `Invalid content block type '${block.type}' in section ${sectionIndex + 1}.` },
@@ -221,7 +221,6 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         }
       }
     }
-
 
     const updatedCaseStudy: Partial<CaseStudy> = {
       slug: data.slug,
@@ -268,6 +267,8 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
       );
     }
 
+    revalidateTag('case-studies'); // ← clears cache immediately after update
+
     return NextResponse.json(
       { message: 'Case Study Updated Successfully' },
       { status: 200 }
@@ -281,10 +282,12 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
   const { slug } = params;
 
-  // Validate ObjectId
   if (!slug) {
     return NextResponse.json({ message: 'Slug is missing' }, { status: 400 });
   }
@@ -293,9 +296,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { slug:
     const client = await clientPromise;
     const db = client.db();
     const collection = db.collection('caseStudies');
-
-    // Delete the case study
-    const result = await collection.deleteOne({slug: slug});
+    const result = await collection.deleteOne({ slug: slug });
 
     if (result.deletedCount === 0) {
       return NextResponse.json(
@@ -303,6 +304,8 @@ export async function DELETE(request: NextRequest, { params }: { params: { slug:
         { status: 404 }
       );
     }
+
+    revalidateTag('case-studies'); // ← clears cache immediately after delete
 
     return NextResponse.json(
       { message: 'Case Study Deleted Successfully' },

@@ -1,19 +1,16 @@
 // app/api/case-studies/route.ts
-// https://pgagi.in/api/case-studies/[id]
-
-import {NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import clientPromise from '@/utils/mongodb'; 
-import { ObjectId } from 'mongodb';
-
+import clientPromise from '@/utils/mongodb';
+import { revalidateTag } from 'next/cache';
 
 interface ContentBlock {
-  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table'| 'box';
+  type: 'paragraph' | 'quote' | 'highlight' | 'code' | 'image' | 'video' | 'table' | 'box';
   content?: string | { headers: string[]; rows: string[][] };
   src?: string;
   alt?: string;
   caption?: string;
-  title?: string; 
+  title?: string;
 }
 
 interface Section {
@@ -42,9 +39,7 @@ interface CaseStudy {
   updatedAt: Date;
 }
 
-// export const revalidate = 3600; // Revalidate every hour
-export const dynamic = 'force-dynamic';
-
+export const revalidate = 3600;
 
 export async function POST(request: NextRequest) {
   try {
@@ -104,7 +99,7 @@ export async function POST(request: NextRequest) {
               );
             }
             break;
-          case 'video':
+          case 'video': {
             if (!block.src) {
               return NextResponse.json(
                 { message: `Video block ${blockIndex + 1} in section ${sectionIndex + 1} requires src.` },
@@ -119,11 +114,14 @@ export async function POST(request: NextRequest) {
               );
             }
             break;
-          case 'table':
-            if (!block.content || 
-                typeof block.content !== 'object' || 
-                !Array.isArray((block.content as { headers: string[]; rows: string[][] }).headers) || 
-                !Array.isArray((block.content as { headers: string[]; rows: string[][] }).rows)) {
+          }
+          case 'table': {
+            if (
+              !block.content ||
+              typeof block.content !== 'object' ||
+              !Array.isArray((block.content as { headers: string[]; rows: string[][] }).headers) ||
+              !Array.isArray((block.content as { headers: string[]; rows: string[][] }).rows)
+            ) {
               return NextResponse.json(
                 { message: `Table block ${blockIndex + 1} in section ${sectionIndex + 1} requires valid headers and rows.` },
                 { status: 400 }
@@ -138,11 +136,14 @@ export async function POST(request: NextRequest) {
               );
             }
             break;
+          }
           case 'box':
-            if (!block.content || 
-                typeof block.content !== 'object' || 
-                !block.content.heading || 
-                !block.content.text) {
+            if (
+              !block.content ||
+              typeof block.content !== 'object' ||
+              !block.content.heading ||
+              !block.content.text
+            ) {
               return NextResponse.json(
                 { message: `Box block ${blockIndex + 1} in section ${sectionIndex + 1} requires heading and text.` },
                 { status: 400 }
@@ -158,7 +159,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Prepare the case study object
     const caseStudy: CaseStudy = {
       slug: data.slug,
       contentType: data.contentType,
@@ -190,15 +190,13 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date(),
     };
 
-    // Connect to MongoDB
     const client = await clientPromise;
-    const db = client.db(); // Use the default DB specified in your MongoClient
+    const db = client.db();
     const collection = db.collection('caseStudies');
-
-    // Insert the case study into the collection
     const result = await collection.insertOne(caseStudy);
 
-    // Return the inserted case study's ID
+    revalidateTag('case-studies'); // ← clears cache immediately after create
+
     return NextResponse.json(
       { message: 'Case Study created successfully', id: result.insertedId },
       { status: 201 }
@@ -212,13 +210,15 @@ export async function POST(request: NextRequest) {
   }
 }
 
-
 export async function GET(request: NextRequest) {
   try {
     const client = await clientPromise;
     const db = client.db();
     const collection = db.collection('caseStudies');
-    const caseStudies = await collection.find({}, { projection: { slug: 1, title: 1, coverImage: 1, description: 1, metaDescription: 1 } }).toArray();
+    const caseStudies = await collection
+      .find({}, { projection: { slug: 1, title: 1, coverImage: 1, description: 1, metaDescription: 1 } })
+      .toArray();
+
     const response = caseStudies.map((caseStudy) => ({
       slug: caseStudy.slug,
       title: caseStudy.title,
