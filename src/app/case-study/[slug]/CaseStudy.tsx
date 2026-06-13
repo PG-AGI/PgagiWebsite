@@ -9,7 +9,7 @@ import { Link2, ArrowUp } from 'lucide-react';
 import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
 import { LinkPreview } from "@/components/organisms/link-preview";
-
+import type { CaseStudyData } from '@/services/getCaseStudy';
 import Recommendation from '@/components/organisms/Recommendation';
 import { AiOutlineCopy } from 'react-icons/ai';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
@@ -95,12 +95,11 @@ const processLinksWithPreview = (content: string) => {
   return parts;
 };
 
-const CaseStudy = () => {
+  const CaseStudy = ({ initialCaseStudy }: { initialCaseStudy?: CaseStudyData }) => {
   const router = useRouter();
   const params = useParams() as Params; // Type assertion to ensure params.slug is string
   const slug = params.slug;
-
-  const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null);
+  const [caseStudy, setCaseStudy] = useState<CaseStudy | null>((initialCaseStudy as unknown as CaseStudy) ?? null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -120,6 +119,7 @@ const CaseStudy = () => {
   }, []);
   
   useEffect(() => {
+    if (initialCaseStudy) return;
     if (!slug) {
       setError('No case study slug provided.');
       return;
@@ -131,7 +131,7 @@ const CaseStudy = () => {
       try {
         const data = (await fetchCaseStudyBySlug(String(slug))) as unknown as CaseStudy;
         setCaseStudy(data);
-        console.log('case study data is here', data);
+        
       } catch (err: unknown) {
         setError(err instanceof Error ? err.message : 'Failed to fetch case study.');
       } finally {
@@ -140,7 +140,7 @@ const CaseStudy = () => {
     };
 
     fetchCaseStudy();
-  }, [slug]);
+  }, [slug,initialCaseStudy]);
   useEffect(() => {
     if (!caseStudy) return;
   
