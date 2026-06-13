@@ -102,25 +102,54 @@ const ProjectCard = ({ project }: { project: Project }) => (
   </div>
 );
 
+// ── Session-storage cache helpers ────────────────────────────────────
+// sessionStorage is cleared when the tab/session closes, so users always
+// get fresh data on a new visit — no stale project risk.
+const SESSION_KEY = (tab: TabId) => `pgagi_projects_${tab}`;
+
+const readSession = (tab: TabId): Project[] | null => {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY(tab));
+    return raw ? (JSON.parse(raw) as Project[]) : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeSession = (tab: TabId, data: Project[]) => {
+  try { sessionStorage.setItem(SESSION_KEY(tab), JSON.stringify(data)); } catch {}
+};
+
 // ── Main section ──────────────────────────────────────────────────────
 const RecentLaunchSection = () => {
   const [activeTab, setActiveTab] = useState<TabId>("ai-product");
   const [projects,  setProjects]  = useState<Project[]>([]);
   const [loading,   setLoading]   = useState(true);
-  const cache = useRef<Partial<Record<TabId, Project[]>>>({});
+  const memCache = useRef<Partial<Record<TabId, Project[]>>>({});
 
   const fetchProjects = useCallback(async (tab: TabId) => {
-    if (cache.current[tab]) {
-      setProjects(cache.current[tab]!);
+    // Layer 1 — in-memory (component lifetime)
+    if (memCache.current[tab]) {
+      setProjects(memCache.current[tab]!);
       setLoading(false);
       return;
     }
+    // Layer 2 — sessionStorage (survives page navigation, clears on session end)
+    const sessionCached = readSession(tab);
+    if (sessionCached) {
+      memCache.current[tab] = sessionCached;
+      setProjects(sessionCached);
+      setLoading(false);
+      return;
+    }
+    // Layer 3 — network fetch
     setLoading(true);
     try {
       const res = await fetch(`/api/projects?category=${tab}`);
       if (!res.ok) throw new Error("Failed to fetch projects");
       const data: Project[] = await res.json();
-      cache.current[tab] = data;
+      memCache.current[tab] = data;
+      writeSession(tab, data);
       setProjects(data);
     } catch (err) {
       console.error("[RecentLaunchSection]", err);

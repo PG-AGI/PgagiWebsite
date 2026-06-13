@@ -24,6 +24,9 @@ export default function Navigation() {
   const ABOUT = ROUTES.ABOUT_US;
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
 
+  const isActive = (href: string) =>
+    href === ROUTES.HOME ? pathname === href : pathname.startsWith(href);
+
   // ─── Announcement bar offset (home page only) ───────────────────
   const isHome = pathname === ROUTES.HOME;
   const [pastAnnouncement, setPastAnnouncement] = useState(false);
@@ -150,19 +153,19 @@ export default function Navigation() {
               Was causing hydration mismatch and extra re-renders.
               CSS handles visibility — both variants exist in DOM from SSR. */}
           <div className={styles.desktopLinks}>
-            <TransitionLink href={ROUTES.HOME} className={styles.link}>
+            <TransitionLink href={ROUTES.HOME} className={clsx(styles.link, isActive(ROUTES.HOME) && styles.activeLink)}>
               Home
             </TransitionLink>
-            <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
+            <TransitionLink href={ROUTES.ABOUT_US} className={clsx(styles.link, isActive(ROUTES.ABOUT_US) && styles.activeLink)}>
               About Us
             </TransitionLink>
-            <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
+            <TransitionLink href={ROUTES.PROJECTS} className={clsx(styles.link, isActive(ROUTES.PROJECTS) && styles.activeLink)}>
               Case studies
             </TransitionLink>
-            <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
+            <TransitionLink href={ROUTES.EXPERTISE} className={clsx(styles.link, isActive(ROUTES.EXPERTISE) && styles.activeLink)}>
               Expertise
             </TransitionLink>
-            <TransitionLink href={ROUTES.CAREER} className={styles.link}>
+            <TransitionLink href={ROUTES.CAREER} className={clsx(styles.link, isActive(ROUTES.CAREER) && styles.activeLink)}>
               Careers
             </TransitionLink>
           </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "@/styles/components/organisms/base/navigationPill.module.scss";
 import TransitionLink from "@/components/atoms/TransitionLink";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import ContactUsForm from "./contactUsForm";
 import { ArrowRight } from "lucide-react";
@@ -11,6 +12,7 @@ import ROUTES from "@/constants/routes";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
 
 export default function NavigationPill() {
+  const pathname = usePathname();
   const [navbarVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,6 +21,9 @@ export default function NavigationPill() {
   const [isOverFooter, setIsOverFooter] = useState(false);
 
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
+
+  const isActive = (href: string) =>
+    href === ROUTES.HOME ? pathname === href : pathname.startsWith(href);
 
   // ─── Glass effect on scroll ─────────────────────────────────────
   useEffect(() => {
@@ -115,19 +120,19 @@ export default function NavigationPill() {
           {/* FIXED: Removed isMobile useState+useEffect+resize listener.
               CSS handles visibility — no hydration mismatch. */}
           <div className={styles.desktopLinks}>
-            <TransitionLink href={ROUTES.HOME} className={styles.link}>
+            <TransitionLink href={ROUTES.HOME} className={clsx(styles.link, isActive(ROUTES.HOME) && styles.activeLink)}>
               Home
             </TransitionLink>
-            <TransitionLink href={ROUTES.ABOUT_US} className={styles.link}>
+            <TransitionLink href={ROUTES.ABOUT_US} className={clsx(styles.link, isActive(ROUTES.ABOUT_US) && styles.activeLink)}>
               About Us
             </TransitionLink>
-            <TransitionLink href={ROUTES.PROJECTS} className={styles.link}>
+            <TransitionLink href={ROUTES.PROJECTS} className={clsx(styles.link, isActive(ROUTES.PROJECTS) && styles.activeLink)}>
               Case studies
             </TransitionLink>
-            <TransitionLink href={ROUTES.EXPERTISE} className={styles.link}>
+            <TransitionLink href={ROUTES.EXPERTISE} className={clsx(styles.link, isActive(ROUTES.EXPERTISE) && styles.activeLink)}>
               Expertise
             </TransitionLink>
-            <TransitionLink href={ROUTES.CAREER} className={styles.link}>
+            <TransitionLink href={ROUTES.CAREER} className={clsx(styles.link, isActive(ROUTES.CAREER) && styles.activeLink)}>
               Careers
             </TransitionLink>
           </div>
