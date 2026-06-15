@@ -12,8 +12,8 @@ import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
 
-// ISR: serve cached HTML, regenerate at most hourly in the background.
-export const revalidate = 3600;
+// Force dynamic server rendering for case-study pages (no ISR cache).
+export const dynamic = 'force-dynamic';
 // dynamicParams defaults to `true`: slugs not pre-rendered at build still work —
 // they render on demand on first hit, then get cached. (No need to set it.)
 

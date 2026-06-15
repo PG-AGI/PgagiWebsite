@@ -8,8 +8,6 @@
 // therefore cached by Cloudflare (public s-maxage instead of `private`).
  
 import 'server-only'; // ships with Next; if TS complains: npm i server-only
-import { cache } from 'react';
-import { unstable_cache } from 'next/cache';
 import clientPromise from '@/utils/mongodb';
 import { generateSlug } from '@/services/generateSlugService';
  
@@ -95,14 +93,7 @@ async function queryCaseStudyBySlug(slug: string): Promise<CaseStudyData | null>
   };
 }
  
-// Cross-request persistent cache (Next.js Data Cache). Tagged so an admin
-// edit can invalidate it on demand via revalidateTag('case-studies').
-const getCaseStudyCached = unstable_cache(
-  (slug: string) => queryCaseStudyBySlug(slug),
-  ['case-study-by-slug'],
-  { revalidate: 3600, tags: ['case-studies'] },
-);
- 
-// Per-request memoization so generateMetadata() and the page component share a
-// single resolution instead of querying twice in the same render.
-export const getCaseStudy = cache((slug: string) => getCaseStudyCached(slug));
+// Return fresh DB results on every request (no Next cache).
+export async function getCaseStudy(slug: string): Promise<CaseStudyData | null> {
+  return await queryCaseStudyBySlug(slug);
+}

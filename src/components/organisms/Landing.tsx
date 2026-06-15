@@ -3,14 +3,30 @@ import Image from "next/image";
 import bgImage from "../../../public/start-background.webp";
 import bgImageMobile from "../../../public/background-mobile.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
-import Link from "next/link";
 import landingText from "@/constants/uiText/landing.json";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
-import { ArrowRight } from 'lucide-react';
 import {
   AnnouncementBar,
   type AnnouncementProject,
 } from "./text-flipping-board";
+import { ArrowRight } from 'lucide-react';
+
+const ArrowRightIcon = ({ stroke = "#000" }: { stroke?: string }) => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M9.33 3C9.33 3.43 9.76 4.08 10.19 4.62C10.75 5.32 11.42 5.93 12.18 6.4C12.75 6.75 13.44 7.08 14 7.08M14 7.08C13.44 7.08 12.75 7.42 12.18 7.77C11.42 8.23 10.75 8.85 10.19 9.54C9.76 10.09 9.33 10.73 9.33 11.17M14 7.08L0 7.08"
+      stroke={stroke}
+      strokeWidth="1"
+    />
+  </svg>
+);
 
 const LIVE_PROJECTS: AnnouncementProject[] = [
   { name: "SKILLINA", activeUsers: 12847 },
@@ -74,7 +90,7 @@ export default function Landing() {
 
           <p className={styles.heroSubtext}>{landingText.subtext}</p>
 
-          <Link
+          <a
             href={EXTERNAL_LINKS.CALENDLY_BOOKING}
             target="_blank"
             rel="noopener noreferrer"
@@ -82,25 +98,11 @@ export default function Landing() {
             id="hero-cta-button"
             aria-label={landingText.ctaAriaLabel}
           >
-            <span>{landingText.ctaLabel}</span>
-            <span className={styles.ctaArrow} aria-hidden="true">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 14H18M18 14L15 11M18 14L15 17"
-                  stroke="black"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </Link>
+            {landingText.ctaLabel}
+            <div className={styles.ctaArrow}>
+              <ArrowRight size={20} />
+            </div>
+          </a>
         </div>
 
         {/* Glass cards row pinned to the bottom of the hero */}
@@ -124,7 +126,7 @@ export default function Landing() {
               >
                 <span>{landingText.verticalCard.ctaLabel}</span>
                 <span className={styles.cardCtaArrow} aria-hidden="true">
-                  <ArrowRight size={22} />
+                  <ArrowRightIcon />
                 </span>
               </button>
             </div>
