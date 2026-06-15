@@ -8,7 +8,7 @@ export async function fetchAllCaseStudies(): Promise<ContentSummary[]> {
 }
 
 export async function fetchCaseStudyBySlug(slug: string): Promise<ContentDetails> {
-  const res = await fetch(API_ENDPOINTS.CASE_STUDY_BY_SLUG(slug));
+  const res = await fetch(API_ENDPOINTS.CASE_STUDY_BY_SLUG(slug), { cache: 'no-store' });
   if (!res.ok) throw new Error(`Failed to fetch case study: ${slug}`);
   return res.json() as Promise<ContentDetails>;
 }
