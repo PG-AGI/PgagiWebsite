@@ -120,25 +120,25 @@ export default function Footer() {
               <div className={styles.navColumn}>
                 <p className={styles.columnHeader}>{footerText.resourcesHeader}</p>
                 <ul className={styles.linkList}>
-                  <li>
+                  {/* <li>
                     <TransitionLink
                       href={ROUTES.WHAT_WE_THINK_BLOGS}
                       className={styles.link}
                     >
                       {footerText.links.blog}
                     </TransitionLink>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <TransitionLink
                       href={ROUTES.WHAT_WE_THINK_AINEWS}
                       className={styles.link}
                     >
                       {footerText.links.news}
                     </TransitionLink>
-                  </li>
+                  </li> */}
                   <li>
                     <TransitionLink
-                      href={ROUTES.WHAT_WE_THINK_CASE_STUDIES}
+                      href={ROUTES.PROJECTS}
                       className={styles.link}
                     >
                       {footerText.links.caseStudies}
