@@ -3,13 +3,13 @@ import Image from "next/image";
 import bgImage from "../../../public/background.png";
 import bgImageMobile from "../../../public/background-mobile.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
-import Link from "next/link";
 import landingText from "@/constants/uiText/landing.json";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
 import {
   AnnouncementBar,
   type AnnouncementProject,
 } from "./text-flipping-board";
+import { ArrowRight } from 'lucide-react';
 
 const ArrowRightIcon = ({ stroke = "#000" }: { stroke?: string }) => (
   <svg
@@ -90,7 +90,7 @@ export default function Landing() {
 
           <p className={styles.heroSubtext}>{landingText.subtext}</p>
 
-          <Link
+          <a
             href={EXTERNAL_LINKS.CALENDLY_BOOKING}
             target="_blank"
             rel="noopener noreferrer"
@@ -98,25 +98,11 @@ export default function Landing() {
             id="hero-cta-button"
             aria-label={landingText.ctaAriaLabel}
           >
-            <span>{landingText.ctaLabel}</span>
-            <span className={styles.ctaArrow} aria-hidden="true">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 14H18M18 14L15 11M18 14L15 17"
-                  stroke="black"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </Link>
+            {landingText.ctaLabel}
+            <div className={styles.ctaArrow}>
+              <ArrowRight size={20} />
+            </div>
+          </a>
         </div>
 
         {/* Glass cards row pinned to the bottom of the hero */}
