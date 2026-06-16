@@ -37,6 +37,15 @@
     pointer-events: none;
   }
 
+  // Push pill down to clear the home-page announcement bar
+  &.withBanner {
+    top: 9vh;
+
+    @media (max-width: 850px) {
+      top: 44px;
+    }
+  }
+
   /* ─── Logo ────────────────────────────────── */
   .logo {
     display: flex;
@@ -325,6 +334,11 @@
     background: transparent !important;
     border-bottom: none !important;
     box-shadow: none !important;
+
+    // Rise above announcement bar (z-1100) when menu is open
+    &.menuOpen {
+      z-index: 1200 !important;
+    }
 
     &.glassEffect {
       background: transparent !important;

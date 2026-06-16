@@ -16,12 +16,10 @@ export default function Navigation() {
   const [navbarVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mobileMenuSection, setMobileMenuSection] = useState<null | "main">(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showGlassEffect, setShowGlassEffect] = useState(false);
   const [isOverFooter, setIsOverFooter] = useState(false);
 
-  const ABOUT = ROUTES.ABOUT_US;
   const CONTACT_URL = EXTERNAL_LINKS.CALENDLY_BOOKING;
 
   const isActive = (href: string) =>
@@ -104,10 +102,7 @@ export default function Navigation() {
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen((prev) => {
-      if (!prev) setMobileMenuSection("main");
-      return !prev;
-    });
+    setIsMenuOpen((prev) => !prev);
   };
 
   // Hide navigation on job detail pages
@@ -122,7 +117,8 @@ export default function Navigation() {
         isScrolled && styles.scrolled,
         showGlassEffect && styles.glassEffect,
         isOverFooter && styles.overFooter,
-        offsetForBanner && styles.withBanner
+        offsetForBanner && styles.withBanner,
+        isMenuOpen && styles.menuOpen
       )}
     >
       <div
@@ -148,10 +144,6 @@ export default function Navigation() {
         </TransitionLink>
 
         <div className={styles.links}>
-          {/* ── Desktop links — hidden on mobile via CSS ── */}
-          {/* FIXED: Removed isMobile useState+useEffect+resize listener.
-              Was causing hydration mismatch and extra re-renders.
-              CSS handles visibility — both variants exist in DOM from SSR. */}
           <div className={styles.desktopLinks}>
             <TransitionLink href={ROUTES.HOME} className={clsx(styles.link, isActive(ROUTES.HOME) && styles.activeLink)}>
               Home
@@ -170,44 +162,30 @@ export default function Navigation() {
             </TransitionLink>
           </div>
 
-          {/* ── Mobile menu — rendered only when open ── */}
           {isMenuOpen && (
             <div className={styles.mastermenu}>
-              <TransitionLink
-                href={ROUTES.HOME}
-                className={styles.mobileMenuItem}
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <TransitionLink href={ROUTES.HOME} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                 Home
               </TransitionLink>
-              <TransitionLink
-                href={ABOUT}
-                className={styles.mobileMenuItem}
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <TransitionLink href={ROUTES.ABOUT_US} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                 About Us
               </TransitionLink>
-              <TransitionLink
-                href={ROUTES.PROJECTS}
-                className={styles.mobileMenuItem}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Case studies
+              <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
+                Case Studies
               </TransitionLink>
-              <TransitionLink
-                href={ROUTES.EXPERTISE}
-                className={styles.mobileMenuItem}
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <TransitionLink href={ROUTES.EXPERTISE} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                 Expertise
               </TransitionLink>
-              <TransitionLink
-                href={ROUTES.CAREER}
-                className={styles.mobileMenuItem}
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <TransitionLink href={ROUTES.CAREER} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
                 Careers
               </TransitionLink>
+              <button
+                className={styles.mobileContact}
+                onClick={() => { setIsMenuOpen(false); window.open(CONTACT_URL, "_blank"); }}
+              >
+                Get in touch
+                <ArrowRight size={15} />
+              </button>
             </div>
           )}
         </div>

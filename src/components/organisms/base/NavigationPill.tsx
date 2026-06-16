@@ -25,6 +25,27 @@ export default function NavigationPill() {
   const isActive = (href: string) =>
     href === ROUTES.HOME ? pathname === href : pathname.startsWith(href);
 
+  // ─── Announcement bar offset (home page only) ───────────────────
+  const isHome = pathname === ROUTES.HOME;
+  const [pastAnnouncement, setPastAnnouncement] = useState(false);
+
+  useEffect(() => {
+    if (!isHome) {
+      setPastAnnouncement(false);
+      return;
+    }
+    const check = () => {
+      setPastAnnouncement(
+        (window.pageYOffset || document.documentElement.scrollTop) > 48
+      );
+    };
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, [isHome]);
+
+  const offsetForBanner = isHome && !pastAnnouncement;
+
   // ─── Glass effect on scroll ─────────────────────────────────────
   useEffect(() => {
     const check = () => {
@@ -90,7 +111,9 @@ export default function NavigationPill() {
       className={clsx(
         styles.navigation,
         showGlassEffect && styles.glassEffect,
-        isOverFooter && styles.overFooter
+        isOverFooter && styles.overFooter,
+        offsetForBanner && styles.withBanner,
+        isMenuOpen && styles.menuOpen
       )}
     >
       <div
