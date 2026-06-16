@@ -16,7 +16,7 @@ const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator
 const StatsSection = dynamic(() => import("@/components/organisms/NewPage"), { ssr: false });
 const VisionSystemSection = dynamic(() => import("@/components/organisms/VisionSystemSection"), { ssr: false });
 const SocialOrbitSection = dynamic(() => import("@/components/organisms/SocialOrbitSection"), { ssr: false });
-const EcosystemSection = dynamic(() => import("@/components/organisms/EcosystemSection"), { ssr: false });
+// const EcosystemSection = dynamic(() => import("@/components/organisms/EcosystemSection"), { ssr: false });
 const ProcessTimelineSection = dynamic(() => import("@/components/organisms/ProcessTimelineSection"), { ssr: false });
 const RevenueSection = dynamic(() => import("@/components/organisms/RevenueSection"), { ssr: false });
 const MeasurableImpactSection = dynamic(() => import("@/components/organisms/MeasurableImpactSection"), { ssr: false });
@@ -44,9 +44,6 @@ export default function Home() {
         </LazySection>
         <LazySection minHeight="600px">
           <SocialOrbitSection />
-        </LazySection>
-        <LazySection minHeight="700px">
-          <EcosystemSection />
         </LazySection>
         <LazySection minHeight="820px">
           <ProcessTimelineSection />
