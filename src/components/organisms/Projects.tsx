@@ -27,6 +27,24 @@ type CaseStudy = {
 };
 
 
+// Slugs that must appear first, in this exact order
+const PRIORITY_SLUG_KEYWORDS: string[] = [
+  'brainify',
+  'email-love',
+  'cracked-ai',
+  'mirror-me',
+  'nuaiy',
+  'aimi-brain',
+  'skillina',
+  'jove',
+  'digital-twin',
+];
+
+function priorityIndex(slug: string): number {
+  const idx = PRIORITY_SLUG_KEYWORDS.findIndex((kw) => slug.includes(kw));
+  return idx === -1 ? Infinity : idx;
+}
+
 const STATS = [
   { value: '85+', line1: 'AI Products', line2: 'shipped' },
   { value: '12+', line1: 'Industries', line2: 'served' },
@@ -65,6 +83,8 @@ export default function Projects() {
     if (activeCategory !== 'All Categories') {
       result = result.filter((cs) => caseStudyMeta[cs.slug]?.category === activeCategory);
     }
+
+    result.sort((a, b) => priorityIndex(a.slug) - priorityIndex(b.slug));
 
     return result;
   }, [caseStudies, activeTab, activeCategory]);
@@ -209,12 +229,18 @@ export default function Projects() {
                       <Link href={ROUTES.CASE_STUDY_SLUG(cs.slug)} className={styles.btnPrimary}>
                         View case study <ArrowUpRight />
                       </Link>
-                      {/* {meta?.liveUrl && (
+                      {meta?.liveUrl && (
                         <a href={meta.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
                           <span className={styles.greenDot} />
-                          View Live Product <ArrowUpRight />
+                          {meta.appStoreUrl ? 'Android' : 'View Live Product'} <ArrowUpRight />
                         </a>
-                      )} */}
+                      )}
+                      {meta?.appStoreUrl && (
+                        <a href={meta.appStoreUrl} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
+                          <span className={styles.greenDot} />
+                          iOS <ArrowUpRight />
+                        </a>
+                      )}
                     </div>
                   </div>
 

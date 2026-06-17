@@ -3,6 +3,7 @@ export type CaseStudyMeta = {
   metrics: { value: string; label: string }[];
   highlight: string;
   liveUrl?: string;
+  appStoreUrl?: string;
   tags: string[];
   category: string;
 };
@@ -17,7 +18,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '60%', label: 'Cost Reduction' },
     ],
     highlight: 'MVP shipped and live within 8 weeks',
-    liveUrl: 'https://skillina.com',
+    liveUrl: 'https://skillina.ai/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'HRTech/AI/ML',
   },
@@ -38,6 +39,8 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '50K+', label: 'Active Learners' },
     ],
     highlight: '50K learners onboarded in the first quarter',
+    liveUrl: 'https://play.google.com/store/apps/details?id=com.brainify.app&hl=en',
+    appStoreUrl: 'https://apps.apple.com/us/app/brainify-app/id6759913473',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'EdTech/AI/ML',
   },
@@ -79,6 +82,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '3x', label: 'Engagement Lift' },
     ],
     highlight: '45% reduction in returns after AI try-on integration',
+    liveUrl: 'https://play.google.com/store/apps/details?id=com.pgagi.mirror_me.beta&hl=en',
     tags: ['UI/UX', 'Research'],
     category: 'E-commerce/AI/ML',
   },
@@ -121,6 +125,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '5x', label: 'Creative Output' },
     ],
     highlight: 'AI ad creatives outperforming human-made ads by 60%',
+    liveUrl: 'https://cracked.ai/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
@@ -142,6 +147,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '20K+', label: 'Downloads' },
     ],
     highlight: 'AI companion app reaching 20K+ users at launch',
+    liveUrl: 'https://app.nuaiy.com/',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
   },
@@ -163,6 +169,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '5x', label: 'Faster Onboarding' },
     ],
     highlight: 'AI Digital Twin trained on real Workday expert knowledge',
+    liveUrl: 'https://www.peopleflow.io/',
     tags: ['Live Products', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
@@ -404,6 +411,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '20K+', label: 'Downloads' },
     ],
     highlight: 'AI companion app reaching 20K+ users at launch',
+    liveUrl: 'https://app.nuaiy.com/',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
   },
@@ -429,6 +437,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '5x', label: 'Creative Output' },
     ],
     highlight: 'AI ad creatives outperforming human-made ads by 60%',
+    liveUrl: 'https://cracked.ai/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
@@ -441,6 +450,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '5x', label: 'Faster Onboarding' },
     ],
     highlight: 'AI Digital Twin trained on real Workday expert knowledge',
+    liveUrl: 'https://www.peopleflow.io/',
     tags: ['Live Products', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
