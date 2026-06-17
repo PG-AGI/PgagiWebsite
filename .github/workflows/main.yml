@@ -1,5 +1,4 @@
 name: Back-end Build Docker Compose
-
 on:
   push:
     branches:
@@ -7,16 +6,25 @@ on:
 jobs:
   build-docker-compose:
     runs-on: self-hosted
-
     steps:
-      # Step 1: Checkout the code from the repository
       - name: Checkout repository
         uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-      # Step 2: Build the services defined in docker-compose.yml
       - name: Build Docker Compose Services
-        run: pwd ; docker compose -p pgagi-website-deployment up --build -d
+        env:
+          DOCKER_BUILDKIT: 1
+        run: docker compose -p pgagi-website-deployment up --build -d
 
-      # Step 2: Cleaning up docker services
-      - name: Build Docker Compose Services
-        run: docker system prune
+      - name: Cleanup (preserve build cache)
+        run: |
+          docker container prune -f
+          docker image prune -f --filter "until=48h"
+
+      - name: Purge Cloudflare Cache
+        run: |
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'    
