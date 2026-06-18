@@ -9,63 +9,37 @@ const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator
   loading: () => null,
 });
 
-// All below-fold sections: ssr:false so their CSS ships in async chunks,
-// not in the render-blocking page.css. Reduces blocking CSS from 165KB → ~20KB.
-// Wrapped in LazySection so component chunks (incl. GSAP) only download when
-// the section is ~500px from the viewport — avoids loading 391 KiB of GSAP upfront.
+// ── First-visible sections (priority order) ──
+const TrustedPartnersSection = dynamic(() => import("@/components/organisms/TrustedPartnersSection"), { ssr: false });
+const RecentLaunchSection = dynamic(() => import("@/components/organisms/RecentLaunchSection"), { ssr: false });
+const Customers = dynamic(() => import("@/components/organisms/Customers"), { ssr: false });
+const WhatMakesUsDifferentSection = dynamic(() => import("@/components/organisms/WhatMakesUsDifferentSection"), { ssr: false });
+const MeasurableImpactSection = dynamic(() => import("@/components/organisms/MeasurableImpactSection"), { ssr: false });
+const ConcentricEllipseSection = dynamic(() => import("@/components/organisms/ConcentricEllipseSection"), { ssr: false });
+
+// ── Remaining sections ──
 const StatsSection = dynamic(() => import("@/components/organisms/NewPage"), { ssr: false });
 const VisionSystemSection = dynamic(() => import("@/components/organisms/VisionSystemSection"), { ssr: false });
 const SocialOrbitSection = dynamic(() => import("@/components/organisms/SocialOrbitSection"), { ssr: false });
-// const EcosystemSection = dynamic(() => import("@/components/organisms/EcosystemSection"), { ssr: false });
 const ProcessTimelineSection = dynamic(() => import("@/components/organisms/ProcessTimelineSection"), { ssr: false });
 const RevenueSection = dynamic(() => import("@/components/organisms/RevenueSection"), { ssr: false });
-const MeasurableImpactSection = dynamic(() => import("@/components/organisms/MeasurableImpactSection"), { ssr: false });
 const BuildEcosystemSection = dynamic(() => import("@/components/organisms/BuildEcosystemSection"), { ssr: false });
 const SolutionFitBreakdownSection = dynamic(() => import("@/components/organisms/SolutionFitBreakdownSection"), { ssr: false });
-const TrustedPartnersSection = dynamic(() => import("@/components/organisms/TrustedPartnersSection"), { ssr: false });
-const RecentLaunchSection = dynamic(() => import("@/components/organisms/RecentLaunchSection"), { ssr: false });
-const CaseStudiesSection = dynamic(() => import("@/components/organisms/CaseStudiesSection"), { ssr: false });
-const Customers = dynamic(() => import("@/components/organisms/Customers"), { ssr: false });
-const WhatMakesUsDifferentSection = dynamic(() => import("@/components/organisms/WhatMakesUsDifferentSection"), { ssr: false });
-const ConcentricEllipseSection = dynamic(() => import("@/components/organisms/ConcentricEllipseSection"), { ssr: false });
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <ScrollIndicator />
       <Landing />
-      {/* Near-fold sections: lighter preload window to reduce initial JS/network contention. */}
       <div className={styles.sectionsWrapper}>
-        <LazySection minHeight="600px" rootMargin="100px">
-          <StatsSection />
-        </LazySection>
-        <LazySection minHeight="800px" rootMargin="120px">
-          <VisionSystemSection />
-        </LazySection>
-        <LazySection minHeight="600px">
-          <SocialOrbitSection />
-        </LazySection>
-        <LazySection minHeight="820px">
-          <ProcessTimelineSection />
-        </LazySection>
-        <LazySection minHeight="800px">
-        <RevenueSection />
-        </LazySection>
-        <LazySection minHeight="700px">
-          <BuildEcosystemSection />
-        </LazySection>
-        <LazySection minHeight="600px">
-          <SolutionFitBreakdownSection />
-        </LazySection>
-        <LazySection minHeight="500px">
+
+        {/* ── First visible ── */}
+        <LazySection minHeight="500px" rootMargin="100px">
           <TrustedPartnersSection />
         </LazySection>
         <LazySection minHeight="1200px">
           <RecentLaunchSection />
         </LazySection>
-        {/* <LazySection minHeight="800px">
-          <CaseStudiesSection />
-        </LazySection> */}
         <LazySection minHeight="400px">
           <Customers />
         </LazySection>
@@ -75,9 +49,35 @@ export default function Home() {
         <LazySection minHeight="600px">
           <MeasurableImpactSection />
         </LazySection>
+
+        {/* ── Remaining ── */}
+        <LazySection minHeight="600px">
+          <StatsSection />
+        </LazySection>
+        <LazySection minHeight="800px">
+          <VisionSystemSection />
+        </LazySection>
+        <LazySection minHeight="600px">
+          <SocialOrbitSection />
+        </LazySection>
+        <LazySection minHeight="820px">
+          <ProcessTimelineSection />
+        </LazySection>
+        <LazySection minHeight="800px">
+          <RevenueSection />
+        </LazySection>
+        <LazySection minHeight="700px">
+          <BuildEcosystemSection />
+        </LazySection>
+        <LazySection minHeight="600px">
+          <SolutionFitBreakdownSection />
+        </LazySection>
+
+        {/* ── Last section — CTA ── */}
         <LazySection minHeight="600px">
           <ConcentricEllipseSection />
         </LazySection>
+
       </div>
     </main>
   );

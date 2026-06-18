@@ -18,10 +18,17 @@ const TABS: { id: TabId; label: string }[] = [
 const CARD_STICKY_TOP = 88; // px — base top for the first card
 const CARD_STACK_OFFSET = 10; // px — additional offset per card index
 
-// ── Arrow icon ────────────────────────────────────────────────────────
+// ── Arrow icon (card CTA) ────────────────────────────────────────────
 const ArrowUpRight = () => (
   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
     <path d="M2 11L11 2M11 2H5M11 2V8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+// ── Arrow icon (See all button) ──────────────────────────────────────
+const ArrowRight = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -228,6 +235,13 @@ const RecentLaunchSection = () => {
           ))}
         </div>
       )}
+
+      {/* ── See all button ── */}
+      <div className={styles.seeAllRow}>
+        <Link href={ROUTES.PROJECTS} className={styles.seeAllBtn}>
+          See all <ArrowRight />
+        </Link>
+      </div>
 
     </section>
   );
