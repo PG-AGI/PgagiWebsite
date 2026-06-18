@@ -229,6 +229,13 @@ const RecentLaunchSection = () => {
         </div>
       )}
 
+      {/* ── See all button ── */}
+      <div className={styles.seeAllRow}>
+        <Link href={ROUTES.WHAT_WE_THINK_CASE_STUDIES} className={styles.seeAllBtn}>
+          See all <ArrowUpRight />
+        </Link>
+      </div>
+
     </section>
   );
 };
