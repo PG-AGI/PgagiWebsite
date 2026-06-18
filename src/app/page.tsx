@@ -49,9 +49,6 @@ export default function Home() {
         <LazySection minHeight="600px">
           <MeasurableImpactSection />
         </LazySection>
-        <LazySection minHeight="600px">
-          <ConcentricEllipseSection />
-        </LazySection>
 
         {/* ── Remaining ── */}
         <LazySection minHeight="600px">
@@ -74,6 +71,11 @@ export default function Home() {
         </LazySection>
         <LazySection minHeight="600px">
           <SolutionFitBreakdownSection />
+        </LazySection>
+
+        {/* ── Last section — CTA ── */}
+        <LazySection minHeight="600px">
+          <ConcentricEllipseSection />
         </LazySection>
 
       </div>
