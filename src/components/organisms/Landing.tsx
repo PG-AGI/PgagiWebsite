@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import bgImage from "../../../public/background.png";
 import bgImageMobile from "../../../public/background-mobile.png";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import landingText from "@/constants/uiText/landing.json";
@@ -51,14 +50,11 @@ export default function Landing() {
   <div className={styles.heroBg} aria-hidden="true">
     {/* Desktop — hidden below 768px via CSS, not downloaded on mobile */}
 {/* Desktop */}
-<Image
-  src={bgImage}
+{/* eslint-disable-next-line @next/next/no-img-element */}
+<img
+  src="/pgagi_hero_background.svg"
   alt=""
-  priority
-  fetchPriority="high"
-  placeholder="blur"
-  sizes="100vw"
-  quality={75}
+  aria-hidden="true"
   className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
 />
 
