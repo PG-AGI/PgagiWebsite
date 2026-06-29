@@ -1,6 +1,6 @@
 .section {
   background: #ffffff;
-  padding: 150px 0;
+  padding: 260px 0 150px;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 800px;

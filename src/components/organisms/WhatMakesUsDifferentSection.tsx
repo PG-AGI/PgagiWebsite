@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef, type CSSProperties } from "react";
 import { motion } from "@/lib/motion-lite";
 import styles from "@/styles/components/organisms/WhatMakesUsDifferentSection.module.scss";
 import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
@@ -95,17 +95,6 @@ const cardVariants = {
   }
 };
 
-const arrowVariants = {
-  hidden: { opacity: 0 },
-  visible: (i: number) => ({
-    opacity: 1,
-    transition: {
-      delay: 0.1 + i * 0.06,
-      duration: 0.3,
-    }
-  })
-};
-
 const FlowArrow = ({
   direction,
   className,
@@ -116,46 +105,15 @@ const FlowArrow = ({
   delayStep?: number;
 }) => {
   return (
-    <motion.div 
-      className={`${styles.flow} ${styles[direction]} ${className ?? ""}`} 
+    <div
+      className={`${styles.flow} ${styles[direction]} ${className ?? ""}`}
       aria-hidden
-      custom={delayStep}
-      variants={arrowVariants}
+      // `--step` places this connector's synced pulse on the shared loop clock.
+      style={{ "--step": delayStep } as CSSProperties}
     >
-      <motion.span
-        className={styles.track}
-        variants={{
-          hidden: {
-            scaleY: direction === "down" || direction === "up" ? 0 : 1,
-            scaleX: direction === "right" ? 0 : 1,
-            transformOrigin: direction === "down" ? "top" : direction === "up" ? "bottom" : "left"
-          },
-          visible: {
-            scaleY: 1,
-            scaleX: 1,
-            transition: {
-              delay: 0.05 + delayStep * 0.06,
-              duration: MOTION_DURATION.fast,
-              ease: FRAMER_EASE.snappyOut,
-            }
-          }
-        }}
-      />
-      <motion.span
-        className={styles.tracer}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { delay: 0.1 + delayStep * 0.06, duration: 0.2 } }
-        }}
-      />
-      <motion.span
-        className={styles.head}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { delay: 0.1 + delayStep * 0.06, duration: 0.2 } }
-        }}
-      />
-    </motion.div>
+      <span className={styles.track} />
+      <span className={styles.head} />
+    </div>
   );
 };
 
@@ -182,6 +140,26 @@ const ArtCard = ({ card }: { card: CardArt }) => {
 };
 
 const WhatMakesUsDifferentSection = () => {
+  // Run the CSS spotlight loop only while the section is on screen: the
+  // observer toggles `.playing`, so the animation auto-pauses (and costs
+  // nothing) when scrolled away. Pure IntersectionObserver — no per-frame JS.
+  const boardRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = boardRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        el.classList.toggle(styles.playing, entry.isIntersecting);
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className={styles.section} id="what-makes-us-different">
       <div className={styles.container}>
@@ -196,6 +174,7 @@ const WhatMakesUsDifferentSection = () => {
         </motion.h2>
 
         <motion.div
+          ref={boardRef}
           className={styles.board}
           initial="hidden"
           whileInView="visible"

@@ -406,7 +406,9 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 .seeAllRow {
   display: flex;
   justify-content: center;
-  padding: 2rem 0 3rem;
+  /* small gap above so the button reads as part of the cards stack,
+     comfortable gap below so it stays anchored inside this section */
+  padding: clamp(0.5rem, 1.5vw, 1rem) 0 clamp(2.5rem, 5vw, 4rem);
   position: relative;
   z-index: 10;
   background: #ffffff;
@@ -416,11 +418,12 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.75rem 2rem;
+  /* match the "View case study" (.ctaPrimary) button dimensions */
+  padding: 0.62rem 1.3rem;
   border-radius: 999px;
   background: #9f0000;
   color: #ffffff;
-  font-size: clamp(0.88rem, 1vw, 0.96rem);
+  font-size: clamp(0.8rem, 0.92vw, 0.88rem);
   font-weight: 600;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
   text-decoration: none;

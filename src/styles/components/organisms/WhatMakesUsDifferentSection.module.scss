@@ -12,7 +12,9 @@
 
 .container {
   width: 100%;
-  max-width: 82vw;
+  // Cap so the board never scales past the artwork's native ~1280px size
+  // (was 82vw uncapped, which over-inflated the cards on wide screens).
+  max-width: min(82vw, 1180px);
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
@@ -142,46 +144,73 @@
   height: auto;
 }
 
+// ── Process-flow spotlight ──────────────────────────────────────────────
+// An automated, calm loop: the "active" card brightens, lifts, and glows as
+// it travels along the reading order; the rest sit at a light dim (~85%) so
+// they stay readable. ~1s per card + a rest beat, then it repeats.
+// 100% CSS (opacity / transform / box-shadow — all composited) and gated by
+// the `.playing` class, which the IntersectionObserver only adds while the
+// section is on screen — so it costs nothing when scrolled away.
+.playing .cardFrame {
+  opacity: 0.85; // resting dim while the loop runs
+  animation: stepCycle 7.5s linear infinite;
+}
+
+// Reading order: top-left → mid-left → bottom-left → bottom-right → mid-right → top-right
+.playing .leftTop .cardFrame    { animation-delay: 0s; }
+.playing .leftMiddle .cardFrame { animation-delay: 1s; }
+.playing .leftBottom .cardFrame { animation-delay: 2s; }
+.playing .rightBottom .cardFrame { animation-delay: 3s; }
+.playing .rightMiddle .cardFrame { animation-delay: 4s; }
+.playing .rightTop .cardFrame   { animation-delay: 5s; }
+
+// One ~1s active "bump" near the start of the cycle, then dim for the rest of
+// the lap (1s ≈ 13.3% of the 7.5s loop; boxes 1–6 fire at 0–5s, then a rest
+// beat from ~6.4s to 7.5s before the next lap). Per-keyframe easing makes the
+// lift glide up and settle back smoothly instead of ramping linearly.
+@keyframes stepCycle {
+  0% {
+    opacity: 0.85;
+    transform: translateY(0) scale(1);
+    box-shadow: 0 8px 16px rgba(32, 24, 14, 0.08);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); // ease-out: glide up
+  }
+  5%,
+  9% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.018);
+    box-shadow:
+      0 0 0 3px rgba(150, 112, 60, 0.5),
+      0 18px 40px rgba(150, 110, 48, 0.34);
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); // ease-in-out: settle back
+  }
+  17%,
+  100% {
+    opacity: 0.85;
+    transform: translateY(0) scale(1);
+    box-shadow: 0 8px 16px rgba(32, 24, 14, 0.08);
+  }
+}
+
 .flow {
   position: relative;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  // Establishes a container query context so tracer can use cqh/cqi
-  // units in transform instead of animating top/left (non-composited)
-  container-type: size;
 }
 
+// Connector line — thicker and intentional; rests at low contrast and
+// brightens on cue (see the synced pulse below).
 .track {
   position: absolute;
   border-radius: 999px;
-  background: #998a7b;
-  opacity: 0.9;
-}
-
-.tracer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0.36rem;
-  height: 0.36rem;
-  border-radius: 999px;
-  background: #867665;
-  box-shadow: 0 0 0 4px rgba(134, 118, 101, 0.15);
-  will-change: transform, opacity;
-}
-
-.head {
-  position: absolute;
-  width: 0.56rem;
-  height: 0.56rem;
-  border-right: 2px solid #867665;
-  border-bottom: 2px solid #867665;
+  background: #a6824f;
+  opacity: 0.45;
 }
 
 .down .track,
 .up .track {
-  width: 2px;
+  width: 3px;
   height: 100%;
   left: 50%;
   top: 0;
@@ -190,43 +219,72 @@
 
 .right .track {
   width: 100%;
-  height: 2px;
+  height: 3px;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.down .tracer {
-  animation: moveDown 1.7s ease-in-out infinite;
-}
-
-.up .tracer {
-  animation: moveUp 1.7s ease-in-out infinite;
-}
-
-.right .tracer {
-  animation: moveRight 1.7s ease-in-out infinite;
+// Solid triangular arrowhead built from borders — a clean, real arrow that
+// reads as direction (replaces the old rotated-border chevron that looked
+// like a little square).
+.head {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0.55;
 }
 
 .down .head {
   left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 0) rotate(45deg);
-  animation: bobDown 1.3s ease-in-out infinite;
+  bottom: -2px;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid #a6824f;
 }
 
 .up .head {
   left: 50%;
-  top: 0;
-  transform: translate(-50%, 0) rotate(-135deg);
-  animation: bobUp 1.3s ease-in-out infinite;
+  top: -2px;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #a6824f;
 }
 
 .right .head {
-  right: 0;
   top: 50%;
-  transform: translate(0, -50%) rotate(-45deg);
-  animation: bobRight 1.3s ease-in-out infinite;
+  right: -2px;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #a6824f;
+}
+
+// Synced pulse — each connector lights up as the spotlight hands off from its
+// source card to the next. `--step` (set per-arrow from `delayStep`) places it
+// on the same 7.5s timeline, ~0.35s after its source card lights.
+.playing .track,
+.playing .head {
+  animation: connectorPulse 7.5s linear infinite;
+  animation-delay: calc((var(--step, 1) - 1) * 1s + 0.35s);
+}
+
+@keyframes connectorPulse {
+  0% {
+    opacity: 0.45;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); // ease-out: brighten in
+  }
+  4%,
+  12% {
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); // ease-in-out: fade back
+  }
+  20%,
+  100% {
+    opacity: 0.45;
+  }
 }
 
 .mobileStack {
@@ -237,78 +295,6 @@
 
 .mobileFlow {
   height: 1.35rem;
-}
-
-@keyframes moveDown {
-  0% {
-    transform: translateX(calc(50cqi - 50%)) translateY(0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(50cqi - 50%)) translateY(calc(100cqh - 0.36rem));
-    opacity: 0;
-  }
-}
-
-@keyframes moveUp {
-  0% {
-    transform: translateX(calc(50cqi - 50%)) translateY(calc(100cqh - 0.36rem));
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(50cqi - 50%)) translateY(0);
-    opacity: 0;
-  }
-}
-
-@keyframes moveRight {
-  0% {
-    transform: translateX(0) translateY(calc(50cqh - 50%));
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(100cqi - 0.36rem)) translateY(calc(50cqh - 50%));
-    opacity: 0;
-  }
-}
-
-@keyframes bobDown {
-  0%,
-  100% {
-    transform: translate(-50%, 0) rotate(45deg);
-  }
-  50% {
-    transform: translate(-50%, 2px) rotate(45deg);
-  }
-}
-
-@keyframes bobUp {
-  0%,
-  100% {
-    transform: translate(-50%, 0) rotate(-135deg);
-  }
-  50% {
-    transform: translate(-50%, -2px) rotate(-135deg);
-  }
-}
-
-@keyframes bobRight {
-  0%,
-  100% {
-    transform: translate(0, -50%) rotate(-45deg);
-  }
-  50% {
-    transform: translate(2px, -50%) rotate(-45deg);
-  }
 }
 
 @media (max-width: 860px) {
@@ -350,6 +336,28 @@
   .cardFrame {
     border-radius: 0.62rem;
   }
+
+  // Mobile stack is already in flow order (top → bottom); stagger the spotlight
+  // down the column. `:nth-of-type` counts only the <article> cards, skipping
+  // the arrow <div>s in between.
+  .playing .mobileStack .cardFrame:nth-of-type(1) {
+    animation-delay: 0s;
+  }
+  .playing .mobileStack .cardFrame:nth-of-type(2) {
+    animation-delay: 1s;
+  }
+  .playing .mobileStack .cardFrame:nth-of-type(3) {
+    animation-delay: 2s;
+  }
+  .playing .mobileStack .cardFrame:nth-of-type(4) {
+    animation-delay: 3s;
+  }
+  .playing .mobileStack .cardFrame:nth-of-type(5) {
+    animation-delay: 4s;
+  }
+  .playing .mobileStack .cardFrame:nth-of-type(6) {
+    animation-delay: 5s;
+  }
 }
 
 @media (max-width: 480px) {
@@ -368,5 +376,19 @@
 
   .mobileFlow {
     height: 1.2rem;
+  }
+}
+
+// Honour reduced-motion: stop the loop entirely and leave every card fully
+// lit and static. Order is still legible from the arrows.
+@media (prefers-reduced-motion: reduce) {
+  .playing .cardFrame,
+  .playing .track,
+  .playing .head {
+    animation: none;
+  }
+
+  .playing .cardFrame {
+    opacity: 1;
   }
 }

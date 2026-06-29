@@ -2,6 +2,7 @@
   position: relative;
   background: #090c12; // Deep dark background as requested
   padding: 150px 0 150px;
+  border-radius: 2rem; // Soften the dark box corners to match other sections
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 800px;
@@ -14,6 +15,7 @@
     right: 0;
     bottom: 0;
     z-index: 0;
+    border-radius: inherit; // Clip the red glow overlay to the rounded corners
     background:
       radial-gradient(
         110% 80% at 50% -10%,
