@@ -63,6 +63,25 @@
     z-index: 20;
   }
 
+  /* Opt-in (centerCards): vertically centre the pinned card in the space
+     below the navbar instead of pinning it to the top. Desktop only — the
+     mobile stacked layout is intentionally left untouched. */
+  &.centered {
+    @media (min-width: 768px) {
+      .container {
+        justify-content: center;
+      }
+
+      .stackArea {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 1240px; // matches the Revenue card cap
+        margin-inline: auto;
+        aspect-ratio: 1240 / 482; // = the card's box, so top:0 fills it exactly
+      }
+    }
+  }
+
   /* Mobile pinned: same absolute layout as desktop, smaller padding */
   @media (max-width: 767px) {
     .viewport {

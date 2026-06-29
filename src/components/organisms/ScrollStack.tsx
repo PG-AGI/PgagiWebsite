@@ -44,6 +44,9 @@ type ScrollStackProps = {
   cardOverlap?: number;
   preRoll?: number;
   scrollMultiplier?: number;
+  /** Desktop only: vertically centre the pinned card in the viewport
+      instead of pinning it to the top of the stack area. */
+  centerCards?: boolean;
 };
 
 const ScrollStack = ({
@@ -58,6 +61,7 @@ const ScrollStack = ({
   cardOverlap = 0.35,
   preRoll = 0,
   scrollMultiplier = 1,
+  centerCards = false,
 }: ScrollStackProps) => {
   const sectionRef   = useRef<HTMLElement>(null);
   const viewportRef  = useRef<HTMLDivElement>(null);
@@ -263,11 +267,12 @@ const ScrollStack = ({
 
   const layoutClass    = animated ? styles.animated : styles.static;
   const mobileFlowClass = mobileMode === "flow" ? styles.mobileFlow : "";
+  const centerClass     = centerCards ? styles.centered : "";
 
   return (
     <section
       ref={sectionRef}
-      className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${className ?? ""}`.trim()}
+      className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${centerClass} ${className ?? ""}`.trim()}
       id={id}
       style={animated ? { height: `${count * 100 * scrollMultiplier}vh` } : undefined}
     >

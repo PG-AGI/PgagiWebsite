@@ -17,21 +17,21 @@ const visionCards = [
     title: visionSystemText.cards[0].title,
     points: visionSystemText.cards[0].points,
     outcome: visionSystemText.cards[0].outcome,
-    image: "/svgs/Landing/First.webp",
+    image: "/svgs/Landing/First-hd.webp",
     imageAlt: visionSystemText.cards[0].imageAlt,
   },
   {
     title: visionSystemText.cards[1].title,
     points: visionSystemText.cards[1].points,
     outcome: visionSystemText.cards[1].outcome,
-    image: "/svgs/Landing/Second.webp",
+    image: "/svgs/Landing/Second-hd.webp",
     imageAlt: visionSystemText.cards[1].imageAlt,
   },
   {
     title: visionSystemText.cards[2].title,
     points: visionSystemText.cards[2].points,
     outcome: visionSystemText.cards[2].outcome,
-    image: "/svgs/Landing/Third.webp",
+    image: "/svgs/Landing/Third-hd.webp",
     imageAlt: visionSystemText.cards[2].imageAlt,
   },
 ];
@@ -95,9 +95,10 @@ const CardContent = ({
           <Image
             src={image}
             alt={imageAlt}
-            width={520}
-            height={350}
-            sizes="(max-width: 768px) 88vw, 420px"
+            width={1000}
+            height={920}
+            quality={86}
+            sizes="(max-width: 768px) 88vw, 500px"
             className={styles.mediaImage}
             onLoad={handleImageLoad}
           />
@@ -108,7 +109,23 @@ const CardContent = ({
         <h3 className={styles.cardTitle}>{title}</h3>
         <ul className={styles.pointList}>
           {points.map((point) => (
-            <li key={point}>{point}</li>
+            <li key={point}>
+              <svg
+                className={styles.check}
+                viewBox="0 0 20 15"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M1 9.68C1 9.68 2.82 9.68 5.25 13.5C5.25 13.5 12 3.5 18 1.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span>{point}</span>
+            </li>
           ))}
         </ul>
         <p className={styles.outcome}>
