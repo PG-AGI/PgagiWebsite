@@ -10,7 +10,9 @@
 }
 
 /* ── Shared content-width limiter ── */
-$content-max: 1620px;
+/* ~1400px design reference (matches VisionSystem approach): content caps here
+   and centres on wider monitors so proportions read identically on every laptop/PC. */
+$content-max: 1400px;
 
 /* ─────────────────────────────────────────────────────────────────
    SECTION OUTER WRAPPERS
@@ -286,17 +288,17 @@ $content-max: 1620px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 5vw;          /* vw-based gap scales with screen width */
+  gap: clamp(32px, 3vw, 56px);   /* steady rhythm between cards, capped on wide monitors */
   box-sizing: border-box;
 
   @media (max-width: 900px) {
     width: 90vw;
-    gap: 3vw;
+    gap: 28px;
   }
 
   @media (max-width: 600px) {
     width: 92vw;
-    gap: 4vw;
+    gap: 24px;
   }
 }
 
@@ -306,8 +308,11 @@ $content-max: 1620px;
   grid-template-columns: 2.5fr 3fr;
   align-items: stretch;
   width: 100%;
-  min-height: 520px;
-  height: 80vh;
+  /* Figma: card is a fixed ~2.2:1 rectangle (≈1400×636 at the design reference).
+     A fixed aspect-ratio — instead of the old height:80vh — keeps the same shape on
+     every screen, so the image panel never stretches tall and magnifies the photo.
+     If the left column's content is ever taller, the card grows naturally. */
+  aspect-ratio: 2.2 / 1;
   background: #f2f2f3;
   border-radius: 10px;
   overflow: hidden;
@@ -321,7 +326,8 @@ $content-max: 1620px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    height: auto;       /* remove fixed 80vh so stacked content is never clipped */
+    aspect-ratio: auto;  /* stacked layout: height follows content + image box */
+    height: auto;
     min-height: auto;
     border-radius: 14px;
   }
@@ -351,7 +357,6 @@ $content-max: 1620px;
   overflow: hidden;
   background: #f2f2f3;
   height: 100%;
-  min-height: 400px;
 
   @media (max-width: 900px) {
     order: 1;
@@ -690,13 +695,14 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   display: grid;
   grid-template-columns: 2.5fr 3fr;
   align-items: stretch;
-  min-height: 520px;
+  aspect-ratio: 2.2 / 1;   /* match the loaded card so layout doesn't shift */
   background: #f2f2f3;
-  border-radius: 16px;
+  border-radius: 10px;
   overflow: hidden;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    aspect-ratio: auto;
     min-height: auto;
     border-radius: 14px;
   }
@@ -719,7 +725,6 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   position: relative;
   overflow: hidden;
   background: #e2e2e4;
-  min-height: 420px;
 
   &::after {
     content: '';

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import bgImageMobile from "../../../public/background-mobile.png";
+import bgImageMobile from "../../../public/hero-mountain-mobile.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import landingText from "@/constants/uiText/landing.json";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
@@ -48,13 +48,14 @@ export default function Landing() {
 
       {/* Hero media is rendered as next/image so the browser can prioritize it immediately for LCP. */}
   <div className={styles.heroBg} aria-hidden="true">
-    {/* Desktop — hidden below 768px via CSS, not downloaded on mobile */}
-{/* Desktop */}
+    {/* Desktop — mountain hero, hidden below 768px via CSS */}
 {/* eslint-disable-next-line @next/next/no-img-element */}
 <img
-  src="/pgagi_hero_background.svg"
+  src="/hero-mountain.webp"
   alt=""
   aria-hidden="true"
+  fetchPriority="high"
+  decoding="async"
   className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
 />
 

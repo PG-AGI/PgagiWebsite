@@ -7,6 +7,14 @@ $red: #9f0000;
 .outerWrapper {
   background: #ffffff;
   position: relative;
+  // The pinned scroll-stack leaves its trailing space *inside* the sticky
+  // viewport, so add real flow whitespace below it to match the inter-section
+  // gap used elsewhere (~150px desktop) before the next section.
+  padding-bottom: clamp(90px, 11vh, 150px);
+
+  @media (max-width: 768px) {
+    padding-bottom: clamp(60px, 8vh, 80px);
+  }
 }
 
 // ─── Static intro (heading → subtitle → image) ──────────────────

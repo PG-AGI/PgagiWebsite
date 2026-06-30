@@ -17,7 +17,7 @@
   /* Design tokens — rem + vw hybrid clamps scale with both viewport width AND browser zoom */
   --content-x:       clamp(1.25rem, 0.5rem + 3.5vw, 5rem);       /* 20 → 80px gutter */
   --h1-size:         clamp(2rem, 1rem + 3vw, 4.5rem);            /* 32 → 72px */
-  --h1-line:         clamp(2.75rem, 1.3rem + 4.2vw, 5.5rem);     /* 44 → 88px */
+  --h1-line:         clamp(2.625rem, 1.4rem + 3.9vw, 5.125rem);  /* 42 → 82px (Figma 164/2) */
   --body-size:       clamp(0.9375rem, 0.75rem + 0.45vw, 1.25rem); /* 15 → 20px */
   --body-line:       clamp(1.55rem, 1.3rem + 0.95vw, 2.1rem);    /* 24.8 → 33.6px */
   --cta-size:        clamp(0.8125rem, 0.7rem + 0.3vw, 1rem);     /* 13 → 16px */
@@ -33,18 +33,34 @@
   --card-radius:     clamp(1rem, 0.7rem + 0.6vw, 1.5rem);        /* 16 → 24px */
   --card-bg: rgba(0, 0, 0, 0.52);
   --card-shadow: -6px -6px 15.5px 0px rgba(255, 255, 255, 0.34);
-  --overlay: linear-gradient(to right,
-      rgba(0, 0, 0, 0.281) 0%,
-      rgba(0, 0, 0, 0.233) 45%,
-      rgba(0, 0, 0, 0.233) 75%,
-      transparent 100%);
+  /* DESKTOP: copied from Figma node 922:2107 (Ellipse 59 + Ellipse 63).
+     Both are soft blurred BLUE shapes — Ellipse 59 #4D76B7 (~0.37 a) and
+     Ellipse 63 #567BAA (multiply) over the headline. Net effect: a medium-blue
+     wash weighted to the LEFT / top-left, fading to transparent before centre
+     so the mountain photo + the man/robot on the right stay clearly visible. */
+  --overlay:
+    radial-gradient(48% 44% at 32% 29%,
+      rgba(86, 123, 170, 0.55) 0%,
+      rgba(86, 123, 170, 0.16) 56%,
+      rgba(86, 123, 170, 0) 78%),
+    linear-gradient(100deg,
+      rgba(77, 118, 183, 0.70) 0%,
+      rgba(77, 118, 183, 0.44) 22%,
+      rgba(77, 118, 183, 0.20) 40%,
+      rgba(77, 118, 183, 0.05) 56%,
+      rgba(77, 118, 183, 0) 70%);
 
   position: relative;
   width: 100%;
-  min-height: 100dvh;
+  /* The hero fits a single viewport but is capped so that on tall/large
+     desktops the CTA→cards gap stays tight (matches Figma's proportions)
+     heroInner fills this height and uses space-between to pin the heading to
+     the top and the cards to the bottom. (Desktop makes the section taller so
+     the image bleeds below the fold — see the min-width:993px block.) */
+  min-height: min(100dvh, 68rem);
   margin: 0;
-  /* Allow the section to grow taller than 100dvh on tiny screens so content
-     never gets clipped behind the fixed nav; only block horizontal overflow. */
+  /* Only grows past the viewport on very short screens so nothing is clipped
+     behind the fixed nav; block horizontal overflow. */
   overflow-x: hidden;
   overflow-y: visible;
   display: flex;
@@ -80,6 +96,10 @@
 
   .heroBgDesktop {
     display: block;
+    /* Image is cropped so the man+robot pair sits at ~73% width (centred over
+       the right card). object-position Y places their feet just above the
+       cards across common desktop heights. */
+    object-position: center 64%;
   }
 
   .heroBgMobile {
@@ -110,30 +130,54 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 0 var(--content-x);
+  flex: 1 1 auto;     /* fill the hero's 100dvh */
+  min-height: 0;
+  /* Content is capped to the 1400px design reference (same as VisionSystem /
+     SocialOrbit) and centred, with ~4vw fluid gutters below 1522px so every
+     laptop/desktop renders the same proportions. Top padding clears the fixed
+     60px banner + nav, then ~120px of breathing room below the nav before the
+     headline (matches Figma); space-between pins the headline near the top and
+     the cards to the bottom. Scales with width so every desktop looks the same. */
+  padding-top: clamp(9rem, 3rem + 13vw, 16rem);
+  padding-bottom: clamp(1.75rem, 2.5vh, 3rem);
+  padding-left: max(4vw, calc((100% - 1400px) / 2));
+  padding-right: max(4vw, calc((100% - 1400px) / 2));
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  /* No flex: 1 — heroContent drives the height via min-height: 100dvh */
+  justify-content: space-between;
+  gap: clamp(1.25rem, 3vh, 2.5rem);
+}
+
+/* Desktop (cards side-by-side, ≥993px): make the hero TALLER than the viewport
+   so the background image continues below the fold (no hard cut at the screen
+   edge — it flows toward the next section). The content (heading + cards) is
+   decoupled to its own ~viewport-height box pinned at the top, so the cards
+   stay on the first screen — nudged a bit lower — instead of riding the
+   taller hero all the way down. Heading/figures/gradient are unchanged. */
+@media (min-width: 993px) {
+  .hero {
+    min-height: 112dvh;     /* image bleeds ~12% below the fold */
+  }
+  .heroInner {
+    flex: 0 0 auto;
+    height: 104dvh;         /* content box: cards sit a touch lower (just past the fold) */
+    min-height: 0;
+    padding-bottom: clamp(0.25rem, 0.4vh, 0.6rem);
+  }
 }
 
 /* ─── Hero content — occupies the entire first viewport ─── */
 .heroContent {
   width: 100%;
-  /* First screen: heading + subtext + CTA fills at least one full viewport.
-     Announcement bar (60px) + nav (68px) = ~128px fixed chrome — 8rem clears it. */
-  padding: clamp(8rem, 16vh, 11rem) 0 clamp(3rem, 6vh, 5rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   gap: clamp(0.85rem, 1.6vh, 1.5rem);
-  /* Takes up exactly one viewport height minimum so cards start below the fold */
-  min-height: 100dvh;
-  flex: 0 0 auto;   /* mobile overrides this to flex:1 via heroInner min-height strategy */
+  flex: 0 0 auto;   /* natural height; pinned to the top by heroInner space-between */
   box-sizing: border-box;
-  margin-top: 4rem;
-  margin-left: clamp(0rem, 1.5vw, 2rem);
+  margin-left: 0;
 }
 
 .heroHeading {
@@ -152,11 +196,11 @@
 .heroSubtext {
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--body-size);
-  font-weight: 600;
+  font-weight: 500;
   line-height: var(--body-line);
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.92);
   margin: 0;
-  max-width: 560px;
+  max-width: 600px;
   letter-spacing: 0;
   animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
 }
@@ -227,12 +271,13 @@
    ===================================================== */
 .heroCards {
   width: 100%;
-  margin-top: clamp(-4rem, -8vh, -2rem);
-  padding-bottom: clamp(2.5rem, 5vh, 4rem);
+  margin-top: 0;
+  padding-bottom: 0;   /* bottom spacing now lives on heroInner */
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 1.26fr) minmax(0, 1fr);
   gap: var(--cards-gap);
+  flex: 0 0 auto;      /* pinned to the bottom by heroInner space-between */
   animation: cardsEntry 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
 }
 
@@ -475,21 +520,33 @@
 
 /* ─── Tablet + Mobile ─── */
 @media (max-width: 768px) {
+  /* Mobile keeps a full-viewport hero (desktop is content/width-driven above). */
+  .hero {
+    min-height: 100svh;
+    /* Mobile shows the mountain photo clearly (not the desktop haze) — a dark
+       vignette for white-text legibility, matching the mobile Figma. */
+    --overlay:
+      linear-gradient(180deg,
+        rgba(3, 11, 33, 0.62) 0%,
+        rgba(3, 11, 33, 0.18) 16%,
+        rgba(3, 11, 33, 0) 36%),
+      radial-gradient(125% 95% at 12% 22%,
+        rgba(4, 13, 40, 0.52) 0%,
+        rgba(4, 13, 40, 0.20) 38%,
+        rgba(4, 13, 40, 0) 62%);
+  }
+
   /* heroInner owns the first-viewport height; heroContent grows to fill it */
   .heroInner {
     min-height: 100svh;
   }
 
   .heroContent {
-    /* Grow to fill heroInner's 100svh so centering has real space to work with */
+    /* Grow to fill heroInner so the heading centres vertically (heroInner owns
+       the nav-clearance padding; don't double it here). */
     flex: 1 1 auto;
-    min-height: unset;
     margin-left: 0;
-    margin-top: 0;
     justify-content: center;
-    /* Top padding = announcement bar (~2.5rem) + nav (~4rem) + breathing room */
-    padding-top: 8rem;
-    padding-bottom: 3rem;
     gap: 1.1rem;
   }
 
@@ -510,10 +567,8 @@
 }
 
 @media (max-width: 600px) {
-  .cardGrid {
-    display: none;
-  }
-
+  /* Figma mobile keeps the capabilities visible — stacked under the AI×IoT
+     card as one merged unit (corners handled by the ≤992px rule). */
   .heroContent {
     padding-top: 7.5rem;
     padding-bottom: 2.5rem;
@@ -544,20 +599,15 @@
   }
 
   .capabilityCell {
-    padding: 12px 14px;
-    font-size: 0.72rem;
-    white-space: nowrap;
+    padding: 14px 14px;
+    font-size: 0.78rem;
+    white-space: normal;
+    line-height: 1.2;
     border-right: 1px solid rgba(197, 181, 169, 0.27);
     border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 
     &:nth-child(2n) { border-right: none; }
     &:nth-last-child(-n+2) { border-bottom: none; }
-  }
-
-  /* cardGrid hidden — cardWide is now the only card, restore all 4 corners */
-  .cardWide {
-    border-radius: 24px;
-    border-bottom: none;
   }
 }
 

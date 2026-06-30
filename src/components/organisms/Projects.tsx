@@ -251,8 +251,10 @@ export default function Projects() {
                         src={getSafeImageUrl(cs.coverImage)}
                         alt={cs.title}
                         fill
+                        sizes="(max-width: 900px) 92vw, (max-width: 1600px) 48vw, 760px"
+                        quality={82}
                         className={styles.csImg}
-                        style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
                         onError={(e) => { (e.target as HTMLImageElement).src = '/images/aboutus.png'; }}
                       />
                     </div>
