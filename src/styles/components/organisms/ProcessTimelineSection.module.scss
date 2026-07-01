@@ -14,16 +14,16 @@
 .container {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: 82vw;
+  // Match the "How we scale your product" (SocialOrbitSection) box exactly:
+  // caps at 1400px, fluid ≈92vw below — so both boxes share identical edges
+  // and this box narrows on wide screens instead of overshooting.
+  width: min(1400px, 92vw);
   margin: 0 auto;
-  padding: 0 1vw;
-  position: relative;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
+    width: 100%;
     padding: 0 1.25rem;
-    max-width: 100%;
   }
 }
 

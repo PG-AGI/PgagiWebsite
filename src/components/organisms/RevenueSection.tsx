@@ -6,7 +6,7 @@ import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import styles from "@/styles/components/organisms/RevenueSection.module.scss";
 import revenueSectionText from "@/constants/uiText/revenueSection.json";
 
-// Illustration panels exported @2x from Figma — intrinsic sizes match the
+// Illustration panels exported @3x from Figma — intrinsic sizes match the
 // on-disk WebPs so next/image serves correctly sized, crisp output.
 const revenueCards = [
   {
@@ -15,8 +15,8 @@ const revenueCards = [
     outcome: revenueSectionText.cards[0].outcome,
     image: "/svgs/Revenue/First.webp",
     imageAlt: revenueSectionText.cards[0].imageAlt,
-    imageWidth: 1040,
-    imageHeight: 957,
+    imageWidth: 1491,
+    imageHeight: 1372,
   },
   {
     title: revenueSectionText.cards[1].title,
@@ -24,8 +24,9 @@ const revenueCards = [
     outcome: revenueSectionText.cards[1].outcome,
     image: "/svgs/Revenue/Second.webp",
     imageAlt: revenueSectionText.cards[1].imageAlt,
-    imageWidth: 1040,
-    imageHeight: 953,
+    imageWidth: 1470,
+    imageHeight: 1347,
+    highlightPoints: ["Human-in-the-loop control"],
   },
   {
     title: revenueSectionText.cards[2].title,
@@ -33,8 +34,8 @@ const revenueCards = [
     outcome: revenueSectionText.cards[2].outcome,
     image: "/svgs/Revenue/Third.webp",
     imageAlt: revenueSectionText.cards[2].imageAlt,
-    imageWidth: 1080,
-    imageHeight: 979,
+    imageWidth: 1542,
+    imageHeight: 1398,
   },
 ];
 
@@ -79,7 +80,7 @@ const RevenueSection = () => {
         id="revenue-system"
         animated={true}
         centerCards
-        scrollMultiplier={1.8}
+        scrollMultiplier={1.2}
       >
         {revenueCards.map((card, i) => (
           <ScrollStackItem
@@ -102,6 +103,7 @@ const CardContent = ({
   imageAlt,
   imageWidth,
   imageHeight,
+  highlightPoints = [],
   priority = false,
 }: {
   title: string;
@@ -111,6 +113,7 @@ const CardContent = ({
   imageAlt: string;
   imageWidth: number;
   imageHeight: number;
+  highlightPoints?: string[];
   priority?: boolean;
 }) => (
   <>
@@ -121,8 +124,8 @@ const CardContent = ({
           alt={imageAlt}
           width={imageWidth}
           height={imageHeight}
-          quality={86}
-          sizes="(max-width: 900px) 70vw, 520px"
+          quality={95}
+          sizes="(max-width: 900px) 70vw, 560px"
           className={styles.mediaImage}
           priority={priority}
         />
@@ -147,7 +150,9 @@ const CardContent = ({
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{point}</span>
+            <span className={highlightPoints.includes(point) ? styles.pointHighlight : undefined}>
+              {point}
+            </span>
           </li>
         ))}
       </ul>

@@ -1,8 +1,18 @@
 .section {
   position: relative;
   background: #090c12; // Deep dark background as requested
-  padding: 9.375rem 0 9.375rem;
+  // Compact internal padding — the old 9.375rem (300px total) was fine as a
+  // full-bleed band's gap, but inside a centered card it just made the box far
+  // too tall. Neighbouring sections already provide the white gap around it.
+  padding: clamp(2.5rem, 4vw, 3.75rem) 0;
   border-radius: 2rem; // Soften the dark box corners to match other sections
+  // Match the "Process timeline" box: centered, capped at 1400px, fluid ≈92vw
+  // below — so this dark card lines up edge-to-edge with that section instead of
+  // spanning the full viewport. overflow:hidden clips the ambient glow to the
+  // rounded box so it can't bleed onto the white gutters.
+  width: min(1400px, 92vw);
+  margin: 0 auto;
+  overflow: hidden;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 800px;
@@ -255,6 +265,10 @@
 
 @media (max-width: 920px) {
   .section {
+    // Back to full-bleed on tablet/mobile so the horizontal-scroll pin and the
+    // edge-to-edge dark band behave exactly as before.
+    width: 100%;
+    overflow: visible;
     padding-top: 5rem;
     padding-bottom: 2.2rem;
   }

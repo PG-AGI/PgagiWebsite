@@ -7,6 +7,12 @@ $red: #9f0000;
 .outerWrapper {
   background: #ffffff;
   position: relative;
+  // Match the "You have the vision / We engineer the system" (VisionSystemSection)
+  // ScrollStack: cards cap at 87.5rem (1400px), fluid ≈92vw below, zero side gutter.
+  // Inherited by the nested ScrollStack .container so both sections' cards are
+  // exactly the same width at every viewport.
+  --scrollstack-container-max: min(87.5rem, 92vw);
+  --scrollstack-container-pad-x: 0;
   // The pinned scroll-stack leaves its trailing space *inside* the sticky
   // viewport, so add real flow whitespace below it to match the inter-section
   // gap used elsewhere (~150px desktop) before the next section.
@@ -84,9 +90,11 @@ $red: #9f0000;
   }
 }
 
-// Wide banner image — intentionally wider than the text block
+// Wide banner image — intentionally wider than the text block, but capped so
+// it matches the other section boxes (min(1400px, 92vw)) instead of overshooting
+// on wide screens. 1400px is also the video's native width — no upscaling.
 .headerImageWrapper {
-  width: 80vw;
+  width: min(1400px, 92vw);
   margin: 5vh auto 0;
   border-radius: 24px;
   overflow: hidden;
@@ -117,7 +125,9 @@ $red: #9f0000;
   flex-direction: row;
   align-items: center;
   width: 100%;
-  max-width: 77.5rem;
+  // 1400px — matches the VisionSystemSection card cap so these three cards are
+  // the same width as the "You have the vision" cards.
+  max-width: 87.5rem;
   margin-inline: auto;
   aspect-ratio: 1240 / 482;
   box-sizing: border-box;
@@ -127,13 +137,14 @@ $red: #9f0000;
   &.card1,
   &.card2,
   &.card3 {
-    background: #f5efea;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   }
 
   // ── Per-card horizontal geometry (% of 1240) ──
   // card1 — illustration left, copy right
   &.card1 {
+    background: #f0f8ff;
+
     .media {
       width: 40.081%; // 497 / 1240
       margin-left: 0.887%; // 11 / 1240
@@ -147,6 +158,7 @@ $red: #9f0000;
 
   // card2 — copy left, illustration right
   &.card2 {
+    background: #fff3ed;
     flex-direction: row-reverse;
 
     .media {
@@ -163,6 +175,8 @@ $red: #9f0000;
 
   // card3 — illustration left, copy right
   &.card3 {
+    background: #fcfee2;
+
     .media {
       width: 41.452%; // 514 / 1240
       margin-left: 0.645%; // 8 / 1240
@@ -289,6 +303,11 @@ $red: #9f0000;
     &:not(:last-child) {
       margin-bottom: -4px; // Figma row overlap
     }
+  }
+
+  // Points flagged via `highlightPoints` in the card config.
+  .pointHighlight {
+    color: #ff4040;
   }
 
   @media (max-width: 900px) {

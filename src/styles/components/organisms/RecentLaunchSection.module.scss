@@ -8,19 +8,33 @@
   position: relative;
   content-visibility: auto;
   contain-intrinsic-size: 0 2000px;
+  /* Height reserved for the sticky heading + tabs. Cards pin just below it so
+     the "Recent Launch" heading stays visible (and the tabs stay usable) while
+     the deck stacks — instead of the heading scrolling away and the cards
+     jamming under the navbar. Kept comfortably ≥ the heading block's real
+     height across breakpoints. */
+  --rl-header-h: clamp(196px, 25vh, 252px);
 }
 
-/* ── Top block: heading + filter tabs ── */
+/* ── Top block: heading + filter tabs — sticky so it stays on screen ── */
 .topBlock {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1.6rem, 3vw, 2.4rem);
-  padding: clamp(80px, 10vw, 120px) 0 clamp(3rem, 5vw, 5rem);
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  padding: clamp(84px, 9vh, 100px) 0 clamp(1.2rem, 2.5vh, 1.8rem);
   background: #ffffff;
-  /* stays above sticky cards */
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  /* above the sticky cards, which scroll underneath it */
+  z-index: 20;
+
+  @media (max-width: 768px) {
+    /* On mobile the cards don't pin (see .stickyCard), so neither does the
+       heading — keep it in normal flow. */
+    position: relative;
+    padding: clamp(64px, 12vw, 88px) 0 clamp(1.5rem, 4vw, 2.2rem);
+  }
 }
 
 .heading {
@@ -91,7 +105,8 @@
 /* ── Individual sticky card wrapper ── */
 .stickyCard {
   position: sticky;
-  /* top is set inline per card index */
+  /* Pin below the sticky heading; each successive card peeks 10px lower. */
+  top: calc(var(--rl-header-h) + var(--card-index, 0) * 10px);
   border-radius: 20px;
   overflow: hidden;
   /* Each successive card sits above the previous */

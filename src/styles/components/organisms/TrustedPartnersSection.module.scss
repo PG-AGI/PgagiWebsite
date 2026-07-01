@@ -14,6 +14,7 @@ $muted: #5f5f5f;
 $brand: #9f0000;
 $brand-soft: rgba(159, 0, 0, 0.16);
 $line: #e7e4e0;
+$bar: #d1d1d1; // light-grey accent bar (left of the logo)
 $hover-bg: #f8f4f1;
 
 .section {
@@ -33,7 +34,7 @@ $hover-bg: #f8f4f1;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 }
 
-/* ── Section heading ── */
+/* ── Section heading — centered above the grid ── */
 .heading {
   margin: 0 0 clamp(1.6rem, 3vw, 2.75rem);
   font-size: clamp(1.5rem, 2.4vw, 2.25rem);
@@ -41,7 +42,7 @@ $hover-bg: #f8f4f1;
   color: #111111;
   letter-spacing: -0.02em;
   line-height: 1.15;
-  text-align: left;
+  text-align: center;
 }
 
 /* ── Grid: 3 columns → 2 → 1 ──
@@ -98,8 +99,6 @@ $hover-bg: #f8f4f1;
    Clickable partner card — open, no box
 ───────────────────────────────────────── */
 .card {
-  --accent: #{$brand};
-
   position: relative;
   display: flex;
   flex-direction: column;
@@ -111,17 +110,18 @@ $hover-bg: #f8f4f1;
   isolation: isolate;
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* per-card colour accent bar (left of the logo) — always visible for a
-     colourful grid; grows on hover. NO background fill anywhere. */
+  /* light-grey accent bar — sits flush on the column separating line
+     (left edge of the card). Always visible; grows on hover. NO
+     background fill anywhere. */
   &::before {
     content: "";
     position: absolute;
-    left: 0.55rem;
+    left: 0;
     top: clamp(1.45rem, 2vw, 1.95rem);
     width: 0.25rem;
     height: 1.375rem;
     border-radius: 4px;
-    background: var(--accent);
+    background: $bar;
     transition: height 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 1;
   }
@@ -146,7 +146,7 @@ $hover-bg: #f8f4f1;
 
   /* accessible focus ring (kept after the shared rule so it wins) */
   &:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid $brand;
     outline-offset: 6px;
     border-radius: 6px;
   }
@@ -164,6 +164,17 @@ $hover-bg: #f8f4f1;
     .arrowWrap {
       transform: translate(3px, -3px) scale(0.82);
       transition-duration: 0.09s;
+    }
+  }
+
+  /* ── Mobile: single column, no dividers. Tighter side padding gives the
+     logo/text more room and keeps the accent bar close to the logo; a thin
+     light-grey rule separates the stacked cards. ── */
+  @media (max-width: 600px) {
+    padding: 1.4rem 1.1rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $line;
     }
   }
 }
@@ -203,14 +214,14 @@ $hover-bg: #f8f4f1;
   }
 }
 
-/* arrow — top right. Bare glyph (no circle), per-card accent colour.
-   Slides diagonally out on hover. */
+/* arrow — top right. Bare glyph (no circle), brand red (matches the
+   "View case study" CTA). Slides diagonally out on hover. */
 .arrowWrap {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
+  color: $brand;
   transition: transform 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -234,6 +245,14 @@ $hover-bg: #f8f4f1;
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  /* single column has room — show the full blurb, no clamp */
+  @media (max-width: 600px) {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
 }
 
 /* respect reduced-motion: kill the lift / sweep transitions */

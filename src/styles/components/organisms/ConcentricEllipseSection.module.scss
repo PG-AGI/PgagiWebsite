@@ -10,11 +10,12 @@
 
 .layout {
   --ring-scale: 1;
-  width: 100%;
-  max-width: 82vw;
+  // Match the previous section boxes: centered, capped at 1400px, fluid ≈92vw
+  // below — so the red surface lines up edge-to-edge with them instead of
+  // overshooting on wide screens.
+  width: min(1400px, 92vw);
   height: calc(458px * var(--ring-scale));
   margin: 0 auto;
-  padding: 0 1vw;
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -176,6 +177,7 @@
   .layout {
     --ring-scale: 0.76;
     width: calc(100% - 1.5rem);
+    max-width: 82vw; // preserve the tablet cap (base no longer sets one)
   }
 
   .contentCard {

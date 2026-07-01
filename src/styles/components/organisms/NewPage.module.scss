@@ -1,7 +1,6 @@
 .section {
   position: relative;
   background: #ffffff;
-  padding-right:5rem;
   padding-top: 9.375rem;
   padding-bottom: 9.375rem;
   min-height: 100vh;
@@ -25,7 +24,6 @@
   @media (max-width: 768px) {
     padding-top: 5rem;
     padding-bottom: 5rem;
-    padding-right: 0;
     min-height: unset;
     // flex-direction: column;
     // font-weight: 400;
@@ -38,9 +36,11 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 82vw;
+  // Match the "We engineer the system" ScrollStack card width so this section
+  // lines up edge-to-edge with the cards directly below it.
+  max-width: min(87.5rem, 92vw);
   margin: 0 auto;
-  padding: 0 1vw;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;

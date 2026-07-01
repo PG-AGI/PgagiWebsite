@@ -18,9 +18,15 @@ function scheduleScrollTriggerRefresh() {
   if (refreshTimer) clearTimeout(refreshTimer);
   refreshTimer = setTimeout(() => {
     refreshTimer = null;
-    void import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-      ScrollTrigger.refresh(true);
-    });
+    // Use the shared loader so ScrollTrigger is registered with gsap before we
+    // call refresh(). Calling refresh() on an unregistered ScrollTrigger throws
+    // ("Cannot read properties of undefined") because its internal gsap
+    // reference hasn't been wired up yet.
+    void import('@/lib/gsapLoader').then(({ loadScrollTrigger }) =>
+      loadScrollTrigger().then(({ ScrollTrigger }) => {
+        ScrollTrigger.refresh(true);
+      })
+    );
   }, 150);
 }
 
@@ -69,9 +75,14 @@ export default function LazySection({
         !shouldRender
           ? { minHeight }
           : {
-              // Skip paint/layout for off-screen sections entirely
+              // Skip paint/layout for off-screen sections entirely.
               contentVisibility: 'auto' as React.CSSProperties['contentVisibility'],
-              containIntrinsicSize: `0 ${minHeight}`,
+              // `auto` = use minHeight as the first guess, then remember the real
+              // rendered height and reuse it when the section scrolls back off
+              // screen. Without it, a tall (multi-hundred-vh) stacked section
+              // collapses to `minHeight` when skipped and jolts the page height
+              // as you scroll past / back — a visible scroll stutter.
+              containIntrinsicSize: `0 auto ${minHeight}`,
             }
       }
     >

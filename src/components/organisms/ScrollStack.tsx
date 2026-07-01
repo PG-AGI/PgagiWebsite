@@ -84,6 +84,12 @@ const ScrollStack = ({
 
   if (!section || !viewport || cards.length < 2) return;
 
+  // Mobile (non-"flow") uses a pure-CSS sticky stack (see ScrollStack.module.scss):
+  // no rAF loop, no scroll listener, no GSAP download — the compositor does all the
+  // work off the main thread. Only the explicit `flow` mode keeps a JS path on mobile.
+  const isMobile = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+  if (isMobile && mobileMode !== "flow") return;
+
   let cleanup: (() => void) | undefined;
   let cancelled = false;
   const currentLenis = lenis;
@@ -145,6 +151,16 @@ const ScrollStack = ({
     let headerShown = false;
     const landingOffset = isMobileViewport ? 0 : offset;
 
+    // Promote cards to compositor layers only while the section is on screen,
+    // instead of a permanent `will-change` in CSS that reserves GPU memory for
+    // every card on the page for the whole session.
+    let promoted = false;
+    const setPromoted = (on: boolean) => {
+      if (on === promoted) return;
+      promoted = on;
+      gsap.set(cards, { willChange: on ? "transform" : "auto" });
+    };
+
     const applyProgress = (p: number) => {
       const clamped = Math.max(0, Math.min(1, p));
       const scrollP = Math.max(0, clamped - preRoll);
@@ -205,6 +221,10 @@ const ScrollStack = ({
       const sectionTop = cachedSectionTop;
       const vh         = getVH();
 
+      // Section height in px must mirror the JSX `height` formula below.
+      const sectionHeightPx = ((count - 1) * scrollMultiplier + 1) * vh;
+      setPromoted(sectionTop < scroll + vh && sectionTop + sectionHeightPx > scroll);
+
       if (!headerShown && scroll + vh * 0.85 >= sectionTop) {
         headerShown = true;
         if (headerRef.current) {
@@ -259,7 +279,7 @@ const ScrollStack = ({
         cancelAnimationFrame(rafId);
       }
       gsap.set([...cards, headerRef.current].filter(Boolean), {
-        clearProps: "transform,opacity,y,scale",
+        clearProps: "transform,opacity,y,scale,willChange",
       });
     };
   }
@@ -274,7 +294,11 @@ const ScrollStack = ({
       ref={sectionRef}
       className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${centerClass} ${className ?? ""}`.trim()}
       id={id}
-      style={animated ? { height: `${count * 100 * scrollMultiplier}vh` } : undefined}
+      // Height = scroll room the animation actually consumes ((count-1) steps ×
+      // multiplier) + one viewport for the final card to rest. Using `count`
+      // here (the old formula) left ~100·(multiplier-1)vh of dead pinned scroll
+      // after the last card landed, before the next section appeared.
+      style={animated ? { height: `${(count - 1) * 100 * scrollMultiplier + 100}vh` } : undefined}
     >
       <div ref={viewportRef} className={styles.viewport}>
         <div className={styles.container}>
@@ -289,6 +313,8 @@ const ScrollStack = ({
                 key={i}
                 ref={(el) => { cardRefs.current[i] = el; }}
                 className={styles.cardWrapper}
+                // Drives the mobile CSS sticky-stack offset (top per card index).
+                style={{ ["--card-index" as string]: i } as React.CSSProperties}
               >
                 {child}
               </div>

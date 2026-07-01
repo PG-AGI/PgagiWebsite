@@ -5,6 +5,13 @@ $red: #9f0000;
 .outerSection {
   background: #ffffff;
   position: relative;
+  // Line the pinned cards up with the "How we scale your product" box
+  // (SocialOrbitSection: container = min(1400px, 92vw), no side gutter).
+  // Widening the shared ScrollStack container here — and dropping its 1vw
+  // gutter — lets the cards match that box edge-to-edge without touching the
+  // Revenue / CaseStudies stacks, which keep the 82vw default.
+  --scrollstack-container-max: min(87.5rem, 92vw);
+  --scrollstack-container-pad-x: 0;
 }
 
 // ─── Heading (Figma: Plus Jakarta Sans) ───────────
@@ -59,7 +66,9 @@ $red: #9f0000;
   align-items: center;
   gap: 7.5%; // 96 / 1280
   width: 100%;
-  max-width: 80rem;
+  // 1400px — matches the "How we scale your product" box cap so the card fills
+  // the widened container (--scrollstack-container-max) up to the same width.
+  max-width: 87.5rem;
   margin-inline: auto;
   aspect-ratio: 1280 / 482;
   padding: 0.75rem;

@@ -2,15 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import styles from "@/styles/components/organisms/VisionSystemSection.module.scss";
 import visionSystemText from "@/constants/uiText/visionSystem.json";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const visionCards = [
   {
@@ -42,7 +36,7 @@ const VisionSystemSection = () => {
       id="vision-system"
       animated={true}
       preRoll={0.10}
-      scrollMultiplier={1.8}
+      scrollMultiplier={1.2}
       className={styles.outerSection}
       header={
         <>
@@ -80,14 +74,10 @@ const CardContent = ({
   image: string;
   imageAlt: string;
 }) => {
-  // When image loads, refresh GSAP scroll trigger calculations
-  const handleImageLoad = () => {
-    if (typeof window !== "undefined") {
-      // Refresh scroll trigger calculations when image finishes loading
-      ScrollTrigger.refresh();
-    }
-  };
-
+  // Note: the ScrollStack desktop engine recomputes its own geometry on
+  // resize / window-load / ResizeObserver, so images finishing late don't need
+  // a manual ScrollTrigger.refresh() here — and a per-image refresh() caused a
+  // global layout recalc that hitched the scroll mid-animation.
   return (
     <>
       <div className={styles.media}>
@@ -100,7 +90,6 @@ const CardContent = ({
             quality={86}
             sizes="(max-width: 768px) 88vw, 500px"
             className={styles.mediaImage}
-            onLoad={handleImageLoad}
           />
         </div>
       </div>

@@ -17,15 +17,21 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding-top: clamp(120px, 14vh, 160px);
+    /* Trimmed from 120–160px: the large top inset ate the vertical room the
+       card needs, which clipped its bottom on shorter laptops. 88px min still
+       clears the ~84px fixed navbar. */
+    padding-top: clamp(88px, 10vh, 120px);
     box-sizing: border-box;
   }
 
   .container {
     width: 100%;
-    max-width: 82vw;
+    // Width/side-gutter are overridable per section via CSS variables so a
+    // consumer can line its cards up with a neighbouring block. Defaults keep
+    // the original 82vw / 1vw behaviour for every section that doesn't set them.
+    max-width: var(--scrollstack-container-max, 82vw);
     margin: 0 auto;
-    padding: 0 1vw;
+    padding: 0 var(--scrollstack-container-pad-x, 1vw);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -51,7 +57,9 @@
     right: 0;
     transform-origin: top center;
     z-index: 10;
-    will-change: transform;
+    /* `will-change` is toggled on/off in JS only while the section is on screen
+       (ScrollStack.tsx `setPromoted`), so we don't permanently reserve a GPU
+       layer per card for the whole page. */
   }
 
   .footerArea {
@@ -75,31 +83,88 @@
       .stackArea {
         flex: 0 0 auto;
         width: 100%;
-        max-width: 77.5rem; // matches the Revenue card cap
+        max-width: 87.5rem; // matches the Revenue card cap (= VisionSystem cards)
         margin-inline: auto;
         aspect-ratio: 1240 / 482; // = the card's box, so top:0 fills it exactly
       }
     }
   }
 
-  /* Mobile pinned: same absolute layout as desktop, smaller padding */
+  /* ── Mobile: pure-CSS sticky stack (no JS engine runs — see ScrollStack.tsx) ──
+     The compositor handles the pinning; the optional scale/fade below is a
+     scroll-driven animation, also off the main thread. This is the lightweight
+     mobile path the manager asked for. */
   @media (max-width: 767px) {
+    /* Override the inline `count·100·multiplier vh` height: on mobile the stack
+       is natural-height and its scroll room comes from the cards themselves. */
+    height: auto !important;
+
     .viewport {
-      padding-top: clamp(88px, 14vh, 120px);
+      position: static;
+      height: auto;
+      overflow: visible;
+      padding-top: 0;
+      display: block;
     }
 
     .container {
       max-width: 100%;
       padding: 0 1rem;
+      height: auto;
+      display: block;
     }
 
     .headerArea {
-      padding: clamp(0.4rem, 1vh, 0.8rem) 0 clamp(0.3rem, 0.8vh, 0.6rem);
+      /* JS never runs on mobile, so it can't fade the header in — show it. */
+      opacity: 1;
+      padding: clamp(1.25rem, 5vh, 2rem) 0 clamp(0.9rem, 2.5vh, 1.4rem);
+    }
+
+    .stackArea {
+      position: static;
+      display: block;
+      min-height: 0;
+    }
+
+    .cardWrapper {
+      position: sticky;
+      /* Each card pins just below the previous one → a peeking deck. */
+      top: calc(var(--stack-top, 84px) + var(--card-index, 0) * var(--stack-peek, 12px));
+      left: auto;
+      right: auto;
+      /* Later cards paint over earlier ones (cover + peek). */
+      z-index: calc(10 + var(--card-index, 0));
+      margin-bottom: var(--stack-gap, 1rem);
+      transform-origin: 50% 0;
+      will-change: auto;
     }
 
     .footerArea {
-      padding: 0.6rem 0 0.4rem;
+      position: static;
+      padding: clamp(1rem, 3vh, 1.5rem) 0;
     }
+  }
+
+  /* Progressive polish: where scroll-driven animations are supported (modern
+     Chrome/Android, iOS 26+) the covered card scales down + dims as the next
+     one settles over it. Everywhere else it degrades to the flat sticky stack
+     above. Skipped under reduced-motion. Values are intentionally subtle and
+     safe to tune on-device. */
+  @supports (animation-timeline: view()) {
+    @media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+      .cardWrapper {
+        animation: scrollStackSettle linear both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+    }
+  }
+}
+
+@keyframes scrollStackSettle {
+  to {
+    transform: scale(0.92);
+    opacity: 0.6;
   }
 }
 
