@@ -17,7 +17,7 @@
 }
 
 .values-container {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
   padding: 0 2rem;
   position: relative;
@@ -115,7 +115,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 0.1875rem;
     background: linear-gradient(90deg, #9F0000, #7b0000, #9F0000);
     transform: scaleX(0);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -165,8 +165,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   opacity: 0.6;
   background: radial-gradient(circle, rgba(159, 0, 0, 0.2) 0%, rgba(159, 0, 0, 0.08) 60%, transparent 70%);
@@ -218,8 +218,8 @@
   }
 
   .values-icon-bg {
-    width: 70px;
-    height: 70px;
+    width: 4.375rem;
+    height: 4.375rem;
   }
 }
 
@@ -237,7 +237,7 @@
   }
 
   .values-icon-bg {
-    width: 60px;
-    height: 60px;
+    width: 3.75rem;
+    height: 3.75rem;
   }
 }

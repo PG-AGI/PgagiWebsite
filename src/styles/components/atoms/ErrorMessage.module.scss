@@ -2,7 +2,7 @@
 
 .errorMessage {
   position: fixed;
-  bottom: 20px;
+  bottom: 1.25rem;
   left: 50%;
   transform: translateX(-50%);
   background-color: #ff4b4b;
@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 300px;
+  width: 18.75rem;
   max-width: 80%;
   animation: fadeInOut 0.5s ease-in-out, fadeOut 0.5s ease-in-out 4.5s;
 
@@ -44,10 +44,10 @@
 
 .progressBar {
   width: 100%;
-  height: 5px;
+  height: 0.3125rem;
   background-color: #ffffff90; /* Light color to contrast with red */
   border-radius: 4px;
-  margin-top: 10px;
+  margin-top: 0.625rem;
   overflow: hidden;
 }
 

@@ -75,7 +75,7 @@
       .stackArea {
         flex: 0 0 auto;
         width: 100%;
-        max-width: 1240px; // matches the Revenue card cap
+        max-width: 77.5rem; // matches the Revenue card cap
         margin-inline: auto;
         aspect-ratio: 1240 / 482; // = the card's box, so top:0 fills it exactly
       }

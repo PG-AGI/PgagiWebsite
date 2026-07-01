@@ -23,8 +23,8 @@
 // Hero Section
 .hero {
   position: relative;
-  padding: 120px 20px 80px;
-  max-width: 1600px;
+  padding: 7.5rem 1.25rem 5rem;
+  max-width: 100rem;
   margin: 0 auto;
   
   .heroContent {
@@ -51,7 +51,7 @@
     }
     
     .heroTitle {
-      font-size: 64px;
+      font-size: 4rem;
       line-height: 1.1;
       font-weight: 400;
       margin: 0;
@@ -78,10 +78,10 @@
   
   .heroDot {
     position: absolute;
-    top: 200px;
+    top: 12.5rem;
     left: 60%;
-    width: 8px;
-    height: 8px;
+    width: 0.5rem;
+    height: 0.5rem;
     background-color: #1a1a1a;
     border-radius: 50%;
     z-index: 1;
@@ -90,30 +90,30 @@
 
 // Main Content Section
 .mainContent {
-  padding:  100px 10px;
-  max-width: 1600px;
+  padding:  6.25rem 0.625rem;
+  max-width: 100rem;
   margin: 0 auto;
   
   .contentGrid {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 120px;
+    gap: 7.5rem;
     align-items: flex-start;
   }
   
   .leftColumn {
     display: flex;
     flex-direction: column;
-    gap: 80px;
+    gap: 5rem;
     
     // Mission & Vision Sections
     .missionSection,
     .visionSection {
       .sectionTitle {
-        font-size: 24px;
+        font-size: 1.5rem;
         font-weight: 600;
         color: #1a1a1a;
-        margin: 0 0 16px 0;
+        margin: 0 0 1rem 0;
         position: relative;
         // font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
         
@@ -123,22 +123,22 @@
           left: -20px;
           top: 50%;
           transform: translateY(-50%);
-          width: 4px;
-          height: 24px;
+          width: 0.25rem;
+          height: 1.5rem;
           background: linear-gradient(135deg, #9F0000 0%, #d32f2f 100%);
           border-radius: 2px;
         }
       }
       
       .sectionText {
-        font-size: 16px;
+        font-size: 1rem;
         line-height: 1.6;
         color: #4a4a4a;
         margin: 0;
         font-weight: 400;
-        padding-left: 20px;
+        padding-left: 1.25rem;
         border-left: 1px solid #f0f0f0;
-        margin-left: 20px;
+        margin-left: 1.25rem;
         // font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
       }
     }
@@ -149,7 +149,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px 0;
+        padding: 1.25rem 0;
         border-bottom: 1px solid #f0f0f0;
         
         &:last-child {
@@ -157,22 +157,22 @@
         }
         
         .itemLabel {
-          font-size: 16px;
+          font-size: 1rem;
           font-weight: 500;
           color: #1a1a1a;
           // font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
         }
         
         .itemValue {
-          font-size: 16px;
+          font-size: 1rem;
           font-weight: 400;
           color: #666666;
           // font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
         }
         
         .checkIcon {
-          width: 20px;
-          height: 20px;
+          width: 1.25rem;
+          height: 1.25rem;
           color: #1a1a1a;
         }
       }
@@ -181,13 +181,13 @@
   
   .rightColumn {
     .contentText {
-      margin-bottom: 80px;
+      margin-bottom: 5rem;
       
       p {
-        font-size: 18px;
+        font-size: 1.125rem;
         line-height: 1.6;
         color: #1a1a1a;
-        margin: 0 0 24px 0;
+        margin: 0 0 1.5rem 0;
         font-weight: 400;
         // font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
         
@@ -201,28 +201,28 @@
       margin-top: 5rem;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 100px;
+      gap: 6.25rem;
       
       .metric {
         text-align: center;
         
         .metricValue {
           display: inline-block;
-          font-size: 36px;
+          font-size: 2.25rem;
           font-weight: 700;
           color: #1a1a1a;
-          margin-bottom: 8px;
+          margin-bottom: 0.5rem;
           // font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
         }
         
         // Add a small space between the number and the unit (e.g., % or +)
         .metricValue + .metricValue {
-          margin-left: 4px;
+          margin-left: 0.25rem;
         }
         
         .metricLabel {
           display: block;
-          font-size: 14px;
+          font-size: 0.875rem;
           font-weight: 400;
           color: #666666;
           line-height: 1.4;
@@ -236,49 +236,49 @@
 // Framer Badge
 .framerBadge {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 1.5rem;
+  right: 1.5rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   background-color: #1a1a1a;
   color: #ffffff;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   z-index: 1000;
   
   .badgeIcon {
-    font-size: 12px;
+    font-size: 0.75rem;
     transform: rotate(90deg);
   }
 }
 
 // Mission & Vision Section
 .missionVisionSection {
-  padding: 80px 40px 0;
-  max-width: 1600px;
+  padding: 5rem 2.5rem 0;
+  max-width: 100rem;
   margin: 0 auto;
   
   .missionVisionContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    gap: 5rem;
     align-items: center;
     
     .missionVisionContent {
       display: flex;
       flex-direction: column;
-      gap: 60px;
+      gap: 3.75rem;
       
       .missionSection,
       .visionSection {
         .sectionTitle {
-          font-size: 24px;
+          font-size: 1.5rem;
           font-weight: 600;
           color: #1a1a1a;
-          margin: 0 0 16px 0;
+          margin: 0 0 1rem 0;
           position: relative;
           // font-family: var(--font-alexandria), var(--font-poppins), sans-serif;
           
@@ -288,22 +288,22 @@
             left: -20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 4px;
-            height: 24px;
+            width: 0.25rem;
+            height: 1.5rem;
             background: linear-gradient(135deg, #9F0000 0%, #d32f2f 100%);
             border-radius: 2px;
           }
         }
         
         .sectionText {
-          font-size: 16px;
+          font-size: 1rem;
           line-height: 1.6;
           color: #4a4a4a;
           margin: 0;
           font-weight: 400;
-          padding-left: 20px;
+          padding-left: 1.25rem;
           border-left: 1px solid #f0f0f0;
-          margin-left: 20px;
+          margin-left: 1.25rem;
           // font-family: var(--font-poppins), var(--font-alexandria), sans-serif;
         }
       }
@@ -357,8 +357,8 @@
   .hero,
   .mainContent,
   .missionVisionSection {
-    padding-left: 60px;
-    padding-right: 60px;
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
   }
   
   .hero .heroContent {
@@ -366,157 +366,157 @@
   }
   
   .mainContent .contentGrid {
-    gap: 80px;
+    gap: 5rem;
   }
   
   .missionVisionSection .missionVisionContainer {
-    gap: 60px;
+    gap: 3.75rem;
   }
 }
 
 @media (max-width: 900px) {
   .hero {
-    padding: 80px 40px 60px;
+    padding: 5rem 2.5rem 3.75rem;
     
     .heroContent {
       gap: 0;
       
       .heroText {
-        margin-top: 30px;
+        margin-top: 1.875rem;
         
         .heroTitle {
-          font-size: 48px;
+          font-size: 3rem;
         }
       }
     }
     
     .heroDot {
-      top: 180px;
+      top: 11.25rem;
       left: 50%;
     }
   }
   
   .missionVisionSection {
-    padding: 60px 40px 0;
+    padding: 3.75rem 2.5rem 0;
     
     .missionVisionContainer {
       grid-template-columns: 1fr;
-      gap: 60px;
+      gap: 3.75rem;
       
       .missionVisionImage {
-        height: 300px;
+        height: 18.75rem;
         order: -1; // Image appears above text on mobile
       }
     }
   }
   
   .mainContent {
-    padding: 0 40px 80px;
+    padding: 0 2.5rem 5rem;
     
     .contentGrid {
       grid-template-columns: 1fr;
-      gap: 60px;
+      gap: 3.75rem;
     }
     
     .rightColumn .keyMetrics {
       grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
+      gap: 1.875rem;
     }
   }
 }
 
 @media (max-width: 600px) {
   .hero {
-    padding: 60px 24px 40px;
+    padding: 3.75rem 1.5rem 2.5rem;
     
     .heroText {
-      margin-top: 20px;
+      margin-top: 1.25rem;
       
       .heroTitle {
-        font-size: 36px;
+        font-size: 2.25rem;
       }
       
       .aboutLabel {
-        margin-bottom: 40px;
+        margin-bottom: 2.5rem;
       }
     }
     
     .heroDot {
-      top: 160px;
+      top: 10rem;
       left: 50%;
     }
   }
   
   .missionVisionSection {
-    padding: 40px 24px 0;
+    padding: 2.5rem 1.5rem 0;
     
     .missionVisionContainer {
-      gap: 40px;
+      gap: 2.5rem;
       
       .missionVisionContent {
-        gap: 40px;
+        gap: 2.5rem;
         
         .missionSection,
         .visionSection {
           .sectionTitle {
-            font-size: 20px;
+            font-size: 1.25rem;
             
             &::before {
               left: -15px;
-              width: 3px;
-              height: 20px;
+              width: 0.1875rem;
+              height: 1.25rem;
             }
           }
           
           .sectionText {
-            font-size: 15px;
-            padding-left: 15px;
-            margin-left: 15px;
+            font-size: 0.9375rem;
+            padding-left: 0.9375rem;
+            margin-left: 0.9375rem;
           }
         }
       }
       
       .missionVisionImage {
-        height: 250px;
+        height: 15.625rem;
       }
     }
   }
   
   .mainContent {
-    padding: 0 24px 60px;
+    padding: 0 1.5rem 3.75rem;
     
     .leftColumn {
-      gap: 60px;
+      gap: 3.75rem;
     }
     
     .rightColumn {
       .contentText p {
-        font-size: 16px;
+        font-size: 1rem;
       }
       
       .keyMetrics {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 1.875rem;
         
         .metric .metricValue {
-          font-size: 32px;
+          font-size: 2rem;
         }
       }
     }
   }
   
   .framerBadge {
-    bottom: 16px;
-    right: 16px;
-    padding: 10px 14px;
-    font-size: 12px;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.75rem;
   }
 }
 
 // Bottom Image Section
 .bottomImageSection {
   width: 100%;
-  margin-top: 80px;
+  margin-top: 5rem;
   overflow: hidden;
   
   .imageContainer {
@@ -566,7 +566,7 @@
 // Responsive styles for bottom image
 @media (max-width: 900px) {
   .bottomImageSection {
-    margin-top: 60px;
+    margin-top: 3.75rem;
     
     .imageContainer .bottomImage {
       filter: brightness(0.95) contrast(1.05);
@@ -576,7 +576,7 @@
 
 @media (max-width: 600px) {
   .bottomImageSection {
-    margin-top: 40px;
+    margin-top: 2.5rem;
     
     .imageContainer .bottomImage {
       filter: brightness(0.98) contrast(1.02);
@@ -595,7 +595,7 @@
 
 .combinedGrid {
   display: block;
-  gap: 24px;
+  gap: 1.5rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
   @media (max-width: 1024px) {
@@ -604,7 +604,7 @@
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 1.25rem;
   }
 }
 
@@ -643,7 +643,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 0.1875rem;
     background: linear-gradient(90deg, #9F0000 0%, #ff6b6b 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -657,7 +657,7 @@
 .imageWrap {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 12.5rem;
   background: #f8f9fa;
   overflow: hidden;
   
@@ -684,7 +684,7 @@
 }
 
 .content {
-  padding: 24px;
+  padding: 1.5rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -697,8 +697,8 @@
     content: '';
     position: absolute;
     top: 0;
-    left: 24px;
-    right: 24px;
+    left: 1.5rem;
+    right: 1.5rem;
     height: 1px;
     background: linear-gradient(90deg, transparent 0%, #e5e7eb 50%, transparent 100%);
   }
@@ -709,7 +709,7 @@
   font-weight: 600;
   color: #1f2937;
   line-height: 1.4;
-  margin: 0 0 16px 0;
+  margin: 0 0 1rem 0;
   letter-spacing: -0.01em;
   transition: color 0.3s ease;
   
@@ -724,7 +724,7 @@
   color: #9F0000;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   opacity: 0.8;
 }
 
@@ -734,7 +734,7 @@
   margin-top: auto;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   
   &::before {
     content: '⏱';
@@ -754,22 +754,22 @@
 
 .imgSkeleton {
   width: 100%;
-  height: 200px;
+  height: 12.5rem;
   background: linear-gradient(90deg, #f8f9fa 25%, #e9ecef 50%, #f8f9fa 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 .contentSkeleton {
-  padding: 24px;
+  padding: 1.5rem;
   position: relative;
   
   &::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 24px;
-    right: 24px;
+    left: 1.5rem;
+    right: 1.5rem;
     height: 1px;
     background: linear-gradient(90deg, transparent 0%, #e5e7eb 50%, transparent 100%);
   }
@@ -777,7 +777,7 @@
 
 .titleSkeleton,
 .metaSkeleton {
-  height: 16px;
+  height: 1rem;
   border-radius: 8px;
   background: linear-gradient(90deg, #f0f0f0 25%, #e5e7eb 50%, #f0f0f0 75%);
   background-size: 200% 100%;
@@ -786,19 +786,19 @@
 
 .titleSkeleton {
   width: 85%;
-  margin-bottom: 16px;
-  height: 20px;
+  margin-bottom: 1rem;
+  height: 1.25rem;
 }
 
 .metaSkeleton {
   width: 60%;
-  height: 14px;
+  height: 0.875rem;
 }
 
 .categorySkeleton {
   width: 40%;
-  height: 12px;
-  margin-bottom: 8px;
+  height: 0.75rem;
+  margin-bottom: 0.5rem;
   border-radius: 6px;
   background: linear-gradient(90deg, #f0f0f0 25%, #e5e7eb 50%, #f0f0f0 75%);
   background-size: 200% 100%;
@@ -809,7 +809,7 @@
   color: #9F0000;
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
-  margin-bottom: 60px;
+  margin-bottom: 3.75rem;
   text-align: center;
   position: relative;
 
@@ -819,8 +819,8 @@
     bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
+    width: 5rem;
+    height: 0.25rem;
     background: linear-gradient(90deg, #64ffda, #4fd1c7);
     border-radius: 2px;
   }
@@ -829,12 +829,12 @@
 .marqueeWrapper {
   display: flex;
   align-items: stretch;
-  padding: 20px 0;
+  padding: 1.25rem 0;
 }
 
 .tile {
   flex: 0 0 auto;
-  width: 280px;
+  width: 17.5rem;
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -843,8 +843,8 @@
   border: 1px solid #f0f0f0;
   text-decoration: none;
   color: inherit;
-  height: 380px;
-  margin-right: 24px;
+  height: 23.75rem;
+  margin-right: 1.5rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -870,7 +870,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 0.1875rem;
     background: linear-gradient(90deg, #9F0000 0%, #ff6b6b 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -884,7 +884,7 @@
 .imageWrap {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 12.5rem;
   background: #f8f9fa;
   overflow: hidden;
   
@@ -911,7 +911,7 @@
 }
 
 .content {
-  padding: 20px;
+  padding: 1.25rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -924,8 +924,8 @@
     content: '';
     position: absolute;
     top: 0;
-    left: 20px;
-    right: 20px;
+    left: 1.25rem;
+    right: 1.25rem;
     height: 1px;
     background: linear-gradient(90deg, transparent 0%, #e5e7eb 50%, transparent 100%);
   }
@@ -936,7 +936,7 @@
   font-weight: 600;
   color: #1f2937;
   line-height: 1.4;
-  margin: 0 0 16px 0;
+  margin: 0 0 1rem 0;
   letter-spacing: -0.01em;
   transition: color 0.3s ease;
   
@@ -949,7 +949,7 @@
 .error {
   text-align: center;
   color: red;
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 /* Responsive */

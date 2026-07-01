@@ -109,11 +109,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 150px 2rem 100px;
+    padding: 9.375rem 2rem 6.25rem;
   }
 
   .container {
-    max-width: 1400px;
+    max-width: 87.5rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -142,7 +142,7 @@
   .expertiseDescription {
     font-size: 1.25rem;
     line-height: 1.4;
-    max-width: 800px;
+    max-width: 50rem;
     margin: 0;
   }
 
@@ -216,7 +216,7 @@
   }
 
   .container {
-    max-width: 1500px;
+    max-width: 93.75rem;
     gap: 4.5rem;
     padding: 0 2.5rem;
   }
@@ -227,7 +227,7 @@
 
   .expertiseDescription {
     font-size: 1.3125rem;
-    max-width: 850px;
+    max-width: 53.125rem;
   }
 
   .bottomSection {
@@ -258,7 +258,7 @@
   }
 
   .container {
-    max-width: 1600px;
+    max-width: 100rem;
     gap: 5rem;
     padding: 0 3rem;
   }
@@ -273,7 +273,7 @@
 
   .expertiseDescription {
     font-size: 1.375rem;
-    max-width: 900px;
+    max-width: 56.25rem;
   }
 
   .bottomSection {
@@ -304,7 +304,7 @@
   }
 
   .container {
-    max-width: 1800px;
+    max-width: 112.5rem;
     gap: 6rem;
     padding: 0 4rem;
   }
@@ -319,7 +319,7 @@
 
   .expertiseDescription {
     font-size: 1.5rem;
-    max-width: 1000px;
+    max-width: 62.5rem;
   }
 
   .bottomSection {
@@ -351,12 +351,12 @@
 /* Ultra Wide Desktop Layout (1440px and above) */
 @media (min-width: 1440px) {
   .container {
-    max-width: 2000px;
+    max-width: 125rem;
     padding: 0 5rem;
   }
 
   .expertiseDescription {
-    max-width: 1200px;
+    max-width: 75rem;
   }
 
   .bottomSection {
@@ -390,16 +390,16 @@
   /* your red */
   border-radius: 50px;
   /* pill shape */
-  padding: 15px 20px;
+  padding: 0.9375rem 1.25rem;
   /* small */
-  font-size: 20px;
+  font-size: 1.25rem;
   /* small text */
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 0.375rem;
   /* space before arrow */
   transition: all 0.25s ease-in-out;
   outline: none;
@@ -431,7 +431,7 @@
 /* Optional: slightly larger on mobile for touch comfort */
 @media (max-width: 768px) {
   .projectsButton {
-    padding: 8px 18px;
+    padding: 0.5rem 1.125rem;
     font-size: 1rem;
   }
 }

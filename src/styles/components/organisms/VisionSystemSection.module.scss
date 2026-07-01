@@ -59,10 +59,10 @@ $red: #9f0000;
   align-items: center;
   gap: 7.5%; // 96 / 1280
   width: 100%;
-  max-width: 1280px;
+  max-width: 80rem;
   margin-inline: auto;
   aspect-ratio: 1280 / 482;
-  padding: 12px;
+  padding: 0.75rem;
   box-sizing: border-box;
   border-radius: $card-radius;
   overflow: hidden;
@@ -110,7 +110,7 @@ $red: #9f0000;
   @media (max-width: 768px) {
     flex-basis: auto;
     width: 80%;
-    max-width: 320px;
+    max-width: 20rem;
     margin: 0 auto;
   }
 }
@@ -142,7 +142,7 @@ $red: #9f0000;
 }
 
 .cardTitle {
-  margin: 0 0 24px; // gap title → list
+  margin: 0 0 1.5rem; // gap title → list
   color: $ink;
   font-size: 2rem; // 32
   line-height: 2.5rem; // 40
@@ -167,7 +167,7 @@ $red: #9f0000;
   li {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 0.9375rem;
     font-size: 1.25rem; // 20
     line-height: 2.5rem; // 40
     font-weight: 500;
@@ -181,7 +181,7 @@ $red: #9f0000;
     li {
       font-size: 0.9rem;
       line-height: 1.6rem;
-      gap: 10px;
+      gap: 0.625rem;
 
       &:not(:last-child) {
         margin-bottom: 0;
@@ -192,19 +192,19 @@ $red: #9f0000;
 
 .check {
   flex: 0 0 auto;
-  width: 20px;
-  height: 15px;
+  width: 1.25rem;
+  height: 0.9375rem;
   color: $ink;
 
   @media (max-width: 768px) {
-    width: 16px;
-    height: 12px;
+    width: 1rem;
+    height: 0.75rem;
   }
 }
 
 .outcome {
-  margin: 56px 0 0; // gap list → divider
-  padding-top: 24px; // gap divider → outcome text
+  margin: 3.5rem 0 0; // gap list → divider
+  padding-top: 1.5rem; // gap divider → outcome text
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
   color: $ink;

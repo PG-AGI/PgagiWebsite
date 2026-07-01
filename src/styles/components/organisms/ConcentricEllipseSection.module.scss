@@ -1,10 +1,10 @@
 .section {
   position: relative;
   background: #ffffff;
-  padding: 150px 0;
+  padding: 9.375rem 0;
 
   @media (max-width: 768px) {
-    padding: 80px 0; // Standardized
+    padding: 5rem 0; // Standardized
   }
 }
 
@@ -138,8 +138,8 @@
   background: #a30e08;
   color: #ffffff;
   border-radius: 999px;
-  padding: 3px 4px 3px 1.35rem;
-  min-height: 48px;
+  padding: 0.1875rem 0.25rem 0.1875rem 1.35rem;
+  min-height: 3rem;
   display: inline-flex;
   align-items: center;
   gap: 0.72rem;
@@ -161,8 +161,8 @@
 }
 
 .arrowCircle {
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -219,18 +219,18 @@
   }
 
   .ctaButton {
-    min-height: 44px;
+    min-height: 2.75rem;
     width: min(100%, 356px);
     justify-content: space-between;
-    padding: 3px 4px 3px 1.12rem;
+    padding: 0.1875rem 0.25rem 0.1875rem 1.12rem;
     margin-top: 1.2rem;
     font-size: 0.95rem;
     gap: 0.5rem;
   }
 
   .arrowCircle {
-    width: 36px;
-    height: 36px;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 }
 

@@ -1,13 +1,13 @@
 .section {
   position: relative;
   background: #ffffff;
-  padding: 150px 0 150px;
+  padding: 9.375rem 0 9.375rem;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 820px;
 
   @media (max-width: 768px) {
-    padding: 80px 0 80px;
+    padding: 5rem 0 5rem;
   }
 }
 
@@ -29,7 +29,7 @@
 
 .panel {
   position: relative;
-  height: 690px;
+  height: 43.125rem;
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   overflow: hidden;
@@ -74,13 +74,13 @@
 
 .contentLayout {
   position: absolute;
-  top: 121px;
-  left: 63px;
+  top: 7.5625rem;
+  left: 3.9375rem;
   width: calc(100% - 126px);
-  height: 448.7497558594px;
+  height: 28.0469rem;
   display: flex;
   flex-direction: column;
-  gap: 96px;
+  gap: 6rem;
   z-index: 1;
 }
 
@@ -111,7 +111,7 @@
 }
 
 .copyBlock {
-  min-height: 118px;
+  min-height: 7.375rem;
   padding: 0 clamp(0.42rem, 0.95vw, 0.72rem);
   opacity: 0.4;
   animation: textHighlight 8s ease-in-out infinite;
@@ -221,7 +221,7 @@
 
 @media (max-width: 960px) {
   .section {
-    padding: 80px 0; // Standardized
+    padding: 5rem 0; // Standardized
   }
 
   .panel {
@@ -284,7 +284,7 @@
   }
 
   .copyBlock {
-    min-height: 84px;
+    min-height: 5.25rem;
     padding: 0 0.34rem;
 
     h3 {
@@ -301,12 +301,12 @@
 
   .track {
     --icon-anchor-y: 32.7%;
-    height: 132px;
+    height: 8.25rem;
   }
 
   .iconBadge {
-    width: 33px;
-    height: 33px;
+    width: 2.0625rem;
+    height: 2.0625rem;
     top: var(--icon-anchor-y);
   }
 
@@ -378,13 +378,13 @@
   }
 
   .copyBlock {
-    min-height: 80px;
+    min-height: 5rem;
     padding: 0 0.24rem;
   }
 
   .track {
     --icon-anchor-y: 32.7%;
-    height: 124px;
+    height: 7.75rem;
   }
 
   .mobileHint {

@@ -639,8 +639,8 @@ affecting the functionality of the stylesheet. */
 }
 
 .glowDot {
-  width: 10px;
-  height: 10px;
+  width: 0.625rem;
+  height: 0.625rem;
   background-color: $green-glow;
   border-radius: 50%;
   box-shadow: 0 0 8px $green-glow;
@@ -855,8 +855,8 @@ affecting the functionality of the stylesheet. */
 
     .video {
       width: 100%;
-      max-width: 800px;
-      height: 450px;
+      max-width: 50rem;
+      height: 28.125rem;
       border-radius: 0.5rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
@@ -901,7 +901,7 @@ affecting the functionality of the stylesheet. */
 
   .videoBlock {
     .video {
-      height: 250px;
+      height: 15.625rem;
     }
   }
 }
@@ -948,7 +948,7 @@ affecting the functionality of the stylesheet. */
   color:black;
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   // background: #1a1a1a;
   background: white;
   // @include glass-effect;
@@ -960,9 +960,9 @@ affecting the functionality of the stylesheet. */
 
 .cell {
   border-bottom: 1px solid #444;
-  padding: 12px;
+  padding: 0.75rem;
   text-align: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   transition: background-color 0.3s ease;
   // color: #fff;
 }
@@ -972,18 +972,18 @@ affecting the functionality of the stylesheet. */
   text-align: center;
   border: 1px solid #444;
   border-radius: 10px;
-  padding: 12px;
+  padding: 0.75rem;
   margin-bottom: 1.5rem;
   .boxHeading{
     color: #9333ea;
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 }
 // copy this collection
 $spacing-unit: 1rem;
 .boxHeading{
   color: #9333ea;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 @mixin glass-effect {
   background: rgba(255, 255, 255, 0.03);
@@ -1055,12 +1055,12 @@ $spacing-unit: 1rem;
 .blogpg_rightAside {
   width: 20%;
   // min-width: 200px;
-  padding: 10px;
+  padding: 0.625rem;
   // overflow: hidden;
   overflow-y: none !important;
   display: flex;
   justify-content: center;
-  font-size: 16px;
+  font-size: 1rem;
   align-self: flex-start;
   position: sticky !important;
   top: 0px;
@@ -1081,7 +1081,7 @@ $spacing-unit: 1rem;
       font-weight: 600;
       border-bottom: 1px solid #ddd;
       width: 100%;
-      padding: 20px 5px;
+      padding: 1.25rem 0.3125rem;
     }
 
     .blogpg_shareElement {
@@ -1089,10 +1089,10 @@ $spacing-unit: 1rem;
       align-items: center;
       border-bottom: 1px solid #ddd;
       width: 100%;
-      padding: 20px 5px;
+      padding: 1.25rem 0.3125rem;
 
       p {
-        margin-left: 10px;
+        margin-left: 0.625rem;
       }
 
       &:hover {

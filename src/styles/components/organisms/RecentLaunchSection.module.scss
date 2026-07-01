@@ -265,8 +265,8 @@
 }
 
 .liveIndicator {
-  width: 7px;
-  height: 7px;
+  width: 0.4375rem;
+  height: 0.4375rem;
   border-radius: 50%;
   background: #22c55e;
   flex-shrink: 0;
@@ -284,7 +284,7 @@
 
   @media (max-width: 900px) {
     padding: 0 1.5rem 2rem;
-    min-height: 200px;
+    min-height: 12.5rem;
   }
 }
 
@@ -353,12 +353,12 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   animation: shimmer 1.5s infinite;
 
   @media (max-width: 900px) {
-    min-height: 200px;
+    min-height: 12.5rem;
   }
 }
 
 .skTitle {
-  height: 36px;
+  height: 2.25rem;
   width: 55%;
   border-radius: 6px;
   background: $sk-bg;
@@ -367,7 +367,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skText {
-  height: 64px;
+  height: 4rem;
   width: 90%;
   border-radius: 6px;
   background: $sk-bg;
@@ -376,7 +376,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skTags {
-  height: 28px;
+  height: 1.75rem;
   width: 65%;
   border-radius: 100px;
   background: $sk-bg;
@@ -385,7 +385,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skMetrics {
-  height: 54px;
+  height: 3.375rem;
   width: 50%;
   border-radius: 6px;
   background: $sk-bg;
@@ -394,7 +394,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skBtns {
-  height: 40px;
+  height: 2.5rem;
   width: 60%;
   border-radius: 100px;
   background: $sk-bg;
@@ -445,7 +445,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 280px;
+  min-height: 17.5rem;
   color: #999999;
   font-size: 0.95rem;
   font-style: italic;

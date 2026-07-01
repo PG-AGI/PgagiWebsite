@@ -1,12 +1,12 @@
 .section {
   background: #ffffff;
-  padding: 150px 0;
+  padding: 9.375rem 0;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;
 
   @media (max-width: 768px) {
-    padding: 80px 0;
+    padding: 5rem 0;
   }
 }
 
@@ -83,7 +83,7 @@
 
 @media (max-width: 900px) {
   .section {
-    padding: 80px 0; /* Standardized */
+    padding: 5rem 0; /* Standardized */
   }
 
   .title {
@@ -128,11 +128,11 @@
 
 @media (max-width: 500px) {
   .section {
-    padding: 80px 0.62rem; /* Standardized */
+    padding: 5rem 0.62rem; /* Standardized */
   }
 
   .container {
-    max-width: 340px;
+    max-width: 21.25rem;
   }
 
   .title {
