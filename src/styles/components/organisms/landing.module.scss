@@ -60,8 +60,12 @@
   min-height: min(100dvh, 68rem);
   margin: 0;
   /* Only grows past the viewport on very short screens so nothing is clipped
-     behind the fixed nav; block horizontal overflow. */
-  overflow-x: hidden;
+     behind the fixed nav; block horizontal overflow.
+     `clip` (not `hidden`): `overflow-x: hidden` + `overflow-y: visible` makes
+     the browser compute overflow-y to `auto`, turning the hero into its own
+     scroll container (the phantom second scrollbar). `clip` leaves overflow-y
+     truly visible, so there is no nested scroll. */
+  overflow-x: clip;
   overflow-y: visible;
   display: flex;
   flex-direction: column;
@@ -160,9 +164,12 @@
     min-height: 112dvh;     /* image bleeds ~12% below the fold */
   }
   .heroInner {
-    flex: 0 0 auto;
-    height: 104dvh;         /* content box: cards sit a touch lower (just past the fold) */
-    min-height: 0;
+    flex: 1 1 auto;
+    /* min-height (not fixed height): the content box still targets ~104dvh so
+       the cards sit just past the fold, but it can GROW when the viewport is
+       short (laptops / Windows display-scaling) instead of overflowing and
+       clipping the heading. */
+    min-height: 104dvh;
     padding-bottom: clamp(0.25rem, 0.4vh, 0.6rem);
   }
 }

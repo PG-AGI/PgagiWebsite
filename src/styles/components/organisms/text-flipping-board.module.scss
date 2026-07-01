@@ -65,8 +65,9 @@
   position: relative;
   margin: 0 auto;
   display: flex;
-  /* Figma banner height = 60px; caps at the 1400px content reference. */
-  height: 60px;
+  /* Figma banner height = 60px; caps at the 1400px content reference.
+     rem so it shrinks with the fluid root (nav .withBanner top matches). */
+  height: 3.75rem;
   width: min(1400px, 92vw);
   max-width: 1400px;
   align-items: center;

@@ -16,6 +16,31 @@ html {
 	scroll-behavior: auto;
 	/* Prevent elastic overscroll paint cost on Chrome/Android */
 	overscroll-behavior: none;
+
+	/* Mobile + fallback: default 16px root. Every rem-based size derives from
+	   this, so mobile keeps its own breakpoint-tuned sizing untouched. */
+	font-size: 16px;
+}
+
+/* ─── Fluid root scale (desktop / laptop) ─────────────────────────────
+   The landing + site were built against a 1440px reference. On real
+   laptops (1024–1440 CSS px, or wider panels shrunk by 125–150% Windows
+   display scaling) that reference renders too large — the "zoomed in"
+   look that only came right at ~80% browser zoom.
+
+   Scaling the ROOT font-size down across the laptop band shrinks every
+   rem-based size uniformly (≈63% of the site), reproducing that 80%-zoom
+   fit at 100%. Gated at ≥992px so it aligns with the desktop layout
+   breakpoint and leaves the mobile/tablet designs at a full 16px.
+
+   `rem` inside this calc() resolves to the INITIAL 16px (per spec, rem on
+   the root's own font-size uses the initial value), so browser zoom still
+   works — the rem term scales with zoom, the vw term adds fluid response.
+   Curve: ~13px @ 1024 (≈81%) → 16px @ ~1600+. Tune the clamp to taste. */
+@media (min-width: 992px) {
+	html {
+		font-size: clamp(13px, calc(0.55rem + 0.45vw), 16px);
+	}
 }
 
 html,

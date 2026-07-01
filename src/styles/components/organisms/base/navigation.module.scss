@@ -51,7 +51,7 @@
   // Push the nav down to clear the hero's announcement bar (top of viewport).
   // Bar is 60px on desktop, 44px on mobile.
   &.withBanner {
-    top: 60px;
+    top: 3.75rem;   /* must match banner height (60px @ 16 root); scales together */
 
     @media (max-width: 850px) {
       top: 44px;
@@ -110,14 +110,14 @@
     gap: 4px;          /* Figma: 4px between icon and wordmark */
 
     img {
-      width: 48px;
-      height: 48px;
+      width: 3rem;   /* 48px @ 16 root — scales with fluid root */
+      height: 3rem;
       flex-shrink: 0;
     }
 
     p {
       font-family: 'Gilroy', 'Plus Jakarta Sans', sans-serif;
-      font-size: 11px;       /* Figma: ~11px wordmark */
+      font-size: 0.6875rem;  /* 11px @ 16 root — scales with fluid root */
       font-weight: 400;      /* Figma: regular weight */
       margin: 0;
       color: #ffffff;
@@ -137,7 +137,7 @@
     /* Full-width bar — logo pins left, links centre via position:absolute */
     position: relative;        /* anchor for absolute-centred links */
     width: 100%;
-    height: 84px;              /* Figma nav bar height */
+    height: 5.25rem;           /* 84px @ 16 root — scales with fluid root */
     /* Gutter matches the hero's 1400px reference so the logo lines up exactly
        with the hero heading on every laptop/desktop. */
     padding: 0 max(4vw, calc((100% - 1400px) / 2));
@@ -161,14 +161,14 @@
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 30px;             /* Figma: 30px between each link */
+      gap: 1.875rem;         /* 30px @ 16 root — scales with fluid root */
       white-space: nowrap;
       pointer-events: auto;
 
       > a,
       .desktopLinks a {
         font-family: 'Plus Jakarta Sans', 'Alexandria', sans-serif;
-        font-size: 16px;
+        font-size: 1rem;       /* 16px @ 16 root — scales with fluid root */
         font-weight: 400;
         line-height: 1;
         letter-spacing: 0;
