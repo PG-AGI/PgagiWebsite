@@ -10,7 +10,9 @@
   // below — so this dark card lines up edge-to-edge with that section instead of
   // spanning the full viewport. overflow:hidden clips the ambient glow to the
   // rounded box so it can't bleed onto the white gutters.
-  width: min(1400px, 92vw);
+  // Clay-style 1240px rail, wrapper-relative (100%, not vw — the page wrapper
+  // already pads the sides; vw widths overflowed and were clipped on the right).
+  width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
   margin: 0 auto;
   overflow: hidden;
   // Skip painting offscreen content — major scroll performance win
@@ -64,13 +66,20 @@
   margin: 0 0 3.75rem 0; // More space below title
   text-align: center;
   color: #f2f2f3;
-  font-size: clamp(2.4rem, 4.8vw, 3.8rem); // Matches target scale better
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 6.7vh);
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 700;
 
   span {
     color: #ca1e11;
+  }
+
+  @media (min-width: 921px) {
+    // Desktop-scoped (the ≤920 blocks don't reset this margin): the gap below
+    // the title compresses via vh on short laptops, matching the page rhythm.
+    margin-bottom: min(3.75rem, 5.5vh);
   }
 }
 

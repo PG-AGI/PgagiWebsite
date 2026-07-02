@@ -30,7 +30,8 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
 
 .section {
   background: #ffffff;
-  padding: 9.375rem 0;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 900px;
@@ -42,9 +43,9 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
 
 .container {
   width: 100%;
-  // Cap so the board never scales past the artwork's native ~1280px size
-  // (was 82vw uncapped, which over-inflated the cards on wide screens).
-  max-width: min(82vw, 1180px);
+  // Cap so the board never scales past the artwork's native ~1280px size.
+  // 100% (not vw) — sized against the padded page wrapper like every section.
+  max-width: min(73.75rem, 100%); // rem: scales with the fluid desktop root
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
@@ -60,7 +61,8 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
   margin: 0;
   text-align: center;
   color: #1a1a1a;
-  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5.5vh);
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -78,6 +80,14 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
   border: 1px solid #d2c7bd;
   box-shadow: 0 16px 36px rgba(53, 43, 34, 0.08);
   overflow: hidden;
+
+  @media (min-width: 861px) {
+    // Fit-to-fold: the board's text is baked into the card SVGs, so it can't
+    // reflow — the whole aspect-locked board scales down instead, capped so
+    // the full flow diagram fits below the navbar + title (~16rem allowance).
+    // On viewports ≥ ~1090px tall the container's 1180px cap still wins.
+    max-width: calc((100dvh - 16rem) * 1280 / 909);
+  }
 }
 
 .board::before {

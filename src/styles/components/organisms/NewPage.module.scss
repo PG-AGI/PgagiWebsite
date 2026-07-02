@@ -1,8 +1,9 @@
 .section {
   position: relative;
   background: #ffffff;
-  padding-top: 9.375rem;
-  padding-bottom: 9.375rem;
+  // Clay-style page rhythm — identical on every landing section.
+  padding-top: clamp(4rem, 10vh, 7rem);
+  padding-bottom: clamp(4rem, 10vh, 7rem);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -34,9 +35,10 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  // Match the "We engineer the system" ScrollStack card width so this section
-  // lines up edge-to-edge with the cards directly below it.
-  max-width: min(87.5rem, 92vw);
+  // Match the "We engineer the system" ScrollStack card width (1240px Clay
+  // rail, wrapper-relative) so this section lines up edge-to-edge with the
+  // cards directly below it.
+  max-width: min(77.5rem, 100%);
   margin: 0 auto;
   padding: 0;
   display: flex;
@@ -55,7 +57,7 @@
 .tabSwitcher {
   display: inline-flex;
   align-items: center;
-  margin: 0 auto 3.125rem;
+  margin: 0 auto min(3.125rem, 5vh); // vh binds on short laptops only
   padding: 0.5rem;
   background:#F5EFEA;
   border: 2px solid rgba(255, 255, 255, 0.5);
@@ -73,7 +75,7 @@
 }
 
 .tab {
-  padding: 1.5rem 2rem;
+  padding: min(1.5rem, 2.6vh) 2rem; // vertical pad compresses on short laptops
   border-radius: 100px;
   border: none;
   background: transparent;
@@ -133,7 +135,9 @@
   display: flex;
   flex-direction: column;
   width: min(100%, 48rem);
-  min-height: clamp(24rem, 38vw, 32rem);
+  // Outer min() caps the width-derived floor by viewport height so the card
+  // can't force the 100vh section past the fold on short laptops.
+  min-height: min(clamp(24rem, 38vw, 32rem), calc(100dvh - 18rem));
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(26, 26, 26, 0.12);
   border-radius: 32px;
@@ -181,10 +185,12 @@
 
 .mainTitle {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  // Clay scale (in-card heading sits below the 40px section titles); vh
+  // terms only bind on short laptop viewports (< ~900px tall).
+  font-size: min(clamp(1.5rem, 2.2vw, 2.1rem), 4.6vh);
   font-weight: 700;
   line-height: 1.1;
-  margin: 0 0 clamp(1.2rem, 1.8vw, 1.8rem);
+  margin: 0 0 min(clamp(1rem, 1.5vw, 1.5rem), 3.2vh);
   color: #1A1A1A;
   margin-top: 0.5em;
 
@@ -302,6 +308,13 @@
   height: 150%;
   object-fit: contain;
   display: block;
+
+  @media (min-width: 769px) {
+    // Cap the oversized (150%) image box by viewport height so the contained
+    // artwork shrinks on short laptops instead of pushing past the fold.
+    // No-op on taller screens (the drawn art is width-driven and smaller).
+    max-height: calc(100dvh - 18rem);
+  }
 
   @media (max-width: 768px) {
     width: 100%;

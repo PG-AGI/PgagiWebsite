@@ -6,11 +6,13 @@ $red: #9f0000;
   background: #ffffff;
   position: relative;
   // Line the pinned cards up with the "How we scale your product" box
-  // (SocialOrbitSection: container = min(1400px, 92vw), no side gutter).
+  // (SocialOrbitSection: container = min(1240px, 100%), no side gutter).
   // Widening the shared ScrollStack container here — and dropping its 1vw
   // gutter — lets the cards match that box edge-to-edge without touching the
   // Revenue / CaseStudies stacks, which keep the 82vw default.
-  --scrollstack-container-max: min(87.5rem, 92vw);
+  // 77.5rem = the 1240px Clay rail; 100% (not vw) because the page wrapper
+  // already pads the sides — vw widths overflowed and were clipped right.
+  --scrollstack-container-max: min(77.5rem, 100%);
   --scrollstack-container-pad-x: 0;
 
   @media (max-width: 767px) {
@@ -40,8 +42,11 @@ $red: #9f0000;
 // Title  56 / 75, -0.7px   ·   Subtitle 20 / 28
 .title {
   margin: 0;
-  font-size: 3.5rem;
-  line-height: 4.6875rem;
+  // Clay heading scale: 40px with a tight 1.25 line-height (was Figma's
+  // 56/75). The vh terms only bind below ~900px-tall viewports (short
+  // laptops), where the fixed title starved the pinned card of room.
+  font-size: min(2.5rem, 5.5vh);
+  line-height: min(3.125rem, 6.9vh);
   font-weight: 700;
   letter-spacing: -0.7px;
   color: #2c2c2c;
@@ -64,10 +69,11 @@ $red: #9f0000;
 .subtitle {
   // 16px above (Figma gap to title) · ~42px below so the subtitle → first-card
   // gap reads as Figma's 56px once the ScrollStack header padding is added.
-  margin: 1rem 0 2.625rem;
+  // vh terms compress the header on short laptops (see .title note).
+  margin: min(0.75rem, 1.5vh) 0 min(1.75rem, 3.5vh); // Clay-tight header air
   color: #2c2c2c;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+  font-size: min(1.125rem, 2.2vh); // Clay scale (was 20px)
+  line-height: min(1.625rem, 3.1vh);
   font-weight: 500;
 
   @media (max-width: 768px) {
@@ -88,9 +94,9 @@ $red: #9f0000;
   align-items: center;
   gap: 7.5%; // 96 / 1280
   width: 100%;
-  // 1400px — matches the "How we scale your product" box cap so the card fills
-  // the widened container (--scrollstack-container-max) up to the same width.
-  max-width: 87.5rem;
+  // 1240px Clay rail — matches the "How we scale your product" box cap so the
+  // card fills the container (--scrollstack-container-max) to the same width.
+  max-width: 77.5rem;
   margin-inline: auto;
   aspect-ratio: 1280 / 482;
   padding: 0.75rem;
@@ -113,6 +119,15 @@ $red: #9f0000;
       padding-right: 0;
       padding-left: 2.4%;
     }
+  }
+
+  @media (min-width: 769px) {
+    // Short-laptop fit: the width rail (min(77.5rem, 100%), shared with the
+    // other section boxes) never changes — the aspect-locked height gives way
+    // instead, so the card flattens to fit the pinned viewport rather than
+    // clipping at the fold. 19.5rem = viewport top pad + compressed header.
+    // Only binds when 100dvh − 19.5rem < the aspect-derived height (~527px).
+    max-height: calc(100dvh - 19.5rem);
   }
 
   @media (max-width: 768px) {
@@ -143,6 +158,17 @@ $red: #9f0000;
   flex: 0 0 38.85%; // 497 / 1280
   align-self: center;
 
+  @media (min-width: 769px) {
+    // Hug the illustration: the pane takes exactly the image's width (the
+    // image spans the full card height below, ratio intact), so there is
+    // never dead space around the art — on any screen or card height. At the
+    // full design size this computes to the same 38.85% as before.
+    flex: 0 0 auto;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
   @media (max-width: 768px) {
     // Figma mobile: the illustration spans the full card width on every
     // device — the composition never changes, only the overall scale (it
@@ -156,6 +182,11 @@ $red: #9f0000;
 .imageInner {
   width: 100%;
   line-height: 0;
+
+  @media (min-width: 769px) {
+    width: auto;
+    height: 100%;
+  }
 }
 
 .mediaImage {
@@ -163,6 +194,15 @@ $red: #9f0000;
   height: auto;
   display: block;
   object-fit: contain;
+
+  @media (min-width: 769px) {
+    // Height-driven: the image always spans the full card height (the card's
+    // own aspect-ratio/max-height bound it), width follows the natural ratio,
+    // and the hugging pane above means zero dead space at any card height.
+    width: auto;
+    height: 100%;
+    max-width: none;
+  }
 
   @media (max-width: 768px) {
     // A fixed 92% of the card width, aspect ratio intact — the image renders
@@ -195,10 +235,12 @@ $red: #9f0000;
 }
 
 .cardTitle {
-  margin: 0 0 1.5rem; // gap title → list
+  // Clay scale (was 32/40); vh terms only bind on short laptops, where the
+  // card flattens (see .card max-height) and the copy compresses with it.
+  margin: 0 0 min(1.25rem, 2.7vh); // gap title → list
   color: $ink;
-  font-size: 2rem; // 32
-  line-height: 2.5rem; // 40
+  font-size: min(1.75rem, 3.6vh); // 28
+  line-height: min(2.25rem, 4.4vh); // 36
   letter-spacing: -1px;
   font-weight: 700;
 
@@ -221,8 +263,8 @@ $red: #9f0000;
     display: flex;
     align-items: center;
     gap: 0.9375rem;
-    font-size: 1.25rem; // 20
-    line-height: 2.5rem; // 40
+    font-size: min(1.125rem, 2.2vh); // Clay scale, 18 (was 20)
+    line-height: min(2.375rem, 4.4vh); // 38
     font-weight: 500;
 
     &:not(:last-child) {
@@ -256,13 +298,13 @@ $red: #9f0000;
 }
 
 .outcome {
-  margin: 3.5rem 0 0; // gap list → divider
-  padding-top: 1.5rem; // gap divider → outcome text
+  margin: min(2.5rem, 6.2vh) 0 0; // gap list → divider (Clay-tightened)
+  padding-top: min(1.25rem, 2.7vh); // gap divider → outcome text
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
   color: $ink;
-  font-size: 1.5rem; // 24
-  line-height: 1.9375rem; // 31
+  font-size: min(1.25rem, 2.7vh); // Clay scale, 20 (was 24)
+  line-height: min(1.75rem, 3.4vh); // 28
   letter-spacing: -0.5px;
   font-weight: 700;
   white-space: nowrap;

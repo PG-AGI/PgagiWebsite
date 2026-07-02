@@ -1,12 +1,13 @@
 /* ─── Section ──────────────────────────────────────────────────────── */
 .section {
   background: #ffffff;
-  padding: 6.25rem 0 7.5rem;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   overflow: hidden;
 }
 
 .container {
-  width: min(1320px, calc(100% - 2rem));
+  width: min(77.5rem, 100%); // Clay rail; rem scales with the fluid root
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 }
@@ -14,7 +15,7 @@
 /* ─── Header ───────────────────────────────────────────────────────── */
 .header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: min(4rem, 6vh); // vh binds on short laptops only
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +25,8 @@
 .title {
   margin: 0;
   color: #1a1a1a;
-  font-size: clamp(2.6rem, 5vw, 4rem);
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 7vh);
   line-height: 1.02;
   letter-spacing: -0.035em;
   font-weight: 700;
@@ -398,9 +400,106 @@
   to   { transform: translateX(0); }
 }
 
+/* ─── Desktop fit-one-fold (Clay-style) ────────────────────────────────
+   Header + BOTH marquee rows share a single laptop/desktop fold. Cards are
+   one size down from the old 340px design and every vertical value carries a
+   vh term that only binds below ~900px-tall viewports, so the section
+   compresses smoothly instead of the second row falling off the screen.
+   Scoped ≥769px so the phone design above is untouched. */
+@media (min-width: 769px) {
+  .header {
+    gap: min(1.1rem, 1.5vh);
+    margin-bottom: min(2.25rem, 3.5vh);
+  }
+
+  .title {
+    font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5vh);
+  }
+
+  .subtitle {
+    font-size: min(clamp(0.97rem, 1.3vw, 1.08rem), 2vh);
+  }
+
+  .ratingBadge {
+    padding: min(0.55rem, 0.9vh) 1.2rem min(0.55rem, 0.9vh) 0.72rem;
+  }
+
+  .stackAvatar {
+    width: min(1.875rem, 3.2vh);
+    height: min(1.875rem, 3.2vh);
+  }
+
+  .platformLogo {
+    width: min(2.125rem, 3.4vh);
+    height: min(2.125rem, 3.4vh);
+  }
+
+  .card {
+    width: 19.5rem; // Clay-scale card (was 340px)
+    padding: min(1.25rem, 2vh) 1.25rem min(1.1rem, 1.8vh);
+    border-radius: 20px;
+  }
+
+  .quote {
+    font-size: min(0.9rem, 1.75vh);
+    line-height: 1.55;
+    -webkit-line-clamp: 3; // one line fewer than the phone card
+    margin-bottom: min(0.9rem, 1.5vh);
+  }
+
+  .caseStudyBtn {
+    padding: min(0.55rem, 1vh) 0.75rem;
+    font-size: min(0.78rem, 1.5vh);
+    margin-bottom: min(1.1rem, 1.8vh);
+  }
+
+  .cardDivider {
+    margin-bottom: min(0.8rem, 1.3vh);
+  }
+
+  .cardPerson {
+    margin-bottom: min(0.7rem, 1.2vh);
+  }
+
+  .personAvatar {
+    width: min(2.25rem, 3.6vh);
+    height: min(2.25rem, 3.6vh);
+    min-width: min(2.25rem, 3.6vh);
+  }
+
+  .personInitials {
+    font-size: min(1rem, 1.9vh);
+  }
+
+  .name {
+    font-size: min(0.92rem, 1.75vh);
+  }
+
+  .company {
+    font-size: min(0.76rem, 1.5vh);
+  }
+
+  .footerLogo {
+    height: min(1.25rem, 2vh);
+  }
+
+  .footerProject {
+    font-size: min(0.72rem, 1.4vh);
+  }
+
+  .marqueeWrapper {
+    gap: min(1rem, 1.6vh);
+    padding: 0.25rem 0;
+  }
+
+  .marqueeTrack {
+    gap: 1rem;
+  }
+}
+
 /* ─── Tablet (≤1100px) ─────────────────────────────────────────────── */
 @media (max-width: 1100px) {
-  .section { padding: 80px 0 100px; }
+  .section { padding: clamp(3.25rem, 10vh, 7rem) 0; }
 }
 
 /* ─── Mobile (≤768px) ──────────────────────────────────────────────── */

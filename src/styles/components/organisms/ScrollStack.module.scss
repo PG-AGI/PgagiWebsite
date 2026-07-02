@@ -21,8 +21,9 @@
     align-items: stretch;
     /* Trimmed from 120–160px: the large top inset ate the vertical room the
        card needs, which clipped its bottom on shorter laptops. 88px min still
-       clears the ~84px fixed navbar. */
-    padding-top: clamp(88px, 10vh, 120px);
+       clears the ~84px fixed navbar; 104px cap keeps the pinned header close
+       under the navbar (Clay-tight) instead of floating. */
+    padding-top: clamp(5.5rem, 9vh, 6.5rem); /* rem: tracks the fluid root + nav height */
     box-sizing: border-box;
   }
 
@@ -85,9 +86,13 @@
       .stackArea {
         flex: 0 0 auto;
         width: 100%;
-        max-width: 87.5rem; // matches the Revenue card cap (= VisionSystem cards)
+        max-width: 77.5rem; // matches the Revenue card cap (= VisionSystem cards)
         margin-inline: auto;
         aspect-ratio: 1240 / 482; // = the card's box, so top:0 fills it exactly
+        // Short-laptop fit: never taller than the pinned viewport minus its
+        // top padding, so the centred card can't clip at the fold. The card
+        // itself carries a matching max-height (RevenueSection.module.scss).
+        max-height: calc(100dvh - 10rem);
       }
     }
   }

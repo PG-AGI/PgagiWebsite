@@ -9,6 +9,7 @@ import NavWrapper from "@/components/organisms/base/NavWrapper";
 import Footer from "@/components/organisms/Footer";
 import PageTransition from "@/components/organisms/PageTransition";
 
+
 // Fonts
 const poppins = Poppins({
   subsets: ['latin'],

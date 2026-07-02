@@ -13,7 +13,7 @@
      the deck stacks — instead of the heading scrolling away and the cards
      jamming under the navbar. Kept comfortably ≥ the heading block's real
      height across breakpoints. */
-  --rl-header-h: clamp(196px, 25vh, 252px);
+  --rl-header-h: clamp(12.25rem, 25vh, 15.75rem); /* rem: fluid-root scaled */
 }
 
 /* ── Top block: heading + filter tabs — sticky so it stays on screen ── */
@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   gap: clamp(0.9rem, 2vw, 1.4rem);
-  padding: clamp(84px, 9vh, 100px) 0 clamp(1.2rem, 2.5vh, 1.8rem);
+  padding: clamp(5.25rem, 9vh, 6.25rem) 0 clamp(1.2rem, 2.5vh, 1.8rem);
   background: #ffffff;
   position: sticky;
   top: 0;
@@ -40,7 +40,8 @@
 
 .heading {
   margin: 0;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  // Clay heading cap (40px) — uniform with every landing-section title.
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   color: #111111;
@@ -93,7 +94,7 @@
 /* ── Cards stack wrapper ── */
 .cardsStack {
   position: relative;
-  max-width: 82vw;
+  max-width: min(77.5rem, 100%); // Clay rail; rem scales with the fluid root
   margin: 0 auto;
   padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
 
@@ -109,8 +110,8 @@
 .stickyCard {
   position: sticky;
   /* Pin below the sticky heading; each successive card peeks 10px lower. */
-  top: calc(var(--rl-header-h) + var(--card-index, 0) * 10px);
-  border-radius: 20px;
+  top: calc(var(--rl-header-h) + var(--card-index, 0) * 0.625rem);
+  border-radius: 1.25rem; /* rem: fluid-root scaled */
   overflow: hidden;
   /* Each successive card sits above the previous */
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
@@ -129,7 +130,7 @@
   // border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: clamp(380px, 48vh, 520px);
+  min-height: clamp(23.75rem, 48vh, 32.5rem); /* rem: fluid-root scaled */
   overflow: hidden;
   position: relative;
 
@@ -309,15 +310,15 @@
 .screenshotFrame {
   position: relative;
   width: 100%;
-  border-radius: 14px;
+  border-radius: 0.875rem; /* rem: fluid-root scaled */
   overflow: hidden;
   box-shadow:
     0 8px 30px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.08);
   background: #e8e8ea;
   /* Slight vertical overflow for floating look */
-  margin-top: -24px;
-  margin-bottom: -24px;
+  margin-top: -1.5rem;
+  margin-bottom: -1.5rem;
 
   @media (max-width: 900px) {
     margin-top: 0;
@@ -346,9 +347,9 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 .cardSkeleton {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: clamp(380px, 48vh, 520px);
+  min-height: clamp(23.75rem, 48vh, 32.5rem); /* rem: fluid-root scaled */
   background: #f5f5f7;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   overflow: hidden;
 
   @media (max-width: 900px) {

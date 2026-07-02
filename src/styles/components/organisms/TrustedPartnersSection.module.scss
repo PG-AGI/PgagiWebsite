@@ -19,7 +19,8 @@ $hover-bg: #f8f4f1;
 
 .section {
   background: #ffffff;
-  padding: clamp(56px, 7vw, 96px) 0 clamp(64px, 8vw, 112px);
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   content-visibility: auto;
   contain-intrinsic-size: 0 720px;
 
@@ -34,7 +35,7 @@ $hover-bg: #f8f4f1;
    reference and uses the same 4vw gutters below that. */
 .container {
   width: 100%;
-  padding: 0 max(4vw, calc((100% - 1400px) / 2));
+  padding: 0 max(0px, calc((100% - 77.5rem) / 2)); // Clay rail (rem: fluid root)
   box-sizing: border-box;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 }

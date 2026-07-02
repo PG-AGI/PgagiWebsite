@@ -142,9 +142,14 @@
     position: relative;        /* anchor for absolute-centred links */
     width: 100%;
     height: 5.25rem;           /* 84px @ 16 root — scales with fluid root */
-    /* Gutter matches the hero's 1400px reference so the logo lines up exactly
-       with the hero heading on every laptop/desktop. */
-    padding: 0 max(4vw, calc((100% - 1400px) / 2));
+    /* Gutter matches the landing sections' 1240px Clay rail (sections sit in
+       .sectionsWrapper, which pads the sides by clamp(2.5rem, 7vw, 9rem) and
+       centres a min(1240px, 100%) box). Using the same two-term formula here
+       means the logo lines up with the section boxes' left edge on EVERY
+       screen width — the old max(4vw, (100% − 1400px)/2) flipped between a
+       tight 4vw gutter (narrow screens) and a wide 1400 rail (large screens),
+       which read as the nav "moving left" on some machines. */
+    padding: 0 max(clamp(2.5rem, 7vw, 9rem), calc((100% - 77.5rem) / 2));
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -220,17 +225,19 @@
 }
 
 
-// ── Responsive: shrink padding + link gap before mobile breakpoint ──────────
+// ── Responsive: shrink link gap before mobile breakpoint ────────────────────
+// Padding keeps the same clamp(2.5rem, 7vw, 9rem) gutter as the base rule —
+// it's the .sectionsWrapper gutter, so the logo stays flush with the section
+// boxes' left edge at every desktop width (the old 4vw here pulled the nav
+// further left than the content on mid-size laptops).
 @media (max-width: 1200px) {
   .navigation .nav {
-    padding: 0 4vw;          /* stays aligned with the hero's 4vw gutter */
     .links { gap: 24px; }
   }
 }
 
 @media (max-width: 1000px) {
   .navigation .nav {
-    padding: 0 4vw;
     .links {
       gap: 20px;
       > a, .desktopLinks a { font-size: 15px; }
@@ -240,7 +247,6 @@
 
 @media (max-width: 900px) {
   .navigation .nav {
-    padding: 0 4vw;
     .links {
       gap: 16px;
       > a, .desktopLinks a { font-size: 14px; }

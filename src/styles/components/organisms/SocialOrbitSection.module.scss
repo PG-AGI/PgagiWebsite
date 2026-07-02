@@ -13,8 +13,8 @@
 
 .section {
   background: #ffffff;
-  // Fluid vertical rhythm — 96px → 150px (anchored at the ~1400px reference)
-  padding: clamp(6rem, 9vw, 9.375rem) 0;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   // Reduces paint cost for off-screen content
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;
@@ -29,9 +29,11 @@
 }
 
 .container {
-  // 1400px reference: caps at 1400, fluid below (≈4% gutters each side).
-  // Identical ≥1522px viewport; scales proportionally down to the tablet break.
-  width: min(1400px, 92vw);
+  // Clay-style page rail: caps at 1240px, fluid below. 100% (not vw!) —
+  // the page's .sectionsWrapper already pads the sides by clamp(2.5rem, 7vw,
+  // 9rem), so a 92vw box physically couldn't fit and was clipped on the
+  // right by .main's overflow-x: clip. Wrapper-relative width can't overflow.
+  width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
   margin: 0 auto;
   position: relative;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
@@ -46,13 +48,14 @@
 }
 
 .sectionTitle {
-  // Gap title → panel ≈ 52px at the 1400px reference
-  margin: 0 0 clamp(2rem, 3.6vw, 3.25rem);
+  // Gap title → panel ≈ 52px at the 1400px reference. The vh terms only bind
+  // on short laptop viewports (< ~900px tall).
+  margin: 0 0 min(clamp(2rem, 3.6vw, 3.25rem), 5vh);
   text-align: center;
   color: #2c2c2c;
   font-family: var(--font-plus-jakarta), sans-serif;
-  // 56px at the reference; scales with viewport below it
-  font-size: clamp(2rem, 3.7vw, 3.5rem);
+  // Clay-style heading scale: caps at 40px, fluid below
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 6.2vh);
   font-weight: 700;
   line-height: 1.18;
   letter-spacing: -0.0125em; // -0.7px / 56px
@@ -62,8 +65,11 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
-  // ≈640px at the reference — tall enough to frame the open accordion + orbit
-  min-height: clamp(520px, 43vw, 640px);
+  // ≈570px at the 1240px rail — tall enough to frame the open accordion +
+  // orbit without dominating the screen. The outer min() is the laptop
+  // fit-to-height cap: on short viewports the panel floor drops so title +
+  // panel share one fold (content can still grow it — min-height, never a clip).
+  min-height: min(clamp(28.75rem, 40vw, 35.625rem), calc(100dvh - 13rem));
   border-radius: clamp(16px, 1.55vw, 22px);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -83,16 +89,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // ≈15px between items at the reference
-  gap: clamp(0.7rem, 1.05vw, 0.95rem);
+  // ≈15px between items at the reference (vh binds on short laptops only)
+  gap: min(clamp(0.7rem, 1.05vw, 0.95rem), 1.6vh);
 }
 
 .accordionItem {
   border-radius: clamp(10px, 1vw, 14px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: #34363c;
-  // ≈26px vertical / ≈22px horizontal at the reference — matches the airy design
-  padding: clamp(1.1rem, 1.85vw, 1.65rem) clamp(1rem, 1.6vw, 1.4rem);
+  // ≈26px vertical / ≈22px horizontal at the reference — matches the airy
+  // design (vertical pad compresses via vh on short laptops)
+  padding: min(clamp(1.1rem, 1.85vw, 1.65rem), 2.4vh) clamp(1rem, 1.6vw, 1.4rem);
   /* Needed so the absolutely-positioned body on mobile has a reference */
   position: relative;
 }
@@ -113,8 +120,8 @@
   gap: 0.7rem;
   cursor: pointer;
   padding: 0;
-  // ≈20px at the reference
-  font-size: clamp(1.02rem, 1.42vw, 1.25rem);
+  // ≈20px at the reference (vh binds on short laptops only)
+  font-size: min(clamp(1.02rem, 1.42vw, 1.25rem), 2.2vh);
   line-height: 1.3;
   font-weight: 600;
 
@@ -130,16 +137,16 @@
 }
 
 .accordionBody {
-  // ≈18px gap below the title at the reference
-  margin-top: clamp(0.8rem, 1.4vw, 1.15rem);
+  // ≈18px gap below the title at the reference (vh: short laptops only)
+  margin-top: min(clamp(0.8rem, 1.4vw, 1.15rem), 1.6vh);
   border-radius: clamp(8px, 0.85vw, 12px);
   border: 1px solid rgba(255, 255, 255, 0.34);
   background: #ffffff;
   color: #2c2c2c;
   // ≈26px vertical / ≈30px horizontal at the reference
-  padding: clamp(1.15rem, 1.9vw, 1.65rem) clamp(1.25rem, 2.1vw, 1.85rem);
+  padding: min(clamp(1.15rem, 1.9vw, 1.65rem), 2.2vh) clamp(1.25rem, 2.1vw, 1.85rem);
   // ≈17px at the reference
-  font-size: clamp(0.95rem, 1.2vw, 1.0625rem);
+  font-size: min(clamp(0.95rem, 1.2vw, 1.0625rem), 1.9vh);
   font-weight: 500;
   line-height: 1.55;
   animation: accordionIn 0.2s ease-out both;
@@ -159,12 +166,16 @@
 .orbitScene {
   position: absolute;
   // ── Orbit scale lock ──────────────────────────────────
-  // 1em == (container width / 1400). The container caps at 1400px
-  // (= min(1400px, 92vw)), so 92vw / 1400 = 0.0657vw, capped at 1px.
+  // 1em == (container width / 1400 design ref). The container is
+  // min(1240px, 100%), and the page wrapper leaves ≈86vw of room, so:
+  // fluid term 86vw / 1400 = 0.0614vw, capped at 1240/1400 = 0.886px.
   // Every orbit dimension below is expressed in `em`, so the whole
   // orbit scales as ONE rigid unit with the panel — no drift, exact
   // proportions preserved at every desktop width.
-  font-size: min(1px, 0.0657vw);
+  // Third term = laptop fit-to-height: it mirrors the panel's min-height cap
+  // ((100dvh − 13rem) / 640px design height), so when the panel shrinks on a
+  // short viewport the orbit artwork scales down in lockstep with it.
+  font-size: min(calc(77.5rem / 1400), 0.0614vw, calc((100dvh - 13rem) / 640));
   right: -360em;
   top: 50%;
   transform: translateY(-50%);

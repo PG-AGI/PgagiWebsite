@@ -8,15 +8,16 @@ $red: #9f0000;
   background: #ffffff;
   position: relative;
   // Match the "You have the vision / We engineer the system" (VisionSystemSection)
-  // ScrollStack: cards cap at 87.5rem (1400px), fluid ≈92vw below, zero side gutter.
-  // Inherited by the nested ScrollStack .container so both sections' cards are
-  // exactly the same width at every viewport.
-  --scrollstack-container-max: min(87.5rem, 92vw);
+  // ScrollStack: cards cap at 77.5rem (1240px Clay rail), wrapper-relative
+  // (100%, not vw — vw widths overflowed the padded page wrapper and were
+  // clipped on the right). Inherited by the nested ScrollStack .container so
+  // both sections' cards are exactly the same width at every viewport.
+  --scrollstack-container-max: min(77.5rem, 100%);
   --scrollstack-container-pad-x: 0;
   // The pinned scroll-stack leaves its trailing space *inside* the sticky
-  // viewport, so add real flow whitespace below it to match the inter-section
-  // gap used elsewhere (~150px desktop) before the next section.
-  padding-bottom: clamp(90px, 11vh, 150px);
+  // viewport, so add real flow whitespace below it — Clay-style page rhythm,
+  // identical on every landing section.
+  padding-bottom: clamp(4rem, 10vh, 7rem);
 
   @media (max-width: 768px) {
     // Page-wide mobile rhythm token (set on .main in page.module.scss).
@@ -33,7 +34,7 @@ $red: #9f0000;
 
 .introSection {
   width: 100%;
-  padding-top: clamp(100px, 12vh, 155px);
+  padding-top: clamp(4rem, 10vh, 7rem); // Clay-style page rhythm
   padding-bottom: clamp(1.5rem, 3vh, 3rem);
   min-height: 37.5rem;
   text-align: center;
@@ -67,7 +68,10 @@ $red: #9f0000;
 
 .title {
   margin: 0;
-  font-size: clamp(2.9rem, 3.8vw, 3.1rem);
+  // Clay heading cap (40px); the vh term only binds below ~900px-tall
+  // viewports (short laptops), where the intro must compress so heading +
+  // banner share one fold.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5.5vh);
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -90,7 +94,7 @@ $red: #9f0000;
 .subtitle {
   margin: 2vh 0 0;
   color: #606060;
-  font-size: clamp(1.2rem, 2.1vw, 1.5rem);
+  font-size: min(clamp(1rem, 1.6vw, 1.125rem), 2.7vh); // Clay scale (was 24px)
   font-weight: 500;
   line-height: 1.5;
 
@@ -101,10 +105,15 @@ $red: #9f0000;
 }
 
 // Wide banner image — intentionally wider than the text block, but capped so
-// it matches the other section boxes (min(1400px, 92vw)) instead of overshooting
+// it matches the other section boxes (min(1240px, 100%)) instead of overshooting
 // on wide screens. 1400px is also the video's native width — no upscaling.
 .headerImageWrapper {
-  width: min(1400px, 92vw);
+  // Third term = fit-to-fold on short laptops: the 2:1 video can only fit a
+  // shorter screen by getting narrower (cropping the dashboard footage was
+  // ruled out), so it scales to (viewport − nav/heading allowance) × aspect
+  // and stays centred. On viewports ≥ ~900px tall the old caps win untouched.
+  // 100% (not vw): the padded page wrapper is the real available width.
+  width: min(77.5rem, 100%, calc((100dvh - 17rem) * 2));
   margin: 5vh auto 0;
   border-radius: 24px;
   overflow: hidden;
@@ -139,9 +148,9 @@ $red: #9f0000;
   flex-direction: row;
   align-items: center;
   width: 100%;
-  // 1400px — matches the VisionSystemSection card cap so these three cards are
-  // the same width as the "You have the vision" cards.
-  max-width: 87.5rem;
+  // 1240px Clay rail — matches the VisionSystemSection card cap so these
+  // three cards are the same width as the "You have the vision" cards.
+  max-width: 77.5rem;
   margin-inline: auto;
   aspect-ratio: 1240 / 482;
   box-sizing: border-box;
@@ -152,6 +161,13 @@ $red: #9f0000;
   &.card2,
   &.card3 {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (min-width: 901px) {
+    // Short-laptop fit: the width rail never changes — the aspect-locked
+    // height gives way so the pinned card flattens instead of clipping.
+    // Mirrors the .centered .stackArea cap in ScrollStack.module.scss.
+    max-height: calc(100dvh - 10rem);
   }
 
   // ── Per-card horizontal geometry (% of 1240) ──
@@ -277,6 +293,17 @@ $red: #9f0000;
   height: auto;
   display: block;
   border-radius: inherit;
+
+  @media (min-width: 901px) {
+    // Pairs with the .card max-height: when the card flattens on short
+    // laptops the illustration shrinks (height-capped, ratio intact, centred
+    // in its pane) instead of being clipped. When the cap doesn't bind,
+    // width:auto + max-width:100% renders identical to the old width:100%.
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - 12rem);
+    margin-inline: auto;
+  }
 }
 
 // ─── Copy ─────────────────────────────────────
@@ -293,10 +320,12 @@ $red: #9f0000;
 }
 
 .cardTitle {
-  margin: 0 0 1.5rem; // gap title → list
+  // vh terms only bind on short laptops, where the card flattens (see .card
+  // max-height) and the copy must compress with it. Figma sizes otherwise.
+  margin: 0 0 min(1.5rem, 2.7vh); // gap title → list
   color: $ink;
-  font-size: 2rem; // 32
-  line-height: 2.5rem; // 40
+  font-size: min(2rem, 3.6vh); // 32
+  line-height: min(2.5rem, 4.4vh); // 40
   letter-spacing: -1px;
   font-weight: 700;
 
@@ -316,14 +345,14 @@ $red: #9f0000;
   color: $ink;
   // Reserve four rows so the divider/outcome sit at the same height on
   // every card (Figma keeps a 4th, hidden row on the 3-point card).
-  min-height: 9.25rem; // 40·4 − 4·3
+  min-height: min(9.25rem, 16.5vh); // 40·4 − 4·3 (vh: short laptops)
 
   li {
     display: flex;
     align-items: center;
     gap: 0.9375rem;
-    font-size: 1.25rem; // 20
-    line-height: 2.5rem; // 40
+    font-size: min(1.25rem, 2.2vh); // 20 (vh binds on short laptops only)
+    line-height: min(2.5rem, 4.4vh); // 40
     font-weight: 500;
 
     &:not(:last-child) {
@@ -364,13 +393,13 @@ $red: #9f0000;
 }
 
 .outcome {
-  margin: 3.5rem 0 0; // gap list → divider
-  padding-top: 1.5rem; // gap divider → outcome text
+  margin: min(3.5rem, 6.2vh) 0 0; // gap list → divider (vh: short laptops)
+  padding-top: min(1.5rem, 2.7vh); // gap divider → outcome text
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
   color: $ink;
-  font-size: 1.5rem; // 24
-  line-height: 1.9375rem; // 31
+  font-size: min(1.5rem, 2.7vh); // 24
+  line-height: min(1.9375rem, 3.4vh); // 31
   letter-spacing: -0.5px;
   font-weight: 700;
   white-space: nowrap;

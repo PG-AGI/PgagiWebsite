@@ -16,6 +16,21 @@ html {
   overscroll-behavior: none;
 }
 
+/* ── Fluid desktop root (Clay-style visual uniformity) ─────────────────
+   The desktop UI is authored in rem against an ~1850px-wide reference.
+   Below that, the root scales the entire page proportionally, so the rail
+   width, type and spacing occupy the SAME visual share of the screen on a
+   1480px laptop as on a 1920px desktop — instead of fixed px caps filling
+   84% of one screen and 67% of the other ("too zoomed in").
+   0.865vw = 16px at 1850. Floor 12px keeps text readable on the smallest
+   desktop widths. Phones/tablets (≤768px) keep the fixed 16px root so the
+   mobile design is untouched. */
+@media (min-width: 769px) {
+  html {
+    font-size: clamp(12px, 0.865vw, 16px);
+  }
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
