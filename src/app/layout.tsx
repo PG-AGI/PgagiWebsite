@@ -100,11 +100,11 @@ export default function RootLayout({
                 }}
               />
               {/* DataFast Analytics */}
-              {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_DATAFAST_ID && process.env.NEXT_PUBLIC_DATAFAST_DOMAIN && (
+              {process.env.NODE_ENV === 'production' && (
                 <Script
-                  strategy="lazyOnload"
-                  data-website-id={process.env.NEXT_PUBLIC_DATAFAST_ID}
-                  data-domain={process.env.NEXT_PUBLIC_DATAFAST_DOMAIN}
+                  strategy="afterInteractive"
+                  data-website-id="dfid_ScLgcSKCkChuKsrvgG1Pa"
+                  data-domain="pgagi.in"
                   src="https://datafa.st/js/script.js"
                 />
               )}
