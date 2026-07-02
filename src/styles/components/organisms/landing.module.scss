@@ -117,10 +117,14 @@
 
   .heroBgDesktop {
     display: block;
-    /* Image is cropped so the man+robot pair sits at ~73% width (centred over
-       the right card). object-position Y places their feet just above the
-       cards across common desktop heights. */
-    object-position: center 64%;
+    /* The 16:9 sunset artwork is wider than the hero on common laptops
+       (16:10 / 16:9 + 112dvh hero), so cover crops the sides. Anchoring X at
+       100% makes that crop come out of the empty lake on the LEFT, which
+       pins the man+robot pair at ~73-76% width (over the right card) and
+       keeps the sun + foliage at the right edge in frame on every screen —
+       with `center` the pair drifted to ~85% and nearly clipped. Y=64% only
+       applies on ultra-wide screens where cover crops vertically instead. */
+    object-position: 100% 64%;
   }
 
   .heroBgMobile {
@@ -132,12 +136,12 @@
       display: none;
     }
 
-    /* The man+robot pair sits right-of-centre in the mobile crop. Short
-       phones are width-bound (the full image width shows, no horizontal
-       crop), but TALL phones are height-bound: cover crops ~15-20% of the
-       width. Anchoring at x=80% makes that crop come out of the empty
-       mountains on the LEFT, keeping the pair fully in frame with a margin —
-       at 66% the crop ate the right edge and pushed the robot off-screen. */
+    /* The mobile crop is a 0.7-aspect portrait; phones are 0.45-0.56, so
+       cover always crops ~20-35% of the width. The man+robot pair sits at
+       ~64% of the image width — anchoring at x=80% takes most of that crop
+       from the empty valley on the LEFT, landing the pair at ~55% of the
+       screen (slightly right of centre, same on every phone) with the sun
+       glow kept on the right edge. */
     .heroBgMobile {
       display: block;
       object-position: 80% 20%;
