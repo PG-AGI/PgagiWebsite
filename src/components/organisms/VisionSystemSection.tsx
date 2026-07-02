@@ -35,6 +35,9 @@ const VisionSystemSection = () => {
     <ScrollStack
       id="vision-system"
       animated={true}
+      // On mobile, pin the heading below the navbar and stack the cards beneath
+      // it (desktop keeps its own pinned stacking animation, untouched).
+      mobileStickyHeader
       preRoll={0.10}
       scrollMultiplier={1.2}
       className={styles.outerSection}

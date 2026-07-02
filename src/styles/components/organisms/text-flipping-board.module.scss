@@ -81,6 +81,13 @@
     height: 44px;
     gap: 12px;
   }
+
+  /* Small phones: slimmer bar. Navigation's .withBanner top offset steps
+     down with it (navigation.module.scss) — keep the two in sync. */
+  @media (max-width: 480px) {
+    height: 38px;
+    gap: 8px;
+  }
 }
 
 /* ─── LIVE indicator ─── */

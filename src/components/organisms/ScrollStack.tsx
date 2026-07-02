@@ -47,6 +47,9 @@ type ScrollStackProps = {
   /** Desktop only: vertically centre the pinned card in the viewport
       instead of pinning it to the top of the stack area. */
   centerCards?: boolean;
+  /** Mobile only: keep the section heading pinned just below the navbar while
+      the cards stack beneath it (instead of the heading scrolling away). */
+  mobileStickyHeader?: boolean;
 };
 
 const ScrollStack = ({
@@ -62,6 +65,7 @@ const ScrollStack = ({
   preRoll = 0,
   scrollMultiplier = 1,
   centerCards = false,
+  mobileStickyHeader = false,
 }: ScrollStackProps) => {
   const sectionRef   = useRef<HTMLElement>(null);
   const viewportRef  = useRef<HTMLDivElement>(null);
@@ -285,14 +289,52 @@ const ScrollStack = ({
   }
 }, [animated, cardOverlap, count, lenis, mobileMode, offset, preRoll, scrollMultiplier]);
 
+  // ── Mobile sticky-header: publish the heading's live height as a CSS var ──
+  // The heading is pinned below the navbar (pure CSS); the cards pin just below
+  // it, offset by this height. Measuring it (rather than hard-coding) keeps the
+  // cards aligned no matter how the title wraps on a given phone. This is a
+  // ResizeObserver only — no scroll listener, no rAF, no GSAP.
+  useEffect(() => {
+    if (!mobileStickyHeader) return;
+    const section = sectionRef.current;
+    const header  = headerRef.current;
+    if (!section || !header) return;
+
+    const mq = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const measure = () => {
+      if (mq.matches) {
+        section.style.setProperty("--sticky-header-h", `${Math.ceil(header.offsetHeight)}px`);
+      } else {
+        section.style.removeProperty("--sticky-header-h");
+      }
+    };
+    measure();
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(measure);
+      ro.observe(header);
+    }
+    mq.addEventListener?.("change", measure);
+    window.addEventListener("resize", measure, { passive: true });
+
+    return () => {
+      ro?.disconnect();
+      mq.removeEventListener?.("change", measure);
+      window.removeEventListener("resize", measure);
+      section.style.removeProperty("--sticky-header-h");
+    };
+  }, [mobileStickyHeader, count]);
+
   const layoutClass    = animated ? styles.animated : styles.static;
   const mobileFlowClass = mobileMode === "flow" ? styles.mobileFlow : "";
   const centerClass     = centerCards ? styles.centered : "";
+  const stickyHeaderClass = mobileStickyHeader ? styles.stickyHeaderMobile : "";
 
   return (
     <section
       ref={sectionRef}
-      className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${centerClass} ${className ?? ""}`.trim()}
+      className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${centerClass} ${stickyHeaderClass} ${className ?? ""}`.trim()}
       id={id}
       // Height = scroll room the animation actually consumes ((count-1) steps ×
       // multiplier) + one viewport for the final card to rest. Using `count`

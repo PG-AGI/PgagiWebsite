@@ -6,7 +6,8 @@
   contain-intrinsic-size: 0 800px;
 
   @media (max-width: 860px) {
-    padding: 5rem 0.9rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0.9rem;
   }
 }
 
@@ -318,11 +319,17 @@
 
 @media (max-width: 480px) {
   .section {
-    padding: 2rem 1.1rem;
+    // Page-wide rhythm token on both edges — adjacent sections use the same
+    // token, so every boundary gap on the page reads identically.
+    padding: var(--section-space, 3rem) 0;
   }
 
   .container {
-    max-width: 100%;
+    // Same centered 92vw rail as the dark ecosystem box above and the CTA
+    // surface below, so all three line up edge-to-edge on phones.
+    width: min(1400px, 92vw);
+    max-width: none;
+    margin-inline: auto;
     padding: 0;
   }
 

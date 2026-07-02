@@ -192,12 +192,16 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 1.5rem 0;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
   }
 
   .layout {
     --ring-scale: 0.72;
-    width: calc(100% - 1.25rem);
+    // Full wrapper-rail width — lines up with the VisionSystemSection cards
+    // (the tablet 82vw cap above otherwise leaks down to phones).
+    width: 100%;
+    max-width: none;
     height: clamp(340px, 92vw, 470px);
   }
 
@@ -208,7 +212,7 @@
   }
 
   .title {
-    font-size: clamp(2rem, 8.4vw, 2.7rem);
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
     max-width: 11ch;
     line-height: 1.12;
   }
@@ -237,26 +241,37 @@
 }
 
 @media (max-width: 480px) {
+  .section {
+    // Same rhythm token as every landing section — the boundary with the
+    // Solution-fit panel above reads like all the other section gaps.
+    padding: var(--section-space, 3rem) 0;
+  }
+
   .layout {
     --ring-scale: 0.68;
-    width: min(22.625rem, calc(100% - 2rem));
-    height: 16rem; // Increased height
+    // Full wrapper-rail width — identical footprint to the Vision cards.
+    width: 100%;
+    max-width: none;
+    // Enough red canvas for the card to float with an even frame of rings
+    // around it, instead of being wedged edge-to-edge.
+    height: 18.5rem;
   }
 
   .surface {
-    border-radius: 1rem;
+    border-radius: 1.25rem;
   }
 
   .contentCard {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% - 2.5rem); // Increased width
-    height: auto; // Let it grow or set a larger min-height
-    min-height: 11.5rem;
-    border-radius: 0.75rem;
-    padding: 1.5rem 1.25rem;
-    gap: 0.5rem;
+    // An even ~1rem ring of red on every side of the card.
+    width: calc(100% - 2rem);
+    height: auto;
+    min-height: 0;
+    border-radius: 0.9rem;
+    padding: 1.6rem 0.9rem 1.4rem;
+    gap: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -265,43 +280,57 @@
 
   .title {
     font-size: clamp(1.1rem, 5.5vw, 1.35rem);
-    max-width: 16ch; // Increased to allow 2 lines
-    line-height: 1.2;
+    // Wide enough that the headline breaks as two balanced lines instead of
+    // orphaning "way." onto its own line.
+    max-width: 22ch;
+    line-height: 1.22;
   }
 
   .subtitle {
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
     font-size: clamp(0.7rem, 3vw, 0.8rem);
-    line-height: 1.3;
-    max-width: 28ch;
+    line-height: 1.45;
+    max-width: 30ch;
   }
 
   .ctaButton {
-    margin-top: 0.85rem;
-    width: 100%;
-    min-height: 2.85rem; // Slightly more compact
-    padding: 0.35rem 0.35rem 0.35rem 1.15rem;
-    font-size: 0.725rem; // Decreased font size for better fit
-    font-weight: 600;
+    margin-top: 1.1rem;
+    // Natural pill width, centred — the full label fits, so no more
+    // stretched full-width bar with a truncated "Schedule Strategic C…".
+    width: auto;
+    max-width: 100%;
+    min-height: 2.85rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.9rem;
+    font-size: 0.725rem;
+    /* base button weight (500) — the old 600 override was what pushed the
+       label past the card width and forced the "…" truncation */
+    font-weight: 500;
     line-height: 1.2;
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.35rem; // Reduced gap to give text more space
+    gap: 0.45rem;
   }
 
   .arrowCircle {
-    width: 2.15rem; // Slightly smaller to match decreased font size
-    height: 2.15rem;
+    width: 1.9rem;
+    height: 1.9rem;
     flex-shrink: 0;
   }
 
   .ctaLabel {
-    flex: 1;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+/* Narrow phones: one more type step so the full "Schedule Strategic
+   Consultation" label fits the pill without truncating. */
+@media (max-width: 400px) {
+  .ctaButton {
+    font-size: 0.66rem;
   }
 }
 

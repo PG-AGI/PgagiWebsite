@@ -49,8 +49,10 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
+    // Full wrapper width, no extra gutter — matches the VisionSystemSection
+    // card width on mobile.
     max-width: 100%;
-    padding: 0 1.2rem;
+    padding: 0;
   }
 }
 
@@ -520,11 +522,15 @@ $top-gap-h: $top-left-art-h - $top-right-art-h;
 
 @media (max-width: 860px) {
   .section {
-    padding: 2.2rem 0.75rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    // No inline padding: the board lines up with the Vision cards.
+    padding: var(--section-space, 3rem) 0;
   }
 
   .container {
-    max-width: 33.75rem;
+    // Match the VisionSystemSection card width (full wrapper width) instead
+    // of the old narrow 33.75rem cap.
+    max-width: 100%;
   }
 
   .title {
@@ -550,7 +556,7 @@ $top-gap-h: $top-left-art-h - $top-right-art-h;
     display: flex;
     flex-direction: column;
     gap: 0.48rem;
-    max-width: 18rem;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -563,20 +569,27 @@ $top-gap-h: $top-left-art-h - $top-right-art-h;
 
 @media (max-width: 480px) {
   .section {
-    padding: 2rem 0.62rem;
+    padding: var(--section-space, 3rem) 0;
   }
 
   .container {
-    max-width: 21.25rem;
+    max-width: 100%;
   }
 
   .mobileStack {
-    max-width: 17rem;
+    max-width: 100%;
     gap: 0.42rem;
   }
 
   .mobileFlow {
     height: 1.2rem;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .title {
+    font-size: 1.5rem;
   }
 }
 

@@ -115,9 +115,15 @@
       display: none;
     }
 
+    /* The man+robot pair sits right-of-centre in the mobile crop. Short
+       phones are width-bound (the full image width shows, no horizontal
+       crop), but TALL phones are height-bound: cover crops ~15-20% of the
+       width. Anchoring at x=80% makes that crop come out of the empty
+       mountains on the LEFT, keeping the pair fully in frame with a margin —
+       at 66% the crop ate the right edge and pushed the robot off-screen. */
     .heroBgMobile {
       display: block;
-      object-position: center top;
+      object-position: 80% 20%;
     }
   }
 }
@@ -266,8 +272,8 @@
   svg { width: 55%; height: 55%; }
 
   @media (max-width: 768px) {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -498,6 +504,12 @@
   }
 }
 
+/* Capability rows (label : value) — mobile only. Rendered inside the wide
+   card; hidden on desktop where the bordered grid card is used instead. */
+.capabilityRows {
+  display: none;
+}
+
 /* ─── Animations ─── */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(32px); }
@@ -569,7 +581,71 @@
 
   .heroCards {
     margin-top: 0;
-    padding-bottom: 2rem;
+    padding-bottom: 1.25rem;
+  }
+
+  /* Mobile card = single merged glass panel (SS2): title, description,
+     label:value rows, then the CTA. The bordered grid card is dropped.
+     The whole panel is deliberately compact: hero is 100svh, so headline +
+     subtext + CTA + this full card must land inside ONE viewport on every
+     phone — a taller card pushes the hero (and its background photo) past
+     the screen edge. */
+  .cardGrid {
+    display: none;
+  }
+
+  .cardWide {
+    border-radius: var(--card-radius);
+    gap: 0.65rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .cardTitle {
+    font-size: 1.15rem;
+  }
+
+  .cardDescription {
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .capabilityRows {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 1.25rem;
+    row-gap: 0.45rem;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .capabilityLabel,
+  .capabilityValue {
+    margin: 0;
+    font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #ffffff;
+  }
+
+  /* "Explore this vertical" pill — one size down */
+  .cardCta {
+    font-size: 0.78rem;
+    padding: 3px 3px 3px 0.9rem;
+    gap: 0.5rem;
+  }
+
+  .cardCtaArrow {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  /* Main red CTA — one size down on all phones */
+  .heroCta {
+    font-size: 0.85rem;
+    padding: 6px 10px 6px 20px;
+    gap: 12px;
   }
 }
 
@@ -631,6 +707,71 @@
 
   .heroCta {
     font-size: 0.8125rem;
+  }
+}
+
+/* Short phones (mobile width AND ≤720px tall) — same height-keyed system as
+   the section compact passes. The 100svh hero has to land nav clearance +
+   headline + subtext + CTA + the card peek inside one short screen: drop the
+   doubled top clearance (heroInner already clears the nav; the ≤600px
+   heroContent padding-top pushed everything further down) and step the type
+   down one notch. Desktop (≥769px) untouched. */
+@media (max-width: 768px) and (max-height: 45rem) {
+  .heroInner {
+    /* Clears the announcement banner (44px) + slim navbar (≈64px) with
+       breathing room below — both fixed elements overlay the hero's top. */
+    padding-top: 8rem;
+    padding-bottom: 1rem;
+  }
+
+  .heroContent {
+    padding-top: 0;
+    padding-bottom: 1rem;
+    gap: 0.8rem;
+  }
+
+  .heroHeading {
+    font-size: clamp(1.7rem, 7.5vw, 2.1rem);
+    line-height: 1.14;
+  }
+
+  .heroSubtext {
+    font-size: 0.85rem;
+    max-width: 15rem;
+  }
+
+  .heroCta {
+    font-size: 0.8rem;
+    padding: 6px 10px 6px 20px;
+    gap: 12px;
+  }
+
+  .heroCards {
+    padding-bottom: 0.75rem;
+  }
+
+  /* The glass card gives up its last slack on very short screens. */
+  .cardWide {
+    padding: 0.85rem 1rem;
+    gap: 0.55rem;
+  }
+
+  .cardTitle {
+    font-size: 1.05rem;
+  }
+
+  .cardDescription {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .capabilityRows {
+    row-gap: 0.35rem;
+  }
+
+  .capabilityLabel,
+  .capabilityValue {
+    font-size: 0.78rem;
   }
 }
 

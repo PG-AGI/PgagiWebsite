@@ -306,7 +306,8 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 3.5rem 0 3rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
     contain-intrinsic-size: auto 520px;
   }
 
@@ -413,5 +414,13 @@
   .signalDot,
   .signalDotSmall {
     display: none;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .title {
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
   }
 }

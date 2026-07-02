@@ -1,6 +1,8 @@
 /* ── Base ────────────────────────────────────────────────────────── */
 .section {
   position: relative;
+  /* Anchor jumps (e.g. #vision-system) land below the fixed navbar. */
+  scroll-margin-top: 6rem;
 }
 
 /* ── Animated — desktop stacking via manual position:fixed pin ────
@@ -109,7 +111,11 @@
 
     .container {
       max-width: 100%;
-      padding: 0 1rem;
+      // Honour the consumer's side-gutter var on mobile too (was hardcoded
+      // 1rem, which ignored --scrollstack-container-pad-x). Sections that set
+      // it to 0 (Revenue, Vision) now line their cards up with the neighbouring
+      // section boxes; others fall back to the original 1rem gutter.
+      padding: 0 var(--scrollstack-container-pad-x, 1rem);
       height: auto;
       display: block;
     }
@@ -117,7 +123,13 @@
     .headerArea {
       /* JS never runs on mobile, so it can't fade the header in — show it. */
       opacity: 1;
-      padding: clamp(1.25rem, 5vh, 2rem) 0 clamp(0.9rem, 2.5vh, 1.4rem);
+      /* Extra top room so the section heading sits clear of the fixed navbar
+         as the section scrolls in, instead of rendering behind it. The bottom
+         pad is var-overridable: on short phones every pixel of pinned-heading
+         height comes straight out of the cards' space, so consumers (Vision)
+         can tighten it; the default keeps other stacks unchanged. */
+      padding: clamp(2rem, 8vh, 3rem) 0
+        var(--scrollstack-header-pad-bottom, clamp(0.9rem, 2.5vh, 1.4rem));
     }
 
     .stackArea {
@@ -252,6 +264,36 @@
     .container {
       max-width: 100%;
       padding: 0 1rem;
+    }
+  }
+}
+
+/* ── Mobile: pin the section heading below the navbar (mobileStickyHeader) ──
+   Opt-in. The heading sticks just below the fixed navbar and stays put while
+   the cards stack beneath it. Each card pins below the heading, offset by the
+   heading's measured height (--sticky-header-h, published from JS) so the
+   alignment holds however the title wraps. Pure CSS motion — sticky only, no
+   scroll listener. Placed after `.animated` so its card `top` wins the cascade. */
+.stickyHeaderMobile {
+  @media (max-width: 767px) {
+    .headerArea {
+      position: sticky;
+      top: var(--nav-h, 5.75rem);
+      z-index: 40;
+      /* Opaque so a stacked card can never bleed through behind the heading. */
+      background: var(--scrollstack-header-bg, #fff);
+      /* The sticky offset already clears the navbar, so drop the large top pad
+         used in the non-pinned path. Var-overridable like the bottom pad. */
+      padding-top: var(--scrollstack-header-pad-top, clamp(0.75rem, 2.5vh, 1.25rem));
+    }
+
+    .cardWrapper {
+      top: calc(
+        var(--nav-h, 5.75rem) +
+        var(--sticky-header-h, 9rem) +
+        var(--stack-header-gap, 0.75rem) +
+        var(--card-index, 0) * var(--stack-peek, 0.75rem)
+      );
     }
   }
 }

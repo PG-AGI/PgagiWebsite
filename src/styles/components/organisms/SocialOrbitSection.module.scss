@@ -38,7 +38,10 @@
 
   @media (max-width: 768px) {
     width: 100%;
-    padding: 0 1rem;
+    // No extra side padding here — the global .sectionsWrapper already
+    // provides symmetric gutters. Adding padding here (plus the old 90vw
+    // panel) double-inset the panel and pushed it off-centre.
+    padding: 0;
   }
 }
 
@@ -302,20 +305,24 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 0 0 0.75rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
   }
 
   .sectionTitle {
     margin-bottom: 0.95rem;
-    font-size: clamp(2.02rem, 10.2vw, 2.6rem);
+    font-size: clamp(1.9rem, 9vw, 2.4rem);
     line-height: 0.98;
     letter-spacing: -0.028em;
   }
 
   .panel {
     border-radius: 16px;
-    width: 90vw;
-    margin: 0 auto;
+    // Fill the container exactly so left/right gutters are always equal.
+    // (was width: 90vw + margin auto — vw is viewport-relative and fought
+    // with the wrapper padding, throwing the panel off-centre.)
+    width: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
     height: auto;
@@ -328,7 +335,9 @@
 
   .accordionItem {
     border-radius: 9px;
-    padding: 0.56rem 0.64rem;
+    // ≈14px side padding so the expanded white card is framed with a
+    // clear gutter (its border was cramped against the box edge before)
+    padding: 0.58rem 0.9rem;
   }
 
   .accordionButton {
@@ -345,7 +354,7 @@
   .accordionBody {
     position: static;
     margin-top: 0.62rem;
-    padding: 0.88rem 0.82rem;
+    padding: 0.9rem 0.95rem;
     font-size: clamp(0.88rem, 3.2vw, 1rem);
     line-height: 1.45;
     box-shadow: none;
@@ -392,18 +401,18 @@
 
 @media (max-width: 480px) {
   .section {
-    padding: 1.75rem 0 0.54rem;
+    padding: var(--section-space, 3rem) 0;
   }
 
   .sectionTitle {
-    font-size: clamp(1.88rem, 9.6vw, 2.32rem);
+    font-size: clamp(1.6rem, 8vw, 2rem);
     line-height: 0.98;
   }
 
   .panel {
     border-radius: 15px;
-    width: 90vw;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
   }
 
   .accordionColumn {
@@ -412,7 +421,8 @@
   }
 
   .accordionItem {
-    padding: 0.54rem 0.62rem;
+    // Match the ≤768 gutter so the expanded card border is framed, not cut
+    padding: 0.56rem 0.88rem;
   }
 
   .accordionButton {
@@ -427,7 +437,7 @@
   .accordionBody {
     position: static;
     margin-top: 0.62rem;
-    padding: 0.82rem 0.76rem;
+    padding: 0.85rem 0.9rem;
     font-size: clamp(0.84rem, 3.4vw, 0.98rem);
     line-height: 1.45;
     box-shadow: none;

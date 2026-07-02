@@ -32,5 +32,10 @@
     "Real-Time Decision",
     "Firmware + AI Stack",
     "Connected Platforms"
+  ],
+  "capabilityRows": [
+    { "label": "Firmware + AI Stack", "value": "Embedded Systems" },
+    { "label": "Edge AI Inference", "value": "Real-Time Decision" },
+    { "label": "Sensor Fusion", "value": "Connected Platforms" }
   ]
 }

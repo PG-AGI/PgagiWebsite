@@ -115,6 +115,19 @@ export default function Landing() {
             <p className={styles.cardDescription}>
               {landingText.verticalCard.description}
             </p>
+
+            {/* Mobile-only capability rows (label : value) — matches the
+                mobile Figma (SS2). Hidden on desktop, where the bordered
+                grid card below is shown instead. */}
+            <dl className={styles.capabilityRows} aria-label="Capabilities">
+              {landingText.capabilityRows.map((row) => (
+                <React.Fragment key={row.label}>
+                  <dt className={styles.capabilityLabel}>{row.label}</dt>
+                  <dd className={styles.capabilityValue}>{row.value}</dd>
+                </React.Fragment>
+              ))}
+            </dl>
+
             <div className={styles.cardCtaWrapper}>
               <button
                 type="button"

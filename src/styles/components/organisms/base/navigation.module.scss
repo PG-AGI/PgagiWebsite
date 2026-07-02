@@ -56,6 +56,10 @@
     @media (max-width: 850px) {
       top: 44px;
     }
+
+    @media (max-width: 480px) {
+      top: 38px; /* matches the slim banner (text-flipping-board .row) */
+    }
   }
 
   // &.nav-dark {
@@ -469,7 +473,11 @@
     }
 
     .nav {
-      padding: 12px 16px;
+      /* The desktop bar height (5.25rem) reads oversized on small phones —
+         the content is only ~46px tall. Slim the bar; --nav-h in sections
+         that pin content below the navbar (Vision) steps down in sync. */
+      height: 4.25rem;
+      padding: 10px 16px;
 
       .logo {
         img {
@@ -515,7 +523,8 @@
     }
 
     .nav {
-      padding: 10px 12px;
+      height: 4rem;
+      padding: 8px 12px;
 
       .logo {
         margin: 0;
@@ -534,6 +543,13 @@
       .links {
         padding: 60px 16px 24px 16px;
       }
+    }
+
+    /* Scrolled (glass) state at ≤850px pins the logo at 32px — match the
+       30px used here so the logo doesn't grow when the bar turns glassy. */
+    &.glassEffect .nav .logo img {
+      width: 30px;
+      height: 30px;
     }
   }
 }

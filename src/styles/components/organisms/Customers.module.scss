@@ -405,11 +405,12 @@
 
 /* ─── Mobile (≤768px) ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .section { padding: 72px 0 88px; }
+  /* Page-wide mobile rhythm token (set on .main in page.module.scss). */
+  .section { padding: var(--section-space, 3rem) 0; }
 
-  .header { margin-bottom: 2.75rem; }
+  .header { margin-bottom: 2rem; }
 
-  .title { font-size: clamp(2.1rem, 9vw, 2.9rem); }
+  .title { font-size: clamp(1.9rem, 8vw, 2.6rem); }
 
   .ratingBadge {
     gap: 0.58rem;
@@ -426,7 +427,68 @@
 
   .verificationEyebrow { font-size: 0.68rem; }
 
-  .card { width: 290px; }
+  /* ── Testimonial cards: one full size down on phones. The desktop card
+     (340px, roomy padding, 44px avatar) read oversized on every phone. ── */
+  .card {
+    /* min() so very narrow phones (<320px) don't overflow the marquee lane. */
+    width: min(260px, 78vw);
+    padding: 1rem 0.9rem 0.85rem;
+  }
+
+  .quote {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin-bottom: 0.7rem;
+  }
+
+  .caseStudyBtn {
+    font-size: 0.68rem;
+    padding: 0.4rem 0.62rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .cardDivider {
+    margin-bottom: 0.65rem;
+  }
+
+  .cardPerson {
+    gap: 0.5rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .personAvatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    min-width: 2.25rem;
+  }
+
+  .personInitials {
+    font-size: 0.95rem;
+  }
+
+  .name {
+    font-size: 0.85rem;
+  }
+
+  .company {
+    font-size: 0.7rem;
+  }
+
+  .footerLogo {
+    height: 1.125rem;
+  }
+
+  .footerProject {
+    font-size: 0.66rem;
+  }
+
+  .marqueeWrapper {
+    gap: 0.75rem;
+  }
+
+  .marqueeTrack {
+    gap: 0.75rem;
+  }
 }
 
 /* ─── Small mobile (≤520px) ───────────────────────────────────────── */
@@ -453,4 +515,10 @@
 @media (max-width: 420px) {
   .container { width: calc(100% - 1.25rem); }
   .verificationPanel { gap: 0.4rem; }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .title { font-size: 1.6rem; }
+  .header { margin-bottom: 1.5rem; }
 }

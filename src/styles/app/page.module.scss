@@ -21,6 +21,21 @@
   flex-direction: column;
   overflow-x: clip; /* clip ≠ hidden: doesn't create a scroll container, so position:sticky works */
 
+  // ── Mobile section rhythm ──
+  // One token for every landing section's vertical padding on mobile, so the
+  // visual gap at each section boundary is identical page-wide. Sections read
+  // it as `padding-block: var(--section-space)` inside their own ≤768px rules
+  // (desktop values untouched). Tune the rhythm here, not per section.
+  @media (max-width: 768px) {
+    --section-space: 3rem;
+  }
+
+  // Short phones: slightly tighter so sections don't feel emptier than the
+  // (height-compacted) content they hold.
+  @media (max-width: 768px) and (max-height: 45rem) {
+    --section-space: 2.5rem;
+  }
+
   .segmentSection {
     display: flex;
     flex-direction: column;

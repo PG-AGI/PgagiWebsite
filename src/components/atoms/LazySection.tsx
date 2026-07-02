@@ -7,6 +7,12 @@ interface LazySectionProps {
   minHeight?: string;
   /** IntersectionObserver rootMargin — how far before the viewport to start loading. */
   rootMargin?: string;
+  /**
+   * Optional id on the placeholder wrapper. Because the wrapper is always in the
+   * DOM (only its children are lazy), this gives callers a stable scroll anchor
+   * for a section that hasn't mounted its content yet.
+   */
+  id?: string;
 }
 
 // Module-level debounce: all 13 LazySection instances share one refresh call.
@@ -39,6 +45,7 @@ export default function LazySection({
   children,
   minHeight = '400px',
   rootMargin = '500px',
+  id,
 }: LazySectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(false);
@@ -71,6 +78,7 @@ export default function LazySection({
   return (
     <div
       ref={ref}
+      id={id}
       style={
         !shouldRender
           ? { minHeight }
