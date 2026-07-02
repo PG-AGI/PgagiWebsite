@@ -2,6 +2,7 @@
    RECENT LAUNCH SECTION
    Heading + filter tabs + CSS-sticky stacking project cards
    ========================================================== */
+@use "../../tactileButtons" as *;
 
 .section {
   background: #ffffff;
@@ -49,6 +50,10 @@
   text-align: center;
 }
 
+/* ── Tactile button behavior: shared mixins ───────────────────────────
+   tactile-red / tactile-outline come from src/styles/_tactileButtons.scss
+   (the hero "Let's build together" CTA physics — see that file). */
+
 /* ── Filter tabs row ── */
 .tabs {
   display: flex;
@@ -68,9 +73,9 @@
   font-weight: 500;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
   cursor: pointer;
-  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
   white-space: nowrap;
   line-height: 1.3;
+  @include tactile-outline;
 
   &:hover {
     border-color: #aaaaaa;
@@ -80,14 +85,19 @@
 
 .tabActive {
   composes: tab;
-  background: #9f0000;
-  border-color: #9f0000;
   color: #ffffff;
+  @include tactile-red;
+  /* translucent white rim, like the hero CTA's border — reads as a lit
+     top edge on the gradient (same 1.5px width, so no size change) */
+  border-color: rgba(255, 255, 255, 0.14);
 
   &:hover {
-    background: #b30000;
-    border-color: #b30000;
+    border-color: rgba(255, 255, 255, 0.2);
     color: #ffffff;
+  }
+
+  &:active {
+    border-color: rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -239,18 +249,26 @@
   gap: 0.4rem;
   padding: 0.62rem 1.3rem;
   border-radius: 999px;
-  background: #9f0000;
   color: #ffffff;
   font-size: clamp(0.8rem, 0.92vw, 0.88rem);
   font-weight: 600;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: background 0.18s ease;
   white-space: nowrap;
+  @include tactile-red;
 
-  &:hover {
-    background: #b30000;
+  /* Disabled (no case study yet): render at rest, but stay inert —
+     no hover lift, no press, no pointer affordance. */
+  &[aria-disabled="true"] {
+    cursor: default;
+
+    &:hover,
+    &:active {
+      background: $red-grad-rest;
+      transform: none;
+      box-shadow: $red-shadow-rest;
+    }
   }
 
   svg {
@@ -271,8 +289,8 @@
   text-decoration: none;
   border: 1.5px solid #cccccc;
   cursor: pointer;
-  transition: border-color 0.18s ease;
   white-space: nowrap;
+  @include tactile-outline;
 
   &:hover {
     border-color: #888888;
@@ -445,19 +463,13 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   /* match the "View case study" (.ctaPrimary) button dimensions */
   padding: 0.62rem 1.3rem;
   border-radius: 999px;
-  background: #9f0000;
   color: #ffffff;
   font-size: clamp(0.8rem, 0.92vw, 0.88rem);
   font-weight: 600;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
   text-decoration: none;
-  transition: background 0.18s ease, transform 0.18s ease;
   white-space: nowrap;
-
-  &:hover {
-    background: #b30000;
-    transform: translateY(-1px);
-  }
+  @include tactile-red;
 
   svg {
     flex-shrink: 0;
@@ -524,7 +536,13 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   .tab,
   .tabActive,
   .ctaPrimary,
-  .ctaSecondary {
+  .ctaSecondary,
+  .seeAllBtn {
     transition: none;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
   }
 }

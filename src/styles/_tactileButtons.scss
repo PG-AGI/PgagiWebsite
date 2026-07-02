@@ -1,0 +1,108 @@
+/* ==========================================================
+   TACTILE BUTTONS — shared hover/press physics
+   Source of truth for the "real button" treatment, matched to
+   the hero "Let's build together" CTA (landing.module.scss
+   .heroCta): glossy top-lit gradient, inner bevel (white inset
+   highlight above, dark inset shade below), soft red glow,
+   lift on hover, sink-and-darken on press.
+
+   Used by: RecentLaunchSection, Customers, NewPage,
+   ConcentricEllipseSection.
+
+   These mixins never touch padding or type. Hover effects are
+   gated behind (hover: hover) so touch devices only get the
+   press feedback.
+   ========================================================== */
+
+// Filled brand-red pills — same gradient stops as .heroCta
+$red-grad-rest:  linear-gradient(180deg, #b50707 0%, #9f0000 100%);
+$red-grad-hover: linear-gradient(180deg, #c40909 0%, #9f0000 100%);
+$red-grad-press: linear-gradient(180deg, #940000 0%, #820000 100%);
+
+$red-shadow-rest:
+  inset 0 1px 1.5px rgba(255, 255, 255, 0.35),
+  inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.25),
+  0 5px 14px rgba(159, 0, 0, 0.28);
+$red-shadow-hover:
+  inset 0 1.5px 2px rgba(255, 255, 255, 0.45),
+  inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.2),
+  0 9px 22px rgba(159, 0, 0, 0.4);
+$red-shadow-press:
+  inset 0 3px 6px rgba(0, 0, 0, 0.45),
+  inset 0 1px 2px rgba(0, 0, 0, 0.3),
+  0 1px 4px rgba(159, 0, 0, 0.2);
+
+@mixin tactile-red {
+  -webkit-tap-highlight-color: transparent;
+  background: $red-grad-rest;
+  box-shadow: $red-shadow-rest;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (hover: hover) {
+    &:hover {
+      background: $red-grad-hover;
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: $red-shadow-hover;
+    }
+  }
+
+  &:active {
+    background: $red-grad-press;
+    transform: translateY(1px) scale(0.96);
+    box-shadow: $red-shadow-press;
+    transition: all 0.08s ease;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #9f0000;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+// Outlined pills — raised-key depth on a light surface
+$outline-shadow-rest:  0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+$outline-shadow-hover: 0 6px 14px rgba(0, 0, 0, 0.13), 0 2px 5px rgba(0, 0, 0, 0.08);
+$outline-shadow-press: inset 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.05);
+
+@mixin tactile-outline {
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: $outline-shadow-rest;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: $outline-shadow-hover;
+    }
+  }
+
+  &:active {
+    background: rgba(17, 17, 17, 0.04);
+    transform: translateY(1px) scale(0.96);
+    box-shadow: $outline-shadow-press;
+    transition: all 0.08s ease;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #9f0000;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
+  }
+}

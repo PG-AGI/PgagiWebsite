@@ -21,9 +21,14 @@ html {
 	   this, so mobile keeps its own breakpoint-tuned sizing untouched. */
 	font-size: 16px;
 }
-html {
-	zoom: 0.9;
-  }
+/* Desktop/laptop only. On phones this zoom shrank the laid-out page to 90%
+   of the visual viewport, so the 100svh hero ended ~10% short and the next
+   section rose into the first screen. */
+@media (min-width: 769px) {
+	html {
+		zoom: 0.9;
+	}
+}
 /* ─── Fluid root scale (desktop / laptop) ─────────────────────────────
    The landing + site were built against a 1440px reference. On real
    laptops (1024–1440 CSS px, or wider panels shrunk by 125–150% Windows

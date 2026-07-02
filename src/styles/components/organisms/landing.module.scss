@@ -15,22 +15,38 @@
 
 .hero {
   /* Design tokens — rem + vw hybrid clamps scale with both viewport width AND browser zoom */
-  --content-x:       clamp(1.25rem, 0.5rem + 3.5vw, 5rem);       /* 20 → 80px gutter */
-  --h1-size:         clamp(2rem, 1rem + 3vw, 4.5rem);            /* 32 → 72px */
-  --h1-line:         clamp(2.625rem, 1.4rem + 3.9vw, 5.125rem);  /* 42 → 82px (Figma 164/2) */
-  --body-size:       clamp(0.9375rem, 0.75rem + 0.45vw, 1.25rem); /* 15 → 20px */
-  --body-line:       clamp(1.55rem, 1.3rem + 0.95vw, 2.1rem);    /* 24.8 → 33.6px */
-  --cta-size:        clamp(0.8125rem, 0.7rem + 0.3vw, 1rem);     /* 13 → 16px */
-  --cta-pad-x:       clamp(1.25rem, 0.9rem + 1vw, 1.75rem);      /* 20 → 28px */
-  --cta-arrow:       clamp(2rem, 1.6rem + 0.7vw, 2.25rem);       /* 32 → 36px */
-  --card-title-size: clamp(1.25rem, 0.85rem + 1vw, 1.75rem);     /* 20 → 28px */
-  --card-desc-size:  clamp(0.8125rem, 0.75rem + 0.3vw, 1rem);    /* 13 → 16px */
-  --card-cta-arrow:  clamp(2.25rem, 1.8rem + 1vw, 2.75rem);      /* 36 → 44px */
-  --cap-size:        clamp(0.8125rem, 0.7rem + 0.4vw, 1rem);     /* 13 → 16px */
-  --cap-pad-x:       clamp(0.875rem, 0.6rem + 0.8vw, 1.5rem);    /* 14 → 24px */
-  --card-pad:        clamp(1.125rem, 0.7rem + 1.4vw, 2rem);      /* 18 → 32px */
-  --cards-gap:       clamp(0.75rem, 0.5rem + 0.6vw, 1.5rem);     /* 12 → 24px */
-  --card-radius:     clamp(1rem, 0.7rem + 0.6vw, 1.5rem);        /* 16 → 24px */
+  --content-x: clamp(1.25rem, 0.5rem + 3.5vw, 5rem);
+  /* 20 → 80px gutter */
+  --h1-size: clamp(2rem, 1rem + 3vw, 4.5rem);
+  /* 32 → 72px */
+  --h1-line: clamp(2.625rem, 1.4rem + 3.9vw, 5.125rem);
+  /* 42 → 82px (Figma 164/2) */
+  --body-size: clamp(0.9375rem, 0.75rem + 0.45vw, 1.25rem);
+  /* 15 → 20px */
+  --body-line: clamp(1.55rem, 1.3rem + 0.95vw, 2.1rem);
+  /* 24.8 → 33.6px */
+  --cta-size: clamp(0.8125rem, 0.7rem + 0.3vw, 1rem);
+  /* 13 → 16px */
+  --cta-pad-x: clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
+  /* 20 → 28px */
+  --cta-arrow: clamp(2rem, 1.6rem + 0.7vw, 2.25rem);
+  /* 32 → 36px */
+  --card-title-size: clamp(1.25rem, 0.85rem + 1vw, 1.75rem);
+  /* 20 → 28px */
+  --card-desc-size: clamp(0.8125rem, 0.75rem + 0.3vw, 1rem);
+  /* 13 → 16px */
+  --card-cta-arrow: clamp(2.25rem, 1.8rem + 1vw, 2.75rem);
+  /* 36 → 44px */
+  --cap-size: clamp(0.8125rem, 0.7rem + 0.4vw, 1rem);
+  /* 13 → 16px */
+  --cap-pad-x: clamp(0.875rem, 0.6rem + 0.8vw, 1.5rem);
+  /* 14 → 24px */
+  --card-pad: clamp(1.125rem, 0.7rem + 1.4vw, 2rem);
+  /* 18 → 32px */
+  --cards-gap: clamp(0.75rem, 0.5rem + 0.6vw, 1.5rem);
+  /* 12 → 24px */
+  --card-radius: clamp(1rem, 0.7rem + 0.6vw, 1.5rem);
+  /* 16 → 24px */
   --card-bg: rgba(0, 0, 0, 0.52);
   --card-shadow: -6px -6px 15.5px 0px rgba(255, 255, 255, 0.34);
   /* DESKTOP: copied from Figma node 922:2107 (Ellipse 59 + Ellipse 63).
@@ -81,7 +97,8 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  overflow: hidden;       /* clips image to hero bounds */
+  overflow: hidden;
+  /* clips image to hero bounds */
   transform: translateZ(0);
 
 
@@ -140,7 +157,8 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  flex: 1 1 auto;     /* fill the hero's 100dvh */
+  flex: 1 1 auto;
+  /* fill the hero's 100dvh */
   min-height: 0;
   /* Content is capped to the 1400px design reference (same as VisionSystem /
      SocialOrbit) and centred, with ~4vw fluid gutters below 1522px so every
@@ -167,8 +185,10 @@
    taller hero all the way down. Heading/figures/gradient are unchanged. */
 @media (min-width: 993px) {
   .hero {
-    min-height: 112dvh;     /* image bleeds ~12% below the fold */
+    min-height: 112dvh;
+    /* image bleeds ~12% below the fold */
   }
+
   .heroInner {
     flex: 1 1 auto;
     /* min-height (not fixed height): the content box still targets ~104dvh so
@@ -188,7 +208,8 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: clamp(0.85rem, 1.6vh, 1.5rem);
-  flex: 0 0 auto;   /* natural height; pinned to the top by heroInner space-between */
+  flex: 0 0 auto;
+  /* natural height; pinned to the top by heroInner space-between */
   box-sizing: border-box;
   margin-left: 0;
 }
@@ -219,11 +240,16 @@
 }
 
 /* ─── Primary CTA ─── */
+.heroCtaWrapper {
+  display: inline-block;
+  animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
+}
+
 .heroCta {
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  background: #9F0000;
+  background: linear-gradient(180deg, #b50707 0%, #9F0000 100%);
   color: #ffffff;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--cta-size);
@@ -232,26 +258,37 @@
   text-decoration: none;
   padding: 8px 12px 8px 24px;
   border-radius: 50px;
-  border: none;
-  box-shadow: 0 8px 24px rgba(159, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(159, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   white-space: nowrap;
-  animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
 
   &:hover {
-    transform: translateY(-3px);
-    background: #9F0000;
-    box-shadow: 0 12px 32px rgba(159, 0, 0, 0.32);
-    .ctaArrow { 
+    transform: translateY(-3px) scale(1.03);
+    background: linear-gradient(180deg, #c40909 0%, #9F0000 100%);
+    box-shadow:
+      inset 0 2px 3px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.2),
+      0 14px 36px rgba(159, 0, 0, 0.36);
+
+    .ctaArrow {
       transform: scale(1.08);
       background: #ffffff;
     }
   }
 
   &:active {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px -5px rgba(159, 0, 0, 0.4);
+    transform: translateY(2px) scale(0.97);
+    background: linear-gradient(180deg, #940000 0%, #820000 100%);
+    box-shadow:
+      inset 0 4px 8px rgba(0, 0, 0, 0.5),
+      inset 0 1.5px 3px rgba(0, 0, 0, 0.3),
+      0 2px 6px rgba(159, 0, 0, 0.2);
+    transition: all 0.08s ease;
   }
 }
 
@@ -269,7 +306,10 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
   border: 2px solid rgba(0, 0, 0, 0.06);
 
-  svg { width: 55%; height: 55%; }
+  svg {
+    width: 55%;
+    height: 55%;
+  }
 
   @media (max-width: 768px) {
     width: 32px;
@@ -285,23 +325,33 @@
 .heroCards {
   width: 100%;
   margin-top: 0;
-  padding-bottom: 0;   /* bottom spacing now lives on heroInner */
+  padding-bottom: 0;
+  /* bottom spacing now lives on heroInner */
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 1.26fr) minmax(0, 1fr);
   gap: var(--cards-gap);
-  flex: 0 0 auto;      /* pinned to the bottom by heroInner space-between */
+  flex: 0 0 auto;
+  /* pinned to the bottom by heroInner space-between */
   animation: cardsEntry 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
 }
 
 @keyframes cardsEntry {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .glassCard {
   position: relative;
-  height: clamp(14rem, 11rem + 6vw, 17.1875rem); /* 17.1875rem = 275px at 16px base */
+  height: clamp(14rem, 11rem + 6vw, 17.1875rem);
+  /* 17.1875rem = 275px at 16px base */
   border-radius: 24px;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
@@ -324,7 +374,7 @@
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
-            mask-composite: exclude;
+    mask-composite: exclude;
     pointer-events: none;
     z-index: 1;
   }
@@ -404,20 +454,42 @@
   gap: 0.75rem;
   padding: 4px 4px 4px var(--cta-pad-x);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.14) 100%);
   color: #ffffff;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--cta-size);
   font-weight: 500;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.02);
-  transition: background 0.25s ease, transform 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.25),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.26);
-    transform: translateY(-1px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.20) 100%);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:
+      inset 0 2px 3px rgba(255, 255, 255, 0.35),
+      inset 0 -1.5px 2px rgba(0, 0, 0, 0.1),
+      0 10px 24px rgba(0, 0, 0, 0.3);
 
-    .cardCtaArrow { transform: translateX(2px); }
+    .cardCtaArrow {
+      transform: translateX(2px);
+    }
+  }
+
+  &:active {
+    transform: translateY(2px) scale(0.97);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 4px 8px rgba(0, 0, 0, 0.4),
+      inset 0 1.5px 3px rgba(0, 0, 0, 0.25),
+      0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.08s ease;
   }
 }
 
@@ -461,11 +533,14 @@
   border-radius: 50%;
   background: #ffffff;
   box-shadow: inset 0 -4px 4px rgba(255, 255, 255, 0.25),
-              inset -2px 4px 4px rgba(255, 255, 255, 0.25);
+    inset -2px 4px 4px rgba(255, 255, 255, 0.25);
   transition: transform 0.2s ease;
   flex-shrink: 0;
 
-  svg { width: 38%; height: 38%; }
+  svg {
+    width: 38%;
+    height: 38%;
+  }
 }
 
 /* Capabilities grid (2 cols x 3 rows) */
@@ -499,6 +574,7 @@
   &:nth-child(2n) {
     border-right: none;
   }
+
   &:nth-last-child(-n+2) {
     border-bottom: none;
   }
@@ -512,12 +588,25 @@
 
 /* ─── Animations ─── */
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes slideUp {
-  from { transform: translateY(32px); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(32px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* =====================================================
@@ -530,15 +619,25 @@
     grid-template-columns: 1fr;
     gap: 0;
   }
-  .glassCard { height: auto; min-height: unset; }
+
+  .glassCard {
+    height: auto;
+    min-height: unset;
+  }
 
   /* Merge cards into one unit — round only outer corners */
-  .cardWide { border-radius: 24px 24px 0 0; }
-  .cardGrid  { border-radius: 0 0 24px 24px; }
+  .cardWide {
+    border-radius: 24px 24px 0 0;
+  }
+
+  .cardGrid {
+    border-radius: 0 0 24px 24px;
+  }
 }
 
 /* ─── Tablet + Mobile ─── */
 @media (max-width: 768px) {
+
   /* Mobile keeps a full-viewport hero (desktop is content/width-driven above). */
   .hero {
     min-height: 100svh;
@@ -652,6 +751,7 @@
 }
 
 @media (max-width: 600px) {
+
   /* Figma mobile keeps the capabilities visible — stacked under the AI×IoT
      card as one merged unit (corners handled by the ≤992px rule). */
   .heroContent {
@@ -691,8 +791,13 @@
     border-right: 1px solid rgba(197, 181, 169, 0.27);
     border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 
-    &:nth-child(2n) { border-right: none; }
-    &:nth-last-child(-n+2) { border-bottom: none; }
+    &:nth-child(2n) {
+      border-right: none;
+    }
+
+    &:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
   }
 }
 
@@ -778,6 +883,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .heroHeading,
   .heroSubtext,
   .heroCta,
@@ -786,5 +892,8 @@
     transform: none !important;
     opacity: 1 !important;
   }
-  .heroCta { transition: none; }
+
+  .heroCta {
+    transition: none;
+  }
 }

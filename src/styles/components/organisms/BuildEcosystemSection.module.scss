@@ -96,6 +96,13 @@
   overflow: visible; // Allow glows to bleed out
   background: transparent; // Blend into the section background
   isolation: isolate;
+
+  @media (min-width: 921px) {
+    // The rail's height:100% can't resolve against a min-height-only parent,
+    // which left the card cluster stuck at the top of the box. An explicit
+    // height (same value) lets the rail fill the stage and center the cards.
+    height: clamp(380px, 42vw, 480px);
+  }
 }
 
 .gridBackdrop {
@@ -134,6 +141,21 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0.85;
+
+  @media (min-width: 921px) {
+    // The curves were tuned against the old top-aligned layout; shift them to
+    // hug the centered cluster. Horizontal endpoints tuck under the (now
+    // wider) cards, which sit above this layer, so no x remap is needed.
+    transform: translateY(10%) scaleY(0.94);
+  }
+}
+
+.nodeLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  // Must stay click-through: this layer covers the cards.
+  pointer-events: none;
 }
 
 .neutralPath {
@@ -188,6 +210,20 @@
 .gapLeft { left: 34.5%; top: 48%; width: 10px; height: 10px; }
 .gapRight { left: 65.5%; top: 53%; width: 10px; height: 10px; }
 
+@media (min-width: 921px) {
+  // Remapped to the desktop rail geometry (28% columns / 1.6% margins with a
+  // vertically centered cluster). Set directly on the dots because their own
+  // transform is owned by the pulse animation.
+  .nodeLeftTop { left: 30.9%; top: 46%; }
+  .nodeLeftBottom { left: 30.9%; top: 82.5%; }
+  .nodeCenterLeft { left: 36.9%; top: 63%; }
+  .nodeCenterRight { left: 63.1%; top: 63%; }
+  .nodeRightTop { left: 69.2%; top: 46%; }
+  .nodeRightBottom { left: 69.2%; top: 82.5%; }
+  .gapLeft { left: 33.9%; top: 57%; }
+  .gapRight { left: 66.1%; top: 62%; }
+}
+
 .cardsRail {
   position: relative;
   z-index: 2;
@@ -205,6 +241,17 @@
   align-content: center;
   gap: 2.5rem;
   justify-items: center;
+
+  @media (min-width: 921px) {
+    // Definite track: an auto track grows to the card's max-content width and
+    // overflows the column to the right, which made the left cluster sit
+    // closer to the CRM card than the right cluster.
+    grid-template-columns: 100%;
+    // Wider columns + slimmer side margins: cards keep their big size while
+    // the gaps to the CRM column stay equal (3×28% + 2×6.4% gaps + 2×1.6%).
+    width: 28%;
+    margin-left: 1.6%;
+  }
 }
 
 .centerColumn {
@@ -212,6 +259,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 921px) {
+    width: 28%; // match the side columns — uniform card size
+  }
 }
 
 .rightColumn {
@@ -221,6 +272,12 @@
   align-content: center;
   gap: 2.5rem;
   justify-items: center;
+
+  @media (min-width: 921px) {
+    grid-template-columns: 100%; // see .leftColumn
+    width: 28%;
+    margin-right: 1.6%;
+  }
 }
 
 .integrationCard {
@@ -240,6 +297,12 @@
 .erpCard,
 .communicationCard {
   width: clamp(240px, 30vw, 340px); // Larger cards
+
+  @media (min-width: 921px) {
+    // All five cards fill their 20.7% column exactly — uniform size, and the
+    // gaps to the CRM card come out equal on both sides.
+    width: 100%;
+  }
 }
 
 .cardImage {

@@ -143,6 +143,23 @@
       min-height: 0;
     }
 
+    /* Rest room after the last card lands. The sticky deck's scroll room comes
+       only from the cards' natural heights, so without this the section ends
+       the moment the last card pins — the next section is already entering the
+       viewport and immediately shoves the whole deck off-screen (desktop
+       reserves a full extra viewport via the JS height formula; mobile had
+       ~0px). An in-flow spacer extends the cards' sticky containing block
+       (padding wouldn't — sticky clamps to the parent's *content* box), so the
+       finished deck stays pinned for ~one card-rhythm of scroll before the
+       section releases it. --stack-rest is the per-section override (e.g. set
+       it smaller on a stack that renders a footer below the cards). Flow mode
+       never pins, so it's excluded. */
+    &:not(.mobileFlow) .stackArea::after {
+      content: "";
+      display: block;
+      height: var(--stack-rest, min(24rem, 60vh));
+    }
+
     .cardWrapper {
       position: sticky;
       /* Each card pins just below the previous one → a peeking deck. */

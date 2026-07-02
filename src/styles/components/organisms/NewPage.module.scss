@@ -1,3 +1,5 @@
+@use "../../tactileButtons" as *;
+
 .section {
   position: relative;
   background: #ffffff;
@@ -85,12 +87,43 @@
   color: #2C2C2C;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover:not(.tabActive) {
     color: #9F0000;
+  }
+
+  /* Segments scale in place instead of lifting — a translateY would read
+     as the segment detaching from the switcher track. */
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  &:active {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+
+    &:not(.tabActive) {
+      background: rgba(159, 0, 0, 0.06);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #9f0000;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover,
+    &:active {
+      transform: none;
+    }
   }
 
   @media (max-width: 768px) {
@@ -103,9 +136,29 @@
 }
 
 .tabActive {
-  background: #9F0000;
+  /* hero-CTA gloss (see src/styles/_tactileButtons.scss): top-lit gradient +
+     inner bevel; keeps this control's original wider glow radius */
+  background: $red-grad-rest;
   color: #ffffff;
-  box-shadow: 0 6px 16px rgba(159, 0, 0, 0.28);
+  box-shadow:
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.35),
+    inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.25),
+    0 6px 16px rgba(159, 0, 0, 0.28);
+
+  @media (hover: hover) {
+    &:hover {
+      background: $red-grad-hover;
+      box-shadow:
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.45),
+        inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.2),
+        0 8px 20px rgba(159, 0, 0, 0.36);
+    }
+  }
+
+  &:active {
+    background: $red-grad-press;
+    box-shadow: $red-shadow-press;
+  }
 }
 
 .content {
@@ -231,7 +284,6 @@
 }
 
 .pillButton {
-  background: #9F0000;
   border: none;
   padding: 0.375rem 0.4375rem;
   border-radius: 100px;
@@ -249,8 +301,8 @@
   cursor: pointer;
   color: #ffffff;
   width: fit-content;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  // box-shadow: 18px 18px 30px rgba(159, 0, 0, 0.18);
+  /* hero-CTA press physics (see src/styles/_tactileButtons.scss) */
+  @include tactile-red;
 
   @media (max-width: 768px) {
     padding: 0.3rem 0.3rem 0.3rem 0.9rem;
@@ -258,14 +310,8 @@
     font-size: 0.78rem;
   }
 
-  &:hover {
-    // background: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.18);
-
-    .redArrowCircle {
-      transform: translateX(3px);
-    }
+  &:hover .redArrowCircle {
+    transform: translateX(3px);
   }
 }
 

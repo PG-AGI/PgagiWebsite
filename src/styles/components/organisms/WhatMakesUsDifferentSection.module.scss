@@ -34,7 +34,7 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
   padding: clamp(4rem, 10vh, 7rem) 0;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
-  contain-intrinsic-size: 0 900px;
+  contain-intrinsic-size: 0 1150px;
 
   @media (max-width: 860px) {
     padding: 5rem 0.75rem;
@@ -43,9 +43,10 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
 
 .container {
   width: 100%;
-  // Cap so the board never scales past the artwork's native ~1280px size.
+  // Clay rail — same width as every other landing section, so the board
+  // renders identically on any laptop or desktop.
   // 100% (not vw) — sized against the padded page wrapper like every section.
-  max-width: min(73.75rem, 100%); // rem: scales with the fluid desktop root
+  max-width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
@@ -82,11 +83,13 @@ $draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fa
   overflow: hidden;
 
   @media (min-width: 861px) {
-    // Fit-to-fold: the board's text is baked into the card SVGs, so it can't
-    // reflow — the whole aspect-locked board scales down instead, capped so
-    // the full flow diagram fits below the navbar + title (~16rem allowance).
-    // On viewports ≥ ~1090px tall the container's 1180px cap still wins.
-    max-width: calc((100dvh - 16rem) * 1280 / 909);
+    // Uniform across laptops and desktops: cap the board to a fixed share of
+    // the viewport width (≈60% rendered, after the global html zoom). The
+    // rem rail alone is NOT uniform — the fluid root font makes 77.5rem
+    // swallow ~3/4 of a laptop's width but only ~60% of a large desktop's,
+    // which is exactly the mismatch this vw cap removes. The rail (via the
+    // container) still bounds it on ultra-wide screens.
+    max-width: min(100%, 66vw);
   }
 }
 

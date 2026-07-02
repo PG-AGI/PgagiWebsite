@@ -87,19 +87,21 @@ export default function Landing() {
 
           <p className={styles.heroSubtext}>{landingText.subtext}</p>
 
-          <a
-            href={EXTERNAL_LINKS.CALENDLY_BOOKING}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.heroCta}
-            id="hero-cta-button"
-            aria-label={landingText.ctaAriaLabel}
-          >
-            {landingText.ctaLabel}
-            <div className={styles.ctaArrow}>
-              <ArrowRight size={20} />
-            </div>
-          </a>
+          <div className={styles.heroCtaWrapper}>
+            <a
+              href={EXTERNAL_LINKS.CALENDLY_BOOKING}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.heroCta}
+              id="hero-cta-button"
+              aria-label={landingText.ctaAriaLabel}
+            >
+              {landingText.ctaLabel}
+              <div className={styles.ctaArrow}>
+                <ArrowRight size={20} />
+              </div>
+            </a>
+          </div>
         </div>
 
         {/* Glass cards row pinned to the bottom of the hero */}

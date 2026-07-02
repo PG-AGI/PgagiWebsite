@@ -176,6 +176,7 @@
 
       > a,
       .desktopLinks a {
+        position: relative;
         font-family: 'Plus Jakarta Sans', 'Alexandria', sans-serif;
         font-size: 1rem;       /* 16px @ 16 root — scales with fluid root */
         font-weight: 400;
@@ -186,10 +187,40 @@
         text-decoration: none;
         color: rgba(255, 255, 255, 0.9);
         white-space: nowrap;
-        transition: color 0.2s ease;
+        transition: color 0.2s ease, transform 0.2s ease;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          border-radius: 2px;
+          background: #9f0000;
+          transform: scaleX(0);
+          transform-origin: center;
+          transition: transform 0.25s ease;
+        }
 
         &:hover {
           color: #ffffff;
+          transform: scale(1.08);
+
+          &::after {
+            transform: scaleX(1);
+          }
+        }
+
+        /* Active link keeps its white underline (higher-specificity ::after
+           above would otherwise hide it); hover still recolors it dark red */
+        &.activeLink::after {
+          transform: scaleX(1);
+          background: #ffffff;
+        }
+
+        &.activeLink:hover::after {
+          background: #9f0000;
         }
       }
     }

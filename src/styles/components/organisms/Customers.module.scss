@@ -1,3 +1,5 @@
+@use "../../tactileButtons" as *;
+
 /* ─── Section ──────────────────────────────────────────────────────── */
 .section {
   background: #ffffff;
@@ -230,11 +232,17 @@
   font-family: inherit;
   flex-shrink: 0;
   text-decoration: none;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  /* hero-CTA press physics (see src/styles/_tactileButtons.scss) */
+  @include tactile-outline;
 
   &:hover {
     background: rgba(159, 0, 0, 0.06);
     border-color: #9F0000;
+  }
+
+  &:active {
+    /* red-tinted press shading to match the red border */
+    background: rgba(159, 0, 0, 0.1);
   }
 }
 
@@ -402,12 +410,13 @@
   to   { transform: translateX(0); }
 }
 
-/* ─── Desktop fit-one-fold (Clay-style) ────────────────────────────────
-   Header + BOTH marquee rows share a single laptop/desktop fold. Cards are
-   one size down from the old 340px design and every vertical value carries a
-   vh term that only binds below ~900px-tall viewports, so the section
-   compresses smoothly instead of the second row falling off the screen.
-   Scoped ≥769px so the phone design above is untouched. */
+/* ─── Desktop / laptop cards (Clay-style) ──────────────────────────────
+   The header keeps its vh compression for short laptops, but the testimonial
+   cards themselves use fixed rem sizing only — no vh terms — so every card
+   renders identically on any laptop or desktop. Card is a step up from the
+   old 312px compact size (roomier type, padding, and gaps) while staying
+   well inside the marquee lane. Scoped ≥769px so the phone design above is
+   untouched. */
 @media (min-width: 769px) {
   .header {
     gap: min(1.1rem, 1.5vh);
@@ -437,65 +446,65 @@
   }
 
   .card {
-    width: 19.5rem; // Clay-scale card (was 340px)
-    padding: min(1.25rem, 2vh) 1.25rem min(1.1rem, 1.8vh);
-    border-radius: 20px;
+    width: 21.5rem; // roomier card (was 19.5rem), uniform on every screen
+    padding: 1.5rem 1.4rem 1.3rem;
+    border-radius: 22px;
   }
 
   .quote {
-    font-size: min(0.9rem, 1.75vh);
-    line-height: 1.55;
+    font-size: 0.95rem;
+    line-height: 1.6;
     -webkit-line-clamp: 3; // one line fewer than the phone card
-    margin-bottom: min(0.9rem, 1.5vh);
+    margin-bottom: 1rem;
   }
 
   .caseStudyBtn {
-    padding: min(0.55rem, 1vh) 0.75rem;
-    font-size: min(0.78rem, 1.5vh);
-    margin-bottom: min(1.1rem, 1.8vh);
+    padding: 0.6rem 0.85rem;
+    font-size: 0.8rem;
+    margin-bottom: 1.35rem;
   }
 
   .cardDivider {
-    margin-bottom: min(0.8rem, 1.3vh);
+    margin-bottom: 0.9rem;
   }
 
   .cardPerson {
-    margin-bottom: min(0.7rem, 1.2vh);
+    margin-bottom: 0.8rem;
   }
 
   .personAvatar {
-    width: min(2.25rem, 3.6vh);
-    height: min(2.25rem, 3.6vh);
-    min-width: min(2.25rem, 3.6vh);
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
   }
 
   .personInitials {
-    font-size: min(1rem, 1.9vh);
+    font-size: 1.05rem;
   }
 
   .name {
-    font-size: min(0.92rem, 1.75vh);
+    font-size: 0.95rem;
   }
 
   .company {
-    font-size: min(0.76rem, 1.5vh);
+    font-size: 0.78rem;
   }
 
   .footerLogo {
-    height: min(1.25rem, 2vh);
+    height: 1.3rem;
   }
 
   .footerProject {
-    font-size: min(0.72rem, 1.4vh);
+    font-size: 0.75rem;
   }
 
   .marqueeWrapper {
-    gap: min(1rem, 1.6vh);
+    gap: 1.15rem;
     padding: 0.25rem 0;
   }
 
   .marqueeTrack {
-    gap: 1rem;
+    gap: 1.15rem;
   }
 }
 

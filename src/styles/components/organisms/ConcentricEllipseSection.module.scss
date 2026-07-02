@@ -1,3 +1,5 @@
+@use "../../tactileButtons" as *;
+
 .section {
   position: relative;
   background: #ffffff;
@@ -151,7 +153,6 @@
 .ctaButton {
   margin-top: 1.55rem;
   border: 0;
-  background: #a30e08;
   color: #ffffff;
   border-radius: 999px;
   padding: 0.1875rem 0.25rem 0.1875rem 1.35rem;
@@ -164,12 +165,8 @@
   font-weight: 500;
   line-height: 1;
   cursor: pointer;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 24px rgba(159, 0, 0, 0.36);
-  }
+  /* hero-CTA press physics (see src/styles/_tactileButtons.scss) */
+  @include tactile-red;
 }
 
 .ctaLabel {

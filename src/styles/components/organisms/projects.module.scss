@@ -360,12 +360,8 @@ $content-max: 1400px;
 
   @media (max-width: 900px) {
     order: 1;
-    height: 17.5rem;     /* explicit height so absolute-positioned image has a concrete box */
+    height: auto;        /* height comes from the aspect-ratio image box below */
     min-height: unset;
-  }
-
-  @media (max-width: 500px) {
-    height: 13.75rem;
   }
 }
 
@@ -375,13 +371,29 @@ $content-max: 1400px;
   inset: 1.25rem;
   overflow: hidden;
   border-radius: 10px;            /* Fix 4: reduced from 14px → matches Figma */
+
+  @media (max-width: 900px) {
+    /* Width-proportional box: same shape on every phone size. All case-study
+       cover images are exported at 1356×1102, so a box with that exact ratio
+       lets the contained image fill it edge-to-edge — no crop, no letterbox. */
+    position: relative;
+    inset: auto;
+    margin: 1.25rem;
+    aspect-ratio: 1356 / 1102;
+  }
 }
 
 .csImg {
+  object-fit: cover;
+  object-position: center;
   transition: transform 0.5s ease;
 
   .csCard:hover & {
     transform: scale(1.03);
+  }
+
+  @media (max-width: 900px) {
+    object-fit: contain;   /* whole image always visible on mobile */
   }
 }
 
