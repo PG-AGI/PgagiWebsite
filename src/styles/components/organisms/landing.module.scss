@@ -150,8 +150,8 @@
      the cards to the bottom. Scales with width so every desktop looks the same. */
   padding-top: clamp(9rem, 3rem + 13vw, 16rem);
   padding-bottom: clamp(1.75rem, 2.5vh, 3rem);
-  padding-left: max(4vw, calc((100% - 1400px) / 2));
-  padding-right: max(4vw, calc((100% - 1400px) / 2));
+  padding-left: max(clamp(2.5rem, 7vw, 9rem), calc((100% - 77.5rem) / 2));
+  padding-right: max(clamp(2.5rem, 7vw, 9rem), calc((100% - 77.5rem) / 2));
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -558,6 +558,8 @@
   /* heroInner owns the first-viewport height; heroContent grows to fill it */
   .heroInner {
     min-height: 100svh;
+    padding-left: 4vw;
+    padding-right: 4vw;
   }
 
   .heroContent {
