@@ -1,24 +1,60 @@
+@use "sass:math";
+
+// ── Flow-animation timeline (single source of truth) ────────────────────────
+// A "signal" travels the reading order TL→ML→BL→BR→MR→TR. Cards light in
+// sequence; each connector's comet draws right after its source card. All
+// elements share ONE loop; their `--step` (set inline in the component) places
+// them on it. Tune the feel here — every keyframe % below is *derived* from
+// these durations via `sass:math`, so nothing drifts out of sync.
+$flow-beat: 1.4s; // cadence: time between consecutive steps (slower = calmer)
+$flow-loop: 8.4s; // 6 cards × 1 beat — wraps seamlessly (card 6 → card 1 is one beat,
+// same as every other step), so the signal flows continuously with no dead gap
+$flow-active: 1.3s; // how long a card stays lit
+$flow-handoff: 0.45s; // a connector fires this long after its source card lights
+$arrow-active: 1.2s; // comet travel time along a connector
+
+// Card spotlight key moments, as % of the loop (derived, not guessed).
+$card-rise: math.div(0.45s, $flow-loop) * 100%; // reaches full brightness
+$card-hold: math.div(0.8s, $flow-loop) * 100%; // holds the peak
+$card-settle: math.div($flow-active, $flow-loop) * 100%; // back to resting dim
+
+// Glossy sheen sweep across the active card — appears, glides across, fades.
+$sheen-in: math.div(0.15s, $flow-loop) * 100%;
+$sheen-mid: math.div(0.55s, $flow-loop) * 100%;
+$sheen-out: math.div(0.95s, $flow-loop) * 100%;
+
+// Connector comet key moments, as % of the loop.
+$draw-grow: math.div($arrow-active, $flow-loop) * 100%; // line fully drawn / comet arrives
+$node-pop: math.div($arrow-active - 0.25s, $flow-loop) * 100%; // head/reach hold dim until here
+$draw-fade: math.div($arrow-active + 0.9s, $flow-loop) * 100%; // bright draw fades back to the rail
+
 .section {
   background: #ffffff;
-  padding: 150px 0;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
-  contain-intrinsic-size: 0 900px;
+  contain-intrinsic-size: 0 1150px;
 
   @media (max-width: 860px) {
-    padding: 80px 0.75rem;
+    padding: 5rem 0.75rem;
   }
 }
 
 .container {
   width: 100%;
-  max-width: 82vw;
+  // Clay rail — same width as every other landing section, so the board
+  // renders identically on any laptop or desktop.
+  // 100% (not vw) — sized against the padded page wrapper like every section.
+  max-width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
+    // Full wrapper width, no extra gutter — matches the VisionSystemSection
+    // card width on mobile.
     max-width: 100%;
-    padding: 0 1.2rem;
+    padding: 0;
   }
 }
 
@@ -26,7 +62,8 @@
   margin: 0;
   text-align: center;
   color: #1a1a1a;
-  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5.5vh);
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -44,6 +81,16 @@
   border: 1px solid #d2c7bd;
   box-shadow: 0 16px 36px rgba(53, 43, 34, 0.08);
   overflow: hidden;
+
+  @media (min-width: 861px) {
+    // Uniform across laptops and desktops: cap the board to a fixed share of
+    // the viewport width (≈60% rendered, after the global html zoom). The
+    // rem rail alone is NOT uniform — the fluid root font makes 77.5rem
+    // swallow ~3/4 of a laptop's width but only ~60% of a large desktop's,
+    // which is exactly the mismatch this vw cap removes. The rail (via the
+    // container) still bounds it on ultra-wide screens.
+    max-width: min(100%, 66vw);
+  }
 }
 
 .board::before {
@@ -112,6 +159,49 @@
   grid-area: rightFlowOne;
 }
 
+// Card artwork dimensions (from the SVGs wired up in the component). The two
+// top cards share a grid row, so the row is sized to the taller left card and
+// the shorter top-right card leaves a gap below it. That gap is the cards'
+// height *difference* — derived here from the real art, never a guessed value.
+$card-art-w: 568;
+$top-left-art-h: 279; // First.svg — taller (carries the Align/Plan/Scale chips)
+$top-right-art-h: 221; // Six.svg — the top-right card
+$top-gap-h: $top-left-art-h - $top-right-art-h;
+
+// The generic `.up` rule already extends this arrow up to the row boundary
+// (i.e. the bottom of the top-right card's row). The pseudo-element below adds
+// exactly the remaining gap — the top-right card's height deficit — so the
+// connector meets the card edge precisely. Because `aspect-ratio` sizes the
+// box from its own width (which equals the card column's width), this stays
+// exact at every screen size with no static lengths. The combined selector
+// outweighs the generic `.up` rule defined later in the file.
+.up.rightFlowOne::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 100%; // sit directly on top of the existing track segment
+  width: 100%; // == card column width
+  aspect-ratio: #{$card-art-w} / #{$top-gap-h}; // height = width * gap / cardWidth
+  background: #a6824f;
+  opacity: 0.5;
+  // Shape the filled box into a thin connector line topped with the arrowhead.
+  clip-path: polygon(
+    50% 0,
+    calc(50% + 6px) 8px,
+    calc(50% + 1.5px) 8px,
+    calc(50% + 1.5px) 100%,
+    calc(50% - 1.5px) 100%,
+    calc(50% - 1.5px) 8px,
+    calc(50% - 6px) 8px
+  );
+}
+
+// The default arrowhead would now float mid-line — the pseudo-element above
+// carries the head at the true top instead.
+.up.rightFlowOne .head {
+  display: none;
+}
+
 .leftFlowTwo {
   grid-area: leftFlowTwo;
 }
@@ -142,91 +232,295 @@
   height: auto;
 }
 
+// ── Process-flow spotlight ──────────────────────────────────────────────
+// An automated, calm loop: the "active" card brightens, desaturates back to
+// full colour, lifts and glows as the signal reaches it; the rest sit dimmed
+// and slightly desaturated so the eye follows the active one. The whole thing
+// is gated by `.playing`, which the IntersectionObserver only adds while the
+// section is on screen — so it costs nothing when scrolled away.
+//
+// `--step` (the card's flow position, set inline in the component) is the ONLY
+// thing that sequences the cards — one rule replaces the old per-card delays.
+.playing .cardFrame {
+  opacity: 0.55; // resting dim while the loop runs
+  filter: grayscale(0.25) brightness(0.96);
+  animation: cardCycle $flow-loop linear infinite;
+  animation-delay: calc(var(--step, 0) * #{$flow-beat});
+  will-change: transform, opacity, filter;
+}
+
+// Resting state at 0% and 100% is byte-identical, so the loop never snaps.
+// Per-keyframe easing makes the lift glide up and settle back smoothly.
+@keyframes cardCycle {
+  0% {
+    opacity: 0.55;
+    filter: grayscale(0.25) brightness(0.96);
+    transform: translateY(0) scale(1);
+    box-shadow: 0 8px 16px rgba(32, 24, 14, 0.08);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); // ease-out: glide up
+  }
+  #{$card-rise},
+  #{$card-hold} {
+    opacity: 1;
+    filter: grayscale(0) brightness(1.02);
+    transform: translateY(-6px) scale(1.025);
+    // Soft depth only — no hard highlight ring (the shine comes from the sheen).
+    box-shadow: 0 18px 40px rgba(40, 30, 16, 0.16);
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); // ease-in-out: settle back
+  }
+  #{$card-settle},
+  100% {
+    opacity: 0.55;
+    filter: grayscale(0.25) brightness(0.96);
+    transform: translateY(0) scale(1);
+    box-shadow: 0 8px 16px rgba(32, 24, 14, 0.08);
+  }
+}
+
+// Glossy sheen — a diagonal light streak overlaid on the card. It's invisible
+// at rest and sweeps across only when the card is active (clipped by the card's
+// own `overflow: hidden`, so it never spills out). Pure transform/opacity.
+.cardFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 251, 242, 0.65) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+}
+
+.playing .cardFrame::before {
+  animation: cardSheen $flow-loop linear infinite;
+  animation-delay: calc(var(--step, 0) * #{$flow-beat});
+  will-change: transform, opacity;
+}
+
+@keyframes cardSheen {
+  0%,
+  #{$sheen-in} {
+    transform: translateX(-130%);
+    opacity: 0;
+  }
+  #{$sheen-mid} {
+    opacity: 0.9;
+  }
+  #{$sheen-out},
+  100% {
+    transform: translateX(130%);
+    opacity: 0;
+  }
+}
+
 .flow {
   position: relative;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  // Establishes a container query context so tracer can use cqh/cqi
-  // units in transform instead of animating top/left (non-composited)
-  container-type: size;
+}
+
+// Grow each connector across the surrounding grid gap so the line/arrowhead
+// physically touches both cards instead of floating in the middle of the row.
+// The added length on each side equals the grid's row-gap (vertical arrows)
+// or column-gap (horizontal arrow).
+.down,
+.up {
+  $row-gap: clamp(0.72rem, 1.7vw, 1rem);
+  height: calc(100% + 2 * #{$row-gap});
+  margin-block: calc(-1 * #{$row-gap});
+}
+
+.right {
+  $col-gap: clamp(0.8rem, 1.8vw, 1.5rem);
+  width: calc(100% + 2 * #{$col-gap});
+  margin-inline: calc(-1 * #{$col-gap});
+}
+
+// The connector is two stacked layers sharing identical geometry:
+//   .track — the dim resting rail (always visible at low contrast)
+//   .draw  — the bright "comet": a glowing overlay that clip-reveals along the
+//            flow direction as the signal passes, then fades back to the rail.
+.track,
+.draw {
+  position: absolute;
+  border-radius: 999px;
+  background: #a6824f;
 }
 
 .track {
-  position: absolute;
-  border-radius: 999px;
-  background: #998a7b;
-  opacity: 0.9;
+  opacity: 0.45;
 }
 
-.tracer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0.36rem;
-  height: 0.36rem;
-  border-radius: 999px;
-  background: #867665;
-  box-shadow: 0 0 0 4px rgba(134, 118, 101, 0.15);
-  will-change: transform, opacity;
-}
-
-.head {
-  position: absolute;
-  width: 0.56rem;
-  height: 0.56rem;
-  border-right: 2px solid #867665;
-  border-bottom: 2px solid #867665;
+.draw {
+  opacity: 0; // hidden until this connector's turn on the timeline
+  // Gold glow that rides the revealed (leading) edge — modest blur to stay cheap.
+  filter: drop-shadow(0 0 5px rgba(166, 130, 79, 0.85));
 }
 
 .down .track,
-.up .track {
-  width: 2px;
+.down .draw,
+.up .track,
+.up .draw {
+  width: 0.1875rem;
   height: 100%;
   left: 50%;
   top: 0;
   transform: translateX(-50%);
 }
 
-.right .track {
+.right .track,
+.right .draw {
   width: 100%;
-  height: 2px;
+  height: 0.1875rem;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.down .tracer {
-  animation: moveDown 1.7s ease-in-out infinite;
-}
-
-.up .tracer {
-  animation: moveUp 1.7s ease-in-out infinite;
-}
-
-.right .tracer {
-  animation: moveRight 1.7s ease-in-out infinite;
+// Solid triangular arrowhead built from borders — a clean, real arrow that
+// reads as direction (replaces the old rotated-border chevron that looked
+// like a little square).
+.head {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0.55;
 }
 
 .down .head {
   left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 0) rotate(45deg);
-  animation: bobDown 1.3s ease-in-out infinite;
+  bottom: -2px;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid #a6824f;
 }
 
 .up .head {
   left: 50%;
-  top: 0;
-  transform: translate(-50%, 0) rotate(-135deg);
-  animation: bobUp 1.3s ease-in-out infinite;
+  top: -2px;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid #a6824f;
 }
 
 .right .head {
-  right: 0;
   top: 50%;
-  transform: translate(0, -50%) rotate(-45deg);
-  animation: bobRight 1.3s ease-in-out infinite;
+  right: -2px;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #a6824f;
+}
+
+// ── Comet timeline ──────────────────────────────────────────────────────
+// Each connector fires `$flow-handoff` after its source card lights (the
+// `--step` math mirrors the cards). The `.draw` overlay reveals in the flow
+// direction (the comet travelling); the head — and, for the top-right arrow,
+// its `::before` reach segment — then flash as the comet arrives, reading as
+// the signal handing the baton to the next card.
+.playing .draw,
+.playing .head,
+.playing .up.rightFlowOne::before {
+  animation-duration: $flow-loop;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-delay: calc((var(--step, 1) - 1) * #{$flow-beat} + #{$flow-handoff});
+}
+
+.playing .draw {
+  will-change: opacity;
+}
+
+// The comet "draws" the line in the flow direction (clip-path reveal). The
+// drop-shadow on `.draw` makes the leading edge glow as it travels.
+.playing .down .draw {
+  animation-name: drawDown;
+}
+.playing .up .draw {
+  animation-name: drawUp;
+}
+.playing .right .draw {
+  animation-name: drawRight;
+}
+
+// Arrowhead — and the top-right reach segment — brighten on the comet's arrival.
+.playing .head,
+.playing .up.rightFlowOne::before {
+  animation-name: nodeFlash;
+}
+
+@keyframes drawDown {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 0 100% 0); // hidden; reveals top → bottom
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #{$draw-grow} {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  #{$draw-fade},
+  100% {
+    opacity: 0;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes drawUp {
+  0% {
+    opacity: 1;
+    clip-path: inset(100% 0 0 0); // hidden; reveals bottom → top
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #{$draw-grow} {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  #{$draw-fade},
+  100% {
+    opacity: 0;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes drawRight {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 100% 0 0); // hidden; reveals left → right
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #{$draw-grow} {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  #{$draw-fade},
+  100% {
+    opacity: 0;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+// Holds dim, pops bright exactly as the comet arrives, then settles back.
+@keyframes nodeFlash {
+  0%,
+  #{$node-pop} {
+    opacity: 0.5;
+  }
+  #{$draw-grow} {
+    opacity: 1;
+  }
+  #{$draw-fade},
+  100% {
+    opacity: 0.5;
+  }
 }
 
 .mobileStack {
@@ -239,85 +533,17 @@
   height: 1.35rem;
 }
 
-@keyframes moveDown {
-  0% {
-    transform: translateX(calc(50cqi - 50%)) translateY(0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(50cqi - 50%)) translateY(calc(100cqh - 0.36rem));
-    opacity: 0;
-  }
-}
-
-@keyframes moveUp {
-  0% {
-    transform: translateX(calc(50cqi - 50%)) translateY(calc(100cqh - 0.36rem));
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(50cqi - 50%)) translateY(0);
-    opacity: 0;
-  }
-}
-
-@keyframes moveRight {
-  0% {
-    transform: translateX(0) translateY(calc(50cqh - 50%));
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(100cqi - 0.36rem)) translateY(calc(50cqh - 50%));
-    opacity: 0;
-  }
-}
-
-@keyframes bobDown {
-  0%,
-  100% {
-    transform: translate(-50%, 0) rotate(45deg);
-  }
-  50% {
-    transform: translate(-50%, 2px) rotate(45deg);
-  }
-}
-
-@keyframes bobUp {
-  0%,
-  100% {
-    transform: translate(-50%, 0) rotate(-135deg);
-  }
-  50% {
-    transform: translate(-50%, -2px) rotate(-135deg);
-  }
-}
-
-@keyframes bobRight {
-  0%,
-  100% {
-    transform: translate(0, -50%) rotate(-45deg);
-  }
-  50% {
-    transform: translate(2px, -50%) rotate(-45deg);
-  }
-}
-
 @media (max-width: 860px) {
   .section {
-    padding: 2.2rem 0.75rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    // No inline padding: the board lines up with the Vision cards.
+    padding: var(--section-space, 3rem) 0;
   }
 
   .container {
-    max-width: 540px;
+    // Match the VisionSystemSection card width (full wrapper width) instead
+    // of the old narrow 33.75rem cap.
+    max-width: 100%;
   }
 
   .title {
@@ -343,30 +569,67 @@
     display: flex;
     flex-direction: column;
     gap: 0.48rem;
-    max-width: 18rem;
+    max-width: 100%;
     margin: 0 auto;
   }
 
   .cardFrame {
     border-radius: 0.62rem;
   }
+  // The mobile stack reuses the same `--step`-driven timeline as desktop —
+  // cards carry their step from the component, so no per-position rules here.
 }
 
 @media (max-width: 480px) {
   .section {
-    padding: 2rem 0.62rem;
+    padding: var(--section-space, 3rem) 0;
   }
 
   .container {
-    max-width: 340px;
+    max-width: 100%;
   }
 
   .mobileStack {
-    max-width: 17rem;
+    max-width: 100%;
     gap: 0.42rem;
   }
 
   .mobileFlow {
     height: 1.2rem;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+// Honour reduced-motion: stop the loop entirely and leave the whole diagram
+// fully lit and static — cards at full colour and the connectors fully drawn
+// (NOT clip-hidden, or the lines would read as blank). Order stays legible.
+@media (prefers-reduced-motion: reduce) {
+  .playing .cardFrame,
+  .playing .cardFrame::before,
+  .playing .draw,
+  .playing .head,
+  .playing .up.rightFlowOne::before {
+    animation: none;
+  }
+
+  .playing .cardFrame {
+    opacity: 1;
+    filter: none;
+  }
+
+  .playing .draw {
+    opacity: 1;
+    clip-path: inset(0 0 0 0); // fully drawn bright line, no travelling comet
+  }
+
+  .playing .head,
+  .playing .up.rightFlowOne::before {
+    opacity: 0.8;
   }
 }

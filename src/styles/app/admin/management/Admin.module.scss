@@ -32,7 +32,7 @@ $red-color: #ef4444;
 
 // Main container
 .container {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
   padding: 2rem;
   color: $text-primary;
@@ -346,8 +346,8 @@ $red-color: #ef4444;
     color: $purple-light;
 
     .glowDot {
-      width: 10px;
-      height: 10px;
+      width: 0.625rem;
+      height: 0.625rem;
       background-color: $green-glow;
       border-radius: 50%;
       box-shadow: 0 0 8px $green-glow;
@@ -462,13 +462,13 @@ $red-color: #ef4444;
 
       .video {
         width: 100%;
-        max-width: 800px;
-        height: 450px;
+        max-width: 50rem;
+        height: 28.125rem;
         border-radius: 0.5rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
         @media (max-width: 768px) {
-          height: 250px;
+          height: 15.625rem;
         }
       }
 
@@ -499,7 +499,7 @@ $red-color: #ef4444;
   padding: 2rem;
   border-radius: 0.5rem;
   width: 90%;
-  max-width: 800px;
+  max-width: 50rem;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -620,13 +620,13 @@ $red-color: #ef4444;
 
       .video {
         width: 100%;
-        max-width: 800px;
-        height: 450px;
+        max-width: 50rem;
+        height: 28.125rem;
         border-radius: 0.5rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
         @media (max-width: 768px) {
-          height: 250px;
+          height: 15.625rem;
         }
       }
 
@@ -677,14 +677,14 @@ $red-color: #ef4444;
 }
 
 .coverImage {
-  width: 100px;
+  width: 6.25rem;
   height: auto;
   border-radius: 0.5rem;
   object-fit: cover;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
-    width: 80px;
+    width: 5rem;
   }
 }
 
@@ -849,10 +849,10 @@ $red-color: #ef4444;
   }
 }
 .filterContainer {
-  margin-bottom: 15px;
+  margin-bottom: 0.9375rem;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
   
   :global(label) {
     color: inherit !important;
@@ -865,7 +865,7 @@ $red-color: #ef4444;
 }
 
 .filterSelect {
-  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
   border-radius: 4px;
   border: 1px solid #ccc;
   // background-color: transparent;
@@ -950,7 +950,7 @@ $red-color: #ef4444;
 .dynamicTable {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   background: #1a1a1a;
   border-radius: 8px;
   overflow: hidden;
@@ -959,9 +959,9 @@ $red-color: #ef4444;
 
 .cell {
   border-bottom: 1px solid #444;
-  padding: 12px;
+  padding: 0.75rem;
   text-align: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   transition: background-color 0.3s ease;
   color: #fff;
 }
@@ -969,16 +969,16 @@ $red-color: #ef4444;
 .heading {
   border-top: 1px solid #444;
   border-bottom: 1px solid #444;
-  padding: 12px;
+  padding: 0.75rem;
   text-align: center;
   color: #9333ea;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
   background: #333;
 }
 
 .tableEditorContainer {
-  margin-top: 20px;
+  margin-top: 1.25rem;
   padding: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
@@ -1034,7 +1034,7 @@ $red-color: #ef4444;
 .headerWrapper {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 0.3125rem;
 }
 
 .tableEditorInput {
@@ -1061,7 +1061,7 @@ $red-color: #ef4444;
   cursor: pointer;
   font-size: 1.2rem;
   line-height: 1;
-  padding: 0 4px;
+  padding: 0 0.25rem;
   @include hover-transition;
 }
 
@@ -1073,7 +1073,7 @@ $red-color: #ef4444;
   cursor: pointer;
   font-size: 1.2rem;
   line-height: 1;
-  padding: 0 4px;
+  padding: 0 0.25rem;
   @include hover-transition;
 }
 
@@ -1082,16 +1082,16 @@ $red-color: #ef4444;
   text-align: center;
   border: 1px solid #444;
   border-radius: 10px;
-  padding: 12px;
+  padding: 0.75rem;
   .boxHeading{
     color: #9333ea;
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 }
 $spacing-unit: 1rem;
 .boxHeading{
   color: #9333ea;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 // @mixin glass-effect {
 //   background: rgba(255, 255, 255, 0.03);

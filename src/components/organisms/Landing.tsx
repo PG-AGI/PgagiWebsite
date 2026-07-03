@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import bgImageMobile from "../../../public/background-mobile.png";
+import bgImageMobile from "../../../public/hero-sunset-mobile.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import landingText from "@/constants/uiText/landing.json";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
@@ -48,13 +48,14 @@ export default function Landing() {
 
       {/* Hero media is rendered as next/image so the browser can prioritize it immediately for LCP. */}
   <div className={styles.heroBg} aria-hidden="true">
-    {/* Desktop — hidden below 768px via CSS, not downloaded on mobile */}
-{/* Desktop */}
+    {/* Desktop — sunset hero, hidden below 768px via CSS */}
 {/* eslint-disable-next-line @next/next/no-img-element */}
 <img
-  src="/pgagi_hero_background.svg"
+  src="/hero-sunset.webp"
   alt=""
   aria-hidden="true"
+  fetchPriority="high"
+  decoding="async"
   className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
 />
 
@@ -86,19 +87,21 @@ export default function Landing() {
 
           <p className={styles.heroSubtext}>{landingText.subtext}</p>
 
-          <a
-            href={EXTERNAL_LINKS.CALENDLY_BOOKING}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.heroCta}
-            id="hero-cta-button"
-            aria-label={landingText.ctaAriaLabel}
-          >
-            {landingText.ctaLabel}
-            <div className={styles.ctaArrow}>
-              <ArrowRight size={20} />
-            </div>
-          </a>
+          <div className={styles.heroCtaWrapper}>
+            <a
+              href={EXTERNAL_LINKS.CALENDLY_BOOKING}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.heroCta}
+              id="hero-cta-button"
+              aria-label={landingText.ctaAriaLabel}
+            >
+              {landingText.ctaLabel}
+              <div className={styles.ctaArrow}>
+                <ArrowRight size={20} />
+              </div>
+            </a>
+          </div>
         </div>
 
         {/* Glass cards row pinned to the bottom of the hero */}
@@ -114,6 +117,19 @@ export default function Landing() {
             <p className={styles.cardDescription}>
               {landingText.verticalCard.description}
             </p>
+
+            {/* Mobile-only capability rows (label : value) — matches the
+                mobile Figma (SS2). Hidden on desktop, where the bordered
+                grid card below is shown instead. */}
+            <dl className={styles.capabilityRows} aria-label="Capabilities">
+              {landingText.capabilityRows.map((row) => (
+                <React.Fragment key={row.label}>
+                  <dt className={styles.capabilityLabel}>{row.label}</dt>
+                  <dd className={styles.capabilityValue}>{row.value}</dd>
+                </React.Fragment>
+              ))}
+            </dl>
+
             <div className={styles.cardCtaWrapper}>
               <button
                 type="button"

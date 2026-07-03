@@ -2,36 +2,30 @@
 
 import React from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import styles from "@/styles/components/organisms/VisionSystemSection.module.scss";
 import visionSystemText from "@/constants/uiText/visionSystem.json";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const visionCards = [
   {
     title: visionSystemText.cards[0].title,
     points: visionSystemText.cards[0].points,
     outcome: visionSystemText.cards[0].outcome,
-    image: "/svgs/Landing/First.webp",
+    image: "/svgs/Landing/First-hd.webp",
     imageAlt: visionSystemText.cards[0].imageAlt,
   },
   {
     title: visionSystemText.cards[1].title,
     points: visionSystemText.cards[1].points,
     outcome: visionSystemText.cards[1].outcome,
-    image: "/svgs/Landing/Second.webp",
+    image: "/svgs/Landing/Second-hd.webp",
     imageAlt: visionSystemText.cards[1].imageAlt,
   },
   {
     title: visionSystemText.cards[2].title,
     points: visionSystemText.cards[2].points,
     outcome: visionSystemText.cards[2].outcome,
-    image: "/svgs/Landing/Third.webp",
+    image: "/svgs/Landing/Third-hd.webp",
     imageAlt: visionSystemText.cards[2].imageAlt,
   },
 ];
@@ -41,8 +35,11 @@ const VisionSystemSection = () => {
     <ScrollStack
       id="vision-system"
       animated={true}
+      // On mobile, pin the heading below the navbar and stack the cards beneath
+      // it (desktop keeps its own pinned stacking animation, untouched).
+      mobileStickyHeader
       preRoll={0.10}
-      scrollMultiplier={1.8}
+      scrollMultiplier={1.2}
       className={styles.outerSection}
       header={
         <>
@@ -80,14 +77,10 @@ const CardContent = ({
   image: string;
   imageAlt: string;
 }) => {
-  // When image loads, refresh GSAP scroll trigger calculations
-  const handleImageLoad = () => {
-    if (typeof window !== "undefined") {
-      // Refresh scroll trigger calculations when image finishes loading
-      ScrollTrigger.refresh();
-    }
-  };
-
+  // Note: the ScrollStack desktop engine recomputes its own geometry on
+  // resize / window-load / ResizeObserver, so images finishing late don't need
+  // a manual ScrollTrigger.refresh() here — and a per-image refresh() caused a
+  // global layout recalc that hitched the scroll mid-animation.
   return (
     <>
       <div className={styles.media}>
@@ -95,11 +88,11 @@ const CardContent = ({
           <Image
             src={image}
             alt={imageAlt}
-            width={520}
-            height={350}
-            sizes="(max-width: 768px) 88vw, 420px"
+            width={1000}
+            height={920}
+            quality={86}
+            sizes="(max-width: 768px) 88vw, 500px"
             className={styles.mediaImage}
-            onLoad={handleImageLoad}
           />
         </div>
       </div>
@@ -108,7 +101,23 @@ const CardContent = ({
         <h3 className={styles.cardTitle}>{title}</h3>
         <ul className={styles.pointList}>
           {points.map((point) => (
-            <li key={point}>{point}</li>
+            <li key={point}>
+              <svg
+                className={styles.check}
+                viewBox="0 0 20 15"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M1 9.68C1 9.68 2.82 9.68 5.25 13.5C5.25 13.5 12 3.5 18 1.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span>{point}</span>
+            </li>
           ))}
         </ul>
         <p className={styles.outcome}>

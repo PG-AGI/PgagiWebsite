@@ -14,9 +14,9 @@ const TABS: { id: TabId; label: string }[] = [
   { id: "ai-iot",      label: "AI X IoT Engineering" },
 ];
 
-// Sticky top offset per card index — gives a "peeking deck" feel
-const CARD_STICKY_TOP = 88; // px — base top for the first card
-const CARD_STACK_OFFSET = 10; // px — additional offset per card index
+// The sticky offset per card is computed in CSS from `--card-index`
+// (see RecentLaunchSection.module.scss `.stickyCard`), so cards pin *below*
+// the now-sticky heading + tabs instead of jamming under the navbar.
 
 // ── Arrow icon (card CTA) ────────────────────────────────────────────
 const ArrowUpRight = () => (
@@ -202,7 +202,7 @@ const RecentLaunchSection = () => {
             <div
               key={i}
               className={styles.stickyCard}
-              style={{ top: `${CARD_STICKY_TOP + i * CARD_STACK_OFFSET}px`, zIndex: i + 1 }}
+              style={{ ["--card-index" as string]: i, zIndex: i + 1 } as React.CSSProperties}
             >
               <div className={styles.cardSkeleton}>
                 <div className={styles.skeletonLeft}>
@@ -225,10 +225,7 @@ const RecentLaunchSection = () => {
             <div
               key={project.id}
               className={styles.stickyCard}
-              style={{
-                top: `${CARD_STICKY_TOP + i * CARD_STACK_OFFSET}px`,
-                zIndex: i + 1,
-              }}
+              style={{ ["--card-index" as string]: i, zIndex: i + 1 } as React.CSSProperties}
             >
               <ProjectCard project={project} />
             </div>

@@ -1,35 +1,43 @@
 .section {
   position: relative;
   background: #ffffff;
-  padding: 150px 0 150px;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 820px;
 
   @media (max-width: 768px) {
-    padding: 80px 0 80px;
+    padding: 5rem 0 5rem;
   }
 }
 
 .container {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: 82vw;
+  // Match the "How we scale your product" (SocialOrbitSection) box exactly:
+  // Clay-style 1240px rail, wrapper-relative (100%, not vw — the page wrapper
+  // already pads the sides; vw widths overflowed and were clipped on the right).
+  width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
   margin: 0 auto;
-  padding: 0 1vw;
-  position: relative;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
-    padding: 0 1.25rem;
-    max-width: 100%;
+    width: 100%;
+    // No side padding — the global .sectionsWrapper supplies the gutters, so
+    // this box shares identical left/right edges with the SocialOrbitSection
+    // box above it. (The panel below has its own internal padding for content.)
+    padding: 0;
   }
 }
 
 .panel {
   position: relative;
-  height: 690px;
+  // Laptop fit-to-height: the 690px design height gives way below ~866px-tall
+  // viewports so the whole dark panel fits one fold under the navbar. The
+  // absolute internals (.contentLayout top/gap, .track, .copyBlock) carry
+  // matching vh clamps so the timeline compresses in step, never clips.
+  height: min(43.125rem, calc(100dvh - 11rem));
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   overflow: hidden;
@@ -62,7 +70,7 @@
   margin: 0;
   text-align: center;
   color: rgba(249, 249, 250, 0.98);
-  font-size: clamp(2.2rem, 4.7vw, 3.45rem);
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5vh); // Clay heading cap (40px)
   line-height: 1;
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -74,13 +82,14 @@
 
 .contentLayout {
   position: absolute;
-  top: 121px;
-  left: 63px;
-  width: calc(100% - 126px);
-  height: 448.7497558594px;
+  // top/gap compress with the panel's vh height cap on short laptops.
+  top: min(7.5625rem, 9vh);
+  left: 3.9375rem;
+  width: calc(100% - 7.875rem);
+  height: 28.0469rem;
   display: flex;
   flex-direction: column;
-  gap: 96px;
+  gap: min(6rem, 8vh);
   z-index: 1;
 }
 
@@ -111,7 +120,7 @@
 }
 
 .copyBlock {
-  min-height: 118px;
+  min-height: min(7.375rem, 12vh); // vh binds on short laptops only
   padding: 0 clamp(0.42rem, 0.95vw, 0.72rem);
   opacity: 0.4;
   animation: textHighlight 8s ease-in-out infinite;
@@ -120,7 +129,7 @@
   h3 {
     margin: 0;
     color: #f2f2f4;
-    font-size: clamp(0.98rem, 1.1vw, 1.24rem);
+    font-size: min(clamp(0.98rem, 1.1vw, 1.24rem), 2.2vh);
     line-height: 1.2;
     font-weight: 650;
     transition: color 0.3s ease;
@@ -129,7 +138,7 @@
   p {
     margin: 0.38rem 0 0;
     color: rgba(211, 214, 219, 0.7);
-    font-size: clamp(0.72rem, 0.84vw, 0.88rem);
+    font-size: min(clamp(0.72rem, 0.84vw, 0.88rem), 1.7vh);
     line-height: 1.42;
     font-weight: 500;
   }
@@ -138,7 +147,9 @@
 .track {
   position: relative;
   --icon-anchor-y: 32.7%;
-  height: clamp(146px, 17.2vw, 186px);
+  // Outer min() lets the arc track drop below its 146px floor when the panel
+  // compresses on short laptops (the SVG arcs scale with the track box).
+  height: min(clamp(9.125rem, 17.2vw, 11.625rem), 22vh);
   margin-top: 0.1rem;
 }
 
@@ -190,8 +201,8 @@
   position: absolute;
   left: 50%;
   top: var(--icon-anchor-y);
-  width: clamp(30px, 2.75vw, 36px);
-  height: clamp(30px, 2.75vw, 36px);
+  width: clamp(1.875rem, 2.75vw, 2.25rem);
+  height: clamp(1.875rem, 2.75vw, 2.25rem);
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -221,7 +232,8 @@
 
 @media (max-width: 960px) {
   .section {
-    padding: 80px 0; // Standardized
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
   }
 
   .panel {
@@ -284,7 +296,7 @@
   }
 
   .copyBlock {
-    min-height: 84px;
+    min-height: 5.25rem;
     padding: 0 0.34rem;
 
     h3 {
@@ -301,12 +313,12 @@
 
   .track {
     --icon-anchor-y: 32.7%;
-    height: 132px;
+    height: 8.25rem;
   }
 
   .iconBadge {
-    width: 33px;
-    height: 33px;
+    width: 2.0625rem;
+    height: 2.0625rem;
     top: var(--icon-anchor-y);
   }
 
@@ -360,7 +372,7 @@
 @media (max-width: 640px) {
   .section {
     padding-inline: 0;
-    padding-bottom: 1.5rem;
+    padding-bottom: var(--section-space, 3rem);
   }
 
   .panel {
@@ -378,18 +390,29 @@
   }
 
   .copyBlock {
-    min-height: 80px;
+    min-height: 5rem;
     padding: 0 0.24rem;
   }
 
   .track {
     --icon-anchor-y: 32.7%;
-    height: 124px;
+    height: 7.75rem;
   }
 
   .mobileHint {
     margin-top: 0.34rem;
     font-size: 0.64rem;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .timelineScroller {
+    margin-top: 1.2rem;
   }
 }
 

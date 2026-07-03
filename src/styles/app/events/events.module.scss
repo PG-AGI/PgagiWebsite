@@ -28,7 +28,7 @@
             button{
                 border: 1px solid #0007A7;
                 cursor: pointer;
-                padding: 10px 30px;
+                padding: 0.625rem 1.875rem;
                 border-radius: 30px;
                 font-size: 1rem;
                 font-weight: 600;
@@ -134,25 +134,25 @@
 
 .modalContent {
     background: #fff;
-    padding: 20px;
+    padding: 1.25rem;
     border-radius: 8px;
     position: relative;
-    width: 400px;
+    width: 25rem;
     max-width: 90%;
 }
 
 .closeButton {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0.625rem;
+    right: 0.625rem;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
 .modalActions {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
 }

@@ -1,4 +1,5 @@
-$card-radius: 26px;
+$card-radius: 32px;
+$ink: #262626;
 $red: #9f0000;
 
 // ─── Outer wrapper (holds intro + scroll stack) ─────────────────
@@ -6,21 +7,46 @@ $red: #9f0000;
 .outerWrapper {
   background: #ffffff;
   position: relative;
+  // Match the "You have the vision / We engineer the system" (VisionSystemSection)
+  // ScrollStack: cards cap at 77.5rem (1240px Clay rail), wrapper-relative
+  // (100%, not vw — vw widths overflowed the padded page wrapper and were
+  // clipped on the right). Inherited by the nested ScrollStack .container so
+  // both sections' cards are exactly the same width at every viewport.
+  --scrollstack-container-max: min(77.5rem, 100%);
+  --scrollstack-container-pad-x: 0;
+  // The pinned scroll-stack leaves its trailing space *inside* the sticky
+  // viewport, so add real flow whitespace below it — Clay-style page rhythm,
+  // identical on every landing section.
+  padding-bottom: clamp(4rem, 10vh, 7rem);
+
+  @media (max-width: 768px) {
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding-bottom: var(--section-space, 3rem);
+    // Mobile pin offset for the stacked cards (ScrollStack --stack-top,
+    // default 84px): the fixed navbar bottom sits at ~72-94px depending on
+    // width, which left the pinned cards nearly touching it. 7rem keeps a
+    // clear gap below the bar on every phone size.
+    --stack-top: 7rem;
+  }
 }
 
 // ─── Static intro (heading → subtitle → image) ──────────────────
 
 .introSection {
   width: 100%;
-  padding-top: clamp(100px, 12vh, 155px);
+  padding-top: clamp(4rem, 10vh, 7rem); // Clay-style page rhythm
   padding-bottom: clamp(1.5rem, 3vh, 3rem);
-  min-height: 600px;
+  min-height: 37.5rem;
   text-align: center;
   overflow: hidden; /* keeps 90vw image from causing horizontal scroll */
 
   @media (max-width: 767px) {
-    padding-top: clamp(80px, 12vh, 110px);
-    padding-bottom: 2vh;
+    padding-top: var(--section-space, 3rem);
+    // Real breathing room between the intro banner and the first stacked
+    // card below it (2vh was ~14px and read cramped).
+    padding-bottom: 3.25rem;
+    // The 37.5rem desktop min-height forces empty air on phones.
+    min-height: 0;
   }
 }
 
@@ -42,7 +68,10 @@ $red: #9f0000;
 
 .title {
   margin: 0;
-  font-size: clamp(2.9rem, 3.8vw, 3.1rem);
+  // Clay heading cap (40px); the vh term only binds below ~900px-tall
+  // viewports (short laptops), where the intro must compress so heading +
+  // banner share one fold.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5.5vh);
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -65,7 +94,7 @@ $red: #9f0000;
 .subtitle {
   margin: 2vh 0 0;
   color: #606060;
-  font-size: clamp(1.2rem, 2.1vw, 1.5rem);
+  font-size: min(clamp(1rem, 1.6vw, 1.125rem), 2.7vh); // Clay scale (was 24px)
   font-weight: 500;
   line-height: 1.5;
 
@@ -75,16 +104,27 @@ $red: #9f0000;
   }
 }
 
-// Wide banner image — intentionally wider than the text block
+// Wide banner image — intentionally wider than the text block, but capped so
+// it matches the other section boxes (min(1240px, 100%)) instead of overshooting
+// on wide screens. 1400px is also the video's native width — no upscaling.
 .headerImageWrapper {
-  width: 80vw;
+  // Third term = fit-to-fold on short laptops: the 2:1 video can only fit a
+  // shorter screen by getting narrower (cropping the dashboard footage was
+  // ruled out), so it scales to (viewport − nav/heading allowance) × aspect
+  // and stays centred. On viewports ≥ ~900px tall the old caps win untouched.
+  // 100% (not vw): the padded page wrapper is the real available width.
+  width: min(77.5rem, 100%, calc((100dvh - 17rem) * 2));
   margin: 5vh auto 0;
   border-radius: 24px;
   overflow: hidden;
   line-height: 0;
 
   @media (max-width: 767px) {
-    width: 97vw;
+    // Fill the intro container exactly. 97vw was wider than this box's parent
+    // (which is ~92vw after the page-wrapper padding) and the parent clips
+    // overflow, so the right edge was being cut off. width:100% keeps equal
+    // gutters and matches the other section boxes' width.
+    width: 100%;
     border-radius: 16px;
     margin-top: 2vh;
   }
@@ -97,37 +137,119 @@ $red: #9f0000;
 }
 
 // ─── Cards ────────────────────────────────────
+// Figma frame: content 1240 × 482, radius 32, bg #f5efea.
+// Geometry is expressed as proportions of the 1240 reference width
+// (widths + gap margins) so each card reads identically at any desktop
+// width; the card caps at 1240 and centres on wider screens. Below the
+// 900px breakpoint the original mobile stack is preserved untouched.
 
 .card {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  border: 1px solid rgba(0, 0, 0, 0.025);
+  width: 100%;
+  // 1240px Clay rail — matches the VisionSystemSection card cap so these
+  // three cards are the same width as the "You have the vision" cards.
+  max-width: 77.5rem;
+  margin-inline: auto;
+  aspect-ratio: 1240 / 482;
+  box-sizing: border-box;
   border-radius: $card-radius;
-  padding: clamp(1.8rem, 3.2vw, 2.8rem);
+  overflow: hidden;
 
   &.card1,
   &.card2,
   &.card3 {
-    background: #F0EBE3;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   }
 
-  /* Alternating layout: card2 flips image to right (desktop only) */
-  &.card2 {
-    flex-direction: row-reverse;
+  @media (min-width: 901px) {
+    // Short-laptop fit: the width rail never changes — the aspect-locked
+    // height gives way so the pinned card flattens instead of clipping.
+    // Mirrors the .centered .stackArea cap in ScrollStack.module.scss.
+    max-height: calc(100dvh - 10rem);
+  }
 
-    @media (max-width: 900px) {
-      flex-direction: column-reverse;
+  // ── Per-card horizontal geometry (% of 1240) ──
+  // card1 — illustration left, copy right
+  &.card1 {
+    background: #f0f8ff;
+
+    .media {
+      width: 40.081%; // 497 / 1240
+      margin-left: 0.887%; // 11 / 1240
+      border-radius: 5.33%; // 26.5 / 497
+    }
+    .copyBlock {
+      width: 38.629%; // 479 / 1240
+      margin-left: 7.742%; // gap 96 / 1240
     }
   }
 
+  // card2 — copy left, illustration right
+  &.card2 {
+    background: #fff3ed;
+    flex-direction: row-reverse;
+
+    .media {
+      width: 39.516%; // 490 / 1240
+      margin-right: 0.806%; // 10 / 1240
+      border-radius: 4.44%; // 21.76 / 490
+    }
+    .copyBlock {
+      width: 38.629%; // 479 / 1240
+      margin-left: 6.452%; // 80 / 1240
+      margin-right: 14.597%; // gap 181 / 1240
+    }
+  }
+
+  // card3 — illustration left, copy right
+  &.card3 {
+    background: #fcfee2;
+
+    .media {
+      width: 41.452%; // 514 / 1240
+      margin-left: 0.645%; // 8 / 1240
+      border-radius: 4.31%; // 22.14 / 514
+    }
+    .copyBlock {
+      width: 38.629%; // 479 / 1240
+      margin-left: 8.226%; // gap 102 / 1240
+    }
+  }
+
+  // ── Mobile: restore the original stacked layout (untouched) ──
   @media (max-width: 900px) {
     flex-direction: column-reverse;
     align-items: stretch;
+    aspect-ratio: auto;
     gap: 1.4rem;
     padding: 1.5rem;
+
+    &.card1,
+    &.card2,
+    &.card3 {
+      // Same fixed composition as the VisionSystemSection cards: 92% of the
+      // card width, centred, natural aspect ratio, identical on every phone.
+      // (These per-card selectors outrank the standalone .media mobile rule,
+      // so the width has to live here — `width: auto` collapsed the pane to
+      // the image's intrinsic size and broke the layout.)
+      .media {
+        width: 92%;
+        max-width: none;
+        margin: 0 auto;
+        align-self: center;
+      }
+
+      .copyBlock {
+        width: auto;
+        margin: 0;
+      }
+    }
+
+    &.card2 {
+      flex-direction: column-reverse;
+    }
   }
 
   @media (max-width: 600px) {
@@ -137,106 +259,33 @@ $red: #9f0000;
   }
 }
 
-// ─── Copy ────────────────────────────────────
-
-.copyBlock {
-  flex: 1;
-  min-width: 0;
-}
-
-.cardTitle {
-  margin: 0;
-  color: #1a1a1a;
-  font-size: clamp(1.25rem, 2.3vw, 1.82rem);
-  line-height: 1.2;
-  font-weight: 700;
-
-  @media (max-width: 768px) {
-    font-size: 1.15rem;
-  }
-}
-
-.pointList {
-  margin: 0.8rem 0 1.1rem;
-  padding-left: 0;
-  color: #1a1a1a;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  li {
-    font-size: clamp(0.85rem, 1.1vw, 1rem);
-    line-height: 1.45;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-
-    &::before {
-      content: "✓";
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.05em;
-    }
-  }
-
-  @media (max-width: 768px) {
-    margin: 0.4rem 0 0.6rem;
-    gap: 0.35rem;
-
-    li {
-      font-size: 0.85rem;
-    }
-  }
-}
-
-.outcome {
-  margin: 0;
-  padding-top: 1.2rem;
-  border-top: 1.5px solid rgba(0, 0, 0, 0.12);
-  color: #1a1a1a;
-  font-size: clamp(1rem, 1.3vw, 1.3rem);
-  font-weight: 700;
-  line-height: 1.4;
-
-  span {
-    font-weight: 800;
-  }
-}
-
-// ─── Media ───────────────────────────────────
-
+// ─── Media (illustration panel, exported @2x — bg & corners baked in) ──
 .media {
-  width: clamp(300px, 39%, 420px);
-  flex: 0 0 clamp(300px, 39%, 420px);
-  min-height: clamp(300px, 30vw, 360px);
+  flex: 0 0 auto;
   align-self: center;
-  border-radius: 22px;
   overflow: hidden;
-  background: #E2D5C4;
+  line-height: 0;
 
   @media (max-width: 900px) {
-    width: 70%;
-    max-width: 260px;
+    // Same fixed composition as the VisionSystemSection cards: a constant 92%
+    // of the card width on every phone — natural aspect ratio, no per-device
+    // caps, only the overall scale follows the viewport.
+    width: 92%;
+    max-width: none;
     margin: 0 auto;
-    flex-basis: auto;
-    align-self: center;
-    min-height: unset;
     border-radius: 14px;
   }
 
   @media (max-width: 480px) {
-    width: 65%;
-    max-width: 220px;
     border-radius: 12px;
   }
 }
 
 .imageInner {
   width: 100%;
-  height: 100%;
   border-radius: inherit;
   overflow: hidden;
+  line-height: 0;
 }
 
 .mediaImage {
@@ -244,4 +293,169 @@ $red: #9f0000;
   height: auto;
   display: block;
   border-radius: inherit;
+
+  @media (min-width: 901px) {
+    // Pairs with the .card max-height: when the card flattens on short
+    // laptops the illustration shrinks (height-capped, ratio intact, centred
+    // in its pane) instead of being clipped. When the cap doesn't bind,
+    // width:auto + max-width:100% renders identical to the old width:100%.
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - 12rem);
+    margin-inline: auto;
+  }
+}
+
+// ─── Copy ─────────────────────────────────────
+.copyBlock {
+  flex: 0 0 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    flex: 1 1 auto;
+  }
+}
+
+.cardTitle {
+  // vh terms only bind on short laptops, where the card flattens (see .card
+  // max-height) and the copy must compress with it. Figma sizes otherwise.
+  margin: 0 0 min(1.5rem, 2.7vh); // gap title → list
+  color: $ink;
+  font-size: min(2rem, 3.6vh); // 32
+  line-height: min(2.5rem, 4.4vh); // 40
+  letter-spacing: -1px;
+  font-weight: 700;
+
+  @media (max-width: 900px) {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+  }
+}
+
+.pointList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  color: $ink;
+  // Reserve four rows so the divider/outcome sit at the same height on
+  // every card (Figma keeps a 4th, hidden row on the 3-point card).
+  min-height: min(9.25rem, 16.5vh); // 40·4 − 4·3 (vh: short laptops)
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.9375rem;
+    font-size: min(1.25rem, 2.2vh); // 20 (vh binds on short laptops only)
+    line-height: min(2.5rem, 4.4vh); // 40
+    font-weight: 500;
+
+    &:not(:last-child) {
+      margin-bottom: -4px; // Figma row overlap
+    }
+  }
+
+  // Points flagged via `highlightPoints` in the card config.
+  .pointHighlight {
+    color: #ff4040;
+  }
+
+  @media (max-width: 900px) {
+    min-height: 0;
+
+    li {
+      font-size: 0.9rem;
+      line-height: 1.6rem;
+      gap: 0.625rem;
+
+      &:not(:last-child) {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.check {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 0.9375rem;
+  color: $ink;
+
+  @media (max-width: 900px) {
+    width: 1rem;
+    height: 0.75rem;
+  }
+}
+
+.outcome {
+  margin: min(3.5rem, 6.2vh) 0 0; // gap list → divider (vh: short laptops)
+  padding-top: min(1.5rem, 2.7vh); // gap divider → outcome text
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  color: $ink;
+  font-size: min(1.5rem, 2.7vh); // 24
+  line-height: min(1.9375rem, 3.4vh); // 31
+  letter-spacing: -0.5px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  span {
+    font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    margin-top: 1.2rem;
+    padding-top: 0.9rem;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    white-space: normal;
+  }
+}
+
+// ─── Short phones (mobile width AND ≤720px tall) ──
+// Same height-keyed compact scale as VisionSystemSection so the two stacking
+// sections read identically: the illustration keeps its fixed 92% composition
+// and the chrome (type, padding) gives way instead.
+@media (max-width: 768px) and (max-height: 45rem) {
+  .title {
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+  }
+
+  .card {
+    gap: 0.7rem;
+    padding: 0.85rem;
+    border-radius: 16px;
+  }
+
+  .cardTitle {
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .pointList li {
+    font-size: 0.82rem;
+    line-height: 1.3rem;
+    gap: 0.5rem;
+  }
+
+  .check {
+    width: 0.85rem;
+    height: 0.65rem;
+  }
+
+  .outcome {
+    margin-top: 0.6rem;
+    padding-top: 0.5rem;
+    font-size: 0.82rem;
+  }
 }

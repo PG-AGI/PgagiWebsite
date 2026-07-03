@@ -15,37 +15,73 @@
 
 .hero {
   /* Design tokens — rem + vw hybrid clamps scale with both viewport width AND browser zoom */
-  --content-x:       clamp(1.25rem, 0.5rem + 3.5vw, 5rem);       /* 20 → 80px gutter */
-  --h1-size:         clamp(2rem, 1rem + 3vw, 4.5rem);            /* 32 → 72px */
-  --h1-line:         clamp(2.75rem, 1.3rem + 4.2vw, 5.5rem);     /* 44 → 88px */
-  --body-size:       clamp(0.9375rem, 0.75rem + 0.45vw, 1.25rem); /* 15 → 20px */
-  --body-line:       clamp(1.55rem, 1.3rem + 0.95vw, 2.1rem);    /* 24.8 → 33.6px */
-  --cta-size:        clamp(0.8125rem, 0.7rem + 0.3vw, 1rem);     /* 13 → 16px */
-  --cta-pad-x:       clamp(1.25rem, 0.9rem + 1vw, 1.75rem);      /* 20 → 28px */
-  --cta-arrow:       clamp(2rem, 1.6rem + 0.7vw, 2.25rem);       /* 32 → 36px */
-  --card-title-size: clamp(1.25rem, 0.85rem + 1vw, 1.75rem);     /* 20 → 28px */
-  --card-desc-size:  clamp(0.8125rem, 0.75rem + 0.3vw, 1rem);    /* 13 → 16px */
-  --card-cta-arrow:  clamp(2.25rem, 1.8rem + 1vw, 2.75rem);      /* 36 → 44px */
-  --cap-size:        clamp(0.8125rem, 0.7rem + 0.4vw, 1rem);     /* 13 → 16px */
-  --cap-pad-x:       clamp(0.875rem, 0.6rem + 0.8vw, 1.5rem);    /* 14 → 24px */
-  --card-pad:        clamp(1.125rem, 0.7rem + 1.4vw, 2rem);      /* 18 → 32px */
-  --cards-gap:       clamp(0.75rem, 0.5rem + 0.6vw, 1.5rem);     /* 12 → 24px */
-  --card-radius:     clamp(1rem, 0.7rem + 0.6vw, 1.5rem);        /* 16 → 24px */
+  --content-x: clamp(1.25rem, 0.5rem + 3.5vw, 5rem);
+  /* 20 → 80px gutter */
+  --h1-size: clamp(2rem, 1rem + 3vw, 4.5rem);
+  /* 32 → 72px */
+  --h1-line: clamp(2.625rem, 1.4rem + 3.9vw, 5.125rem);
+  /* 42 → 82px (Figma 164/2) */
+  --body-size: clamp(0.9375rem, 0.75rem + 0.45vw, 1.25rem);
+  /* 15 → 20px */
+  --body-line: clamp(1.55rem, 1.3rem + 0.95vw, 2.1rem);
+  /* 24.8 → 33.6px */
+  --cta-size: clamp(0.8125rem, 0.7rem + 0.3vw, 1rem);
+  /* 13 → 16px */
+  --cta-pad-x: clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
+  /* 20 → 28px */
+  --cta-arrow: clamp(2rem, 1.6rem + 0.7vw, 2.25rem);
+  /* 32 → 36px */
+  --card-title-size: clamp(1.25rem, 0.85rem + 1vw, 1.75rem);
+  /* 20 → 28px */
+  --card-desc-size: clamp(0.8125rem, 0.75rem + 0.3vw, 1rem);
+  /* 13 → 16px */
+  --card-cta-arrow: clamp(2.25rem, 1.8rem + 1vw, 2.75rem);
+  /* 36 → 44px */
+  --cap-size: clamp(0.8125rem, 0.7rem + 0.4vw, 1rem);
+  /* 13 → 16px */
+  --cap-pad-x: clamp(0.875rem, 0.6rem + 0.8vw, 1.5rem);
+  /* 14 → 24px */
+  --card-pad: clamp(1.125rem, 0.7rem + 1.4vw, 2rem);
+  /* 18 → 32px */
+  --cards-gap: clamp(0.75rem, 0.5rem + 0.6vw, 1.5rem);
+  /* 12 → 24px */
+  --card-radius: clamp(1rem, 0.7rem + 0.6vw, 1.5rem);
+  /* 16 → 24px */
   --card-bg: rgba(0, 0, 0, 0.52);
   --card-shadow: -6px -6px 15.5px 0px rgba(255, 255, 255, 0.34);
-  --overlay: linear-gradient(to right,
-      rgba(0, 0, 0, 0.281) 0%,
-      rgba(0, 0, 0, 0.233) 45%,
-      rgba(0, 0, 0, 0.233) 75%,
-      transparent 100%);
+  /* DESKTOP: copied from Figma node 922:2107 (Ellipse 59 + Ellipse 63).
+     Both are soft blurred BLUE shapes — Ellipse 59 #4D76B7 (~0.37 a) and
+     Ellipse 63 #567BAA (multiply) over the headline. Net effect: a medium-blue
+     wash weighted to the LEFT / top-left, fading to transparent before centre
+     so the mountain photo + the man/robot on the right stay clearly visible. */
+  --overlay:
+    radial-gradient(48% 44% at 32% 29%,
+      rgba(86, 123, 170, 0.55) 0%,
+      rgba(86, 123, 170, 0.16) 56%,
+      rgba(86, 123, 170, 0) 78%),
+    linear-gradient(100deg,
+      rgba(77, 118, 183, 0.70) 0%,
+      rgba(77, 118, 183, 0.44) 22%,
+      rgba(77, 118, 183, 0.20) 40%,
+      rgba(77, 118, 183, 0.05) 56%,
+      rgba(77, 118, 183, 0) 70%);
 
   position: relative;
   width: 100%;
-  min-height: 100dvh;
+  /* The hero fits a single viewport but is capped so that on tall/large
+     desktops the CTA→cards gap stays tight (matches Figma's proportions)
+     heroInner fills this height and uses space-between to pin the heading to
+     the top and the cards to the bottom. (Desktop makes the section taller so
+     the image bleeds below the fold — see the min-width:993px block.) */
+  min-height: min(100dvh, 68rem);
   margin: 0;
-  /* Allow the section to grow taller than 100dvh on tiny screens so content
-     never gets clipped behind the fixed nav; only block horizontal overflow. */
-  overflow-x: hidden;
+  /* Only grows past the viewport on very short screens so nothing is clipped
+     behind the fixed nav; block horizontal overflow.
+     `clip` (not `hidden`): `overflow-x: hidden` + `overflow-y: visible` makes
+     the browser compute overflow-y to `auto`, turning the hero into its own
+     scroll container (the phantom second scrollbar). `clip` leaves overflow-y
+     truly visible, so there is no nested scroll. */
+  overflow-x: clip;
   overflow-y: visible;
   display: flex;
   flex-direction: column;
@@ -61,7 +97,8 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  overflow: hidden;       /* clips image to hero bounds */
+  overflow: hidden;
+  /* clips image to hero bounds */
   transform: translateZ(0);
 
 
@@ -80,6 +117,14 @@
 
   .heroBgDesktop {
     display: block;
+    /* The 16:9 sunset artwork is wider than the hero on common laptops
+       (16:10 / 16:9 + 112dvh hero), so cover crops the sides. Anchoring X at
+       100% makes that crop come out of the empty lake on the LEFT, which
+       pins the man+robot pair at ~73-76% width (over the right card) and
+       keeps the sun + foliage at the right edge in frame on every screen —
+       with `center` the pair drifted to ~85% and nearly clipped. Y=64% only
+       applies on ultra-wide screens where cover crops vertically instead. */
+    object-position: 100% 64%;
   }
 
   .heroBgMobile {
@@ -91,9 +136,18 @@
       display: none;
     }
 
+    /* The mobile crop is a 0.70-aspect portrait (1120×1609, re-cut
+       2026-07-03 with extended sky); phones are 0.45-0.56, so cover always
+       shows the FULL image height and crops only width — figures' heads
+       land at 56% of the screen on every phone (the text block centres in
+       the sky above; see .heroContent). The pair sits at ~53-58% of the
+       image width — anchoring at x=80% takes the width crop mostly from
+       the LEFT, landing the pair near screen centre with the sun kept on
+       the right edge. y=20% only matters on portrait tablets (0.75 aspect),
+       where it trims foreground rocks instead of sky/figures. */
     .heroBgMobile {
       display: block;
-      object-position: center top;
+      object-position: 80% 20%;
     }
   }
 }
@@ -105,35 +159,69 @@
   z-index: 1;
 }
 
+/* NOTE: the CSS crow flock was removed 2026-07-03 — an AI-generated
+   sprite/asset will replace it (user-supplied). */
+
 /* ─── Inner container ─── */
 .heroInner {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 0 var(--content-x);
+  flex: 1 1 auto;
+  /* fill the hero's 100dvh */
+  min-height: 0;
+  /* Content is capped to the 1400px design reference (same as VisionSystem /
+     SocialOrbit) and centred, with ~4vw fluid gutters below 1522px so every
+     laptop/desktop renders the same proportions. Top padding clears the fixed
+     60px banner + nav, then ~120px of breathing room below the nav before the
+     headline (matches Figma); space-between pins the headline near the top and
+     the cards to the bottom. Scales with width so every desktop looks the same. */
+  padding-top: clamp(9rem, 3rem + 13vw, 16rem);
+  padding-bottom: clamp(1.75rem, 2.5vh, 3rem);
+  padding-left: max(clamp(2.5rem, 7vw, 9rem), calc((100% - 77.5rem) / 2));
+  padding-right: max(clamp(2.5rem, 7vw, 9rem), calc((100% - 77.5rem) / 2));
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  /* No flex: 1 — heroContent drives the height via min-height: 100dvh */
+  justify-content: space-between;
+  gap: clamp(1.25rem, 3vh, 2.5rem);
+}
+
+/* Desktop (cards side-by-side, ≥993px): make the hero TALLER than the viewport
+   so the background image continues below the fold (no hard cut at the screen
+   edge — it flows toward the next section). The content (heading + cards) is
+   decoupled to its own ~viewport-height box pinned at the top, so the cards
+   stay on the first screen — nudged a bit lower — instead of riding the
+   taller hero all the way down. Heading/figures/gradient are unchanged. */
+@media (min-width: 993px) {
+  .hero {
+    min-height: 112dvh;
+    /* image bleeds ~12% below the fold */
+  }
+
+  .heroInner {
+    flex: 1 1 auto;
+    /* min-height (not fixed height): the content box still targets ~104dvh so
+       the cards sit just past the fold, but it can GROW when the viewport is
+       short (laptops / Windows display-scaling) instead of overflowing and
+       clipping the heading. */
+    min-height: 104dvh;
+    padding-bottom: clamp(0.25rem, 0.4vh, 0.6rem);
+  }
 }
 
 /* ─── Hero content — occupies the entire first viewport ─── */
 .heroContent {
   width: 100%;
-  /* First screen: heading + subtext + CTA fills at least one full viewport.
-     Announcement bar (60px) + nav (68px) = ~128px fixed chrome — 8rem clears it. */
-  padding: clamp(8rem, 16vh, 11rem) 0 clamp(3rem, 6vh, 5rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   gap: clamp(0.85rem, 1.6vh, 1.5rem);
-  /* Takes up exactly one viewport height minimum so cards start below the fold */
-  min-height: 100dvh;
-  flex: 0 0 auto;   /* mobile overrides this to flex:1 via heroInner min-height strategy */
+  flex: 0 0 auto;
+  /* natural height; pinned to the top by heroInner space-between */
   box-sizing: border-box;
-  margin-top: 4rem;
-  margin-left: clamp(0rem, 1.5vw, 2rem);
+  margin-left: 0;
 }
 
 .heroHeading {
@@ -152,21 +240,26 @@
 .heroSubtext {
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--body-size);
-  font-weight: 600;
+  font-weight: 500;
   line-height: var(--body-line);
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.92);
   margin: 0;
-  max-width: 560px;
+  max-width: 600px;
   letter-spacing: 0;
   animation: fadeSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
 }
 
 /* ─── Primary CTA ─── */
+.heroCtaWrapper {
+  display: inline-block;
+  animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
+}
+
 .heroCta {
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  background: #9F0000;
+  background: linear-gradient(180deg, #b50707 0%, #9F0000 100%);
   color: #ffffff;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--cta-size);
@@ -175,26 +268,37 @@
   text-decoration: none;
   padding: 8px 12px 8px 24px;
   border-radius: 50px;
-  border: none;
-  box-shadow: 0 8px 24px rgba(159, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(159, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   white-space: nowrap;
-  animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
 
   &:hover {
-    transform: translateY(-3px);
-    background: #9F0000;
-    box-shadow: 0 12px 32px rgba(159, 0, 0, 0.32);
-    .ctaArrow { 
+    transform: translateY(-3px) scale(1.03);
+    background: linear-gradient(180deg, #c40909 0%, #9F0000 100%);
+    box-shadow:
+      inset 0 2px 3px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.2),
+      0 14px 36px rgba(159, 0, 0, 0.36);
+
+    .ctaArrow {
       transform: scale(1.08);
       background: #ffffff;
     }
   }
 
   &:active {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px -5px rgba(159, 0, 0, 0.4);
+    transform: translateY(2px) scale(0.97);
+    background: linear-gradient(180deg, #940000 0%, #820000 100%);
+    box-shadow:
+      inset 0 4px 8px rgba(0, 0, 0, 0.5),
+      inset 0 1.5px 3px rgba(0, 0, 0, 0.3),
+      0 2px 6px rgba(159, 0, 0, 0.2);
+    transition: all 0.08s ease;
   }
 }
 
@@ -212,11 +316,14 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
   border: 2px solid rgba(0, 0, 0, 0.06);
 
-  svg { width: 55%; height: 55%; }
+  svg {
+    width: 55%;
+    height: 55%;
+  }
 
   @media (max-width: 768px) {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -227,23 +334,34 @@
    ===================================================== */
 .heroCards {
   width: 100%;
-  margin-top: clamp(-4rem, -8vh, -2rem);
-  padding-bottom: clamp(2.5rem, 5vh, 4rem);
+  margin-top: 0;
+  padding-bottom: 0;
+  /* bottom spacing now lives on heroInner */
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(0, 1.26fr) minmax(0, 1fr);
   gap: var(--cards-gap);
+  flex: 0 0 auto;
+  /* pinned to the bottom by heroInner space-between */
   animation: cardsEntry 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
 }
 
 @keyframes cardsEntry {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .glassCard {
   position: relative;
-  height: clamp(14rem, 11rem + 6vw, 17.1875rem); /* 17.1875rem = 275px at 16px base */
+  height: clamp(14rem, 11rem + 6vw, 17.1875rem);
+  /* 17.1875rem = 275px at 16px base */
   border-radius: 24px;
   background: var(--card-bg);
   box-shadow: var(--card-shadow);
@@ -266,7 +384,7 @@
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
-            mask-composite: exclude;
+    mask-composite: exclude;
     pointer-events: none;
     z-index: 1;
   }
@@ -346,20 +464,42 @@
   gap: 0.75rem;
   padding: 4px 4px 4px var(--cta-pad-x);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.14) 100%);
   color: #ffffff;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   font-size: var(--cta-size);
   font-weight: 500;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.02);
-  transition: background 0.25s ease, transform 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.25),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.26);
-    transform: translateY(-1px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.20) 100%);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:
+      inset 0 2px 3px rgba(255, 255, 255, 0.35),
+      inset 0 -1.5px 2px rgba(0, 0, 0, 0.1),
+      0 10px 24px rgba(0, 0, 0, 0.3);
 
-    .cardCtaArrow { transform: translateX(2px); }
+    .cardCtaArrow {
+      transform: translateX(2px);
+    }
+  }
+
+  &:active {
+    transform: translateY(2px) scale(0.97);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 4px 8px rgba(0, 0, 0, 0.4),
+      inset 0 1.5px 3px rgba(0, 0, 0, 0.25),
+      0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.08s ease;
   }
 }
 
@@ -403,11 +543,14 @@
   border-radius: 50%;
   background: #ffffff;
   box-shadow: inset 0 -4px 4px rgba(255, 255, 255, 0.25),
-              inset -2px 4px 4px rgba(255, 255, 255, 0.25);
+    inset -2px 4px 4px rgba(255, 255, 255, 0.25);
   transition: transform 0.2s ease;
   flex-shrink: 0;
 
-  svg { width: 38%; height: 38%; }
+  svg {
+    width: 38%;
+    height: 38%;
+  }
 }
 
 /* Capabilities grid (2 cols x 3 rows) */
@@ -441,19 +584,39 @@
   &:nth-child(2n) {
     border-right: none;
   }
+
   &:nth-last-child(-n+2) {
     border-bottom: none;
   }
 }
 
+/* Capability rows (label : value) — mobile only. Rendered inside the wide
+   card; hidden on desktop where the bordered grid card is used instead. */
+.capabilityRows {
+  display: none;
+}
+
 /* ─── Animations ─── */
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes slideUp {
-  from { transform: translateY(32px); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(32px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* =====================================================
@@ -466,118 +629,133 @@
     grid-template-columns: 1fr;
     gap: 0;
   }
-  .glassCard { height: auto; min-height: unset; }
+
+  .glassCard {
+    height: auto;
+    min-height: unset;
+  }
 
   /* Merge cards into one unit — round only outer corners */
-  .cardWide { border-radius: 24px 24px 0 0; }
-  .cardGrid  { border-radius: 0 0 24px 24px; }
+  .cardWide {
+    border-radius: 24px 24px 0 0;
+  }
+
+  .cardGrid {
+    border-radius: 0 0 24px 24px;
+  }
 }
 
 /* ─── Tablet + Mobile ─── */
 @media (max-width: 768px) {
-  /* heroInner owns the first-viewport height; heroContent grows to fill it */
-  .heroInner {
+
+  /* Mobile keeps a full-viewport hero (desktop is content/width-driven above). */
+  .hero {
     min-height: 100svh;
+    /* Mobile shows the mountain photo clearly (not the desktop haze) — a dark
+       vignette for white-text legibility, matching the mobile Figma. */
+    --overlay:
+      linear-gradient(180deg,
+        rgba(3, 11, 33, 0.62) 0%,
+        rgba(3, 11, 33, 0.18) 16%,
+        rgba(3, 11, 33, 0) 36%),
+      radial-gradient(125% 95% at 12% 22%,
+        rgba(4, 13, 40, 0.52) 0%,
+        rgba(4, 13, 40, 0.20) 38%,
+        rgba(4, 13, 40, 0) 62%);
   }
 
+  /* heroInner owns the first-viewport height */
+  .heroInner {
+    min-height: 100svh;
+    /* Nav + banner clearance (both fixed-height overlays) — also the top
+       edge of the "sky zone" the text block centres in below. */
+    --hero-top: 8rem;
+    padding-top: var(--hero-top);
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  /* The mobile bg is a 0.70-aspect portrait, taller than every phone, so
+     cover always shows its FULL height — the figures' heads sit at a fixed
+     56% of the viewport on every device (asset re-cut 2026-07-03 to put
+     them there; recipe in _image_backup_hero/make-mobile-crop-v2.js).
+     Centring the fixed-rem text block inside the free sky zone
+     [--hero-top … 56svh] guarantees text never touches the figures: tall
+     phones centre it in the open sky, short phones converge on the
+     top-anchored layout. */
   .heroContent {
-    /* Grow to fill heroInner's 100svh so centering has real space to work with */
-    flex: 1 1 auto;
-    min-height: unset;
+    flex: 0 0 auto;
+    height: calc(56svh - var(--hero-top));
     margin-left: 0;
-    margin-top: 0;
     justify-content: center;
-    /* Top padding = announcement bar (~2.5rem) + nav (~4rem) + breathing room */
-    padding-top: 8rem;
-    padding-bottom: 3rem;
-    gap: 1.1rem;
+    gap: 0.875rem;
   }
 
   .heroHeading {
-    font-size: clamp(2rem, 6vw, 3rem);
-    line-height: 1.15;
+    /* 30px — the largest size that keeps "Building AI Systems" on one line
+       down to ~350px-wide screens */
+    font-size: 1.875rem;
+    line-height: 1.18;
+    letter-spacing: -0.4px;
   }
 
   .heroSubtext {
-    max-width: 16rem;
-    font-size: clamp(0.9rem, 2.4vw, 1.1rem);
+    max-width: 17rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
+  .heroCtaWrapper {
+    /* 1.5rem total gap from the paragraph (0.875 content gap + this) */
+    margin-top: 0.625rem;
+  }
+
+  /* The glass cards are hidden on mobile — the AI×IoT card now lives at
+     the bottom of the full-screen mobile menu (navigation.module.scss),
+     so the hero photo is no longer crowded. */
   .heroCards {
-    margin-top: 0;
-    padding-bottom: 2rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .cardGrid {
     display: none;
   }
 
-  .heroContent {
-    padding-top: 7.5rem;
-    padding-bottom: 2.5rem;
-    gap: 1.25rem;
+  /* Main red CTA — compact and FIXED rem sizing (no vw clamps) so it
+     renders identically on every phone. Width trimmed via paddings/gap/
+     arrow only — text size and flex centring stay untouched. */
+  .heroCta {
+    font-size: 0.8125rem;
+    padding: 4px 5px 4px 14px;
+    gap: 7px;
   }
 
-  .heroCards {
-    margin-top: 0;
+}
+
+/* NOTE: the former ≤600px / ≤400px width-keyed hero passes are gone on
+   purpose — mobile hero type & spacing are fixed rem values (≤768px block
+   above) so the composition is identical on every phone. The single
+   exception below is height-keyed. */
+
+/* Sub-600px-tall phones (old iPhone SE class): the sky zone
+   [--hero-top … 56svh] shrinks below the ~217px text block, so step the
+   type down one notch to keep the text off the figures there too. */
+@media (max-width: 768px) and (max-height: 600px) {
+  .heroInner {
+    --hero-top: 7.5rem;
   }
 
   .heroHeading {
-    font-size: clamp(2rem, 8.5vw, 2.75rem);
-    line-height: 1.12;
-    letter-spacing: -0.4px;
-    margin-top: 0;
+    font-size: 1.625rem;
   }
 
   .heroSubtext {
-    font-size: clamp(0.875rem, 3.5vw, 1rem);
-    max-width: 15rem;
+    font-size: 0.875rem;
   }
 
-  /* Capabilities grid on mobile */
-  .capabilityGrid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: unset;
-    padding: 0;
-  }
-
-  .capabilityCell {
-    padding: 12px 14px;
-    font-size: 0.72rem;
-    white-space: nowrap;
-    border-right: 1px solid rgba(197, 181, 169, 0.27);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-
-    &:nth-child(2n) { border-right: none; }
-    &:nth-last-child(-n+2) { border-bottom: none; }
-  }
-
-  /* cardGrid hidden — cardWide is now the only card, restore all 4 corners */
-  .cardWide {
-    border-radius: 24px;
-    border-bottom: none;
-  }
-}
-
-/* Extra-small phones */
-@media (max-width: 400px) {
-  .heroContent {
-    padding-top: clamp(4.5rem, 14vh, 6rem);
-    margin-left: 0;
-  }
-
-  .heroHeading {
-    font-size: clamp(1.75rem, 8vw, 2.25rem);
-  }
-
-  .heroCta {
-    font-size: 0.8125rem;
+  .heroCtaWrapper {
+    margin-top: 0.375rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .heroHeading,
   .heroSubtext,
   .heroCta,
@@ -586,5 +764,8 @@
     transform: none !important;
     opacity: 1 !important;
   }
-  .heroCta { transition: none; }
+
+  .heroCta {
+    transition: none;
+  }
 }

@@ -7,7 +7,7 @@
     {
       "title": "Product and market deep dive",
       "points": [
-        "Pressure-test your idea",
+        "Finding your product market-fit",
         "Define real user personas",
         "Map technical scope",
         "Identify scaling risks"
@@ -23,7 +23,7 @@
         "Security & compliance built-in",
         "Scalable cloud infrastructure"
       ],
-      "outcome": "No rebuild at 1,000 users",
+      "outcome": "No rebuild till 10,000 users",
       "imageAlt": "Product architecture diagram"
     },
     {

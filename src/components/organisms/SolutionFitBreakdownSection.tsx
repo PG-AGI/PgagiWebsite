@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import styles from "@/styles/components/organisms/SolutionFitBreakdownSection.module.scss";
 import { motion, useReducedMotion } from "@/lib/motion-lite";
 import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
@@ -107,8 +108,12 @@ const SolutionFitBreakdownSection = () => {
             </div>
 
             <div className={styles.metricsCard}>
-              {analysisItems.map((item) => (
-                <div key={item} className={styles.metricRow}>
+              {analysisItems.map((item, index) => (
+                <div
+                  key={item}
+                  className={styles.metricRow}
+                  style={{ "--metric-index": index } as CSSProperties}
+                >
                   <span className={styles.metricIcon} aria-hidden>
                     &#10003;
                   </span>

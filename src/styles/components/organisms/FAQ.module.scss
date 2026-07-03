@@ -1,13 +1,13 @@
 .faqSection {
   background-color: #ffffff;
-  padding: 150px 0 0;
+  padding: 9.375rem 0 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
 }
 
 .container {
-  max-width: 1600px;
+  max-width: 100rem;
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
@@ -39,7 +39,7 @@
   color: #000000;
   line-height: 1.2;
   margin: 0;
-  max-width: 500px;
+  max-width: 31.25rem;
 }
 
 .imageSection {
@@ -49,8 +49,8 @@
 }
 
 .imageContainer {
-  width: 300px;
-  height: 300px;
+  width: 18.75rem;
+  height: 18.75rem;
   border-radius: 8px;
   overflow: hidden;
   background-color: #f5f5f5;
@@ -151,8 +151,8 @@
 }
 
 .toggleIcon {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -191,7 +191,7 @@
 
 .faqItem.open {
   .faqAnswer {
-    max-height: 300px;
+    max-height: 18.75rem;
     
     .answerContent {
       opacity: 1;
@@ -219,8 +219,8 @@
 }
 
 .mobileImageContainer {
-  width: 250px;
-  height: 250px;
+  width: 15.625rem;
+  height: 15.625rem;
   border-radius: 8px;
   overflow: hidden;
   background-color: #f5f5f5;
@@ -332,8 +332,8 @@
   }
   
   .toggleIcon {
-    width: 28px;
-    height: 28px;
+    width: 1.75rem;
+    height: 1.75rem;
     font-size: 1rem;
   }
   
@@ -379,8 +379,8 @@
   }
   
   .toggleIcon {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     font-size: 0.9rem;
   }
   
@@ -391,8 +391,8 @@
   }
   
   .mobileImageContainer {
-    width: 200px;
-    height: 200px;
+    width: 12.5rem;
+    height: 12.5rem;
   }
   
   .mobileContactText p {

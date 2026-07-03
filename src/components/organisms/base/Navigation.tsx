@@ -10,6 +10,15 @@ import ContactUsForm from "./contactUsForm";
 import { ArrowRight } from "lucide-react";
 import ROUTES from "@/constants/routes";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
+import landingText from "@/constants/uiText/landing.json";
+
+const MOBILE_MENU_LINKS = [
+  { href: ROUTES.HOME, label: "Home" },
+  { href: ROUTES.ABOUT_US, label: "About Us" },
+  { href: ROUTES.PROJECTS, label: "Case Studies" },
+  { href: ROUTES.EXPERTISE, label: "Expertise" },
+  { href: ROUTES.CAREER, label: "Careers" },
+];
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -80,20 +89,26 @@ export default function Navigation() {
   }, []);
 
   // ─── Mobile menu body scroll lock ───────────────────────────────
+  // position:fixed + negative top freezes the page at its current scroll
+  // offset (plain overflow:hidden is ignored by iOS Safari); the cleanup
+  // restores the exact scroll position when the menu closes.
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-    } else {
-      document.body.style.overflow = "auto";
-      document.body.style.position = "static";
-      document.body.style.width = "auto";
-    }
+    if (!isMenuOpen) return;
+    const scrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "auto";
-      document.body.style.position = "static";
-      document.body.style.width = "auto";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+      window.scrollTo(0, scrollY);
     };
   }, [isMenuOpen]);
 
@@ -164,21 +179,22 @@ export default function Navigation() {
 
           {isMenuOpen && (
             <div className={styles.mastermenu}>
-              <TransitionLink href={ROUTES.HOME} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                Home
-              </TransitionLink>
-              <TransitionLink href={ROUTES.ABOUT_US} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                About Us
-              </TransitionLink>
-              <TransitionLink href={ROUTES.PROJECTS} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                Case Studies
-              </TransitionLink>
-              <TransitionLink href={ROUTES.EXPERTISE} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                Expertise
-              </TransitionLink>
-              <TransitionLink href={ROUTES.CAREER} className={styles.mobileMenuItem} onClick={() => setIsMenuOpen(false)}>
-                Careers
-              </TransitionLink>
+              <div className={styles.mobileMenuLinks}>
+                {MOBILE_MENU_LINKS.map(({ href, label }) => (
+                  <TransitionLink
+                    key={href}
+                    href={href}
+                    className={clsx(
+                      styles.mobileMenuItem,
+                      isActive(href) && styles.mobileMenuItemActive
+                    )}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {label}
+                  </TransitionLink>
+                ))}
+              </div>
+
               <button
                 className={styles.mobileContact}
                 onClick={() => { setIsMenuOpen(false); window.open(CONTACT_URL, "_blank"); }}
@@ -186,6 +202,37 @@ export default function Navigation() {
                 Get in touch
                 <ArrowRight size={15} />
               </button>
+
+              {/* AI×IoT vertical card — moved out of the mobile hero (it was
+                  crowding the background photo) and pinned to the bottom of
+                  the full-screen menu. Compact, fixed rem sizing. */}
+              <article
+                className={styles.menuVerticalCard}
+                aria-label={landingText.verticalCard.ctaAriaLabel}
+              >
+                <h2 className={styles.menuCardTitle}>
+                  {landingText.verticalCard.titlePrefix}{" "}
+                  <span className={styles.menuCardTitleAccent}>
+                    {landingText.verticalCard.titleSuffix}
+                  </span>
+                </h2>
+                <p className={styles.menuCardDescription}>
+                  {landingText.verticalCard.description}
+                </p>
+                <ul className={styles.menuCardCapabilities} aria-label="Capabilities">
+                  {landingText.capabilities.map((label) => (
+                    <li key={label}>{label}</li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  className={styles.menuCardCta}
+                  aria-label={landingText.verticalCard.ctaAriaLabel}
+                >
+                  <span>{landingText.verticalCard.ctaLabel}</span>
+                  <ArrowRight size={14} />
+                </button>
+              </article>
             </div>
           )}
         </div>

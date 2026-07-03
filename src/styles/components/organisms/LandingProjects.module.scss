@@ -2,10 +2,10 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 150px 0 0;
+    padding: 9.375rem 0 0;
 
     >h3 {
-        font-size: 30px;
+        font-size: 1.875rem;
         font-weight: 500;
         color: #000;
         margin-bottom: 5rem;
@@ -29,7 +29,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 400px;
+            height: 25rem;
             overflow: hidden;
             padding: 2rem;
             width: 100%;
@@ -43,19 +43,19 @@
             z-index: 0;
 
             &:nth-child(1) {
-                height: 650px; // Top-left card - bigger height
+                height: 40.625rem; // Top-left card - bigger height
             }
 
             &:nth-child(2) {
-                height: 450px; // Top-right card - smaller height
+                height: 28.125rem; // Top-right card - smaller height
             }
 
             &:nth-child(3) {
-                height: 450px; // Bottom-left card - smaller height
+                height: 28.125rem; // Bottom-left card - smaller height
             }
 
             &:nth-child(4) {
-                height: 650px; // Bottom-right card - bigger height
+                height: 40.625rem; // Bottom-right card - bigger height
                 margin-top: -12.5rem;
             }
 
@@ -86,7 +86,7 @@
             }
 
             h3 {
-                font-size: 24px;
+                font-size: 1.5rem;
                 font-weight: 600;
                 color: #fff;
                 margin: 0 0 1rem 0;
@@ -95,7 +95,7 @@
 
             p {
                 color: #fff;
-                font-size: 16px;
+                font-size: 1rem;
                 font-weight: 400;
                 margin: 0;
                 text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -105,26 +105,26 @@
             .brief {
                 display: none;
                 color: #FFF;
-                font-size: 14px;
+                font-size: 0.875rem;
                 position: absolute;
-                bottom: 145px;
-                left: 3px;
+                bottom: 9.0625rem;
+                left: 0.1875rem;
                 font-weight: 500;
             }
 
             .expandButton {
                 display: none;
                 position: absolute;
-                bottom: 20px;
-                right: 20px;
+                bottom: 1.25rem;
+                right: 1.25rem;
                 background: #FFF;
                 border: none;
                 border-radius: 50%;
-                width: 40px;
-                height: 40px;
+                width: 2.5rem;
+                height: 2.5rem;
                 cursor: pointer;
                 color: #000;
-                font-size: 16px;
+                font-size: 1rem;
                 transition: all 0.3s ease;
 
                 &:hover {
@@ -154,7 +154,7 @@
     align-items: center;
     height: min-content;
     overflow: hidden;
-    padding: 90px 16px;
+    padding: 5.625rem 1rem;
     width: 100%;
     border-radius: 0.5rem;
     background: cover;
@@ -182,17 +182,17 @@
     }
 
     h3 {
-        font-size: 18px;
+        font-size: 1.125rem;
         font-weight: 700;
         color: #FFF;
-        margin: 25px 10px 10px 28px;
+        margin: 1.5625rem 0.625rem 0.625rem 1.75rem;
     }
 
     p {
         color: #FFF;
-        font-size: 15px;
+        font-size: 0.9375rem;
         font-weight: 600;
-        margin: 10px 26px 26px 26px;
+        margin: 0.625rem 1.625rem 1.625rem 1.625rem;
     }
 
     // .badge {
@@ -272,11 +272,11 @@
     .expandButton {
         display: none;
         position: absolute;
-        right: 20px;
-        bottom: 20px;
+        right: 1.25rem;
+        bottom: 1.25rem;
         background-color: #8987f800;
         border: none;
-        padding: 8px 16px;
+        padding: 0.5rem 1rem;
         border-radius: 15px;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
@@ -293,7 +293,7 @@
         padding: 1.5rem 0;
 
         >h3 {
-            font-size: 26px;
+            font-size: 1.625rem;
             margin-bottom: 3rem;
             margin-right: 2rem;
         }
@@ -306,23 +306,23 @@
             margin: 0 auto;
 
             .trendingItem {
-                height: 350px;
+                height: 21.875rem;
                 padding: 1.5rem;
 
                 &:nth-child(1) {
-                    height: 500px;
+                    height: 31.25rem;
                 }
 
                 &:nth-child(2) {
-                    height: 400px;
+                    height: 25rem;
                 }
 
                 &:nth-child(3) {
-                    height: 400px;
+                    height: 25rem;
                 }
 
                 &:nth-child(4) {
-                    height: 500px;
+                    height: 31.25rem;
                     margin-top: -8rem;
                 }
             }
@@ -338,7 +338,7 @@
 
         // margin-top: 75%;
         >h3 {
-            font-size: 23px;
+            font-size: 1.4375rem;
             font-weight: 500;
             color: #000;
             // margin-top: -50%;
@@ -366,7 +366,7 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                height: 300px;
+                height: 18.75rem;
                 overflow: hidden;
                 padding: 1.5rem;
                 width: 100%;
@@ -382,7 +382,7 @@
 
                 // Remove the negative margin that was causing overlap
                 &:nth-child(4) {
-                    height: 300px;
+                    height: 18.75rem;
                     margin-top: 0;
                 }
 
@@ -424,37 +424,37 @@
                 }
 
                 h3 {
-                    font-size: 18px;
+                    font-size: 1.125rem;
                     color: #FFF;
-                    margin: 25px 10px 10px 28px;
+                    margin: 1.5625rem 0.625rem 0.625rem 1.75rem;
                 }
 
                 p {
                     color: #FFF;
-                    font-size: 15px;
+                    font-size: 0.9375rem;
                     font-weight: 600;
-                    margin: 26px;
+                    margin: 1.625rem;
                 }
 
                 .brief {
                     display: none;
                     color: #FFF;
-                    font-size: 14px;
+                    font-size: 0.875rem;
                     position: absolute;
-                    bottom: 145px;
-                    left: 3px;
+                    bottom: 9.0625rem;
+                    left: 0.1875rem;
                     font-weight: 500;
                 }
 
                 .expandButton {
                     display: none;
                     position: absolute;
-                    right: 10px;
-                    bottom: 10px;
+                    right: 0.625rem;
+                    bottom: 0.625rem;
                     background-color: #FFF;
                     color: #000;
                     border: none;
-                    padding: 8px 16px;
+                    padding: 0.5rem 1rem;
                     border-radius: 4px;
                     cursor: pointer;
 
@@ -473,7 +473,7 @@
 
         // margin-top: 60%;
         >h3 {
-            font-size: 20px;
+            font-size: 1.25rem;
             // margin-top: -40%;
             margin-bottom: 3%;
         }
@@ -484,19 +484,19 @@
             padding: 0.8rem 0;
 
             .trendingItem {
-                height: 250px;
+                height: 15.625rem;
                 padding: 1rem;
                 border-radius: 8px;
 
                 .content {
                     h3 {
-                        font-size: 16px;
-                        margin: 20px 8px 8px 20px;
+                        font-size: 1rem;
+                        margin: 1.25rem 0.5rem 0.5rem 1.25rem;
                     }
 
                     p {
-                        font-size: 14px;
-                        margin: 20px;
+                        font-size: 0.875rem;
+                        margin: 1.25rem;
                     }
                 }
             }
@@ -523,16 +523,16 @@
     /* your red */
     border-radius: 50px;
     /* pill shape */
-    padding: 15px 20px;
+    padding: 0.9375rem 1.25rem;
     /* small */
-    font-size: 20px;
+    font-size: 1.25rem;
     /* small text */
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 0.375rem;
     /* space before arrow */
     transition: all 0.25s ease-in-out;
     outline: none;
@@ -564,7 +564,7 @@
 /* Optional: slightly larger on mobile for touch comfort */
 @media (max-width: 768px) {
     .projectsButton {
-        padding: 8px 18px;
+        padding: 0.5rem 1.125rem;
         font-size: 1rem;
     }
 }

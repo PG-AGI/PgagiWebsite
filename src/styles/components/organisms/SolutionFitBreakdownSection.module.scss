@@ -1,23 +1,28 @@
 .section {
   background: #ffffff;
-  padding: 150px 0;
+  // Clay-style page rhythm — identical on every landing section (replaces the
+  // old 260px one-off gap above, which broke the page's consistent spacing).
+  padding: clamp(4rem, 10vh, 7rem) 0;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 800px;
 
   @media (max-width: 860px) {
-    padding: 80px 0.9rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0.9rem;
   }
 }
 
 .container {
+  // Same 1400px-capped content rail as the Hero / Trusted Partners sections,
+  // so this section lines up edge-to-edge and renders identical proportions
+  // on every laptop / desktop width.
   width: 100%;
-  max-width: 82vw;
-  margin: 0 auto;
+  padding: 0 max(0px, calc((100% - 77.5rem) / 2)); // Clay rail (rem: fluid root)
+  box-sizing: border-box;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
-    max-width: 100%;
     padding: 0 1.25rem;
   }
 }
@@ -26,7 +31,8 @@
   margin: 0;
   text-align: center;
   color: #1a1a1a;
-  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5.5vh);
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -37,7 +43,7 @@
 }
 
 .layout {
-  margin-top: clamp(3rem, 3.6vw, 3rem);
+  margin-top: min(3rem, 4.5vh);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(1.4rem, 3vw, 2.9rem);
@@ -49,7 +55,7 @@
 
   h3 {
     margin: 0;
-    font-size: clamp(1.75rem, 3vw, 2.65rem);
+    font-size: min(clamp(1.75rem, 3vw, 2.65rem), 4.7vh); // vh: short laptops
     line-height: 1.08;
     font-weight: 700;
     margin-top: 10%;
@@ -83,6 +89,13 @@
   padding: clamp(1.2rem, 2.5vw, 2rem);
   background: #9f0000;
   box-shadow: 0 1.125rem 2.375rem rgba(57, 16, 11, 0.2);
+
+  @media (min-width: 861px) {
+    // Laptop fit-to-height: the width stays on the shared rail; the aspect-
+    // locked height gives way so the red panel fits the fold below the title.
+    // The rows inside are space-between HTML, so they compress with it.
+    max-height: calc(100dvh - 16rem);
+  }
 }
 
 .mainCard {
@@ -102,6 +115,16 @@
 
   &:last-child {
     border-bottom: none;
+  }
+
+  // The metrics card overlaps the bottom-right corner of the main card. Only
+  // the detail text on the last two rows runs under it — the titles sit higher,
+  // clear of the card — so reserve room on just those paragraphs. They reflow
+  // to the left and stay fully visible while the titles keep the full width
+  // (so "Teams generating 1k+ leads/month" stays on one line). The card and
+  // panel scale together, so this percentage holds across all desktop widths.
+  &:nth-last-child(-n + 2) p {
+    padding-right: 46%;
   }
 
   h4 {
@@ -125,15 +148,22 @@
   position: absolute;
   right: clamp(-1rem, -1.8vw, -1.5rem);
   bottom: clamp(1.5rem, 4vw, 3rem);
-  width: clamp(12rem, 18vw, 16.5rem);
+  // Hug the content: the card sizes to its widest pill instead of a fixed
+  // width, so there's no dead space on the right. The pills (stretch by
+  // default) all settle to that same width for a clean, uniform look.
+  width: fit-content;
+  max-width: clamp(12rem, 18vw, 16.5rem);
   background: #e7ddd1;
   border: 0.0625rem solid rgba(214, 203, 188, 0.88);
   border-radius: 1rem;
-  padding: clamp(0.5rem, 1.1vw, 0.8rem);
-  box-shadow: 0 0.75rem 1.375rem rgba(46, 28, 12, 0.2);
+  padding: clamp(0.55rem, 1.1vw, 0.85rem);
+  // Soft, layered drop shadow so the card lifts off the red panel.
+  box-shadow:
+    0 1.5rem 2.75rem rgba(46, 28, 12, 0.24),
+    0 0.5rem 1rem rgba(46, 28, 12, 0.14);
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.5rem;
   z-index: 2;
 }
 
@@ -150,14 +180,48 @@
   line-height: 1.2;
   letter-spacing: -0.01em;
   padding: 0.5rem 0.6rem;
+
+  // Reveal the rows one after another in an endless loop. Each row is offset
+  // by its index (--metric-index, set inline) so they cascade in sequence,
+  // hold, then the whole cycle repeats.
+  opacity: 0;
+  transform: translateY(0.5rem);
+  animation: metricReveal 4.2s ease-in-out infinite;
+  animation-delay: calc(var(--metric-index, 0) * 0.45s);
+  will-change: opacity, transform;
+}
+
+@keyframes metricReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  12%,
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metricRow {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 
 .metricIcon {
   width: 0.9rem;
   height: 0.9rem;
   border-radius: 999px;
-  background: #4f5054;
-  color: #f7f3ee;
+  background: #16a34a;
+  color: #ffffff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -165,6 +229,20 @@
   font-weight: 900;
   box-shadow: inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.26);
   flex-shrink: 0;
+}
+
+// The content-hugging metrics card is narrower than the old fixed width and
+// sits further right, so the detail text needs less reserved space on desktop.
+@media (min-width: 861px) {
+  .row:nth-last-child(-n + 2) p {
+    padding-right: 34%;
+  }
+
+  // Pairs with the visualPanel max-height: row padding compresses via vh on
+  // short laptops so the four rows fit the flattened card.
+  .row {
+    padding: min(clamp(0.7rem, 1.5vw, 1.2rem), 1.6vh) 0;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -257,11 +335,17 @@
 
 @media (max-width: 480px) {
   .section {
-    padding: 2rem 1.1rem;
+    // Page-wide rhythm token on both edges — adjacent sections use the same
+    // token, so every boundary gap on the page reads identically.
+    padding: var(--section-space, 3rem) 0;
   }
 
   .container {
-    max-width: 100%;
+    // Same centered 92vw rail as the dark ecosystem box above and the CTA
+    // surface below, so all three line up edge-to-edge on phones.
+    width: min(1400px, 92vw);
+    max-width: none;
+    margin-inline: auto;
     padding: 0;
   }
 

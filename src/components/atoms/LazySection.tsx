@@ -7,6 +7,12 @@ interface LazySectionProps {
   minHeight?: string;
   /** IntersectionObserver rootMargin — how far before the viewport to start loading. */
   rootMargin?: string;
+  /**
+   * Optional id on the placeholder wrapper. Because the wrapper is always in the
+   * DOM (only its children are lazy), this gives callers a stable scroll anchor
+   * for a section that hasn't mounted its content yet.
+   */
+  id?: string;
 }
 
 // Module-level debounce: all 13 LazySection instances share one refresh call.
@@ -18,9 +24,15 @@ function scheduleScrollTriggerRefresh() {
   if (refreshTimer) clearTimeout(refreshTimer);
   refreshTimer = setTimeout(() => {
     refreshTimer = null;
-    void import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-      ScrollTrigger.refresh(true);
-    });
+    // Use the shared loader so ScrollTrigger is registered with gsap before we
+    // call refresh(). Calling refresh() on an unregistered ScrollTrigger throws
+    // ("Cannot read properties of undefined") because its internal gsap
+    // reference hasn't been wired up yet.
+    void import('@/lib/gsapLoader').then(({ loadScrollTrigger }) =>
+      loadScrollTrigger().then(({ ScrollTrigger }) => {
+        ScrollTrigger.refresh(true);
+      })
+    );
   }, 150);
 }
 
@@ -33,6 +45,7 @@ export default function LazySection({
   children,
   minHeight = '400px',
   rootMargin = '500px',
+  id,
 }: LazySectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(false);
@@ -65,13 +78,19 @@ export default function LazySection({
   return (
     <div
       ref={ref}
+      id={id}
       style={
         !shouldRender
           ? { minHeight }
           : {
-              // Skip paint/layout for off-screen sections entirely
+              // Skip paint/layout for off-screen sections entirely.
               contentVisibility: 'auto' as React.CSSProperties['contentVisibility'],
-              containIntrinsicSize: `0 ${minHeight}`,
+              // `auto` = use minHeight as the first guess, then remember the real
+              // rendered height and reuse it when the section scrolls back off
+              // screen. Without it, a tall (multi-hundred-vh) stacked section
+              // collapses to `minHeight` when skipped and jolts the page height
+              // as you scroll past / back — a visible scroll stutter.
+              containIntrinsicSize: `0 auto ${minHeight}`,
             }
       }
     >

@@ -32,30 +32,38 @@ const orbitItems: OrbitConfig[] = [
     sizeClass: "outerRing",
     duration: 30,
     direction: -1,
+    // 12 nodes, 30° apart — tighter icon spacing
     nodes: [
       { platform: "Meta", angle: 0 },
-      { platform: "X", angle: 45 },
-      { platform: "Reddit", angle: 90 },
-      { platform: "LinkedIn", angle: 135 },
-      { platform: "Meta", angle: 180 },
-      { platform: "X", angle: 225 },
-      { platform: "Reddit", angle: 270 },
-      { platform: "LinkedIn", angle: 315 },
+      { platform: "X", angle: 30 },
+      { platform: "Reddit", angle: 60 },
+      { platform: "LinkedIn", angle: 90 },
+      { platform: "Meta", angle: 120 },
+      { platform: "X", angle: 150 },
+      { platform: "Reddit", angle: 180 },
+      { platform: "LinkedIn", angle: 210 },
+      { platform: "Meta", angle: 240 },
+      { platform: "X", angle: 270 },
+      { platform: "Reddit", angle: 300 },
+      { platform: "LinkedIn", angle: 330 },
     ],
   },
   {
     sizeClass: "innerRing",
     duration: 20,
     direction: 1,
+    // 10 nodes, 36° apart (offset 18°) — ~same arc spacing as the outer ring
     nodes: [
-      { platform: "Reddit", angle: 22.5 },
-      { platform: "LinkedIn", angle: 67.5 },
-      { platform: "X", angle: 112.5 },
-      { platform: "Meta", angle: 157.5 },
-      { platform: "Reddit", angle: 202.5 },
-      { platform: "LinkedIn", angle: 247.5 },
-      { platform: "X", angle: 292.5 },
-      { platform: "Meta", angle: 337.5 },
+      { platform: "Reddit", angle: 18 },
+      { platform: "LinkedIn", angle: 54 },
+      { platform: "X", angle: 90 },
+      { platform: "Meta", angle: 126 },
+      { platform: "Reddit", angle: 162 },
+      { platform: "LinkedIn", angle: 198 },
+      { platform: "X", angle: 234 },
+      { platform: "Meta", angle: 270 },
+      { platform: "Reddit", angle: 306 },
+      { platform: "LinkedIn", angle: 342 },
     ],
   },
 ];
@@ -179,16 +187,21 @@ const SocialOrbitSection = () => {
                         className={styles.orbitNode}
                         style={{
                           animationDuration: `${ring.duration}s`,
-                          animationDirection: ring.direction === 1 ? "reverse" : "normal",
+                          // Must MATCH the ring's direction so the counter-spin
+                          // cancels (not compounds) the ring rotation → upright icons
+                          animationDirection: ring.direction === 1 ? "normal" : "reverse",
                         } as CSSProperties}
                       >
-                        <Image
-                          src={iconByPlatform[node.platform]}
-                          alt={`${node.platform} logo`}
-                          width={48}
-                          height={48}
-                          className={styles.nodeImage}
-                        />
+                        {/* Cancels the anchor's angular tilt so the logo stays upright */}
+                        <div className={styles.nodeUpright}>
+                          <Image
+                            src={iconByPlatform[node.platform]}
+                            alt={`${node.platform} logo`}
+                            width={48}
+                            height={48}
+                            className={styles.nodeImage}
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}

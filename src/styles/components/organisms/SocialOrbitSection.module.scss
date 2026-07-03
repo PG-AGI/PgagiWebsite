@@ -13,51 +13,64 @@
 
 .section {
   background: #ffffff;
-  padding: 150px 0 150px;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   // Reduces paint cost for off-screen content
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;
 
   @media (max-width: 1024px) {
-    padding-top: 28px;
+    padding-top: 1.75rem;
   }
 
   @media (max-width: 768px) {
-    padding: 32px 0 48px;
+    padding: 2rem 0 3rem;
   }
 }
 
 .container {
-  width: 100%;
-  max-width: 82vw;
+  // Clay-style page rail: caps at 1240px, fluid below. 100% (not vw!) —
+  // the page's .sectionsWrapper already pads the sides by clamp(2.5rem, 7vw,
+  // 9rem), so a 92vw box physically couldn't fit and was clipped on the
+  // right by .main's overflow-x: clip. Wrapper-relative width can't overflow.
+  width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
   margin: 0 auto;
-  padding: 0 1vw;
   position: relative;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
   @media (max-width: 768px) {
-    padding: 0 1rem;
-    max-width: 100%;
+    width: 100%;
+    // No extra side padding here — the global .sectionsWrapper already
+    // provides symmetric gutters. Adding padding here (plus the old 90vw
+    // panel) double-inset the panel and pushed it off-centre.
+    padding: 0;
   }
 }
 
 .sectionTitle {
-  margin: 0 0 clamp(2.5rem, 6vw, 4rem);
+  // Gap title → panel ≈ 52px at the 1400px reference. The vh terms only bind
+  // on short laptop viewports (< ~900px tall).
+  margin: 0 0 min(clamp(2rem, 3.6vw, 3.25rem), 5vh);
   text-align: center;
   color: #2c2c2c;
   font-family: var(--font-plus-jakarta), sans-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem); // 3.5rem = 56px
+  // Clay-style heading scale: caps at 40px, fluid below
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 6.2vh);
   font-weight: 700;
-  line-height: 1.34; // 75px / 56px
+  line-height: 1.18;
   letter-spacing: -0.0125em; // -0.7px / 56px
 }
 
 .panel {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(390px, 1.02fr) minmax(390px, 0.98fr);
-  min-height: clamp(430px, 37vw, 510px);
-  border-radius: 22px;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  // ≈570px at the 1240px rail — tall enough to frame the open accordion +
+  // orbit without dominating the screen. The outer min() is the laptop
+  // fit-to-height cap: on short viewports the panel floor drops so title +
+  // panel share one fold (content can still grow it — min-height, never a clip).
+  min-height: min(clamp(28.75rem, 40vw, 35.625rem), calc(100dvh - 13rem));
+  border-radius: clamp(16px, 1.55vw, 22px);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
@@ -71,18 +84,22 @@
 }
 
 .accordionColumn {
-  padding: clamp(1.35rem, 2.6vw, 2.2rem) clamp(1.2rem, 2.3vw, 2.1rem);
+  // ≈40px vertical / ≈36px horizontal at the 1400px reference
+  padding: clamp(1.75rem, 2.85vw, 2.5rem) clamp(1.5rem, 2.55vw, 2.25rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.72rem;
+  // ≈15px between items at the reference (vh binds on short laptops only)
+  gap: min(clamp(0.7rem, 1.05vw, 0.95rem), 1.6vh);
 }
 
 .accordionItem {
-  border-radius: 10px;
+  border-radius: clamp(10px, 1vw, 14px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: #34363c;
-  padding: 0.78rem 0.9rem;
+  // ≈26px vertical / ≈22px horizontal at the reference — matches the airy
+  // design (vertical pad compresses via vh on short laptops)
+  padding: min(clamp(1.1rem, 1.85vw, 1.65rem), 2.4vh) clamp(1rem, 1.6vw, 1.4rem);
   /* Needed so the absolutely-positioned body on mobile has a reference */
   position: relative;
 }
@@ -103,8 +120,9 @@
   gap: 0.7rem;
   cursor: pointer;
   padding: 0;
-  font-size: clamp(0.98rem, 1.08vw, 1.14rem);
-  line-height: 1.26;
+  // ≈20px at the reference (vh binds on short laptops only)
+  font-size: min(clamp(1.02rem, 1.42vw, 1.25rem), 2.2vh);
+  line-height: 1.3;
   font-weight: 600;
 
   span {
@@ -119,15 +137,18 @@
 }
 
 .accordionBody {
-  margin-top: 0.62rem;
-  border-radius: 8px;
+  // ≈18px gap below the title at the reference (vh: short laptops only)
+  margin-top: min(clamp(0.8rem, 1.4vw, 1.15rem), 1.6vh);
+  border-radius: clamp(8px, 0.85vw, 12px);
   border: 1px solid rgba(255, 255, 255, 0.34);
-  background: #efefef;
-  color: #33363d;
-  padding: 0.98rem 0.92rem;
-  font-size: clamp(0.9rem, 0.95vw, 1rem);
+  background: #ffffff;
+  color: #2c2c2c;
+  // ≈26px vertical / ≈30px horizontal at the reference
+  padding: min(clamp(1.15rem, 1.9vw, 1.65rem), 2.2vh) clamp(1.25rem, 2.1vw, 1.85rem);
+  // ≈17px at the reference
+  font-size: min(clamp(0.95rem, 1.2vw, 1.0625rem), 1.9vh);
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.55;
   animation: accordionIn 0.2s ease-out both;
 }
 
@@ -144,10 +165,21 @@
 
 .orbitScene {
   position: absolute;
-  right: clamp(-360px, -26vw, -280px);
-  top: 56%;
+  // ── Orbit scale lock ──────────────────────────────────
+  // 1em == (container width / 1400 design ref). The container is
+  // min(1240px, 100%), and the page wrapper leaves ≈86vw of room, so:
+  // fluid term 86vw / 1400 = 0.0614vw, capped at 1240/1400 = 0.886px.
+  // Every orbit dimension below is expressed in `em`, so the whole
+  // orbit scales as ONE rigid unit with the panel — no drift, exact
+  // proportions preserved at every desktop width.
+  // Third term = laptop fit-to-height: it mirrors the panel's min-height cap
+  // ((100dvh − 13rem) / 640px design height), so when the panel shrinks on a
+  // short viewport the orbit artwork scales down in lockstep with it.
+  font-size: min(calc(77.5rem / 1400), 0.0614vw, calc((100dvh - 13rem) / 640));
+  right: -360em;
+  top: 50%;
   transform: translateY(-50%);
-  width: clamp(630px, 56vw, 770px);
+  width: 880em;
   aspect-ratio: 1;
   pointer-events: none;
 }
@@ -157,7 +189,8 @@
   left: 50%;
   top: 50%;
   border-radius: 50%;
-  border: 1.4px dashed rgba(222, 226, 232, 0.5);
+  // Finer dashed ring matching the design's guide lines
+  border: 1px dashed rgba(226, 230, 236, 0.32);
   // CSS animation runs on compositor — not JS main thread
   animation: orbit-spin linear infinite;
   // Duration/direction set via inline style from component
@@ -169,15 +202,16 @@
 }
 
 .outerRing {
-  --ring-radius: 272px;
-  width: 544px;
-  height: 544px;
+  --ring-radius: 400em;
+  width: 800em;
+  height: 800em;
 }
 
 .innerRing {
-  --ring-radius: 174px;
-  width: 348px;
-  height: 348px;
+  // inner : outer radius ≈ 0.62 (measured from Figma) — big radial gap
+  --ring-radius: 250em;
+  width: 500em;
+  height: 500em;
 }
 
 .nodeAnchor {
@@ -194,8 +228,9 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 58px;
-  height: 58px;
+  // em → scales with the orbit scale lock (≈58px at the 1400px reference)
+  width: 58em;
+  height: 58em;
   display: grid;
   place-items: center;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.24));
@@ -208,6 +243,16 @@
   }
 }
 
+.nodeUpright {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  // Inherits --node-angle from .nodeAnchor; cancels the positional tilt
+  // so every logo renders upright (matches the design) while the ring spins.
+  transform: rotate(calc(-1 * var(--node-angle)));
+}
+
 .nodeImage {
   width: 100%;
   height: 100%;
@@ -215,29 +260,9 @@
   display: block;
 }
 
-@media (max-width: 1180px) {
-  .panel {
-    grid-template-columns: minmax(340px, 1.02fr) minmax(340px, 0.98fr);
-    min-height: 484px;
-  }
-
-  .orbitScene {
-    right: clamp(-320px, -31vw, -250px);
-    width: min(700px, 100%);
-  }
-
-  .outerRing {
-    --ring-radius: 246px;
-    width: 492px;
-    height: 492px;
-  }
-
-  .innerRing {
-    --ring-radius: 158px;
-    width: 316px;
-    height: 316px;
-  }
-}
+// Note: the former @media (max-width: 1180px) block was removed.
+// The fluid 1400px-reference base now scales the panel AND the orbit
+// continuously from 1400px down to the tablet break (≤1024px) below.
 
 @media (max-width: 1024px) {
   .section {
@@ -256,7 +281,7 @@
   }
 
   .visualBlock {
-    min-height: 220px;
+    min-height: 13.75rem;
     overflow: hidden;
     position: relative;
   }
@@ -273,38 +298,42 @@
 
   .outerRing {
     --ring-radius: 188px;
-    width: 376px;
-    height: 376px;
+    width: 23.5rem;
+    height: 23.5rem;
   }
 
   .innerRing {
     --ring-radius: 122px;
-    width: 244px;
-    height: 244px;
+    width: 15.25rem;
+    height: 15.25rem;
   }
 
   .orbitNode {
-    width: 42px;
-    height: 42px;
+    width: 2.625rem;
+    height: 2.625rem;
   }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 0 0 0.75rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
   }
 
   .sectionTitle {
     margin-bottom: 0.95rem;
-    font-size: clamp(2.02rem, 10.2vw, 2.6rem);
+    font-size: clamp(1.9rem, 9vw, 2.4rem);
     line-height: 0.98;
     letter-spacing: -0.028em;
   }
 
   .panel {
     border-radius: 16px;
-    width: 90vw;
-    margin: 0 auto;
+    // Fill the container exactly so left/right gutters are always equal.
+    // (was width: 90vw + margin auto — vw is viewport-relative and fought
+    // with the wrapper padding, throwing the panel off-centre.)
+    width: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
     height: auto;
@@ -317,7 +346,9 @@
 
   .accordionItem {
     border-radius: 9px;
-    padding: 0.56rem 0.64rem;
+    // ≈14px side padding so the expanded white card is framed with a
+    // clear gutter (its border was cramped against the box edge before)
+    padding: 0.58rem 0.9rem;
   }
 
   .accordionButton {
@@ -326,15 +357,15 @@
   }
 
   .accordionButton svg {
-    width: 14px;
-    height: 14px;
+    width: 0.875rem;
+    height: 0.875rem;
   }
 
   /* Same in-flow panel as desktop — absolute overlay caused empty / clipped content */
   .accordionBody {
     position: static;
     margin-top: 0.62rem;
-    padding: 0.88rem 0.82rem;
+    padding: 0.9rem 0.95rem;
     font-size: clamp(0.88rem, 3.2vw, 1rem);
     line-height: 1.45;
     box-shadow: none;
@@ -342,8 +373,8 @@
 
   .visualBlock {
     /* Fixed height so animation area is always the same */
-    height: 180px;
-    min-height: 180px;
+    height: 11.25rem;
+    min-height: 11.25rem;
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
@@ -363,36 +394,36 @@
 
   .outerRing {
     --ring-radius: 142px;
-    width: 284px;
-    height: 284px;
+    width: 17.75rem;
+    height: 17.75rem;
   }
 
   .innerRing {
     --ring-radius: 92px;
-    width: 184px;
-    height: 184px;
+    width: 11.5rem;
+    height: 11.5rem;
   }
 
   .orbitNode {
-    width: 26px;
-    height: 26px;
+    width: 1.625rem;
+    height: 1.625rem;
   }
 }
 
 @media (max-width: 480px) {
   .section {
-    padding: 1.75rem 0 0.54rem;
+    padding: var(--section-space, 3rem) 0;
   }
 
   .sectionTitle {
-    font-size: clamp(1.88rem, 9.6vw, 2.32rem);
+    font-size: clamp(1.6rem, 8vw, 2rem);
     line-height: 0.98;
   }
 
   .panel {
     border-radius: 15px;
-    width: 90vw;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
   }
 
   .accordionColumn {
@@ -401,7 +432,8 @@
   }
 
   .accordionItem {
-    padding: 0.54rem 0.62rem;
+    // Match the ≤768 gutter so the expanded card border is framed, not cut
+    padding: 0.56rem 0.88rem;
   }
 
   .accordionButton {
@@ -409,22 +441,22 @@
   }
 
   .accordionButton svg {
-    width: 13px;
-    height: 13px;
+    width: 0.8125rem;
+    height: 0.8125rem;
   }
 
   .accordionBody {
     position: static;
     margin-top: 0.62rem;
-    padding: 0.82rem 0.76rem;
+    padding: 0.85rem 0.9rem;
     font-size: clamp(0.84rem, 3.4vw, 0.98rem);
     line-height: 1.45;
     box-shadow: none;
   }
 
   .visualBlock {
-    height: 168px;
-    min-height: 168px;
+    height: 10.5rem;
+    min-height: 10.5rem;
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
@@ -443,18 +475,18 @@
 
   .outerRing {
     --ring-radius: 132px;
-    width: 264px;
-    height: 264px;
+    width: 16.5rem;
+    height: 16.5rem;
   }
 
   .innerRing {
     --ring-radius: 86px;
-    width: 172px;
-    height: 172px;
+    width: 10.75rem;
+    height: 10.75rem;
   }
 
   .orbitNode {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }

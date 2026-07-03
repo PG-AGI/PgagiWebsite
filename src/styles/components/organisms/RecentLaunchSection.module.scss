@@ -2,36 +2,57 @@
    RECENT LAUNCH SECTION
    Heading + filter tabs + CSS-sticky stacking project cards
    ========================================================== */
+@use "../../tactileButtons" as *;
 
 .section {
   background: #ffffff;
   position: relative;
   content-visibility: auto;
   contain-intrinsic-size: 0 2000px;
+  /* Height reserved for the sticky heading + tabs. Cards pin just below it so
+     the "Recent Launch" heading stays visible (and the tabs stay usable) while
+     the deck stacks — instead of the heading scrolling away and the cards
+     jamming under the navbar. Kept comfortably ≥ the heading block's real
+     height across breakpoints. */
+  --rl-header-h: clamp(12.25rem, 25vh, 15.75rem); /* rem: fluid-root scaled */
 }
 
-/* ── Top block: heading + filter tabs ── */
+/* ── Top block: heading + filter tabs — sticky so it stays on screen ── */
 .topBlock {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1.6rem, 3vw, 2.4rem);
-  padding: clamp(80px, 10vw, 120px) 0 clamp(3rem, 5vw, 5rem);
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  padding: clamp(5.25rem, 9vh, 6.25rem) 0 clamp(1.2rem, 2.5vh, 1.8rem);
   background: #ffffff;
-  /* stays above sticky cards */
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  /* above the sticky cards, which scroll underneath it */
+  z-index: 20;
+
+  @media (max-width: 768px) {
+    /* On mobile the cards don't pin (see .stickyCard), so neither does the
+       heading — keep it in normal flow. Top edge uses the page-wide mobile
+       rhythm token (set on .main in page.module.scss). */
+    position: relative;
+    padding: var(--section-space, 3rem) 0 1.25rem;
+  }
 }
 
 .heading {
   margin: 0;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  // Clay heading cap (40px) — uniform with every landing-section title.
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   color: #111111;
   line-height: 1.08;
   text-align: center;
 }
+
+/* ── Tactile button behavior: shared mixins ───────────────────────────
+   tactile-red / tactile-outline come from src/styles/_tactileButtons.scss
+   (the hero "Let's build together" CTA physics — see that file). */
 
 /* ── Filter tabs row ── */
 .tabs {
@@ -52,9 +73,9 @@
   font-weight: 500;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
   cursor: pointer;
-  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
   white-space: nowrap;
   line-height: 1.3;
+  @include tactile-outline;
 
   &:hover {
     border-color: #aaaaaa;
@@ -64,35 +85,43 @@
 
 .tabActive {
   composes: tab;
-  background: #9f0000;
-  border-color: #9f0000;
   color: #ffffff;
+  @include tactile-red;
+  /* translucent white rim, like the hero CTA's border — reads as a lit
+     top edge on the gradient (same 1.5px width, so no size change) */
+  border-color: rgba(255, 255, 255, 0.14);
 
   &:hover {
-    background: #b30000;
-    border-color: #b30000;
+    border-color: rgba(255, 255, 255, 0.2);
     color: #ffffff;
+  }
+
+  &:active {
+    border-color: rgba(255, 255, 255, 0.08);
   }
 }
 
 /* ── Cards stack wrapper ── */
 .cardsStack {
   position: relative;
-  max-width: 82vw;
+  max-width: min(77.5rem, 100%); // Clay rail; rem scales with the fluid root
   margin: 0 auto;
   padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
 
   @media (max-width: 768px) {
+    // No extra side gutter: the page wrapper's padding already frames this,
+    // so the cards line up exactly with the VisionSystemSection cards.
     max-width: 100%;
-    padding: 0 1.1rem 1.5rem;
+    padding: 0 0 1.5rem;
   }
 }
 
 /* ── Individual sticky card wrapper ── */
 .stickyCard {
   position: sticky;
-  /* top is set inline per card index */
-  border-radius: 20px;
+  /* Pin below the sticky heading; each successive card peeks 10px lower. */
+  top: calc(var(--rl-header-h) + var(--card-index, 0) * 0.625rem);
+  border-radius: 1.25rem; /* rem: fluid-root scaled */
   overflow: hidden;
   /* Each successive card sits above the previous */
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
@@ -111,7 +140,7 @@
   // border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: clamp(380px, 48vh, 520px);
+  min-height: clamp(23.75rem, 48vh, 32.5rem); /* rem: fluid-root scaled */
   overflow: hidden;
   position: relative;
 
@@ -220,18 +249,26 @@
   gap: 0.4rem;
   padding: 0.62rem 1.3rem;
   border-radius: 999px;
-  background: #9f0000;
   color: #ffffff;
   font-size: clamp(0.8rem, 0.92vw, 0.88rem);
   font-weight: 600;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: background 0.18s ease;
   white-space: nowrap;
+  @include tactile-red;
 
-  &:hover {
-    background: #b30000;
+  /* Disabled (no case study yet): render at rest, but stay inert —
+     no hover lift, no press, no pointer affordance. */
+  &[aria-disabled="true"] {
+    cursor: default;
+
+    &:hover,
+    &:active {
+      background: $red-grad-rest;
+      transform: none;
+      box-shadow: $red-shadow-rest;
+    }
   }
 
   svg {
@@ -252,8 +289,8 @@
   text-decoration: none;
   border: 1.5px solid #cccccc;
   cursor: pointer;
-  transition: border-color 0.18s ease;
   white-space: nowrap;
+  @include tactile-outline;
 
   &:hover {
     border-color: #888888;
@@ -265,8 +302,8 @@
 }
 
 .liveIndicator {
-  width: 7px;
-  height: 7px;
+  width: 0.4375rem;
+  height: 0.4375rem;
   border-radius: 50%;
   background: #22c55e;
   flex-shrink: 0;
@@ -284,22 +321,22 @@
 
   @media (max-width: 900px) {
     padding: 0 1.5rem 2rem;
-    min-height: 200px;
+    min-height: 12.5rem;
   }
 }
 
 .screenshotFrame {
   position: relative;
   width: 100%;
-  border-radius: 14px;
+  border-radius: 0.875rem; /* rem: fluid-root scaled */
   overflow: hidden;
   box-shadow:
     0 8px 30px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.08);
   background: #e8e8ea;
   /* Slight vertical overflow for floating look */
-  margin-top: -24px;
-  margin-bottom: -24px;
+  margin-top: -1.5rem;
+  margin-bottom: -1.5rem;
 
   @media (max-width: 900px) {
     margin-top: 0;
@@ -328,9 +365,9 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 .cardSkeleton {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: clamp(380px, 48vh, 520px);
+  min-height: clamp(23.75rem, 48vh, 32.5rem); /* rem: fluid-root scaled */
   background: #f5f5f7;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   overflow: hidden;
 
   @media (max-width: 900px) {
@@ -353,12 +390,12 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   animation: shimmer 1.5s infinite;
 
   @media (max-width: 900px) {
-    min-height: 200px;
+    min-height: 12.5rem;
   }
 }
 
 .skTitle {
-  height: 36px;
+  height: 2.25rem;
   width: 55%;
   border-radius: 6px;
   background: $sk-bg;
@@ -367,7 +404,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skText {
-  height: 64px;
+  height: 4rem;
   width: 90%;
   border-radius: 6px;
   background: $sk-bg;
@@ -376,7 +413,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skTags {
-  height: 28px;
+  height: 1.75rem;
   width: 65%;
   border-radius: 100px;
   background: $sk-bg;
@@ -385,7 +422,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skMetrics {
-  height: 54px;
+  height: 3.375rem;
   width: 50%;
   border-radius: 6px;
   background: $sk-bg;
@@ -394,7 +431,7 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 }
 
 .skBtns {
-  height: 40px;
+  height: 2.5rem;
   width: 60%;
   border-radius: 100px;
   background: $sk-bg;
@@ -406,31 +443,33 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
 .seeAllRow {
   display: flex;
   justify-content: center;
-  padding: 2rem 0 3rem;
+  /* small gap above so the button reads as part of the cards stack,
+     comfortable gap below so it stays anchored inside this section */
+  padding: clamp(0.5rem, 1.5vw, 1rem) 0 clamp(2.5rem, 5vw, 4rem);
   position: relative;
   z-index: 10;
   background: #ffffff;
+
+  @media (max-width: 768px) {
+    /* Section bottom edge — same rhythm token as every landing section. */
+    padding-bottom: var(--section-space, 3rem);
+  }
 }
 
 .seeAllBtn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.75rem 2rem;
+  /* match the "View case study" (.ctaPrimary) button dimensions */
+  padding: 0.62rem 1.3rem;
   border-radius: 999px;
-  background: #9f0000;
   color: #ffffff;
-  font-size: clamp(0.88rem, 1vw, 0.96rem);
+  font-size: clamp(0.8rem, 0.92vw, 0.88rem);
   font-weight: 600;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
   text-decoration: none;
-  transition: background 0.18s ease, transform 0.18s ease;
   white-space: nowrap;
-
-  &:hover {
-    background: #b30000;
-    transform: translateY(-1px);
-  }
+  @include tactile-red;
 
   svg {
     flex-shrink: 0;
@@ -442,10 +481,54 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 280px;
+  min-height: 17.5rem;
   color: #999999;
   font-size: 0.95rem;
   font-style: italic;
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .heading {
+    font-size: 1.6rem;
+  }
+
+  .tab {
+    padding: 0.45rem 1rem;
+    font-size: 0.78rem;
+  }
+
+  .cardLeft {
+    padding: 1.3rem 1.1rem;
+    gap: 0.8rem;
+  }
+
+  .cardTitle {
+    font-size: 1.35rem;
+  }
+
+  .cardDescription {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .statValue {
+    font-size: 1.35rem;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    padding: 0.55rem 1.1rem;
+  }
+
+  .cardRight {
+    padding: 0 1.1rem 1.4rem;
+    min-height: 0;
+  }
+
+  .stickyCard {
+    margin-bottom: 1.1rem;
+  }
 }
 
 /* ── Reduced motion ── */
@@ -453,7 +536,13 @@ $sk-bg: linear-gradient(90deg, #eaeaea 25%, #dcdcdc 50%, #eaeaea 75%);
   .tab,
   .tabActive,
   .ctaPrimary,
-  .ctaSecondary {
+  .ctaSecondary,
+  .seeAllBtn {
     transition: none;
+
+    &:hover,
+    &:active {
+      transform: none;
+    }
   }
 }

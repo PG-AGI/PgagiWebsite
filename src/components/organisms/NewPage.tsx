@@ -43,6 +43,32 @@ const NewPage = () => {
     return () => ctx.revert();
   }, [isMobile, isMounted]);
 
+  // The revenue section lives inside a lazy-loaded block far below this one, so
+  // at click time it usually isn't in the DOM yet, and the sections between here
+  // and there render (and shift layout) as we travel down. Scroll toward the
+  // always-present lazy placeholder anchor, then keep correcting until the real
+  // section has mounted and the layout has settled.
+  const scrollToRevenue = () => {
+    const start = performance.now();
+    let settledTicks = 0;
+
+    const tick = () => {
+      const real = document.getElementById('revenue-section');
+      const target = real ?? document.getElementById('revenue-section-anchor');
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Once the real section exists, re-issue the scroll a few more times to
+      // absorb the layout shift from intervening lazy sections mounting.
+      if (real) settledTicks += 1;
+
+      if (settledTicks < 4 && performance.now() - start < 3000) {
+        window.setTimeout(tick, 200);
+      }
+    };
+
+    tick();
+  };
+
   const tabContent = activeTab === 'founders'
     ? {
         overline: newPageText.leftLabelOverline,
@@ -73,7 +99,7 @@ const NewPage = () => {
             role="tab"
             aria-selected={activeTab === 'enterprises'}
             className={`${styles.tab} ${activeTab === 'enterprises' ? styles.tabActive : ''}`}
-            onClick={() => { setActiveTab('enterprises'); document.getElementById('revenue-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+            onClick={() => { setActiveTab('enterprises'); scrollToRevenue(); }}
           >
             {newPageText.enterprisesTabLabel}
           </button>

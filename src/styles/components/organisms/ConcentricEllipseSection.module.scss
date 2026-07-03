@@ -1,20 +1,37 @@
+@use "../../tactileButtons" as *;
+
 .section {
   position: relative;
   background: #ffffff;
-  padding: 150px 0;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
 
   @media (max-width: 768px) {
-    padding: 80px 0; // Standardized
+    padding: 5rem 0; // Standardized
   }
 }
 
 .layout {
   --ring-scale: 1;
-  width: 100%;
-  max-width: 82vw;
-  height: calc(458px * var(--ring-scale));
+  // Match the previous section boxes: centered, capped at 1400px, fluid ≈92vw
+  // below — so the red surface lines up edge-to-edge with them instead of
+  // overshooting on wide screens.
+  // Clay-style 1240px rail, wrapper-relative (100%, not vw — the page wrapper
+  // already pads the sides; vw widths overflowed and were clipped on the right).
+  width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
+  height: calc(28.625rem * var(--ring-scale));
   margin: 0 auto;
-  padding: 0 1vw;
+
+  // Laptop fit-to-height: every dimension in this section already keys off
+  // --ring-scale, so short viewports just step the whole artwork down —
+  // same idiom as the existing width-based ring-scale tiers below.
+  @media (min-width: 1025px) and (max-height: 50rem) {
+    --ring-scale: 0.85;
+  }
+
+  @media (min-width: 1025px) and (max-height: 43.75rem) {
+    --ring-scale: 0.75;
+  }
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -26,7 +43,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: calc(40px * var(--ring-scale));
+  border-radius: calc(2.5rem * var(--ring-scale));
   background: #9f0000;
   overflow: hidden;
   isolation: isolate;
@@ -34,10 +51,10 @@
   &::after {
     content: "";
     position: absolute;
-    top: calc(-132px * var(--ring-scale));
-    right: calc(-168px * var(--ring-scale));
-    width: calc(760px * var(--ring-scale));
-    height: calc(296px * var(--ring-scale));
+    top: calc(-8.25rem * var(--ring-scale));
+    right: calc(-10.5rem * var(--ring-scale));
+    width: calc(47.5rem * var(--ring-scale));
+    height: calc(18.5rem * var(--ring-scale));
     border-radius: 50%;
     background: linear-gradient(
       180deg,
@@ -59,40 +76,40 @@
 }
 
 .ellipseOne {
-  width: calc(1429px * var(--ring-scale));
-  height: calc(1429px * var(--ring-scale));
-  top: calc(-239px * var(--ring-scale));
-  left: calc(-203px * var(--ring-scale));
+  width: calc(89.3125rem * var(--ring-scale));
+  height: calc(89.3125rem * var(--ring-scale));
+  top: calc(-14.9375rem * var(--ring-scale));
+  left: calc(-12.6875rem * var(--ring-scale));
   box-shadow:
     inset 4px 19px 41px 0 rgba(255, 255, 255, 0.35),
     0 4px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .ellipseTwo {
-  width: calc(1256px * var(--ring-scale));
-  height: calc(1256px * var(--ring-scale));
-  top: calc(-79px * var(--ring-scale));
-  left: calc(-190px * var(--ring-scale));
+  width: calc(78.5rem * var(--ring-scale));
+  height: calc(78.5rem * var(--ring-scale));
+  top: calc(-4.9375rem * var(--ring-scale));
+  left: calc(-11.875rem * var(--ring-scale));
   box-shadow:
     inset -10px 19px 39.2px 0 rgba(255, 255, 255, 0.32),
     0 4px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .ellipseThree {
-  width: calc(876px * var(--ring-scale));
-  height: calc(876px * var(--ring-scale));
-  top: calc(38px * var(--ring-scale));
-  left: calc(10px * var(--ring-scale));
+  width: calc(54.75rem * var(--ring-scale));
+  height: calc(54.75rem * var(--ring-scale));
+  top: calc(2.375rem * var(--ring-scale));
+  left: calc(0.625rem * var(--ring-scale));
   box-shadow:
     inset 4px 19px 39.2px 0 rgba(255, 255, 255, 0.25),
     0 4px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .ellipseFour {
-  width: calc(611px * var(--ring-scale));
-  height: calc(611px * var(--ring-scale));
-  top: calc(167px * var(--ring-scale));
-  left: calc(142px * var(--ring-scale));
+  width: calc(38.1875rem * var(--ring-scale));
+  height: calc(38.1875rem * var(--ring-scale));
+  top: calc(10.4375rem * var(--ring-scale));
+  left: calc(8.875rem * var(--ring-scale));
   box-shadow:
     inset -7px 19px 39.2px 0 rgba(255, 255, 255, 0.39),
     0 4px 4px 0 rgba(0, 0, 0, 0.2);
@@ -104,7 +121,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(880px, calc(100% - 4rem));
+  width: min(55rem, calc(100% - 4rem)); // rem: scales with the fluid root
   border-radius: 20px;
   background: #f3f3f3;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
@@ -116,7 +133,8 @@
 .title {
   margin: 0;
   color: #1a1a1a;
-  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5.5vh);
   line-height: 1.12;
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -125,9 +143,9 @@
 }
 
 .subtitle {
-  margin: 1.15rem 0 0;
+  margin: min(1.15rem, 2vh) 0 0;
   color: #6f6f6f;
-  font-size: clamp(0.95rem, 1.2vw, 1.45rem);
+  font-size: min(clamp(0.95rem, 1.2vw, 1.125rem), 2.6vh); // Clay scale (was 23px)
   line-height: 1.45;
   font-weight: 500;
 }
@@ -135,11 +153,10 @@
 .ctaButton {
   margin-top: 1.55rem;
   border: 0;
-  background: #a30e08;
   color: #ffffff;
   border-radius: 999px;
-  padding: 3px 4px 3px 1.35rem;
-  min-height: 48px;
+  padding: 0.1875rem 0.25rem 0.1875rem 1.35rem;
+  min-height: 3rem;
   display: inline-flex;
   align-items: center;
   gap: 0.72rem;
@@ -148,12 +165,8 @@
   font-weight: 500;
   line-height: 1;
   cursor: pointer;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 24px rgba(159, 0, 0, 0.36);
-  }
+  /* hero-CTA press physics (see src/styles/_tactileButtons.scss) */
+  @include tactile-red;
 }
 
 .ctaLabel {
@@ -161,8 +174,8 @@
 }
 
 .arrowCircle {
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -176,6 +189,7 @@
   .layout {
     --ring-scale: 0.76;
     width: calc(100% - 1.5rem);
+    max-width: 82vw; // preserve the tablet cap (base no longer sets one)
   }
 
   .contentCard {
@@ -190,12 +204,16 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 1.5rem 0;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
   }
 
   .layout {
     --ring-scale: 0.72;
-    width: calc(100% - 1.25rem);
+    // Full wrapper-rail width — lines up with the VisionSystemSection cards
+    // (the tablet 82vw cap above otherwise leaks down to phones).
+    width: 100%;
+    max-width: none;
     height: clamp(340px, 92vw, 470px);
   }
 
@@ -206,7 +224,7 @@
   }
 
   .title {
-    font-size: clamp(2rem, 8.4vw, 2.7rem);
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
     max-width: 11ch;
     line-height: 1.12;
   }
@@ -219,42 +237,53 @@
   }
 
   .ctaButton {
-    min-height: 44px;
+    min-height: 2.75rem;
     width: min(100%, 356px);
     justify-content: space-between;
-    padding: 3px 4px 3px 1.12rem;
+    padding: 0.1875rem 0.25rem 0.1875rem 1.12rem;
     margin-top: 1.2rem;
     font-size: 0.95rem;
     gap: 0.5rem;
   }
 
   .arrowCircle {
-    width: 36px;
-    height: 36px;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 }
 
 @media (max-width: 480px) {
+  .section {
+    // Same rhythm token as every landing section — the boundary with the
+    // Solution-fit panel above reads like all the other section gaps.
+    padding: var(--section-space, 3rem) 0;
+  }
+
   .layout {
     --ring-scale: 0.68;
-    width: min(22.625rem, calc(100% - 2rem));
-    height: 16rem; // Increased height
+    // Full wrapper-rail width — identical footprint to the Vision cards.
+    width: 100%;
+    max-width: none;
+    // Enough red canvas for the card to float with an even frame of rings
+    // around it, instead of being wedged edge-to-edge.
+    height: 18.5rem;
   }
 
   .surface {
-    border-radius: 1rem;
+    border-radius: 1.25rem;
   }
 
   .contentCard {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% - 2.5rem); // Increased width
-    height: auto; // Let it grow or set a larger min-height
-    min-height: 11.5rem;
-    border-radius: 0.75rem;
-    padding: 1.5rem 1.25rem;
-    gap: 0.5rem;
+    // An even ~1rem ring of red on every side of the card.
+    width: calc(100% - 2rem);
+    height: auto;
+    min-height: 0;
+    border-radius: 0.9rem;
+    padding: 1.6rem 0.9rem 1.4rem;
+    gap: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -263,43 +292,57 @@
 
   .title {
     font-size: clamp(1.1rem, 5.5vw, 1.35rem);
-    max-width: 16ch; // Increased to allow 2 lines
-    line-height: 1.2;
+    // Wide enough that the headline breaks as two balanced lines instead of
+    // orphaning "way." onto its own line.
+    max-width: 22ch;
+    line-height: 1.22;
   }
 
   .subtitle {
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
     font-size: clamp(0.7rem, 3vw, 0.8rem);
-    line-height: 1.3;
-    max-width: 28ch;
+    line-height: 1.45;
+    max-width: 30ch;
   }
 
   .ctaButton {
-    margin-top: 0.85rem;
-    width: 100%;
-    min-height: 2.85rem; // Slightly more compact
-    padding: 0.35rem 0.35rem 0.35rem 1.15rem;
-    font-size: 0.725rem; // Decreased font size for better fit
-    font-weight: 600;
+    margin-top: 1.1rem;
+    // Natural pill width, centred — the full label fits, so no more
+    // stretched full-width bar with a truncated "Schedule Strategic C…".
+    width: auto;
+    max-width: 100%;
+    min-height: 2.85rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.9rem;
+    font-size: 0.725rem;
+    /* base button weight (500) — the old 600 override was what pushed the
+       label past the card width and forced the "…" truncation */
+    font-weight: 500;
     line-height: 1.2;
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.35rem; // Reduced gap to give text more space
+    gap: 0.45rem;
   }
 
   .arrowCircle {
-    width: 2.15rem; // Slightly smaller to match decreased font size
-    height: 2.15rem;
+    width: 1.9rem;
+    height: 1.9rem;
     flex-shrink: 0;
   }
 
   .ctaLabel {
-    flex: 1;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+/* Narrow phones: one more type step so the full "Schedule Strategic
+   Consultation" label fits the pill without truncating. */
+@media (max-width: 400px) {
+  .ctaButton {
+    font-size: 0.66rem;
   }
 }
 

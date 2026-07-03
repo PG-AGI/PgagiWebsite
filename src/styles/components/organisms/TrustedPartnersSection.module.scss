@@ -1,156 +1,295 @@
 /* ================================================
-   TRUSTED PARTNERS SECTION
-   Open grid layout — label → divider → logo
-   No card borders, no box shadows, no outlines
-   White background, grayscale logos
+   TRUSTED PARTNERS SECTION  (Figma 1897:3827)
+   Fixed, centered 1280px content rail so the layout
+   reads identically on every laptop / desktop width.
+   Open layout — NO card boxes. Only light-grey vertical
+   lines separate the columns (as in Figma). Each cell is
+   clickable, with a brand accent bar, an arrow chip and a
+   soft inset background highlight on hover. Opens the
+   partner link in a new tab.
    ================================================ */
+
+$ink: #1a1a1a;
+$muted: #5f5f5f;
+$brand: #9f0000;
+$brand-soft: rgba(159, 0, 0, 0.16);
+$line: #e7e4e0;
+$bar: #d1d1d1; // light-grey accent bar (left of the logo)
+$hover-bg: #f8f4f1;
 
 .section {
   background: #ffffff;
-  padding: 90px 0 110px;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   content-visibility: auto;
-  contain-intrinsic-size: 0 580px;
-
-  @media (max-width: 860px) {
-    padding: 64px 0 80px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 48px 0 60px;
-  }
-}
-
-.container {
-  width: 100%;
-  max-width: 82vw;
-  margin: 0 auto;
-  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+  contain-intrinsic-size: 0 720px;
 
   @media (max-width: 768px) {
-    max-width: 100%;
-    padding: 0 1.4rem;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
   }
 }
 
-/* ── Section heading — bold, left-aligned ── */
+/* Content rail — identical to the hero / nav so this section lines up
+   edge-to-edge with the section above. Caps content at the 1400px design
+   reference and uses the same 4vw gutters below that. */
+.container {
+  width: 100%;
+  padding: 0 max(0px, calc((100% - 77.5rem) / 2)); // Clay rail (rem: fluid root)
+  box-sizing: border-box;
+  font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
+}
+
+/* ── Section heading — centered above the grid ── */
 .heading {
-  margin: 0 0 clamp(2.8rem, 5vw, 4.5rem);
-  font-size: clamp(1.25rem, 1.75vw, 1.6rem);
+  margin: 0 0 clamp(1.6rem, 3vw, 2.75rem);
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
   font-weight: 700;
   color: #111111;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-  text-align: left;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-align: center;
 }
 
-/* ── Partners grid: 4 open columns, no column separators ── */
+/* ── Grid: 3 columns → 2 → 1 ──
+   Light-grey vertical column dividers are drawn with the two
+   grid pseudo-elements (continuous, full-height), so there are
+   NO per-card boxes or horizontal lines. */
 .grid {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: clamp(1.5rem, 3vw, 2.5rem);
-  row-gap: 0; /* row spacing is handled by logoWrap padding-bottom */
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 0;
+  row-gap: clamp(0.5rem, 1.4vw, 1.25rem);
 
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: clamp(1rem, 3vw, 2rem);
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: $line;
+    pointer-events: none;
+  }
+  &::before {
+    left: 33.333%;
+  }
+  &::after {
+    left: 66.666%;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 960px) {
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 1rem;
+
+    &::before {
+      left: 50%;
+    }
+    &::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+
+    &::before,
+    &::after {
+      display: none;
+    }
   }
 }
 
 /* ─────────────────────────────────────────
-   Individual partner cell
-   NO border, NO background, NO box-shadow
-   Pure open layout
+   Clickable partner card — open, no box
 ───────────────────────────────────────── */
-.cell {
+.card {
+  position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  padding: clamp(1.4rem, 2vw, 1.9rem) clamp(1.5rem, 2.2vw, 2rem);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  isolation: isolate;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* light-grey accent bar — sits flush on the column separating line
+     (left edge of the card). Always visible; grows on hover. NO
+     background fill anywhere. */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: clamp(1.45rem, 2vw, 1.95rem);
+    width: 0.25rem;
+    height: 1.375rem;
+    border-radius: 4px;
+    background: $bar;
+    transition: height 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1;
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-3px);
+    outline: none;
+
+    &::before {
+      height: 2.5rem;
+    }
+
+    .arrowWrap {
+      transform: translate(6px, -6px);
+    }
+
+    .logo {
+      filter: grayscale(100%);
+    }
+  }
+
+  /* accessible focus ring (kept after the shared rule so it wins) */
+  &:focus-visible {
+    outline: 2px solid $brand;
+    outline-offset: 6px;
+    border-radius: 6px;
+  }
+
+  /* ── Press feedback ── quick + tactile, snaps on press, eases on release.
+     Placed after :hover so it wins while the pointer is down. */
+  &:active {
+    transform: translateY(-1px) scale(0.985);
+    transition-duration: 0.09s;
+
+    &::before {
+      height: 2.75rem;
+    }
+
+    .arrowWrap {
+      transform: translate(3px, -3px) scale(0.82);
+      transition-duration: 0.09s;
+    }
+  }
+
+  /* ── Mobile: single column, no dividers. Tighter side padding gives the
+     logo/text more room and keeps the accent bar close to the logo; a thin
+     light-grey rule separates the stacked cards. ── */
+  @media (max-width: 600px) {
+    padding: 1.4rem 1.1rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $line;
+    }
+  }
+}
+
+/* top row: logo (left) + arrow (right) */
+.cardTop {
+  display: flex;
   align-items: flex-start;
-
-  /* Vertical breathing room between rows:
-     top padding = space from previous row's logo to this label */
-  padding-top: clamp(2rem, 4vw, 3rem);
-
-  /* First row of cells gets no top padding — heading already has margin */
-  &:nth-child(-n + 4) {
-    padding-top: 0;
-  }
-
-  @media (max-width: 900px) {
-    &:nth-child(-n + 4) {
-      padding-top: clamp(2rem, 4vw, 3rem);
-    }
-    &:nth-child(-n + 2) {
-      padding-top: 0;
-    }
-  }
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: clamp(0.85rem, 1.6vw, 1.25rem);
 }
 
-/* ── 1. Partner name label ── */
-.partnerName {
-  display: block;
-  font-size: clamp(0.68rem, 0.8vw, 0.78rem);
-  font-weight: 400;
-  color: #9b9b9b;
-  letter-spacing: 0.01em;
-  line-height: 1.4;
-
-  /* Tight gap: label sits just above the divider */
-  margin-bottom: 0.55rem;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-/* ── 2. Full-width horizontal divider — spans the full column ── */
-.divider {
-  display: block;
-  border: none;
-  border-top: 1px solid #d8d8d8;
-  width: 100%;
-  margin: 0;
-
-  /* Space between divider and logo — gives logo room to breathe */
-  margin-bottom: clamp(1.4rem, 2.8vw, 2.2rem);
-}
-
-/* ── 3. Logo wrapper — uniform height for all logos ── */
 .logoWrap {
-  width: 100%;
-  /* Fixed height so every logo sits on the same baseline */
-  height: 56px;
+  height: 2.875rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
-  /* Bottom space — largest gap, separates this logo from the next row's label */
-  padding-bottom: clamp(1.8rem, 3.5vw, 2.8rem);
-
-  @media (max-width: 480px) {
-    height: 44px;
+  @media (max-width: 600px) {
+    height: 2.625rem;
   }
 }
 
-/* ── 4. Logo image — uniform size, grayscale ── */
 .logo {
-  /* All logos rendered at identical height; width stays proportional */
   width: auto !important;
-  height: 52px !important;
-  max-width: 100%;
+  height: 2.625rem !important;
+  max-width: 10rem;
   object-fit: contain;
   object-position: left center;
+  /* full colour at rest; colour removed (grayscale) on hover */
+  filter: none;
+  transition: filter 0.32s ease;
 
-  /* Greyscale with slight brightness pull to look less washed-out */
-  filter: grayscale(100%) brightness(0.75);
-
-  @media (max-width: 480px) {
-    height: 40px !important;
+  @media (max-width: 600px) {
+    height: 2.375rem !important;
   }
 }
 
+/* arrow — top right. Bare glyph (no circle), brand red (matches the
+   "View case study" CTA). Slides diagonally out on hover. */
+.arrowWrap {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $brand;
+  transition: transform 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.arrow {
+  width: 1.625rem;
+  height: 1.625rem;
+}
+
+/* blurb — kept to ~2–3 lines */
+.blurb {
+  margin: auto 0 0;
+  color: $muted;
+  font-size: clamp(0.84rem, 1vw, 0.95rem);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+
+  /* safety clamp so an over-long blurb never breaks the grid rhythm */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  /* single column has room — show the full blurb, no clamp */
+  @media (max-width: 600px) {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .heading {
+    font-size: 1.35rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .card {
+    padding: 1.1rem 0.9rem;
+  }
+
+  .blurb {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+}
+
+/* respect reduced-motion: kill the lift / sweep transitions */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::before,
+  .card::after,
+  .arrowWrap,
+  .logo {
+    transition: none;
+  }
+  .card:hover,
+  .card:focus-visible,
+  .card:active {
+    transform: none;
+  }
+}

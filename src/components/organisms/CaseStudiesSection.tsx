@@ -92,7 +92,7 @@ const CaseStudiesSection = () => (
     id="case-studies-showcase"
     animated={true}
     cardOverlap={0.12}
-    scrollMultiplier={1.8}
+    scrollMultiplier={1.2}
     className={styles.outerSection}
     header={<h2 className={styles.title}>{caseStudiesSectionText.title}</h2>}
     footer={

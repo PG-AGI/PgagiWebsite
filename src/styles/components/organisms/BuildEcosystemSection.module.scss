@@ -1,7 +1,20 @@
 .section {
   position: relative;
   background: #090c12; // Deep dark background as requested
-  padding: 150px 0 150px;
+  // Compact internal padding — the old 9.375rem (300px total) was fine as a
+  // full-bleed band's gap, but inside a centered card it just made the box far
+  // too tall. Neighbouring sections already provide the white gap around it.
+  padding: clamp(2.5rem, 4vw, 3.75rem) 0;
+  border-radius: 2rem; // Soften the dark box corners to match other sections
+  // Match the "Process timeline" box: centered, capped at 1400px, fluid ≈92vw
+  // below — so this dark card lines up edge-to-edge with that section instead of
+  // spanning the full viewport. overflow:hidden clips the ambient glow to the
+  // rounded box so it can't bleed onto the white gutters.
+  // Clay-style 1240px rail, wrapper-relative (100%, not vw — the page wrapper
+  // already pads the sides; vw widths overflowed and were clipped on the right).
+  width: min(77.5rem, 100%); // rem: scales with the fluid desktop root
+  margin: 0 auto;
+  overflow: hidden;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 800px;
@@ -14,6 +27,7 @@
     right: 0;
     bottom: 0;
     z-index: 0;
+    border-radius: inherit; // Clip the red glow overlay to the rounded corners
     background:
       radial-gradient(
         110% 80% at 50% -10%,
@@ -25,7 +39,7 @@
   }
 
   @media (max-width: 920px) {
-    padding: 80px 0 80px;
+    padding: 5rem 0 5rem;
     &::before {
       top: 0;
       bottom: var(--mobile-horizontal-distance, 0px);
@@ -49,16 +63,23 @@
 }
 
 .title {
-  margin: 0 0 60px 0; // More space below title
+  margin: 0 0 3.75rem 0; // More space below title
   text-align: center;
   color: #f2f2f3;
-  font-size: clamp(2.4rem, 4.8vw, 3.8rem); // Matches target scale better
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 6.7vh);
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 700;
 
   span {
     color: #ca1e11;
+  }
+
+  @media (min-width: 921px) {
+    // Desktop-scoped (the ≤920 blocks don't reset this margin): the gap below
+    // the title compresses via vh on short laptops, matching the page rhythm.
+    margin-bottom: min(3.75rem, 5.5vh);
   }
 }
 
@@ -75,6 +96,13 @@
   overflow: visible; // Allow glows to bleed out
   background: transparent; // Blend into the section background
   isolation: isolate;
+
+  @media (min-width: 921px) {
+    // The rail's height:100% can't resolve against a min-height-only parent,
+    // which left the card cluster stuck at the top of the box. An explicit
+    // height (same value) lets the rail fill the stage and center the cards.
+    height: clamp(380px, 42vw, 480px);
+  }
 }
 
 .gridBackdrop {
@@ -113,6 +141,21 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0.85;
+
+  @media (min-width: 921px) {
+    // The curves were tuned against the old top-aligned layout; shift them to
+    // hug the centered cluster. Horizontal endpoints tuck under the (now
+    // wider) cards, which sit above this layer, so no x remap is needed.
+    transform: translateY(10%) scaleY(0.94);
+  }
+}
+
+.nodeLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  // Must stay click-through: this layer covers the cards.
+  pointer-events: none;
 }
 
 .neutralPath {
@@ -147,8 +190,8 @@
 
 .pulseNode {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background: #ca1e11;
   box-shadow: 0 0 12px #ca1e11;
@@ -167,6 +210,20 @@
 .gapLeft { left: 34.5%; top: 48%; width: 10px; height: 10px; }
 .gapRight { left: 65.5%; top: 53%; width: 10px; height: 10px; }
 
+@media (min-width: 921px) {
+  // Remapped to the desktop rail geometry (28% columns / 1.6% margins with a
+  // vertically centered cluster). Set directly on the dots because their own
+  // transform is owned by the pulse animation.
+  .nodeLeftTop { left: 30.9%; top: 46%; }
+  .nodeLeftBottom { left: 30.9%; top: 82.5%; }
+  .nodeCenterLeft { left: 36.9%; top: 63%; }
+  .nodeCenterRight { left: 63.1%; top: 63%; }
+  .nodeRightTop { left: 69.2%; top: 46%; }
+  .nodeRightBottom { left: 69.2%; top: 82.5%; }
+  .gapLeft { left: 33.9%; top: 57%; }
+  .gapRight { left: 66.1%; top: 62%; }
+}
+
 .cardsRail {
   position: relative;
   z-index: 2;
@@ -182,8 +239,19 @@
   width: 20.7%; // Right edge hits 29.3%
   display: grid;
   align-content: center;
-  gap: 40px;
+  gap: 2.5rem;
   justify-items: center;
+
+  @media (min-width: 921px) {
+    // Definite track: an auto track grows to the card's max-content width and
+    // overflows the column to the right, which made the left cluster sit
+    // closer to the CRM card than the right cluster.
+    grid-template-columns: 100%;
+    // Wider columns + slimmer side margins: cards keep their big size while
+    // the gaps to the CRM column stay equal (3×28% + 2×6.4% gaps + 2×1.6%).
+    width: 28%;
+    margin-left: 1.6%;
+  }
 }
 
 .centerColumn {
@@ -191,6 +259,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 921px) {
+    width: 28%; // match the side columns — uniform card size
+  }
 }
 
 .rightColumn {
@@ -198,13 +270,19 @@
   width: 20.7%; // Left edge hits 70.7%
   display: grid;
   align-content: center;
-  gap: 40px;
+  gap: 2.5rem;
   justify-items: center;
+
+  @media (min-width: 921px) {
+    grid-template-columns: 100%; // see .leftColumn
+    width: 28%;
+    margin-right: 1.6%;
+  }
 }
 
 .integrationCard {
   width: 100%;
-  max-width: 323px;
+  max-width: 20.1875rem;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
   transition: transform 0.4s ease;
 
@@ -219,6 +297,12 @@
 .erpCard,
 .communicationCard {
   width: clamp(240px, 30vw, 340px); // Larger cards
+
+  @media (min-width: 921px) {
+    // All five cards fill their 20.7% column exactly — uniform size, and the
+    // gaps to the CRM card come out equal on both sides.
+    width: 100%;
+  }
 }
 
 .cardImage {
@@ -253,7 +337,11 @@
 
 @media (max-width: 920px) {
   .section {
-    padding-top: 80px;
+    // Back to full-bleed on tablet/mobile so the horizontal-scroll pin and the
+    // edge-to-edge dark band behave exactly as before.
+    width: 100%;
+    overflow: visible;
+    padding-top: 5rem;
     padding-bottom: 2.2rem;
   }
 
@@ -278,8 +366,8 @@
   }
 
   .stage {
-    width: 1080px;
-    min-height: 338px;
+    width: 67.5rem;
+    min-height: 21.125rem;
     margin-inline: 0;
     border-radius: 0;
     border: none;
@@ -290,14 +378,15 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 56px 0 48px;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
     contain-intrinsic-size: auto 520px;
   }
 
   .title {
     text-align: center;
     max-width: none;
-    margin-bottom: 28px;
+    margin-bottom: 1.75rem;
     padding-inline: 1rem;
   }
 
@@ -341,7 +430,7 @@
   .cardsRail {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 0.75rem;
     justify-items: center;
     align-items: center;
     padding: 0;
@@ -397,5 +486,13 @@
   .signalDot,
   .signalDotSmall {
     display: none;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .title {
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
   }
 }

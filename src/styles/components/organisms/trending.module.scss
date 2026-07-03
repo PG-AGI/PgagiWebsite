@@ -6,10 +6,10 @@
     background-color: #fff;
 
     >h3 {
-        font-size: 48px;
+        font-size: 3rem;
         font-weight: 500;
         color: #000;
-        margin-bottom: 48px;
+        margin-bottom: 3rem;
         background: #FFF;
         -webkit-background-clip: text;
         background-clip: text;
@@ -21,7 +21,7 @@
       width: 90%;
       display: flex;
       gap: 0.938rem;
-      padding: 10px 0;
+      padding: 0.625rem 0;
       scroll-behavior: smooth;
       overflow-x: auto;
       justify-content: center;
@@ -163,7 +163,7 @@
         }
     
         h3 {
-          font-size: 18px;
+          font-size: 1.125rem;
           font-weight: 700;
           color: #FFF;
         }
@@ -177,11 +177,11 @@
         .expandButton {
           display: none;
           position: absolute;
-          right: 20px;
-          bottom: 20px;
+          right: 1.25rem;
+          bottom: 1.25rem;
           background-color: #ffffff00;
           border: none;
-          padding: 8px 16px;
+          padding: 0.5rem 1rem;
           border-radius: 15px;
           cursor: pointer;
           transition: all 0.3s ease-in-out;
@@ -204,7 +204,7 @@
         margin-top: 20%;
 
         >h3 {
-            font-size: 23px;
+            font-size: 1.4375rem;
             font-weight: 500;
             color: #caccff;
             margin-top: -50%;
@@ -221,7 +221,7 @@
             display: flex;
             flex-direction: column;
             gap: 10%;
-            padding: 36px 14%;
+            padding: 2.25rem 14%;
             scroll-behavior: smooth;
             overflow-x: auto;
             align-items: center;
@@ -232,17 +232,17 @@
             }
 
             &:first-child {
-                margin-left: 300px;
+                margin-left: 18.75rem;
             }
 
             .trendingItem {
               display: flex;
                 position: relative;
-                min-width: 300px;
-                height: 430px;
+                min-width: 18.75rem;
+                height: 26.875rem;
                 border-radius: 16px;
                 overflow: hidden;
-                padding: 48px 24px;
+                padding: 3rem 1.5rem;
                 background: cover;
                 background-position: center;
                 cursor: pointer;
@@ -275,38 +275,38 @@
                 }
 
                 h3 {
-                    font-size: 18px;
+                    font-size: 1.125rem;
                     color: #FFF;
-                    margin: 25px 10px 10px 28px;
+                    margin: 1.5625rem 0.625rem 0.625rem 1.75rem;
                 }
 
                 p {
                     color: #FFF;
-                    font-size: 15px;
+                    font-size: 0.9375rem;
                     font-weight: 600;
-                    margin: 26px;
+                    margin: 1.625rem;
                 }
 
                 .brief {
                     display: none;
                     color: #FFF;
-                    font-size: 14px;
+                    font-size: 0.875rem;
                     // padding: 10px;
                     position: absolute;
-                    bottom: 145px;
-                    left: 3px;
+                    bottom: 9.0625rem;
+                    left: 0.1875rem;
                     font-weight: 500;
                 }
 
                 .expandButton {
                     display: none;
                     position: absolute;
-                    right: 10px;
-                    bottom: 10px;
+                    right: 0.625rem;
+                    bottom: 0.625rem;
                     background-color: #FFF;
                     color: #000;
                     border: none;
-                    padding: 8px 16px;
+                    padding: 0.5rem 1rem;
                     border-radius: 4px;
                     cursor: pointer;
 
@@ -328,10 +328,10 @@
   margin-top: 1rem;
 
   > h3 {
-    font-size: 30px;
+    font-size: 1.875rem;
     font-weight: 500;
     color: #caccff;
-    margin-bottom: 30px;
+    margin-bottom: 1.875rem;
     text-align: center;
   }
 
@@ -339,7 +339,7 @@
     display: flex;
     overflow-x: auto;
     gap: 1rem;
-    padding: 10px;
+    padding: 0.625rem;
     width: 100%;
     scroll-behavior: smooth;
 

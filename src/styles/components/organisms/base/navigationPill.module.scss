@@ -3,7 +3,7 @@
 /* ─── Outer wrapper — transparent, centered ─────────────────────── */
 .navigation {
   position: fixed;
-  top: 16px;
+  top: 1rem;
   left: 50%;
   transform: translateX(-50%);
   width: 75vw;               /* 70-80% of viewport width */
@@ -42,7 +42,7 @@
     top: 9vh;
 
     @media (max-width: 850px) {
-      top: 44px;
+      top: 2.75rem;
     }
   }
 
@@ -53,22 +53,22 @@
     align-items: center;       /* centres "PG-AGI" text under the icon */
     justify-content: center;
     margin: 0;
-    padding: 4px 0;
+    padding: 0.25rem 0;
     text-decoration: none;
     transition: opacity 0.1s ease-in-out;
     min-width: 0;
     width: auto;
-    gap: 4px;
+    gap: 0.25rem;
 
     img {
-      width: 36px;
-      height: 36px;
+      width: 2.25rem;
+      height: 2.25rem;
       flex-shrink: 0;
     }
 
     p {
       font-family: 'Gilroy', 'Plus Jakarta Sans', sans-serif;
-      font-size: 10px;
+      font-size: 0.625rem;
       font-weight: 400;
       margin: 0;
       color: var(--text-color, #111);
@@ -96,7 +96,7 @@
     transition: opacity 0.1s ease-in-out, visibility 0s 0.3s, box-shadow 0.25s ease;
     will-change: transform, opacity;
     z-index: 1900;
-    padding: 10px 5vw;        /* equal breathing room on both sides */
+    padding: 0.625rem 5vw;        /* equal breathing room on both sides */
     gap: 0;
     background: #f2f2f2;
     border-radius: 50px;
@@ -112,7 +112,7 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 32px;
+      gap: 2rem;
       align-items: center;
       flex-wrap: nowrap;
       white-space: nowrap;
@@ -125,7 +125,7 @@
         font-weight: 500;
         line-height: 1;
         letter-spacing: 0;
-        padding: 6px 4px;
+        padding: 0.375rem 0.25rem;
         cursor: pointer;
         text-decoration: none;
         color: var(--text-color);
@@ -139,19 +139,19 @@
 
     /* ─── CTA button ──────────────────────────── */
     .contact {
-      padding: 10px 22px;
+      padding: 0.625rem 1.375rem;
       border-radius: 25px;
       background: #fff;
       border: 2px solid #9F0000;
       font-family: 'Alexandria', sans-serif;
-      font-size: 15px;
+      font-size: 0.9375rem;
       font-weight: 400;
       cursor: pointer;
       transition: all 0.3s ease-out;
       color: #000;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       white-space: nowrap;
       flex-shrink: 0;
       min-width: max-content;
@@ -169,15 +169,15 @@
       display: none;
       flex-direction: column;
       justify-content: space-between;
-      width: 25px;
-      height: 21px;
+      width: 1.5625rem;
+      height: 1.3125rem;
       cursor: pointer;
       z-index: 1000;
 
       span {
         display: block;
         width: 100%;
-        height: 3px;
+        height: 0.1875rem;
         background-color: #222;
         transition: all 0.3s ease-in-out;
       }
@@ -199,9 +199,9 @@
   left: 20%;
   transform: translateX(-50%);
   width: 80vw;
-  height: 500px;
+  height: 31.25rem;
   display: none;
-  padding-top: 55px;
+  padding-top: 3.4375rem;
   z-index: 1000;
 
   .content {
@@ -218,8 +218,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 900px;
-      height: 700px;
+      width: 56.25rem;
+      height: 43.75rem;
       transform: translate(-38%, -50%);
       border-radius: 999px;
       background: #e0e0e0;
@@ -229,18 +229,18 @@
     }
 
     .menu {
-      min-width: 300px;
+      min-width: 18.75rem;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      padding: 32px 0;
-      gap: 12px;
+      padding: 2rem 0;
+      gap: 0.75rem;
       border-right: 1px solid rgba(0, 0, 0, 0.1);
 
       > span {
         position: relative;
         width: 100%;
-        padding: 12px 16px 12px 32px;
+        padding: 0.75rem 1rem 0.75rem 2rem;
         border-radius: 8px;
         user-select: none;
         color: #000;
@@ -248,7 +248,7 @@
         transition: all 0.3s ease;
         text-align: left;
         font-weight: 500;
-        font-size: 16px;
+        font-size: 1rem;
 
         &.active {
           background: #e0e0e0;
@@ -268,20 +268,20 @@
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      padding: 32px;
-      max-height: 400px;
+      padding: 2rem;
+      max-height: 25rem;
       overflow-y: auto;
 
       > a {
-        padding: 12px 16px;
-        font-size: 14px;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
         font-weight: 400;
         text-decoration: none;
         color: #333;
         border-radius: 6px;
         transition: all 0.3s ease-out;
         text-align: left;
-        margin-bottom: 4px;
+        margin-bottom: 0.25rem;
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
@@ -300,21 +300,21 @@
 
 @media (max-width: 1200px) {
   .navigation .nav {
-    padding: 10px 28px;
+    padding: 0.625rem 1.75rem;
     .links { gap: 24px; > a, .desktopLinks a { font-size: 0.9rem; } }
   }
 }
 
 @media (max-width: 1000px) {
   .navigation .nav {
-    padding: 9px 22px;
+    padding: 0.5625rem 1.375rem;
     .links { gap: 20px; > a, .desktopLinks a { font-size: 0.85rem; } }
   }
 }
 
 @media (max-width: 900px) {
   .navigation .nav {
-    padding: 8px 18px;
+    padding: 0.5rem 1.125rem;
     .links { gap: 16px; > a, .desktopLinks a { font-size: 0.82rem; } }
   }
 }
@@ -323,7 +323,7 @@
 @media (max-width: 850px) {
   .navigation {
     position: fixed;
-    top: 10px;
+    top: 0.625rem;
     left: 0;
     right: 0;
     transform: none;
@@ -346,7 +346,7 @@
       box-shadow: none !important;
 
       .nav {
-        padding: 8px 20px;
+        padding: 0.5rem 1.25rem;
         background: rgba(242, 242, 242, 0.92);
         box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
       }
@@ -359,10 +359,10 @@
       justify-content: flex-start;
       align-items: center;
       position: relative;
-      margin: 80px auto 0;
+      margin: 5rem auto 0;
       width: calc(100% - 48px);
-      max-width: 380px;
-      padding: 8px 16px 20px;
+      max-width: 23.75rem;
+      padding: 0.5rem 1rem 1.25rem;
       background: rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -375,14 +375,14 @@
       font-size: 1.15rem;
       width: 100%;
       height: auto;
-      padding: 13px 16px;
+      padding: 0.8125rem 1rem;
       text-align: center;
       color: #222;
       border-radius: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 0.25rem;
       cursor: pointer;
       text-decoration: none;
       font-weight: 400;
@@ -396,21 +396,21 @@
     }
 
     .mobileContact {
-      padding: 13px 24px;
+      padding: 0.8125rem 1.5rem;
       border-radius: 999px;
       background: #9F0000;
       border: none;
-      font-size: 15px;
+      font-size: 0.9375rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.25s ease-out;
       color: #fff;
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 12px;
+      gap: 0.375rem;
+      margin-top: 0.75rem;
       width: calc(100% - 8px);
-      max-width: 280px;
+      max-width: 17.5rem;
       justify-content: center;
 
       &:hover {
@@ -424,7 +424,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px 20px;
+      padding: 0.9375rem 1.25rem;
       background: #f2f2f2;
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -472,7 +472,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-        padding: 0 20px 40px;
+        padding: 0 1.25rem 2.5rem;
         z-index: 999;
         overflow-y: auto;
         gap: 0;
@@ -487,11 +487,11 @@
 
 @media (max-width: 568px) {
   .navigation {
-    top: 8px;
+    top: 0.5rem;
     width: 100%;
 
     .nav {
-      padding: 12px 16px;
+      padding: 0.75rem 1rem;
 
       .logo {
         img { width: 35px; height: 35px; }
@@ -503,11 +503,11 @@
 
 @media (max-width: 450px) {
   .navigation {
-    top: 6px;
+    top: 0.375rem;
     width: 100%;
 
     .nav {
-      padding: 10px 12px;
+      padding: 0.625rem 0.75rem;
 
       .logo {
         img { height: 32px; width: 32px; }
@@ -545,9 +545,9 @@
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.9);
   color: white;
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 0.75rem;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
@@ -569,7 +569,7 @@
 .desktopLinks {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 2rem;
 
   @media (max-width: 768px) {
     display: none;

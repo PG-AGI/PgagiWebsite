@@ -1,10 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Fragment } from "react";
-import { motion } from "@/lib/motion-lite";
+import { Fragment, useEffect, useRef, type CSSProperties } from "react";
 import styles from "@/styles/components/organisms/WhatMakesUsDifferentSection.module.scss";
-import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
 
 type CardArt = {
   id: string;
@@ -12,6 +10,10 @@ type CardArt = {
   alt: string;
   width: number;
   height: number;
+  // Position in the process flow (reading order). Drives the synced spotlight
+  // timeline — it is the single source of truth for *when* a card lights up,
+  // identical on desktop (snake layout) and mobile (vertical stack).
+  step: number;
 };
 
 type FlowDirection = "down" | "up" | "right";
@@ -23,6 +25,7 @@ const cardArt: Record<string, CardArt> = {
     alt: "Architecture-led execution card",
     width: 568,
     height: 279,
+    step: 0,
   },
   second: {
     id: "second",
@@ -30,6 +33,7 @@ const cardArt: Record<string, CardArt> = {
     alt: "Security and compliance conscious card",
     width: 568,
     height: 214,
+    step: 1,
   },
   third: {
     id: "third",
@@ -37,6 +41,7 @@ const cardArt: Record<string, CardArt> = {
     alt: "Scalable infrastructure from day one card",
     width: 568,
     height: 214,
+    step: 2,
   },
   fourth: {
     id: "fourth",
@@ -44,6 +49,7 @@ const cardArt: Record<string, CardArt> = {
     alt: "Human-in-the-loop reliability card",
     width: 568,
     height: 221,
+    step: 3,
   },
   fifth: {
     id: "fifth",
@@ -51,6 +57,7 @@ const cardArt: Record<string, CardArt> = {
     alt: "Growth and analytics embedded card",
     width: 568,
     height: 214,
+    step: 4,
   },
   sixth: {
     id: "sixth",
@@ -58,6 +65,7 @@ const cardArt: Record<string, CardArt> = {
     alt: "Long-term system partnerships card",
     width: 568,
     height: 221,
+    step: 5,
   },
 };
 
@@ -70,105 +78,34 @@ const mobileOrder: CardArt[] = [
   cardArt.sixth,
 ];
 
-// Animation Variants — tight stagger, no per-card delay stacking
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: MOTION_STAGGER.tight, // 0.06s — fast waterfall
-      delayChildren: 0.05,
-    }
-  }
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      // No per-card delay — container stagger handles ordering
-      duration: MOTION_DURATION.fast, // 0.28s — snappy
-      ease: FRAMER_EASE.premiumOut,
-    }
-  }
-};
-
-const arrowVariants = {
-  hidden: { opacity: 0 },
-  visible: (i: number) => ({
-    opacity: 1,
-    transition: {
-      delay: 0.1 + i * 0.06,
-      duration: 0.3,
-    }
-  })
-};
-
+// A connector on the flow. `step` places its comet on the shared timeline: each
+// arrow fires just after its source card lights (handled in CSS via `--step`).
 const FlowArrow = ({
   direction,
   className,
-  delayStep = 0,
+  step = 0,
 }: {
   direction: FlowDirection;
   className?: string;
-  delayStep?: number;
+  step?: number;
 }) => {
   return (
-    <motion.div 
-      className={`${styles.flow} ${styles[direction]} ${className ?? ""}`} 
+    <div
+      className={`${styles.flow} ${styles[direction]} ${className ?? ""}`}
       aria-hidden
-      custom={delayStep}
-      variants={arrowVariants}
+      style={{ "--step": step } as CSSProperties}
     >
-      <motion.span
-        className={styles.track}
-        variants={{
-          hidden: {
-            scaleY: direction === "down" || direction === "up" ? 0 : 1,
-            scaleX: direction === "right" ? 0 : 1,
-            transformOrigin: direction === "down" ? "top" : direction === "up" ? "bottom" : "left"
-          },
-          visible: {
-            scaleY: 1,
-            scaleX: 1,
-            transition: {
-              delay: 0.05 + delayStep * 0.06,
-              duration: MOTION_DURATION.fast,
-              ease: FRAMER_EASE.snappyOut,
-            }
-          }
-        }}
-      />
-      <motion.span
-        className={styles.tracer}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { delay: 0.1 + delayStep * 0.06, duration: 0.2 } }
-        }}
-      />
-      <motion.span
-        className={styles.head}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { delay: 0.1 + delayStep * 0.06, duration: 0.2 } }
-        }}
-      />
-    </motion.div>
+      {/* Dim resting rail, the bright "comet" reveal that draws over it, and the head. */}
+      <span className={styles.track} />
+      <span className={styles.draw} />
+      <span className={styles.head} />
+    </div>
   );
 };
 
 const ArtCard = ({ card }: { card: CardArt }) => {
   return (
-    <motion.article
-      className={styles.cardFrame}
-      variants={cardVariants}
-      whileHover={{
-        scale: 1.02,
-        transition: { duration: MOTION_DURATION.fast, ease: FRAMER_EASE.snappyOut },
-      }}
-    >
+    <article className={styles.cardFrame} style={{ "--step": card.step } as CSSProperties}>
       <Image
         src={card.src}
         alt={card.alt}
@@ -177,31 +114,37 @@ const ArtCard = ({ card }: { card: CardArt }) => {
         className={styles.cardImage}
         sizes="(max-width: 860px) 90vw, (max-width: 1200px) 44vw, 500px"
       />
-    </motion.article>
+    </article>
   );
 };
 
 const WhatMakesUsDifferentSection = () => {
+  // Run the CSS flow loop only while the section is on screen: the observer
+  // toggles `.playing`, so the animation auto-pauses (and costs nothing) when
+  // scrolled away. Pure IntersectionObserver — no per-frame JS.
+  const boardRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = boardRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        el.classList.toggle(styles.playing, entry.isIntersecting);
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className={styles.section} id="what-makes-us-different">
       <div className={styles.container}>
-        <motion.h2 
-          className={styles.title}
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: MOTION_DURATION.slow, ease: FRAMER_EASE.premiumOut }}
-        >
-          What makes us different
-        </motion.h2>
+        <h2 className={styles.title}>What makes us different</h2>
 
-        <motion.div
-          className={styles.board}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px", amount: 0.1 }}
-          variants={containerVariants}
-        >
+        <div ref={boardRef} className={styles.board}>
           <div className={styles.desktopGrid}>
             <div className={styles.leftTop}>
               <ArtCard card={cardArt.first} />
@@ -210,8 +153,8 @@ const WhatMakesUsDifferentSection = () => {
               <ArtCard card={cardArt.sixth} />
             </div>
 
-            <FlowArrow direction="down" className={styles.leftFlowOne} delayStep={1} />
-            <FlowArrow direction="up" className={styles.rightFlowOne} delayStep={5} />
+            <FlowArrow direction="down" className={styles.leftFlowOne} step={1} />
+            <FlowArrow direction="up" className={styles.rightFlowOne} step={5} />
 
             <div className={styles.leftMiddle}>
               <ArtCard card={cardArt.second} />
@@ -220,13 +163,13 @@ const WhatMakesUsDifferentSection = () => {
               <ArtCard card={cardArt.fifth} />
             </div>
 
-            <FlowArrow direction="down" className={styles.leftFlowTwo} delayStep={2} />
-            <FlowArrow direction="up" className={styles.rightFlowTwo} delayStep={4} />
+            <FlowArrow direction="down" className={styles.leftFlowTwo} step={2} />
+            <FlowArrow direction="up" className={styles.rightFlowTwo} step={4} />
 
             <div className={styles.leftBottom}>
               <ArtCard card={cardArt.third} />
             </div>
-            <FlowArrow direction="right" className={styles.bottomFlow} delayStep={3} />
+            <FlowArrow direction="right" className={styles.bottomFlow} step={3} />
             <div className={styles.rightBottom}>
               <ArtCard card={cardArt.fourth} />
             </div>
@@ -237,16 +180,15 @@ const WhatMakesUsDifferentSection = () => {
               <Fragment key={card.id}>
                 <ArtCard card={card} />
                 {index < mobileOrder.length - 1 && (
-                  <FlowArrow direction="down" className={styles.mobileFlow} delayStep={index + 1} />
+                  <FlowArrow direction="down" className={styles.mobileFlow} step={index + 1} />
                 )}
               </Fragment>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
 export default WhatMakesUsDifferentSection;
-

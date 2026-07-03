@@ -1,9 +1,11 @@
+@use "../../tactileButtons" as *;
+
 .section {
   position: relative;
   background: #ffffff;
-  padding-right:80px;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  // Clay-style page rhythm — identical on every landing section.
+  padding-top: clamp(4rem, 10vh, 7rem);
+  padding-bottom: clamp(4rem, 10vh, 7rem);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -23,13 +25,10 @@
   }
 
   @media (max-width: 768px) {
-    padding-top: 80px;
-    padding-bottom: 80px;
-    padding-right: 0;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding-top: var(--section-space, 3rem);
+    padding-bottom: var(--section-space, 3rem);
     min-height: unset;
-    // flex-direction: column;
-    // font-weight: 400;
-    // font-size: 0.5rem;
     &::before { top: 0; }
   }
 }
@@ -38,24 +37,30 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 82vw;
+  // Match the "We engineer the system" ScrollStack card width (1240px Clay
+  // rail, wrapper-relative) so this section lines up edge-to-edge with the
+  // cards directly below it.
+  max-width: min(77.5rem, 100%);
   margin: 0 auto;
-  padding: 0 1vw;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   @media (max-width: 768px) {
-    padding: 0 1rem;
-    max-width: 100vw;
+    // No extra side gutter on mobile — the page wrapper's padding frames the
+    // card and the tab switcher, so both line up exactly with the
+    // VisionSystemSection cards.
+    padding: 0;
+    max-width: 100%;
   }
 }
 
 .tabSwitcher {
   display: inline-flex;
   align-items: center;
-  margin: 0 auto 50px;
-  padding: 8px;
+  margin: 0 auto min(3.125rem, 5vh); // vh binds on short laptops only
+  padding: 0.5rem;
   background:#F5EFEA;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 100px;
@@ -64,15 +69,15 @@
   transform: translateZ(0);
 
   @media (max-width: 768px) {
-    margin-bottom: 28px;
-    padding: 3px;
+    margin-bottom: 1.75rem;
+    padding: 0.1875rem;
     width: 100%;
     max-width: 100%;
   }
 }
 
 .tab {
-  padding: 24px 32px;
+  padding: min(1.5rem, 2.6vh) 2rem; // vertical pad compresses on short laptops
   border-radius: 100px;
   border: none;
   background: transparent;
@@ -82,16 +87,47 @@
   color: #2C2C2C;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover:not(.tabActive) {
     color: #9F0000;
   }
 
+  /* Segments scale in place instead of lifting — a translateY would read
+     as the segment detaching from the switcher track. */
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  &:active {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+
+    &:not(.tabActive) {
+      background: rgba(159, 0, 0, 0.06);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #9f0000;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover,
+    &:active {
+      transform: none;
+    }
+  }
+
   @media (max-width: 768px) {
-    padding: 10px 8px;
+    padding: 0.625rem 0.5rem;
     font-size: 0.62rem;
     flex: 1;
     text-align: center;
@@ -100,15 +136,35 @@
 }
 
 .tabActive {
-  background: #9F0000;
+  /* hero-CTA gloss (see src/styles/_tactileButtons.scss): top-lit gradient +
+     inner bevel; keeps this control's original wider glow radius */
+  background: $red-grad-rest;
   color: #ffffff;
-  box-shadow: 0 6px 16px rgba(159, 0, 0, 0.28);
+  box-shadow:
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.35),
+    inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.25),
+    0 6px 16px rgba(159, 0, 0, 0.28);
+
+  @media (hover: hover) {
+    &:hover {
+      background: $red-grad-hover;
+      box-shadow:
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.45),
+        inset 0 -1.5px 2.5px rgba(0, 0, 0, 0.2),
+        0 8px 20px rgba(159, 0, 0, 0.36);
+    }
+  }
+
+  &:active {
+    background: $red-grad-press;
+    box-shadow: $red-shadow-press;
+  }
 }
 
 .content {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
-  gap: 60px;
+  gap: 3.75rem;
   align-items: center;
   width: 100%;
   padding: 0;
@@ -119,12 +175,12 @@
   backdrop-filter: none;
 
   @media (max-width: 1024px) {
-    gap: 40px;
+    gap: 2.5rem;
   }
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 1.75rem;
   }
 }
 
@@ -132,7 +188,9 @@
   display: flex;
   flex-direction: column;
   width: min(100%, 48rem);
-  min-height: clamp(24rem, 38vw, 32rem);
+  // Outer min() caps the width-derived floor by viewport height so the card
+  // can't force the 100vh section past the fold on short laptops.
+  min-height: min(clamp(24rem, 38vw, 32rem), calc(100dvh - 18rem));
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(26, 26, 26, 0.12);
   border-radius: 32px;
@@ -144,11 +202,11 @@
   @media (max-width: 1024px) {
     width: 100%;
     min-height: unset;
-    padding: 40px;
+    padding: 2.5rem;
   }
 
   @media (max-width: 768px) {
-    padding: 24px;
+    padding: 1.5rem;
     border-radius: 24px;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -168,29 +226,31 @@
   align-self: flex-start;
 
   @media (max-width: 768px) {
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
     font-size: clamp(0.52rem, 2.2vw, 0.68rem);
     background: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 100px;
-    padding: 4px 10px;
+    padding: 0.25rem 0.625rem;
     white-space: nowrap;
   }
 }
 
 .mainTitle {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  // Clay scale (in-card heading sits below the 40px section titles); vh
+  // terms only bind on short laptop viewports (< ~900px tall).
+  font-size: min(clamp(1.5rem, 2.2vw, 2.1rem), 4.6vh);
   font-weight: 700;
   line-height: 1.1;
-  margin: 0 0 clamp(1.2rem, 1.8vw, 1.8rem);
+  margin: 0 0 min(clamp(1rem, 1.5vw, 1.5rem), 3.2vh);
   color: #1A1A1A;
   margin-top: 0.5em;
 
   @media (max-width: 768px) {
-    font-size: clamp(2rem, 8.5vw, 2.9rem);
+    font-size: clamp(1.6rem, 6.6vw, 2.2rem);
     margin-bottom: 1.1rem;
-    line-height: 1.1;
+    line-height: 1.12;
   }
 }
 
@@ -224,9 +284,8 @@
 }
 
 .pillButton {
-  background: #9F0000;
   border: none;
-  padding: 6px 7px;
+  padding: 0.375rem 0.4375rem;
   border-radius: 100px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 400;
@@ -234,37 +293,31 @@
   line-height: 1;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 0.875rem;
   padding-right: 2px;
-  padding-left: 14px;
+  padding-left: 0.875rem;
   padding-top: 2px;
   padding-bottom: 2px;
   cursor: pointer;
   color: #ffffff;
   width: fit-content;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  // box-shadow: 18px 18px 30px rgba(159, 0, 0, 0.18);
+  /* hero-CTA press physics (see src/styles/_tactileButtons.scss) */
+  @include tactile-red;
 
   @media (max-width: 768px) {
-    padding: 6px 6px 6px 18px;
-    gap: 10px;
-    font-size: 0.82rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.9rem;
+    gap: 0.5rem;
+    font-size: 0.78rem;
   }
 
-  &:hover {
-    // background: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.18);
-
-    .redArrowCircle {
-      transform: translateX(3px);
-    }
+  &:hover .redArrowCircle {
+    transform: translateX(3px);
   }
 }
 
 .redArrowCircle {
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   background: #ffffff;
   color: #9F0000;
   border-radius: 50%;
@@ -276,8 +329,8 @@
   border: 2px solid rgba(0,0,0,0.06);
 
   @media (max-width: 768px) {
-    width: 36px;
-    height: 36px;
+    width: 1.9rem;
+    height: 1.9rem;
   }
 }
 
@@ -302,8 +355,42 @@
   object-fit: contain;
   display: block;
 
+  @media (min-width: 769px) {
+    // Cap the oversized (150%) image box by viewport height so the contained
+    // artwork shrinks on short laptops instead of pushing past the fold.
+    // No-op on taller screens (the drawn art is width-driven and smaller).
+    max-height: calc(100dvh - 18rem);
+  }
+
   @media (max-width: 768px) {
     width: 100%;
     max-width: 100%;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .mainTitle {
+    font-size: 1.45rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .descriptionText {
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .textColumn {
+    padding: 1.1rem;
+    border-radius: 18px;
+  }
+
+  .tabSwitcher {
+    margin-bottom: 1.2rem;
+  }
+
+  .ctaWrapper {
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
   }
 }

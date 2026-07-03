@@ -44,6 +44,12 @@ type ScrollStackProps = {
   cardOverlap?: number;
   preRoll?: number;
   scrollMultiplier?: number;
+  /** Desktop only: vertically centre the pinned card in the viewport
+      instead of pinning it to the top of the stack area. */
+  centerCards?: boolean;
+  /** Mobile only: keep the section heading pinned just below the navbar while
+      the cards stack beneath it (instead of the heading scrolling away). */
+  mobileStickyHeader?: boolean;
 };
 
 const ScrollStack = ({
@@ -58,6 +64,8 @@ const ScrollStack = ({
   cardOverlap = 0.35,
   preRoll = 0,
   scrollMultiplier = 1,
+  centerCards = false,
+  mobileStickyHeader = false,
 }: ScrollStackProps) => {
   const sectionRef   = useRef<HTMLElement>(null);
   const viewportRef  = useRef<HTMLDivElement>(null);
@@ -79,6 +87,12 @@ const ScrollStack = ({
   const cards    = cardRefs.current.filter((el): el is HTMLDivElement => el !== null);
 
   if (!section || !viewport || cards.length < 2) return;
+
+  // Mobile (non-"flow") uses a pure-CSS sticky stack (see ScrollStack.module.scss):
+  // no rAF loop, no scroll listener, no GSAP download — the compositor does all the
+  // work off the main thread. Only the explicit `flow` mode keeps a JS path on mobile.
+  const isMobile = window.matchMedia(MOBILE_MEDIA_QUERY).matches;
+  if (isMobile && mobileMode !== "flow") return;
 
   let cleanup: (() => void) | undefined;
   let cancelled = false;
@@ -141,6 +155,16 @@ const ScrollStack = ({
     let headerShown = false;
     const landingOffset = isMobileViewport ? 0 : offset;
 
+    // Promote cards to compositor layers only while the section is on screen,
+    // instead of a permanent `will-change` in CSS that reserves GPU memory for
+    // every card on the page for the whole session.
+    let promoted = false;
+    const setPromoted = (on: boolean) => {
+      if (on === promoted) return;
+      promoted = on;
+      gsap.set(cards, { willChange: on ? "transform" : "auto" });
+    };
+
     const applyProgress = (p: number) => {
       const clamped = Math.max(0, Math.min(1, p));
       const scrollP = Math.max(0, clamped - preRoll);
@@ -201,6 +225,10 @@ const ScrollStack = ({
       const sectionTop = cachedSectionTop;
       const vh         = getVH();
 
+      // Section height in px must mirror the JSX `height` formula below.
+      const sectionHeightPx = ((count - 1) * scrollMultiplier + 1) * vh;
+      setPromoted(sectionTop < scroll + vh && sectionTop + sectionHeightPx > scroll);
+
       if (!headerShown && scroll + vh * 0.85 >= sectionTop) {
         headerShown = true;
         if (headerRef.current) {
@@ -255,21 +283,64 @@ const ScrollStack = ({
         cancelAnimationFrame(rafId);
       }
       gsap.set([...cards, headerRef.current].filter(Boolean), {
-        clearProps: "transform,opacity,y,scale",
+        clearProps: "transform,opacity,y,scale,willChange",
       });
     };
   }
 }, [animated, cardOverlap, count, lenis, mobileMode, offset, preRoll, scrollMultiplier]);
 
+  // ── Mobile sticky-header: publish the heading's live height as a CSS var ──
+  // The heading is pinned below the navbar (pure CSS); the cards pin just below
+  // it, offset by this height. Measuring it (rather than hard-coding) keeps the
+  // cards aligned no matter how the title wraps on a given phone. This is a
+  // ResizeObserver only — no scroll listener, no rAF, no GSAP.
+  useEffect(() => {
+    if (!mobileStickyHeader) return;
+    const section = sectionRef.current;
+    const header  = headerRef.current;
+    if (!section || !header) return;
+
+    const mq = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const measure = () => {
+      if (mq.matches) {
+        section.style.setProperty("--sticky-header-h", `${Math.ceil(header.offsetHeight)}px`);
+      } else {
+        section.style.removeProperty("--sticky-header-h");
+      }
+    };
+    measure();
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(measure);
+      ro.observe(header);
+    }
+    mq.addEventListener?.("change", measure);
+    window.addEventListener("resize", measure, { passive: true });
+
+    return () => {
+      ro?.disconnect();
+      mq.removeEventListener?.("change", measure);
+      window.removeEventListener("resize", measure);
+      section.style.removeProperty("--sticky-header-h");
+    };
+  }, [mobileStickyHeader, count]);
+
   const layoutClass    = animated ? styles.animated : styles.static;
   const mobileFlowClass = mobileMode === "flow" ? styles.mobileFlow : "";
+  const centerClass     = centerCards ? styles.centered : "";
+  const stickyHeaderClass = mobileStickyHeader ? styles.stickyHeaderMobile : "";
 
   return (
     <section
       ref={sectionRef}
-      className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${className ?? ""}`.trim()}
+      className={`${styles.section} ${layoutClass} ${mobileFlowClass} ${centerClass} ${stickyHeaderClass} ${className ?? ""}`.trim()}
       id={id}
-      style={animated ? { height: `${count * 100 * scrollMultiplier}vh` } : undefined}
+      // Height = scroll room the animation actually consumes ((count-1) steps ×
+      // multiplier) + one viewport for the final card to rest. Using `count`
+      // here (the old formula) left ~100·(multiplier-1)vh of dead pinned scroll
+      // after the last card landed, before the next section appeared.
+      style={animated ? { height: `${(count - 1) * 100 * scrollMultiplier + 100}vh` } : undefined}
     >
       <div ref={viewportRef} className={styles.viewport}>
         <div className={styles.container}>
@@ -284,6 +355,8 @@ const ScrollStack = ({
                 key={i}
                 ref={(el) => { cardRefs.current[i] = el; }}
                 className={styles.cardWrapper}
+                // Drives the mobile CSS sticky-stack offset (top per card index).
+                style={{ ["--card-index" as string]: i } as React.CSSProperties}
               >
                 {child}
               </div>

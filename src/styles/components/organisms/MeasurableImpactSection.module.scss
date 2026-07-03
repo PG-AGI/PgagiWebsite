@@ -1,18 +1,20 @@
 .section {
   background: #ffffff;
-  padding: 150px 0;
+  // Clay-style page rhythm — identical on every landing section.
+  padding: clamp(4rem, 10vh, 7rem) 0;
   // Skip painting offscreen content — major scroll performance win
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;
 
   @media (max-width: 768px) {
-    padding: 80px 0;
+    // Page-wide mobile rhythm token (set on .main in page.module.scss).
+    padding: var(--section-space, 3rem) 0;
   }
 }
 
 .container {
   width: 100%;
-  max-width: 82vw;
+  max-width: min(77.5rem, 100%); // Clay rail; rem scales with the fluid root
   margin: 0 auto;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 
@@ -26,7 +28,8 @@
   margin: 0;
   text-align: center;
   color: #1a1a1a;
-  font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+  // Clay heading cap (40px); the vh term only binds on short laptops.
+  font-size: min(clamp(1.8rem, 2.8vw, 2.5rem), 5.5vh);
   line-height: 1.12;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -48,26 +51,31 @@
 }
 
 .metricCard {
-  min-height: clamp(8.2rem, 13vw, 10.2rem);
-  padding: clamp(1.1rem, 1.8vw, 1.4rem) clamp(0.72rem, 1.45vw, 1rem)
-    clamp(1.25rem, 2.1vw, 1.6rem);
+  // Clay scale: compact stat cells (the old 13vw reservation grew past 160px
+  // and made the grid dominate the fold on scaled laptops).
+  min-height: clamp(6.5rem, 9vw, 8rem);
+  padding: clamp(0.9rem, 1.5vw, 1.2rem) clamp(0.72rem, 1.45vw, 1rem)
+    clamp(1rem, 1.7vw, 1.3rem);
   border-top: 1px solid rgba(157, 58, 48, 0.22);
   border-left: 1px solid rgba(157, 58, 48, 0.22);
+  text-align: center;
 }
 
 .metricValue {
   margin: 0;
   color: #2e2f32;
-  font-size: clamp(2.1rem, 3.25vw, 3rem);
+  // Clay scale: 40px stat numbers (was 48px), sitting below the 40px section
+  // title in visual weight; vh term compresses on short laptops.
+  font-size: min(clamp(1.9rem, 2.6vw, 2.5rem), 5vh);
   line-height: 1;
   letter-spacing: -0.03em;
   font-weight: 700;
 }
 
 .metricDescription {
-  margin: 0.58rem 0 0;
+  margin: 0.5rem auto 0;
   color: #4c4d50;
-  font-size: clamp(0.74rem, 0.97vw, 0.92rem);
+  font-size: clamp(0.78rem, 0.95vw, 0.875rem);
   line-height: 1.4;
   font-weight: 500;
   max-width: 16ch;
@@ -83,7 +91,7 @@
 
 @media (max-width: 900px) {
   .section {
-    padding: 80px 0; /* Standardized */
+    padding: var(--section-space, 3rem) 0; /* page-wide rhythm token */
   }
 
   .title {
@@ -128,11 +136,11 @@
 
 @media (max-width: 500px) {
   .section {
-    padding: 80px 0.62rem; /* Standardized */
+    padding: var(--section-space, 3rem) 0.62rem; /* page-wide rhythm token */
   }
 
   .container {
-    max-width: 340px;
+    max-width: 21.25rem;
   }
 
   .title {
@@ -148,5 +156,20 @@
   .metricCard {
     min-height: 7.2rem;
     padding: 0.82rem 0.56rem 0.9rem;
+  }
+}
+
+/* ── Small/short phones — page-wide compact scale (see VisionSystemSection) ── */
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .metricValue {
+    font-size: 1.7rem;
+  }
+
+  .metricCard {
+    min-height: 6.4rem;
   }
 }

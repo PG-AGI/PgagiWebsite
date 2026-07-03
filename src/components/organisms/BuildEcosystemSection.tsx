@@ -245,16 +245,18 @@ const BuildEcosystemSection = () => {
               </circle>
             </svg>
 
-            <span className={`${styles.pulseNode} ${styles.nodeLeftTop}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.nodeLeftBottom}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.nodeCenterLeft}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.nodeCenterRight}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.nodeRightTop}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.nodeRightBottom}`} aria-hidden="true" />
+            <div className={styles.nodeLayer} aria-hidden="true">
+              <span className={`${styles.pulseNode} ${styles.nodeLeftTop}`} />
+              <span className={`${styles.pulseNode} ${styles.nodeLeftBottom}`} />
+              <span className={`${styles.pulseNode} ${styles.nodeCenterLeft}`} />
+              <span className={`${styles.pulseNode} ${styles.nodeCenterRight}`} />
+              <span className={`${styles.pulseNode} ${styles.nodeRightTop}`} />
+              <span className={`${styles.pulseNode} ${styles.nodeRightBottom}`} />
 
-            {/* Gap midpoint nodes */}
-            <span className={`${styles.pulseNode} ${styles.gapLeft}`} aria-hidden="true" />
-            <span className={`${styles.pulseNode} ${styles.gapRight}`} aria-hidden="true" />
+              {/* Gap midpoint nodes */}
+              <span className={`${styles.pulseNode} ${styles.gapLeft}`} />
+              <span className={`${styles.pulseNode} ${styles.gapRight}`} />
+            </div>
 
             <div className={styles.cardsRail}>
               <div className={styles.leftColumn}>
