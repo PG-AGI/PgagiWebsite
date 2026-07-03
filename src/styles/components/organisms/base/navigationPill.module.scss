@@ -120,6 +120,7 @@
 
       > a,
       .desktopLinks a {
+        position: relative;
         font-family: 'Plus Jakarta Sans', 'Alexandria', sans-serif;
         font-size: 0.95rem;
         font-weight: 500;
@@ -131,9 +132,39 @@
         color: var(--text-color);
         white-space: nowrap;
         opacity: 0.85;
-        transition: opacity 0.2s ease, color 0.2s ease;
+        transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
 
-        &:hover { opacity: 1; }
+        /* Sliding underline — mirrors the home-page navbar. Inset by the
+           link's 0.25rem horizontal padding so it spans just the text. */
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0.25rem;
+          right: 0.25rem;
+          height: 2px;
+          border-radius: 2px;
+          background: #9f0000;
+          transform: scaleX(0);
+          transform-origin: center;
+          transition: transform 0.25s ease;
+        }
+
+        &:hover {
+          opacity: 1;
+          transform: scale(1.08);
+
+          &::after {
+            transform: scaleX(1);
+          }
+        }
+
+        /* Active route keeps its underline shown. This nested rule outranks
+           the root-level .activeLink::after (same specificity trick the home
+           navbar uses), so the base ::after's scaleX(0) can't hide it. */
+        &.activeLink::after {
+          transform: scaleX(1);
+        }
       }
     }
 

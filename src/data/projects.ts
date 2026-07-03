@@ -16,6 +16,8 @@ export type Project = {
   caseStudySlug: string | null;
   liveUrl?: string | null;
   tab: TabId;
+  // Dominant-colour placeholder (data URI) for next/image placeholder="blur".
+  blurDataURL?: string;
 };
 
 // Top 3 projects shown per tab in Recent Launch — ordered, exact.

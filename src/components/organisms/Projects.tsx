@@ -1,15 +1,13 @@
 
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/styles/components/organisms/projects.module.scss';
 import { getSafeImageUrl } from '@/utils/imageUtils';
-import { fetchAllCaseStudies } from '@/services/caseStudyService';
 import ROUTES from '@/constants/routes';
 import EXTERNAL_LINKS from '@/constants/externalLinks';
-import { getErrorMessage } from '@/utils/errorUtils';
 import caseStudyMeta, { FILTER_TABS, CATEGORIES, type FilterTab } from '@/data/caseStudyMeta';
 
 const ArrowUpRight = () => (
@@ -19,12 +17,17 @@ const ArrowUpRight = () => (
 );
 
 type CaseStudy = {
-  id: string;
   slug: string;
   title: string;
   coverImage: string;
   description?: string;
+  blurDataURL?: string;
 };
+
+// Slugs to hide from the public listing.
+const HIDDEN_SLUGS = new Set<string>([
+  'ai-asr-doctor-clinical-documentation-platform',
+]);
 
 
 // Slugs that must appear first, in this exact order
@@ -51,25 +54,15 @@ const STATS = [
   { value: '2M+', line1: 'AI interactions', line2: 'processed' },
 ];
 
-export default function Projects() {
-  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+export default function Projects({ initialStudies }: { initialStudies: CaseStudy[] }) {
+  // Data is server-rendered and handed in as a prop — no client fetch, no
+  // loading state. Filtering is deterministic from props, so server and
+  // client first renders match (no hydration mismatch).
+  const [caseStudies] = useState<CaseStudy[]>(() =>
+    initialStudies.filter((cs) => !HIDDEN_SLUGS.has(cs.slug))
+  );
   const [activeTab, setActiveTab] = useState<FilterTab>('Show All');
   const [activeCategory, setActiveCategory] = useState('All Categories');
-
-  useEffect(() => {
-    fetchAllCaseStudies()
-      .then((data) => {
-        const filtered = (data as unknown as CaseStudy[]).filter(
-          (cs) => cs.slug !== 'ai-asr-doctor-clinical-documentation-platform'
-        );
-        console.log('[SLUGS]', filtered.map((cs) => `"${cs.slug}": "${cs.title}"`).join('\n'));
-        setCaseStudies(filtered);
-      })
-      .catch((e) => setError(getErrorMessage(e)))
-      .finally(() => setLoading(false));
-  }, []);
 
   const filteredStudies = useMemo(() => {
     let result = [...caseStudies].reverse();
@@ -134,26 +127,10 @@ export default function Projects() {
                 {tab}
               </button>
             ))}
-            <div className={styles.categoryWrap}>
-              <span className={styles.categoryPill}>Category for:</span>
-              <div className={styles.categorySelectContainer}>
-                <select
-                  className={styles.categorySelect}
-                  value={activeCategory}
-                  onChange={(e) => { setActiveCategory(e.target.value); }}
-                >
-                  {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                </select>
-                {/* Fix 2: SVG chevron for a crisp, consistent arrow */}
-                <span className={styles.selectArrow} aria-hidden="true">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="#444" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className={styles.filterRow}>
+            {/* Desktop keeps a deliberate 4+4 split via this forced line break;
+                on mobile it collapses so all tabs wrap continuously and no
+                single tab (e.g. "Research") gets orphaned on its own line. */}
+            <span className={styles.rowBreak} aria-hidden="true" />
             {FILTER_TABS.slice(4).map((tab) => (
               <button
                 key={tab}
@@ -164,32 +141,37 @@ export default function Projects() {
               </button>
             ))}
           </div>
+          {/* Category dropdown: pinned top-right on desktop, flows to the
+              bottom-right below the tab rows on mobile (see .categoryWrap). */}
+          <div className={styles.categoryWrap}>
+            <span className={styles.categoryPill}>Category for:</span>
+            <div className={styles.categorySelectContainer}>
+              <select
+                className={styles.categorySelect}
+                value={activeCategory}
+                onChange={(e) => { setActiveCategory(e.target.value); }}
+              >
+                {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+              {/* Fix 2: SVG chevron for a crisp, consistent arrow */}
+              <span className={styles.selectArrow} aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2.5 4.5L6 8L9.5 4.5" stroke="#444" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── Case study cards ── */}
       <div className={styles.cardsOuter}>
       <div className={styles.cardsList}>
-        {loading ? (
-          Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className={styles.cardSkeleton}>
-              <div className={styles.skeletonLeft}>
-                <div className={styles.skTitle} />
-                <div className={styles.skText} />
-                <div className={styles.skTags} />
-                <div className={styles.skMetrics} />
-                <div className={styles.skBtns} />
-              </div>
-              <div className={styles.skeletonRight} />
-            </div>
-          ))
-        ) : error ? (
-          <p className={styles.errorMsg}>{error}</p>
-        ) : filteredStudies.length === 0 ? (
+        {filteredStudies.length === 0 ? (
           <p className={styles.emptyMsg}>No case studies match this filter.</p>
         ) : (
           <>
-            {filteredStudies.map((cs) => {
+            {filteredStudies.map((cs, idx) => {
               const meta = caseStudyMeta[cs.slug] ?? caseStudyMeta[cs.slug?.toLowerCase().trim()];
 
               return (
@@ -253,6 +235,13 @@ export default function Projects() {
                         fill
                         sizes="(max-width: 900px) 92vw, (max-width: 1600px) 48vw, 760px"
                         quality={82}
+                        // First two cards are above the fold: preload eagerly
+                        // (in the initial HTML) instead of lazy-loading.
+                        priority={idx < 2}
+                        // Solid dominant-colour placeholder while the HD image
+                        // downloads — no blur, fades to the full image.
+                        placeholder={cs.blurDataURL ? 'blur' : 'empty'}
+                        blurDataURL={cs.blurDataURL}
                         className={styles.csImg}
                         onError={(e) => { (e.target as HTMLImageElement).src = '/images/aboutus.png'; }}
                       />

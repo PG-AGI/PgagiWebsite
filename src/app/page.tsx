@@ -2,6 +2,11 @@ import Landing from "@/components/organisms/Landing";
 import styles from "@/styles/app/page.module.scss";
 import dynamic from "next/dynamic";
 import LazySection from "@/components/atoms/LazySection";
+import { getRecentLaunchProjects } from "@/services/getRecentLaunchProjects";
+
+// ISR: prerender at build, refresh in the background every hour. Keeps the
+// Recent Launch MongoDB query out of the per-request critical path.
+export const revalidate = 3600;
 
 // ScrollIndicator — UI-only, no SSR needed
 const ScrollIndicator = dynamic(() => import("@/components/atoms/ScrollIndicator"), {
@@ -26,7 +31,9 @@ const RevenueSection = dynamic(() => import("@/components/organisms/RevenueSecti
 const BuildEcosystemSection = dynamic(() => import("@/components/organisms/BuildEcosystemSection"), { ssr: false });
 const SolutionFitBreakdownSection = dynamic(() => import("@/components/organisms/SolutionFitBreakdownSection"), { ssr: false });
 
-export default function Home() {
+export default async function Home() {
+  const recentLaunch = await getRecentLaunchProjects();
+
   return (
     <main className={styles.main}>
       <ScrollIndicator />
@@ -38,7 +45,7 @@ export default function Home() {
           <TrustedPartnersSection />
         </LazySection>
         <LazySection minHeight="1200px">
-          <RecentLaunchSection />
+          <RecentLaunchSection projects={recentLaunch} />
         </LazySection>
         <LazySection minHeight="400px">
           <Customers />

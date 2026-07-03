@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/components/organisms/RecentLaunchSection.module.scss";
@@ -103,76 +103,60 @@ const ProjectCard = ({ project }: { project: Project }) => (
           height={450}
           className={styles.screenshot}
           loading="lazy"
+          placeholder={project.blurDataURL ? "blur" : "empty"}
+          blurDataURL={project.blurDataURL}
         />
       </div>
     </div>
   </div>
 );
 
-// ── Session-storage cache helpers ────────────────────────────────────
-// sessionStorage is cleared when the tab/session closes, so users always
-// get fresh data on a new visit — no stale project risk.
-const SESSION_KEY = (tab: TabId) => `pgagi_projects_${tab}`;
-
-const readSession = (tab: TabId): Project[] | null => {
-  try {
-    const raw = sessionStorage.getItem(SESSION_KEY(tab));
-    return raw ? (JSON.parse(raw) as Project[]) : null;
-  } catch {
-    return null;
-  }
-};
-
-const writeSession = (tab: TabId, data: Project[]) => {
-  try { sessionStorage.setItem(SESSION_KEY(tab), JSON.stringify(data)); } catch {}
-};
-
 // ── Main section ──────────────────────────────────────────────────────
-const RecentLaunchSection = () => {
+// Project data for all three tabs is fetched on the server (see
+// getRecentLaunchProjects) and passed in as a prop. Switching tabs is a pure
+// state toggle over already-loaded data — no fetch, no loading skeleton, no
+// MongoDB round-trip.
+type RecentLaunchSectionProps = {
+  projects: Record<TabId, Project[]>;
+};
+
+const RecentLaunchSection = ({ projects: projectsByTab }: RecentLaunchSectionProps) => {
   const [activeTab, setActiveTab] = useState<TabId>("ai-product");
-  const [projects,  setProjects]  = useState<Project[]>([]);
-  const [loading,   setLoading]   = useState(true);
-  const memCache = useRef<Partial<Record<TabId, Project[]>>>({});
-
-  const fetchProjects = useCallback(async (tab: TabId) => {
-    // Layer 1 — in-memory (component lifetime)
-    if (memCache.current[tab]) {
-      setProjects(memCache.current[tab]!);
-      setLoading(false);
-      return;
-    }
-    // Layer 2 — sessionStorage (survives page navigation, clears on session end)
-    const sessionCached = readSession(tab);
-    if (sessionCached) {
-      memCache.current[tab] = sessionCached;
-      setProjects(sessionCached);
-      setLoading(false);
-      return;
-    }
-    // Layer 3 — network fetch
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/projects?category=${tab}`);
-      if (!res.ok) throw new Error("Failed to fetch projects");
-      const data: Project[] = await res.json();
-      memCache.current[tab] = data;
-      writeSession(tab, data);
-      setProjects(data);
-    } catch (err) {
-      console.error("[RecentLaunchSection]", err);
-      setProjects([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchProjects(activeTab);
-  }, [activeTab, fetchProjects]);
+  const projects = projectsByTab[activeTab] ?? [];
 
   const handleTabChange = (tab: TabId) => {
     setActiveTab(tab);
   };
+
+  // ── Prefetch the other tabs' covers on idle ──────────────────────────
+  // Once the visible tab has settled, quietly warm the inactive tabs' images.
+  // Rendering real (hidden) next/image tags guarantees the warmed URL matches
+  // the optimized URL the visible tab will request, so switching tabs is an
+  // instant cache hit — not a fresh download. Skipped on data-saver / 2G.
+  const [prewarm, setPrewarm] = useState(false);
+  useEffect(() => {
+    const conn = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    if (conn?.saveData || /2g/.test(conn?.effectiveType ?? "")) return;
+
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(() => setPrewarm(true), { timeout: 2500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = setTimeout(() => setPrewarm(true), 1500);
+    return () => clearTimeout(t);
+  }, []);
+
+  const inactiveProjects = prewarm
+    ? (Object.keys(projectsByTab) as TabId[])
+        .filter((t) => t !== activeTab)
+        .flatMap((t) => projectsByTab[t] ?? [])
+    : [];
 
   return (
     <section className={styles.section} id="recent-launch" aria-label="Recent Launch">
@@ -196,28 +180,7 @@ const RecentLaunchSection = () => {
       </div>
 
       {/* ── Cards stack ── */}
-      {loading ? (
-        <div className={styles.cardsStack}>
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className={styles.stickyCard}
-              style={{ ["--card-index" as string]: i, zIndex: i + 1 } as React.CSSProperties}
-            >
-              <div className={styles.cardSkeleton}>
-                <div className={styles.skeletonLeft}>
-                  <div className={styles.skTitle} />
-                  <div className={styles.skText} />
-                  <div className={styles.skTags} />
-                  <div className={styles.skMetrics} />
-                  <div className={styles.skBtns} />
-                </div>
-                <div className={styles.skeletonRight} />
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : projects.length === 0 ? (
+      {projects.length === 0 ? (
         <div className={styles.emptyState}>No projects found in this category.</div>
       ) : (
         <div className={styles.cardsStack}>
@@ -239,6 +202,25 @@ const RecentLaunchSection = () => {
           See all <ArrowRight />
         </Link>
       </div>
+
+      {/* Idle prefetch of inactive tabs' covers — hidden, off-flow, no layout impact. */}
+      {inactiveProjects.length > 0 && (
+        <div
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px", top: 0, width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none" }}
+        >
+          {inactiveProjects.map((p) => (
+            <Image
+              key={`warm-${p.tab}-${p.id}`}
+              src={p.screenshot}
+              alt=""
+              width={720}
+              height={450}
+              loading="eager"
+            />
+          ))}
+        </div>
+      )}
 
     </section>
   );

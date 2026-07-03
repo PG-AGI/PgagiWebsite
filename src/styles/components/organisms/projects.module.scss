@@ -171,6 +171,7 @@ $content-max: 1400px;
   flex-direction: column;
   gap: 1.25rem;           /* gap between the two pill rows */
   box-sizing: border-box;
+  position: relative;     /* anchor for the top-right category dropdown */
 
   @media (max-width: 900px) {
     width: 90vw;
@@ -191,6 +192,19 @@ $content-max: 1400px;
 
   @media (max-width: 600px) {
     gap: 0.625rem;
+  }
+}
+
+/* Forces the tab list to break after the 4th tab on desktop (a full-width,
+   zero-height flex item pushes the rest to the next line). Hidden on mobile
+   so every tab packs into a single continuous wrap. */
+.rowBreak {
+  flex-basis: 100%;
+  height: 0;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 
@@ -231,15 +245,21 @@ $content-max: 1400px;
 .categoryWrap {
   display: flex;
   align-items: center;
-  margin-left: auto;
   border: 1.5px solid #9F0000;
   border-radius: 100px;
   overflow: hidden;
-  position: relative;
   background: #fff;
+  /* Desktop: pin to the top-right of the filter section, aligned with
+     the first tab row. */
+  position: absolute;
+  top: 0;
+  right: 0;
 
+  /* Mobile: flow into the column so it lands last (after both tab rows)
+     and sits on the right edge. */
   @media (max-width: 768px) {
-    margin-left: 0;
+    position: static;
+    align-self: flex-end;
   }
 }
 
@@ -251,10 +271,16 @@ $content-max: 1400px;
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
+
+  @media (max-width: 600px) {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
 }
 
 .categorySelectContainer {
   background: #9f0000;
+  position: relative;   /* anchor for the chevron, independent of .categoryWrap */
 }
 
 .categorySelect {
@@ -270,6 +296,12 @@ $content-max: 1400px;
   appearance: none;
   -webkit-appearance: none;
   min-width: 8.125rem;
+
+  @media (max-width: 600px) {
+    padding: 0.5rem 1.75rem 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    min-width: 6rem;
+  }
 }
 
 .selectArrow {
@@ -279,6 +311,11 @@ $content-max: 1400px;
   color: #444;
   font-size: 0.75rem;
   pointer-events: none;
+
+  @media (max-width: 600px) {
+    top: 0.625rem;
+    right: 0.625rem;
+  }
 }
 
 /* ── Cards list ── */
