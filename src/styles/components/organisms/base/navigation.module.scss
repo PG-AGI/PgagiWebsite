@@ -245,6 +245,7 @@
 
       &.open {
         span {
+          /* dark "X" — the open menu panel is light */
           background-color: #111111;
           &:first-child { transform: translateY(9px) rotate(45deg); }
           &:nth-child(2) { opacity: 0; }
@@ -302,8 +303,11 @@
     box-shadow: none !important;
 
     // When mobile menu is open, rise above the announcement bar (z-1100)
+    // and pin the header row to the very top so the full-screen panel
+    // starts at the same place on every phone (banner or not).
     &.menuOpen {
       z-index: 1200 !important;
+      top: 0 !important;
     }
 
     &.glassEffect {
@@ -334,72 +338,179 @@
       }
     }
 
+    /* ── Full-screen mobile menu ─────────────────────────────────────
+       .links (further down) is the fixed full-viewport dark panel;
+       .mastermenu is the flex column inside it: nav links on top,
+       contact CTA under them, AI×IoT card pinned to the bottom.
+       Fixed rem sizing keeps it identical on every phone. */
     .mastermenu {
       z-index: 2;
+      position: relative;
+      flex: 1 1 auto;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      position: relative;
-      margin: 80px auto 0;
-      width: calc(100% - 48px);
-      max-width: 380px;
-      padding: 8px 16px 20px;
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 24px;
-      border: 1px solid rgba(0, 0, 0, 0.07);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      align-items: stretch;
+      width: 100%;
+      max-width: 26rem;   /* keeps rows readable on phablets/small tablets */
+      margin: 0 auto;
+      padding: 0;
+      background: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .mobileMenuLinks {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
     }
 
     .mobileMenuItem {
-      font-size: 1.15rem;
-      width: 100%;
-      height: auto;
-      padding: 13px 16px;
-      text-align: center;
-      color: #222;
-      border-radius: 10px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      margin-bottom: 4px;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 400;
+      width: 100%;
+      padding: 0.85rem 0.25rem;
+      font-family: 'Plus Jakarta Sans', 'Alexandria', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
       letter-spacing: -0.01em;
-      transition: background 0.2s ease, color 0.2s ease;
+      color: #2a2a35;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(17, 17, 34, 0.08);
+      cursor: pointer;
+      transition: color 0.2s ease;
 
       &:hover {
-        background: rgba(0, 0, 0, 0.05);
-        color: #9F0000;
+        color: #9f0000;
       }
     }
 
+    .mobileMenuItemActive {
+      color: #111118;
+      font-weight: 600;
+      border-left: 3px solid #9f0000;
+      padding-left: 0.75rem;
+    }
+
     .mobileContact {
-      padding: 13px 24px;
-      border-radius: 999px;
-      background: #9F0000;
-      border: none;
-      font-family: 'Alexandria', sans-serif;
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.25s ease-out;
-      color: #fff;
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 12px;
-      width: calc(100% - 8px);
-      max-width: 280px;
       justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: none;
+      margin: 1.25rem 0 1.5rem;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #b50707 0%, #9f0000 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', 'Alexandria', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.25s ease-out, transform 0.25s ease-out;
 
       &:hover {
         background: #7a0000;
         transform: translateY(-1px);
       }
+    }
+
+    /* ── Compact AI×IoT vertical card (moved here from the mobile hero) ──
+       Sits right below the contact CTA (the button's 1.5rem bottom margin
+       is the gap). Dark navy so it pops on the light panel. */
+    .menuVerticalCard {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 1rem 1.1rem;
+      border-radius: 1rem;
+      background: linear-gradient(180deg, #111c38 0%, #0a1226 100%);
+      box-shadow: 0 10px 28px rgba(10, 18, 38, 0.18);
+      overflow: hidden;
+
+      /* same green-fade gradient border as the hero glass card */
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: radial-gradient(136.36% 527.24% at 4.36% -3.09%,
+            #44ff40 0%,
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+    }
+
+    .menuCardTitle {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    .menuCardTitleAccent {
+      color: #c3ffc2;
+    }
+
+    .menuCardDescription {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.72);
+      /* two lines max — keeps the card short on every phone */
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .menuCardCapabilities {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 1rem;
+
+      li {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        line-height: 1.25;
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+
+    .menuCardCta {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.15rem;
+      padding: 0.45rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.1) 100%);
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
     }
 
     .nav {
@@ -463,26 +574,57 @@
       .links {
         position: fixed;
         display: none;
-        top: 0;
-        left: 0;
+        inset: 0;
         width: 100%;
         height: 100dvh;
-        background: rgba(240, 240, 245, 0.88);
-        backdrop-filter: blur(24px) saturate(180%);
-        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        /* light full-screen panel — greyish white */
+        background: rgba(247, 247, 249, 0.97);
+        backdrop-filter: blur(24px) saturate(140%);
+        -webkit-backdrop-filter: blur(24px) saturate(140%);
+        /* the desktop .links rule sets nowrap — restore wrapping for the
+           menu card's description/capabilities */
+        white-space: normal;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         justify-content: flex-start;
-        padding: 0 20px 40px 20px;
+        /* top padding clears the fixed logo/hamburger row (nav is 5.25rem
+           tall and pinned to top:0 while the menu is open) */
+        padding: 6.5rem 1.5rem 0;
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
         z-index: 999;
         overflow-y: auto;
+        overscroll-behavior: contain;
         gap: 0;
         transform: none;
+
+        /* the horizontal desktop links have no place in the overlay */
+        .desktopLinks { display: none; }
       }
 
       .contact { display: none; }
 
       &.open .links { display: flex; }
+
+      /* keep the logo visible above the open panel (hamburger already
+         has z-index 1000); drop the bar's border/shadow while open so
+         no stray line is drawn across the panel */
+      .logo {
+        position: relative;
+        z-index: 1000;
+      }
+
+      &.open {
+        /* neutralise the scrolled glass bar (dark slate) while the light
+           panel is open — the header row must sit flat on the panel */
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+
+        /* white wordmark would vanish on the light panel */
+        .logo p {
+          color: #111118;
+        }
+      }
     }
   }
 }
@@ -492,21 +634,18 @@
     top: 8px;
     width: 100%;
 
-    .mastermenu {
-      top: 72px;
-      left: 8px;
-      right: 8px;
-      padding: 6px;
+    .mobileMenuItem {
+      font-size: 1.1rem;
+      padding: 0.8rem 0.25rem;
     }
 
-    .mobileMenuItem {
-      font-size: 1rem;
-      padding: 12px 16px;
+    .mobileMenuItemActive {
+      padding-left: 0.75rem;
     }
 
     .mobileContact {
-      font-size: 0.95rem;
-      padding: 12px 16px;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.25rem;
     }
 
     .nav {
@@ -529,9 +668,9 @@
       }
 
       .links {
-        padding: 80px 24px 32px 24px;
-
-        a { font-size: 24px; }
+        /* nav bar is 4.25rem tall at this width */
+        padding: 5.75rem 1.25rem 0;
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
       }
     }
   }
@@ -542,21 +681,18 @@
     top: 6px;
     width: 100%;
 
-    .mastermenu {
-      top: 68px;
-      left: 6px;
-      right: 6px;
-      padding: 4px;
+    .mobileMenuItem {
+      font-size: 1.05rem;
+      padding: 0.75rem 0.25rem;
     }
 
-    .mobileMenuItem {
-      font-size: 0.95rem;
-      padding: 11px 14px;
+    .mobileMenuItemActive {
+      padding-left: 0.75rem;
     }
 
     .mobileContact {
       font-size: 0.9rem;
-      padding: 11px 14px;
+      padding: 0.7rem 1.25rem;
     }
 
     .nav {
@@ -578,7 +714,9 @@
       }
 
       .links {
-        padding: 60px 16px 24px 16px;
+        /* nav bar is 4rem tall at this width */
+        padding: 5.5rem 1.25rem 0;
+        padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
       }
     }
 

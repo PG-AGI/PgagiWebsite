@@ -136,12 +136,15 @@
       display: none;
     }
 
-    /* The mobile crop is a 0.7-aspect portrait; phones are 0.45-0.56, so
-       cover always crops ~20-35% of the width. The man+robot pair sits at
-       ~64% of the image width — anchoring at x=80% takes most of that crop
-       from the empty valley on the LEFT, landing the pair at ~55% of the
-       screen (slightly right of centre, same on every phone) with the sun
-       glow kept on the right edge. */
+    /* The mobile crop is a 0.70-aspect portrait (1120×1609, re-cut
+       2026-07-03 with extended sky); phones are 0.45-0.56, so cover always
+       shows the FULL image height and crops only width — figures' heads
+       land at 56% of the screen on every phone (the text block centres in
+       the sky above; see .heroContent). The pair sits at ~53-58% of the
+       image width — anchoring at x=80% takes the width crop mostly from
+       the LEFT, landing the pair near screen centre with the sun kept on
+       the right edge. y=20% only matters on portrait tablets (0.75 aspect),
+       where it trims foreground rocks instead of sky/figures. */
     .heroBgMobile {
       display: block;
       object-position: 80% 20%;
@@ -155,6 +158,9 @@
   background: var(--overlay);
   z-index: 1;
 }
+
+/* NOTE: the CSS crow flock was removed 2026-07-03 — an AI-generated
+   sprite/asset will replace it (user-supplied). */
 
 /* ─── Inner container ─── */
 .heroInner {
@@ -316,8 +322,8 @@
   }
 
   @media (max-width: 768px) {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -658,231 +664,93 @@
         rgba(4, 13, 40, 0) 62%);
   }
 
-  /* heroInner owns the first-viewport height; heroContent grows to fill it */
+  /* heroInner owns the first-viewport height */
   .heroInner {
     min-height: 100svh;
+    /* Nav + banner clearance (both fixed-height overlays) — also the top
+       edge of the "sky zone" the text block centres in below. */
+    --hero-top: 8rem;
+    padding-top: var(--hero-top);
     padding-left: 4vw;
     padding-right: 4vw;
   }
 
+  /* The mobile bg is a 0.70-aspect portrait, taller than every phone, so
+     cover always shows its FULL height — the figures' heads sit at a fixed
+     56% of the viewport on every device (asset re-cut 2026-07-03 to put
+     them there; recipe in _image_backup_hero/make-mobile-crop-v2.js).
+     Centring the fixed-rem text block inside the free sky zone
+     [--hero-top … 56svh] guarantees text never touches the figures: tall
+     phones centre it in the open sky, short phones converge on the
+     top-anchored layout. */
   .heroContent {
-    /* Grow to fill heroInner so the heading centres vertically (heroInner owns
-       the nav-clearance padding; don't double it here). */
-    flex: 1 1 auto;
+    flex: 0 0 auto;
+    height: calc(56svh - var(--hero-top));
     margin-left: 0;
     justify-content: center;
-    gap: 1.1rem;
+    gap: 0.875rem;
   }
 
   .heroHeading {
-    font-size: clamp(2rem, 6vw, 3rem);
-    line-height: 1.15;
+    /* 30px — the largest size that keeps "Building AI Systems" on one line
+       down to ~350px-wide screens */
+    font-size: 1.875rem;
+    line-height: 1.18;
+    letter-spacing: -0.4px;
   }
 
   .heroSubtext {
-    max-width: 16rem;
-    font-size: clamp(0.9rem, 2.4vw, 1.1rem);
+    max-width: 17rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
+  .heroCtaWrapper {
+    /* 1.5rem total gap from the paragraph (0.875 content gap + this) */
+    margin-top: 0.625rem;
+  }
+
+  /* The glass cards are hidden on mobile — the AI×IoT card now lives at
+     the bottom of the full-screen mobile menu (navigation.module.scss),
+     so the hero photo is no longer crowded. */
   .heroCards {
-    margin-top: 0;
-    padding-bottom: 1.25rem;
-  }
-
-  /* Mobile card = single merged glass panel (SS2): title, description,
-     label:value rows, then the CTA. The bordered grid card is dropped.
-     The whole panel is deliberately compact: hero is 100svh, so headline +
-     subtext + CTA + this full card must land inside ONE viewport on every
-     phone — a taller card pushes the hero (and its background photo) past
-     the screen edge. */
-  .cardGrid {
     display: none;
   }
 
-  .cardWide {
-    border-radius: var(--card-radius);
-    gap: 0.65rem;
-    padding: 1rem 1.1rem;
-  }
-
-  .cardTitle {
-    font-size: 1.15rem;
-  }
-
-  .cardDescription {
-    font-size: 0.8rem;
-    line-height: 1.45;
-  }
-
-  .capabilityRows {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    column-gap: 1.25rem;
-    row-gap: 0.45rem;
-    margin: 0;
-    position: relative;
-    z-index: 2;
-  }
-
-  .capabilityLabel,
-  .capabilityValue {
-    margin: 0;
-    font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    line-height: 1.25;
-    color: #ffffff;
-  }
-
-  /* "Explore this vertical" pill — one size down */
-  .cardCta {
-    font-size: 0.78rem;
-    padding: 3px 3px 3px 0.9rem;
-    gap: 0.5rem;
-  }
-
-  .cardCtaArrow {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
-
-  /* Main red CTA — one size down on all phones */
-  .heroCta {
-    font-size: 0.85rem;
-    padding: 6px 10px 6px 20px;
-    gap: 12px;
-  }
-}
-
-@media (max-width: 600px) {
-
-  /* Figma mobile keeps the capabilities visible — stacked under the AI×IoT
-     card as one merged unit (corners handled by the ≤992px rule). */
-  .heroContent {
-    padding-top: 7.5rem;
-    padding-bottom: 2.5rem;
-    gap: 1.25rem;
-  }
-
-  .heroCards {
-    margin-top: 0;
-  }
-
-  .heroHeading {
-    font-size: clamp(2rem, 8.5vw, 2.75rem);
-    line-height: 1.12;
-    letter-spacing: -0.4px;
-    margin-top: 0;
-  }
-
-  .heroSubtext {
-    font-size: clamp(0.875rem, 3.5vw, 1rem);
-    max-width: 15rem;
-  }
-
-  /* Capabilities grid on mobile */
-  .capabilityGrid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: unset;
-    padding: 0;
-  }
-
-  .capabilityCell {
-    padding: 14px 14px;
-    font-size: 0.78rem;
-    white-space: normal;
-    line-height: 1.2;
-    border-right: 1px solid rgba(197, 181, 169, 0.27);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-
-    &:nth-child(2n) {
-      border-right: none;
-    }
-
-    &:nth-last-child(-n+2) {
-      border-bottom: none;
-    }
-  }
-}
-
-/* Extra-small phones */
-@media (max-width: 400px) {
-  .heroContent {
-    padding-top: clamp(4.5rem, 14vh, 6rem);
-    margin-left: 0;
-  }
-
-  .heroHeading {
-    font-size: clamp(1.75rem, 8vw, 2.25rem);
-  }
-
+  /* Main red CTA — compact and FIXED rem sizing (no vw clamps) so it
+     renders identically on every phone. Width trimmed via paddings/gap/
+     arrow only — text size and flex centring stay untouched. */
   .heroCta {
     font-size: 0.8125rem;
+    padding: 4px 5px 4px 14px;
+    gap: 7px;
   }
+
 }
 
-/* Short phones (mobile width AND ≤720px tall) — same height-keyed system as
-   the section compact passes. The 100svh hero has to land nav clearance +
-   headline + subtext + CTA + the card peek inside one short screen: drop the
-   doubled top clearance (heroInner already clears the nav; the ≤600px
-   heroContent padding-top pushed everything further down) and step the type
-   down one notch. Desktop (≥769px) untouched. */
-@media (max-width: 768px) and (max-height: 45rem) {
-  .heroInner {
-    /* Clears the announcement banner (44px) + slim navbar (≈64px) with
-       breathing room below — both fixed elements overlay the hero's top. */
-    padding-top: 8rem;
-    padding-bottom: 1rem;
-  }
+/* NOTE: the former ≤600px / ≤400px width-keyed hero passes are gone on
+   purpose — mobile hero type & spacing are fixed rem values (≤768px block
+   above) so the composition is identical on every phone. The single
+   exception below is height-keyed. */
 
-  .heroContent {
-    padding-top: 0;
-    padding-bottom: 1rem;
-    gap: 0.8rem;
+/* Sub-600px-tall phones (old iPhone SE class): the sky zone
+   [--hero-top … 56svh] shrinks below the ~217px text block, so step the
+   type down one notch to keep the text off the figures there too. */
+@media (max-width: 768px) and (max-height: 600px) {
+  .heroInner {
+    --hero-top: 7.5rem;
   }
 
   .heroHeading {
-    font-size: clamp(1.7rem, 7.5vw, 2.1rem);
-    line-height: 1.14;
+    font-size: 1.625rem;
   }
 
   .heroSubtext {
-    font-size: 0.85rem;
-    max-width: 15rem;
+    font-size: 0.875rem;
   }
 
-  .heroCta {
-    font-size: 0.8rem;
-    padding: 6px 10px 6px 20px;
-    gap: 12px;
-  }
-
-  .heroCards {
-    padding-bottom: 0.75rem;
-  }
-
-  /* The glass card gives up its last slack on very short screens. */
-  .cardWide {
-    padding: 0.85rem 1rem;
-    gap: 0.55rem;
-  }
-
-  .cardTitle {
-    font-size: 1.05rem;
-  }
-
-  .cardDescription {
-    font-size: 0.78rem;
-    line-height: 1.4;
-  }
-
-  .capabilityRows {
-    row-gap: 0.35rem;
-  }
-
-  .capabilityLabel,
-  .capabilityValue {
-    font-size: 0.78rem;
+  .heroCtaWrapper {
+    margin-top: 0.375rem;
   }
 }
 
