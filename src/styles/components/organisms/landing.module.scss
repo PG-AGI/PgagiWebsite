@@ -507,30 +507,6 @@
   position: relative;
   display: inline-block;
   align-self: flex-start;
-
-  &::after {
-    content: "Coming Soon";
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    background: rgba(0, 0, 0, 0.82);
-    color: #fff;
-    padding: 5px 14px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.18s ease, transform 0.18s ease;
-  }
-
-  &:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
 }
 
 

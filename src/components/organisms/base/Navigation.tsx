@@ -224,14 +224,15 @@ export default function Navigation() {
                     <li key={label}>{label}</li>
                   ))}
                 </ul>
-                <button
-                  type="button"
+                <TransitionLink
+                  href={ROUTES.EXPERTISE_VERTICAL("ai-iot")}
                   className={styles.menuCardCta}
-                  aria-label={landingText.verticalCard.ctaAriaLabel}
+                  ariaLabel={landingText.verticalCard.ctaAriaLabel}
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   <span>{landingText.verticalCard.ctaLabel}</span>
                   <ArrowRight size={14} />
-                </button>
+                </TransitionLink>
               </article>
             </div>
           )}

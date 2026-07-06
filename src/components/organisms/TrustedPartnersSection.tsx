@@ -30,6 +30,15 @@ const partners: Partner[] = [
     url: "https://www.social27.com/",
   },
   {
+    name: "Dr. Ana Cukic-Armstrong",
+    logo: "/assets/Customers/anaArmstrong.webp",
+    // A person's headshot, not a brand logo — render as a circular avatar.
+    isPerson: true,
+    blurb:
+      "Award-winning CEO Dr. Ana Cukic-Armstrong, Ph.D is a hedge fund manager, entrepreneur and the Chief Executive Officer of Armstrong Investment Managers LLP, an FCA licensed Financial Institution. Dr. Cukic-Armstrong led the portfolio construction at UBS Wealth Management, one of the world's largest banks with assets CHF1.062 trillion (2014) and the multi-asset group at Insight Investment.",
+    url: "https://www.awardwinningceo.com/ana-armstrong",
+  },
+  {
     name: "Hire Extra",
     logo: "/assets/partners/hireextra (1).png",
     blurb:
@@ -98,15 +107,6 @@ const partners: Partner[] = [
     blurb:
       "Curated vacation villas and apartments across Sardinia, with full booking and property management.",
     url: "https://www.sardiniaunlimited.com/?__cf_chl_f_tk=fcZwvWOtcTHXftMNMUaoQ9aEECDT3Fxz.j6J.X1Pjog-1782839044-1.0.1.1-Se0hLrh0lHV0giSJ9O3raMLOeG0mbGIHhnjBxO6M3og",
-  },
-  {
-    name: "Dr. Ana Cukic-Armstrong",
-    logo: "/assets/Customers/anaArmstrong.webp",
-    // A person's headshot, not a brand logo — render as a circular avatar.
-    isPerson: true,
-    blurb:
-      "Award-winning CEO Dr. Ana Cukic-Armstrong, Ph.D is a hedge fund manager, entrepreneur and the Chief Executive Officer of Armstrong Investment Managers LLP, an FCA licensed Financial Institution. Dr. Cukic-Armstrong led the portfolio construction at UBS Wealth Management, one of the world's largest banks with assets CHF1.062 trillion (2014) and the multi-asset group at Insight Investment.",
-    url: "https://www.awardwinningceo.com/ana-armstrong",
   },
 ];
 
