@@ -521,6 +521,7 @@ $content-max: 1400px;
 }
 
 .btnPrimary {
+  position: relative;                                /* anchor for the spinner */
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -540,6 +541,51 @@ $content-max: 1400px;
     text-decoration: none;
     color: #fff;
   }
+
+  /* While navigating, keep the button's box intact but hide the label so the
+     centred spinner is the only thing visible. */
+  &[aria-busy='true'] {
+    cursor: progress;
+
+    &:hover {
+      transform: none;                               /* stay put once clicked */
+    }
+  }
+}
+
+/* Wraps the label + arrow so we can hide it (without collapsing the button)
+   the moment the spinner appears. */
+.btnLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .btnPrimary[aria-busy='true'] & {
+    visibility: hidden;
+  }
+}
+
+/* Circular loader, centred inside the button. Sized in `em` so it scales with
+   the button's font-size and never outgrows the button — including mobile. */
+.btnSpinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.05em;
+  height: 1.05em;
+  margin: -0.525em 0 0 -0.525em;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btnSpin 0.6s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 1.2s;
+  }
+}
+
+@keyframes btnSpin {
+  to { transform: rotate(360deg); }
 }
 
 .btnSecondary {
@@ -571,120 +617,8 @@ $content-max: 1400px;
 
 /* ─────────────────────────────────────────────────────────────────
    FIX 5: CTA Section — "See what your AI product could become"
+   Moved to productVisionCta.module.scss (shared <ProductVisionCta />).
    ───────────────────────────────────────────────────────────────── */
-.ctaSection {
-  width: 100%;
-  padding: 10vh 0 12vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1.25rem;
-  box-sizing: border-box;
-
-  @media (max-width: 900px) {
-    padding: 8vh 5vw 10vh;
-    gap: 1.125rem;
-  }
-
-  @media (max-width: 600px) {
-    padding: 7vh 6vw 9vh;
-    gap: 1rem;
-  }
-}
-
-.ctaTitle {
-  font-size: clamp(2rem, 4vw, 3.8rem);
-  font-weight: 800;
-  color: #111;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  max-width: 45rem;
-  margin: 0;
-
-  @media (max-width: 600px) {
-    font-size: clamp(1.7rem, 6vw, 2.4rem);
-  }
-}
-
-.ctaSubtitle {
-  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
-  color: #666;
-  line-height: 1.65;
-  max-width: 31.25rem;
-  margin: 0;
-}
-
-.ctaButtons {
-  display: flex;
-  gap: 0.875rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 0.75rem;
-}
-
-.ctaBtnPrimary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.875rem 0.875rem 0.875rem 1.75rem;
-  background: #9F0000;
-  color: #fff;
-  border-radius: 100px;
-  font-size: clamp(0.9rem, 1vw, 1rem);
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.2s;
-  white-space: nowrap;
-
-  &:hover {
-    background: #7a0000;
-    transform: translateY(-2px);
-    color: #fff;
-    text-decoration: none;
-  }
-}
-
-/* Circle arrow on the right side of the primary CTA button */
-.ctaBtnArrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.125rem;
-  height: 2.125rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
-  font-size: 1rem;
-  flex-shrink: 0;
-  transition: background 0.2s;
-
-  .ctaBtnPrimary:hover & {
-    background: rgba(255, 255, 255, 0.28);
-  }
-}
-
-.ctaBtnSecondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
-  background: #fff;
-  color: #222;
-  border-radius: 100px;
-  border: 1.5px solid #d4d4d4;
-  font-size: clamp(0.9rem, 1vw, 1rem);
-  font-weight: 600;
-  text-decoration: none;
-  transition: border-color 0.2s, color 0.2s, transform 0.2s;
-  white-space: nowrap;
-
-  &:hover {
-    border-color: #9F0000;
-    color: #9F0000;
-    transform: translateY(-2px);
-    text-decoration: none;
-  }
-}
 
 .greenDot {
   width: 0.5rem;

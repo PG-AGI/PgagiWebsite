@@ -352,8 +352,25 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+  text-decoration: none; // harmless on the <span>; keeps the <a> variant clean
 
   svg { flex-shrink: 0; color: #9F0000; opacity: 1; }
+}
+
+/* Linked footer variant (client site). Resting look is identical to the plain
+   footer above — only the hover/focus affordance is added, so the card matches
+   every other card until you interact with it. */
+a.footerProject {
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover { color: #9F0000; }
+
+  &:focus-visible {
+    outline: 2px solid rgba(159, 0, 0, 0.4);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
 }
 
 /* ─── Horizontal marquee ───────────────────────────────────────────── */

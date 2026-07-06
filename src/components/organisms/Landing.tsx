@@ -4,6 +4,8 @@ import bgImageMobile from "../../../public/hero-sunset-mobile.webp";
 import styles from "@/styles/components/organisms/landing.module.scss";
 import landingText from "@/constants/uiText/landing.json";
 import EXTERNAL_LINKS from "@/constants/externalLinks";
+import ROUTES from "@/constants/routes";
+import TransitionLink from "@/components/atoms/TransitionLink";
 import {
   AnnouncementBar,
   type AnnouncementProject,
@@ -131,16 +133,16 @@ export default function Landing() {
             </dl>
 
             <div className={styles.cardCtaWrapper}>
-              <button
-                type="button"
+              <TransitionLink
+                href={ROUTES.EXPERTISE_VERTICAL("ai-iot")}
                 className={styles.cardCta}
-                aria-label={landingText.verticalCard.ctaAriaLabel}
+                ariaLabel={landingText.verticalCard.ctaAriaLabel}
               >
                 <span>{landingText.verticalCard.ctaLabel}</span>
                 <span className={styles.cardCtaArrow} aria-hidden="true">
                   <ArrowRightIcon />
                 </span>
-              </button>
+              </TransitionLink>
             </div>
           </article>
 

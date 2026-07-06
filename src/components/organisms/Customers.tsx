@@ -17,8 +17,12 @@ const platformLogos = {
 const allTestimonials = pgagiClientTestimonials.map((t, i) => ({
   id: i + 1,
   name: t.name.trim() || t.company.trim() || "Client",
-  company: t.company.trim(),
-  role: t.projectName.trim(),
+  // Secondary line under the name: role/title when given, else the company.
+  subline: (t.position?.trim() || t.company.trim()),
+  // Footer label: the company name when it carries an outbound link, else the
+  // project name (legacy cards). Its icon becomes clickable when a URL exists.
+  footerLabel: (t.companyUrl ? t.company.trim() : t.projectName.trim()),
+  footerUrl: t.companyUrl?.trim() ?? "",
   quote: t.quote.trim(),
   platform: (t.platform ?? "upwork") as "upwork" | "clutch",
   memberImage: t.memberImage ?? "",
@@ -85,6 +89,9 @@ type CardTestimonial = (typeof allTestimonials)[number];
 
 const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
   const logo = platformLogos[t.platform];
+  // Internal case studies (relative paths) open in the same tab; external
+  // sites open in a new tab. The URL always comes from the data, never hardcoded.
+  const caseStudyIsInternal = t.caseStudyUrl.startsWith("/");
   return (
     <div className={styles.card}>
       <p className={styles.quote}>&ldquo;{t.quote}&rdquo;</p>
@@ -92,8 +99,9 @@ const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
       {t.caseStudyUrl ? (
         <a
           href={t.caseStudyUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(caseStudyIsInternal
+            ? {}
+            : { target: "_blank", rel: "noopener noreferrer" })}
           className={styles.caseStudyBtn}
         >
           View case study <span aria-hidden>→</span>
@@ -122,7 +130,7 @@ const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
         </span>
         <div className={styles.nameBlock}>
           <p className={styles.name}>{t.name}</p>
-          {t.company && <p className={styles.company}>{t.company}</p>}
+          {t.subline && <p className={styles.company}>{t.subline}</p>}
         </div>
       </div>
 
@@ -132,10 +140,23 @@ const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
         <span className={styles.footerPlatform}>
           <Image src={logo.src} alt={logo.name} width={72} height={22} className={styles.footerLogo} />
         </span>
-        <span className={styles.footerProject}>
-          {t.role}&nbsp;
-          <FiExternalLink size={13} aria-hidden />
-        </span>
+        {t.footerUrl ? (
+          <a
+            href={t.footerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.footerProject}
+            aria-label={`Open ${t.footerLabel} website in a new tab`}
+          >
+            {t.footerLabel}&nbsp;
+            <FiExternalLink size={13} aria-hidden />
+          </a>
+        ) : (
+          <span className={styles.footerProject}>
+            {t.footerLabel}&nbsp;
+            <FiExternalLink size={13} aria-hidden />
+          </span>
+        )}
       </div>
     </div>
   );

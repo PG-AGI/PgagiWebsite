@@ -12,9 +12,45 @@ export type PgagiClientReview = {
   platform?: "upwork" | "clutch";
   memberImage?: string;
   caseStudyUrl?: string;
+  /** Secondary line under the name. When set, it replaces `company` in the
+   *  person block (used for role/title, e.g. "CEO"). Falls back to `company`. */
+  position?: string;
+  /** When set, the footer label + external-link icon become a clickable link
+   *  to this URL, and the footer shows the `company` name instead of the
+   *  project name. Used to point at the client's own site/profile. */
+  companyUrl?: string;
 };
 
 export const pgagiClientTestimonials: PgagiClientReview[] = [
+  {
+    name: "Dr. Ana Cukic-Armstrong",
+    position: "CEO",
+    company: "Armstrong Investment Managers LLP",
+    country: "",
+    platform: "upwork",
+    gender: "female",
+    memberImage: "/assets/Customers/anaArmstrong.webp",
+    caseStudyUrl: "/case-study/aimi-brain-real-time-financial-intelligence",
+    companyUrl: "https://www.awardwinningceo.com/ana-armstrong",
+    // Truncated to fit the card's 3-line clamp without changing its size.
+    quote:
+      "Working with PGAGI has been an outstanding experience. They delivered an excellent RAG solution ........",
+    projectName: "AIMI Brain – Real-Time Financial Intelligence",
+  },
+  {
+    name: "Mohit Basil",
+    position: "Founder",
+    company: "Rimolinx Technology Ltd",
+    country: "",
+    platform: "upwork",
+    gender: "male",
+    caseStudyUrl: "/case-study/mirror-me-ai-virtual-try-on",
+    companyUrl: "https://mirrormeapp.in/",
+    // Truncated to fit the card's 3-line clamp without changing its size.
+    quote:
+      "We had an excellent experience working with this software company. They understood our requirements ........",
+    projectName: "Mirror Me AI – Virtual Try-On",
+  },
   {
     name: "Pascal",
     company: "",

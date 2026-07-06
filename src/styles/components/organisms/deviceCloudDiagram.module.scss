@@ -1,0 +1,301 @@
+/* ─────────────────────────────────────────────────────────────────
+   Device-to-Cloud diagram (Figma 2003:11343).
+   The blue box is a container-query context; nodes/labels are sized in
+   `cqw` and placed in `%`, so the illustration keeps its exact Figma
+   proportions (reference 1280 × 623) at any width. Desktop-first.
+   ───────────────────────────────────────────────────────────────── */
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 1.5625rem); /* 25px block ↔ caption */
+}
+
+.topBlock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.6vw, 1.25rem); /* 20px eyebrow ↔ box */
+}
+
+/* ── Eyebrow: 32×2 bar + uppercase label ── */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrowBar {
+  width: 32px;
+  height: 2px;
+  background: #2c2c2c;
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.6875rem; /* 11px */
+  line-height: 1.5;
+  letter-spacing: 0.18em; /* 1.98px on 11px */
+  text-transform: uppercase;
+  color: #2c2c2c;
+  white-space: nowrap;
+}
+
+/* ── Blue diagram box ── */
+.box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 623;
+  background: #46a9ff;
+  border: 1px solid #dfdcd5;
+  border-radius: 24px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.fastPath {
+  position: absolute;
+  z-index: 2;
+  top: 6%;
+  left: 57.5%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.9cqw; /* 24.3px / 1280 */
+  letter-spacing: -0.02em;
+  color: #111111;
+}
+
+/* ── Nodes ── */
+.node {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.55cqw;
+  padding: 0.5cqw 0.75cqw;
+  border-radius: 1.54cqw; /* 19.711px / 1280 */
+  /* Gentle lift the moment the incoming line reaches this box.
+     animation-delay is set per node (inline) = its glowDelay. */
+  animation: dcNodeLift 5s ease-in-out infinite;
+}
+
+/* Soft ring/halo that fades in with the lift. Separate element so it never
+   fights each variant's own base shadow. Inherits the node's delay. */
+/* Soft ring/halo that fades in with the lift — white ring + blue glow.
+   Separate element so it never fights each variant's base shadow. */
+.node::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 0 2.5px rgba(255, 255, 255, 0.65),
+    0 0 16px 2px rgba(74, 108, 247, 0.5),
+    0 8px 22px rgba(0, 0, 0, 0.18);
+  animation: dcNodeGlow 5s ease-in-out infinite;
+  animation-delay: inherit;
+}
+
+@keyframes dcNodeLift {
+  0% { transform: scale(1); }
+  4% { transform: scale(1.035); }
+  16%, 100% { transform: scale(1); }
+}
+
+@keyframes dcNodeGlow {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  12% { opacity: 1; }
+  20%, 100% { opacity: 0; }
+}
+
+/* ── Connectors ──
+   Base pipe sits dim; a bright highlight draws L→R over it, in sequence. */
+.baseConnectors {
+  opacity: 0.3;
+}
+
+.sweepBlue line,
+.sweepGreen line {
+  stroke-dasharray: 1 1;   /* pathLength=1 → one dash spans the whole segment */
+  stroke-dashoffset: 1;    /* start hidden */
+  opacity: 0;
+  animation: dcLineSweep 5s linear infinite;
+}
+
+.sweepBlue line {
+  filter: drop-shadow(0 0 2px rgba(74, 108, 247, 0.85));
+}
+
+.sweepGreen line {
+  filter: drop-shadow(0 0 2px rgba(34, 197, 94, 0.7));
+}
+
+/* Draw in from left (offset 1 → 0), hold lit, then fade — the leading edge
+   "arrives" at the box at 10% (0.5s in), which is when that box lights. */
+@keyframes dcLineSweep {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  3% { opacity: 1; }
+  10% { stroke-dashoffset: 0; opacity: 1; }
+  16% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 1; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node,
+  .node::after,
+  .sweepBlue line,
+  .sweepGreen line {
+    animation: none;
+  }
+  .baseConnectors { opacity: 1; } /* show the full static pipe */
+  .node::after,
+  .sweepBlue line,
+  .sweepGreen line { opacity: 0; }
+}
+
+/* Positioning context for the scroll hint (arrow stays at the visible edge). */
+.boxWrap {
+  position: relative;
+  width: 100%;
+}
+
+/* Wrapper: passthrough on desktop, horizontal swipe-scroll on phones. */
+.boxScroll {
+  width: 100%;
+}
+
+/* Scroll affordance — hidden on desktop; a nudging chevron on phones. */
+.scrollHint {
+  display: none;
+}
+
+@keyframes dcScrollNudge {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-50%) translateX(4px); }
+}
+
+/* ── Mobile: the diagram keeps its horizontal composition; swipe to see the
+   full flow. Internal text is bumped up so it stays legible at the scroll
+   width instead of being squished. ── */
+@media (max-width: 768px) {
+  .boxScroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem; /* room for the scrollbar */
+  }
+  .box {
+    min-width: 43rem; /* ~688px — legible; user swipes horizontally */
+  }
+  .nodeTitle { font-size: 2.05cqw; }
+  .nodeTitleSm { font-size: 1.9cqw; }
+  .nodeSub { font-size: 1.5cqw; }
+  .fastPath { font-size: 2.35cqw; }
+  .caption { font-size: 0.8rem; line-height: 1.6; }
+  .eyebrowText { font-size: 0.625rem; }
+
+  .scrollHint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
+    pointer-events: none; /* never blocks the swipe */
+    z-index: 3;
+    animation: dcScrollNudge 1.4s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollHint { animation: none; }
+}
+
+.nodeTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1.54cqw; /* 19.711px */
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.nodeTitleSm {
+  font-size: 1.43cqw; /* 18.303px — Alerts / Dashboards */
+}
+
+.nodeSub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.1cqw; /* 14.08px */
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* Variants */
+.nodeDark {
+  background: #1c1c1c;
+  .nodeTitle { color: #ffffff; }
+  .nodeSub { color: #ffffff; }
+}
+
+.nodeCream {
+  background: #fffbef;
+  .nodeTitle { color: #3b3b9e; }
+  .nodeSub { color: #5555aa; }
+}
+
+.nodeWhite {
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  .nodeTitle { color: #1a1a1a; }
+  .nodeSub { color: #6b7280; }
+}
+
+.nodeWhiteAlt {
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  .nodeTitle { color: #16a34a; }
+  .nodeSub { color: #6b7280; }
+}
+
+/* ── Caption ── */
+.caption {
+  margin: 0;
+  max-width: 64rem; /* 1024px */
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.875rem); /* 14px */
+  line-height: 1.625;
+  color: #374151;
+
+  strong {
+    font-weight: 700;
+  }
+}

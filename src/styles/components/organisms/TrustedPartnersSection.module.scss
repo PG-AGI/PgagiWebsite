@@ -220,6 +220,23 @@ $hover-bg: #f8f4f1;
   }
 }
 
+/* A person's headshot (not a brand logo): render as a circular avatar that
+   fills the logo row height, so it reads as intentional and stays aligned
+   with the other cards' logos. `object-fit: cover` keeps the face centered. */
+.avatarLogo {
+  width: 2.875rem !important;
+  height: 2.875rem !important;
+  max-width: none;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+
+  @media (max-width: 600px) {
+    width: 2.625rem !important;
+    height: 2.625rem !important;
+  }
+}
+
 /* arrow — top right. Bare glyph (no circle), brand red (matches the
    "View case study" CTA). Slides diagonally out on hover. */
 .arrowWrap {

@@ -7,8 +7,8 @@ import Image from 'next/image';
 import styles from '@/styles/components/organisms/projects.module.scss';
 import { getSafeImageUrl } from '@/utils/imageUtils';
 import ROUTES from '@/constants/routes';
-import EXTERNAL_LINKS from '@/constants/externalLinks';
 import caseStudyMeta, { FILTER_TABS, CATEGORIES, type FilterTab } from '@/data/caseStudyMeta';
+import ProductVisionCta from './ProductVisionCta';
 
 const ArrowUpRight = () => (
   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -63,6 +63,9 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
   );
   const [activeTab, setActiveTab] = useState<FilterTab>('Show All');
   const [activeCategory, setActiveCategory] = useState('All Categories');
+  // Tracks which card's "View case study" link was clicked so we can show a
+  // spinner while Next.js navigates to the (slower) case-study page.
+  const [loadingSlug, setLoadingSlug] = useState<string | null>(null);
 
   const filteredStudies = useMemo(() => {
     let result = [...caseStudies].reverse();
@@ -208,8 +211,18 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                     )}
 
                     <div className={styles.actions}>
-                      <Link href={ROUTES.CASE_STUDY_SLUG(cs.slug)} className={styles.btnPrimary}>
-                        View case study <ArrowUpRight />
+                      <Link
+                        href={ROUTES.CASE_STUDY_SLUG(cs.slug)}
+                        className={styles.btnPrimary}
+                        aria-busy={loadingSlug === cs.slug}
+                        onClick={() => setLoadingSlug(cs.slug)}
+                      >
+                        <span className={styles.btnLabel}>
+                          View case study <ArrowUpRight />
+                        </span>
+                        {loadingSlug === cs.slug && (
+                          <span className={styles.btnSpinner} aria-hidden="true" />
+                        )}
                       </Link>
                       {meta?.liveUrl && (
                         <a href={meta.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
@@ -256,25 +269,8 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
       </div>
       </div>{/* /cardsOuter */}
 
-      {/* ── Fix 5: CTA section — before footer ── */}
-      <div className={styles.ctaSection}>
-        <h2 className={styles.ctaTitle}>
-          See what your AI product<br />could become
-        </h2>
-        <p className={styles.ctaSubtitle}>
-          Work with a team focused on architecture,<br />
-          execution, and scalable AI systems.
-        </p>
-        <div className={styles.ctaButtons}>
-          <a href={EXTERNAL_LINKS.CALENDLY_BOOKING} target="_blank" rel="noopener noreferrer" className={styles.ctaBtnPrimary}>
-            Start Your Project
-            <span className={styles.ctaBtnArrow}>→</span>
-          </a>
-          <a href={EXTERNAL_LINKS.CALENDLY_BOOKING} target="_blank" rel="noopener noreferrer" className={styles.ctaBtnSecondary}>
-            Book a Strategy Call
-          </a>
-        </div>
-      </div>
+      {/* ── Fix 5: CTA section — before footer (shared component) ── */}
+      <ProductVisionCta />
     </div>
   );
 }

@@ -10,6 +10,7 @@ interface TransitionLinkProps {
   className?: string;
   onClick?: () => void;
   prefetch?: boolean;
+  ariaLabel?: string;
 }
 
 export default function TransitionLink({
@@ -18,6 +19,7 @@ export default function TransitionLink({
   className,
   onClick,
   prefetch = false,
+  ariaLabel,
 }: TransitionLinkProps): JSX.Element {
   const router = useRouter();
 
@@ -68,6 +70,7 @@ export default function TransitionLink({
       className={className}
       onClick={handleClick}
       prefetch={prefetch}
+      aria-label={ariaLabel}
     >
       {children}
     </Link>

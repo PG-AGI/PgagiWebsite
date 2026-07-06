@@ -1,0 +1,41 @@
+/* ─────────────────────────────────────────────────────────────────
+   Section intro — heading + paragraph (Figma 2003:11339).
+   Heading uses the shared 40px "Clay heading cap" for page-wide
+   consistency with every other landing-section title.
+   ───────────────────────────────────────────────────────────────── */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.heading {
+  margin: 0;
+  max-width: 48rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem); /* Clay heading cap: 40px */
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: #1d283f;
+}
+
+.body {
+  margin: 0;
+  max-width: 55rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.9rem, 0.95vw, 0.98rem); /* landing body scale */
+  line-height: 1.65;
+  color: #2c2c2c;
+}
+
+/* ── Mobile: fixed-rem type ── */
+@media (max-width: 768px) {
+  .heading { font-size: 1.6rem; }
+  .body { font-size: 0.9rem; line-height: 1.6; }
+}
+
+@media (max-width: 400px), (max-width: 768px) and (max-height: 45rem) {
+  .heading { font-size: 1.45rem; }
+}

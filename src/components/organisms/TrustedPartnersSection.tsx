@@ -10,9 +10,18 @@ import { FRAMER_EASE, MOTION_DURATION, MOTION_STAGGER } from "@/lib/motion";
  * Trusted partners.
  * Each blurb is kept to ~2 lines for a clean, even grid (Figma 1897:3827).
  * Cards open the partner site in a new tab. A "#" url (none currently)
- * would render as a non-clickable card.
+ * would render as a non-clickable card. `isPerson` renders the image as a
+ * circular headshot avatar instead of a wide brand logo.
  */
-const partners = [
+type Partner = {
+  name: string;
+  logo: string;
+  blurb: string;
+  url: string;
+  isPerson?: boolean;
+};
+
+const partners: Partner[] = [
   {
     name: "Social 27",
     logo: "/assets/partners/social27 (1).png",
@@ -89,6 +98,15 @@ const partners = [
     blurb:
       "Curated vacation villas and apartments across Sardinia, with full booking and property management.",
     url: "https://www.sardiniaunlimited.com/?__cf_chl_f_tk=fcZwvWOtcTHXftMNMUaoQ9aEECDT3Fxz.j6J.X1Pjog-1782839044-1.0.1.1-Se0hLrh0lHV0giSJ9O3raMLOeG0mbGIHhnjBxO6M3og",
+  },
+  {
+    name: "Dr. Ana Cukic-Armstrong",
+    logo: "/assets/Customers/anaArmstrong.webp",
+    // A person's headshot, not a brand logo — render as a circular avatar.
+    isPerson: true,
+    blurb:
+      "Award-winning CEO Dr. Ana Cukic-Armstrong, Ph.D is a hedge fund manager, entrepreneur and the Chief Executive Officer of Armstrong Investment Managers LLP, an FCA licensed Financial Institution. Dr. Cukic-Armstrong led the portfolio construction at UBS Wealth Management, one of the world's largest banks with assets CHF1.062 trillion (2014) and the multi-asset group at Insight Investment.",
+    url: "https://www.awardwinningceo.com/ana-armstrong",
   },
 ];
 
@@ -167,9 +185,11 @@ const TrustedPartnersSection = () => {
                     <Image
                       src={partner.logo}
                       alt={partner.name}
-                      width={180}
-                      height={60}
-                      className={styles.logo}
+                      width={partner.isPerson ? 96 : 180}
+                      height={partner.isPerson ? 96 : 60}
+                      className={`${styles.logo}${
+                        partner.isPerson ? ` ${styles.avatarLogo}` : ""
+                      }`}
                       loading="lazy"
                     />
                   </div>

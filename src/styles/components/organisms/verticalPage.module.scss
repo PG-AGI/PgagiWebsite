@@ -1,0 +1,68 @@
+/* ─────────────────────────────────────────────────────────────────
+   Vertical landing page (/expertise/[vertical]) shell.
+   Sections sit on the shared 77.5rem "Clay rail", centered, with fluid
+   gutters — uniform width with every other landing section.
+   ───────────────────────────────────────────────────────────────── */
+.main {
+  width: 100%;
+  overflow-x: clip;
+  background: #ffffff;
+}
+
+/* "How we build it" block: intro + device-to-cloud diagram + feature cards.
+   Horizontal gutter matches the home page's .sectionsWrapper so content lines
+   up with every landing section (Recent Launch, etc.). */
+.buildSection {
+  width: 100%;
+  padding: clamp(4rem, 10vh, 7rem) clamp(2.5rem, 7vw, 9rem);
+  box-sizing: border-box;
+}
+
+/* "Practical Use Cases" — top spacing comes from buildSection's bottom padding. */
+.useCasesSection {
+  width: 100%;
+  padding: 0 clamp(2.5rem, 7vw, 9rem) clamp(4rem, 10vh, 7rem);
+  box-sizing: border-box;
+}
+
+/* Same content rail as Recent Launch: capped at 77.5rem, centered, no inner
+   padding (the gutter lives on the section above). */
+.rail {
+  width: min(77.5rem, 100%); /* Clay rail — 1240px */
+  margin-inline: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vh, 3.5rem);
+}
+
+/* ── Mobile: page-wide rhythm token + tighter gutters (mirrors the home page) ── */
+.main {
+  @media (max-width: 768px) {
+    --section-space: 3rem;
+  }
+  // Short / small phones: a touch tighter, same as the landing.
+  @media (max-width: 768px) and (max-height: 45rem) {
+    --section-space: 2.5rem;
+  }
+  @media (max-width: 400px) {
+    --section-space: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .buildSection {
+    padding: var(--section-space, 3rem) clamp(1.25rem, 4vw, 2rem);
+  }
+  .useCasesSection {
+    padding: 0 clamp(1.25rem, 4vw, 2rem) var(--section-space, 3rem);
+  }
+  .rail {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .buildSection { padding-inline: 1rem; }
+  .useCasesSection { padding-inline: 1rem; }
+}
