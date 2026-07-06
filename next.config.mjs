@@ -53,9 +53,20 @@ const nextConfig = {
     // gsap removed — it's dynamically imported in useEffect, so static tree-shaking has no effect
     optimizePackageImports: [
       '@radix-ui/react-hover-card',
-       'lucide-react',    
-       'gsap',            
+       'lucide-react',
+       'gsap',
     ],
+    // Keep the 366MB /public folder OUT of serverless function bundles.
+    // src/services/imagePlaceholder.ts reads `path.join(process.cwd(), 'public', coverImage)`
+    // with a runtime variable; @vercel/nft can't resolve it statically, so it defensively
+    // traces ALL of /public into every route that imports it (via getRecentLaunchProjects /
+    // getCaseStudies), pushing index.rsc to 401MB (> Vercel's 250MB limit).
+    // This only affects what's COPIED into the function — build-time SSG still reads /public
+    // off disk and bakes in the correct dominant-colour placeholders. On ISR revalidation the
+    // read misses and coverPlaceholder's try/catch falls back to a neutral tint (graceful).
+    outputFileTracingExcludes: {
+      '*': ['public/**'],
+    },
   },
   headers: async () => [
     // Security headers — all routes
