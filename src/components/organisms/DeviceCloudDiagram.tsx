@@ -140,11 +140,6 @@ export default function DeviceCloudDiagram() {
           ))}
         </div>
         </div>
-          <span className={styles.scrollHint} aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A6CF7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 6l6 6-6 6" />
-            </svg>
-          </span>
         </div>
       </div>
 

@@ -1,42 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/styles/components/organisms/expertise.module.scss';
-import { generateSlug } from '@/services/generateSlugService';
-import { getSafeImageUrl } from '@/utils/imageUtils';
-import Marquee from 'react-fast-marquee';
-import Calendly from './Calendly';
-import { fetchAllBlogs } from '@/services/blogService';
-import { fetchAllAINews } from '@/services/ainewsService';
-import ROUTES from '@/constants/routes';
-import { getErrorMessage } from '@/utils/errorUtils';
-
-type Blog = {
-  id: string;
-  title: string;
-  coverImage: string;
-  readTime: string;
-  category: string
-};
-type News = {
-  id: string;
-  title: string;
-  coverImage: string;
-  readTime: string;
-  category: string
-};
+import ProductVisionCta from './ProductVisionCta';
 
 export default function Expertise() {
   const [activeSection, setActiveSection] = useState(1);
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loadingBlogs, setLoadingBlogs] = useState<boolean>(false);
-  const [errorBlogs, setErrorBlogs] = useState<string>('');
-  const [news, setNews] = useState<News[]>([]);
-  const [loadingNews, setLoadingNews] = useState<boolean>(false);
-  const [errorNews, setErrorNews] = useState<string>('');
-  const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -167,57 +137,49 @@ export default function Expertise() {
     };
   }, []);
 
-  // Fetch blogs and news from the API
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      setLoadingBlogs(true);
-      setErrorBlogs('');
-      try {
-        const data = (await fetchAllBlogs()) as unknown as Blog[];
-        setBlogs(data);
-      } catch (error: unknown) {
-        setErrorBlogs(getErrorMessage(error));
-      } finally {
-        setLoadingBlogs(false);
-      }
-    }
-
-    const fetchNews = async () => {
-      setLoadingNews(true);
-      setErrorNews('');
-      try {
-        const data = (await fetchAllAINews()) as unknown as News[];
-        setNews(data);
-      } catch (error: unknown) {
-        setErrorNews(getErrorMessage(error));
-      } finally {
-        setLoadingNews(false);
-      }
-    }
-
-    fetchBlogs();
-    fetchNews();
-  }, []);
-
   // Set section refs
   const setSectionRef = (el: HTMLElement | null, index: number) => {
     sectionRefs.current[index] = el;
   };
 
   return (
-    <section className={styles.expertiseSection}>
-      <div className={styles.container}>
-        {/* Header Section */}
-        <div className={`${styles.header} top-section-slide-in`}>
-          <span className={styles.subtitle}>{'Expertise'}</span>
-          <h1 className={styles.mainTitle}>
-            <span className={styles.titleLine1}>We partner with bold founders to build end-to-end AI products that truly matter to users.</span>
-            <span className={styles.titleLine2}>Our expertise spans from designing and developing AI-driven products to delivering enterprise-grade solutions that scale.</span>
-          </h1>
+    <>
+      {/* ── Section 1 — Hero (full-bleed bg image, locked to image ratio so it's never cropped) ── */}
+      <section className={styles.hero}>
+        <Image
+          src="/expertise/newExpertiseBg.webp"
+          alt="An AI robot and a person with a laptop looking out over a sunlit valley"
+          fill
+          priority
+          sizes="100vw"
+          quality={85}
+          className={styles.heroBg}
+        />
+        <div className={styles.heroOverlay}>
+          <div className={styles.heroInner}>
+            <h1 className={styles.heroTitle}>Engineering Expertise</h1>
+            <p className={styles.heroDescription}>
+              A technical capability overview for the Expertise page, prepared for
+              the design team. It is written to read precisely for engineering
+              audiences and clearly for non-technical stakeholders, and covers four
+              areas: AI engineering, AI with IoT, AI SaaS platforms, and mobile
+              applications with integrated AI.
+            </p>
+            <div className={styles.heroPills}>
+              <span className={styles.heroPill}>AI Engineering</span>
+              <span className={styles.heroPill}>AI + IoT</span>
+              <span className={styles.heroPill}>AI SaaS Platforms</span>
+              <span className={styles.heroPill}>Mobile + AI</span>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Main Content - Left Static, Right Scrollable with Page */}
-        <div className={styles.mainContent}>
+      {/* ── Section 2 — Main content (redesign next) ── */}
+      <section className={styles.expertiseSection}>
+        <div className={styles.container}>
+          {/* Main Content - Left Static, Right Scrollable with Page */}
+          <div className={styles.mainContent}>
           {/* Left Side - Static */}
           <div className={styles.leftSide}>
             <div className={styles.leftContent}>
@@ -270,86 +232,11 @@ export default function Expertise() {
               </div>
             ))}
           </div>
-        </div>
-        {/* </div> */}
-
-        {/* Combined Blogs & News Section */}
-        
-        {/* <Calendly /> */}
-      </div>
-      <section className={styles.combinedSection} id="blogs-news">
-          <h3 className={styles.sectionTitle}>News & Blogs</h3>
-          <div className={styles.combinedGrid}>
-            {loadingBlogs || loadingNews ? (
-              Array.from({ length: 3 }).map((_, i) => (
-                <div className={styles.tileSkeleton} key={i}>
-                  <div className={styles.imgSkeleton} />
-                  <div className={styles.contentSkeleton}>
-                    <div className={styles.categorySkeleton} />
-                    <div className={styles.titleSkeleton} />
-                    <div className={styles.metaSkeleton} />
-                  </div>
-                </div>
-              ))
-            ) : errorBlogs ? (
-              <p className={styles.error}>{errorBlogs}</p>
-            ) : errorNews ? (
-              <p className={styles.error}>{errorNews}</p>
-            ) : blogs.length === 0 && news.length === 0 ? (
-              <p>No blogs or news found.</p>
-            ) : (
-              <>
-                <Marquee
-                  gradient={false}
-                  speed={55}
-                  className={styles.marqueeWrapper}
-                >
-                  {[...blogs, ...news].reverse().map((item) => {
-                    const isBlog = blogs.some((b) => b.title === item.title);
-                    return (
-                      <Link
-                        key={generateSlug(item.title)}
-                        href={
-                          isBlog
-                            ? ROUTES.BLOGPOST_SLUG(generateSlug(item.title))
-                            : ROUTES.AINEWS_SLUG(generateSlug(item.title))
-                        }
-                        className={styles.tile}
-                      >
-                        <div className={styles.imageWrap}>
-                          <Image
-                            src={getSafeImageUrl(item.coverImage)}
-                            alt={item.title}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className={styles.image}
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = "/images/aboutus.png";
-                            }}
-                          />
-                        </div>
-                        <div className={styles.content}>
-                          <div>
-                            <div className={styles.category}>
-                              {isBlog ? 'Blog' : 'News'}
-                            </div>
-                            <h3 className={styles.title}>{item.title}</h3>
-                          </div>
-                          <div className={styles.readTime}>
-                            {item.readTime || '5 min read'}
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </Marquee>
-              </>
-            )}
           </div>
-        </section>
-      <Calendly />
-    </section>
-    
+        </div>
+      </section>
+
+      <ProductVisionCta />
+    </>
   );
-} 
+}
