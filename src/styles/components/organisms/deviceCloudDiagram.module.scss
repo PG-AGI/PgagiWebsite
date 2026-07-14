@@ -171,67 +171,26 @@
   .sweepGreen line { opacity: 0; }
 }
 
-/* Positioning context for the scroll hint (arrow stays at the visible edge). */
 .boxWrap {
-  position: relative;
   width: 100%;
 }
 
-/* Wrapper: passthrough on desktop, horizontal swipe-scroll on phones. */
 .boxScroll {
   width: 100%;
 }
 
-/* Scroll affordance — hidden on desktop; a nudging chevron on phones. */
-.scrollHint {
-  display: none;
-}
-
-@keyframes dcScrollNudge {
-  0%, 100% { transform: translateY(-50%) translateX(0); }
-  50% { transform: translateY(-50%) translateX(4px); }
-}
-
-/* ── Mobile: the diagram keeps its horizontal composition; swipe to see the
-   full flow. Internal text is bumped up so it stays legible at the scroll
-   width instead of being squished. ── */
+/* ── Mobile: the diagram keeps its horizontal composition but shrinks to fit
+   the viewport width (no horizontal scroll). Everything is sized in cqw/%, so
+   the whole illustration scales down proportionally — identical geometry, just
+   smaller. Internal text is bumped to the largest ratio that still fits each
+   node, to stay as legible as possible at the reduced width. ── */
 @media (max-width: 768px) {
-  .boxScroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 0.5rem; /* room for the scrollbar */
-  }
-  .box {
-    min-width: 43rem; /* ~688px — legible; user swipes horizontally */
-  }
   .nodeTitle { font-size: 2.05cqw; }
   .nodeTitleSm { font-size: 1.9cqw; }
   .nodeSub { font-size: 1.5cqw; }
   .fastPath { font-size: 2.35cqw; }
   .caption { font-size: 0.8rem; line-height: 1.6; }
   .eyebrowText { font-size: 0.625rem; }
-
-  .scrollHint {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 0.6rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
-    pointer-events: none; /* never blocks the swipe */
-    z-index: 3;
-    animation: dcScrollNudge 1.4s ease-in-out infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scrollHint { animation: none; }
 }
 
 .nodeTitle {
