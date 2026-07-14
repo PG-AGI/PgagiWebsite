@@ -1,0 +1,35 @@
+/* Opt-in click spinner (enabled via the `showSpinnerOnClick` prop).
+   The link becomes the positioning context; while navigating, its real
+   content is kept in the layout but hidden, and a centered spinner is
+   overlaid so the user gets immediate "button clicked" feedback. */
+.spinnerHost {
+  position: relative;
+}
+
+.isLoading {
+  /* Preserve the button's size (keep layout) but hide everything except
+     the spinner overlay. */
+  & > :not(.spinner) {
+    visibility: hidden;
+  }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.15em;
+  height: 1.15em;
+  margin: -0.575em 0 0 -0.575em;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: transitionLinkSpin 0.6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes transitionLinkSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}

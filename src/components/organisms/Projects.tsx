@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/styles/components/organisms/projects.module.scss';
@@ -9,6 +9,7 @@ import { getSafeImageUrl } from '@/utils/imageUtils';
 import ROUTES from '@/constants/routes';
 import caseStudyMeta, { FILTER_TABS, CATEGORIES, type FilterTab } from '@/data/caseStudyMeta';
 import ProductVisionCta from './ProductVisionCta';
+import { consumeScrollIntent } from '@/utils/scrollIntent';
 
 const ArrowUpRight = () => (
   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -64,6 +65,25 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
   // Tracks which card's "View case study" link was clicked so we can show a
   // spinner while Next.js navigates to the (slower) case-study page.
   const [loadingSlug, setLoadingSlug] = useState<string | null>(null);
+
+  // If we arrived via a link that set a scroll intent (e.g. the AI + IoT
+  // "View Case Study" button → the VOOK AI card), scroll that card into view
+  // once. The intent is in-memory, so a refresh or a direct /projects visit —
+  // where it's absent — does nothing. Card heights are fixed (aspect-ratio),
+  // so the target position is stable before cover images load.
+  useEffect(() => {
+    const slug = consumeScrollIntent();
+    if (!slug) return;
+
+    requestAnimationFrame(() => {
+      const el = document.getElementById(slug);
+      if (!el) return;
+      // Offset for the fixed <nav> so the card lands just below it, not under it.
+      const navHeight = document.querySelector('nav')?.getBoundingClientRect().height ?? 0;
+      const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 24;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  }, []);
 
   const filteredStudies = useMemo(() => {
     let result = [...caseStudies].reverse();
@@ -176,7 +196,7 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
               const meta = caseStudyMeta[cs.slug] ?? caseStudyMeta[cs.slug?.toLowerCase().trim()];
 
               return (
-                <div key={cs.slug} className={styles.csCard}>
+                <div key={cs.slug} id={cs.slug} className={styles.csCard}>
                   {/* Left */}
                   <div className={styles.csLeft}>
                     <h2 className={styles.csTitle}>{cs.title}</h2>

@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import styles from "./TransitionLink.module.scss";
+import { setScrollIntent } from "@/utils/scrollIntent";
 
 interface TransitionLinkProps {
   href: string;
@@ -11,6 +13,18 @@ interface TransitionLinkProps {
   onClick?: () => void;
   prefetch?: boolean;
   ariaLabel?: string;
+  /**
+   * When true, shows a centered circular spinner over the link after it is
+   * clicked (until navigation completes / the component unmounts), giving the
+   * user immediate feedback that the click registered.
+   */
+  showSpinnerOnClick?: boolean;
+  /**
+   * Case-study slug (element id) to scroll to on the destination page. Recorded
+   * as a one-shot in-memory intent just before navigating, so arriving via this
+   * link lands on that element while the URL stays clean. See scrollIntent util.
+   */
+  scrollToOnArrive?: string;
 }
 
 export default function TransitionLink({
@@ -20,8 +34,11 @@ export default function TransitionLink({
   onClick,
   prefetch = false,
   ariaLabel,
+  showSpinnerOnClick = false,
+  scrollToOnArrive,
 }: TransitionLinkProps): JSX.Element {
   const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const isModifiedClick =
@@ -48,6 +65,15 @@ export default function TransitionLink({
 
     e.preventDefault();
 
+    // Record a one-shot scroll target for the destination page before we push.
+    if (scrollToOnArrive) {
+      setScrollIntent(scrollToOnArrive);
+    }
+
+    if (showSpinnerOnClick) {
+      setIsNavigating(true);
+    }
+
     const navigate = () => {
       router.push(href);
     };
@@ -64,15 +90,23 @@ export default function TransitionLink({
     navigate();
   };
 
+  const linkClassName = showSpinnerOnClick
+    ? [className, styles.spinnerHost, isNavigating && styles.isLoading]
+        .filter(Boolean)
+        .join(" ")
+    : className;
+
   return (
     <Link
       href={href}
-      className={className}
+      className={linkClassName}
       onClick={handleClick}
       prefetch={prefetch}
       aria-label={ariaLabel}
+      aria-busy={isNavigating || undefined}
     >
       {children}
+      {isNavigating && <span className={styles.spinner} aria-hidden="true" />}
     </Link>
   );
 }

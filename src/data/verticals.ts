@@ -53,6 +53,13 @@ export type Vertical = {
   heroDescription: string;
   /** Destination of the hero "View Case Study" button. */
   caseStudyHref: string;
+  /**
+   * Optional case-study slug to scroll to on the destination page. Set as a
+   * one-shot in-memory intent when the button is clicked, so arriving via the
+   * button lands on that card while the URL stays clean (a refresh/direct visit
+   * doesn't scroll). See `@/utils/scrollIntent`.
+   */
+  caseStudyScrollToSlug?: string;
   intro: VerticalIntro;
   features: VerticalFeature[];
   useCases: VerticalUseCases;
@@ -68,6 +75,9 @@ export const VERTICALS: Record<string, Vertical> = {
     heroDescription:
       'This section describes how we collect, process, and model data from connected devices and sensors, and how model output is used to drive prediction, anomaly detection, and automated response.',
     caseStudyHref: '/projects',
+    // Clicking "View Case Study" lands on the VOOK AI card (see Projects.tsx
+    // scroll-intent effect). URL stays a clean /projects.
+    caseStudyScrollToSlug: 'vook-ai-wireless-microphone-companion-app',
     intro: {
       heading: 'Processing and modelling data from connected devices.',
       body: 'Connected devices produce a continuous stream of data, much of which is never used. We build the pipeline that collects it reliably, processes it in real time, and runs AI models on it, so that the system can identify patterns, anticipate failures before they occur, and automate the response. Where it is appropriate, inference is moved to the edge so that devices respond locally without a cloud round-trip, and the output is connected back into your business applications so that a prediction results in a work order, an alert, or an automated control action.',

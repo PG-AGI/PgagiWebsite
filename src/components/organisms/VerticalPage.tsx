@@ -22,6 +22,7 @@ export default function VerticalPage({ vertical }: { vertical: Vertical }) {
         title={vertical.heroTitle}
         description={vertical.heroDescription}
         ctaHref={vertical.caseStudyHref}
+        ctaScrollToSlug={vertical.caseStudyScrollToSlug}
       />
 
       <section className={styles.buildSection}>

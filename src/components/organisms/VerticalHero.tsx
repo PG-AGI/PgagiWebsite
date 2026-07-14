@@ -16,6 +16,8 @@ type VerticalHeroProps = {
   description: string;
   ctaLabel?: string;
   ctaHref: string;
+  /** Case-study slug to scroll to after the CTA navigates (see TransitionLink). */
+  ctaScrollToSlug?: string;
 };
 
 /**
@@ -27,13 +29,19 @@ export default function VerticalHero({
   description,
   ctaLabel = 'View Case Study',
   ctaHref,
+  ctaScrollToSlug,
 }: VerticalHeroProps) {
   return (
     <section className={styles.hero}>
       <div className={styles.inner}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{description}</p>
-        <TransitionLink href={ctaHref} className={styles.cta} ariaLabel={`${ctaLabel} — ${title}`}>
+        <TransitionLink
+          href={ctaHref}
+          className={styles.cta}
+          ariaLabel={`${ctaLabel} — ${title}`}
+          scrollToOnArrive={ctaScrollToSlug}
+        >
           <span>{ctaLabel}</span>
           <span className={styles.ctaArrow} aria-hidden="true">
             <ArrowRightIcon />

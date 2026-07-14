@@ -137,6 +137,7 @@ export default function Landing() {
                 href={ROUTES.EXPERTISE_VERTICAL("ai-iot")}
                 className={styles.cardCta}
                 ariaLabel={landingText.verticalCard.ctaAriaLabel}
+                showSpinnerOnClick
               >
                 <span>{landingText.verticalCard.ctaLabel}</span>
                 <span className={styles.cardCtaArrow} aria-hidden="true">
