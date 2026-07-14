@@ -242,7 +242,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '2x', label: 'Battery Life' },
     ],
     highlight: 'AI-enhanced audio device with 2× battery improvement',
-    liveUrl: 'https://vook.com',
+    liveUrl: 'https://vook.in/',
     tags: ['Live Products', 'IoT x AI Engineering'],
     category: 'IoT/AI/ML',
   },
