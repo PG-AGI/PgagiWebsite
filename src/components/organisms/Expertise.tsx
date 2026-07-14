@@ -205,17 +205,40 @@ export default function Expertise() {
   };
 
   return (
+    <>
+    {/* ── Section 1 — Hero (full-bleed bg image, locked to image ratio so it's never cropped) ── */}
+    <section className={styles.hero}>
+      <Image
+        src="/expertise/newExpertiseBg.webp"
+        alt="An AI robot and a person with a laptop looking out over a sunlit valley"
+        fill
+        priority
+        sizes="100vw"
+        quality={85}
+        className={styles.heroBg}
+      />
+      <div className={styles.heroOverlay}>
+        <div className={styles.heroInner}>
+          <h1 className={styles.heroTitle}>Engineering Expertise</h1>
+          <p className={styles.heroDescription}>
+            A technical capability overview for the Expertise page, prepared for
+            the design team. It is written to read precisely for engineering
+            audiences and clearly for non-technical stakeholders, and covers four
+            areas: AI engineering, AI with IoT, AI SaaS platforms, and mobile
+            applications with integrated AI.
+          </p>
+          <div className={styles.heroPills}>
+            <span className={styles.heroPill}>AI Engineering</span>
+            <span className={styles.heroPill}>AI + IoT</span>
+            <span className={styles.heroPill}>AI SaaS Platforms</span>
+            <span className={styles.heroPill}>Mobile + AI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section className={styles.expertiseSection}>
       <div className={styles.container}>
-        {/* Header Section */}
-        <div className={`${styles.header} top-section-slide-in`}>
-          <span className={styles.subtitle}>{'Expertise'}</span>
-          <h1 className={styles.mainTitle}>
-            <span className={styles.titleLine1}>We partner with bold founders to build end-to-end AI products that truly matter to users.</span>
-            <span className={styles.titleLine2}>Our expertise spans from designing and developing AI-driven products to delivering enterprise-grade solutions that scale.</span>
-          </h1>
-        </div>
-
         {/* Main Content - Left Static, Right Scrollable with Page */}
         <div className={styles.mainContent}>
           {/* Left Side - Static */}
@@ -350,6 +373,6 @@ export default function Expertise() {
         </section>
       <Calendly />
     </section>
-    
+    </>
   );
-} 
+}

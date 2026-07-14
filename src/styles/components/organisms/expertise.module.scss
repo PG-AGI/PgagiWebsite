@@ -1,3 +1,107 @@
+/* ==========================================================
+   SECTION 1 — HERO
+   Full-bleed background image. The block is locked to the image's
+   native 2880×1762 ratio so the whole scene is ALWAYS visible
+   (never cropped). Content sits on the shared landing width rail
+   (outer gutter clamp(2.5rem,7vw,9rem) + inner min(77.5rem,100%)),
+   left-aligned. All rem scale with the fluid root (globals.scss).
+   Laptop / tablet only — mobile is a later pass.
+   ========================================================== */
+.hero {
+  position: relative;
+  width: 100%;
+  /* Fill exactly one screen — no spill into Section 2, no gap below. Full-bleed
+     width + one screen means cover trims a little expendable TOP sky only; the
+     whole valley + robot + person stay via object-position below. */
+  height: 100dvh;
+  overflow: clip;
+  /* No padding here on purpose: the image (below) fills this box; the gutter
+     lives on .heroOverlay so nothing distorts the fill. */
+
+  /* globals.scss applies html{zoom:0.9} at ≥769px, which renders any vh-based
+     height at ~90% of the screen (the ~10% gap below the image). Divide by the
+     zoom factor so the hero fills the viewport exactly on laptop/desktop. */
+  @media (min-width: 769px) {
+    height: calc(100dvh / 0.9);
+  }
+}
+
+.heroBg {
+  object-fit: cover;
+  /* Anchor to the bottom: keep the subject (valley + robot + person),
+     trim only top sky when the screen is wider than the image ratio. */
+  object-position: center bottom;
+  z-index: 0;
+}
+
+/* Overlay that carries the shared gutter + centres the content rail. */
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding-inline: clamp(2.5rem, 7vw, 9rem); /* == home .sectionsWrapper */
+}
+
+.heroInner {
+  width: min(77.5rem, 100%);                /* == Recent Launch cards rail */
+  box-sizing: border-box;
+  /* Top pad clears the fixed navbar and drops the headline into the upper
+     third; content stacks from there, the image foreground sits below it. */
+  padding-block: clamp(9rem, 6rem + 9vw, 13.5rem) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+.heroTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.75rem, 5.2vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #1b1b1b;
+}
+
+.heroDescription {
+  margin: 0;
+  max-width: 40rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.95rem, 1.05vw, 1.1rem);
+  line-height: 1.55; /* ≈ 26px at the 1440 Figma reference; scales with root */
+  color: #282828;
+}
+
+.heroPills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 0.85rem);
+  margin-top: clamp(0.4rem, 1vw, 0.9rem);
+}
+
+.heroPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #1f2024;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
 .expertiseSection {
   padding: 7.5rem 0 0;
   background: white;
