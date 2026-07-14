@@ -25,9 +25,7 @@ type CaseStudy = {
 };
 
 // Slugs to hide from the public listing.
-const HIDDEN_SLUGS = new Set<string>([
-  'ai-asr-doctor-clinical-documentation-platform',
-]);
+const HIDDEN_SLUGS = new Set<string>([]);
 
 
 // Slugs that must appear first, in this exact order

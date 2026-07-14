@@ -235,7 +235,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['Live Products', 'UI/UX'],
     category: 'HealthTech/AI/ML',
   },
-  'vook': {
+  'vook-ai-wireless-microphone-companion-app': {
     techStack: ['React Native', 'Python', 'FastAPI', 'IoT', '+2'],
     metrics: [
       { value: '95%', label: 'Sound Clarity' },
