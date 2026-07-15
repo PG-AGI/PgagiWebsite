@@ -137,14 +137,18 @@ const CoreExpertiseAreas = () => (
             className={area.spotlight ? `${styles.cell} ${styles.cellWide}` : styles.cell}
           >
             <div className={styles.iconBadge} style={{ background: area.iconBg }}>
-              {/* priority: badge icons must be visible the moment the page
-                  opens — never lazy-loaded on scroll */}
+              {/* eager + fetchPriority=low: icons must never pop in on scroll,
+                  but they're below the fold — anything higher makes React SSR
+                  auto-emit <head> preloads that compete with the hero bg for
+                  bandwidth (Fizz preloads any non-lazy img unless priority is
+                  explicitly low). */}
               <Image
                 src={area.icon.src}
                 alt=""
                 width={area.icon.size}
                 height={area.icon.size}
-                priority
+                loading="eager"
+                fetchPriority="low"
                 unoptimized
               />
             </div>

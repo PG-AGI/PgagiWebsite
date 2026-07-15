@@ -26,31 +26,23 @@
   }
 }
 
+/* Single <img> inside an art-directed <picture>: the browser swaps the FILE at
+   768px (desktop landscape vs mobile portrait crop); this class only adjusts
+   how each file sits in the box. */
 .heroBg {
   object-fit: cover;
   /* Anchor to the bottom: keep the subject (valley + robot + person),
      trim only top sky when the screen is wider than the image ratio. */
   object-position: center bottom;
   z-index: 0;
-}
 
-.heroBgDesktop {
+  /* Mobile asset is a 0.634-aspect portrait (1120×1767): the RIGHT side of the
+     scene with the sky extended upward, so a full-height cover shows the whole
+     valley + person + robot (heads at ~70% height) instead of a zoomed slice.
+     Recipe: _image_backup_hero/make-expertise-mobile-crop.js. Phones are
+     narrower than 0.634 so cover trims width only — right-anchoring keeps the
+     pair in frame and crops the empty lake on the left. */
   @media (max-width: 768px) {
-    display: none;
-  }
-}
-
-/* Mobile asset is a 0.634-aspect portrait (1120×1767): the RIGHT side of the
-   scene with the sky extended upward, so a full-height cover shows the whole
-   valley + person + robot (heads at ~70% height) instead of a zoomed slice.
-   Recipe: _image_backup_hero/make-expertise-mobile-crop.js. Phones are
-   narrower than 0.634 so cover trims width only — right-anchoring keeps the
-   pair in frame and crops the empty lake on the left. */
-.heroBgMobile {
-  display: none;
-
-  @media (max-width: 768px) {
-    display: block;
     object-position: right bottom;
   }
 }
