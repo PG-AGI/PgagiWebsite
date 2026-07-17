@@ -1,0 +1,182 @@
+/* ─────────────────────────────────────────────────────────────────
+   Foundation LLM implementation diagram — ai-ml counterpart to
+   deviceCloudDiagram.module.scss. Flexbox layout (not a fixed-viewBox
+   illustration): request/response flow on top, orchestration/agents/data
+   loop below, connected by a vertical arrow. Desktop-first.
+   ───────────────────────────────────────────────────────────────── */
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 1.5625rem);
+}
+
+.topBlock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.6vw, 1.25rem);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrowBar {
+  width: 32px;
+  height: 2px;
+  background: #2c2c2c;
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2c2c2c;
+  white-space: nowrap;
+}
+
+.box {
+  width: 100%;
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 3rem);
+  background: #14162a;
+  border: 1px solid #dfdcd5;
+  border-radius: 24px;
+  box-sizing: border-box;
+}
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 1.6vw, 1.5rem);
+}
+
+.node {
+  flex: 1 1 0;
+  max-width: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4rem;
+  padding: clamp(0.9rem, 1.5vw, 1.25rem);
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+
+.nodeMain {
+  background: #4a6cf7;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 8px 24px rgba(74, 108, 247, 0.35);
+
+  .nodeTitle { color: #ffffff; }
+  .nodeSub { color: rgba(255, 255, 255, 0.8); }
+}
+
+.nodeSmall {
+  background: #fffbef;
+
+  .nodeTitle { color: #3b3b9e; }
+  .nodeSub { color: #5555aa; }
+}
+
+.nodeTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  line-height: 1.3;
+  color: #1a1a1a;
+}
+
+.nodeSub {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.72rem, 0.85vw, 0.8rem);
+  line-height: 1.4;
+  color: #6b7280;
+}
+
+.arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.loopConnector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  margin: -0.5rem 0;
+}
+
+.arrowVertical svg {
+  transform: rotate(90deg);
+}
+
+.caption {
+  margin: 0;
+  max-width: 64rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.875rem);
+  line-height: 1.625;
+  color: #374151;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+/* ── Mobile: stack each row's nodes vertically, keep the loop connector ── */
+@media (max-width: 768px) {
+  .box {
+    padding: 1.5rem 1.25rem;
+  }
+  .row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .node {
+    max-width: none;
+    width: 100%;
+  }
+  .arrow svg {
+    transform: rotate(90deg);
+  }
+  .arrowVertical svg {
+    transform: rotate(90deg);
+  }
+  .caption {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  .eyebrowText {
+    font-size: 0.625rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .box {
+    padding: 1.25rem 1rem;
+  }
+}

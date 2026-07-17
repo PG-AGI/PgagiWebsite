@@ -1,0 +1,101 @@
+/* ─────────────────────────────────────────────────────────────────
+   RAG architecture diagram — embedded in the wide "RAG architecture"
+   feature card. Bright blue box (ties to the ai-ml brand blue used on
+   /expertise), two node rows (ingestion, retrieval/generation), chevron
+   connectors. Desktop-first.
+   ───────────────────────────────────────────────────────────────── */
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.25rem, 2.4vw, 1.75rem);
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.25rem, 2.4vw, 2rem);
+  background: #3859f9;
+  border-radius: 18px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.4rem, 1vw, 0.75rem);
+}
+
+.nodeGroup {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.4rem, 1vw, 0.75rem);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.node {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.78rem, 0.95vw, 0.9rem);
+  line-height: 1.2;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.nodeLight {
+  background: #ffffff;
+  color: #1d283f;
+}
+
+.nodeDark {
+  background: #0f1226;
+  color: #ffffff;
+}
+
+.hint {
+  margin: 0;
+  max-width: 34rem;
+  text-align: center;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.75rem, 0.85vw, 0.8rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.caption {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.875rem);
+  line-height: 1.625;
+  color: #374151;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 768px) {
+  .box {
+    padding: 1.5rem 1.25rem;
+  }
+  .node {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .row {
+    gap: 0.4rem;
+  }
+  .nodeGroup {
+    gap: 0.4rem;
+  }
+}
