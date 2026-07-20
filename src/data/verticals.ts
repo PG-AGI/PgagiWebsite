@@ -170,6 +170,11 @@ export const VERTICALS: Record<string, Vertical> = {
       {
         icon: '/assets/verticals/ai-ml/custom-ml.svg',
         title: 'Open-source & custom machine-learning models',
+        // Wide: it's the 3rd card before a wide diagram card — left as a
+        // regular half-width card, the grid would strand an empty cell
+        // next to it instead of backfilling (CSS Grid doesn't reflow gaps
+        // left by a full-width item mid-grid).
+        wide: true,
         bullets: [
           { text: 'Classical ML models (scikit-learn, XGBoost) for structured and tabular data.' },
           { text: 'Deep learning models (PyTorch, TensorFlow) for vision, NLP, and forecasting.' },
@@ -206,6 +211,8 @@ export const VERTICALS: Record<string, Vertical> = {
       {
         icon: '/assets/verticals/ai-ml/function-calling.svg',
         title: 'Function calling & tool execution',
+        // Wide for the same reason as 'Open-source & custom ML models' above.
+        wide: true,
         bullets: [
           { text: 'LLM-triggered API calls, database queries, and external service integration.' },
           { text: 'Structured function-calling schemas with validation and error handling.' },
