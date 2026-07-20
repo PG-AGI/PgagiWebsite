@@ -5,8 +5,8 @@
  * cards on the home page. Content is driven from here so the layout components
  * (VerticalHero, VerticalIntro, …) stay reusable across verticals.
  *
- * NOTE (2026-07-20): ai-iot, ai-ml, and ai-saas are built full-page, desktop-first.
- * mobile-ai still needs its entry.
+ * NOTE (2026-07-20): ai-iot, ai-ml, ai-saas, and mobile-ai are built full-page,
+ * desktop-first.
  */
 
 export type VerticalIntro = {
@@ -21,7 +21,7 @@ export type FeatureBullet = {
 };
 
 /** Keys for the illustrated diagrams that can slot into the "build" section. */
-export type BuildDiagramKey = 'device-cloud' | 'foundation-llm' | 'multi-tenant';
+export type BuildDiagramKey = 'device-cloud' | 'foundation-llm' | 'multi-tenant' | 'mobile-ai';
 
 /** Keys for the diagrams a wide `VerticalFeature` card can embed in place of/above its bullets. */
 export type FeatureDiagramKey = 'rag-architecture' | 'ai-orchestration';
@@ -280,6 +280,61 @@ export const VERTICALS: Record<string, Vertical> = {
         { eyebrow: 'MONETIZATION', title: 'AI product with usage-based billing', body: 'A feature that consumes tokens, compute, or usage needs metered billing, tracked and monetized from day one.', icon: '/assets/AixSaaS/AixSaaS-2.svg' },
         { eyebrow: 'SCALING', title: 'Re-architect for growth', body: 'Move a product from a single-tenant, single-region setup to a multi-tenant, multi-region architecture that scales.', icon: '/assets/AixSaaS/AixSaaS-3.svg' },
         { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'SSO/SCIM, org-level permissions, and enterprise-grade audit trails so the product clears enterprise procurement checklists.', icon: '/assets/AixSaaS/AixSaaS-4.svg' },
+      ],
+    },
+  },
+  'mobile-ai': {
+    slug: 'mobile-ai',
+    metaTitle: 'Mobile + AI | PGAGI',
+    metaDescription:
+      'Native and cross-platform mobile products with an integrated AI layer — on-device inference, backend, and app store delivery, engineered end to end.',
+    heroTitle: 'Mobile + AI',
+    heroDescription:
+      'We build complete mobile products spanning the application, backend, AI layer, and deployment — native or cross-platform, with on-device and cloud AI wired in from the start, not bolted on after launch.',
+    caseStudyHref: '/case-study/brainify-edtech-platform',
+    intro: {
+      heading: 'Building complete mobile products with an integrated AI layer.',
+      body: 'A mobile-first product is more than an app shell around an API. We build the full stack — native or cross-platform UI, an AI layer for on-device and cloud inference, a backend that keeps sync and offline state consistent, and the release pipeline that ships and monitors it in the app stores.',
+    },
+    buildDiagram: 'mobile-ai',
+    features: [
+      {
+        icon: '/assets/verticals/mobile-ai/app-development.svg',
+        title: 'App development',
+        bullets: [
+          { text: 'Native (Swift, Kotlin) and cross-platform (React Native, Flutter) mobile app development.' },
+          { text: 'Backend-connected app builds with real-time sync, offline support, and push notifications.' },
+          { text: 'Performance-first, scalable UI for smooth AI feature integration on-device.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/mobile-ai/ai-in-app.svg',
+        title: 'AI inside the app',
+        bullets: [
+          { text: 'Chat / voice interfaces and AI agents built directly into the app — not just a backend API.' },
+          { text: 'Image, document & data scanning — scan receipts, documents, or photos and extract structured data.' },
+          { text: 'AI-powered notifications — smart, personalized push notifications, not just generic alerts.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/mobile-ai/platform-delivery.svg',
+        title: 'Platform, integration & delivery',
+        wide: true,
+        bullets: [
+          { text: 'Multi-platform integration — CRM, calendars, payment platforms, and other 3rd-party services.' },
+          { text: 'API integrations with payment, messaging, and other services, plus secure handling of user data.' },
+          { text: 'App store deployment — App Store / Play Store listing, review submission, and ongoing app health monitoring.' },
+        ],
+      },
+    ],
+    useCases: {
+      heading: 'Practical Use Cases',
+      subtitle: 'Applied examples of complex systems we design and deploy.',
+      items: [
+        { eyebrow: 'CONVERSATIONAL', title: 'Chat + voice product', body: 'A mobile-first assistant with chat and voice interfaces, generative on-device or cloud AI, and a UI built for conversation.', icon: '/assets/AixMobile/AixMobile-1.svg' },
+        { eyebrow: 'FIELD OPS', title: 'Offline-first capture', body: 'Data capture that works with no connectivity and syncs cleanly the moment the device is back online, without losing a record.', icon: '/assets/AixMobile/AixMobile-2.svg' },
+        { eyebrow: 'RETROFIT', title: 'AI features inside an existing app', body: 'Add on-device or cloud AI — chat, scanning, personalization — into an existing app, without a rewrite of the codebase.', icon: '/assets/AixMobile/AixMobile-3.svg' },
+        { eyebrow: 'CROSS-PLATFORM', title: 'One Flutter codebase, two stores', body: 'One codebase shipped to iOS and Android alike, with shared logic, native performance, and one release pipeline to maintain.', icon: '/assets/AixMobile/AixMobile-4.svg' },
       ],
     },
   },
