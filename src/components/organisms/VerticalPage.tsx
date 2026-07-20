@@ -3,6 +3,7 @@ import VerticalHero from './VerticalHero';
 import VerticalIntro from './VerticalIntro';
 import DeviceCloudDiagram from './DeviceCloudDiagram';
 import FoundationLLMDiagram from './FoundationLLMDiagram';
+import MultiTenantArchitectureDiagram from './MultiTenantArchitectureDiagram';
 import FeatureCards from './FeatureCards';
 import UseCases from './UseCases';
 import ProductVisionCta from './ProductVisionCta';
@@ -11,6 +12,7 @@ import type { BuildDiagramKey, Vertical } from '@/data/verticals';
 const BUILD_DIAGRAMS: Record<BuildDiagramKey, () => JSX.Element> = {
   'device-cloud': DeviceCloudDiagram,
   'foundation-llm': FoundationLLMDiagram,
+  'multi-tenant': MultiTenantArchitectureDiagram,
 };
 
 /**

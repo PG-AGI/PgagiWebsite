@@ -5,8 +5,8 @@
  * cards on the home page. Content is driven from here so the layout components
  * (VerticalHero, VerticalIntro, …) stay reusable across verticals.
  *
- * NOTE (2026-07-17): ai-iot and ai-ml are built full-page, desktop-first.
- * ai-saas and mobile-ai still need their entries.
+ * NOTE (2026-07-20): ai-iot, ai-ml, and ai-saas are built full-page, desktop-first.
+ * mobile-ai still needs its entry.
  */
 
 export type VerticalIntro = {
@@ -21,7 +21,7 @@ export type FeatureBullet = {
 };
 
 /** Keys for the illustrated diagrams that can slot into the "build" section. */
-export type BuildDiagramKey = 'device-cloud' | 'foundation-llm';
+export type BuildDiagramKey = 'device-cloud' | 'foundation-llm' | 'multi-tenant';
 
 /** Keys for the diagrams a wide `VerticalFeature` card can embed in place of/above its bullets. */
 export type FeatureDiagramKey = 'rag-architecture' | 'ai-orchestration';
@@ -225,6 +225,61 @@ export const VERTICALS: Record<string, Vertical> = {
         { eyebrow: 'KNOWLEDGE OPS', title: 'Internal knowledge + action agent', body: 'An internal agent retrieves from company knowledge and takes the next action directly — filing a ticket, updating a record, drafting a reply — instead of just answering.', icon: '/assets/AixML/AixML-2.svg' },
         { eyebrow: 'DOCUMENT AI', title: 'Document intelligence at scale', body: 'Contracts, invoices, and forms are parsed, extracted, and validated automatically, turning unstructured paperwork into structured, queryable data.', icon: '/assets/AixML/AixML-3.svg' },
         { eyebrow: 'FORECASTING', title: 'Prediction & workflow automation', body: 'Custom ML models forecast outcomes and feed the result straight into an automated workflow, so a prediction becomes an action, not just a number on a dashboard.', icon: '/assets/AixML/AixML-4.svg' },
+      ],
+    },
+  },
+  'ai-saas': {
+    slug: 'ai-saas',
+    metaTitle: 'AI SaaS Platforms | PGAGI',
+    metaDescription:
+      'Multi-tenant architecture, secure isolation, usage-based billing, and the production infrastructure required to commercialize AI-powered SaaS products.',
+    heroTitle: 'AI SaaS Platforms',
+    heroDescription:
+      'We build production-ready, multi-tenant SaaS platforms with integrated AI capabilities — engineered for security, scale, cost control, and the infrastructure required to commercialize AI-powered products.',
+    caseStudyHref: '/case-study/how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin',
+    intro: {
+      heading: 'Architecting multi-tenant platforms for production workloads.',
+      body: 'We engineer the full SaaS layer AI product companies need to commercialize: multi-tenant architecture, secure isolation, usage-based billing, and the infrastructure to scale reliably. Every layer — tenancy, access, backend, billing — built to production standards, not a demo.',
+    },
+    buildDiagram: 'multi-tenant',
+    features: [
+      {
+        icon: '/assets/verticals/ai-saas/tenancy-security.svg',
+        title: 'Tenancy, access & security',
+        bullets: [
+          { text: 'Multi-tenant architecture with logical or physical isolation — schema-per-tenant, DB-per-tenant, or shared with row-level security.' },
+          { text: 'Role-based access control (RBAC) — org, team, and user-level permission hierarchies.' },
+          { text: 'SSO / SAML, SCIM provisioning, and audit logs for enterprise buyers.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/ai-saas/backend-realtime.svg',
+        title: 'Backend & real-time systems',
+        bullets: [
+          { text: 'Scalable backend with API-first design, built for concurrent multi-tenant load.' },
+          { text: 'Webhooks & real-time messaging — WebSockets, SSE, or event streams for live product updates.' },
+          { text: 'Background job processing — queues for async, long-running, or scheduled tasks.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/ai-saas/billing-ops.svg',
+        title: 'Billing, dashboards & operations',
+        wide: true,
+        bullets: [
+          { text: 'Subscription & usage-based billing (Stripe) — metering, invoicing, plan tiers.' },
+          { text: 'Admin & analytics dashboards — tenant usage, health metrics, revenue tracking.' },
+          { text: 'Infrastructure, observability, logging & alerting — CI/CD, containers, autoscaling, and centralized log output.' },
+        ],
+      },
+    ],
+    useCases: {
+      heading: 'Practical Use Cases',
+      subtitle: 'Applied examples of complex systems we design and deploy.',
+      items: [
+        { eyebrow: 'GREENFIELD', title: 'New product from scratch', body: 'Fully multi-tenant — secure auth, billing, dashboards, data — ready to onboard paying customers, not just a prototype.', icon: '/assets/AixSaaS/AixSaaS-1.svg' },
+        { eyebrow: 'MONETIZATION', title: 'AI product with usage-based billing', body: 'A feature that consumes tokens, compute, or usage needs metered billing, tracked and monetized from day one.', icon: '/assets/AixSaaS/AixSaaS-2.svg' },
+        { eyebrow: 'SCALING', title: 'Re-architect for growth', body: 'Move a product from a single-tenant, single-region setup to a multi-tenant, multi-region architecture that scales.', icon: '/assets/AixSaaS/AixSaaS-3.svg' },
+        { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'SSO/SCIM, org-level permissions, and enterprise-grade audit trails so the product clears enterprise procurement checklists.', icon: '/assets/AixSaaS/AixSaaS-4.svg' },
       ],
     },
   },
