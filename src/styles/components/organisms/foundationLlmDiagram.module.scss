@@ -1,8 +1,9 @@
 /* ─────────────────────────────────────────────────────────────────
-   Foundation LLM implementation diagram — ai-ml counterpart to
-   deviceCloudDiagram.module.scss. Flexbox layout (not a fixed-viewBox
-   illustration): request/response flow on top, orchestration/agents/data
-   loop below, connected by a vertical arrow. Desktop-first.
+   Foundation LLM diagram (Figma export: foundation-llm.svg).
+   Same technique as deviceCloudDiagram.module.scss: the green box is a
+   container-query context; nodes/labels are sized in `cqw` and placed in
+   `%`, so the illustration keeps its exact Figma proportions (reference
+   1280 × 623) at any width. Desktop-first.
    ───────────────────────────────────────────────────────────────── */
 .figure {
   margin: 0;
@@ -41,98 +42,233 @@
   white-space: nowrap;
 }
 
-.box {
+.boxWrap {
   width: 100%;
-  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 3rem);
-  background: #14162a;
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 623;
+  background: #90d6a3;
   border: 1px solid #dfdcd5;
   border-radius: 24px;
-  box-sizing: border-box;
+  overflow: hidden;
+  container-type: inline-size;
 }
 
-.flow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.row {
+.connectors {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.75rem, 1.6vw, 1.5rem);
+  height: 100%;
+  z-index: 1;
 }
 
+/* ── Nodes ── */
 .node {
-  flex: 1 1 0;
-  max-width: 15rem;
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 0.4rem;
-  padding: clamp(0.9rem, 1.5vw, 1.25rem);
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.12);
-  box-sizing: border-box;
+  gap: 0.4cqw;
+  padding: 0.6cqw 0.9cqw;
+  border-radius: 1.2cqw;
+  animation: flNodeLift 5s ease-in-out infinite;
 }
 
-.nodeMain {
-  background: #4a6cf7;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 8px 24px rgba(74, 108, 247, 0.35);
-
-  .nodeTitle { color: #ffffff; }
-  .nodeSub { color: rgba(255, 255, 255, 0.8); }
+.node::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 0 2.5px rgba(255, 255, 255, 0.7),
+    0 0 16px 2px rgba(56, 89, 249, 0.5),
+    0 8px 22px rgba(0, 0, 0, 0.18);
+  animation: flNodeGlow 5s ease-in-out infinite;
+  animation-delay: inherit;
 }
 
-.nodeSmall {
-  background: #fffbef;
+@keyframes flNodeLift {
+  0% { transform: scale(1); }
+  4% { transform: scale(1.03); }
+  16%, 100% { transform: scale(1); }
+}
 
-  .nodeTitle { color: #3b3b9e; }
-  .nodeSub { color: #5555aa; }
+@keyframes flNodeGlow {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  12% { opacity: 1; }
+  20%, 100% { opacity: 0; }
 }
 
 .nodeTitle {
   margin: 0;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   font-weight: 700;
-  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
-  line-height: 1.3;
-  color: #1a1a1a;
+  font-size: 1.5cqw;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .nodeSub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
-  font-size: clamp(0.72rem, 0.85vw, 0.8rem);
+  font-size: 1.05cqw;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+/* Variants */
+.nodeDark {
+  background: #111827;
+  .nodeTitle { color: #ffffff; }
+  .nodeSub { color: #ffffff; }
+}
+
+.nodeLavender {
+  background: #eaeeff;
+  .nodeTitle { color: #4545c8; }
+  .nodeSub { color: #374151; }
+}
+
+.nodeWhite {
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  .nodeTitle { color: #111827; }
+  .nodeSub { color: #374151; }
+}
+
+.nodeWhiteGreen {
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  .nodeTitle { color: #16a34a; }
+  .nodeSub { color: #16a34a; }
+}
+
+/* ── Observability strip ── */
+.observability {
+  position: absolute;
+  z-index: 2;
+  left: 15.55%;
+  top: 78.97%;
+  width: 71.02%;
+  height: 12.2%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3cqw;
+  background: #ffffff;
+  border-radius: 1.2cqw;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow:
+      0 0 0 2.5px rgba(255, 255, 255, 0.7),
+      0 0 16px 2px rgba(56, 89, 249, 0.4),
+      0 8px 22px rgba(0, 0, 0, 0.18);
+    animation: flNodeGlow 5s ease-in-out infinite;
+    animation-delay: inherit;
+  }
+}
+
+.obsTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.15cqw;
   line-height: 1.4;
-  color: #6b7280;
+  color: #3859f9;
+  text-align: center;
 }
 
-.arrow {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6b7280;
+.obsSub {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1cqw;
+  line-height: 1.4;
+  color: #374151;
 }
 
-.loopConnector {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6b7280;
-  margin: -0.5rem 0;
+/* ── Connectors ──
+   Base pipe sits dim; a bright highlight draws over it, in sequence. */
+.baseConnectors {
+  opacity: 0.35;
 }
 
-.arrowVertical svg {
-  transform: rotate(90deg);
+.sweepBlue line,
+.sweepBlue path,
+.sweepWhite line {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: flLineSweep 5s linear infinite;
 }
 
+.sweepBlue line,
+.sweepBlue path {
+  filter: drop-shadow(0 0 2px rgba(56, 89, 249, 0.85));
+}
+
+.sweepWhite line {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.85));
+}
+
+@keyframes flLineSweep {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  3% { opacity: 1; }
+  10% { stroke-dashoffset: 0; opacity: 1; }
+  16% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 1; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node,
+  .node::after,
+  .observability,
+  .observability::after,
+  .sweepBlue line,
+  .sweepBlue path,
+  .sweepWhite line {
+    animation: none;
+  }
+  .baseConnectors { opacity: 1; }
+  .node::after,
+  .observability::after,
+  .sweepBlue line,
+  .sweepBlue path,
+  .sweepWhite line { opacity: 0; }
+}
+
+/* ── Mobile: shrink proportionally, bump text to stay legible. ── */
+@media (max-width: 768px) {
+  .nodeTitle { font-size: 2.1cqw; }
+  .nodeSub { font-size: 1.55cqw; }
+  .obsTitle { font-size: 1.7cqw; }
+  .obsSub { font-size: 1.5cqw; }
+  .caption { font-size: 0.8rem; line-height: 1.6; }
+  .eyebrowText { font-size: 0.625rem; }
+}
+
+/* ── Caption ── */
 .caption {
   margin: 0;
   max-width: 64rem;
@@ -144,39 +280,5 @@
 
   strong {
     font-weight: 700;
-  }
-}
-
-/* ── Mobile: stack each row's nodes vertically, keep the loop connector ── */
-@media (max-width: 768px) {
-  .box {
-    padding: 1.5rem 1.25rem;
-  }
-  .row {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .node {
-    max-width: none;
-    width: 100%;
-  }
-  .arrow svg {
-    transform: rotate(90deg);
-  }
-  .arrowVertical svg {
-    transform: rotate(90deg);
-  }
-  .caption {
-    font-size: 0.8rem;
-    line-height: 1.6;
-  }
-  .eyebrowText {
-    font-size: 0.625rem;
-  }
-}
-
-@media (max-width: 400px) {
-  .box {
-    padding: 1.25rem 1rem;
   }
 }
