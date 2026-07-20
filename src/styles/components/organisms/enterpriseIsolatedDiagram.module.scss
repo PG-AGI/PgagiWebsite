@@ -257,10 +257,19 @@
   .sweepWhite line { opacity: 0; }
 }
 
-/* ── Mobile: shrink proportionally, bump text to stay legible. ── */
+/* ── Mobile: shrinking to card width makes cqw text illegible, so hold the
+   box at a legible fixed width and scroll it horizontally instead. ── */
 @media (max-width: 768px) {
-  .nodeTitle { font-size: 2.1cqw; }
-  .nodeSub { font-size: 1.55cqw; }
+  .boxWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .box {
+    width: 56.25rem; /* 900px */
+    max-width: none;
+  }
+  .nodeTitle { font-size: 2.1cqw; white-space: normal; overflow-wrap: break-word; }
+  .nodeSub { font-size: 1.55cqw; white-space: normal; overflow-wrap: break-word; }
   .obsTitle { font-size: 1.7cqw; }
   .obsSub { font-size: 1.5cqw; }
   .caption { font-size: 0.8rem; line-height: 1.6; }
