@@ -126,7 +126,7 @@ export default function MultiTenantArchitectureDiagram() {
       <figcaption className={styles.caption}>
         <strong>Figure 1 — Multi-tenant architecture. </strong>
         Tenant traffic is authenticated and routed at the gateway, then reaches the core, billing, and
-        search services — each scoped to its tenant. Every tenant's data stays isolated in its own
+        search services — each scoped to its tenant. Every tenant&apos;s data stays isolated in its own
         schema or database, and the dashboard, alongside observability, keeps every layer measured
         in production.
       </figcaption>
