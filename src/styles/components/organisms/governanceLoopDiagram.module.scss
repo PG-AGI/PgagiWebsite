@@ -1,0 +1,225 @@
+/* ─────────────────────────────────────────────────────────────────
+   Security & governance loop diagram (enterprise-ai vertical). Same
+   technique as aiOrchestrationDiagram.module.scss: the purple box is a
+   container-query context; nodes/labels are sized in `cqw` and placed in
+   `%`, so the illustration keeps its proportions (reference 1280 × 623)
+   at any width. Desktop-first.
+   ───────────────────────────────────────────────────────────────── */
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 1.5625rem);
+}
+
+.topBlock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.6vw, 1.25rem);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrowBar {
+  width: 32px;
+  height: 2px;
+  background: #2c2c2c;
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2c2c2c;
+  white-space: nowrap;
+}
+
+.boxWrap {
+  width: 100%;
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 623;
+  background: #c3b1f0;
+  border: 1px solid #dfdcd5;
+  border-radius: 24px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.node {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4cqw;
+  padding: 0.6cqw 0.9cqw;
+  border-radius: 1.2cqw;
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.08);
+  animation: glNodeLift 5s ease-in-out infinite;
+}
+
+.node::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 0 2.5px rgba(255, 255, 255, 0.75),
+    0 0 16px 2px rgba(124, 58, 237, 0.45),
+    0 8px 22px rgba(0, 0, 0, 0.16);
+  animation: glNodeGlow 5s ease-in-out infinite;
+  animation-delay: inherit;
+}
+
+@keyframes glNodeLift {
+  0% { transform: scale(1); }
+  4% { transform: scale(1.05); }
+  16%, 100% { transform: scale(1); }
+}
+
+@keyframes glNodeGlow {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  12% { opacity: 1; }
+  20%, 100% { opacity: 0; }
+}
+
+.nodeTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1.5cqw;
+  line-height: 1.4;
+  color: #4c1d95;
+  white-space: nowrap;
+}
+
+.nodeSub {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.05cqw;
+  line-height: 1.45;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* ── Governance — center circle, gentle independent pulse. ── */
+.center {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.3cqw;
+  border-radius: 50%;
+  background: #ede9fe;
+  animation: glCenterPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes glCenterPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.35); }
+  50% { box-shadow: 0 0 0 6px rgba(124, 58, 237, 0); }
+}
+
+.centerTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1.4cqw;
+  line-height: 1.4;
+  color: #5b21b6;
+  white-space: nowrap;
+}
+
+.centerSub {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1cqw;
+  line-height: 1.4;
+  color: #6d28d9;
+  white-space: nowrap;
+}
+
+.baseConnectors {
+  opacity: 0.4;
+}
+
+.sweep path {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  filter: drop-shadow(0 0 2px rgba(124, 58, 237, 0.85));
+  animation: glLineSweep 5s linear infinite;
+}
+
+@keyframes glLineSweep {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  3% { opacity: 1; }
+  10% { stroke-dashoffset: 0; opacity: 1; }
+  16% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 1; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node,
+  .node::after,
+  .center,
+  .sweep path {
+    animation: none;
+  }
+  .baseConnectors { opacity: 1; }
+  .node::after,
+  .sweep path { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .nodeTitle { font-size: 2.15cqw; }
+  .nodeSub { font-size: 1.6cqw; }
+  .centerTitle { font-size: 2cqw; }
+  .centerSub { font-size: 1.5cqw; }
+  .caption { font-size: 0.8rem; line-height: 1.6; }
+  .eyebrowText { font-size: 0.625rem; }
+}
+
+.caption {
+  margin: 0;
+  max-width: 64rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.875rem);
+  line-height: 1.625;
+  color: #374151;
+
+  strong {
+    font-weight: 700;
+  }
+}

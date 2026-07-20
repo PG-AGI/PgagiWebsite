@@ -5,6 +5,9 @@ import DeviceCloudDiagram from './DeviceCloudDiagram';
 import FoundationLLMDiagram from './FoundationLLMDiagram';
 import MultiTenantArchitectureDiagram from './MultiTenantArchitectureDiagram';
 import MobileAiDiagram from './MobileAiDiagram';
+import EnterpriseIsolatedDiagram from './EnterpriseIsolatedDiagram';
+import DeploymentOptionsDiagram from './DeploymentOptionsDiagram';
+import GovernanceLoopDiagram from './GovernanceLoopDiagram';
 import FeatureCards from './FeatureCards';
 import UseCases from './UseCases';
 import ProductVisionCta from './ProductVisionCta';
@@ -15,6 +18,9 @@ const BUILD_DIAGRAMS: Record<BuildDiagramKey, () => JSX.Element> = {
   'foundation-llm': FoundationLLMDiagram,
   'multi-tenant': MultiTenantArchitectureDiagram,
   'mobile-ai': MobileAiDiagram,
+  'enterprise-isolated': EnterpriseIsolatedDiagram,
+  'deployment-options': DeploymentOptionsDiagram,
+  'governance-loop': GovernanceLoopDiagram,
 };
 
 /**
@@ -41,6 +47,10 @@ export default function VerticalPage({ vertical }: { vertical: Vertical }) {
           <VerticalIntro heading={vertical.intro.heading} body={vertical.intro.body} />
           {BuildDiagram && <BuildDiagram />}
           <FeatureCards cards={vertical.features} />
+          {vertical.secondaryDiagrams?.map((key) => {
+            const SecondaryDiagram = BUILD_DIAGRAMS[key];
+            return <SecondaryDiagram key={key} />;
+          })}
         </div>
       </section>
 

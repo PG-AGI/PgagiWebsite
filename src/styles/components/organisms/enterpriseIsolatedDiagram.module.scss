@@ -1,0 +1,283 @@
+/* ─────────────────────────────────────────────────────────────────
+   Isolated enterprise deployment diagram (enterprise-ai vertical). Same
+   technique as foundationLlmDiagram.module.scss: the red/pink box is a
+   container-query context; nodes/labels are sized in `cqw` and placed in
+   `%`, so the illustration keeps its proportions (reference 1280 × 623)
+   at any width. Desktop-first.
+   ───────────────────────────────────────────────────────────────── */
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 1.5625rem);
+}
+
+.topBlock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.6vw, 1.25rem);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrowBar {
+  width: 32px;
+  height: 2px;
+  background: #2c2c2c;
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2c2c2c;
+  white-space: nowrap;
+}
+
+.boxWrap {
+  width: 100%;
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 623;
+  background: #f0a3a3;
+  border: 1px solid #dfdcd5;
+  border-radius: 24px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ── Nodes ── */
+.node {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4cqw;
+  padding: 0.6cqw 0.9cqw;
+  border-radius: 1.2cqw;
+  animation: eiNodeLift 5s ease-in-out infinite;
+}
+
+.node::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 0 2.5px rgba(255, 255, 255, 0.7),
+    0 0 16px 2px rgba(159, 0, 0, 0.5),
+    0 8px 22px rgba(0, 0, 0, 0.18);
+  animation: eiNodeGlow 5s ease-in-out infinite;
+  animation-delay: inherit;
+}
+
+@keyframes eiNodeLift {
+  0% { transform: scale(1); }
+  4% { transform: scale(1.03); }
+  16%, 100% { transform: scale(1); }
+}
+
+@keyframes eiNodeGlow {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  12% { opacity: 1; }
+  20%, 100% { opacity: 0; }
+}
+
+.nodeTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1.5cqw;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.nodeSub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.05cqw;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+/* Variants */
+.nodeDark {
+  background: #191919;
+  .nodeTitle { color: #ffffff; }
+  .nodeSub { color: #ffffff; }
+}
+
+.nodeLavender {
+  background: #fff0f0;
+  .nodeTitle { color: #9f0000; }
+  .nodeSub { color: #374151; }
+}
+
+.nodeWhite {
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  .nodeTitle { color: #191919; }
+  .nodeSub { color: #374151; }
+}
+
+.nodeWhiteGreen {
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  .nodeTitle { color: #16a34a; }
+  .nodeSub { color: #16a34a; }
+}
+
+/* ── Observability strip ── */
+.observability {
+  position: absolute;
+  z-index: 2;
+  left: 15.55%;
+  top: 78.97%;
+  width: 71.02%;
+  height: 12.2%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3cqw;
+  background: #ffffff;
+  border-radius: 1.2cqw;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow:
+      0 0 0 2.5px rgba(255, 255, 255, 0.7),
+      0 0 16px 2px rgba(159, 0, 0, 0.4),
+      0 8px 22px rgba(0, 0, 0, 0.18);
+    animation: eiNodeGlow 5s ease-in-out infinite;
+    animation-delay: inherit;
+  }
+}
+
+.obsTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.15cqw;
+  line-height: 1.4;
+  color: #9f0000;
+  text-align: center;
+}
+
+.obsSub {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1cqw;
+  line-height: 1.4;
+  color: #374151;
+}
+
+/* ── Connectors ──
+   Base pipe sits dim; a bright highlight draws over it, in sequence. */
+.baseConnectors {
+  opacity: 0.35;
+}
+
+.sweepRed line,
+.sweepRed path,
+.sweepWhite line {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: eiLineSweep 5s linear infinite;
+}
+
+.sweepRed line,
+.sweepRed path {
+  filter: drop-shadow(0 0 2px rgba(159, 0, 0, 0.85));
+}
+
+.sweepWhite line {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.85));
+}
+
+@keyframes eiLineSweep {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  3% { opacity: 1; }
+  10% { stroke-dashoffset: 0; opacity: 1; }
+  16% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 1; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node,
+  .node::after,
+  .observability::after,
+  .sweepRed line,
+  .sweepRed path,
+  .sweepWhite line {
+    animation: none;
+  }
+  .baseConnectors { opacity: 1; }
+  .node::after,
+  .observability::after,
+  .sweepRed line,
+  .sweepRed path,
+  .sweepWhite line { opacity: 0; }
+}
+
+/* ── Mobile: shrink proportionally, bump text to stay legible. ── */
+@media (max-width: 768px) {
+  .nodeTitle { font-size: 2.1cqw; }
+  .nodeSub { font-size: 1.55cqw; }
+  .obsTitle { font-size: 1.7cqw; }
+  .obsSub { font-size: 1.5cqw; }
+  .caption { font-size: 0.8rem; line-height: 1.6; }
+  .eyebrowText { font-size: 0.625rem; }
+}
+
+/* ── Caption ── */
+.caption {
+  margin: 0;
+  max-width: 64rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.875rem);
+  line-height: 1.625;
+  color: #374151;
+
+  strong {
+    font-weight: 700;
+  }
+}

@@ -21,7 +21,14 @@ export type FeatureBullet = {
 };
 
 /** Keys for the illustrated diagrams that can slot into the "build" section. */
-export type BuildDiagramKey = 'device-cloud' | 'foundation-llm' | 'multi-tenant' | 'mobile-ai';
+export type BuildDiagramKey =
+  | 'device-cloud'
+  | 'foundation-llm'
+  | 'multi-tenant'
+  | 'mobile-ai'
+  | 'enterprise-isolated'
+  | 'deployment-options'
+  | 'governance-loop';
 
 /** Keys for the diagrams a wide `VerticalFeature` card can embed in place of/above its bullets. */
 export type FeatureDiagramKey = 'rag-architecture' | 'ai-orchestration';
@@ -64,6 +71,8 @@ export type Vertical = {
   /** Illustrated diagram rendered between the intro and the feature cards, if any. */
   buildDiagram?: BuildDiagramKey;
   features: VerticalFeature[];
+  /** Additional illustrated diagrams rendered after the feature cards, before use cases. */
+  secondaryDiagrams?: BuildDiagramKey[];
   useCases: VerticalUseCases;
 };
 
@@ -335,6 +344,82 @@ export const VERTICALS: Record<string, Vertical> = {
         { eyebrow: 'FIELD OPS', title: 'Offline-first capture', body: 'Data capture that works with no connectivity and syncs cleanly the moment the device is back online, without losing a record.', icon: '/assets/AixMobile/AixMobile-2.svg' },
         { eyebrow: 'RETROFIT', title: 'AI features inside an existing app', body: 'Add on-device or cloud AI — chat, scanning, personalization — into an existing app, without a rewrite of the codebase.', icon: '/assets/AixMobile/AixMobile-3.svg' },
         { eyebrow: 'CROSS-PLATFORM', title: 'One Flutter codebase, two stores', body: 'One codebase shipped to iOS and Android alike, with shared logic, native performance, and one release pipeline to maintain.', icon: '/assets/AixMobile/AixMobile-4.svg' },
+      ],
+    },
+  },
+  'enterprise-ai': {
+    slug: 'enterprise-ai',
+    metaTitle: 'Enterprise AI | PGAGI',
+    metaDescription:
+      'AI systems that run entirely inside your environment — self-hosted models, CPU-optimized inference, and a boundary designed so data never leaves your control.',
+    heroTitle: 'Enterprise AI',
+    heroDescription:
+      'We deploy AI capabilities entirely within your own infrastructure — for organizations that require full control over data and models, whether the driver is security, compliance, or IP. On-premise, private cloud, or fully air-gapped, with the same production discipline as any cloud deployment.',
+    caseStudyHref: '/case-study/fraud-detection-using-machine-learning-techniques',
+    intro: {
+      heading: 'Deploying AI entirely within your environment.',
+      body: 'For organizations that can’t send data outside their walls — regulated industries, defense, and enterprises where data sovereignty is non-negotiable — we deploy models, retrieval, and agents entirely within your infrastructure: on-prem, private cloud, or air-gapped, with the same production discipline as any cloud deployment.',
+    },
+    buildDiagram: 'enterprise-isolated',
+    features: [
+      {
+        icon: '/assets/verticals/enterprise-ai/sovereignty.svg',
+        title: 'Isolated AI deployment & sovereignty',
+        bullets: [
+          { text: 'Models, retrieval, and agents run entirely inside your boundary — no third-party API calls in the request path.' },
+          { text: 'Full control over which model versions run and when they change.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/enterprise-ai/on-prem-cloud.svg',
+        title: 'On-premises / private cloud deployment',
+        bullets: [
+          { text: 'Deploys to your own data center, private cloud, or VPC — whichever your infrastructure team already runs.' },
+          { text: 'Packaged for your existing container and orchestration tooling.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/enterprise-ai/cpu-inference.svg',
+        title: 'CPU-optimized inference',
+        bullets: [
+          { text: 'Self-hosted small and mid-size language models tuned to run without dedicated GPU hardware.' },
+          { text: 'Quantization and batching tuned for the throughput your hardware actually has.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/enterprise-ai/compliance-residency.svg',
+        title: 'Compliance and residency',
+        bullets: [
+          { text: 'Data residency guarantees — nothing crosses a region or jurisdiction boundary it isn’t allowed to.' },
+          { text: 'Built to match the frameworks your compliance team already audits against.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/enterprise-ai/air-gapped.svg',
+        title: 'Air-gapped / no internet dependency',
+        bullets: [
+          { text: 'Runs with zero outbound internet dependency — models, weights, and tooling ship with the deployment.' },
+          { text: 'Updates delivered as offline packages, not live pulls.' },
+        ],
+      },
+      {
+        icon: '/assets/verticals/enterprise-ai/access-audit.svg',
+        title: 'Access control & audit',
+        bullets: [
+          { text: 'Role-based access control and full audit logs on every model call and tool invocation.' },
+          { text: 'Exportable logs for your existing SIEM or compliance pipeline.' },
+        ],
+      },
+    ],
+    secondaryDiagrams: ['deployment-options', 'governance-loop'],
+    useCases: {
+      heading: 'Practical Use Cases',
+      subtitle: 'Applied examples of complex systems we design and deploy.',
+      items: [
+        { eyebrow: 'REGULATED DATA', title: 'Customer-data air-gapped deployment', body: 'Customer or patient data never leaves your network — inference, retrieval, and storage all run inside your own boundary.', icon: '/assets/AixEnterprise/AixEnterprise-1.svg' },
+        { eyebrow: 'COMPLIANCE', title: 'Regulatory-driven on-premise rollout', body: 'A deployment shaped around what your compliance team already has to audit — data residency, access logs, and retention built in from day one.', icon: '/assets/AixEnterprise/AixEnterprise-2.svg' },
+        { eyebrow: 'GOVERNANCE', title: 'Multi-product oversight, in-house', body: 'One governed platform your internal teams run multiple AI products on, with shared access control and audit instead of five one-off deployments.', icon: '/assets/AixEnterprise/AixEnterprise-3.svg' },
+        { eyebrow: 'FULL CONTROL', title: 'Full self-hosted deployment', body: 'Every layer — model, retrieval, orchestration, and data — hosted on infrastructure you own and operate end to end.', icon: '/assets/AixEnterprise/AixEnterprise-4.svg' },
       ],
     },
   },
