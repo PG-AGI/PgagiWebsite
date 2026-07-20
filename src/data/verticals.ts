@@ -28,7 +28,9 @@ export type BuildDiagramKey =
   | 'mobile-ai'
   | 'enterprise-isolated'
   | 'deployment-options'
-  | 'governance-loop';
+  | 'governance-loop'
+  | 'rag-architecture'
+  | 'ai-orchestration';
 
 /** Keys for the diagrams a wide `VerticalFeature` card can embed in place of/above its bullets. */
 export type FeatureDiagramKey = 'rag-architecture' | 'ai-orchestration';
@@ -70,6 +72,8 @@ export type Vertical = {
   intro: VerticalIntro;
   /** Illustrated diagram rendered between the intro and the feature cards, if any. */
   buildDiagram?: BuildDiagramKey;
+  /** Additional diagrams rendered after buildDiagram, still before the feature cards. */
+  preFeatureDiagrams?: BuildDiagramKey[];
   features: VerticalFeature[];
   /** Additional illustrated diagrams rendered after the feature cards, before use cases. */
   secondaryDiagrams?: BuildDiagramKey[];
@@ -147,6 +151,7 @@ export const VERTICALS: Record<string, Vertical> = {
       body: 'A single language-model call is rarely the product. What matters is what surrounds it: retrieval that grounds it in your data, tools it can call to take action, memory that carries context across turns and sessions, and an orchestration layer that plans, routes, and recovers when a step fails. We build each of those components and wire them into one dependable system — closed or open-source model, RAG pipeline, agents, memory, and orchestration — engineered for production, not just a demo.',
     },
     buildDiagram: 'foundation-llm',
+    preFeatureDiagrams: ['rag-architecture'],
     features: [
       {
         icon: '/assets/verticals/ai-ml/closed-llm.svg',
@@ -170,11 +175,6 @@ export const VERTICALS: Record<string, Vertical> = {
       {
         icon: '/assets/verticals/ai-ml/custom-ml.svg',
         title: 'Open-source & custom machine-learning models',
-        // Wide: it's the 3rd card before a wide diagram card — left as a
-        // regular half-width card, the grid would strand an empty cell
-        // next to it instead of backfilling (CSS Grid doesn't reflow gaps
-        // left by a full-width item mid-grid).
-        wide: true,
         bullets: [
           { text: 'Classical ML models (scikit-learn, XGBoost) for structured and tabular data.' },
           { text: 'Deep learning models (PyTorch, TensorFlow) for vision, NLP, and forecasting.' },
@@ -184,9 +184,12 @@ export const VERTICALS: Record<string, Vertical> = {
       {
         icon: '/assets/verticals/ai-ml/rag.svg',
         title: 'RAG architecture',
-        wide: true,
-        diagram: 'rag-architecture',
-        bullets: [],
+        bullets: [
+          { lead: 'Document ingestion & chunking:', text: 'PDFs, pages, and records split, cleaned, and tagged for retrieval.' },
+          { lead: 'Embeddings & vector storage:', text: 'documents indexed and versioned in a vector database for fast semantic lookup.' },
+          { lead: 'Hybrid search & re-ranking:', text: 'dense (semantic) and keyword retrieval combined, then re-ranked for relevance.' },
+          { lead: 'Grounded, cited generation:', text: 'the LLM answers from retrieved context, with citations validated before returning.' },
+        ],
       },
       {
         icon: '/assets/verticals/ai-ml/agents.svg',
@@ -211,8 +214,6 @@ export const VERTICALS: Record<string, Vertical> = {
       {
         icon: '/assets/verticals/ai-ml/function-calling.svg',
         title: 'Function calling & tool execution',
-        // Wide for the same reason as 'Open-source & custom ML models' above.
-        wide: true,
         bullets: [
           { text: 'LLM-triggered API calls, database queries, and external service integration.' },
           { text: 'Structured function-calling schemas with validation and error handling.' },
@@ -223,8 +224,6 @@ export const VERTICALS: Record<string, Vertical> = {
       {
         icon: '/assets/verticals/ai-ml/orchestration.svg',
         title: 'AI orchestration',
-        wide: true,
-        diagram: 'ai-orchestration',
         bullets: [
           { text: 'Multi-step workflow orchestration (LangChain, LlamaIndex, custom orchestrators).' },
           { text: 'Conditional routing and fallback logic across models and tools.' },
@@ -233,6 +232,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
     ],
+    secondaryDiagrams: ['ai-orchestration'],
     useCases: {
       heading: 'Practical Use Cases',
       subtitle: 'Applied examples of complex systems we design and deploy.',

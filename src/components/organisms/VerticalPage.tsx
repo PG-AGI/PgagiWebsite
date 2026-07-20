@@ -8,6 +8,8 @@ import MobileAiDiagram from './MobileAiDiagram';
 import EnterpriseIsolatedDiagram from './EnterpriseIsolatedDiagram';
 import DeploymentOptionsDiagram from './DeploymentOptionsDiagram';
 import GovernanceLoopDiagram from './GovernanceLoopDiagram';
+import RagArchitectureDiagram from './RagArchitectureDiagram';
+import AiOrchestrationDiagram from './AiOrchestrationDiagram';
 import FeatureCards from './FeatureCards';
 import UseCases from './UseCases';
 import ProductVisionCta from './ProductVisionCta';
@@ -21,6 +23,8 @@ const BUILD_DIAGRAMS: Record<BuildDiagramKey, () => JSX.Element> = {
   'enterprise-isolated': EnterpriseIsolatedDiagram,
   'deployment-options': DeploymentOptionsDiagram,
   'governance-loop': GovernanceLoopDiagram,
+  'rag-architecture': RagArchitectureDiagram,
+  'ai-orchestration': AiOrchestrationDiagram,
 };
 
 /**
@@ -46,6 +50,10 @@ export default function VerticalPage({ vertical }: { vertical: Vertical }) {
         <div className={styles.rail}>
           <VerticalIntro heading={vertical.intro.heading} body={vertical.intro.body} />
           {BuildDiagram && <BuildDiagram />}
+          {vertical.preFeatureDiagrams?.map((key) => {
+            const PreFeatureDiagram = BUILD_DIAGRAMS[key];
+            return <PreFeatureDiagram key={key} />;
+          })}
           <FeatureCards cards={vertical.features} />
           {vertical.secondaryDiagrams?.map((key) => {
             const SecondaryDiagram = BUILD_DIAGRAMS[key];
