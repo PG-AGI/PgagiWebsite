@@ -72,8 +72,6 @@ export type Vertical = {
   intro: VerticalIntro;
   /** Illustrated diagram rendered between the intro and the feature cards, if any. */
   buildDiagram?: BuildDiagramKey;
-  /** Additional diagrams rendered after buildDiagram, still before the feature cards. */
-  preFeatureDiagrams?: BuildDiagramKey[];
   features: VerticalFeature[];
   /** Additional illustrated diagrams rendered after the feature cards, before use cases. */
   secondaryDiagrams?: BuildDiagramKey[];
@@ -151,7 +149,6 @@ export const VERTICALS: Record<string, Vertical> = {
       body: 'A single language-model call is rarely the product. What matters is what surrounds it: retrieval that grounds it in your data, tools it can call to take action, memory that carries context across turns and sessions, and an orchestration layer that plans, routes, and recovers when a step fails. We build each of those components and wire them into one dependable system — closed or open-source model, RAG pipeline, agents, memory, and orchestration — engineered for production, not just a demo.',
     },
     buildDiagram: 'foundation-llm',
-    preFeatureDiagrams: ['rag-architecture'],
     features: [
       {
         icon: '/assets/verticals/ai-ml/closed-llm.svg',
@@ -232,7 +229,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
     ],
-    secondaryDiagrams: ['ai-orchestration'],
+    secondaryDiagrams: ['rag-architecture', 'ai-orchestration'],
     useCases: {
       heading: 'Practical Use Cases',
       subtitle: 'Applied examples of complex systems we design and deploy.',

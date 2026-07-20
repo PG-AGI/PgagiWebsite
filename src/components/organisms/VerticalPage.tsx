@@ -50,10 +50,6 @@ export default function VerticalPage({ vertical }: { vertical: Vertical }) {
         <div className={styles.rail}>
           <VerticalIntro heading={vertical.intro.heading} body={vertical.intro.body} />
           {BuildDiagram && <BuildDiagram />}
-          {vertical.preFeatureDiagrams?.map((key) => {
-            const PreFeatureDiagram = BUILD_DIAGRAMS[key];
-            return <PreFeatureDiagram key={key} />;
-          })}
           <FeatureCards cards={vertical.features} />
           {vertical.secondaryDiagrams?.map((key) => {
             const SecondaryDiagram = BUILD_DIAGRAMS[key];
