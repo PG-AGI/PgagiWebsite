@@ -327,18 +327,18 @@ export const VERTICALS: Record<string, Vertical> = {
         icon: '/assets/verticals/mobile-ai/app-development.png',
         title: 'App development',
         bullets: [
-          { text: 'Native (Swift, Kotlin) and cross-platform (React Native, Flutter) mobile app development.' },
-          { text: 'Backend-connected app builds with real-time sync, offline support, and push notifications.' },
-          { text: 'Performance-first, scalable UI for smooth AI feature integration on-device.' },
+          { text: 'Native (Swift / Kotlin) and Flutter cross-platform development for iOS and Android from one codebase where it fits.' },
+          { text: 'Backend-connected apps designed around the API, not bolted onto it — with clean state, caching, and error handling.' },
+          { lead: 'Performance & scalability:', text: 'smooth UI, efficient networking, and architecture that holds up as the app grows.' },
         ],
       },
       {
         icon: '/assets/verticals/mobile-ai/ai-in-app.png',
         title: 'AI inside the app',
         bullets: [
-          { text: 'Chat / voice interfaces and AI agents built directly into the app — not just a backend API.' },
-          { text: 'Image, document & data scanning — scan receipts, documents, or photos and extract structured data.' },
-          { text: 'AI-powered notifications — smart, personalized push notifications, not just generic alerts.' },
+          { text: 'AI chat interfaces and voice AI (speech-to-text, text-to-speech, voice assistants) running inside the app.' },
+          { lead: 'Image, document & text processing:', text: 'scan, extract, summarize, and act on content on-device or via the backend.' },
+          { text: 'AI-powered workflows that connect app actions to the same RAG, agents, and tools described in section 01.' },
         ],
       },
       {
@@ -346,9 +346,9 @@ export const VERTICALS: Record<string, Vertical> = {
         title: 'Platform, integration & delivery',
         wide: true,
         bullets: [
-          { text: 'Multi-platform integration — CRM, calendars, payment platforms, and other 3rd-party services.' },
-          { text: 'API integrations with payment, messaging, and other services, plus secure handling of user data.' },
-          { text: 'App store deployment — App Store / Play Store listing, review submission, and ongoing app health monitoring.' },
+          { text: 'Mobile authentication (social / OTP / biometric), push notifications, and offline-first behavior where the use case needs it.' },
+          { text: 'API integration with your systems and third-party services, plus secure handling of tokens and data.' },
+          { lead: 'App store deployment:', text: 'build pipelines, signing, store submission, and release management for both platforms.' },
         ],
       },
     ],
