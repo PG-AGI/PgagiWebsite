@@ -185,17 +185,6 @@
    smaller. Internal text is bumped to the largest ratio that still fits each
    node, to stay as legible as possible at the reduced width. ── */
 @media (max-width: 768px) {
-  /* Shrinking the whole diagram down to a single mobile card's width makes
-     the text illegible (well under an em at typical phone widths). Instead,
-     hold the box at a legible fixed width and let it scroll horizontally. */
-  .boxScroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .box {
-    width: 56.25rem; /* 900px */
-    max-width: none;
-  }
   .nodeTitle { font-size: 2.05cqw; white-space: normal; overflow-wrap: break-word; }
   .nodeTitleSm { font-size: 1.9cqw; white-space: normal; overflow-wrap: break-word; }
   .nodeSub { font-size: 1.5cqw; white-space: normal; overflow-wrap: break-word; }
