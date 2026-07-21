@@ -389,7 +389,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/enterprise-ai/on-prem-cloud.png',
+        icon: '/assets/AixEnterprise/AixEnterprise-3.png',
         title: 'Self-hosted small language models',
         description: 'Open models selected, hosted, and tuned inside the boundary, with weights held on the organisation’s own storage.',
         bullets: [
@@ -411,7 +411,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/enterprise-ai/compliance-residency.png',
+        icon: '/assets/AixEnterprise/AixEnterprise-1.png',
         title: 'Data governance & residency',
         description: 'Data remains within the defined jurisdiction and boundary, under the organisation’s own controls.',
         bullets: [
@@ -448,10 +448,10 @@ export const VERTICALS: Record<string, Vertical> = {
       heading: 'Practical Use Cases',
       subtitle: 'Applied examples of complex systems we design and deploy.',
       items: [
-        { eyebrow: 'FINANCIAL SERVICES', title: 'Customer data stays in the bank', body: 'Models process customer and transaction data inside the institution’s environment; nothing is sent to an external API, meeting regulatory and residency requirements.', icon: '/assets/AixEnterprise/AixEnterprise-1.png' },
-        { eyebrow: 'HEALTHCARE', title: 'PHI processed on-premise', body: 'Patient data is analysed by self-hosted models within the hospital or provider network, with no patient information leaving the boundary.', icon: '/assets/AixEnterprise/AixEnterprise-2.png' },
-        { eyebrow: 'LEGAL', title: 'Privileged documents, in-house', body: 'Confidential and privileged material is retrieved and analysed inside the firm’s own systems, under permission-aware access and full audit.', icon: '/assets/AixEnterprise/AixEnterprise-3.png' },
-        { eyebrow: 'GOVERNMENT / DEFENCE', title: 'Fully air-gapped deployment', body: 'The system runs with no external connectivity at all; models, data, and inference operate entirely offline within a controlled network.', icon: '/assets/AixEnterprise/AixEnterprise-4.png' },
+        { eyebrow: 'FINANCIAL SERVICES', title: 'Customer data stays in the bank', body: 'Models process customer and transaction data inside the institution’s environment; nothing is sent to an external API, meeting regulatory and residency requirements.', icon: '/assets/AixEnterprise/AixEnterprise-2.png' },
+        { eyebrow: 'HEALTHCARE', title: 'PHI processed on-premise', body: 'Patient data is analysed by self-hosted models within the hospital or provider network, with no patient information leaving the boundary.', icon: '/assets/verticals/enterprise-ai/on-prem-cloud.png' },
+        { eyebrow: 'LEGAL', title: 'Privileged documents, in-house', body: 'Confidential and privileged material is retrieved and analysed inside the firm’s own systems, under permission-aware access and full audit.', icon: '/assets/AixEnterprise/AixEnterprise-4.png' },
+        { eyebrow: 'GOVERNMENT / DEFENCE', title: 'Fully air-gapped deployment', body: 'The system runs with no external connectivity at all; models, data, and inference operate entirely offline within a controlled network.', icon: '/assets/verticals/enterprise-ai/compliance-residency.png' },
       ],
     },
   },
