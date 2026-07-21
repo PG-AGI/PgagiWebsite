@@ -84,11 +84,20 @@ export default function EnterpriseIsolatedDiagram() {
                 <line pathLength="1" style={{ animationDelay: '2.2s' }} x1="729.6" y1="201.6" x2="729.6" y2="243.6" />
               </g>
 
-              {/* Blocked path — public model APIs sit outside the boundary, never called. */}
-              <line
-                x1="900" y1="214" x2="947.2" y2="205.8"
-                stroke="#ffffff" strokeWidth="2" strokeDasharray="5 5" strokeLinecap="round"
+              {/* Blocked path — the lock sits on this line, which curves into the box. */}
+              <path
+                d="M878 213 C 900 224, 925 224, 947.2 207"
+                fill="none" stroke="#ffffff" strokeWidth="2" strokeDasharray="5 5" strokeLinecap="round"
               />
+
+              {/* Padlock */}
+              <path d="M868 202 V193 A10 10 0 0 1 888 193 V202" fill="none" stroke="#9f0000" strokeWidth="5" strokeLinecap="round" />
+              <rect x="865" y="202" width="26" height="22" rx="5" fill="#9f0000" />
+              <circle cx="878" cy="213" r="3" fill="#ffffff" />
+
+              {/* No-entry circle */}
+              <circle cx="920" cy="214" r="14" fill="#9f0000" />
+              <rect x="909" y="211" width="22" height="6" rx="2" fill="#ffffff" />
             </svg>
 
             <p className={styles.boundaryLabel}>
