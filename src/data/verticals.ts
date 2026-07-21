@@ -39,6 +39,8 @@ export type VerticalFeature = {
   /** Public path to the 3D icon, e.g. "/assets/verticals/ai-iot/collection.png". */
   icon: string;
   title: string;
+  /** Optional one-line subtitle rendered under the title, above the bullets. */
+  description?: string;
   /** Full-width card (spans both columns). */
   wide?: boolean;
   /** Illustrated diagram rendered above the bullets (bullets are optional when set). */

@@ -35,6 +35,7 @@ export default function FeatureCards({ cards }: { cards: VerticalFeature[] }) {
             </div>
             <div className={styles.body}>
               <h3 className={styles.title}>{card.title}</h3>
+              {card.description && <p className={styles.description}>{card.description}</p>}
               {Diagram && <Diagram />}
               {card.bullets.length > 0 && (
                 <ul className={styles.bullets}>
