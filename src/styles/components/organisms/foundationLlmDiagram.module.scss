@@ -258,12 +258,11 @@
   .sweepWhite line { opacity: 0; }
 }
 
-/* ── Mobile: shrink proportionally, bump text to stay legible. ── */
+/* ── Mobile: the box shrinks to fit its card (see .box), so cqw sizing
+   alone scales text down proportionally — no font-size override needed. ── */
 @media (max-width: 768px) {
-  .nodeTitle { font-size: 2.1cqw; white-space: normal; overflow-wrap: break-word; }
-  .nodeSub { font-size: 1.55cqw; white-space: normal; overflow-wrap: break-word; }
-  .obsTitle { font-size: 1.7cqw; }
-  .obsSub { font-size: 1.5cqw; }
+  .nodeTitle { white-space: normal; overflow-wrap: break-word; }
+  .nodeSub { white-space: normal; overflow-wrap: break-word; }
   .caption { font-size: 0.8rem; line-height: 1.6; }
   .eyebrowText { font-size: 0.625rem; }
 }

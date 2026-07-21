@@ -203,10 +203,10 @@
 
 /* ── Mobile: shrink proportionally, bump text to stay legible. ── */
 @media (max-width: 768px) {
-  .nodeTitle { font-size: 2.15cqw; white-space: normal; overflow-wrap: break-word; }
-  .nodeSub { font-size: 1.6cqw; white-space: normal; overflow-wrap: break-word; }
-  .centerTitle { font-size: 2cqw; white-space: normal; overflow-wrap: break-word; }
-  .centerSub { font-size: 1.5cqw; white-space: normal; overflow-wrap: break-word; }
+  .nodeTitle { white-space: normal; overflow-wrap: break-word; }
+  .nodeSub { white-space: normal; overflow-wrap: break-word; }
+  .centerTitle { white-space: normal; overflow-wrap: break-word; }
+  .centerSub { white-space: normal; overflow-wrap: break-word; }
   .caption { font-size: 0.8rem; line-height: 1.6; }
   .eyebrowText { font-size: 0.625rem; }
 }
