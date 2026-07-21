@@ -324,7 +324,7 @@ export const VERTICALS: Record<string, Vertical> = {
     buildDiagram: 'mobile-ai',
     features: [
       {
-        icon: '/assets/verticals/mobile-ai/app-development.svg',
+        icon: '/assets/verticals/mobile-ai/app-development.png',
         title: 'App development',
         bullets: [
           { text: 'Native (Swift, Kotlin) and cross-platform (React Native, Flutter) mobile app development.' },
@@ -333,7 +333,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/mobile-ai/ai-in-app.svg',
+        icon: '/assets/verticals/mobile-ai/ai-in-app.png',
         title: 'AI inside the app',
         bullets: [
           { text: 'Chat / voice interfaces and AI agents built directly into the app — not just a backend API.' },
@@ -342,7 +342,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/mobile-ai/platform-delivery.svg',
+        icon: '/assets/verticals/mobile-ai/platform-delivery.png',
         title: 'Platform, integration & delivery',
         wide: true,
         bullets: [
@@ -356,10 +356,10 @@ export const VERTICALS: Record<string, Vertical> = {
       heading: 'Practical Use Cases',
       subtitle: 'Applied examples of complex systems we design and deploy.',
       items: [
-        { eyebrow: 'CONVERSATIONAL', title: 'Chat + voice product', body: 'A mobile-first assistant with chat and voice interfaces, generative on-device or cloud AI, and a UI built for conversation.', icon: '/assets/AixMobile/AixMobile-1.svg' },
-        { eyebrow: 'FIELD OPS', title: 'Offline-first capture', body: 'Data capture that works with no connectivity and syncs cleanly the moment the device is back online, without losing a record.', icon: '/assets/AixMobile/AixMobile-2.svg' },
-        { eyebrow: 'RETROFIT', title: 'AI features inside an existing app', body: 'Add on-device or cloud AI — chat, scanning, personalization — into an existing app, without a rewrite of the codebase.', icon: '/assets/AixMobile/AixMobile-3.svg' },
-        { eyebrow: 'CROSS-PLATFORM', title: 'One Flutter codebase, two stores', body: 'One codebase shipped to iOS and Android alike, with shared logic, native performance, and one release pipeline to maintain.', icon: '/assets/AixMobile/AixMobile-4.svg' },
+        { eyebrow: 'CONVERSATIONAL', title: 'Chat + voice product', body: 'A mobile-first assistant with chat and voice interfaces, generative on-device or cloud AI, and a UI built for conversation.', icon: '/assets/AixMobile/AixMobile-1.png' },
+        { eyebrow: 'FIELD OPS', title: 'Offline-first capture', body: 'Data capture that works with no connectivity and syncs cleanly the moment the device is back online, without losing a record.', icon: '/assets/AixMobile/AixMobile-2.png' },
+        { eyebrow: 'RETROFIT', title: 'AI features inside an existing app', body: 'Add on-device or cloud AI — chat, scanning, personalization — into an existing app, without a rewrite of the codebase.', icon: '/assets/AixMobile/AixMobile-3.png' },
+        { eyebrow: 'CROSS-PLATFORM', title: 'One Flutter codebase, two stores', body: 'One codebase shipped to iOS and Android alike, with shared logic, native performance, and one release pipeline to maintain.', icon: '/assets/AixMobile/AixMobile-4.png' },
       ],
     },
   },
