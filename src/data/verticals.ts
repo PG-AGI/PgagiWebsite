@@ -152,7 +152,7 @@ export const VERTICALS: Record<string, Vertical> = {
     buildDiagram: 'foundation-llm',
     features: [
       {
-        icon: '/assets/verticals/ai-ml/closed-llm.svg',
+        icon: '/assets/verticals/ai-ml/closed-llm.png',
         title: 'Closed-source LLM integration',
         description: 'Selecting and integrating the appropriate commercial model for each task, behind a provider abstraction that avoids lock-in to any single vendor.',
         bullets: [
@@ -164,7 +164,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/open-llm.svg',
+        icon: '/assets/verticals/ai-ml/open-llm.png',
         title: 'Open-source SLM & LLM implementation',
         description: 'When data must stay private, latency must be low, or cost must be controlled, we run open models on your own infrastructure.',
         bullets: [
@@ -175,7 +175,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/custom-ml.svg',
+        icon: '/assets/verticals/ai-ml/custom-ml.png',
         title: 'Open-source & custom machine-learning models',
         description: 'For problems where classical or deep-learning models outperform LLMs on accuracy, cost, or latency, we build and train them directly.',
         bullets: [
@@ -186,7 +186,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/rag.svg',
+        icon: '/assets/verticals/ai-ml/rag.png',
         title: 'RAG architecture',
         description: 'Grounding responses in your documents and data so that output is accurate, current, and traceable to its source.',
         bullets: [
@@ -198,7 +198,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/agents.svg',
+        icon: '/assets/verticals/ai-ml/agents.png',
         title: 'AI agents',
         description: 'Systems that plan, decide, and act through defined tools, with checkpoints and guardrails applied at each step.',
         bullets: [
@@ -209,7 +209,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/memory.svg',
+        icon: '/assets/verticals/ai-ml/memory.png',
         title: 'Agent memory systems',
         description: 'Persistent memory that allows an assistant to retain context across sessions and operate with knowledge of the user and the organisation.',
         bullets: [
@@ -220,7 +220,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/function-calling.svg',
+        icon: '/assets/verticals/ai-ml/function-calling.png',
         title: 'Function calling & tool execution',
         description: 'The layer through which a model performs actions in your systems, executed under validation and access control.',
         bullets: [
@@ -231,7 +231,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/orchestration.svg',
+        icon: '/assets/verticals/ai-ml/closed-llm.png',
         title: 'AI orchestration',
         description: 'The production control layer that routes requests to the appropriate model and path and maintains reliability under failure conditions.',
         bullets: [
@@ -248,10 +248,10 @@ export const VERTICALS: Record<string, Vertical> = {
       heading: 'Practical Use Cases',
       subtitle: 'Applied examples of complex systems we design and deploy.',
       items: [
-        { eyebrow: 'SUPPORT', title: 'Grounded support assistant', body: 'Answers from your docs and account data with citations, and can take actions — refunds, ticket updates, escalations — through your backend, with approval gates on sensitive steps.', icon: '/assets/AixML/AixML-1.svg' },
-        { eyebrow: 'OPERATIONS', title: 'Internal knowledge + action agent', body: 'Staff ask in plain language; the agent retrieves from policies and systems, then updates the CRM, schedules follow-ups, and drafts emails — logging every action.', icon: '/assets/AixML/AixML-2.svg' },
-        { eyebrow: 'DOCUMENTS', title: 'Document intelligence at scale', body: 'Ingest contracts, reports, or claims; extract structured fields, answer questions across the corpus, and route exceptions to a human.', icon: '/assets/AixML/AixML-3.svg' },
-        { eyebrow: 'FORECASTING', title: 'Prediction wired into workflow', body: 'A custom forecasting/classification model scores records continuously, and an agent acts on the score — flagging churn risk or triggering a reorder.', icon: '/assets/AixML/AixML-4.svg' },
+        { eyebrow: 'SUPPORT', title: 'Grounded support assistant', body: 'Answers from your docs and account data with citations, and can take actions — refunds, ticket updates, escalations — through your backend, with approval gates on sensitive steps.', icon: '/assets/AixML/AixML-1.png' },
+        { eyebrow: 'OPERATIONS', title: 'Internal knowledge + action agent', body: 'Staff ask in plain language; the agent retrieves from policies and systems, then updates the CRM, schedules follow-ups, and drafts emails — logging every action.', icon: '/assets/AixML/AixML-2.png' },
+        { eyebrow: 'DOCUMENTS', title: 'Document intelligence at scale', body: 'Ingest contracts, reports, or claims; extract structured fields, answer questions across the corpus, and route exceptions to a human.', icon: '/assets/AixML/AixML-3.png' },
+        { eyebrow: 'FORECASTING', title: 'Prediction wired into workflow', body: 'A custom forecasting/classification model scores records continuously, and an agent acts on the score — flagging churn risk or triggering a reorder.', icon: '/assets/AixML/AixML-4.png' },
       ],
     },
   },
