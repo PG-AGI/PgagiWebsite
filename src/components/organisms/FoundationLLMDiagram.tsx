@@ -128,10 +128,7 @@ export default function FoundationLLMDiagram() {
 
       <figcaption className={styles.caption}>
         <strong>Figure 1 — Foundation LLM implementation. </strong>
-        A request reaches the foundation model directly for simple calls; for anything that needs
-        grounding or action, orchestration routes it through agents and tools into the data systems —
-        RAG, databases, APIs — and the result feeds back into the model before a response streams out.
-      </figcaption>
+A request enters the orchestration layer, which routes it across the model layer, RAG + memory, and agents + tools. Agents act on your real systems; the response returns structured, cited, and validated. Everything is observed end-to-end.      </figcaption>
     </figure>
   );
 }
