@@ -152,7 +152,7 @@ export const VERTICALS: Record<string, Vertical> = {
     buildDiagram: 'foundation-llm',
     features: [
       {
-        icon: '/assets/verticals/ai-ml/closed-llm.png',
+        icon: '/assets/AixML/AixML-2.png',
         title: 'Closed-source LLM integration',
         description: 'Selecting and integrating the appropriate commercial model for each task, behind a provider abstraction that avoids lock-in to any single vendor.',
         bullets: [
@@ -164,7 +164,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-ml/open-llm.png',
+        icon: '/assets/verticals/ai-ml/function-calling.png',
         title: 'Open-source SLM & LLM implementation',
         description: 'When data must stay private, latency must be low, or cost must be controlled, we run open models on your own infrastructure.',
         bullets: [
@@ -249,7 +249,7 @@ export const VERTICALS: Record<string, Vertical> = {
       subtitle: 'Applied examples of complex systems we design and deploy.',
       items: [
         { eyebrow: 'SUPPORT', title: 'Grounded support assistant', body: 'Answers from your docs and account data with citations, and can take actions — refunds, ticket updates, escalations — through your backend, with approval gates on sensitive steps.', icon: '/assets/AixML/AixML-1.png' },
-        { eyebrow: 'OPERATIONS', title: 'Internal knowledge + action agent', body: 'Staff ask in plain language; the agent retrieves from policies and systems, then updates the CRM, schedules follow-ups, and drafts emails — logging every action.', icon: '/assets/AixML/AixML-2.png' },
+        { eyebrow: 'OPERATIONS', title: 'Internal knowledge + action agent', body: 'Staff ask in plain language; the agent retrieves from policies and systems, then updates the CRM, schedules follow-ups, and drafts emails — logging every action.', icon: '/assets/verticals/ai-ml/open-llm.png' },
         { eyebrow: 'DOCUMENTS', title: 'Document intelligence at scale', body: 'Ingest contracts, reports, or claims; extract structured fields, answer questions across the corpus, and route exceptions to a human.', icon: '/assets/AixML/AixML-3.png' },
         { eyebrow: 'FORECASTING', title: 'Prediction wired into workflow', body: 'A custom forecasting/classification model scores records continuously, and an agent acts on the score — flagging churn risk or triggering a reorder.', icon: '/assets/AixML/AixML-4.png' },
       ],
@@ -288,7 +288,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-saas/billing-ops.png',
+        icon: '/assets/verticals/ai-saas/backend-realtime.png',
         title: 'Billing, dashboards & operations',
         wide: true,
         bullets: [
@@ -304,8 +304,8 @@ export const VERTICALS: Record<string, Vertical> = {
       items: [
         { eyebrow: 'B2B SAAS', title: 'New product from scratch', body: 'Full platform build — tenancy, auth, billing, dashboards, infra — ready to onboard paying customers, not a prototype.', icon: '/assets/AixSaaS/AixSaaS-2.png' },
         { eyebrow: 'AI SAAS', title: 'AI product with usage billing', body: 'AI features metered per use, with quotas, plan limits, and accurate usage-based charges wired into the billing system.', icon: '/assets/AixSaaS/AixSaaS-4.png' },
-        { eyebrow: 'SCALE-UP', title: 'Re-architect for growth', body: 'Move a strained monolith toward services, queues, and caching so it holds up as users and data grow.', icon: '/assets/AixSaaS/AixSaaS-3.svg' },
-        { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'RBAC, SSO, audit logging, and tenant isolation built to clear enterprise procurement and security review.', icon: '/assets/AixSaaS/AixSaaS-4.png' },
+        { eyebrow: 'SCALE-UP', title: 'Re-architect for growth', body: 'Move a strained monolith toward services, queues, and caching so it holds up as users and data grow.', icon: '/assets/verticals/ai-saas/billing-ops.png' },
+        { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'RBAC, SSO, audit logging, and tenant isolation built to clear enterprise procurement and security review.', icon: '/assets/verticals/ai-saas/tenancy-security.png' },
       ],
     },
   },
