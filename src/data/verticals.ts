@@ -145,7 +145,7 @@ export const VERTICALS: Record<string, Vertical> = {
       'We design and build the full AI engineering stack — closed and open-source LLMs, retrieval and agent architectures, memory, tool execution, and orchestration — engineered into reliable, production-grade systems, not prototypes.',
     intro: {
       heading: 'Engineering the components that surround a language model.',
-      body: 'A single language-model call is rarely the product. What matters is what surrounds it: retrieval that grounds it in your data, tools it can call to take action, memory that carries context across turns and sessions, and an orchestration layer that plans, routes, and recovers when a step fails. We build each of those components and wire them into one dependable system — closed or open-source model, RAG pipeline, agents, memory, and orchestration — engineered for production, not just a demo.',
+      body: 'A single model call rarely holds up against real data, real users, and edge cases. We engineer the surrounding system: model selection per task, a retrieval layer that grounds responses in your data, agents that perform actions through your tools, memory that persists across sessions, and orchestration that routes requests, retries on failure, and degrades gracefully under load. The resulting system integrates with your databases, CRMs, and internal workflows, and behaves predictably in production.',
     },
     buildDiagram: 'foundation-llm',
     features: [
