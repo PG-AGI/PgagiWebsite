@@ -270,7 +270,7 @@ export const VERTICALS: Record<string, Vertical> = {
     buildDiagram: 'multi-tenant',
     features: [
       {
-        icon: '/assets/verticals/ai-saas/tenancy-security.svg',
+        icon: '/assets/verticals/ai-saas/tenancy-security.png',
         title: 'Tenancy, access & security',
         bullets: [
           { text: 'Multi-tenant architecture with logical or physical isolation — schema-per-tenant, DB-per-tenant, or shared with row-level security.' },
@@ -279,7 +279,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-saas/backend-realtime.svg',
+        icon: '/assets/verticals/ai-saas/backend-realtime.png',
         title: 'Backend & real-time systems',
         bullets: [
           { text: 'Scalable backend with API-first design, built for concurrent multi-tenant load.' },
@@ -288,7 +288,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-saas/billing-ops.svg',
+        icon: '/assets/verticals/ai-saas/billing-ops.png',
         title: 'Billing, dashboards & operations',
         wide: true,
         bullets: [
@@ -302,10 +302,10 @@ export const VERTICALS: Record<string, Vertical> = {
       heading: 'Practical Use Cases',
       subtitle: 'Applied examples of complex systems we design and deploy.',
       items: [
-        { eyebrow: 'GREENFIELD', title: 'New product from scratch', body: 'Fully multi-tenant — secure auth, billing, dashboards, data — ready to onboard paying customers, not just a prototype.', icon: '/assets/AixSaaS/AixSaaS-1.svg' },
-        { eyebrow: 'MONETIZATION', title: 'AI product with usage-based billing', body: 'A feature that consumes tokens, compute, or usage needs metered billing, tracked and monetized from day one.', icon: '/assets/AixSaaS/AixSaaS-2.svg' },
+        { eyebrow: 'GREENFIELD', title: 'New product from scratch', body: 'Fully multi-tenant — secure auth, billing, dashboards, data — ready to onboard paying customers, not just a prototype.', icon: '/assets/AixSaaS/AixSaaS-2.png' },
+        { eyebrow: 'MONETIZATION', title: 'AI product with usage-based billing', body: 'A feature that consumes tokens, compute, or usage needs metered billing, tracked and monetized from day one.', icon: '/assets/AixSaaS/AixSaaS-4.png' },
         { eyebrow: 'SCALING', title: 'Re-architect for growth', body: 'Move a product from a single-tenant, single-region setup to a multi-tenant, multi-region architecture that scales.', icon: '/assets/AixSaaS/AixSaaS-3.svg' },
-        { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'SSO/SCIM, org-level permissions, and enterprise-grade audit trails so the product clears enterprise procurement checklists.', icon: '/assets/AixSaaS/AixSaaS-4.svg' },
+        { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'SSO/SCIM, org-level permissions, and enterprise-grade audit trails so the product clears enterprise procurement checklists.', icon: '/assets/AixSaaS/AixSaaS-4.png' },
       ],
     },
   },
