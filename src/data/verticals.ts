@@ -270,7 +270,7 @@ export const VERTICALS: Record<string, Vertical> = {
     buildDiagram: 'multi-tenant',
     features: [
       {
-        icon: '/assets/verticals/ai-saas/tenancy-security.png',
+        icon: '/assets/AixMobile/First.png',
         title: 'Tenancy, access & security',
         bullets: [
           { text: 'Multi-tenant architecture with logical or physical isolation — schema-per-tenant, DB-per-tenant, or shared with row-level security.' },
@@ -279,7 +279,7 @@ export const VERTICALS: Record<string, Vertical> = {
         ],
       },
       {
-        icon: '/assets/verticals/ai-saas/backend-realtime.png',
+        icon: '/assets/AixMobile/Second.png',
         title: 'Backend & real-time systems',
         bullets: [
           { text: 'Scalable backend with API-first design, built for concurrent multi-tenant load.' },
@@ -302,10 +302,10 @@ export const VERTICALS: Record<string, Vertical> = {
       heading: 'Practical Use Cases',
       subtitle: 'Applied examples of complex systems we design and deploy.',
       items: [
-        { eyebrow: 'B2B SAAS', title: 'New product from scratch', body: 'Full platform build — tenancy, auth, billing, dashboards, infra — ready to onboard paying customers, not a prototype.', icon: '/assets/AixSaaS/AixSaaS-2.png' },
-        { eyebrow: 'AI SAAS', title: 'AI product with usage billing', body: 'AI features metered per use, with quotas, plan limits, and accurate usage-based charges wired into the billing system.', icon: '/assets/AixSaaS/AixSaaS-4.png' },
-        { eyebrow: 'SCALE-UP', title: 'Re-architect for growth', body: 'Move a strained monolith toward services, queues, and caching so it holds up as users and data grow.', icon: '/assets/verticals/ai-saas/billing-ops.png' },
-        { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'RBAC, SSO, audit logging, and tenant isolation built to clear enterprise procurement and security review.', icon: '/assets/verticals/ai-saas/tenancy-security.png' },
+        { eyebrow: 'B2B SAAS', title: 'New product from scratch', body: 'Full platform build — tenancy, auth, billing, dashboards, infra — ready to onboard paying customers, not a prototype.', icon: '/assets/verticals/ai-saas/billing-ops.png' },
+        { eyebrow: 'AI SAAS', title: 'AI product with usage billing', body: 'AI features metered per use, with quotas, plan limits, and accurate usage-based charges wired into the billing system.', icon: '/assets/AixSaaS/AixSaaS-2.png' },
+        { eyebrow: 'SCALE-UP', title: 'Re-architect for growth', body: 'Move a strained monolith toward services, queues, and caching so it holds up as users and data grow.', icon: 'public\assets\AixSaaS\AixSaaS-3.png' },
+        { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'RBAC, SSO, audit logging, and tenant isolation built to clear enterprise procurement and security review.', icon: '/assets/AixSaaS/AixSaaS-4.png' },
       ],
     },
   },
