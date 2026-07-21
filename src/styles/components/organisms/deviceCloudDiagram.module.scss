@@ -188,7 +188,7 @@
   .nodeTitleSm { white-space: normal; overflow-wrap: break-word; }
   .nodeSub { white-space: normal; overflow-wrap: break-word; }
   .caption { font-size: 0.8rem; line-height: 1.6; }
-  .eyebrowText { font-size: 0.625rem; }
+  .eyebrowText { font-size: 0.625rem; white-space: normal; overflow-wrap: break-word; }
 }
 
 .nodeTitle {
