@@ -304,7 +304,7 @@ export const VERTICALS: Record<string, Vertical> = {
       items: [
         { eyebrow: 'B2B SAAS', title: 'New product from scratch', body: 'Full platform build — tenancy, auth, billing, dashboards, infra — ready to onboard paying customers, not a prototype.', icon: '/assets/verticals/ai-saas/billing-ops.png' },
         { eyebrow: 'AI SAAS', title: 'AI product with usage billing', body: 'AI features metered per use, with quotas, plan limits, and accurate usage-based charges wired into the billing system.', icon: '/assets/AixSaaS/AixSaaS-2.png' },
-        { eyebrow: 'SCALE-UP', title: 'Re-architect for growth', body: 'Move a strained monolith toward services, queues, and caching so it holds up as users and data grow.', icon: 'public\assets\AixSaaS\AixSaaS-3.png' },
+        { eyebrow: 'SCALE-UP', title: 'Re-architect for growth', body: 'Move a strained monolith toward services, queues, and caching so it holds up as users and data grow.', icon: '/assets/AixSaaS/AixSaaS-3.png' },
         { eyebrow: 'ENTERPRISE', title: 'Security & access requirements', body: 'RBAC, SSO, audit logging, and tenant isolation built to clear enterprise procurement and security review.', icon: '/assets/AixSaaS/AixSaaS-4.png' },
       ],
     },
