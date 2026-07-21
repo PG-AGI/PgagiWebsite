@@ -67,8 +67,8 @@ export type Vertical = {
   /** Hero headline, e.g. "AI + IoT". */
   heroTitle: string;
   heroDescription: string;
-  /** Destination of the hero "View Case Study" button. */
-  caseStudyHref: string;
+  /** Destination of the hero "View Case Study" button; omit to hide the button. */
+  caseStudyHref?: string;
   intro: VerticalIntro;
   /** Illustrated diagram rendered between the intro and the feature cards, if any. */
   buildDiagram?: BuildDiagramKey;
@@ -143,7 +143,6 @@ export const VERTICALS: Record<string, Vertical> = {
     heroTitle: 'AI Engineering',
     heroDescription:
       'We design and build the full AI engineering stack — closed and open-source LLMs, retrieval and agent architectures, memory, tool execution, and orchestration — engineered into reliable, production-grade systems, not prototypes.',
-    caseStudyHref: '/case-study/legalspendgpt-invoice-intelligence',
     intro: {
       heading: 'Engineering the components that surround a language model.',
       body: 'A single language-model call is rarely the product. What matters is what surrounds it: retrieval that grounds it in your data, tools it can call to take action, memory that carries context across turns and sessions, and an orchestration layer that plans, routes, and recovers when a step fails. We build each of those components and wire them into one dependable system — closed or open-source model, RAG pipeline, agents, memory, and orchestration — engineered for production, not just a demo.',
@@ -249,7 +248,6 @@ export const VERTICALS: Record<string, Vertical> = {
     heroTitle: 'AI SaaS Platforms',
     heroDescription:
       'We build production-ready, multi-tenant SaaS platforms with integrated AI capabilities — engineered for security, scale, cost control, and the infrastructure required to commercialize AI-powered products.',
-    caseStudyHref: '/case-study/how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin',
     intro: {
       heading: 'Architecting multi-tenant platforms for production workloads.',
       body: 'We engineer the full SaaS layer AI product companies need to commercialize: multi-tenant architecture, secure isolation, usage-based billing, and the infrastructure to scale reliably. Every layer — tenancy, access, backend, billing — built to production standards, not a demo.',
@@ -304,7 +302,6 @@ export const VERTICALS: Record<string, Vertical> = {
     heroTitle: 'Mobile + AI',
     heroDescription:
       'We build complete mobile products spanning the application, backend, AI layer, and deployment — native or cross-platform, with on-device and cloud AI wired in from the start, not bolted on after launch.',
-    caseStudyHref: '/case-study/brainify-edtech-platform',
     intro: {
       heading: 'Building complete mobile products with an integrated AI layer.',
       body: 'A mobile-first product is more than an app shell around an API. We build the full stack — native or cross-platform UI, an AI layer for on-device and cloud inference, a backend that keeps sync and offline state consistent, and the release pipeline that ships and monitors it in the app stores.',
@@ -359,7 +356,6 @@ export const VERTICALS: Record<string, Vertical> = {
     heroTitle: 'Enterprise AI',
     heroDescription:
       'We deploy AI capabilities entirely within your own infrastructure — for organizations that require full control over data and models, whether the driver is security, compliance, or IP. On-premise, private cloud, or fully air-gapped, with the same production discipline as any cloud deployment.',
-    caseStudyHref: '/case-study/fraud-detection-using-machine-learning-techniques',
     intro: {
       heading: 'Deploying AI entirely within your environment.',
       body: 'For organizations that can’t send data outside their walls — regulated industries, defense, and enterprises where data sovereignty is non-negotiable — we deploy models, retrieval, and agents entirely within your infrastructure: on-prem, private cloud, or air-gapped, with the same production discipline as any cloud deployment.',
