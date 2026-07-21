@@ -1,30 +1,39 @@
 import styles from '@/styles/components/organisms/governanceLoopDiagram.module.scss';
 
 /**
- * "How we build it · Security & Governance Loop" diagram. A shared
- * Governance center sits inside a ring of the four controls that keep an
- * isolated deployment accountable — access control, audit logging, data
- * residency, and model provenance. Built the same way as
- * AiOrchestrationDiagram: nodes sized in `cqw` / positioned in `%` of the
- * 1280×623 box, with an inline SVG ellipse ring that sweeps node to node.
+ * "How we build it · Security & Governance Loop" diagram (enterprise-ai
+ * vertical). Every request is authenticated, authorised, and only then
+ * allowed to reach retrieval/model/action — with every step recorded to an
+ * audit log. Built the same way as deploymentOptionsDiagram: nodes sized in
+ * `cqw` / positioned in `%` of a fixed-aspect box, with an inline SVG
+ * connector that sweeps node to node, plus a note strip below.
  */
+
+type NodeVariant = 'dark' | 'lavender' | 'white';
 
 type DiagramNode = {
   key: string;
+  variant: NodeVariant;
   title: string;
-  sub: string;
+  sub: string[];
   glowDelay: number;
-  pos: { left: number; top: number; w: number; h: number };
+  pos: { left: number; top: number; w: number; h: number }; // % of the 1280×460 box
 };
 
 const NODES: DiagramNode[] = [
-  { key: 'access', title: 'Access control', sub: 'RBAC · least privilege', glowDelay: 0, pos: { left: 42.58, top: 21.83, w: 14.84, h: 14.45 } },
-  { key: 'audit', title: 'Audit logging', sub: 'every call recorded', glowDelay: 0.85, pos: { left: 64.45, top: 42.7, w: 14.84, h: 14.45 } },
-  { key: 'residency', title: 'Data residency', sub: 'stays in your boundary', glowDelay: 1.6, pos: { left: 42.58, top: 63.56, w: 14.84, h: 14.45 } },
-  { key: 'provenance', title: 'Model provenance', sub: 'approved, versioned models', glowDelay: 2.35, pos: { left: 20.7, top: 42.7, w: 14.84, h: 14.45 } },
+  { key: 'request', variant: 'dark', title: 'Request', sub: ['user'], glowDelay: 0, pos: { left: 3.13, top: 16.13, w: 13.5, h: 46 } },
+  { key: 'authenticate', variant: 'lavender', title: 'Authenticate', sub: ['SSO · SAML/OIDC'], glowDelay: 0.6, pos: { left: 19.14, top: 16.13, w: 15, h: 46 } },
+  { key: 'authorise', variant: 'lavender', title: 'Authorise', sub: ['RBAC / ABAC'], glowDelay: 1.2, pos: { left: 36.64, top: 16.13, w: 14, h: 46 } },
+  { key: 'retrieval', variant: 'white', title: 'Retrieval', sub: ['permission-aware'], glowDelay: 1.8, pos: { left: 53.13, top: 16.13, w: 14.5, h: 46 } },
+  { key: 'model', variant: 'white', title: 'Model', sub: ['self-hosted SLM'], glowDelay: 2.4, pos: { left: 70.14, top: 16.13, w: 13.5, h: 46 } },
+  { key: 'action', variant: 'white', title: 'Action', sub: ['approval gate'], glowDelay: 3.0, pos: { left: 86.13, top: 16.13, w: 12.9, h: 46 } },
 ];
 
-const CENTER = { left: 44.92, top: 42.7, w: 10.16, h: 20.87 };
+const VARIANT_CLASS: Record<NodeVariant, string> = {
+  dark: styles.nodeDark,
+  lavender: styles.nodeLavender,
+  white: styles.nodeWhite,
+};
 
 export default function GovernanceLoopDiagram() {
   return (
@@ -39,27 +48,26 @@ export default function GovernanceLoopDiagram() {
           <div className={styles.box}>
             <svg
               className={styles.connectors}
-              viewBox="0 0 1280 623"
+              viewBox="0 0 1280 460"
               fill="none"
               preserveAspectRatio="xMidYMid meet"
               aria-hidden="true"
             >
-              <g className={styles.baseConnectors}>
-                <ellipse cx="640" cy="311" rx="280" ry="130" stroke="#7c3aed" strokeWidth="2.2" />
-              </g>
-
-              <g className={styles.sweep} stroke="#a78bfa" strokeWidth="3" strokeLinecap="round" fill="none">
-                <path pathLength="1" style={{ animationDelay: '0.35s' }} d="M640 181 A280 130 0 0 1 920 311" />
-                <path pathLength="1" style={{ animationDelay: '1.1s' }} d="M920 311 A280 130 0 0 1 640 441" />
-                <path pathLength="1" style={{ animationDelay: '1.85s' }} d="M640 441 A280 130 0 0 1 360 311" />
-                <path pathLength="1" style={{ animationDelay: '2.6s' }} d="M360 311 A280 130 0 0 1 640 181" />
+              {/* Dotted line from each node down into the audit-log strip. */}
+              <g className={styles.baseConnectors} stroke="#7c3aed" strokeWidth="2" strokeDasharray="4 5">
+                <line x1="127" y1="286" x2="127" y2="331" />
+                <line x1="341" y1="286" x2="341" y2="331" />
+                <line x1="559" y1="286" x2="559" y2="331" />
+                <line x1="773" y1="286" x2="773" y2="331" />
+                <line x1="984" y1="286" x2="984" y2="331" />
+                <line x1="1185" y1="286" x2="1185" y2="331" />
               </g>
             </svg>
 
             {NODES.map((node) => (
               <div
                 key={node.key}
-                className={styles.node}
+                className={`${styles.node} ${VARIANT_CLASS[node.variant]}`}
                 style={{
                   left: `${node.pos.left}%`,
                   top: `${node.pos.top}%`,
@@ -69,21 +77,20 @@ export default function GovernanceLoopDiagram() {
                 }}
               >
                 <p className={styles.nodeTitle}>{node.title}</p>
-                <span className={styles.nodeSub}>{node.sub}</span>
+                <div className={styles.nodeSub}>
+                  {node.sub.map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                </div>
               </div>
             ))}
 
-            <div
-              className={styles.center}
-              style={{
-                left: `${CENTER.left}%`,
-                top: `${CENTER.top}%`,
-                width: `${CENTER.w}%`,
-                height: `${CENTER.h}%`,
-              }}
-            >
-              <p className={styles.centerTitle}>Governance</p>
-              <span className={styles.centerSub}>policy · oversight</span>
+            <div className={styles.strip}>
+              <p className={styles.stripTitle}>Audit log — every step recorded</p>
+              <p className={styles.stripSub}>
+                authentication · authorisation · retrieval · model call · action, retained per
+                policy, tamper-evident where required.
+              </p>
             </div>
           </div>
         </div>
@@ -91,9 +98,8 @@ export default function GovernanceLoopDiagram() {
 
       <figcaption className={styles.caption}>
         <strong>Figure 3 — Security &amp; governance loop. </strong>
-        Access control, audit logging, data residency, and model provenance run as one continuous
-        loop around a shared governance layer — so every request stays inside policy, not just at
-        deployment time.
+        Every request is authenticated and authorised before it reaches retrieval, the model, or an
+        action — and every step along the way is written to a tamper-evident audit log.
       </figcaption>
     </figure>
   );

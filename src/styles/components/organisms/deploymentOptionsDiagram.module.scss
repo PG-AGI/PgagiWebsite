@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────
-   Deployment options strip (enterprise-ai vertical). Same technique as
-   foundationLlmDiagram.module.scss but a leaner box (reference 1280 × 360)
-   for a compact row of 5 nodes. Desktop-first.
+   Model deployment pipeline strip (enterprise-ai vertical). Same technique
+   as foundationLlmDiagram.module.scss but a leaner box (reference
+   1280 × 460) for a compact row of 5 nodes plus a note strip. Desktop-first.
    ───────────────────────────────────────────────────────────────── */
 .figure {
   margin: 0;
@@ -47,8 +47,8 @@
 .box {
   position: relative;
   width: 100%;
-  aspect-ratio: 1280 / 360;
-  background: #a9c6f7;
+  aspect-ratio: 1280 / 460;
+  background: #7d93f0;
   border: 1px solid #dfdcd5;
   border-radius: 24px;
   overflow: hidden;
@@ -75,9 +75,24 @@
   gap: 0.5cqw;
   padding: 0.6cqw 0.7cqw;
   border-radius: 1.4cqw;
-  background: #ffffff;
   box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.08);
   animation: doNodeLift 5s ease-in-out infinite;
+}
+
+/* Variants */
+.nodeWhite {
+  background: #ffffff;
+  .nodeTitle { color: #1d283f; }
+}
+
+.nodeLavender {
+  background: #eaeeff;
+  .nodeTitle { color: #4545c8; }
+}
+
+.nodeWhiteGreenTitle {
+  background: #ffffff;
+  .nodeTitle { color: #16a34a; }
 }
 
 .node::after {
@@ -114,15 +129,40 @@
   font-weight: 700;
   font-size: 1.65cqw;
   line-height: 1.35;
-  color: #1d283f;
 }
 
 .nodeSub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
   font-size: 1.15cqw;
   line-height: 1.4;
   color: #6b7280;
+}
+
+/* ── Note strip below the pipeline ── */
+.strip {
+  position: absolute;
+  z-index: 2;
+  left: 4.69%;
+  top: 72%;
+  width: 90.62%;
+  height: 20%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5cqw 1cqw;
+  background: rgba(234, 238, 255, 0.9);
+  border-radius: 1.2cqw;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.1cqw;
+  line-height: 1.4;
+  color: #4545c8;
 }
 
 .baseConnectors {

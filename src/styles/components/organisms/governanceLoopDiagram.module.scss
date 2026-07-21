@@ -1,8 +1,8 @@
 /* ─────────────────────────────────────────────────────────────────
    Security & governance loop diagram (enterprise-ai vertical). Same
-   technique as aiOrchestrationDiagram.module.scss: the purple box is a
+   technique as deploymentOptionsDiagram.module.scss: the purple box is a
    container-query context; nodes/labels are sized in `cqw` and placed in
-   `%`, so the illustration keeps its proportions (reference 1280 × 623)
+   `%`, so the illustration keeps its proportions (reference 1280 × 460)
    at any width. Desktop-first.
    ───────────────────────────────────────────────────────────────── */
 .figure {
@@ -49,7 +49,7 @@
 .box {
   position: relative;
   width: 100%;
-  aspect-ratio: 1280 / 623;
+  aspect-ratio: 1280 / 460;
   background: #c3b1f0;
   border: 1px solid #dfdcd5;
   border-radius: 24px;
@@ -77,7 +77,6 @@
   gap: 0.4cqw;
   padding: 0.6cqw 0.9cqw;
   border-radius: 1.2cqw;
-  background: #ffffff;
   box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.08);
   animation: glNodeLift 5s ease-in-out infinite;
 }
@@ -116,97 +115,93 @@
   font-weight: 700;
   font-size: 1.5cqw;
   line-height: 1.4;
-  color: #4c1d95;
-  white-space: nowrap;
 }
 
 .nodeSub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
   font-size: 1.05cqw;
   line-height: 1.45;
   color: #6b7280;
-  white-space: nowrap;
 }
 
-/* ── Governance — center circle, gentle independent pulse. ── */
-.center {
+/* Variants */
+.nodeDark {
+  background: #191919;
+  .nodeTitle { color: #ffffff; }
+  .nodeSub { color: rgba(255, 255, 255, 0.75); }
+}
+
+.nodeLavender {
+  background: #ede9fe;
+  .nodeTitle { color: #5b21b6; }
+}
+
+.nodeWhite {
+  background: #ffffff;
+  .nodeTitle { color: #1d283f; }
+}
+
+.baseConnectors {
+  opacity: 0.55;
+}
+
+/* ── Audit-log strip ── */
+.strip {
   position: absolute;
   z-index: 2;
+  left: 3.13%;
+  top: 72%;
+  width: 95.94%;
+  height: 24%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  gap: 0.3cqw;
-  border-radius: 50%;
-  background: #ede9fe;
-  animation: glCenterPulse 2.5s ease-in-out infinite;
+  gap: 0.35cqw;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1.2cqw;
 }
 
-@keyframes glCenterPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.35); }
-  50% { box-shadow: 0 0 0 6px rgba(124, 58, 237, 0); }
-}
-
-.centerTitle {
+.stripTitle {
   margin: 0;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   font-weight: 700;
-  font-size: 1.4cqw;
+  font-size: 1.2cqw;
   line-height: 1.4;
   color: #5b21b6;
-  white-space: nowrap;
+  text-align: center;
 }
 
-.centerSub {
+.stripSub {
+  margin: 0;
+  max-width: 90%;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   font-weight: 400;
   font-size: 1cqw;
   line-height: 1.4;
-  color: #6d28d9;
-  white-space: nowrap;
-}
-
-.baseConnectors {
-  opacity: 0.4;
-}
-
-.sweep path {
-  stroke-dasharray: 1 1;
-  stroke-dashoffset: 1;
-  opacity: 0;
-  filter: drop-shadow(0 0 2px rgba(124, 58, 237, 0.85));
-  animation: glLineSweep 5s linear infinite;
-}
-
-@keyframes glLineSweep {
-  0% { stroke-dashoffset: 1; opacity: 0; }
-  3% { opacity: 1; }
-  10% { stroke-dashoffset: 0; opacity: 1; }
-  16% { stroke-dashoffset: 0; opacity: 0; }
-  100% { stroke-dashoffset: 1; opacity: 0; }
+  color: #57534e;
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .node,
-  .node::after,
-  .center,
-  .sweep path {
+  .node::after {
     animation: none;
   }
-  .baseConnectors { opacity: 1; }
-  .node::after,
-  .sweep path { opacity: 0; }
+  .node::after { opacity: 0; }
 }
 
-/* ── Mobile: shrink proportionally, bump text to stay legible. ── */
+/* ── Mobile: the box shrinks to fit its card (see .box), so cqw sizing
+   alone scales text down proportionally — no font-size override needed. ── */
 @media (max-width: 768px) {
   .nodeTitle { white-space: normal; overflow-wrap: break-word; }
   .nodeSub { white-space: normal; overflow-wrap: break-word; }
-  .centerTitle { white-space: normal; overflow-wrap: break-word; }
-  .centerSub { white-space: normal; overflow-wrap: break-word; }
+  .stripTitle { white-space: normal; overflow-wrap: break-word; }
   .caption { font-size: 0.8rem; line-height: 1.6; }
   .eyebrowText { font-size: 0.625rem; }
 }

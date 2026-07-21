@@ -1,41 +1,39 @@
 import styles from '@/styles/components/organisms/enterpriseIsolatedDiagram.module.scss';
 
 /**
- * "How we build it · Isolated Enterprise Deployment" diagram. Traffic never
- * leaves your environment: a policy gateway authenticates and routes into a
- * self-hosted model service, retrieval + memory, and agents/tools; the
- * response and your internal systems close the loop — all measured by an
- * audit strip underneath. Built the same way as FoundationLLMDiagram:
- * nodes/labels sized in `cqw` and positioned in `%` of the 1280×623 box, with
- * inline SVG connectors that sweep in sequence.
+ * "How we build it · Isolated Enterprise Deployment" diagram. Everything —
+ * users, auth, inference, data, and audit logging — runs inside a dashed
+ * organisation boundary (on-premise, private VPC, or air-gapped); public
+ * model APIs sit outside that boundary and are never called. Nodes/labels
+ * are sized in `cqw` and positioned in `%` of the 1280×420 box, with inline
+ * SVG connectors that sweep in sequence.
  */
 
-type NodeVariant = 'dark' | 'lavender' | 'white' | 'whiteGreen';
+type NodeVariant = 'dark' | 'lavender' | 'white';
 
 type DiagramNode = {
   key: string;
   variant: NodeVariant;
   title: string;
   sub: string[];
+  accentFirstSub?: boolean;
   glowDelay: number;
-  pos: { left: number; top: number; w: number; h: number }; // % of the 1280×623 box
+  pos: { left: number; top: number; w: number; h: number }; // % of the 1280×420 box
 };
 
 const NODES: DiagramNode[] = [
-  { key: 'environment', variant: 'dark', title: 'Your environment', sub: ['on-prem · private cloud · air-gapped'], glowDelay: 0, pos: { left: 3.91, top: 29.54, w: 14.69, h: 13.48 } },
-  { key: 'gateway', variant: 'lavender', title: 'Policy Gateway', sub: ['RBAC · audit', 'Network boundary', 'No data egress'], glowDelay: 0.85, pos: { left: 24.45, top: 19.9, w: 17.5, h: 30.5 } },
-  { key: 'model', variant: 'white', title: 'Model service', sub: ['self-hosted SLM/LLM', 'CPU-optimized inference'], glowDelay: 1.6, pos: { left: 47.73, top: 10.27, w: 22.19, h: 15.25 } },
-  { key: 'retrieval', variant: 'white', title: 'Retrieval + Memory', sub: ['vector DB · docs', 'on-prem only'], glowDelay: 1.6, pos: { left: 47.73, top: 32.58, w: 22.19, h: 15.25 } },
-  { key: 'agents', variant: 'white', title: 'Agents + Tools', sub: ['internal APIs', 'sandboxed execution'], glowDelay: 1.6, pos: { left: 47.73, top: 55.38, w: 22.19, h: 16.85 } },
-  { key: 'response', variant: 'whiteGreen', title: 'Response', sub: ['audited · logged'], glowDelay: 2.35, pos: { left: 76.17, top: 10.27, w: 19.22, h: 15.25 } },
-  { key: 'systems', variant: 'dark', title: 'Your systems', sub: ['internal DBs', 'ERPs · file stores'], glowDelay: 3.1, pos: { left: 76.17, top: 32.58, w: 19.22, h: 31.3 } },
+  { key: 'users', variant: 'dark', title: 'Users / App', sub: ['inside network'], glowDelay: 0, pos: { left: 5, top: 22, w: 18, h: 26 } },
+  { key: 'auth', variant: 'lavender', title: 'API · SSO · RBAC', sub: ['authN · authZ'], glowDelay: 0.6, pos: { left: 26, top: 22, w: 18, h: 26 } },
+  { key: 'inference', variant: 'white', title: 'SLM inference (CPU)', sub: ['self-hosted · quantized', 'no external calls'], glowDelay: 1.2, pos: { left: 47, top: 22, w: 20, h: 26 } },
+  { key: 'data', variant: 'dark', title: 'Data stores', sub: ['private data'], glowDelay: 0, pos: { left: 5, top: 58, w: 18, h: 26 } },
+  { key: 'vector', variant: 'white', title: 'Vector DB', sub: ['private index'], glowDelay: 0.6, pos: { left: 26, top: 58, w: 18, h: 26 } },
+  { key: 'audit', variant: 'white', title: 'Audit log', sub: ['prompts · actions · access'], accentFirstSub: true, glowDelay: 1.8, pos: { left: 47, top: 58, w: 20, h: 26 } },
 ];
 
 const VARIANT_CLASS: Record<NodeVariant, string> = {
   dark: styles.nodeDark,
   lavender: styles.nodeLavender,
   white: styles.nodeWhite,
-  whiteGreen: styles.nodeWhiteGreen,
 };
 
 export default function EnterpriseIsolatedDiagram() {
@@ -51,48 +49,49 @@ export default function EnterpriseIsolatedDiagram() {
           <div className={styles.box}>
             <svg
               className={styles.connectors}
-              viewBox="0 0 1280 623"
+              viewBox="0 0 1280 420"
               fill="none"
               preserveAspectRatio="xMidYMid meet"
               aria-hidden="true"
             >
-              <defs>
-                <marker id="ei-arrow-blue" viewBox="0 0 10 10" markerWidth="8" markerHeight="8" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-                  <path d="M0 0 L10 5 L0 10 z" fill="#9F0000" />
-                </marker>
-                <marker id="ei-arrow-white" viewBox="0 0 10 10" markerWidth="8" markerHeight="8" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-                  <path d="M0 0 L10 5 L0 10 z" fill="#FFF5F5" />
-                </marker>
-              </defs>
+              {/* Dashed organisation-boundary rect containing the 6 in-network nodes. */}
+              <rect
+                x="38.4" y="54.6" width="844.8" height="310.8" rx="16"
+                fill="none" stroke="#9f0000" strokeWidth="2" strokeDasharray="7 6"
+              />
 
               {/* Dim base pipes — sit faint until the signal sweeps them. */}
-              <g className={styles.baseConnectors}>
-                <g stroke="#9F0000" strokeWidth="2.4" markerEnd="url(#ei-arrow-blue)">
-                  <line x1="238" y1="226" x2="308" y2="226" />
-                  <path d="M537 168 L606 113" />
-                  <path d="M537 239 L606 247" />
-                  <path d="M537 292 L606 388" />
-                  <path d="M895 393 L970 351" />
-                </g>
-                <g stroke="#FFF5F5" strokeWidth="2.2" markerEnd="url(#ei-arrow-white)">
-                  <line x1="895" y1="111" x2="970" y2="111" />
-                  <line x1="1098" y1="159" x2="1098" y2="198" />
-                </g>
+              <g className={styles.baseConnectors} stroke="#9F0000" strokeWidth="2.2">
+                <line x1="294.4" y1="147" x2="332.8" y2="147" />
+                <line x1="563.2" y1="147" x2="601.6" y2="147" />
+                <line x1="294.4" y1="298.2" x2="332.8" y2="298.2" />
+                <line x1="563.2" y1="298.2" x2="601.6" y2="298.2" />
+              </g>
+              <g stroke="#FFF5F5" strokeWidth="2">
+                <line x1="448" y1="201.6" x2="448" y2="243.6" />
+                <line x1="729.6" y1="201.6" x2="729.6" y2="243.6" />
               </g>
 
               {/* Bright highlight sweeps, timed to when each destination node lights. */}
-              <g className={styles.sweepRed} stroke="#e23d3d" strokeWidth="2.8" strokeLinecap="round" fill="none">
-                <line pathLength="1" style={{ animationDelay: '0.35s' }} x1="238" y1="226" x2="308" y2="226" />
-                <path pathLength="1" style={{ animationDelay: '1.1s' }} d="M537 168 L606 113" />
-                <path pathLength="1" style={{ animationDelay: '1.1s' }} d="M537 239 L606 247" />
-                <path pathLength="1" style={{ animationDelay: '1.1s' }} d="M537 292 L606 388" />
-                <path pathLength="1" style={{ animationDelay: '2.6s' }} d="M895 393 L970 351" />
+              <g className={styles.sweepRed} stroke="#e23d3d" strokeWidth="2.6" strokeLinecap="round" fill="none">
+                <line pathLength="1" style={{ animationDelay: '0.35s' }} x1="294.4" y1="147" x2="332.8" y2="147" />
+                <line pathLength="1" style={{ animationDelay: '0.95s' }} x1="563.2" y1="147" x2="601.6" y2="147" />
+                <line pathLength="1" style={{ animationDelay: '0.35s' }} x1="294.4" y1="298.2" x2="332.8" y2="298.2" />
+                <line pathLength="1" style={{ animationDelay: '1.55s' }} x1="563.2" y1="298.2" x2="601.6" y2="298.2" />
               </g>
-              <g className={styles.sweepWhite} stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" fill="none">
-                <line pathLength="1" style={{ animationDelay: '1.85s' }} x1="895" y1="111" x2="970" y2="111" />
-                <line pathLength="1" style={{ animationDelay: '2.6s' }} x1="1098" y1="159" x2="1098" y2="198" />
+              <g className={styles.sweepWhite} stroke="#ffffff" strokeWidth="2.4" strokeLinecap="round" fill="none">
+                <line pathLength="1" style={{ animationDelay: '1.6s' }} x1="448" y1="201.6" x2="448" y2="243.6" />
+                <line pathLength="1" style={{ animationDelay: '2.2s' }} x1="729.6" y1="201.6" x2="729.6" y2="243.6" />
               </g>
+
+              {/* Blocked path — public model APIs sit outside the boundary, never called. */}
+              <circle cx="910" cy="214" r="20" fill="none" stroke="#9f0000" strokeWidth="3" />
+              <line x1="895.86" y1="199.86" x2="924.14" y2="228.14" stroke="#9f0000" strokeWidth="3" strokeLinecap="round" />
             </svg>
+
+            <p className={styles.boundaryLabel}>
+              Organisation boundary — on-premise · private VPC · air-gapped
+            </p>
 
             {NODES.map((node) => (
               <div
@@ -108,16 +107,25 @@ export default function EnterpriseIsolatedDiagram() {
               >
                 <p className={styles.nodeTitle}>{node.title}</p>
                 <div className={styles.nodeSub}>
-                  {node.sub.map((line) => (
-                    <span key={line}>{line}</span>
+                  {node.sub.map((line, i) => (
+                    <span
+                      key={line}
+                      className={node.accentFirstSub && i === 0 ? styles.nodeSubAccent : undefined}
+                    >
+                      {line}
+                    </span>
                   ))}
                 </div>
               </div>
             ))}
 
-            <div className={styles.observability} style={{ animationDelay: '3.85s' }}>
-              <p className={styles.obsTitle}>Observability — audit trails · access logs · compliance reporting</p>
-              <p className={styles.obsSub}>every request measured, nothing leaves your boundary</p>
+            <p className={styles.egressLabel}>No egress — no third-party API calls</p>
+
+            <div className={`${styles.node} ${styles.nodeWhite} ${styles.externalNode}`}>
+              <p className={styles.nodeTitle}>Public model APIs</p>
+              <div className={styles.nodeSub}>
+                <span>not used</span>
+              </div>
             </div>
           </div>
         </div>
@@ -125,10 +133,9 @@ export default function EnterpriseIsolatedDiagram() {
 
       <figcaption className={styles.caption}>
         <strong>Figure 1 — Isolated enterprise deployment. </strong>
-        Traffic never leaves your environment: a policy gateway authenticates and routes it to a
-        self-hosted model, retrieval, and agents/tools — each scoped to your own systems. The
-        response and every downstream call stay inside your boundary, with full audit and access
-        logging.
+        Users, auth, inference, data stores, and audit logging all run inside your organisation
+        boundary — on-premise, private VPC, or fully air-gapped. Public model APIs sit outside that
+        boundary and are never called; nothing egresses.
       </figcaption>
     </figure>
   );

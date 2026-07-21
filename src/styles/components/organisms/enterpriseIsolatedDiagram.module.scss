@@ -2,7 +2,7 @@
    Isolated enterprise deployment diagram (enterprise-ai vertical). Same
    technique as foundationLlmDiagram.module.scss: the red/pink box is a
    container-query context; nodes/labels are sized in `cqw` and placed in
-   `%`, so the illustration keeps its proportions (reference 1280 × 623)
+   `%`, so the illustration keeps its proportions (reference 1280 × 420)
    at any width. Desktop-first.
    ───────────────────────────────────────────────────────────────── */
 .figure {
@@ -49,7 +49,7 @@
 .box {
   position: relative;
   width: 100%;
-  aspect-ratio: 1280 / 623;
+  aspect-ratio: 1280 / 420;
   background: #f0a3a3;
   border: 1px solid #dfdcd5;
   border-radius: 24px;
@@ -137,8 +137,8 @@
 }
 
 .nodeLavender {
-  background: #fff0f0;
-  .nodeTitle { color: #9f0000; }
+  background: #eaeeff;
+  .nodeTitle { color: #4545c8; }
   .nodeSub { color: #374151; }
 }
 
@@ -149,63 +149,47 @@
   .nodeSub { color: #374151; }
 }
 
-.nodeWhiteGreen {
-  background: #ffffff;
-  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
-  .nodeTitle { color: #16a34a; }
-  .nodeSub { color: #16a34a; }
+.nodeSubAccent {
+  color: #16a34a !important;
+  font-weight: 600;
 }
 
-/* ── Observability strip ── */
-.observability {
+/* ── Organisation-boundary label + external "blocked" node ── */
+.boundaryLabel {
   position: absolute;
   z-index: 2;
-  left: 15.55%;
-  top: 78.97%;
-  width: 71.02%;
-  height: 12.2%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.3cqw;
-  background: #ffffff;
-  border-radius: 1.2cqw;
-  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
-    box-shadow:
-      0 0 0 2.5px rgba(255, 255, 255, 0.7),
-      0 0 16px 2px rgba(159, 0, 0, 0.4),
-      0 8px 22px rgba(0, 0, 0, 0.18);
-    animation: eiNodeGlow 5s ease-in-out infinite;
-    animation-delay: inherit;
-  }
-}
-
-.obsTitle {
+  left: 4.5%;
+  top: 9%;
+  max-width: 60%;
   margin: 0;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
-  font-weight: 600;
-  font-size: 1.15cqw;
-  line-height: 1.4;
+  font-weight: 700;
+  font-size: 0.85cqw;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: #9f0000;
-  text-align: center;
 }
 
-.obsSub {
+.egressLabel {
+  position: absolute;
+  z-index: 2;
+  left: 73%;
+  top: 12%;
+  width: 25%;
   margin: 0;
+  text-align: center;
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
-  font-weight: 400;
-  font-size: 1cqw;
-  line-height: 1.4;
-  color: #374151;
+  font-weight: 700;
+  font-size: 0.85cqw;
+  line-height: 1.3;
+  color: #9f0000;
+}
+
+.externalNode {
+  left: 74%;
+  top: 34%;
+  width: 22%;
+  height: 30%;
 }
 
 /* ── Connectors ──
@@ -243,7 +227,6 @@
 @media (prefers-reduced-motion: reduce) {
   .node,
   .node::after,
-  .observability::after,
   .sweepRed line,
   .sweepRed path,
   .sweepWhite line {
@@ -251,7 +234,6 @@
   }
   .baseConnectors { opacity: 1; }
   .node::after,
-  .observability::after,
   .sweepRed line,
   .sweepRed path,
   .sweepWhite line { opacity: 0; }
