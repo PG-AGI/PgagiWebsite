@@ -319,7 +319,7 @@ export const VERTICALS: Record<string, Vertical> = {
       'We build complete mobile products spanning the application, backend, AI layer, and deployment — native or cross-platform, with on-device and cloud AI wired in from the start, not bolted on after launch.',
     intro: {
       heading: 'Building complete mobile products with an integrated AI layer.',
-      body: 'A mobile-first product is more than an app shell around an API. We build the full stack — native or cross-platform UI, an AI layer for on-device and cloud inference, a backend that keeps sync and offline state consistent, and the release pipeline that ships and monitors it in the app stores.',
+      body: 'A mobile application is one layer of a complete product. We build the full set: native or cross-platform applications, the backend they communicate with, the AI layer that powers chat, voice, and document features, the data model, the integrations, and the deployment pipeline that delivers builds to the App Store and Play Store. Because we build the backend and AI layers as well, the application is designed end to end for performance, offline behaviour, and scale, rather than functioning as a thin client over an external API.',
     },
     buildDiagram: 'mobile-ai',
     features: [
