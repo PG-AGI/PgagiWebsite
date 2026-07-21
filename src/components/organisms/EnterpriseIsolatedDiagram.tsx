@@ -85,10 +85,8 @@ export default function EnterpriseIsolatedDiagram() {
               </g>
 
               {/* Blocked path — public model APIs sit outside the boundary, never called. */}
-              <circle cx="910" cy="214" r="20" fill="none" stroke="#9f0000" strokeWidth="3" />
-              <line x1="895.86" y1="199.86" x2="924.14" y2="228.14" stroke="#9f0000" strokeWidth="3" strokeLinecap="round" />
               <line
-                x1="930" y1="214" x2="947.2" y2="205.8"
+                x1="900" y1="214" x2="947.2" y2="205.8"
                 stroke="#ffffff" strokeWidth="2" strokeDasharray="5 5" strokeLinecap="round"
               />
             </svg>
