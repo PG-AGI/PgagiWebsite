@@ -13,10 +13,11 @@
   "privacy": "Privacy Policy",
   "links": {
     "aboutUs": "About Us",
-    "aiResearch": "AI Research",
-    "aiArchitecture": "AI Architecture",
-    "aiMobileDevelopment": "AI Mobile App Development",
-    "aiSaasDevelopment": "AI SaaS Development",
+    "aiEngineering": "AI Engineering",
+    "enterpriseAi": "Enterprise AI",
+    "aiIot": "AI + IoT",
+    "mobileAi": "Mobile + AI",
+    "aiSaasPlatforms": "AI SaaS Platforms",
     "blog": "Blog",
     "news": "News",
     "caseStudies": "Case studies"

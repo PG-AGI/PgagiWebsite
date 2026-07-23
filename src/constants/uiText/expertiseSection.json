@@ -6,19 +6,23 @@
   "services": [
     {
       "number": "01",
-      "title": "AI Research"
+      "title": "AI Research",
+      "slug": "ai-ml"
     },
     {
       "number": "02",
-      "title": "AI Architecture"
+      "title": "AI Architecture",
+      "slug": "enterprise-ai"
     },
     {
       "number": "03",
-      "title": "AI Mobile App Development"
+      "title": "AI Mobile App Development",
+      "slug": "mobile-ai"
     },
     {
       "number": "04",
-      "title": "AI SAAS Development"
+      "title": "AI SAAS Development",
+      "slug": "ai-saas"
     }
   ]
 }

@@ -1,7 +1,6 @@
 const ROUTES = {
   HOME: '/',
   EXPERTISE: '/expertise',
-  EXPERTISE_SECTION: (sectionId: number): string => `/expertise#section-${sectionId}`,
   EXPERTISE_VERTICAL: (slug: string): string => `/expertise/${slug}`,
   PROJECTS: '/projects',
   WHAT_WE_THINK: '/whatwethink',
