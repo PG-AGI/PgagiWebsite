@@ -2,34 +2,59 @@ import styles from '@/styles/components/organisms/verticalPage.module.scss';
 import VerticalHero from './VerticalHero';
 import VerticalIntro from './VerticalIntro';
 import DeviceCloudDiagram from './DeviceCloudDiagram';
+import FoundationLLMDiagram from './FoundationLLMDiagram';
+import MultiTenantArchitectureDiagram from './MultiTenantArchitectureDiagram';
+import MobileAiDiagram from './MobileAiDiagram';
+import EnterpriseIsolatedDiagram from './EnterpriseIsolatedDiagram';
+import DeploymentOptionsDiagram from './DeploymentOptionsDiagram';
+import GovernanceLoopDiagram from './GovernanceLoopDiagram';
+import RagArchitectureDiagram from './RagArchitectureDiagram';
+import AiOrchestrationDiagram from './AiOrchestrationDiagram';
 import FeatureCards from './FeatureCards';
 import UseCases from './UseCases';
 import ProductVisionCta from './ProductVisionCta';
-import type { Vertical } from '@/data/verticals';
+import type { BuildDiagramKey, Vertical } from '@/data/verticals';
+
+const BUILD_DIAGRAMS: Record<BuildDiagramKey, () => JSX.Element> = {
+  'device-cloud': DeviceCloudDiagram,
+  'foundation-llm': FoundationLLMDiagram,
+  'multi-tenant': MultiTenantArchitectureDiagram,
+  'mobile-ai': MobileAiDiagram,
+  'enterprise-isolated': EnterpriseIsolatedDiagram,
+  'deployment-options': DeploymentOptionsDiagram,
+  'governance-loop': GovernanceLoopDiagram,
+  'rag-architecture': RagArchitectureDiagram,
+  'ai-orchestration': AiOrchestrationDiagram,
+};
 
 /**
- * Layout shell for a single vertical (e.g. AI x IoT):
+ * Layout shell for a single vertical (e.g. AI x IoT, AI x ML):
  *   [global navbar] → hero → build section → shared CTA → [global footer]
  *
- * The "build" section (intro + device-to-cloud diagram) is the first block
- * from the Figma design; further sections slot in between it and the CTA as
- * their designs are supplied.
+ * The "build" section (intro + an illustrated diagram, per `buildDiagram`)
+ * is the first block from the Figma design; further sections slot in
+ * between it and the CTA as their designs are supplied.
  */
 export default function VerticalPage({ vertical }: { vertical: Vertical }) {
+  const BuildDiagram = vertical.buildDiagram ? BUILD_DIAGRAMS[vertical.buildDiagram] : null;
+
   return (
     <div className={styles.main}>
       <VerticalHero
         title={vertical.heroTitle}
         description={vertical.heroDescription}
         ctaHref={vertical.caseStudyHref}
-        ctaScrollToSlug={vertical.caseStudyScrollToSlug}
       />
 
       <section className={styles.buildSection}>
         <div className={styles.rail}>
           <VerticalIntro heading={vertical.intro.heading} body={vertical.intro.body} />
-          <DeviceCloudDiagram />
+          {BuildDiagram && <BuildDiagram />}
           <FeatureCards cards={vertical.features} />
+          {vertical.secondaryDiagrams?.map((key) => {
+            const SecondaryDiagram = BUILD_DIAGRAMS[key];
+            return <SecondaryDiagram key={key} />;
+          })}
         </div>
       </section>
 

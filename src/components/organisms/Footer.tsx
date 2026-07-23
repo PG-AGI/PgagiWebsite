@@ -83,34 +83,42 @@ export default function Footer() {
                 <ul className={styles.linkList}>
                   <li>
                     <TransitionLink
-                      href={ROUTES.EXPERTISE_SECTION(1)}
+                      href={ROUTES.EXPERTISE_VERTICAL("ai-ml")}
                       className={styles.link}
                     >
-                      {footerText.links.aiResearch}
+                      {footerText.links.aiEngineering}
                     </TransitionLink>
                   </li>
                   <li>
                     <TransitionLink
-                      href={ROUTES.EXPERTISE_SECTION(2)}
+                      href={ROUTES.EXPERTISE_VERTICAL("enterprise-ai")}
                       className={styles.link}
                     >
-                      {footerText.links.aiArchitecture}
+                      {footerText.links.enterpriseAi}
                     </TransitionLink>
                   </li>
                   <li>
                     <TransitionLink
-                      href={ROUTES.EXPERTISE_SECTION(3)}
+                      href={ROUTES.EXPERTISE_VERTICAL("ai-iot")}
                       className={styles.link}
                     >
-                      {footerText.links.aiMobileDevelopment}
+                      {footerText.links.aiIot}
                     </TransitionLink>
                   </li>
                   <li>
                     <TransitionLink
-                      href={ROUTES.EXPERTISE_SECTION(4)}
+                      href={ROUTES.EXPERTISE_VERTICAL("mobile-ai")}
                       className={styles.link}
                     >
-                      {footerText.links.aiSaasDevelopment}
+                      {footerText.links.mobileAi}
+                    </TransitionLink>
+                  </li>
+                  <li>
+                    <TransitionLink
+                      href={ROUTES.EXPERTISE_VERTICAL("ai-saas")}
+                      className={styles.link}
+                    >
+                      {footerText.links.aiSaasPlatforms}
                     </TransitionLink>
                   </li>
                 </ul>

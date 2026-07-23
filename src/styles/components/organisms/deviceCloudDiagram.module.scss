@@ -181,16 +181,14 @@
 
 /* ── Mobile: the diagram keeps its horizontal composition but shrinks to fit
    the viewport width (no horizontal scroll). Everything is sized in cqw/%, so
-   the whole illustration scales down proportionally — identical geometry, just
-   smaller. Internal text is bumped to the largest ratio that still fits each
-   node, to stay as legible as possible at the reduced width. ── */
+   the whole illustration — including its text — scales down proportionally
+   with the box; no font-size override needed. ── */
 @media (max-width: 768px) {
-  .nodeTitle { font-size: 2.05cqw; }
-  .nodeTitleSm { font-size: 1.9cqw; }
-  .nodeSub { font-size: 1.5cqw; }
-  .fastPath { font-size: 2.35cqw; }
+  .nodeTitle { white-space: normal; overflow-wrap: break-word; }
+  .nodeTitleSm { white-space: normal; overflow-wrap: break-word; }
+  .nodeSub { white-space: normal; overflow-wrap: break-word; }
   .caption { font-size: 0.8rem; line-height: 1.6; }
-  .eyebrowText { font-size: 0.625rem; }
+  .eyebrowText { font-size: 0.625rem; white-space: normal; overflow-wrap: break-word; }
 }
 
 .nodeTitle {

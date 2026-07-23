@@ -1,0 +1,243 @@
+/* ─────────────────────────────────────────────────────────────────
+   Mobile-first architecture diagram (mobile-ai vertical). Same technique
+   as foundationLlmDiagram.module.scss: the lavender box is a container-query
+   context; nodes/labels are sized in `cqw` and placed in `%`, so the
+   illustration keeps its proportions (reference 1280 × 560) at any width.
+   Desktop-first.
+   ───────────────────────────────────────────────────────────────── */
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 1.5625rem);
+}
+
+.topBlock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.6vw, 1.25rem);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrowBar {
+  width: 32px;
+  height: 2px;
+  background: #2c2c2c;
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2c2c2c;
+  white-space: nowrap;
+}
+
+.boxWrap {
+  width: 100%;
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 560;
+  background: #b7a4f0;
+  border: 1px solid #dfdcd5;
+  border-radius: 24px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ── Nodes ── */
+.node {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4cqw;
+  padding: 0.6cqw 0.9cqw;
+  border-radius: 1.2cqw;
+  animation: maNodeLift 5s ease-in-out infinite;
+}
+
+.node::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 0 2.5px rgba(255, 255, 255, 0.7),
+    0 0 16px 2px rgba(56, 89, 249, 0.5),
+    0 8px 22px rgba(0, 0, 0, 0.18);
+  animation: maNodeGlow 5s ease-in-out infinite;
+  animation-delay: inherit;
+}
+
+@keyframes maNodeLift {
+  0% { transform: scale(1); }
+  4% { transform: scale(1.03); }
+  16%, 100% { transform: scale(1); }
+}
+
+@keyframes maNodeGlow {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  12% { opacity: 1; }
+  20%, 100% { opacity: 0; }
+}
+
+.nodeTitle {
+  margin: 0;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1.5cqw;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.nodeSub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1.05cqw;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+/* Variants */
+.nodeDark {
+  background: #111827;
+  .nodeTitle { color: #ffffff; }
+  .nodeSub { color: #ffffff; }
+}
+
+.nodeLavender {
+  background: #f5f1ff;
+  .nodeTitle { color: #6d4cd6; }
+  .nodeSub { color: #374151; }
+}
+
+.nodeWhite {
+  background: #ffffff;
+  box-shadow: 0 1.4px 2.8px rgba(0, 0, 0, 0.06);
+  .nodeTitle { color: #111827; }
+  .nodeSub { color: #374151; }
+}
+
+.nodeSubAccent {
+  color: #16a34a !important;
+  font-weight: 600;
+}
+
+/* ── "ships the app →" hint, floating near the App stores node ── */
+.hint {
+  position: absolute;
+  z-index: 2;
+  left: 78%;
+  top: 72%;
+  width: 16%;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1cqw;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+/* ── Connectors ──
+   Base pipe sits dim; a bright highlight draws over it, in sequence. */
+.baseConnectors {
+  opacity: 0.35;
+}
+
+.sweepBlue line,
+.sweepBlue path,
+.sweepWhite line {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: maLineSweep 5s linear infinite;
+}
+
+.sweepBlue line,
+.sweepBlue path {
+  filter: drop-shadow(0 0 2px rgba(56, 89, 249, 0.85));
+}
+
+.sweepWhite line {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.85));
+}
+
+@keyframes maLineSweep {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  3% { opacity: 1; }
+  10% { stroke-dashoffset: 0; opacity: 1; }
+  16% { stroke-dashoffset: 0; opacity: 0; }
+  100% { stroke-dashoffset: 1; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node,
+  .node::after,
+  .sweepBlue line,
+  .sweepBlue path,
+  .sweepWhite line {
+    animation: none;
+  }
+  .baseConnectors { opacity: 1; }
+  .node::after,
+  .sweepBlue line,
+  .sweepBlue path,
+  .sweepWhite line { opacity: 0; }
+}
+
+/* ── Mobile: the box shrinks to fit its card (see .box), so cqw sizing
+   alone scales text down proportionally — no font-size override needed. ── */
+@media (max-width: 768px) {
+  .nodeTitle { white-space: normal; overflow-wrap: break-word; }
+  .nodeSub { white-space: normal; overflow-wrap: break-word; }
+  .caption { font-size: 0.8rem; line-height: 1.6; }
+  .eyebrowText { font-size: 0.625rem; white-space: normal; overflow-wrap: break-word; }
+}
+
+/* ── Caption ── */
+.caption {
+  margin: 0;
+  max-width: 64rem;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.875rem);
+  line-height: 1.625;
+  color: #374151;
+
+  strong {
+    font-weight: 700;
+  }
+}

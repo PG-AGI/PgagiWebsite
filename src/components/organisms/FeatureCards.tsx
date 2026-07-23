@@ -1,6 +1,13 @@
 import Image from 'next/image';
 import styles from '@/styles/components/organisms/featureCards.module.scss';
-import type { VerticalFeature } from '@/data/verticals';
+import type { FeatureDiagramKey, VerticalFeature } from '@/data/verticals';
+import RagArchitectureDiagram from './RagArchitectureDiagram';
+import AiOrchestrationDiagram from './AiOrchestrationDiagram';
+
+const FEATURE_DIAGRAMS: Record<FeatureDiagramKey, () => JSX.Element> = {
+  'rag-architecture': RagArchitectureDiagram,
+  'ai-orchestration': AiOrchestrationDiagram,
+};
 
 const CheckIcon = () => (
   <svg width="13" height="13" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -18,29 +25,37 @@ const CheckIcon = () => (
 export default function FeatureCards({ cards }: { cards: VerticalFeature[] }) {
   return (
     <div className={styles.grid}>
-      {cards.map((card) => (
-        <article key={card.title} className={`${styles.card} ${card.wide ? styles.wide : ''}`}>
-          <div className={styles.iconTile}>
-            <Image src={card.icon} alt="" width={60} height={60} className={styles.icon} />
-          </div>
-          <div className={styles.body}>
-            <h3 className={styles.title}>{card.title}</h3>
-            <ul className={styles.bullets}>
-              {card.bullets.map((b) => (
-                <li key={b.text} className={styles.bullet}>
-                  <span className={styles.check}>
-                    <CheckIcon />
-                  </span>
-                  <span className={styles.text}>
-                    {b.lead && <strong className={styles.lead}>{b.lead} </strong>}
-                    {b.text}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </article>
-      ))}
+      {cards.map((card) => {
+        const Diagram = card.diagram ? FEATURE_DIAGRAMS[card.diagram] : null;
+
+        return (
+          <article key={card.title} className={`${styles.card} ${card.wide ? styles.wide : ''}`}>
+            <div className={styles.iconTile}>
+              <Image src={card.icon} alt="" width={60} height={60} className={styles.icon} unoptimized />
+            </div>
+            <div className={styles.body}>
+              <h3 className={styles.title}>{card.title}</h3>
+              {card.description && <p className={styles.description}>{card.description}</p>}
+              {Diagram && <Diagram />}
+              {card.bullets.length > 0 && (
+                <ul className={styles.bullets}>
+                  {card.bullets.map((b) => (
+                    <li key={b.text} className={styles.bullet}>
+                      <span className={styles.check}>
+                        <CheckIcon />
+                      </span>
+                      <span className={styles.text}>
+                        {b.lead && <strong className={styles.lead}>{b.lead} </strong>}
+                        {b.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        );
+      })}
     </div>
   );
 }

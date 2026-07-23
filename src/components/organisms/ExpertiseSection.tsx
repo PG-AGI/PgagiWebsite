@@ -10,9 +10,8 @@ export default function ExpertiseSection() {
   
   const services = expertiseSectionText.services;
 
-  const handleServiceClick = (serviceNumber: string) => {
-    const sectionId = parseInt(serviceNumber);
-    router.push(ROUTES.EXPERTISE_SECTION(sectionId));
+  const handleServiceClick = (slug: string) => {
+    router.push(ROUTES.EXPERTISE_VERTICAL(slug));
   };
 
   return (
@@ -53,7 +52,7 @@ export default function ExpertiseSection() {
               <div 
                 key={index} 
                 className={styles.serviceItem}
-                onClick={() => handleServiceClick(service.number)}
+                onClick={() => handleServiceClick(service.slug)}
               >
                 <div className={styles.serviceNumber}>
                   {service.number}

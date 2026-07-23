@@ -2,7 +2,11 @@
 const nextConfig = {
   swcMinify: true,
   images: {
-    formats: ['image/avif', 'image/webp'],
+    /* WebP only — sources are already hand-optimized WebP, and on-demand AVIF
+       re-encoding costs ~2.5-3s per image per width variant (sharp, measured on
+       the /expertise hero) for only ~10-20KB extra savings. WebP encodes in
+       ~0.3s. Revisit if we ever pre-generate variants at build time. */
+    formats: ['image/webp'],
     // Match real viewport breakpoints so Next.js picks the right srcset candidate
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560, 3200, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
