@@ -77,11 +77,12 @@ export default function Expertise() {
         <div className={styles.heroInner}>
           <h1 className={styles.heroTitle}>Engineering Expertise</h1>
           <p className={styles.heroDescription}>
-            A technical capability overview for the Expertise page, prepared for
-            the design team. It is written to read precisely for engineering
-            audiences and clearly for non-technical stakeholders, and covers four
-            areas: AI engineering, AI with IoT, AI SaaS platforms, and mobile
-            applications with integrated AI.
+            Our engineering expertise combines AI, cloud, web, mobile, and IoT
+            technologies to build scalable, secure, and production-ready digital
+            solutions. From intelligent automation and AI-powered SaaS
+            platforms to connected IoT systems and mobile applications, we help
+            businesses transform ideas into high-performance products with a
+            strong focus on innovation, reliability, and long-term growth.
           </p>
           <div className={styles.heroPills}>
             <span className={styles.heroPill}>AI Engineering</span>
