@@ -2,6 +2,8 @@
 import React from "react";
 import { motion } from "@/lib/motion-lite";
 import Image from "next/image";
+import Link from "next/link";
+import ROUTES from "@/constants/routes";
 import styles from "@/styles/app/aboutUs/team.module.scss";
 
 interface TeamMember {
@@ -25,36 +27,52 @@ const teamMembers: TeamMember[] = [
 const Team: React.FC = () => {
   return (
     <section className={styles.teamSection}>
-      {/* Header */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-        <span className={styles.aboutLabel}>{'// Meet Our Team'}</span>
-          <h2 className={styles.description}>
-          We&apos;re a dynamic team of <b>45+ innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life.
-          {/* We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life. */}
-          </h2>
+          {/* <span className={styles.aboutLabel}>{'// Meet Our Team'}</span> */}
+          <h2 className={styles.description}>Who We Are?</h2>
+          <p className={styles.summary}>
+            We&apos;re a dynamic team of <b>45+ innovators</b>, united by a shared passion and diverse perspectives.
+            Together, we create, collaborate, and bring bold ideas to life.
+          </p>
+
+          <div className={styles.metaRow}>
+            <div className={styles.teamMeta}>
+              <span className={styles.teamLabel}>The PGAGI Crew</span>
+              <span className={styles.teamCount}>40+</span>
+            </div>
+
+            <Link href={ROUTES.CAREER} className={styles.ctaButton}>
+              <span>Join the Team</span>
+              <span className={styles.ctaArrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </div>
         </div>
-        <p className={styles.caption}>Our strength lies in our people.</p>
       </div>
 
-        <div className={styles.grid}>
-          {teamMembers.map((member) => (
-            <motion.div key={member.id} className={styles.card} whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}>
+      <div className={styles.grid}>
+        {teamMembers.map((member) => (
+          <motion.div key={member.id} className={styles.card} whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}>
+            <div className={styles.photoCell}>
               <Image
                 src={member.image}
                 alt={member.name}
-                width={400}
-                height={400}
+                width={56}
+                height={56}
                 className={styles.memberImage}
               />
-              {/* Overlay is now a plain div */}
-              <div className={styles.overlay}>
-                <h4>{member.name}</h4>
-                <span>{member.role}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+            <div className={styles.nameCell}>
+              <h4>{member.name}</h4>
+            </div>
+            <div className={styles.roleCell}>
+              <span>{member.role}</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
       </section>
   );
 };
