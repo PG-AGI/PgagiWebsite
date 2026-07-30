@@ -15,12 +15,12 @@ const OfficeSection: React.FC = () => {
       </div>
       <div className={styles.gallery}>
         {[
-          "/assets/office/office1.jpg",
-          "/assets/office/office2.jpg",
-          "/assets/office/office3.jpg",
-          "/assets/office/office4.jpg",
-          "/assets/office/office5.jpg",
-          "/assets/office/office6.jpg",
+          "/assets/office/IMG_8883.jpg",
+          "/assets/office/IMG_8884.jpg",
+          "/assets/office/IMG_8889.jpg",
+          "/assets/office/IMG_8891.jpg",
+          "/assets/office/IMG_8901.jpg",
+          "/assets/office/IMG_8906.jpg",
         ].map((src, i) => (
           <div
             key={src}
