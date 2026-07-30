@@ -279,12 +279,29 @@
   
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
+    .teamSection {
+      padding: 3rem 1rem;
+      gap: 2.5rem;
+    }
+
     .grid {
       grid-template-columns: 1fr;
     }
 
     .header {
+      gap: 1rem;
+
       .headerLeft {
+        .description {
+          font-size: 2rem;
+          line-height: 1.08;
+        }
+
+        .summary {
+          font-size: 0.98rem;
+          line-height: 1.5;
+        }
+
         .metaRow {
           align-items: flex-start;
         }
@@ -297,17 +314,34 @@
     }
 
     .card {
-      grid-template-columns: 4.8rem 1fr 0.9fr;
+        grid-template-columns: 4.4rem minmax(0, 1fr) minmax(0, 1fr);
       border-right: 0;
+        min-height: 4.2rem;
 
       .photoCell {
-        padding: 0.5rem 0.35rem;
+          padding: 0.45rem 0.25rem;
       }
 
       .nameCell,
       .roleCell {
-        padding: 0.5rem 0.85rem;
+          padding: 0.45rem 0.75rem;
       }
+
+        h4 {
+          white-space: normal;
+          overflow: visible;
+          text-overflow: clip;
+        }
+
+        span {
+          white-space: normal;
+          overflow: visible;
+          text-overflow: clip;
+        }
+
+        .roleCell span {
+          line-height: 1.25;
+        }
     }
   }
   
