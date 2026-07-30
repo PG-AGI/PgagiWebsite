@@ -31,8 +31,45 @@
   max-width: 34rem;
 }
 
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2.2rem;
+  align-items: start;
+}
+
+.item {
+  width: 100%;
+  height: 12.5rem;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(23, 27, 32, 0.06);
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.large {
+  grid-column: 3 / 4;
+  grid-row: 1 / 4;
+  height: 100%;
+}
+
 @media (max-width: 768px) {
   .officeSection {
     padding: 1rem 1rem 2rem;
+  }
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+  .large {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    height: 14rem;
   }
 }
