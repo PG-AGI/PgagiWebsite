@@ -84,11 +84,12 @@
         font-size: 1rem;
         font-weight: 700;
         color: #1a1a1a;
+      }
 
-        &::before {
-          content: "👥";
-          font-size: 1rem;
-        }
+      .teamIcon {
+        width: 1.05rem;
+        height: 1.05rem;
+        flex: 0 0 auto;
       }
 
       .ctaButton {
