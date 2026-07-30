@@ -1,0 +1,38 @@
+.officeSection {
+  width: 100%;
+  padding: 1rem 6rem 3rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 40rem;
+}
+
+.title {
+  margin: 0;
+  color: #1a1f2b;
+  font-size: clamp(2rem, 3.2vw, 3.3rem);
+  line-height: 1.02;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.description {
+  margin: 0;
+  color: #4f5563;
+  font-size: 0.98rem;
+  line-height: 1.42;
+  max-width: 34rem;
+}
+
+@media (max-width: 768px) {
+  .officeSection {
+    padding: 1rem 1rem 2rem;
+  }
+}
