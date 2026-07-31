@@ -22,10 +22,20 @@ const OfficeSection: React.FC = () => {
           "/assets/office/IMG_8891.jpg",
           "/assets/office/IMG_8901.jpg",
           "/assets/office/IMG_8906.jpg",
+          "/assets/office/IMG_8994.jpg",
+          "/assets/office/IMG_9008.jpg",
+          "/assets/office/IMG_9015.jpg",
+          "/assets/office/IMG_9016.jpg",
+          "/assets/office/IMG_9017.jpg",
+          "/assets/office/IMG_9018.jpg",
+          "/assets/office/IMG_9019.jpg",
+          "/assets/office/IMG_9034.jpg",
+          "/assets/office/IMG_9035.jpg",
+          "/assets/office/IMG_9036.jpg",
         ].map((src, i) => (
           <div
             key={src}
-            className={`${styles.item} ${i === 5 ? styles.large : ""}`}
+            className={`${styles.item} ${i === 9 ? styles.large : ""}`}
           >
             <Image
               src={src}
