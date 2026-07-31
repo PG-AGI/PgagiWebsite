@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import styles from "@/styles/app/aboutUs/office.module.scss";
 
 const OfficeSection: React.FC = () => {
@@ -26,7 +27,14 @@ const OfficeSection: React.FC = () => {
             key={src}
             className={`${styles.item} ${i === 5 ? styles.large : ""}`}
           >
-            <img src={src} alt={`Office ${i + 1}`} loading="lazy" />
+            <Image
+              src={src}
+              alt={`Office ${i + 1}`}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className={styles.image}
+              priority={i === 5}
+            />
           </div>
         ))}
       </div>
