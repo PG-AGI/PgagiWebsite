@@ -72,6 +72,12 @@
   .officeSection {
     padding: 1rem 1rem 2rem;
   }
+  .title {
+    white-space: normal;
+    max-width: 100%;
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+    line-height: 1.08;
+  }
   .gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 9rem;
