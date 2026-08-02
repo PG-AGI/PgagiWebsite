@@ -12,6 +12,7 @@ import { fetchAllBlogs } from '@/services/blogService';
 import { fetchAllAINews } from '@/services/ainewsService';
 import Marquee from 'react-fast-marquee';
 import Team from './team';
+import OfficeSection from './office';
 import ROUTES from '@/constants/routes';
 import { getErrorMessage } from '@/utils/errorUtils';
 
@@ -305,6 +306,7 @@ export default function AboutUs() {
       </motion.section> */}
 
       <Team/>
+      <OfficeSection />
 
       {/* Combined Blogs & News Section */}
       <section className={styles.combinedSection} id="blogs-news">

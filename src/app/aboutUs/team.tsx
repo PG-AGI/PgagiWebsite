@@ -2,6 +2,8 @@
 import React from "react";
 import { motion } from "@/lib/motion-lite";
 import Image from "next/image";
+import Link from "next/link";
+import ROUTES from "@/constants/routes";
 import styles from "@/styles/app/aboutUs/team.module.scss";
 
 interface TeamMember {
@@ -12,49 +14,116 @@ interface TeamMember {
 }
 
 const teamMembers: TeamMember[] = [
-  { id: 1, name: "Vivek Bhowmik", role: "Founder", image: "/assets/team/member1.png" },
-  { id: 2, name: "Shibajyoti Bhowmik", role: "Managing Director", image: "/assets/team/member2Shibasir.jpg" },
-  { id: 3, name: "Pratik Hegde", role: "Founding Engineer", image: "/assets/team/PRATIK.png" },
-  { id: 4, name: "Sahil Sinha", role: "Founding Engineer", image: "/assets/team/member9.png" },
-  { id: 5, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/3f1b3d45-eabe-4788-84d9-d6e8ce6eb2c1-modified.jpg" },
-  { id: 6, name: "Abhishek Khatri", role: "AI Department", image: "/assets/team/ABHISHEK.jpg" },
-  { id: 7, name: "Deb Dey", role: "Accounts Department", image: "/assets/team/deb.png" },
+  { id: 1, name: "Pratik Hegde", role: "Operational Head", image: "/assets/team/PRATIK.png" },
+  { id: 2, name: "Sahil Sinha", role: "SDE-3 / Founding Engineer", image: "/assets/team/member9.png" },
+  { id: 3, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/pooja-jain.jpg" },
+  { id: 4, name: "Javeriya Shaik", role: "HR Generalist", image: "/assets/team/javeriya-shaik.png" },
+  { id: 5, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
+  { id: 6, name: "Abhishek Khatri", role: "AI/ML Developer", image: "/assets/team/abhishek-khatri.png" },
+  { id: 7, name: "Deb Dey", role: "Accountant", image: "/assets/team/deb-dey.jpg" },
+  { id: 8, name: "Arav Prajapati", role: "SDE -1", image: "/assets/team/arav-prajapati.png" },
+  { id: 9, name: "Bibin Vinod", role: "Golang Developer", image: "/assets/team/bibin-vinod.jpg" },
+  { id: 10, name: "Prasan Vibhuti", role: "QA Tester", image: "/assets/team/prasan-vibhuti.png" },
+  { id: 11, name: "Airaad Sheikh", role: "SDE 1 (Mobile Dev)", image: "/assets/team/airaad-sheikh.jpeg" },
+  { id: 12, name: "Aayush Soni", role: "DevOps Engineer", image: "/assets/team/aayush-soni.png" },
+  { id: 13, name: "Hemanth Terli", role: "AI Engineer", image: "/assets/team/hemanth-terli.png" },
+  { id: 14, name: "Rohan Mahajan", role: "AI/ML Intern", image: "/assets/team/rohan-mahajan.png" },
+  { id: 15, name: "Bhawna", role: "SDE Intern", image: "/assets/team/bhawna.jpeg" },
+  { id: 16, name: "Jayesh Pandey", role: "AI/ML Intern", image: "/assets/team/jayesh-pandey.jpg" },
+  { id: 17, name: "Mradul Gandhi", role: "SDE Intern", image: "/assets/team/mradul-gandhi.png" },
+  { id: 18, name: "Divya Kumar Jha", role: "AI Architecture Intern", image: "/assets/team/divya-kumar-jha.jpeg" },
+  { id: 19, name: "Shreya S Acharya", role: "QA Intern", image: "/assets/team/shreya-acharya.jpg" },
+  { id: 20, name: "Hemanath Kumar R", role: "AI/ML Intern", image: "/assets/team/hemanath-kumar-r.png" },
+  { id: 21, name: "Amit", role: "SDE Intern", image: "/assets/team/amit-sde-intern.jpg" },
 ];
 
 
 const Team: React.FC = () => {
   return (
     <section className={styles.teamSection}>
-      {/* Header */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-        <span className={styles.aboutLabel}>{'// Meet Our Team'}</span>
-          <h2 className={styles.description}>
-          We&apos;re a dynamic team of <b>45+ innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life.
-          {/* We&apos;re a dynamic team of <b>35 innovators</b>, united by a shared passion and diverse perspectives. Together, we create, collaborate, and bring bold ideas to life. */}
-          </h2>
+          {/* <span className={styles.aboutLabel}>{'// Meet Our Team'}</span> */}
+          <h2 className={styles.description}>Who We Are?</h2>
+          <p className={styles.summary}>
+            We&apos;re a dynamic team of <b>45+ innovators</b>, united by a shared passion and diverse perspectives.
+            Together, we create, collaborate, and bring bold ideas to life.
+          </p>
+
+          <div className={styles.metaRow}>
+            <div className={styles.teamMeta}>
+              <span className={styles.teamLabel}>The PGAGI Crew</span>
+              <span className={styles.teamCount}>
+                <svg
+                  className={styles.teamIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M16.5 20.25c0-2.485-2.01-4.5-4.5-4.5s-4.5 2.015-4.5 4.5"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M12 11.25a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M18.75 19.5c0-1.933-1.234-3.618-3.02-4.086"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M8.27 15.414c-1.786.468-3.02 2.153-3.02 4.086"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span>40+</span>
+              </span>
+            </div>
+
+            <Link href={ROUTES.CAREER} className={styles.ctaButton}>
+              <span>Join the Team</span>
+              <span className={styles.ctaArrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </div>
         </div>
-        <p className={styles.caption}>Our strength lies in our people.</p>
       </div>
 
-        <div className={styles.grid}>
-          {teamMembers.map((member) => (
-            <motion.div key={member.id} className={styles.card} whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}>
+      <div className={styles.grid}>
+        {teamMembers.map((member) => (
+          <motion.div key={member.id} className={styles.card} whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}>
+            <div className={styles.photoCell}>
               <Image
                 src={member.image}
                 alt={member.name}
-                width={400}
-                height={400}
+                width={56}
+                height={56}
                 className={styles.memberImage}
               />
-              {/* Overlay is now a plain div */}
-              <div className={styles.overlay}>
-                <h4>{member.name}</h4>
-                <span>{member.role}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+            <div className={styles.nameCell}>
+              <h4>{member.name}</h4>
+            </div>
+            <div className={styles.roleCell}>
+              <span>{member.role}</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
       </section>
   );
 };
