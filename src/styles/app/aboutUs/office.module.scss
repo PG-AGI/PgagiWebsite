@@ -33,19 +33,34 @@
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: 1rem;
   margin-top: 2.2rem;
-  align-items: start;
+  align-items: stretch;
 }
 
-.item {
-  width: 100%;
-  height: 14rem;
-  overflow: hidden;
+.gridItem {
   position: relative;
-  border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(23, 27, 32, 0.08);
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(23, 27, 32, 0.1);
+  min-height: 12rem;
+}
+
+.tallTile {
+  grid-column: span 2;
+  grid-row: span 2;
+  min-height: 25rem;
+}
+
+.wideTile {
+  grid-column: span 2;
+  min-height: 13rem;
+}
+
+.smallTile {
+  min-height: 11rem;
 }
 
 .image {
@@ -53,28 +68,20 @@
   display: block;
 }
 
-.large {
-  grid-column: 2 / 4;
-  grid-row: 1 / 3;
-  height: 100%;
-  min-height: 28.5rem;
-}
-
 @media (max-width: 768px) {
   .officeSection {
     padding: 1rem 1rem 2rem;
   }
   .gallery {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .item {
-    height: 12rem;
-  }
-  .large {
-    grid-column: 1 / -1;
+  .gridItem,
+  .tallTile,
+  .wideTile,
+  .smallTile {
+    grid-column: auto;
     grid-row: auto;
-    min-height: 16rem;
-    height: 16rem;
+    min-height: 13rem;
   }
 }

@@ -4,6 +4,29 @@ import React from "react";
 import Image from "next/image";
 import styles from "@/styles/app/aboutUs/office.module.scss";
 
+const officeImages = [
+  "/assets/office/IMG_8883.jpg",
+  "/assets/office/IMG_8884.jpg",
+  "/assets/office/IMG_8889.jpg",
+  "/assets/office/IMG_8891.jpg",
+  "/assets/office/IMG_8901.jpg",
+  "/assets/office/IMG_8906.jpg",
+  "/assets/office/IMG_8907.jpg",
+  "/assets/office/IMG_8912.jpg",
+  "/assets/office/IMG_8914.jpg",
+  "/assets/office/IMG_8916.jpg",
+  "/assets/office/IMG_8994.jpg",
+  "/assets/office/IMG_9008.jpg",
+  "/assets/office/IMG_9015.jpg",
+  "/assets/office/IMG_9016.jpg",
+  "/assets/office/IMG_9017.jpg",
+  "/assets/office/IMG_9018.jpg",
+  "/assets/office/IMG_9019.jpg",
+  "/assets/office/IMG_9034.jpg",
+  "/assets/office/IMG_9035.jpg",
+  "/assets/office/IMG_9036.jpg",
+];
+
 const OfficeSection: React.FC = () => {
   return (
     <section className={styles.officeSection}>
@@ -15,38 +38,36 @@ const OfficeSection: React.FC = () => {
         </p>
       </div>
       <div className={styles.gallery}>
-        {[
-          "/assets/office/IMG_8883.jpg",
-          "/assets/office/IMG_8884.jpg",
-          "/assets/office/IMG_8889.jpg",
-          "/assets/office/IMG_8891.jpg",
-          "/assets/office/IMG_8901.jpg",
-          "/assets/office/IMG_8906.jpg",
-          "/assets/office/IMG_8994.jpg",
-          "/assets/office/IMG_9008.jpg",
-          "/assets/office/IMG_9015.jpg",
-          "/assets/office/IMG_9016.jpg",
-          "/assets/office/IMG_9017.jpg",
-          "/assets/office/IMG_9018.jpg",
-          "/assets/office/IMG_9019.jpg",
-          "/assets/office/IMG_9034.jpg",
-          "/assets/office/IMG_9035.jpg",
-          "/assets/office/IMG_9036.jpg",
-        ].map((src, i) => (
-          <div
-            key={src}
-            className={`${styles.item} ${i === 9 ? styles.large : ""}`}
-          >
-            <Image
-              src={src}
-              alt={`Office ${i + 1}`}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className={styles.image}
-              priority={i === 5}
-            />
-          </div>
-        ))}
+        {officeImages.map((src, i) => {
+          const tileClass =
+            i % 6 === 0
+              ? styles.tallTile
+              : i % 6 === 1
+                ? styles.wideTile
+                : i % 6 === 2
+                  ? styles.smallTile
+                  : i % 6 === 3
+                    ? styles.tallTile
+                    : i % 6 === 4
+                      ? styles.smallTile
+                      : styles.wideTile;
+
+          return (
+            <div
+              key={src}
+              className={`${styles.gridItem} ${tileClass}`}
+            >
+              <Image
+                src={src}
+                alt={`Office view ${i + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                className={styles.image}
+                priority={i < 2}
+              />
+            </div>
+          );
+        })}
       </div>
     </section>
   );
