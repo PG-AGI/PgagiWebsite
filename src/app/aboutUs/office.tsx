@@ -21,7 +21,7 @@ const officeImages = [
   "/assets/office/IMG_9016.jpg",
   "/assets/office/IMG_9017.jpg",
   "/assets/office/IMG_9018.jpg",
-  "/assets/office/IMG_9019.jpg",
+  // "/assets/office/IMG_9019.jpg",
   "/assets/office/IMG_9034.jpg",
   "/assets/office/IMG_9035.jpg",
   "/assets/office/IMG_9036.jpg",
