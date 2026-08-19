@@ -94,9 +94,11 @@ export default function Landing() {
               href={EXTERNAL_LINKS.CALENDLY_BOOKING}
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.heroCta}
+              className={`${styles.heroCta} df-goal-lets-build-together`}
               id="hero-cta-button"
               aria-label={landingText.ctaAriaLabel}
+              data-df-event="lets_build_together_click"
+              data-df-goal="lets_build_together_click"
             >
               {landingText.ctaLabel}
               <div className={styles.ctaArrow}>
@@ -135,9 +137,11 @@ export default function Landing() {
             <div className={styles.cardCtaWrapper}>
               <TransitionLink
                 href={ROUTES.EXPERTISE_VERTICAL("ai-iot")}
-                className={styles.cardCta}
+                className={`${styles.cardCta} df-goal-explore-this-vertical`}
                 ariaLabel={landingText.verticalCard.ctaAriaLabel}
                 showSpinnerOnClick
+                data-df-event="explore_this_vertical_click"
+                data-df-goal="explore_this_vertical_click"
               >
                 <span>{landingText.verticalCard.ctaLabel}</span>
                 <span className={styles.cardCtaArrow} aria-hidden="true">

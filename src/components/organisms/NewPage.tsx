@@ -113,7 +113,9 @@ const NewPage = () => {
             <div className={styles.ctaWrapper}>
               <button
                 type="button"
-                className={styles.pillButton}
+                className={`${styles.pillButton} df-goal-lets-build-together`}
+                data-df-event="lets_build_together_click"
+                data-df-goal="lets_build_together_click"
                 onClick={() => window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, '_blank')}
               >
                 {newPageText.ctaLabel}
