@@ -33,8 +33,8 @@ const teamMembers: TeamMember[] = [
   { id: 19, name: "Shreya S Acharya", role: "QA", image: "/assets/team/shreya-acharya.jpg" },
   { id: 20, name: "Hemanath Kumar R", role: "AI/ML", image: "/assets/team/hemanath-kumar-r.png" },
   { id: 21, name: "Ayush Sahu", role: "SDE", image: "/assets/team/ayush-github-photo.jpg" },
-  { id: 22, name: "Saksham Verma", role: "AI/ML ", image: "/assets/team/Saksham-verma.png" },
-  { id: 23, name: "Amit Verma", role: "AI/ML ", image: "/assets/team/Amit.jpeg" },
+  { id: 22, name: "Saksham Verma", role: "AI/ML", image: "/assets/team/Saksham-verma.png" },
+  { id: 23, name: "Amit Verma", role: "AI/ML", image: "/assets/team/Amit.jpeg" },
 ];
 
 
