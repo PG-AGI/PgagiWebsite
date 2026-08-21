@@ -34,6 +34,7 @@ const PRIORITY_SLUG_KEYWORDS: string[] = [
   'workaptix',
   'onchain-toolkit',
   'linkedin',
+  'fomo',
   'brainify',
   'email-love',
   'cracked-ai',

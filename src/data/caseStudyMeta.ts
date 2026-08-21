@@ -267,12 +267,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'IoT/AI/ML',
   },
   'fomo': {
-    techStack: ['React', 'Python', 'FastAPI', 'Node.js', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Conversion Lift' },
-      { value: '60%', label: 'Engagement Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Social proof notifications lifting conversions by 40%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://fomo.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
