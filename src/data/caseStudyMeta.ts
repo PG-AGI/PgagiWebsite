@@ -204,6 +204,26 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'HRTech/AI/ML',
   },
+  'onchain-toolkit': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'FinTech/AI/ML',
+  },
+  'onchain-toolkit-ai-analysis-platform': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'FinTech/AI/ML',
+  },
   'innvor-ai': {
     techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
     metrics: [

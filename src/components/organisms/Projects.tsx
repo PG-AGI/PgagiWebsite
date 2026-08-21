@@ -32,6 +32,7 @@ const HIDDEN_SLUGS = new Set<string>([]);
 // Slugs that must appear first, in this exact order
 const PRIORITY_SLUG_KEYWORDS: string[] = [
   'workaptix',
+  'onchain-toolkit',
   'brainify',
   'email-love',
   'cracked-ai',
@@ -266,7 +267,7 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                         alt={cs.title}
                         fill
                         sizes="(max-width: 900px) 92vw, (max-width: 1600px) 48vw, 760px"
-                        quality={82}
+                        quality={95}
                         // First two cards are above the fold: preload eagerly
                         // (in the initial HTML) instead of lazy-loading.
                         priority={idx < 2}
