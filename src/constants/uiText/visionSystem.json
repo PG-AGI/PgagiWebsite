@@ -2,21 +2,31 @@
   "titleLine1": "You have the vision",
   "titleHighlight": "engineer the system",
   "subtitle": "From idea to scalable AI product.",
-  "outcomeLabel": "Outcome:",
+  "outcomeLabel": "Outcome →",
   "cards": [
     {
-      "title": "Product and market deep dive",
+      "id": "deep-dive",
+      "theme": "blue",
+      "titlePart1": "Product and market",
+      "titlePart2": "deep dive",
+      "titleHighlight": "part1",
+      "description": "We analyze your product idea, target users, market gaps, and technical needs. This helps us create a clear blueprint before moving into design and development.",
       "points": [
-        "Finding your product market-fit",
+        "Finding your product <strong>market-fit</strong>",
         "Define real user personas",
-        "Map technical scope",
+        "Map <strong>technical scope</strong>",
         "Identify scaling risks"
       ],
       "outcome": "Clear product blueprint",
-      "imageAlt": "Product and market deep dive illustration"
+      "imageAlt": "Product and market deep dive flowchart"
     },
     {
-      "title": "Architecture before code",
+      "id": "architecture",
+      "theme": "rust",
+      "titlePart1": "Architecture",
+      "titlePart2": "before code",
+      "titleHighlight": "part1",
+      "description": "We plan the technical foundation before writing code, including system structure, security, and scalability. This helps avoid costly rebuilds as the product grows.",
       "points": [
         "High-level system design (HLD)",
         "Low-level execution plan (LLD)",
@@ -27,7 +37,12 @@
       "imageAlt": "Product architecture diagram"
     },
     {
-      "title": "Build. Launch. Scale.",
+      "id": "build-launch-scale",
+      "theme": "lime",
+      "titlePart1": "Build. Launch.",
+      "titlePart2": "Scale.",
+      "titleHighlight": "part2",
+      "description": "We turn the blueprint into a production-ready product with clean execution, stable deployment, and built-in analytics. This helps your AI product launch smoothly and scale with confidence.",
       "points": [
         "Phase-wise execution",
         "Production-grade deployment",
@@ -35,7 +50,7 @@
         "Analytics embedded from day one"
       ],
       "outcome": "AI product engineered to grow",
-      "imageAlt": "Build launch scale illustration"
+      "imageAlt": "Build launch scale execution diagram"
     }
   ]
 }
