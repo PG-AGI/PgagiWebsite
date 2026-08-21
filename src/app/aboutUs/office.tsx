@@ -12,7 +12,7 @@ const officeImages = [
   "/assets/office/IMG_9008.jpg",
   "/assets/office/IMG_9016.jpg",
   "/assets/office/IMG_9036.jpg",
-  "/assets/office/IMG_8994.jpg",
+  
   
 
   
