@@ -229,6 +229,7 @@ export default function Navigation() {
                   className={`${styles.menuCardCta} df-goal-explore-this-vertical`}
                   ariaLabel={landingText.verticalCard.ctaAriaLabel}
                   onClick={() => setIsMenuOpen(false)}
+                  data-fast-goal="explore_this_vertical"
                   data-df-event="explore_this_vertical_click"
                   data-df-goal="explore_this_vertical_click"
                 >

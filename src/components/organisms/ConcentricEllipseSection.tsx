@@ -24,6 +24,7 @@ const ConcentricEllipseSection = () => {
             <button 
               type="button" 
               className={`${styles.ctaButton} df-goal-schedule-strategic-consultation`}
+              data-fast-goal="schedule_strategic_consultation"
               data-df-event="schedule_strategic_consultation_click"
               data-df-goal="schedule_strategic_consultation_click"
               onClick={() => window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, "_blank")}
