@@ -6,36 +6,42 @@ import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import styles from "@/styles/components/organisms/RevenueSection.module.scss";
 import revenueSectionText from "@/constants/uiText/revenueSection.json";
 
-// Illustration panels exported @3x from Figma — intrinsic sizes match the
-// on-disk WebPs so next/image serves correctly sized, crisp output.
 const revenueCards = [
   {
-    title: revenueSectionText.cards[0].title,
+    titlePart1: revenueSectionText.cards[0].titlePart1,
+    titlePart2: revenueSectionText.cards[0].titlePart2,
+    accentClass: styles.accentBlue,
+    pillClass: styles.bluePill,
+    cardClass: styles.card1,
+    description: revenueSectionText.cards[0].description,
     points: revenueSectionText.cards[0].points,
     outcome: revenueSectionText.cards[0].outcome,
-    image: "/svgs/Revenue/First.webp",
+    image: "/svgs/Revenue/First.png",
     imageAlt: revenueSectionText.cards[0].imageAlt,
-    imageWidth: 1491,
-    imageHeight: 1372,
   },
   {
-    title: revenueSectionText.cards[1].title,
+    titlePart1: revenueSectionText.cards[1].titlePart1,
+    titlePart2: revenueSectionText.cards[1].titlePart2,
+    accentClass: styles.accentRust,
+    pillClass: styles.rustPill,
+    cardClass: styles.card2,
+    description: revenueSectionText.cards[1].description,
     points: revenueSectionText.cards[1].points,
     outcome: revenueSectionText.cards[1].outcome,
-    image: "/svgs/Revenue/Second.webp",
+    image: "/svgs/Revenue/Second.png",
     imageAlt: revenueSectionText.cards[1].imageAlt,
-    imageWidth: 1470,
-    imageHeight: 1347,
-    highlightPoints: ["Human-in-the-loop control"],
   },
   {
-    title: revenueSectionText.cards[2].title,
+    titlePart1: revenueSectionText.cards[2].titlePart1,
+    titlePart2: revenueSectionText.cards[2].titlePart2,
+    accentClass: styles.accentLime,
+    pillClass: styles.limePill,
+    cardClass: styles.card3,
+    description: revenueSectionText.cards[2].description,
     points: revenueSectionText.cards[2].points,
     outcome: revenueSectionText.cards[2].outcome,
-    image: "/svgs/Revenue/Third.webp",
+    image: "/svgs/Revenue/Third.png",
     imageAlt: revenueSectionText.cards[2].imageAlt,
-    imageWidth: 1542,
-    imageHeight: 1398,
   },
 ];
 
@@ -57,7 +63,7 @@ const RevenueSection = () => {
           </p>
         </div>
 
-        {/* Wide banner image */}
+        {/* Wide banner video */}
         <div className={styles.headerImageWrapper}>
           <video
             autoPlay
@@ -69,9 +75,9 @@ const RevenueSection = () => {
             className={styles.headerImage}
             aria-label="Revenue section banner"
           >
-        <source src="/assets/RevenueSection.webm" type="video/webm" />
-        <source src="/assets/RevenueSection.mp4" type="video/mp4" />
-</video>
+            <source src="/assets/RevenueSection.webm" type="video/webm" />
+            <source src="/assets/RevenueSection.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
 
@@ -84,83 +90,53 @@ const RevenueSection = () => {
       >
         {revenueCards.map((card, i) => (
           <ScrollStackItem
-            key={card.title}
-            className={`${styles.card} ${styles[`card${i + 1}`]}`}
+            key={i}
+            className={`${styles.card} ${card.cardClass}`}
           >
-            <CardContent {...card} priority={i === 0} />
+            <div className={styles.copyBlock}>
+              <h3 className={styles.cardTitle}>
+                {i === 2 ? (
+                  <>
+                    <span>{card.titlePart1} </span>
+                    <span className={card.accentClass}>{card.titlePart2}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className={card.accentClass}>{card.titlePart1}</span>{" "}
+                    <span>{card.titlePart2}</span>
+                  </>
+                )}
+              </h3>
+              <p className={styles.cardDescription}>{card.description}</p>
+              <ul className={styles.pointList}>
+                {card.points.map((pt, idx) => (
+                  <li key={idx}>{pt}</li>
+                ))}
+              </ul>
+              <div className={`${styles.outcomePill} ${card.pillClass}`}>
+                {revenueSectionText.outcomeLabel} {card.outcome}
+              </div>
+            </div>
+
+            <div className={styles.media}>
+              <div className={styles.imageInner}>
+                <Image
+                  src={card.image}
+                  alt={card.imageAlt}
+                  width={1000}
+                  height={1000}
+                  quality={95}
+                  sizes="(max-width: 768px) 90vw, 480px"
+                  className={styles.mediaImage}
+                  priority={i === 0}
+                />
+              </div>
+            </div>
           </ScrollStackItem>
         ))}
       </ScrollStack>
     </div>
   );
 };
-
-const CardContent = ({
-  title,
-  points,
-  outcome,
-  image,
-  imageAlt,
-  imageWidth,
-  imageHeight,
-  highlightPoints = [],
-  priority = false,
-}: {
-  title: string;
-  points: string[];
-  outcome: string;
-  image: string;
-  imageAlt: string;
-  imageWidth: number;
-  imageHeight: number;
-  highlightPoints?: string[];
-  priority?: boolean;
-}) => (
-  <>
-    <div className={styles.media}>
-      <div className={styles.imageInner}>
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={imageWidth}
-          height={imageHeight}
-          quality={95}
-          sizes="(max-width: 900px) 70vw, 560px"
-          className={styles.mediaImage}
-          priority={priority}
-        />
-      </div>
-    </div>
-    <div className={styles.copyBlock}>
-      <h3 className={styles.cardTitle}>{title}</h3>
-      <ul className={styles.pointList}>
-        {points.map((point) => (
-          <li key={point}>
-            <svg
-              className={styles.check}
-              viewBox="0 0 20 15"
-              fill="none"
-              aria-hidden
-            >
-              <path
-                d="M1 9.68C1 9.68 2.82 9.68 5.25 13.5C5.25 13.5 12 3.5 18 1.5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className={highlightPoints.includes(point) ? styles.pointHighlight : undefined}>
-              {point}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <p className={styles.outcome}>
-        <span>{revenueSectionText.outcomeLabel}</span> {outcome}
-      </p>
-    </div>
-  </>
-);
 
 export default RevenueSection;

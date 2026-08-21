@@ -23,7 +23,9 @@ const ConcentricEllipseSection = () => {
 
             <button 
               type="button" 
-              className={styles.ctaButton}
+              className={`${styles.ctaButton} df-goal-schedule-strategic-consultation`}
+              data-df-event="schedule_strategic_consultation_click"
+              data-df-goal="schedule_strategic_consultation_click"
               onClick={() => window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, "_blank")}
             >
               <span className={styles.ctaLabel}>{concentricEllipseText.ctaLabel}</span>

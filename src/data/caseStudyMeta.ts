@@ -194,15 +194,35 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
   'workaptix': {
-    techStack: ['Python', 'React', 'Node.js', 'PostgreSQL', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '10K+', label: 'Candidates Sourced' },
-      { value: '500+', label: 'Active Employers' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Pre-vetted Workday talent matched and placed in days, not weeks',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://workaptix.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'HRTech/AI/ML',
+  },
+  'onchain-toolkit': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'FinTech/AI/ML',
+  },
+  'onchain-toolkit-ai-analysis-platform': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'FinTech/AI/ML',
   },
   'innvor-ai': {
     techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
@@ -247,25 +267,25 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'IoT/AI/ML',
   },
   'fomo': {
-    techStack: ['React', 'Python', 'FastAPI', 'Node.js', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Conversion Lift' },
-      { value: '60%', label: 'Engagement Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Social proof notifications lifting conversions by 40%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://fomo.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
   'linkedin-ai': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI'],
     metrics: [
-      { value: '$24.8M', label: 'Pipeline Generated' },
-      { value: '1,244', label: 'Leads Qualified' },
+      { value: '10x', label: 'Content Reach' },
+      { value: '85%', label: 'Engagement Rate' },
     ],
-    highlight: '$24.8M pipeline generated through AI-powered LinkedIn outreach',
+    highlight: 'Doctors reaching 10× more patients via AI-generated LinkedIn content',
     tags: ['Live Products', 'AI Implemented in Business'],
-    category: 'MarTech/AI/ML',
+    category: 'Healthcare/AI/ML',
   },
   'legalgpt': {
     techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
@@ -284,7 +304,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '85%', label: 'Engagement Rate' },
     ],
     highlight: 'Doctors reaching 10× more patients via AI-generated LinkedIn content',
-    tags: ['AI Implemented in Business', 'Custom Build'],
+    tags: ['Live Products', 'AI Implemented in Business'],
     category: 'Healthcare/AI/ML',
   },
   'transforming-customer-engagement-and-lead-management-with-ai-powered-automation': {
@@ -392,12 +412,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Workaptix: MongoDB slug is the full descriptive slug
   'workaptix-ai-sourcing-validation-verification': {
-    techStack: ['Python', 'React', 'Node.js', 'PostgreSQL', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '10K+', label: 'Candidates Sourced' },
-      { value: '500+', label: 'Active Employers' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Pre-vetted Workday talent matched and placed in days, not weeks',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://workaptix.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'HRTech/AI/ML',

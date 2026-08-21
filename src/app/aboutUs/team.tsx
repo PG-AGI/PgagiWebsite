@@ -14,27 +14,33 @@ interface TeamMember {
 }
 
 const teamMembers: TeamMember[] = [
-  { id: 1, name: "Pratik Hegde", role: "Operational Head", image: "/assets/team/PRATIK.png" },
-  { id: 2, name: "Sahil Sinha", role: "SDE-3 / Founding Engineer", image: "/assets/team/member9.png" },
-  { id: 3, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/pooja-jain.jpg" },
-  { id: 4, name: "Javeriya Shaik", role: "HR Generalist", image: "/assets/team/javeriya-shaik.png" },
-  { id: 5, name: "Himanshu Mishra", role: "SDE-1", image: "/assets/team/member10.png" },
-  { id: 6, name: "Abhishek Khatri", role: "AI/ML Developer", image: "/assets/team/abhishek-khatri.png" },
-  { id: 7, name: "Deb Dey", role: "Accountant", image: "/assets/team/deb-dey.jpg" },
-  { id: 8, name: "Arav Prajapati", role: "SDE -1", image: "/assets/team/arav-prajapati.png" },
-  { id: 9, name: "Bibin Vinod", role: "Golang Developer", image: "/assets/team/bibin-vinod.jpg" },
-  { id: 10, name: "Prasan Vibhuti", role: "QA Tester", image: "/assets/team/prasan-vibhuti.png" },
-  { id: 11, name: "Airaad Sheikh", role: "SDE 1 (Mobile Dev)", image: "/assets/team/airaad-sheikh.jpeg" },
-  { id: 12, name: "Aayush Soni", role: "DevOps Engineer", image: "/assets/team/aayush-soni.png" },
-  { id: 13, name: "Hemanth Terli", role: "AI Engineer", image: "/assets/team/hemanth-terli.png" },
-  { id: 14, name: "Rohan Mahajan", role: "AI/ML Intern", image: "/assets/team/rohan-mahajan.png" },
-  { id: 15, name: "Bhawna", role: "SDE Intern", image: "/assets/team/bhawna.jpeg" },
-  { id: 16, name: "Jayesh Pandey", role: "AI/ML Intern", image: "/assets/team/jayesh-pandey.jpg" },
-  { id: 17, name: "Mradul Gandhi", role: "SDE Intern", image: "/assets/team/mradul-gandhi.png" },
-  { id: 18, name: "Divya Kumar Jha", role: "AI Architecture Intern", image: "/assets/team/divya-kumar-jha.jpeg" },
-  { id: 19, name: "Shreya S Acharya", role: "QA Intern", image: "/assets/team/shreya-acharya.jpg" },
-  { id: 20, name: "Hemanath Kumar R", role: "AI/ML Intern", image: "/assets/team/hemanath-kumar-r.png" },
-  { id: 21, name: "Amit", role: "SDE Intern", image: "/assets/team/amit-sde-intern.jpg" },
+  { id: 1, name: "Vivekjyoti Bhowmik", role: "Founder", image: "/assets/team/Vivekjyoti Bhowmik.png" },
+  { id: 2, name: "Shibajyoti Bhowmik", role: "Managing Director", image: "/assets/team/Shibajyoti Bhowmik.png" },
+  { id: 3, name: "Pratik Hegde", role: "Operational Head", image: "/assets/team/PRATIK.png" },
+  { id: 4, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/pooja-jain.jpg" },
+  { id: 5, name: "Javeriya Shaik", role: "HR Generalist", image: "/assets/team/javeriya-shaik.png" },
+  { id: 6, name: "Deb Dey", role: "Accountant", image: "/assets/team/deb-dey.jpg" },
+  { id: 7, name: "Abhishek Khatri", role: "AI/ML", image: "/assets/team/abhishek-khatri.png" },
+  { id: 8, name: "Bibin Vinod", role: "Golang Developer", image: "/assets/team/bibin-vinod.jpg" },
+  { id: 9, name: "Himanshu Mishra", role: "SDE", image: "/assets/team/Himanshu.png" },
+  { id: 10, name: "Arav Prajapati", role: "SDE", image: "/assets/team/arav-prajapati.png" },
+  { id: 11, name: "Aayush Soni", role: "DevOps Engineer", image: "/assets/team/aayush-soni.png" },
+  { id: 12, name: "Prasan Vibhuti", role: "QA Tester", image: "/assets/team/prasan-vibhuti.png" },
+  { id: 13, name: "Airaad Sheikh", role: "SDE", image: "/assets/team/airaad-sheikh.jpeg" },
+
+  { id: 14, name: "Hemanth Terli", role: "AI/ML", image: "/assets/team/hemanth-terli.png" },
+  { id: 15, name: "Rohan Mahajan", role: "AI/ML", image: "/assets/team/rohan-mahajan.png" },
+  { id: 16, name: "Jayesh Pandey", role: "AI/ML", image: "/assets/team/jayesh-pandey.jpg" },
+  { id: 17, name: "Mradul Gandhi", role: "SDE", image: "/assets/team/mradul-gandhi.png" },
+  { id: 18, name: "Shreya S Acharya", role: "QA", image: "/assets/team/shreya-acharya.jpg" },
+  { id: 19, name: "Hemanath Kumar R", role: "AI/ML", image: "/assets/team/hemanath-kumar-r.png" },
+  { id: 20, name: "Saksham Verma", role: "AI/ML", image: "/assets/team/Saksham-verma.png" },
+  { id: 21, name: "Amit Verma", role: "AI/ML", image: "/assets/team/Amit.jpeg" },
+  { id: 22, name: "Ayush Sahu", role: "SDE", image: "/assets/team/ayush-github-photo.jpg" },
+  { id: 23, name: "Divyansh Mishra", role: "SDE", image: "/assets/team/Divyansh.png" },
+  { id: 24, name: "Sahil Nikalje", role: "SDE", image: "/assets/team/Sahil Nikalje.jpg" },
+
+
 ];
 
 
@@ -124,7 +130,7 @@ const Team: React.FC = () => {
           </motion.div>
         ))}
       </div>
-      </section>
+    </section>
   );
 };
 

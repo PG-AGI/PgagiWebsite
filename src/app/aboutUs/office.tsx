@@ -5,26 +5,20 @@ import Image from "next/image";
 import styles from "@/styles/app/aboutUs/office.module.scss";
 
 const officeImages = [
-  "/assets/office/IMG_8883.jpg",
   "/assets/office/IMG_8884.jpg",
   "/assets/office/IMG_8889.jpg",
-  "/assets/office/IMG_8891.jpg",
-  "/assets/office/IMG_8901.jpg",
-  "/assets/office/IMG_8906.jpg",
   "/assets/office/IMG_8907.jpg",
-  "/assets/office/IMG_8912.jpg",
-  "/assets/office/IMG_8914.jpg",
   "/assets/office/IMG_8916.jpg",
-  "/assets/office/IMG_8994.jpg",
   "/assets/office/IMG_9008.jpg",
-  "/assets/office/IMG_9015.jpg",
   "/assets/office/IMG_9016.jpg",
-  "/assets/office/IMG_9017.jpg",
-  "/assets/office/IMG_9018.jpg",
-  // "/assets/office/IMG_9019.jpg",
-  "/assets/office/IMG_9034.jpg",
-  "/assets/office/IMG_9035.jpg",
   "/assets/office/IMG_9036.jpg",
+  
+  
+
+  
+  
+
+
 ];
 
 const OfficeSection: React.FC = () => {

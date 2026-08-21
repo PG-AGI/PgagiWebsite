@@ -226,9 +226,11 @@ export default function Navigation() {
                 </ul>
                 <TransitionLink
                   href={ROUTES.EXPERTISE_VERTICAL("ai-iot")}
-                  className={styles.menuCardCta}
+                  className={`${styles.menuCardCta} df-goal-explore-this-vertical`}
                   ariaLabel={landingText.verticalCard.ctaAriaLabel}
                   onClick={() => setIsMenuOpen(false)}
+                  data-df-event="explore_this_vertical_click"
+                  data-df-goal="explore_this_vertical_click"
                 >
                   <span>{landingText.verticalCard.ctaLabel}</span>
                   <ArrowRight size={14} />

@@ -348,8 +348,9 @@ $content-max: 1400px;
   /* Figma: card is a fixed ~2.2:1 rectangle (≈1400×636 at the design reference).
      A fixed aspect-ratio — instead of the old height:80vh — keeps the same shape on
      every screen, so the image panel never stretches tall and magnifies the photo.
-     If the left column's content is ever taller, the card grows naturally. */
+     If the left column's content is ever taller, min-height: max-content lets the card grow naturally without clipping or overlapping. */
   aspect-ratio: 2.2 / 1;
+  min-height: max-content;
   background: #f2f2f3;
   border-radius: 10px;
   overflow: hidden;
@@ -371,11 +372,11 @@ $content-max: 1400px;
 }
 
 .csLeft {
-  padding: clamp(44px, 4.5vw, 64px) clamp(40px, 4vw, 60px);  /* Fix 3 */
+  padding: clamp(36px, 3.8vw, 60px) clamp(32px, 3.6vw, 56px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 1.25rem;                      /* Fix 3: reduced gap */
+  gap: clamp(0.75rem, 1.1vw, 1.25rem);
 
   @media (max-width: 900px) {
     padding: 2.25rem 5vw 1.75rem;
@@ -421,16 +422,12 @@ $content-max: 1400px;
 }
 
 .csImg {
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   transition: transform 0.5s ease;
 
   .csCard:hover & {
     transform: scale(1.03);
-  }
-
-  @media (max-width: 900px) {
-    object-fit: contain;   /* whole image always visible on mobile */
   }
 }
 
