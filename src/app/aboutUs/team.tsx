@@ -14,7 +14,7 @@ interface TeamMember {
 }
 
 const teamMembers: TeamMember[] = [
-  { id: 1, name: "Vivekjyoti Bhowmik", role: "Founder", image: "/assets/team/" },
+  { id: 1, name: "Vivekjyoti Bhowmik", role: "Founder", image: "/assets/team/Vivekjyoti Bhowmik.png" },
   { id: 2, name: "Shibajyoti Bhowmik", role: "Managing Director", image: "/assets/team/Shibajyoti Bhowmik.png" },
   { id: 3, name: "Pratik Hegde", role: "Operational Head", image: "/assets/team/PRATIK.png" },
   { id: 4, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/pooja-jain.jpg" },
