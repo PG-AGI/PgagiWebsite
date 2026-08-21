@@ -278,14 +278,14 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'MarTech/AI/ML',
   },
   'linkedin-ai': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'OpenAI', 'React', 'FastAPI'],
     metrics: [
-      { value: '$24.8M', label: 'Pipeline Generated' },
-      { value: '1,244', label: 'Leads Qualified' },
+      { value: '10x', label: 'Content Reach' },
+      { value: '85%', label: 'Engagement Rate' },
     ],
-    highlight: '$24.8M pipeline generated through AI-powered LinkedIn outreach',
+    highlight: 'Doctors reaching 10× more patients via AI-generated LinkedIn content',
     tags: ['Live Products', 'AI Implemented in Business'],
-    category: 'MarTech/AI/ML',
+    category: 'Healthcare/AI/ML',
   },
   'legalgpt': {
     techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
@@ -304,7 +304,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '85%', label: 'Engagement Rate' },
     ],
     highlight: 'Doctors reaching 10× more patients via AI-generated LinkedIn content',
-    tags: ['AI Implemented in Business', 'Custom Build'],
+    tags: ['Live Products', 'AI Implemented in Business'],
     category: 'Healthcare/AI/ML',
   },
   'transforming-customer-engagement-and-lead-management-with-ai-powered-automation': {

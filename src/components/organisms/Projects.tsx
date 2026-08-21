@@ -33,6 +33,7 @@ const HIDDEN_SLUGS = new Set<string>([]);
 const PRIORITY_SLUG_KEYWORDS: string[] = [
   'workaptix',
   'onchain-toolkit',
+  'linkedin',
   'brainify',
   'email-love',
   'cracked-ai',
@@ -266,15 +267,8 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                         src={getSafeImageUrl(cs.coverImage)}
                         alt={cs.title}
                         fill
-                        sizes="(max-width: 900px) 92vw, (max-width: 1600px) 48vw, 760px"
-                        quality={95}
-                        // First two cards are above the fold: preload eagerly
-                        // (in the initial HTML) instead of lazy-loading.
-                        priority={idx < 2}
-                        // Solid dominant-colour placeholder while the HD image
-                        // downloads — no blur, fades to the full image.
-                        placeholder={cs.blurDataURL ? 'blur' : 'empty'}
-                        blurDataURL={cs.blurDataURL}
+                        unoptimized={true}
+                        priority={idx < 4}
                         className={styles.csImg}
                         onError={(e) => { (e.target as HTMLImageElement).src = '/images/aboutus.png'; }}
                       />

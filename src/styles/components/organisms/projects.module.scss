@@ -422,16 +422,12 @@ $content-max: 1400px;
 }
 
 .csImg {
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   transition: transform 0.5s ease;
 
   .csCard:hover & {
     transform: scale(1.03);
-  }
-
-  @media (max-width: 900px) {
-    object-fit: contain;   /* whole image always visible on mobile */
   }
 }
 
