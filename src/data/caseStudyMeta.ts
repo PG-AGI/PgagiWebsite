@@ -194,12 +194,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
   'workaptix': {
-    techStack: ['Python', 'React', 'Node.js', 'PostgreSQL', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '10K+', label: 'Candidates Sourced' },
-      { value: '500+', label: 'Active Employers' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Pre-vetted Workday talent matched and placed in days, not weeks',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://workaptix.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'HRTech/AI/ML',
@@ -392,12 +392,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Workaptix: MongoDB slug is the full descriptive slug
   'workaptix-ai-sourcing-validation-verification': {
-    techStack: ['Python', 'React', 'Node.js', 'PostgreSQL', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '10K+', label: 'Candidates Sourced' },
-      { value: '500+', label: 'Active Employers' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Pre-vetted Workday talent matched and placed in days, not weeks',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://workaptix.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'HRTech/AI/ML',

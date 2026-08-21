@@ -31,6 +31,7 @@ const HIDDEN_SLUGS = new Set<string>([]);
 
 // Slugs that must appear first, in this exact order
 const PRIORITY_SLUG_KEYWORDS: string[] = [
+  'workaptix',
   'brainify',
   'email-love',
   'cracked-ai',
