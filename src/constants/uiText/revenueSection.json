@@ -3,31 +3,46 @@
   "titleHighlight": "business revenue",
   "subtitleLine1": "Not experiments.",
   "subtitleLine2": "Production systems tied to ROI.",
-  "outcomeLabel": "Outcome:",
+  "outcomeLabel": "Outcome →",
   "cards": [
     {
-      "title": "Deep Business Immersion",
+      "id": "deep-immersion",
+      "theme": "blue",
+      "titlePart1": "Deep Business",
+      "titlePart2": "Immersion",
+      "titleHighlight": "part1",
+      "description": "We study your workflows, bottlenecks, and business goals to identify where AI can create measurable value. This helps define clear ROI targets before execution begins.",
       "points": [
-        "Study workflows (pre-sales, ops, support)",
+        "We Study your workflows (pre-sales, ops, support)",
         "Identify bottlenecks",
         "Map high-impact leverage points"
       ],
       "outcome": "Clear ROI targets",
-      "imageAlt": "ROI leverage analysis diagram"
+      "imageAlt": "Deep Business Immersion ROI diagram"
     },
     {
-      "title": "ROI-Driven System Arch.",
+      "id": "roi-architecture",
+      "theme": "rust",
+      "titlePart1": "ROI-Driven",
+      "titlePart2": "System Architecture",
+      "titleHighlight": "part1",
+      "description": "We design AI systems around measurable ROI, with modular components, cost-aware infrastructure, and secure human oversight. This creates a scalable foundation without costly rebuilds later.",
       "points": [
         "Modular AI system design",
         "Cost-aware infrastructure",
         "Human-in-the-loop control",
         "Secure, compliant foundation"
       ],
-      "outcome": "AI that improves margins",
-      "imageAlt": "ROI-driven architecture diagram"
+      "outcome": "No rebuild till 10,000 users",
+      "imageAlt": "ROI-driven system architecture diagram"
     },
     {
-      "title": "Enterprise Implementation",
+      "id": "enterprise-implementation",
+      "theme": "lime",
+      "titlePart1": "Enterprise",
+      "titlePart2": "Implementation",
+      "titleHighlight": "part2",
+      "description": "We integrate AI into your existing stack with cloud-native deployment, performance monitoring, and continuous optimization. This helps make AI a reliable part of daily operations.",
       "points": [
         "Seamless integration with your stack",
         "Cloud-native deployment",
@@ -35,7 +50,7 @@
         "Continuous optimization"
       ],
       "outcome": "AI embedded into operations",
-      "imageAlt": "Enterprise implementation workflow diagram"
+      "imageAlt": "Enterprise implementation operations diagram"
     }
   ]
 }
