@@ -97,6 +97,7 @@ export default function Landing() {
               className={`${styles.heroCta} df-goal-lets-build-together`}
               id="hero-cta-button"
               aria-label={landingText.ctaAriaLabel}
+              data-fast-goal="lets_build_together"
               data-df-event="lets_build_together_click"
               data-df-goal="lets_build_together_click"
             >
@@ -140,6 +141,7 @@ export default function Landing() {
                 className={`${styles.cardCta} df-goal-explore-this-vertical`}
                 ariaLabel={landingText.verticalCard.ctaAriaLabel}
                 showSpinnerOnClick
+                data-fast-goal="explore_this_vertical"
                 data-df-event="explore_this_vertical_click"
                 data-df-goal="explore_this_vertical_click"
               >
