@@ -91,8 +91,7 @@ $red: #9f0000;
   }
 
   @media (min-width: 769px) {
-    min-height: 480px;
-    max-height: calc(100dvh - 18rem);
+    min-height: 600px;
   }
 
   @media (max-width: 1024px) {
@@ -127,14 +126,23 @@ $red: #9f0000;
 
 .cardTitle {
   margin: 0 0 0.85rem;
-  color: $ink;
-  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  font-weight: 800;
+  color: #001332;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 40px;
+  line-height: 42px;
+  letter-spacing: -1.5px;
+  font-weight: 600;
+
+  span {
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+  }
 
   @media (max-width: 768px) {
     font-size: 1.45rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
     margin-bottom: 0.6rem;
   }
 }
@@ -145,69 +153,67 @@ $red: #9f0000;
 
 // Color Accents for Title Words
 .accentBlue {
-  color: #3355ff;
+  color: #395AFA;
 }
 
 .accentRust {
-  color: #c04010;
+  color: #B53D0A;
 }
 
 .accentLime {
-  color: #708b00;
+  color: #808000;
 }
 
 .cardDescription {
   margin: 0 0 1.5rem;
-  color: #475569;
-  font-size: 1rem;
-  line-height: 1.55;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  color: #001332;
+  font-size: 16px;
+  line-height: 23px;
   font-weight: 400;
-  max-width: 520px;
+  letter-spacing: 0;
+  max-width: 554px;
 
   @media (max-width: 768px) {
-    font-size: 0.875rem;
-    line-height: 1.45;
-    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    margin-bottom: 1.1rem;
+    max-width: 100%;
   }
 }
 
 .pointList {
-  margin: 0 0 1.75rem;
-  padding: 0;
   list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.6rem;
   width: 100%;
 
   li {
+    font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+    color: #001332;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+    letter-spacing: 0;
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    font-size: 1rem;
-    line-height: 1.4;
-    font-weight: 500;
-    color: #1e293b;
+    gap: 0.6rem;
 
     &::before {
       content: "•";
-      color: #1e293b;
+      color: #001332;
       font-size: 1.25rem;
       line-height: 1;
-      flex-shrink: 0;
     }
 
     strong {
-      font-weight: 700;
-      color: #0f172a;
+      font-weight: 600;
+      color: #001332;
     }
-  }
 
-  @media (max-width: 768px) {
-    margin-bottom: 1.25rem;
-    gap: 0.45rem;
-
-    li {
+    @media (max-width: 768px) {
       font-size: 0.85rem;
       gap: 0.5rem;
 
@@ -221,15 +227,24 @@ $red: #9f0000;
 .outcomePill {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.6rem;
+  justify-content: flex-start;
+  width: fit-content;
+  max-width: 393px;
+  min-height: 54px;
+  padding: 16px;
+  box-sizing: border-box;
   border-radius: 12px;
-  font-size: 0.95rem;
+  gap: 10px;
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  line-height: 22px;
   font-weight: 600;
   color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
+  opacity: 1;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   user-select: none;
+  white-space: nowrap;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
@@ -238,29 +253,33 @@ $red: #9f0000;
   }
 
   &.bluePill {
-    background: #3355ff;
+    background: #395AFA;
   }
 
   &.rustPill {
-    background: #c04010;
+    background: #B53D0A;
   }
 
   &.limePill {
-    background: #708b00;
+    background: #808000;
   }
 
   @media (max-width: 768px) {
-    font-size: 0.825rem;
-    padding: 0.65rem 1.1rem;
+    font-size: 0.85rem;
+    line-height: 20px;
+    padding: 0.75rem 1.1rem;
     width: 100%;
-    box-sizing: border-box;
+    min-height: auto;
+    max-width: 100%;
+    white-space: normal;
   }
 }
 
 // ─── Media (Right Diagram Column) ─────────────────
 .media {
   flex: 0 0 48%;
-  max-width: 520px;
+  max-width: 554px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,6 +289,31 @@ $red: #9f0000;
     width: 100%;
     max-width: 100%;
   }
+}
+
+.imageInner {
+  width: 100%;
+  max-width: 554px;
+  border-radius: 26.51px;
+  overflow: hidden;
+  line-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+
+  @media (max-width: 768px) {
+    border-radius: 18px;
+  }
+}
+
+.mediaImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: inherit;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 // ─── Small phones (≤ 400px) ───────────────────────
