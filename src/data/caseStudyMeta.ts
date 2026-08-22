@@ -280,10 +280,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'linkedin-ai': {
     techStack: ['Python', 'OpenAI', 'React', 'FastAPI'],
     metrics: [
-      { value: '10x', label: 'Content Reach' },
-      { value: '85%', label: 'Engagement Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Doctors reaching 10× more patients via AI-generated LinkedIn content',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'Healthcare/AI/ML',
   },
@@ -300,10 +300,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin': {
     techStack: ['Python', 'OpenAI', 'React', 'FastAPI'],
     metrics: [
-      { value: '10x', label: 'Content Reach' },
-      { value: '85%', label: 'Engagement Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Doctors reaching 10× more patients via AI-generated LinkedIn content',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'Healthcare/AI/ML',
   },
