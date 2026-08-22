@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Poppins, Plus_Jakarta_Sans } from 'next/font/google';
 import "@/styles/app/globals.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
@@ -8,22 +7,6 @@ import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
 import NavWrapper from "@/components/organisms/base/NavWrapper";
 import Footer from "@/components/organisms/Footer";
 import PageTransition from "@/components/organisms/PageTransition";
-
-
-// Fonts
-const poppins = Poppins({
-  subsets: ['latin'],
-  variable: '--font-poppins',
-  weight: ['400', '600'],
-  display: 'swap',
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-plus-jakarta',
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: "PGAGI",
@@ -43,13 +26,15 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <html
             lang="en"
-            className={`${poppins.variable} ${plusJakartaSans.variable}`}
             suppressHydrationWarning
             translate="no"
           >
             <head>
               <link rel="icon" href="/landing/PGAGI-logo.png" type="image/png" />
               <link rel="apple-touch-icon" href="/landing/PGAGI-logo.png" />
+              {/* Google Fonts Preconnect */}
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
               {/* DNS prefetch for analytics — preconnect is skipped by lazyOnload scripts during Lighthouse */}
               <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
               <link rel="dns-prefetch" href="https://www.google-analytics.com" />
