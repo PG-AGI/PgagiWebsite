@@ -25,7 +25,7 @@ type CaseStudy = {
     name: string;
     role: string;
   };
-  sections: {
+  sections?: {
     title: string;
     content: ContentBlock[];
   }[];
@@ -143,8 +143,9 @@ const processLinksWithPreview = (content: string) => {
   }, [slug,initialCaseStudy]);
   useEffect(() => {
     if (!caseStudy) return;
-  
-    sectionRefs.current = caseStudy.sections.map((section) =>
+
+    const caseStudySections = caseStudy.sections ?? [];
+    sectionRefs.current = caseStudySections.map((section) =>
       document.getElementById(section.title.toLowerCase().replace(/\s+/g, '-'))
     );
   
@@ -160,7 +161,7 @@ const processLinksWithPreview = (content: string) => {
           const sectionBottom = sectionTop + section.offsetHeight;
   
           if (pageTop >= sectionTop && pageTop < sectionBottom) {
-            const activeSectionId = caseStudy.sections[i].title.toLowerCase().replace(/\s+/g, '-');
+            const activeSectionId = caseStudySections[i].title.toLowerCase().replace(/\s+/g, '-');
             setActiveSection(activeSectionId);
   
             // Scroll the corresponding `li` into view
@@ -342,6 +343,10 @@ const processLinksWithPreview = (content: string) => {
     return null;
   }
 
+  // Defensive: a case study document seeded with the wrong schema (missing
+  // `sections`) would otherwise crash the whole page on render.
+  const sections = caseStudy.sections ?? [];
+
   return (
     <>
       <Head>
@@ -385,7 +390,7 @@ const processLinksWithPreview = (content: string) => {
                 <h1>INDEX</h1>
               </div>
               <ul className={styles.blogpg_navigation}>
-                {caseStudy.sections.map((section) => {
+                {sections.map((section) => {
                   const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
                   return (
                     <li
@@ -421,7 +426,7 @@ const processLinksWithPreview = (content: string) => {
             </div>
             </div>
 
-              {caseStudy.sections.map((section) => (
+              {sections.map((section) => (
                 <section
                   key={section.title}
                   id={section.title.toLowerCase().replace(/\s+/g, '-')}
