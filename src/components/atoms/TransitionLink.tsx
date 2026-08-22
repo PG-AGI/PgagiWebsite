@@ -6,7 +6,7 @@ import { ReactNode, useState } from "react";
 import styles from "./TransitionLink.module.scss";
 import { setScrollIntent } from "@/utils/scrollIntent";
 
-interface TransitionLinkProps {
+interface TransitionLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'onClick'> {
   href: string;
   children: ReactNode;
   className?: string;
@@ -25,6 +25,7 @@ interface TransitionLinkProps {
    * link lands on that element while the URL stays clean. See scrollIntent util.
    */
   scrollToOnArrive?: string;
+  [key: `data-${string}`]: unknown;
 }
 
 export default function TransitionLink({
@@ -36,6 +37,7 @@ export default function TransitionLink({
   ariaLabel,
   showSpinnerOnClick = false,
   scrollToOnArrive,
+  ...rest
 }: TransitionLinkProps): JSX.Element {
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
@@ -104,6 +106,7 @@ export default function TransitionLink({
       prefetch={prefetch}
       aria-label={ariaLabel}
       aria-busy={isNavigating || undefined}
+      {...rest}
     >
       {children}
       {isNavigating && <span className={styles.spinner} aria-hidden="true" />}

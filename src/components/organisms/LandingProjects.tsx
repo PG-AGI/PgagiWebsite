@@ -48,7 +48,10 @@ const LandingProjects = React.memo(() => {
         <button
           type="button"
           onClick={() => router.push(ROUTES.PROJECTS)}
-          className={styles.projectsButton}
+          className={`${styles.projectsButton} df-goal-landing-projects-hub`}
+          data-fast-goal="landing_projects_hub"
+          data-df-event="landing_projects_hub_click"
+          data-df-goal="landing_projects_hub_click"
         >
           Projects
         </button>

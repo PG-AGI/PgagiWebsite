@@ -196,7 +196,10 @@ export default function Navigation() {
               </div>
 
               <button
-                className={styles.mobileContact}
+                className={`${styles.mobileContact} df-goal-nav-get-in-touch`}
+                data-fast-goal="nav_get_in_touch"
+                data-df-event="nav_get_in_touch_click"
+                data-df-goal="nav_get_in_touch_click"
                 onClick={() => { setIsMenuOpen(false); window.open(CONTACT_URL, "_blank"); }}
               >
                 Get in touch
@@ -243,7 +246,10 @@ export default function Navigation() {
 
         {/* ── Mobile CTA — hidden on desktop via CSS ── */}
         <button
-          className={clsx(styles.mobileHeaderButton, styles.mobileOnly)}
+          className={clsx(styles.mobileHeaderButton, styles.mobileOnly, "df-goal-nav-get-in-touch")}
+          data-fast-goal="nav_get_in_touch"
+          data-df-event="nav_get_in_touch_click"
+          data-df-goal="nav_get_in_touch_click"
           onClick={() => window.open(CONTACT_URL, "_blank")}
         >
           Get in touch

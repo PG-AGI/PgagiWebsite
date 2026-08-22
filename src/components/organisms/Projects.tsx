@@ -235,8 +235,11 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                     <div className={styles.actions}>
                       <Link
                         href={ROUTES.CASE_STUDY_SLUG(cs.slug)}
-                        className={styles.btnPrimary}
+                        className={`${styles.btnPrimary} df-goal-view-case-study`}
                         aria-busy={loadingSlug === cs.slug}
+                        data-fast-goal="view_case_study"
+                        data-df-event="view_case_study_click"
+                        data-df-goal="view_case_study_click"
                         onClick={() => setLoadingSlug(cs.slug)}
                       >
                         <span className={styles.btnLabel}>
@@ -247,13 +250,29 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                         )}
                       </Link>
                       {meta?.liveUrl && (
-                        <a href={meta.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
+                        <a
+                          href={meta.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${styles.btnSecondary} ${meta.appStoreUrl ? 'df-goal-app-store-external' : 'df-goal-live-product-external'}`}
+                          data-fast-goal={meta.appStoreUrl ? "app_store_external" : "live_product_external"}
+                          data-df-event={meta.appStoreUrl ? "app_store_external_click" : "live_product_external_click"}
+                          data-df-goal={meta.appStoreUrl ? "app_store_external_click" : "live_product_external_click"}
+                        >
                           <span className={styles.greenDot} />
                           {meta.appStoreUrl ? 'Android' : 'View Live Product'} <ArrowUpRight />
                         </a>
                       )}
                       {meta?.appStoreUrl && (
-                        <a href={meta.appStoreUrl} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
+                        <a
+                          href={meta.appStoreUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${styles.btnSecondary} df-goal-app-store-external`}
+                          data-fast-goal="app_store_external"
+                          data-df-event="app_store_external_click"
+                          data-df-goal="app_store_external_click"
+                        >
                           <span className={styles.greenDot} />
                           iOS <ArrowUpRight />
                         </a>

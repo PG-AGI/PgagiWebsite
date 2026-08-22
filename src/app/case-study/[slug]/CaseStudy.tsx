@@ -554,19 +554,31 @@ const processLinksWithPreview = (content: string) => {
           <aside className={styles.blogpg_rightAside}>
           <div className={styles.blogpg_stickyDiv}>
             <h1 className={styles.blogpg_heading}>{articleShareText.shareHeading}</h1>
-            <div className={styles.blogpg_shareElement} onClick={handleCopyLink}>
+            <div
+              className={`${styles.blogpg_shareElement} df-goal-case-study-copy-link`}
+              data-fast-goal="case_study_copy_link"
+              data-df-event="case_study_copy_link_click"
+              data-df-goal="case_study_copy_link_click"
+              onClick={handleCopyLink}
+            >
               <AiOutlineCopy size={'24px'} />
               <p>{articleShareText.copyLink}</p>
             </div>
             <div
-              className={styles.blogpg_shareElement}
+              className={`${styles.blogpg_shareElement} df-goal-case-study-share-linkedin`}
+              data-fast-goal="case_study_share_linkedin"
+              data-df-event="case_study_share_linkedin_click"
+              data-df-goal="case_study_share_linkedin_click"
               onClick={() => handleShare('linkedin')}
             >
               <FaLinkedin size={'24px'} />
               <p>{articleShareText.postOnLinkedin}</p>
             </div>
             <div
-              className={styles.blogpg_shareElement}
+              className={`${styles.blogpg_shareElement} df-goal-case-study-share-x`}
+              data-fast-goal="case_study_share_x"
+              data-df-event="case_study_share_x_click"
+              data-df-goal="case_study_share_x_click"
               onClick={() => handleShare('twitter')}
             >
               <FaSquareXTwitter size={'24px'} />

@@ -118,7 +118,13 @@ export const Positions = () => {
                       )}
                     </div>
                   </div>
-                  <button onClick={() => handleApply(job.id)} className={styles["apply-button"]}>
+                  <button
+                    onClick={() => handleApply(job.id)}
+                    className={`${styles["apply-button"]} df-goal-job-apply-start`}
+                    data-fast-goal="job_apply_start"
+                    data-df-event="job_apply_start_click"
+                    data-df-goal="job_apply_start_click"
+                  >
                     Apply Now
                   </button>
                 </div>
