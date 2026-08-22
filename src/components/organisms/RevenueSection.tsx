@@ -16,7 +16,7 @@ const revenueCards = [
     description: revenueSectionText.cards[0].description,
     points: revenueSectionText.cards[0].points,
     outcome: revenueSectionText.cards[0].outcome,
-    image: "/svgs/Revenue/First.png",
+    image: "/svgs/Revenue/Deep Business Immersion-img.png",
     imageAlt: revenueSectionText.cards[0].imageAlt,
   },
   {
@@ -28,7 +28,7 @@ const revenueCards = [
     description: revenueSectionText.cards[1].description,
     points: revenueSectionText.cards[1].points,
     outcome: revenueSectionText.cards[1].outcome,
-    image: "/svgs/Revenue/Second.png",
+    image: "/svgs/Revenue/ROI-Driven System Architecture-img.png",
     imageAlt: revenueSectionText.cards[1].imageAlt,
   },
   {
@@ -40,7 +40,7 @@ const revenueCards = [
     description: revenueSectionText.cards[2].description,
     points: revenueSectionText.cards[2].points,
     outcome: revenueSectionText.cards[2].outcome,
-    image: "/svgs/Revenue/Third.png",
+    image: "/svgs/Revenue/enterprise implementation-img.png",
     imageAlt: revenueSectionText.cards[2].imageAlt,
   },
 ];
@@ -114,7 +114,9 @@ const RevenueSection = () => {
                 ))}
               </ul>
               <div className={`${styles.outcomePill} ${card.pillClass}`}>
-                {revenueSectionText.outcomeLabel} {card.outcome}
+                <span className={styles.outcomeText}>
+                  {revenueSectionText.outcomeLabel} {card.outcome}
+                </span>
               </div>
             </div>
 
@@ -123,10 +125,11 @@ const RevenueSection = () => {
                 <Image
                   src={card.image}
                   alt={card.imageAlt}
-                  width={1000}
-                  height={1000}
-                  quality={95}
-                  sizes="(max-width: 768px) 90vw, 480px"
+                  width={1108}
+                  height={1146}
+                  quality={100}
+                  unoptimized
+                  sizes="(max-width: 768px) 100vw, 554px"
                   className={styles.mediaImage}
                   priority={i === 0}
                 />
