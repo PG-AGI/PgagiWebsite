@@ -54,7 +54,13 @@ const ConcentricEllipseSection = () => {
               data-fast-goal="schedule_strategic_consultation"
               data-df-event="schedule_strategic_consultation_click"
               data-df-goal="schedule_strategic_consultation_click"
-              onClick={() => window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, "_blank")}
+              onClick={() => {
+                if (typeof window !== "undefined" && (window as unknown as { datafast?: (event: string) => void }).datafast) {
+                  (window as unknown as { datafast: (event: string) => void }).datafast("schedule_strategic_consultation_click");
+                  (window as unknown as { datafast: (event: string) => void }).datafast("schedule_strategic_consultation");
+                }
+                window.open(EXTERNAL_LINKS.CALENDLY_BOOKING, "_blank");
+              }}
             >
               <span className={styles.ctaLabel}>{concentricEllipseText.ctaLabel}</span>
               <span className={styles.arrowCircle} aria-hidden="true">
