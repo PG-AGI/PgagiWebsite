@@ -100,6 +100,12 @@ export default function Landing() {
               data-fast-goal="lets_build_together"
               data-df-event="lets_build_together_click"
               data-df-goal="lets_build_together_click"
+              onClick={() => {
+                if (typeof window !== "undefined" && (window as unknown as { datafast?: (event: string) => void }).datafast) {
+                  (window as unknown as { datafast: (event: string) => void }).datafast("lets_build_together_click");
+                  (window as unknown as { datafast: (event: string) => void }).datafast("lets_build_together");
+                }
+              }}
             >
               {landingText.ctaLabel}
               <div className={styles.ctaArrow}>
