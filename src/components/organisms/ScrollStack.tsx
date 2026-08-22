@@ -167,7 +167,11 @@ const ScrollStack = ({
 
     const applyProgress = (p: number) => {
       const clamped = Math.max(0, Math.min(1, p));
-      const scrollP = Math.max(0, clamped - preRoll);
+      // Rescale the post-preRoll range back to [0,1] so the last card can still
+      // reach full landing progress — subtracting preRoll alone would cap the
+      // reachable max at (1 - preRoll), leaving the final card perpetually
+      // short of its resting position no matter how far the section scrolls.
+      const scrollP = Math.max(0, clamped - preRoll) / Math.max(1e-6, 1 - preRoll);
 
       const segLen     = 1 / steps;
       const getSegment = (i: number) => {

@@ -87,6 +87,7 @@ const RevenueSection = () => {
         animated={true}
         centerCards
         scrollMultiplier={1.2}
+        cardOverlap={0}
       >
         {revenueCards.map((card, i) => (
           <ScrollStackItem

@@ -14,6 +14,7 @@ const VisionSystemSection = () => {
       mobileStickyHeader
       preRoll={0.1}
       scrollMultiplier={1.2}
+      cardOverlap={0}
       className={styles.outerSection}
       header={
         <>
