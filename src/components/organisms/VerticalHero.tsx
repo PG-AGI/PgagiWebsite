@@ -37,8 +37,11 @@ export default function VerticalHero({
         {ctaHref && (
           <TransitionLink
             href={ctaHref}
-            className={styles.cta}
+            className={`${styles.cta} df-goal-vertical-case-study`}
             ariaLabel={`${ctaLabel} — ${title}`}
+            data-fast-goal="vertical_case_study"
+            data-df-event="vertical_case_study_click"
+            data-df-goal="vertical_case_study_click"
           >
             <span>{ctaLabel}</span>
             <span className={styles.ctaArrow} aria-hidden="true">

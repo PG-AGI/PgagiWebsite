@@ -58,8 +58,11 @@ export default function Footer() {
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={styles.socialLink}
+                        className={`${styles.socialLink} df-goal-footer-social-profile`}
                         aria-label={social.alt}
+                        data-fast-goal="footer_social_profile"
+                        data-df-event="footer_social_profile_click"
+                        data-df-goal="footer_social_profile_click"
                       >
                         <SocialIcon className={styles.socialIcon} aria-hidden="true" />
                       </a>

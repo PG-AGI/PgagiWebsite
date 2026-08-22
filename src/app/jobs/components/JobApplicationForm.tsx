@@ -413,8 +413,11 @@ export const JobApplicationForm = ({
         <div className={styles["button-container"]}>
           <button
             type="submit"
-            className={styles["submit-button"]}
+            className={`${styles["submit-button"]} df-goal-job-application-submit`}
             disabled={isSubmitting}
+            data-fast-goal="job_application_submit"
+            data-df-event="job_application_submit_click"
+            data-df-goal="job_application_submit_click"
           >
             <Send className={styles["icon"]} />
             {isSubmitting ? "Submitting..." : "Submit Application"}

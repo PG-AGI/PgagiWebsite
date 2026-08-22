@@ -224,7 +224,10 @@ const VideoTestimonial: React.FC = () => {
               <button
                 type="button"
                 aria-label={`Open ${video.title} video`}
-                className={styles.videoButton}
+                className={`${styles.videoButton} df-goal-video-testimonial-play`}
+                data-fast-goal="video_testimonial_play"
+                data-df-event="video_testimonial_play_click"
+                data-df-goal="video_testimonial_play_click"
                 onClick={() => openVideo(index)}
               >
                 <div className={styles.videoThumbnail}>

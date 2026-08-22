@@ -37,11 +37,27 @@ export default function ProductVisionCta({
       <h2 className={styles.ctaTitle}>{title}</h2>
       <p className={styles.ctaSubtitle}>{subtitle}</p>
       <div className={styles.ctaButtons}>
-        <a href={primaryHref} target="_blank" rel="noopener noreferrer" className={styles.ctaBtnPrimary}>
+        <a
+          href={primaryHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.ctaBtnPrimary} df-goal-start-project`}
+          data-fast-goal="start_project"
+          data-df-event="start_project_click"
+          data-df-goal="start_project_click"
+        >
           {primaryLabel}
           <span className={styles.ctaBtnArrow}>→</span>
         </a>
-        <a href={secondaryHref} target="_blank" rel="noopener noreferrer" className={styles.ctaBtnSecondary}>
+        <a
+          href={secondaryHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.ctaBtnSecondary} df-goal-book-strategy-call`}
+          data-fast-goal="book_strategy_call"
+          data-df-event="book_strategy_call_click"
+          data-df-goal="book_strategy_call_click"
+        >
           {secondaryLabel}
         </a>
       </div>
