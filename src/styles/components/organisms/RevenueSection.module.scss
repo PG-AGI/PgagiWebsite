@@ -300,9 +300,10 @@ $red: #9f0000;
 
 // ─── Media (Right Diagram Column) ─────────────────
 .media {
-  flex: 0 0 48%;
-  max-width: 554px;
-  width: 100%;
+  flex: 0 0 46%;
+  max-width: 520px;
+  height: 100%;
+  max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -311,31 +312,33 @@ $red: #9f0000;
     flex: 0 0 auto;
     width: 100%;
     max-width: 100%;
+    height: auto;
   }
 }
 
 .imageInner {
-  width: 100%;
-  max-width: 554px;
-  border-radius: 26.51px;
+  position: relative;
+  height: 100%;
+  max-height: 100%;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 554 / 573;
+  border-radius: 24px;
   overflow: hidden;
-  line-height: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 
   @media (max-width: 768px) {
     border-radius: 18px;
+    width: 100%;
+    height: auto;
+    min-height: 280px;
   }
 }
 
 .mediaImage {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
+  object-fit: contain !important;
   border-radius: inherit;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 // ─── Small phones (≤ 400px) ───────────────────────
