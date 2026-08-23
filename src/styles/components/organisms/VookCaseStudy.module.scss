@@ -235,6 +235,10 @@ $color-green-fix-bg: #F0FDF4;
   }
 }
 
+.overviewIntroText {
+  max-width: 725px;
+}
+
 /* ── Stat Metric Cards (4 Purple boxes) ── */
 .statsGrid {
   display: grid;
@@ -272,6 +276,13 @@ $color-green-fix-bg: #F0FDF4;
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.03em;
+
+    .statSuffix {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: normal;
+      margin-left: 2px;
+    }
   }
 
   .statLabel {
@@ -547,6 +558,66 @@ $color-green-fix-bg: #F0FDF4;
   font-weight: bold;
   font-size: 1.2rem;
   line-height: 1;
+}
+
+.flowBranch {
+  display: flex;
+  gap: 16px;
+
+  > * {
+    flex: 1;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
+}
+
+/* ── 3-Way Comparison Cards (Audio / USB / Payload) ── */
+.compareGrid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 36px 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compareCard {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+
+  .compareLabel {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748B;
+    margin-bottom: 8px;
+  }
+
+  .compareDesc {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &.compareActive {
+    background: #FAF5FF;
+    border-color: $color-purple-primary;
+    box-shadow: 0 6px 18px -6px rgba(121, 40, 202, 0.3);
+
+    .compareLabel {
+      color: $color-purple-primary;
+    }
+  }
 }
 
 /* ── Dark Banner ("USB-HID Hardware Integration") ── */

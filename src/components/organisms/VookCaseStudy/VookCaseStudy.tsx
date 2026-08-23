@@ -2,20 +2,16 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { 
-  Shield, 
-  Cpu, 
-  ArrowRight, 
-  ExternalLink, 
-  Radio, 
-  Sliders, 
-  CheckCircle2, 
-  Sparkles,
-  Terminal,
+import {
+  Shield,
+  Cpu,
+  ArrowRight,
+  Radio,
   Layers,
+  CheckCircle2,
+  Terminal,
+  Activity,
   Zap,
-  Activity
 } from 'lucide-react';
 import styles from '@/styles/components/organisms/VookCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
@@ -95,34 +91,30 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
         <section className={styles.sectionBlock}>
           <span className={styles.eyebrow}>Overview</span>
           <h2 className={styles.sectionHeading}>
-            Engineering the companion app for next-gen wireless audio hardware.
+            A single app that controls the hardware<br/> and runs the workflow.
           </h2>
 
-          <p className={styles.sectionParagraph}>
-            <strong>VOOK</strong> is a wireless microphone ecosystem that turns a smartphone into a professional audio control surface. The hardware—a dual-transmitter wireless microphone system with a USB-C receiver dongle—pairs with the VOOK companion app so content creators can control their microphones in real time from the same mobile device they record on, then apply AI audio post-processing to the captured result.
-          </p>
-
-          <p className={styles.sectionParagraph}>
-            The app is built on a clean cross-platform architecture with native Kotlin (Android) and Swift (iOS) layers handling direct USB-HID hardware access. A Python FastAPI backend powers AI denoising and account management, while a from-scratch Python regression suite of 180+ automated tests validates firmware behaviour independently of the app itself.
+          <p className={`${styles.sectionParagraph} ${styles.overviewIntroText}`}>
+            VOOK is a wireless microphone ecosystem that turns a smartphone into a professional audio control surface. The hardware — a dual-transmitter wireless microphone system with a USB-C receiver dongle — pairs with the VOOK app so that creators can control their microphones in real time from the same device they record on, and then apply AI audio post-processing to the captured result.
           </p>
 
           {/* 4 Metric Cards */}
           <div className={styles.statsGrid}>
             <div className={styles.statBox}>
-              <span className={styles.statValue}>95%</span>
-              <span className={styles.statLabel}>Sound Clarity & Noise Suppression</span>
+              <span className={styles.statValue}>3</span>
+              <span className={styles.statLabel}>Hardware product lines driven from one mobile codebase</span>
             </div>
             <div className={styles.statBox}>
-              <span className={styles.statValue}>&lt;15ms</span>
-              <span className={styles.statLabel}>Ultra-Low Latency Round-Trip Control</span>
+              <span className={styles.statValue}>2</span>
+              <span className={styles.statLabel}>Wireless transmitters managed independently per session</span>
             </div>
             <div className={styles.statBox}>
-              <span className={styles.statValue}>2×</span>
-              <span className={styles.statLabel}>Battery Optimization & Efficiency</span>
+              <span className={styles.statValue}>17<span className={styles.statSuffix}>-byte</span></span>
+              <span className={styles.statLabel}>Binary HID frame with CRC-8 integrity checking</span>
             </div>
             <div className={styles.statBox}>
               <span className={styles.statValue}>180+</span>
-              <span className={styles.statLabel}>Automated Firmware Regression Tests</span>
+              <span className={styles.statLabel}>Automated firmware regression tests over raw USB</span>
             </div>
           </div>
 
@@ -147,118 +139,22 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
           <div className={styles.twoCardGrid}>
             <div className={styles.featureCard}>
               <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
-                <Shield size={22} />
+                <CheckCircle2 size={22} />
               </div>
-              <h3 className={styles.cardTitle}>Real-Time AI Noise Suppression</h3>
+              <h3 className={styles.cardTitle}>Overview Values</h3>
               <ul className={styles.cardBullets}>
-                <li>4 configurable levels of on-device neural noise reduction</li>
-                <li>Studio-grade spectral subtraction and vocal isolation</li>
-                <li>Preserves acoustic warmth while removing room reflections and wind</li>
+                <li>Zero-latency hardware control from the same device used to record</li>
+                <li>4 configurable levels of on-device AI noise suppression</li>
+                <li>Independent state tracking for TX0 and TX1 at all times</li>
+                <li>Zero interruption to background video and camera recording apps</li>
               </ul>
             </div>
 
             <div className={styles.featureCard}>
               <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
-                <Cpu size={22} />
-              </div>
-              <h3 className={styles.cardTitle}>Seamless Hardware-to-App Sync</h3>
-              <ul className={styles.cardBullets}>
-                <li>Instant USB-HID device enumeration on physical plug-in</li>
-                <li>Simultaneous independent state tracking for TX0 and TX1</li>
-                <li>Zero audio interruption to background video and camera recording apps</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 4. The Challenge Section ── */}
-        <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>The Challenge</span>
-          <h2 className={styles.sectionHeading}>
-            Overcoming Ultra-Low Latency & Hardware Fragmentation
-          </h2>
-
-          <p className={styles.sectionParagraph}>
-            Controlling hardware in real-time over USB while a smartphone records high-bitrate 4K video presents severe architectural hurdles. Standard audio APIs do not expose internal hardware registers, and standard Bluetooth GATT profiles introduce 100ms+ latency spikes. The companion app had to act as a custom <strong>USB-HID host</strong>, reconcile dual-transmitter state machines across an asynchronous channel, and survive aggressive mobile OS power management without interrupting video capture.
-          </p>
-
-          {/* Comparison Table */}
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th>Architectural Dimension</th>
-                  <th>Standard Bluetooth Audio</th>
-                  <th className={styles.vookCol}>VOOK Custom Pipeline</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Control Protocol</strong></td>
-                  <td>BLE GATT (High overhead & packet drops)</td>
-                  <td className={styles.vookCol}>17-Byte Binary HID Frames with CRC-8 Checksum</td>
-                </tr>
-                <tr>
-                  <td><strong>Control Round-Trip Latency</strong></td>
-                  <td>120ms – 250ms delay</td>
-                  <td className={styles.vookCol}>&lt; 15ms Deterministic Immediate Response</td>
-                </tr>
-                <tr>
-                  <td><strong>Dual-Transmitter Tracking</strong></td>
-                  <td>Serial polling / single channel collapse</td>
-                  <td className={styles.vookCol}>Simultaneous Independent TX0 / TX1 State Models</td>
-                </tr>
-                <tr>
-                  <td><strong>Background Reliability</strong></td>
-                  <td>Vulnerable to OS battery killing</td>
-                  <td className={styles.vookCol}>Native BroadcastReceiver & Silent Claiming</td>
-                </tr>
-                <tr>
-                  <td><strong>AI Audio Post-Processing</strong></td>
-                  <td>Device-bound or manual export</td>
-                  <td className={styles.vookCol}>Asynchronous Cloud S3 Pipeline with Presigned URLs</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* 2 Detail Cards */}
-          <div className={styles.twoCardGrid}>
-            <div className={styles.codeCard}>
-              <div className={styles.codeHeader}>
-                <span>17-Byte Binary HID Protocol Spec</span>
-                <span>VID: 0x4C4A | PID: 0x4155</span>
-              </div>
-              <div className={styles.codeRow}>
-                <span className={styles.codeKey}>Byte 00:</span>
-                <span className={styles.codeVal}>Report ID</span>
-                <span className={styles.codeDesc}>// Vendor specific report type</span>
-              </div>
-              <div className={styles.codeRow}>
-                <span className={styles.codeKey}>Byte 01:</span>
-                <span className={styles.codeVal}>Command</span>
-                <span className={styles.codeDesc}>// SET_MUTE, SET_ECHO, SET_DENOISE</span>
-              </div>
-              <div className={styles.codeRow}>
-                <span className={styles.codeKey}>Byte 02-15:</span>
-                <span className={styles.codeVal}>Payload</span>
-                <span className={styles.codeDesc}>// Target TX, dB level, telemetry</span>
-              </div>
-              <div className={styles.codeRow}>
-                <span className={styles.codeKey}>Byte 16:</span>
-                <span className={styles.codeVal}>CRC-8</span>
-                <span className={styles.codeDesc}>// Dallas/Maxim integrity validation</span>
-              </div>
-            </div>
-
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
                 <Layers size={22} />
               </div>
-              <h3 className={styles.cardTitle}>One Codebase, Three Product Lines</h3>
-              <p className={styles.sectionParagraph} style={{ marginBottom: 12 }}>
-                A single mobile codebase and firmware protocol powers the entire VOOK hardware product family:
-              </p>
+              <h3 className={styles.cardTitle}>Hardware Product Lines</h3>
               <ul className={styles.cardBullets}>
                 <li><strong>MiniMic:</strong> Ultra-compact clip-on mic for mobile vloggers</li>
                 <li><strong>AirMic:</strong> Over-collar transmitter with K6 chipset</li>
@@ -266,80 +162,191 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
               </ul>
             </div>
           </div>
-
-          {/* ── 5. System Architecture Flow ── */}
-          <div className={styles.flowContainer}>
-            <h3 style={{ margin: '0 0 16px', fontSize: '1.25rem', fontWeight: 700, color: '#0F172A' }}>
-              End-to-End Audio & Control Pipeline
-            </h3>
-            
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>1</div>
-              <div className={styles.stepTitle}>Microphone Input</div>
-              <div className={styles.stepDetail}>Dual MEMS array captures acoustic audio and transmits over 2.4GHz RF.</div>
-            </div>
-            
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>2</div>
-              <div className={styles.stepTitle}>USB-C Receiver Dongle</div>
-              <div className={styles.stepDetail}>Dongle exposes USB Audio Class + Vendor HID Interface (17-byte frames).</div>
-            </div>
-
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>3</div>
-              <div className={styles.stepTitle}>Native Platform Bridge</div>
-              <div className={styles.stepDetail}>Kotlin / Swift drivers handle USB interrupt endpoints and CRC-8 frame validation.</div>
-            </div>
-
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>4</div>
-              <div className={styles.stepTitle}>VOOK Companion App</div>
-              <div className={styles.stepDetail}>Optimistic UI updates, suppress-window buffering, and real-time gain/denoise control.</div>
-            </div>
-
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>5</div>
-              <div className={styles.stepTitle}>Cloud AI Audio Pipeline</div>
-              <div className={styles.stepDetail}>Async S3 staging with deep learning denoising models and instant A/B waveform comparison.</div>
-            </div>
-          </div>
-
-          {/* ── 6. Dark Feature Banner ── */}
-          <div className={styles.darkBanner}>
-            <div className={styles.darkContent}>
-              <h2 className={styles.darkTitle}>USB-HID Hardware Integration</h2>
-              <p className={styles.darkDesc}>
-                Deep integration with native USB HAL on Android and iOS to achieve deterministic, zero-latency hardware control.
-              </p>
-              <div className={styles.darkPills}>
-                <span className={styles.darkPill}>Direct Interrupt Endpoints</span>
-                <span className={styles.darkPill}>17-Byte CRC-8 Maxim Frames</span>
-                <span className={styles.darkPill}>Optimistic UI with 800ms Suppress Window</span>
-                <span className={styles.darkPill}>Lossless Dual-TX Telemetry</span>
-              </div>
-            </div>
-          </div>
         </section>
 
-        {/* ── 7. Core Architecture Section ── */}
+        {/* ── 4. Architecture Section ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>Core Architecture</span>
+          <span className={styles.eyebrow}>Architecture</span>
           <h2 className={styles.sectionHeading}>
-            Designing a Zero-Latency Audio Processing Stack
+            Feature-first clean architecture on Flutter.
           </h2>
 
           <p className={styles.sectionParagraph}>
             The application follows a clean feature-first architecture, maintaining distinct presentation, domain, and data layers inside each module, backed by a native platform layer for direct hardware access. This separation keeps hardware-control logic isolated from UI rendering—the <code>mic_controls</code> module manages device domain state independently of the active screen.
           </p>
 
+          {/* Layer Responsibility Table */}
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Responsibility</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Presentation</strong></td>
+                  <td>Screens, widgets, reactive state consumers</td>
+                </tr>
+                <tr>
+                  <td><strong>Domain</strong></td>
+                  <td>ChangeNotifiers, use-cases, business rules</td>
+                </tr>
+                <tr>
+                  <td><strong>Data</strong></td>
+                  <td>Repositories, USB/HID data sources, local cache</td>
+                </tr>
+                <tr>
+                  <td><strong>Platform</strong></td>
+                  <td>Kotlin (Android) / Swift (iOS) native USB-HID bridge</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Core Infrastructure / Feature Modules */}
+          <div className={styles.twoCardGrid}>
+            <div className={styles.featureCard}>
+              <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
+                <Shield size={22} />
+              </div>
+              <h3 className={styles.cardTitle}>Core Infrastructure</h3>
+              <ul className={styles.cardBullets}>
+                <li>Dependency injection and service locator</li>
+                <li>Centralized routing with navigation guards</li>
+                <li>Structured logging and crash reporting</li>
+                <li>Shared theming and design tokens</li>
+              </ul>
+            </div>
+
+            <div className={styles.featureCard}>
+              <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
+                <Cpu size={22} />
+              </div>
+              <h3 className={styles.cardTitle}>Feature Modules</h3>
+              <ul className={styles.cardBullets}>
+                <li><code>mic_controls</code> — device domain state, independent of the active screen</li>
+                <li><code>pairing</code> — dual-transmitter discovery and channel binding</li>
+                <li><code>denoise_studio</code> — AI post-processing and A/B playback</li>
+                <li><code>account</code> — auth, presigned uploads, firmware diagnostics</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Presentation -> Domain -> Data -> Platform Flow */}
+          <div className={styles.flowContainer}>
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>1</div>
+              <div className={styles.stepTitle}>Presentation</div>
+              <div className={styles.stepDetail}>Screens, widgets, screen-scoped state.</div>
+            </div>
+
+            <div className={styles.flowArrow}>↓</div>
+
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>2</div>
+              <div className={styles.stepTitle}>Domain</div>
+              <div className={styles.stepDetail}>ChangeNotifiers, use-cases, application rules.</div>
+            </div>
+
+            <div className={styles.flowArrow}>↓</div>
+
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>3</div>
+              <div className={styles.stepTitle}>Data</div>
+              <div className={styles.stepDetail}>Repositories, HID data sources, local cache.</div>
+            </div>
+
+            <div className={styles.flowArrow}>↓</div>
+
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>4</div>
+              <div className={styles.stepTitle}>Platform</div>
+              <div className={styles.stepDetail}>Native Kotlin / Swift USB-HID bridge to the dongle.</div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 5. Dark Feature Banner ── */}
+        <div className={styles.darkBanner}>
+          <div className={styles.darkContent}>
+            <h2 className={styles.darkTitle}>USB-HID Hardware Integration</h2>
+            <p className={styles.darkDesc}>
+              Deep integration with native USB HAL on Android and iOS to achieve deterministic, zero-latency hardware control.
+            </p>
+            <div className={styles.darkPills}>
+              <span className={styles.darkPill}>Direct Interrupt Endpoints</span>
+              <span className={styles.darkPill}>17-Byte CRC-8 Maxim Frames</span>
+              <span className={styles.darkPill}>Optimistic UI with 800ms Suppress Window</span>
+              <span className={styles.darkPill}>Lossless Dual-TX Telemetry</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ── 6. USB HID Host Section ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>USB Protocol</span>
+          <h2 className={styles.sectionHeading}>
+            The app is a USB HID host, not an audio client.
+          </h2>
+
+          <p className={styles.sectionParagraph}>
+            Standard audio APIs never see the receiver as a control surface — they only expose it as a playback device. VOOK instead claims the dongle&apos;s vendor-specific HID interface directly, reading and writing raw interrupt-endpoint frames rather than routing anything through the audio stack.
+          </p>
+
+          <div className={styles.compareGrid3}>
+            <div className={styles.compareCard}>
+              <span className={styles.compareLabel}>Audio</span>
+              <p className={styles.compareDesc}>Playback only — no command channel, no device reports</p>
+            </div>
+            <div className={`${styles.compareCard} ${styles.compareActive}`}>
+              <span className={styles.compareLabel}>USB</span>
+              <p className={styles.compareDesc}>Vendor-specific HID interrupt endpoint — the real control path</p>
+            </div>
+            <div className={styles.compareCard}>
+              <span className={styles.compareLabel}>Payload</span>
+              <p className={styles.compareDesc}>Command-specific 17-byte frame, not raw PCM</p>
+            </div>
+          </div>
+
+          <p className={styles.sectionParagraph}>
+            Reach — no device commands over Bluetooth or standard audio routing. Device — no off-the-shelf HID report descriptors either; every field in the frame is vendor-defined and reverse-engineered against the chipset.
+          </p>
+
+          {/* VOOK App -> Dongle -> TX0/TX1 Diagram */}
+          <div className={styles.flowContainer}>
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>1</div>
+              <div className={styles.stepTitle}>VOOK App</div>
+              <div className={styles.stepDetail}>Dispatches 17-byte command frames over the HID interrupt endpoint.</div>
+            </div>
+
+            <div className={styles.flowArrow}>↓</div>
+
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>2</div>
+              <div className={styles.stepTitle}>USB-HID Dongle</div>
+              <div className={styles.stepDetail}>Validates CRC-8 and routes the frame to the addressed transmitter.</div>
+            </div>
+
+            <div className={styles.flowArrow}>↓</div>
+
+            <div className={styles.flowBranch}>
+              <div className={styles.flowStep}>
+                <div className={styles.stepNum}>TX0</div>
+                <div className={styles.stepTitle}>Transmitter 0</div>
+                <div className={styles.stepDetail}>Independent mute, gain, and denoise state.</div>
+              </div>
+              <div className={styles.flowStep}>
+                <div className={styles.stepNum}>TX1</div>
+                <div className={styles.stepTitle}>Transmitter 1</div>
+                <div className={styles.stepDetail}>Independent mute, gain, and denoise state.</div>
+              </div>
+            </div>
+          </div>
+
+          {/* USB Dongle Photo */}
           <div className={styles.photoWrapper}>
             <div className={styles.photoFrame}>
               <Image
@@ -357,71 +364,73 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
           </div>
         </section>
 
-        {/* ── 8. Firmware & DSP Co-Design ── */}
+        {/* ── 7. Native Access Section ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>Firmware & DSP</span>
+          <span className={styles.eyebrow}>Native Bridge</span>
           <h2 className={styles.sectionHeading}>
-            Software-Hardware Co-Design for Pro Audio
+            Native access below; a single source of truth above.
           </h2>
+
+          <p className={styles.sectionParagraph}>
+            Everything below the Dart boundary talks directly to hardware. Everything above it only ever reads from one <code>ChangeNotifier</code> — no screen owns hardware state, and no screen talks to the dongle directly.
+          </p>
 
           <div className={styles.twoCardGrid}>
             <div className={styles.featureCard}>
               <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
-                <Radio size={22} />
+                <Terminal size={22} />
               </div>
-              <h3 className={styles.cardTitle}>Dual-Transmitter Synchronization</h3>
+              <h3 className={styles.cardTitle}>Native platform layer — Kotlin / Swift</h3>
               <ul className={styles.cardBullets}>
-                <li>Independent battery, mute, and gain status for TX0 and TX1</li>
-                <li>Instant stereo / mono channel splitting at 48kHz / 24-bit</li>
-                <li>Dynamic RF frequency hopping against 2.4GHz WiFi congestion</li>
+                <li>Kotlin <code>UsbManager</code> / Swift <code>IOKit</code> direct interrupt-endpoint access</li>
+                <li>CRC-8 frame validation before a byte ever reaches Dart</li>
+                <li>MethodChannel bridge exposes typed commands, not raw bytes</li>
               </ul>
             </div>
 
             <div className={styles.featureCard}>
               <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
-                <Sparkles size={22} />
+                <Activity size={22} />
               </div>
-              <h3 className={styles.cardTitle}>Cloud AI Post-Processing Engine</h3>
+              <h3 className={styles.cardTitle}>Domain / UI layer — MicController ChangeNotifier</h3>
               <ul className={styles.cardBullets}>
-                <li>Presigned S3 staging with asynchronous background polling</li>
-                <li>A/B trial demo player with sample-accurate synchronized timestamps</li>
-                <li>Waveform rendering and multi-format audio export (WAV/MP3/AAC)</li>
+                <li>Single <code>ChangeNotifier</code> is the one source of truth for TX0/TX1</li>
+                <li>Optimistic UI updates before hardware acknowledges a command</li>
+                <li>Suppress-window buffering absorbs stale device reports</li>
               </ul>
             </div>
           </div>
 
-          {/* DSP Magenta / Purple Tuning Block */}
-          <div className={styles.dspBlock}>
-            <div className={styles.dspHeader}>
-              <h3>Real-Time Audio Parameter Tuning & DSP Staging</h3>
-              <span className={styles.dspBadge}>LIVE DSP TELEMETRY</span>
+          <div className={styles.flowContainer}>
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>1</div>
+              <div className={styles.stepTitle}>Native Platform Layer</div>
+              <div className={styles.stepDetail}>Kotlin / Swift drivers read raw USB-HID interrupt reports.</div>
             </div>
-            <div className={styles.dspGrid}>
-              <div className={styles.dspCard}>
-                <div className={styles.dspLabel}>Sample Rate & Depth</div>
-                <div className={styles.dspValue}>48 kHz / 24-bit PCM</div>
-              </div>
-              <div className={styles.dspCard}>
-                <div className={styles.dspLabel}>Dynamic Range</div>
-                <div className={styles.dspValue}>114 dB SNR</div>
-              </div>
-              <div className={styles.dspCard}>
-                <div className={styles.dspLabel}>THD+N Distortion</div>
-                <div className={styles.dspValue}>&lt; 0.005% @ 1kHz</div>
-              </div>
-              <div className={styles.dspCard}>
-                <div className={styles.dspLabel}>Spectral Subtraction</div>
-                <div className={styles.dspValue}>Active Neural Filter</div>
-              </div>
+
+            <div className={styles.flowArrow}>↓</div>
+
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>2</div>
+              <div className={styles.stepTitle}>MicController (ChangeNotifier)</div>
+              <div className={styles.stepDetail}>Single domain model reconciles TX0/TX1 state and suppress windows.</div>
+            </div>
+
+            <div className={styles.flowArrow}>↓</div>
+
+            <div className={styles.flowStep}>
+              <div className={styles.stepNum}>3</div>
+              <div className={styles.stepTitle}>UI Widgets</div>
+              <div className={styles.stepDetail}>Purely reactive — listen to the notifier, never touch hardware.</div>
             </div>
           </div>
         </section>
 
-        {/* ── 9. Testing & Validation ── */}
+        {/* ── 8. Testing & Validation ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>Debugging & Validation</span>
+          <span className={styles.eyebrow}>Debugging &amp; Validation</span>
           <h2 className={styles.sectionHeading}>
-            Rigorous Hardware Validation Across 50+ Mobile Devices
+            180+ automated regression tests, run over raw USB.
           </h2>
 
           <p className={styles.sectionParagraph}>
@@ -443,6 +452,33 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
             <p className={styles.photoCaption}>
               <code>run_regression.py</code> against live hardware—full STEREO, RESET, PERSISTENCE, and CRC-validation regressions passing with raw HID frame assertion.
             </p>
+          </div>
+
+          {/* Pipeline Structure / Functional Coverage */}
+          <div className={styles.twoCardGrid}>
+            <div className={styles.featureCard}>
+              <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
+                <Zap size={22} />
+              </div>
+              <h3 className={styles.cardTitle}>Pipeline Structure</h3>
+              <ul className={styles.cardBullets}>
+                <li>Fixture-driven setup/teardown against live hardware</li>
+                <li><code>run_regression.py</code> runs from CI or a dev bench alike</li>
+                <li>Structured pass/fail report per test case with raw frame capture</li>
+              </ul>
+            </div>
+
+            <div className={styles.featureCard}>
+              <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
+                <Radio size={22} />
+              </div>
+              <h3 className={styles.cardTitle}>Functional Coverage</h3>
+              <ul className={styles.cardBullets}>
+                <li>STEREO, RESET, and PERSISTENCE command families</li>
+                <li>CRC-8 frame integrity assertions on every response</li>
+                <li>Mute, gain, and denoise-level command matrices across TX0/TX1</li>
+              </ul>
+            </div>
           </div>
 
           {/* 2 Lab Photos Side-by-Side */}
@@ -481,19 +517,19 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
           </div>
         </section>
 
-        {/* ── 10. Five Reliability Problems Found Section ── */}
+        {/* ── 9. Five Reliability Problems Found Section ── */}
         <section className={styles.reliabilitySection}>
           <div className={styles.relHeader}>
-            <h3>Five Reliability Problems Found. How They Were Fixed.</h3>
+            <h3>Five Reliability Problems, And How They Were Fixed.</h3>
             <p>
               Reconciling two independent state machines across an asynchronous, lossy USB channel.
             </p>
           </div>
 
           <div className={styles.relList}>
-            {/* Problem 1 */}
+            {/* 5.1 */}
             <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>1. Command State Latency Race</h4>
+              <h4 className={styles.relTitle}>5.1 State suppression window</h4>
               <div className={styles.relRow}>
                 <span className={styles.badgeIssue}>Issue</span>
                 <p className={styles.relText}>
@@ -503,31 +539,31 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
               <div className={styles.relRow}>
                 <span className={styles.badgeFix}>Fix</span>
                 <p className={styles.relText}>
-                  Engineered the <strong>Suppress Window pattern</strong>: after dispatching a command, the app updates state optimistically and drops incoming device reports for 800ms (1500ms for resets) until the hardware state settles.
+                  Engineered the <strong>suppress window pattern</strong>: after dispatching a command, the app updates state optimistically and drops incoming device reports for 800ms until the hardware state settles.
                 </p>
               </div>
             </div>
 
-            {/* Problem 2 */}
+            {/* 5.2 */}
             <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>2. Rapid Echo / Denoise Toggle Collision</h4>
+              <h4 className={styles.relTitle}>5.2 Echo rapid-tap race condition</h4>
               <div className={styles.relRow}>
                 <span className={styles.badgeIssue}>Issue</span>
                 <p className={styles.relText}>
-                  Toggling effects on both transmitters in rapid succession fired two independent packets against a stale <code>GET_STATE</code> response, dropping the second command.
+                  Toggling echo effects on both transmitters in rapid succession fired two independent packets against a stale <code>GET_STATE</code> response, dropping the second command.
                 </p>
               </div>
               <div className={styles.relRow}>
                 <span className={styles.badgeFix}>Fix</span>
                 <p className={styles.relText}>
-                  Built an atomic <code>setEchoBoth</code> composite frame and introduced a 120ms hardware debounce that collapses rapid user taps into a single deterministic command.
+                  Built an atomic <code>setEchoBoth</code> composite frame and introduced a 120ms hardware debounce that collapses rapid taps into a single deterministic command.
                 </p>
               </div>
             </div>
 
-            {/* Problem 3 */}
+            {/* 5.3 */}
             <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>3. Noise Cancellation Level Preference Wipe</h4>
+              <h4 className={styles.relTitle}>5.3 Noise cancellation level reset on toggle-off</h4>
               <div className={styles.relRow}>
                 <span className={styles.badgeIssue}>Issue</span>
                 <p className={styles.relText}>
@@ -542,9 +578,9 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
               </div>
             </div>
 
-            {/* Problem 4 */}
+            {/* 5.4 */}
             <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>4. Post-Reset Silent Mute Re-enablement</h4>
+              <h4 className={styles.relTitle}>5.4 Reset re-applies stale state</h4>
               <div className={styles.relRow}>
                 <span className={styles.badgeIssue}>Issue</span>
                 <p className={styles.relText}>
@@ -559,9 +595,9 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
               </div>
             </div>
 
-            {/* Problem 5 */}
+            {/* 5.5 */}
             <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>5. USB Re-enumeration Interrupting Recording Apps</h4>
+              <h4 className={styles.relTitle}>5.5 USB hot-plug relaunching the app on Android</h4>
               <div className={styles.relRow}>
                 <span className={styles.badgeIssue}>Issue</span>
                 <p className={styles.relText}>
@@ -578,9 +614,9 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
           </div>
         </section>
 
-        {/* ── 11. Bottom CTA ── */}
+        {/* ── 10. Bottom CTA ── */}
         <div className={styles.ctaBox}>
-          <h3>Transform your hardware product with custom AI companion apps.</h3>
+          <h3>See what your AI product could become</h3>
           <p>
             We engineer production-grade mobile software, low-latency firmware bridges, and edge AI models for connected hardware and IoT devices.
           </p>
