@@ -14,6 +14,7 @@ import Recommendation from '@/components/organisms/Recommendation';
 import { AiOutlineCopy } from 'react-icons/ai';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import articleShareText from '@/constants/uiText/articleShare.json';
+import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -341,6 +342,11 @@ const processLinksWithPreview = (content: string) => {
 
   if (!caseStudy) {
     return null;
+  }
+
+  const isVook = (slug && String(slug).toLowerCase().includes('vook')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('vook'));
+  if (isVook) {
+    return <VookCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing

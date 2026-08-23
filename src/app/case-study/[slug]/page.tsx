@@ -8,6 +8,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import CaseStudy from './CaseStudy';
+import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -62,6 +63,12 @@ export default async function CaseStudyPage({
 }: {
   params: { slug: string };
 }) {
+  const isVook = params?.slug?.toLowerCase()?.includes('vook');
+  if (isVook) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <VookCaseStudy caseStudy={caseStudy} />;
+  }
+
   const caseStudy = await getCaseStudy(params.slug);
   if (!caseStudy) notFound();
 
