@@ -603,6 +603,36 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   // the /projects listing via HIDDEN_SLUGS in Projects.tsx, so no meta is
   // needed unless it's unhidden later.
 
+  // New card, distinct from the existing 'linkedin-ai' / 'how-we-built-an-ai-
+  // saas-that-helps-doctors-share-healthcare-awareness-on-linkedin' entries —
+  // same title text, but its own slug/doc/image so the original card is untouched.
+  'linkedin-ai-doctors-healthcare-awareness-saas': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: '',
+    ctaLabel: 'View Case Study',
+    tags: ['Live Products', 'AI Implemented in Business'],
+    category: 'Healthcare/AI/ML',
+  },
+
+  // New card, distinct from the existing 'fraud-detection-using-machine-
+  // learning-techniques' entry — same title text, but its own slug/doc/image
+  // so the original card is untouched.
+  'fraud-detection-ml-techniques-v2': {
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    metrics: [
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
+    ],
+    highlight: '',
+    ctaLabel: 'View Research',
+    tags: ['Research', 'Custom Build'],
+    category: 'FinTech/AI/ML',
+  },
+
   'sheltas-health-dataset-annotation-platform': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
