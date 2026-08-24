@@ -597,6 +597,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
 
+  // 'ai-asr-doctor-clinical-documentation-platform' (AI ASR Doctor: Clinical
+  // Documentation Platform) has no entry here on purpose — its title and
+  // MongoDB description are already correct/untouched. It's now hidden from
+  // the /projects listing via HIDDEN_SLUGS in Projects.tsx, so no meta is
+  // needed unless it's unhidden later.
+
   'sheltas-health-dataset-annotation-platform': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
