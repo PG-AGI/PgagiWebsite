@@ -11,7 +11,7 @@ import {
   CheckCircle2,
   Terminal,
   Activity,
-  Zap,
+  Zap, 
 } from 'lucide-react';
 import styles from '@/styles/components/organisms/VookCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';

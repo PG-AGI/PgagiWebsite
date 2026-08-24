@@ -33,14 +33,13 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
   'brainify-edtech-platform': {
-    techStack: ['React Native', 'Python', 'Firebase', 'AI/ML', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '4.8', label: 'App Store Rating' },
-      { value: '50K+', label: 'Active Learners' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: '50K learners onboarded in the first quarter',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://play.google.com/store/apps/details?id=com.brainify.app&hl=en',
-    appStoreUrl: 'https://apps.apple.com/us/app/brainify-app/id6759913473',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'EdTech/AI/ML',
   },
