@@ -44,12 +44,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'EdTech/AI/ML',
   },
   'aimi-brain-real-time-financial-intelligence': {
-    techStack: ['Python', 'TensorFlow', 'React', 'FastAPI', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Portfolio Growth' },
-      { value: '2M+', label: 'Daily Signals' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: '2M+ AI signals processed daily in real time',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://aim-cube.com',
     tags: ['Live Products', 'Research'],
     category: 'FinTech/AI/ML',
