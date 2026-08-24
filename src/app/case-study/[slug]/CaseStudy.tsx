@@ -14,6 +14,7 @@ import Recommendation from '@/components/organisms/Recommendation';
 import { AiOutlineCopy } from 'react-icons/ai';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import articleShareText from '@/constants/uiText/articleShare.json';
+import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -25,7 +26,7 @@ type CaseStudy = {
     name: string;
     role: string;
   };
-  sections: {
+  sections?: {
     title: string;
     content: ContentBlock[];
   }[];
@@ -143,8 +144,9 @@ const processLinksWithPreview = (content: string) => {
   }, [slug,initialCaseStudy]);
   useEffect(() => {
     if (!caseStudy) return;
-  
-    sectionRefs.current = caseStudy.sections.map((section) =>
+
+    const caseStudySections = caseStudy.sections ?? [];
+    sectionRefs.current = caseStudySections.map((section) =>
       document.getElementById(section.title.toLowerCase().replace(/\s+/g, '-'))
     );
   
@@ -160,7 +162,7 @@ const processLinksWithPreview = (content: string) => {
           const sectionBottom = sectionTop + section.offsetHeight;
   
           if (pageTop >= sectionTop && pageTop < sectionBottom) {
-            const activeSectionId = caseStudy.sections[i].title.toLowerCase().replace(/\s+/g, '-');
+            const activeSectionId = caseStudySections[i].title.toLowerCase().replace(/\s+/g, '-');
             setActiveSection(activeSectionId);
   
             // Scroll the corresponding `li` into view
@@ -342,6 +344,15 @@ const processLinksWithPreview = (content: string) => {
     return null;
   }
 
+  const isVook = (slug && String(slug).toLowerCase().includes('vook')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('vook'));
+  if (isVook) {
+    return <VookCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  // Defensive: a case study document seeded with the wrong schema (missing
+  // `sections`) would otherwise crash the whole page on render.
+  const sections = caseStudy.sections ?? [];
+
   return (
     <>
       <Head>
@@ -385,7 +396,7 @@ const processLinksWithPreview = (content: string) => {
                 <h1>INDEX</h1>
               </div>
               <ul className={styles.blogpg_navigation}>
-                {caseStudy.sections.map((section) => {
+                {sections.map((section) => {
                   const sectionId = section.title.toLowerCase().replace(/\s+/g, '-');
                   return (
                     <li
@@ -421,7 +432,7 @@ const processLinksWithPreview = (content: string) => {
             </div>
             </div>
 
-              {caseStudy.sections.map((section) => (
+              {sections.map((section) => (
                 <section
                   key={section.title}
                   id={section.title.toLowerCase().replace(/\s+/g, '-')}

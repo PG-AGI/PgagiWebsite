@@ -26,7 +26,9 @@ type CaseStudy = {
 };
 
 // Slugs to hide from the public listing.
-const HIDDEN_SLUGS = new Set<string>([]);
+const HIDDEN_SLUGS = new Set<string>([
+  'ai-asr-doctor-clinical-documentation-platform',
+]);
 
 
 // Slugs that must appear first, in this exact order
@@ -243,7 +245,7 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                         onClick={() => setLoadingSlug(cs.slug)}
                       >
                         <span className={styles.btnLabel}>
-                          View case study <ArrowUpRight />
+                          {meta?.ctaLabel ?? 'View case study'} <ArrowUpRight />
                         </span>
                         {loadingSlug === cs.slug && (
                           <span className={styles.btnSpinner} aria-hidden="true" />

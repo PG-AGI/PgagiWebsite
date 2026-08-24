@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import styles from "@/styles/components/organisms/VisionSystemSection.module.scss";
 import visionSystemText from "@/constants/uiText/visionSystem.json";
-import DeepDiveDiagram from "./vision-system/DeepDiveDiagram";
-import ArchitectureDiagram from "./vision-system/ArchitectureDiagram";
-import BuildLaunchScaleDiagram from "./vision-system/BuildLaunchScaleDiagram";
 
 const VisionSystemSection = () => {
   return (
@@ -16,6 +14,7 @@ const VisionSystemSection = () => {
       mobileStickyHeader
       preRoll={0.1}
       scrollMultiplier={1.2}
+      cardOverlap={0}
       className={styles.outerSection}
       header={
         <>
@@ -54,7 +53,19 @@ const VisionSystemSection = () => {
           </div>
         </div>
         <div className={styles.media}>
-          <DeepDiveDiagram />
+          <div className={styles.imageInner}>
+            <Image
+              src="/svgs/Vision/product and market deep dive-img.png"
+              alt={visionSystemText.cards[0].imageAlt}
+              width={1108}
+              height={1146}
+              quality={100}
+              unoptimized
+              sizes="(max-width: 768px) 100vw, 554px"
+              className={styles.mediaImage}
+              priority
+            />
+          </div>
         </div>
       </ScrollStackItem>
 
@@ -83,7 +94,18 @@ const VisionSystemSection = () => {
           </div>
         </div>
         <div className={styles.media}>
-          <ArchitectureDiagram />
+          <div className={styles.imageInner}>
+            <Image
+              src="/svgs/Vision/architecture before code-img.png"
+              alt={visionSystemText.cards[1].imageAlt}
+              width={1108}
+              height={1146}
+              quality={100}
+              unoptimized
+              sizes="(max-width: 768px) 100vw, 554px"
+              className={styles.mediaImage}
+            />
+          </div>
         </div>
       </ScrollStackItem>
 
@@ -112,7 +134,18 @@ const VisionSystemSection = () => {
           </div>
         </div>
         <div className={styles.media}>
-          <BuildLaunchScaleDiagram />
+          <div className={styles.imageInner}>
+            <Image
+              src="/svgs/Vision/build-launch-scale-img.png"
+              alt={visionSystemText.cards[2].imageAlt}
+              width={1108}
+              height={1146}
+              quality={100}
+              unoptimized
+              sizes="(max-width: 768px) 100vw, 554px"
+              className={styles.mediaImage}
+            />
+          </div>
         </div>
       </ScrollStackItem>
     </ScrollStack>
