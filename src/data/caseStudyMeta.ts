@@ -6,29 +6,31 @@ export type CaseStudyMeta = {
   appStoreUrl?: string;
   tags: string[];
   category: string;
+  // Overrides the primary CTA's label (default: "View case study").
+  ctaLabel?: string;
 };
 
 const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // ── Already-existing entries ────────────────────────────────────────────
   'skillina-talent-marketplace': {
-    techStack: ['React', 'Node.js', 'PostgreSQL', 'Python', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '3x', label: 'Faster Hiring' },
-      { value: '60%', label: 'Cost Reduction' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'MVP shipped and live within 8 weeks',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://skillina.ai/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'HRTech/AI/ML',
   },
   'ai-mobile-doc': {
-    techStack: ['Python', 'FastAPI', 'React Native', 'OpenAI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '70%', label: 'Time Saved' },
-      { value: '95%', label: 'Accuracy Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Deployed across 3 hospital networks in 30 days',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'IoT x AI Engineering'],
     category: 'Healthcare/AI/ML',
   },
@@ -55,53 +57,55 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'FinTech/AI/ML',
   },
   'ai-ecommerce-arbitrage-platform': {
-    techStack: ['Python', 'FastAPI', 'PostgreSQL', 'AI/ML', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'Margin Increase' },
-      { value: '10x', label: 'Faster Price Discovery' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Automated arbitrage across 5 major marketplaces',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'Custom Build'],
     category: 'E-commerce/AI/ML',
   },
   'legalspendgpt-invoice-intelligence': {
-    techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '80%', label: 'Processing Speed' },
-      { value: '99%', label: 'Extraction Accuracy' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: '99% extraction accuracy on complex legal invoices',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Research', 'Custom Build'],
     category: 'LegalTech/AI/ML',
   },
   'mirror-me-ai-virtual-try-on': {
-    techStack: ['Python', 'TensorFlow', 'React', 'Three.js', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '45%', label: 'Return Rate Drop' },
-      { value: '3x', label: 'Engagement Lift' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: '45% reduction in returns after AI try-on integration',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://play.google.com/store/apps/details?id=com.pgagi.mirror_me.beta&hl=en',
     tags: ['UI/UX', 'Research'],
     category: 'E-commerce/AI/ML',
   },
   'two-point-correlation-function-spatial-clustering': {
-    techStack: ['Python', 'NumPy', 'SciPy', 'Astropy', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Faster Processing' },
-      { value: '99%', label: 'Statistical Accuracy' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Two-point correlation applied to real SDSS survey data',
+    highlight: '',
+    ctaLabel: 'View Research',
     tags: ['Research'],
     category: 'Research/Science',
   },
   'cosmological-model-parameter-extraction': {
-    techStack: ['Python', 'NumPy', 'SciPy', 'Matplotlib', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '97%', label: 'Model Fit Confidence' },
-      { value: '3x', label: 'Faster Parameter Extraction' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Lambda-CDM parameters extracted from Type Ia supernova datasets',
+    highlight: '',
+    ctaLabel: 'View Research',
     tags: ['Research'],
     category: 'Research/Science',
   },
@@ -118,34 +122,34 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'MarTech/AI/ML',
   },
   'cracked-ai': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '60%', label: 'Ad Performance Boost' },
-      { value: '5x', label: 'Creative Output' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI ad creatives outperforming human-made ads by 60%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://cracked.ai/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
   'email-love': {
-    techStack: ['React', 'Node.js', 'OpenAI', 'Python', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '45%', label: 'Open Rate' },
-      { value: '3x', label: 'Campaign Speed' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: '3× faster AI-written email campaigns with higher open rates',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://emaillove.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
   'nuaiy': {
-    techStack: ['React Native', 'Python', 'TensorFlow', 'Firebase', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '4.7', label: 'App Store Rating' },
-      { value: '20K+', label: 'Downloads' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI companion app reaching 20K+ users at launch',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://app.nuaiy.com/',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
@@ -153,7 +157,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'social-jet': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'Conversion Rate' },
+      { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
     highlight: 'Rapid early growth — 1K users in 7 days',
@@ -162,33 +166,32 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'MarTech/AI/ML',
   },
   'jove': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '80%', label: 'Query Resolution' },
-      { value: '5x', label: 'Faster Onboarding' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI Digital Twin trained on real Workday expert knowledge',
-    liveUrl: 'https://getjove.ai/',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
   'sayyes-ai': {
-    techStack: ['React Native', 'Python', 'FastAPI', 'OpenAI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '4.6', label: 'App Store Rating' },
-      { value: '30K+', label: 'Matches Made' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI-powered matching driving 30K+ meaningful connections',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
   },
   'ai-to-md': {
-    techStack: ['Python', 'FastAPI', 'React Native', 'OpenAI', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '70%', label: 'Diagnosis Speed' },
-      { value: '95%', label: 'Accuracy Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI diagnostics deployed across multiple healthcare networks',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'IoT x AI Engineering'],
     category: 'Healthcare/AI/ML',
   },
@@ -224,22 +227,22 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'FinTech/AI/ML',
   },
   'innvor-ai': {
-    techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '85%', label: 'Documentation Speed' },
-      { value: '99%', label: 'Note Accuracy' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Clinical notes auto-generated with 99% accuracy at bedside',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'IoT x AI Engineering'],
     category: 'Healthcare/AI/ML',
   },
   'sheltas': {
-    techStack: ['React', 'Node.js', 'PostgreSQL', 'Python', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '3,847', label: 'Tasks Automated' },
-      { value: '87%', label: 'Automation Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'End-to-end project automation with 87% task automation rate',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://sheltas.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'SaaS/AI/ML',
@@ -255,12 +258,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'HealthTech/AI/ML',
   },
   'vook-ai-wireless-microphone-companion-app': {
-    techStack: ['React Native', 'Python', 'FastAPI', 'IoT', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '95%', label: 'Sound Clarity' },
-      { value: '2x', label: 'Battery Life' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI-enhanced audio device with 2× battery improvement',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://vook.in/',
     tags: ['Live Products', 'IoT x AI Engineering'],
     category: 'IoT/AI/ML',
@@ -307,92 +310,101 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
   'transforming-customer-engagement-and-lead-management-with-ai-powered-automation': {
-    techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '3x', label: 'Lead Conversion' },
-      { value: '60%', label: 'Cost Per Lead' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI automation tripling lead conversions while cutting cost per lead by 60%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'Custom Build'],
     category: 'MarTech/AI/ML',
   },
   'ai-chatbot-for-legal-assistance': {
-    techStack: ['Python', 'OpenAI', 'FastAPI', 'React'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '90%', label: 'Query Resolution' },
-      { value: '70%', label: 'Time Saved' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI legal chatbot resolving 90% of queries without a human lawyer',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['Research', 'Custom Build'],
     category: 'LegalTech/AI/ML',
   },
   'ai-data-query-system': {
-    techStack: ['Python', 'FastAPI', 'PostgreSQL', 'React'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '10x', label: 'Query Speed' },
-      { value: '99%', label: 'Result Accuracy' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Natural-language queries executing 10× faster than SQL dashboards',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['Research', 'Custom Build'],
     category: 'SaaS/AI/ML',
   },
   'ai-marketing-assistance': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '45%', label: 'Campaign ROI' },
-      { value: '3x', label: 'Content Output' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI marketing agent tripling content output while boosting ROI by 45%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'Custom Build'],
     category: 'MarTech/AI/ML',
   },
   'ai-agent-stock-market': {
-    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Return Rate' },
-      { value: '2M+', label: 'Daily Trades Analysed' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Real-time AI stock agent analysing 2M+ trades daily for alpha signals',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['Research', 'Custom Build'],
     category: 'FinTech/AI/ML',
   },
   'tutorgpt-personalised-tutoring-platform': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Learning Speed' },
-      { value: '4.9', label: 'Student Rating' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Personalised AI tutoring boosting learning speed by 40%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'UI/UX'],
     category: 'EdTech/AI/ML',
   },
   'voice-assistant-chatbot-for-shopify-stores-to-enhance-user-engagement': {
-    techStack: ['Python', 'OpenAI', 'Node.js', 'React'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'Cart Conversion' },
-      { value: '60%', label: 'Support Ticket Reduction' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Voice AI lifting Shopify cart conversions by 35%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'Custom Build'],
     category: 'E-commerce/AI/ML',
   },
   'multiagent-trading-system-transforming-cryptocurrency-trading-strategies': {
-    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '2.5x', label: 'Return Rate' },
-      { value: '95%', label: 'Strategy Win Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Multi-agent crypto system achieving 2.5× returns over baseline',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['Research', 'Custom Build'],
     category: 'FinTech/AI/ML',
   },
   'ai-powered-recruiter-agents-to-revolutionise-talent-acquisition': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '3x', label: 'Faster Hiring' },
-      { value: '50%', label: 'Screening Cost Saved' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI recruiter agents cutting time-to-hire by 3× across enterprise clients',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
@@ -424,12 +436,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Nuaiy full slug
   'nuaiy-ai-driven-multilingual-gamified-learning-platform': {
-    techStack: ['React Native', 'Python', 'TensorFlow', 'Firebase', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '4.7', label: 'App Store Rating' },
-      { value: '20K+', label: 'Downloads' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI companion app reaching 20K+ users at launch',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://app.nuaiy.com/',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
@@ -439,7 +451,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'socialjet-ai-influencer-marketing-os': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'Conversion Rate' },
+      { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
     highlight: 'Rapid early growth — 1K users in 7 days',
@@ -450,12 +462,12 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Cracked.ai full slug
   'cracked-ai-growth-platform': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '60%', label: 'Ad Performance Boost' },
-      { value: '5x', label: 'Creative Output' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI ad creatives outperforming human-made ads by 60%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://cracked.ai/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
@@ -463,25 +475,24 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Jove's MongoDB slug is 'digital-twin-ai-powered-expert-knowledge-platform'
   'digital-twin-ai-powered-expert-knowledge-platform': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '80%', label: 'Query Resolution' },
-      { value: '5x', label: 'Faster Onboarding' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI Digital Twin trained on real Workday expert knowledge',
-    liveUrl: 'https://getjove.ai/',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
 
   // Email Love: slug ends with '-and-repair' not '-and-autonomous-repair'
   'email-love-ai-powered-email-template-generation-and-repair': {
-    techStack: ['React', 'Node.js', 'OpenAI', 'Python', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '45%', label: 'Open Rate' },
-      { value: '3x', label: 'Campaign Speed' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: '3× faster AI-written email campaigns with higher open rates',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://emaillove.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
@@ -489,126 +500,135 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // SayYes.AI: MongoDB slug is 'sayyesai-...' (no hyphen between sayyes and ai)
   'sayyesai-the-ai-wedding-companion-for-modern-brides': {
-    techStack: ['React Native', 'Python', 'FastAPI', 'OpenAI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '4.6', label: 'App Store Rating' },
-      { value: '30K+', label: 'Matches Made' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI-powered matching driving 30K+ meaningful connections',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
   },
 
   // 'assistance' in meta but MongoDB title uses 'assistant'
   'ai-marketing-assistant': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '45%', label: 'Campaign ROI' },
-      { value: '3x', label: 'Content Output' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI marketing agent tripling content output while boosting ROI by 45%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'Custom Build'],
     category: 'MarTech/AI/ML',
   },
 
   // 'ai-agent-stock-market' in meta but MongoDB title has 'for'
   'ai-agent-for-stock-market': {
-    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Return Rate' },
-      { value: '2M+', label: 'Daily Trades Analysed' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Real-time AI stock agent analysing 2M+ trades daily for alpha signals',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['Research', 'Custom Build'],
     category: 'FinTech/AI/ML',
   },
 
   // MongoDB uses American spelling 'personalized' and full blog-style slug
   'tutorgpt-personalized-tutoring-platform': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Learning Speed' },
-      { value: '4.9', label: 'Student Rating' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Personalised AI tutoring boosting learning speed by 40%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'UI/UX'],
     category: 'EdTech/AI/ML',
   },
   'tutorgpt-ai-personalized-tutoring-platform-to-make-education-accessible-and-seamless': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '40%', label: 'Learning Speed' },
-      { value: '4.9', label: 'Student Rating' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Personalised AI tutoring boosting learning speed by 40%',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'UI/UX'],
     category: 'EdTech/AI/ML',
   },
 
   // 'multiagent' in meta but MongoDB title uses 'multi-agent' (with hyphen)
   'multi-agent-trading-system-transforming-cryptocurrency-trading-strategies': {
-    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '2.5x', label: 'Return Rate' },
-      { value: '95%', label: 'Strategy Win Rate' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Multi-agent crypto system achieving 2.5× returns over baseline',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['Research', 'Custom Build'],
     category: 'FinTech/AI/ML',
   },
 
   // 'revolutionise' (British) in meta but MongoDB title uses 'revolutionize' (American)
   'ai-powered-recruiter-agents-to-revolutionize-talent-acquisition': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '3x', label: 'Faster Hiring' },
-      { value: '50%', label: 'Screening Cost Saved' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'AI recruiter agents cutting time-to-hire by 3× across enterprise clients',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
     tags: ['AI Implemented in Business', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
 
   'innvor-ai-clinical-engagement-documentation-platform': {
-    techStack: ['Python', 'FastAPI', 'Healthcare AI', 'NLP', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Rapid growth - 1K users in 7 days',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'Healthcare AI'],
     category: 'Healthcare/AI/ML',
   },
 
   'sheltas-health-dataset-annotation-platform': {
-    techStack: ['Python', 'FastAPI', 'React', 'JavaScript', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Rapid growth - 1K users in 7 days',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    liveUrl: 'https://sheltas.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'Healthcare/AI/ML',
   },
 
   'sentlogic-instagram-engagement-revenue-attribution': {
-    techStack: ['Python', 'FastAPI', 'Next.js', 'pgvector', '+3'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Rapid growth — 1K users in 7 days',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
 
   'hermayhem-leading-her-ways-cycle-aware-ai-productivity': {
-    techStack: ['Python', 'FastAPI', 'React Native', 'Gemini AI', '+2'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth - 11 clients in 7 days',
+    highlight: 'Rapid early growth — 1K users in 7 days',
+    ctaLabel: 'View Research',
+    liveUrl: 'https://leading-her-way.com/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'WellTech/AI/ML',
   },
