@@ -3,15 +3,11 @@
 import React from 'react';
 import Image from 'next/image';
 import {
-  Shield,
-  Cpu,
   ArrowRight,
   Radio,
-  Layers,
-  CheckCircle2,
   Terminal,
   Activity,
-  Zap, 
+  Zap,
 } from 'lucide-react';
 import styles from '@/styles/components/organisms/VookCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
@@ -49,11 +45,10 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
             <div className={styles.heroRight}>
               <div className={styles.heroImgWrap}>
                 <Image
-                  src="https://images.pgagi.in/Case%20Studies/Vook.jpg"
+                  src="/assets/CaseStudies/VookPhones.png"
                   alt="VOOK AI Mobile Companion App Preview"
                   fill
                   priority
-                  unoptimized
                   className={styles.heroImg}
                 />
               </div>
@@ -122,44 +117,55 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
           <div className={styles.photoWrapper}>
             <div className={styles.photoFrame}>
               <Image
-                src="https://images.pgagi.in/Vook/IMG_4401%20(1).jpg"
+                src="/assets/CaseStudies/VookHardwareBringup.png"
                 alt="VOOK Hardware Bring-up & Pairing Validation"
                 width={1120}
-                height={630}
-                unoptimized
+                height={545}
                 className={styles.photoImg}
               />
             </div>
-            <p className={styles.photoCaption}>
-              Hardware bring-up: two transmitter units alongside the chipset vendor&apos;s bench tester, reporting per-channel search state and firmware pairing.
+            <span className={styles.labEyebrow}>From the lab</span>
+            <p className={styles.labCaption}>
+              <strong>Hardware bring-up.</strong> Two transmitter units alongside the chipset vendor&apos;s bench tester, which reports per-channel search state and firmware version (V1.3.1.d) during pairing
             </p>
           </div>
 
           {/* 2 Feature Cards */}
-          <div className={styles.twoCardGrid}>
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
-                <CheckCircle2 size={22} />
-              </div>
-              <h3 className={styles.cardTitle}>Overview Values</h3>
-              <ul className={styles.cardBullets}>
-                <li>Zero-latency hardware control from the same device used to record</li>
-                <li>4 configurable levels of on-device AI noise suppression</li>
-                <li>Independent state tracking for TX0 and TX1 at all times</li>
-                <li>Zero interruption to background video and camera recording apps</li>
+          <div className={`${styles.twoCardGrid} ${styles.twoCardGridAlt}`}>
+            <div className={`${styles.featureCard} ${styles.featureCardAlt}`}>
+              <Image
+                src="/assets/CaseStudies/VookCoreValuesIcon.png"
+                alt="Core user values icon"
+                width={73}
+                height={73}
+                className={styles.cardIconImg}
+              />
+              <h3 className={styles.cardTitle}>Core User Values</h3>
+              <ul className={`${styles.cardBullets} ${styles.checkBullets}`}>
+                <li><strong>Live control:</strong> mute, volume, and noise-cancellation adjusted during recording.</li>
+                <li><strong>AI post-processing:</strong> AI-powered denoising applied to captured audio after the fact.</li>
+                <li><strong>Cloud processing:</strong> credit-based cloud jobs with full account management.</li>
+                <li><strong>Unified experience:</strong> one app that handles both the hardware and the creative workflow.</li>
               </ul>
             </div>
 
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
-                <Layers size={22} />
-              </div>
+            <div className={`${styles.featureCard} ${styles.featureCardAlt}`}>
+              <Image
+                src="/assets/CaseStudies/VookHardwareIcon.png"
+                alt="Hardware product lines icon"
+                width={60}
+                height={60}
+                className={styles.cardIconImg}
+              />
               <h3 className={styles.cardTitle}>Hardware Product Lines</h3>
-              <ul className={styles.cardBullets}>
-                <li><strong>MiniMic:</strong> Ultra-compact clip-on mic for mobile vloggers</li>
-                <li><strong>AirMic:</strong> Over-collar transmitter with K6 chipset</li>
-                <li><strong>ClipX:</strong> Broadcast-grade lavalier with D11 dual-DSP chipset</li>
+              <ul className={`${styles.cardBullets} ${styles.checkBullets}`}>
+                <li><strong>MiniMic</strong> — compact clip-on transmitter</li>
+                <li><strong>AirMic</strong> — over-collar transmitter (K6 chipset).</li>
+                <li><strong>ClipX</strong> — broadcast-grade lavalier (D11 chipset).</li>
               </ul>
+              <p className={styles.cardFootnote}>
+                All three lines share a common USB receiver dongle and speak the same firmware protocol — so one mobile codebase drives every product
+              </p>
             </div>
           </div>
         </section>
@@ -182,24 +188,29 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
                 <tr>
                   <th>Layer</th>
                   <th>Responsibility</th>
+                  <th>Technology</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Presentation</strong></td>
-                  <td>Screens, widgets, reactive state consumers</td>
+                  <td className={styles.layerCell}>Presentation</td>
+                  <td>UI elements, widgets, screen layouts</td>
+                  <td>Flutter UI</td>
                 </tr>
                 <tr>
-                  <td><strong>Domain</strong></td>
-                  <td>ChangeNotifiers, use-cases, business rules</td>
+                  <td className={styles.layerCell}>Domain</td>
+                  <td>Business logic, state modification, use cases</td>
+                  <td>Providers, ChangeNotifiers</td>
                 </tr>
                 <tr>
-                  <td><strong>Data</strong></td>
-                  <td>Repositories, USB/HID data sources, local cache</td>
+                  <td className={styles.layerCell}>Data</td>
+                  <td>Data sourcing, network requests, storage</td>
+                  <td>Repositories, Services</td>
                 </tr>
                 <tr>
-                  <td><strong>Platform</strong></td>
-                  <td>Kotlin (Android) / Swift (iOS) native USB-HID bridge</td>
+                  <td className={styles.layerCell}>Platform</td>
+                  <td>Native hardware interfacing, USB communication</td>
+                  <td>Kotlin (Android) / Swift (iOS)</td>
                 </tr>
               </tbody>
             </table>
@@ -207,31 +218,46 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
 
           {/* Core Infrastructure / Feature Modules */}
           <div className={styles.twoCardGrid}>
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
-                <Shield size={22} />
-              </div>
+            <div className={`${styles.featureCard} ${styles.featureCardAlt}`}>
+              <Image
+                src="/assets/CaseStudies/VookCoreInfraIcon.png"
+                alt="Core infrastructure icon"
+                width={56}
+                height={56}
+                className={styles.cardIconImg}
+              />
               <h3 className={styles.cardTitle}>Core Infrastructure</h3>
-              <ul className={styles.cardBullets}>
-                <li>Dependency injection and service locator</li>
-                <li>Centralized routing with navigation guards</li>
-                <li>Structured logging and crash reporting</li>
-                <li>Shared theming and design tokens</li>
+              <ul className={`${styles.cardBullets} ${styles.checkBullets}`}>
+                <li><strong>State management:</strong> Provider + ChangeNotifier, scoped per screen.</li>
+                <li><strong>Routing:</strong> <code>GoRouter</code> with named routes</li>
+                <li><strong>HTTP:</strong> Dio with interceptors for auth-token injection and 401 refresh</li>
+                <li><strong>Image caching:</strong> CachedNetworkImage with stable S3 cache keys.</li>
+                <li><strong>Secure storage:</strong> <code>flutter_secure_storage</code> for JWT and profile data.</li>
+                <li><strong>Audio playback:</strong> <code>audioplayers ^6.x</code> for the in-app demo player.</li>
               </ul>
             </div>
 
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
-                <Cpu size={22} />
-              </div>
+            <div className={styles.moduleColumn}>
               <h3 className={styles.cardTitle}>Feature Modules</h3>
-              <ul className={styles.cardBullets}>
-                <li><code>mic_controls</code> — device domain state, independent of the active screen</li>
-                <li><code>pairing</code> — dual-transmitter discovery and channel binding</li>
-                <li><code>denoise_studio</code> — AI post-processing and A/B playback</li>
-                <li><code>account</code> — auth, presigned uploads, firmware diagnostics</li>
-              </ul>
+              <div className={styles.moduleTags}>
+                <span className={`${styles.moduleTag} ${styles.moduleTagActive}`}>auth</span>
+                <span className={styles.moduleTag}>Home</span>
+                <span className={styles.moduleTag}>enhance_page</span>
+                <span className={styles.moduleTag}>output_page</span>
+                <span className={styles.moduleTag}>clipx</span>
+                <span className={styles.moduleTag}>mic_controls</span>
+                <span className={styles.moduleTag}>profile</span>
+                <span className={styles.moduleTag}>notifications</span>
+                <span className={styles.moduleTag}>support</span>
+              </div>
             </div>
+          </div>
+
+          <div className={styles.calloutDivider}>
+            <span className={styles.calloutLine} />
+            <p className={styles.calloutText}>
+              mic_controls holds the device-state domain — the core HID business logic — kept deliberately separate from the screens that render it
+            </p>
           </div>
 
           {/* Presentation -> Domain -> Data -> Platform Flow */}

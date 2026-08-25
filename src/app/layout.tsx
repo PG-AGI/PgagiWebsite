@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Poppins, Plus_Jakarta_Sans } from 'next/font/google';
+import { Poppins, Plus_Jakarta_Sans, Inter } from 'next/font/google';
 import "@/styles/app/globals.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Providers from "@/contexts/providers";
@@ -24,6 +24,13 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: "PGAGI",
   description:
@@ -42,7 +49,7 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <html
             lang="en"
-            className={`${poppins.variable} ${plusJakartaSans.variable}`}
+            className={`${poppins.variable} ${plusJakartaSans.variable} ${inter.variable}`}
             suppressHydrationWarning
             translate="no"
           >
