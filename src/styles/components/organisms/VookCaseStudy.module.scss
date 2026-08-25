@@ -31,24 +31,72 @@ $color-green-fix-bg: #F0FDF4;
 
 .rail {
   width: 100%;
-  max-width: 1160px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 79px;
+
+  @media (max-width: 640px) {
+    padding: 0 24px;
+  }
 }
 
 /* ── Hero Section ── */
 .heroSection {
   width: 100%;
-  background: radial-gradient(circle at 10% 25%, #EFE8FC 0%, #FAF8FE 45%, #FFFFFF 85%);
+  background: #FFFFFF;
   padding-top: clamp(120px, 14vh, 150px);
   padding-bottom: 60px;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+
+  /* Soft glow blob approximating Figma "Ellipse 162" (#F0B4D6 -> #D2A3F2,
+     rotated -13.4deg). Built from radial-gradient falloff instead of
+     filter:blur() so the edge stays soft instead of banding/clipping. */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -260px;
+    left: -340px;
+    width: 950px;
+    height: 950px;
+    background: radial-gradient(
+      circle at 38% 38%,
+      rgba(240, 180, 214, 0.5) 0%,
+      rgba(228, 172, 226, 0.3) 22%,
+      rgba(210, 163, 242, 0.14) 36%,
+      rgba(210, 163, 242, 0.05) 48%,
+      rgba(210, 163, 242, 0) 60%
+    );
+    transform: rotate(-13.4deg);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Very faint grain over the glow, approximating Figma's monotone noise
+     effect without introducing hard-edged artifacts. */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 6px 6px;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > .rail {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .heroGrid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 0.95fr 1.05fr;
   gap: 40px;
   align-items: center;
 
@@ -136,31 +184,31 @@ $color-green-fix-bg: #F0FDF4;
 .heroImgWrap {
   position: relative;
   width: 100%;
-  max-width: 540px;
-  aspect-ratio: 1.15;
+  max-width: 680px;
+  aspect-ratio: 1.337;
   display: flex;
   align-items: center;
   justify-content: center;
 
   .heroImg {
     object-fit: contain;
-    object-position: center right;
+    object-position: center;
   }
 }
 
 /* ── Quick Meta Facts Bar ── */
 .metaRail {
   width: 100%;
-  background: #FAFAFC;
+  background: #F3F1F5;
   border-top: 1px solid #ECECF2;
   border-bottom: 1px solid #ECECF2;
-  padding: 32px 0;
+  padding: 48px 0;
 }
 
 .metaGrid {
   display: grid;
   grid-template-columns: 1fr 1.3fr 1.3fr 1.4fr;
-  gap: 28px;
+  gap: 103px;
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
@@ -204,33 +252,38 @@ $color-green-fix-bg: #F0FDF4;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: $color-purple-primary;
-  background: $color-purple-badge-bg;
-  padding: 4px 12px;
-  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(239, 180, 214, 0.2) -7.27%, rgba(210, 163, 243, 0.2) 100%);
+  padding: 10px 24px;
+  border-radius: 110px;
   margin-bottom: 14px;
 }
 
 .sectionHeading {
-  font-size: 2.25rem;
-  font-weight: 800;
-  line-height: 1.22;
-  color: #0F172A;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: -1px;
+  color: #1D283F;
   margin: 0 0 20px;
-  letter-spacing: -0.02em;
 
   @media (max-width: 640px) {
     font-size: 1.75rem;
+    line-height: 1.3;
   }
 }
 
 .sectionParagraph {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: #334155;
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: #2C2C2C;
   margin: 0 0 20px;
 
   strong {
-    color: #0F172A;
+    color: #1D283F;
     font-weight: 600;
   }
 }
@@ -256,11 +309,14 @@ $color-green-fix-bg: #F0FDF4;
 }
 
 .statBox {
-  background: linear-gradient(135deg, #7928CA 0%, #5B14B8 100%);
+  position: relative;
+  overflow: hidden;
+  background: #6A00B5;
   color: #ffffff;
   padding: 24px 20px;
-  border-radius: 14px;
-  box-shadow: 0 10px 24px -6px rgba(121, 40, 202, 0.35);
+  border-radius: 16px;
+  min-height: 152px;
+  box-shadow: 0 10px 24px -6px rgba(106, 0, 181, 0.35);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -268,14 +324,53 @@ $color-green-fix-bg: #F0FDF4;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 14px 30px -6px rgba(121, 40, 202, 0.45);
+    box-shadow: 0 14px 30px -6px rgba(106, 0, 181, 0.45);
+  }
+
+  /* Figma "Ellipse 3940": 105x83, top -44.49 / left 160.27, rotate 30.08deg,
+     #FFA2E1 @ 37%, layer blur 60.9 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -44.49px;
+    left: 160.27px;
+    width: 105px;
+    height: 83px;
+    border-radius: 50%;
+    background: rgba(255, 162, 225, 0.37);
+    filter: blur(60.9px);
+    transform: rotate(30.08deg);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Figma "Monotone noise" effect: size 0.5, density 100%, #FFFFFF @ 23% */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 6px 6px;
+    opacity: 0.23;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .statValue,
+  .statLabel {
+    position: relative;
+    z-index: 1;
   }
 
   .statValue {
-    font-size: 2.4rem;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.03em;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: -1px;
+    color: #ffffff;
 
     .statSuffix {
       font-size: 1.1rem;
@@ -286,10 +381,12 @@ $color-green-fix-bg: #F0FDF4;
   }
 
   .statLabel {
-    font-size: 0.9rem;
-    font-weight: 500;
-    line-height: 1.35;
-    color: #EDE9FE;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.5px;
+    color: #ffffff;
   }
 }
 
@@ -322,6 +419,35 @@ $color-green-fix-bg: #F0FDF4;
   margin-top: 10px;
   font-style: italic;
   text-align: center;
+}
+
+.labEyebrow {
+  display: block;
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16.5px;
+  letter-spacing: 1.98px;
+  text-transform: uppercase;
+  color: #2C2C2C;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.labCaption {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22.75px;
+  letter-spacing: 0;
+  color: #374151;
+  text-align: left;
+  font-style: normal;
+
+  strong {
+    font-weight: 700;
+    color: #374151;
+  }
 }
 
 /* ── 2 Highlight Feature Cards ── */
@@ -404,6 +530,51 @@ $color-green-fix-bg: #F0FDF4;
   }
 }
 
+.twoCardGridAlt {
+  width: 1280px;
+  max-width: 100%;
+  gap: 24px;
+}
+
+.featureCardAlt {
+  background: #FAF9F5;
+  border: 1px solid #EDEBE4;
+  box-shadow: none;
+
+  &:hover {
+    border-color: #EDEBE4;
+    transform: none;
+  }
+}
+
+.cardIconImg {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.featureCard .checkBullets {
+  li {
+    padding-left: 22px;
+
+    &::before {
+      content: '\2713';
+      color: #22C55E;
+      font-weight: 700;
+      font-size: 0.95rem;
+      left: 0;
+      top: 1px;
+    }
+  }
+}
+
+.cardFootnote {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+
 /* ── Comparison Table ── */
 .tableOuter {
   width: 100%;
@@ -448,6 +619,63 @@ $color-green-fix-bg: #F0FDF4;
     color: $color-purple-primary;
     background: #FAF5FF;
   }
+
+  .layerCell {
+    font-weight: 600;
+    color: #B91C1C;
+  }
+}
+
+.moduleColumn {
+  padding-top: 4px;
+}
+
+.moduleTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.moduleTag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  background: #ffffff;
+}
+
+.moduleTagActive {
+  background: #111827;
+  border-color: #111827;
+  color: #ffffff;
+}
+
+.calloutDivider {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 28px 0 36px;
+}
+
+.calloutLine {
+  flex: 0 0 24px;
+  height: 1px;
+  background: #CBD5E1;
+  transform: translateY(-4px);
+}
+
+.calloutText {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94A3B8;
+  margin: 0;
 }
 
 /* ── Code / Spec Cards ── */

@@ -27,20 +27,20 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'ai-mobile-doc': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: 'Coming soon', label: 'User Conversions' },
+      { value: 'Coming soon', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: 'Currently in Testing Phase',
     tags: ['Live Products', 'IoT x AI Engineering'],
     category: 'Healthcare/AI/ML',
   },
   'brainify-edtech-platform': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '85%', label: 'User Conversions' },
+      { value: '60%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: 'Rapid early growth — 20K users in 4 months',
     liveUrl: 'https://play.google.com/store/apps/details?id=com.brainify.app&hl=en',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'EdTech/AI/ML',
@@ -48,10 +48,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'aimi-brain-real-time-financial-intelligence': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '65%', label: 'User Conversions' },
+      { value: '35%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: 'Rapid early growth — 20M users in 30 days',
     liveUrl: 'https://aim-cube.com',
     tags: ['Live Products', 'Research'],
     category: 'FinTech/AI/ML',
@@ -62,7 +62,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: '85% of Business Processes Automated',
     tags: ['Live Products', 'Custom Build'],
     category: 'E-commerce/AI/ML',
   },
@@ -79,10 +79,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'mirror-me-ai-virtual-try-on': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '45%', label: 'User Conversions' },
+      { value: '72%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: 'Rapid early growth — 5K Downloads in 60 Days',
     liveUrl: 'https://play.google.com/store/apps/details?id=com.pgagi.mirror_me.beta&hl=en',
     tags: ['UI/UX', 'Research'],
     category: 'E-commerce/AI/ML',
@@ -438,10 +438,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'nuaiy-ai-driven-multilingual-gamified-learning-platform': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '70%', label: 'User Conversions' },
+      { value: '52%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: '1K users in 30 days',
     liveUrl: 'https://app.nuaiy.com/',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
@@ -464,10 +464,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'cracked-ai-growth-platform': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '80%', label: 'User Conversions' },
+      { value: '45%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: 'Rapid early growth — 3K users in 30 days',
     liveUrl: 'https://cracked.ai/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
@@ -477,10 +477,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'digital-twin-ai-powered-expert-knowledge-platform': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: 'Coming soon', label: 'User Conversions' },
+      { value: 'Coming soon', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: 'Just launched last week — 100+ users onboarded.',
     tags: ['Live Products', 'Custom Build'],
     category: 'HRTech/AI/ML',
   },
@@ -489,10 +489,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   'email-love-ai-powered-email-template-generation-and-repair': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '80%', label: 'User Conversions' },
+      { value: '72%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: '50K+ Existing Paid Users',
     liveUrl: 'https://emaillove.com',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
@@ -505,7 +505,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    highlight: '',
     tags: ['Live Products', 'UI/UX'],
     category: 'SocialTech/AI/ML',
   },
