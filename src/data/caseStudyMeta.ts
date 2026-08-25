@@ -14,7 +14,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // ── Already-existing entries ────────────────────────────────────────────
   'skillina-talent-marketplace': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Calendar API', 'Google OAuth', 'Assessment API', 'LinkedIn OAuth', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
@@ -25,7 +25,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'HRTech/AI/ML',
   },
   'ai-mobile-doc': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['MongoDB Atlas ', 'FastAPI', ' Redis', 'Google Gemini 2.0 Flash', '+3'],
     metrics: [
       { value: 'Coming soon', label: 'User Conversions' },
       { value: 'Coming soon', label: 'User Retention' },
@@ -35,7 +35,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
   'brainify-edtech-platform': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React Native', 'FastAPI', 'PostgreSQL', 'LLM APIs + LangChain', '+3'],
     metrics: [
       { value: '85%', label: 'User Conversions' },
       { value: '60%', label: 'User Retention' },
@@ -46,7 +46,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'EdTech/AI/ML',
   },
   'aimi-brain-real-time-financial-intelligence': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React', 'Node.js', 'Tailwind CSS', 'WebSockets', '+3'],
     metrics: [
       { value: '65%', label: 'User Conversions' },
       { value: '35%', label: 'User Retention' },
@@ -57,7 +57,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'FinTech/AI/ML',
   },
   'ai-ecommerce-arbitrage-platform': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Zyte API', 'FastAPI', 'PostgreSQL', 'Docker', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
@@ -67,7 +67,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'E-commerce/AI/ML',
   },
   'legalspendgpt-invoice-intelligence': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Next.js', 'FastAPI', 'Azure OpenAI', 'Redis Streams', '+3'],
     metrics: [
       { value: '75%', label: 'Time Saved' },
       { value: '97%', label: 'Accuracy' },
@@ -77,7 +77,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'LegalTech/AI/ML',
   },
   'mirror-me-ai-virtual-try-on': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React Native', 'FastAPI', 'GPT-4o / Analytics', 'DensePose / MediaPipe', '+3'],
     metrics: [
       { value: '45%', label: 'User Conversions' },
       { value: '72%', label: 'User Retention' },
@@ -88,7 +88,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'E-commerce/AI/ML',
   },
   'two-point-correlation-function-spatial-clustering': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Python', 'pandas', 'Matplotlib', 'Pair counting', '+3'],
     metrics: [],
     highlight: '',
     ctaLabel: 'View Research',
@@ -96,7 +96,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Research/Science',
   },
   'cosmological-model-parameter-extraction': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['NumPy ', 'Matplotlib', 'Python', 'Lambda-CDM model', '+3'],
     metrics: [],
     highlight: '',
     ctaLabel: 'View Research',
@@ -221,7 +221,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'FinTech/AI/ML',
   },
   'vook-ai-wireless-microphone-companion-app': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Flutter', 'Kotlin', 'Python', 'Swift', '+3'],
     metrics: [
       { value: '75%', label: 'User Conversions' },
       { value: '55%', label: 'User Retention' },
@@ -232,7 +232,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'IoT/AI/ML',
   },
   'fomo': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['AI Agents', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
       { value: '76%', label: 'User Conversions' },
       { value: '45%', label: 'User Retention' },
@@ -253,7 +253,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
   'legalgpt': {
-    techStack: ['Python', 'OpenAI', 'FastAPI', 'React', '+2'],
+    techStack: ['Next.js', 'OpenAI', 'FastAPI', 'React', '+2'],
     metrics: [
       { value: '$24.8M', label: 'Spend Analysed' },
       { value: '7.5%', label: 'Cost Overrun Flagged' },
@@ -263,7 +263,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'LegalTech/AI/ML',
   },
   'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin': {
-    techStack: ['Python', 'OpenAI', 'React', 'FastAPI'],
+    techStack: ['Speech-to-Text AI ', 'NLP', 'Content Optimization Engine', 'AI-Powered Scheduler'],
     metrics: [
       { value: '32%', label: 'User Conversions' },
       { value: '35%', label: 'User Retention' },
@@ -273,7 +273,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'Healthcare/AI/ML',
   },
   'transforming-customer-engagement-and-lead-management-with-ai-powered-automation': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Next.js', 'FastAPI', 'PostgreSQL', 'RAG', '+3'],
     metrics: [
       { value: '95%', label: 'User Conversions' },
       { value: '40%', label: 'Sales Increased' },
@@ -284,7 +284,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'MarTech/AI/ML',
   },
   'ai-chatbot-for-legal-assistance': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React.js', 'FastAPI', 'Node.js', 'MongoDB', '+3'],
     metrics: [
       { value: '65%', label: 'User Conversions' },
       { value: '82%', label: 'User Retention' },
@@ -295,7 +295,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'LegalTech/AI/ML',
   },
   'ai-data-query-system': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React.js', 'Node.js', 'PostgreSQL', 'Express.js', '+3'],
     metrics: [
       { value: '98%', label: 'Retrieval Accuracy' },
     ],
@@ -305,7 +305,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'SaaS/AI/ML',
   },
   'voice-assistant-chatbot-for-shopify-stores-to-enhance-user-engagement': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['OAuth', 'FastAPI', 'Tailwind CSS', 'NLP', '+3'],
     metrics: [
       { value: '72%', label: 'User Conversions' },
       { value: '50%', label: 'User Retention' },
@@ -330,7 +330,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Workaptix: MongoDB slug is the full descriptive slug
   'workaptix-ai-sourcing-validation-verification': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['NLP & Vector Search', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
@@ -342,7 +342,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Nuaiy full slug
   'nuaiy-ai-driven-multilingual-gamified-learning-platform': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React Native', 'FastAPI', 'PostgreSQL', 'LLM APIs + LangChain', '+3'],
     metrics: [
       { value: '70%', label: 'User Conversions' },
       { value: '52%', label: 'User Retention' },
@@ -355,7 +355,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // SocialJet full slug
   'socialjet-ai-influencer-marketing-os': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React', 'FastAPI', 'LangGraph', 'Neon PostgreSQL', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
@@ -368,7 +368,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Cracked.ai full slug
   'cracked-ai-growth-platform': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['LLM', 'AI Agents', 'Generative AI', 'Social Media APIs', '+3'],
     metrics: [
       { value: '80%', label: 'User Conversions' },
       { value: '45%', label: 'User Retention' },
@@ -381,7 +381,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Jove's MongoDB slug is 'digital-twin-ai-powered-expert-knowledge-platform'
   'digital-twin-ai-powered-expert-knowledge-platform': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Next.js', 'FastAPI', 'PostgreSQL', 'LLM', '+3'],
     metrics: [
       { value: 'Coming soon', label: 'User Conversions' },
       { value: 'Coming soon', label: 'User Retention' },
@@ -393,7 +393,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Email Love: slug ends with '-and-repair' not '-and-autonomous-repair'
   'email-love-ai-powered-email-template-generation-and-repair': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Figma Plugin Architecture', 'Figma Plugin Architecture', 'HTML/MJML Compilation Engine', 'HTML/MJML Compilation Engine', '+3'],
     metrics: [
       { value: '80%', label: 'User Conversions' },
       { value: '72%', label: 'User Retention' },
@@ -406,7 +406,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // SayYes.AI: MongoDB slug is 'sayyesai-...' (no hyphen between sayyes and ai)
   'sayyesai-the-ai-wedding-companion-for-modern-brides': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['LangChain', 'FastAPI', 'Flutter', 'PostgreSQL', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
@@ -418,7 +418,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // 'assistance' in meta but MongoDB title uses 'assistant'
   'ai-marketing-assistant': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['custom GPT model', 'FastAPI', 'React.js', 'Tailwind CSS', '+3'],
     metrics: [
       { value: '65%', label: 'User Conversions' },
       { value: '43%', label: 'User Retention' },
@@ -431,7 +431,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // 'ai-agent-stock-market' in meta but MongoDB title has 'for'
   'ai-agent-for-stock-market': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['MongoDB', 'FastAPI', 'Polygon.io API', 'REST API', '+3'],
     metrics: [
       { value: '45%', label: 'User Conversions' },
       { value: '80%', label: 'User Retention' },
@@ -444,7 +444,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // MongoDB uses American spelling 'personalized' and full blog-style slug
   'tutorgpt-ai-personalized-tutoring-platform-to-make-education-accessible-and-seamless': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Streamlit', 'FastAPI', 'Mistral LLM', 'RAG', '+3'],
     metrics: [
       { value: '68%', label: 'User Conversions' },
       { value: '70%', label: 'User Retention' },
@@ -457,7 +457,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // 'multiagent' in meta but MongoDB title uses 'multi-agent' (with hyphen)
   'multi-agent-trading-system-transforming-cryptocurrency-trading-strategies': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['GoPlus', 'FastAPI', 'LLM', 'JavaScript', '+3'],
     metrics: [
       { value: '45%', label: 'User Conversions' },
       { value: '55%', label: 'User Retention' },
@@ -470,7 +470,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // 'revolutionise' (British) in meta but MongoDB title uses 'revolutionize' (American)
   'ai-powered-recruiter-agents-to-revolutionize-talent-acquisition': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React', '+3'],
     metrics: [
       { value: '70%', label: 'Time Saved' },
       { value: '85%', label: 'Accuracy' },
@@ -482,7 +482,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   },
 
   'innvor-ai-clinical-engagement-documentation-platform': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['AI Scribe Engine', 'FastAPI', 'Speech-to-Text', 'ICD-10 Coding', '+3'],
     metrics: [
       { value: '45%', label: 'Time Saved' },
       { value: '92%', label: 'Accuracy' },
@@ -502,7 +502,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   // saas-that-helps-doctors-share-healthcare-awareness-on-linkedin' entries —
   // same title text, but its own slug/doc/image so the original card is untouched.
   'linkedin-ai-doctors-healthcare-awareness-saas': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['NextJs', 'python', 'GCP', 'vectordb', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
@@ -517,7 +517,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   // learning-techniques' entry — same title text, but its own slug/doc/image
   // so the original card is untouched.
   'fraud-detection-ml-techniques-v2': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['TypeScript', 'FastAPI', 'Redis', 'Tailwind CSS', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '85%', label: 'User Retention' },
@@ -529,7 +529,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   },
 
   'sheltas-health-dataset-annotation-platform': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Next.js', 'FastAPI', 'Google Cloud Storage', 'Redis', '+3'],
     metrics: [
       { value: 'Coming soon', label: 'User Conversions' },
       { value: 'Coming soon', label: 'User Retention' },
@@ -540,7 +540,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   },
 
   'sentlogic-instagram-engagement-revenue-attribution': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Next.js,', 'FastAPI', 'PostgreSQL', 'Redis', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
       { value: '62%', label: 'User Retention' },
@@ -551,7 +551,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   },
 
   'hermayhem-leading-her-ways-cycle-aware-ai-productivity': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['React Native', 'FastAPI', 'Gemini 3.1 Pro', 'MongoDB', '+3'],
     metrics: [
       { value: 'Coming soon', label: 'User Conversions' },
       { value: 'Coming soon', label: 'User Retention' },
