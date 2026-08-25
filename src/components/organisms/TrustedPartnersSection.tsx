@@ -148,7 +148,7 @@ const TrustedPartnersSection = () => {
           viewport={{ once: true, amount: 0.5 }}
           transition={baseTransition}
         >
-          Our Trusted Partners
+          Our Top Trusted Partners  
         </motion.h2>
 
         {/* ── Grid ── */}
