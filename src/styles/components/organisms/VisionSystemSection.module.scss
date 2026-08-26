@@ -10,20 +10,22 @@ $red: #9f0000;
 
   @media (max-width: 767px) {
     --nav-h: 5.5rem;
-    --stack-header-gap: 0.75rem;
-    --stack-peek: 1.125rem;
-    --stack-gap: 3.5rem;
+    --stack-header-gap: 1rem;
+    --stack-peek: 1.5rem;
+    --stack-gap: 5rem;
     --scrollstack-container-pad-x: clamp(0.75rem, 3.5vw, 1.25rem);
   }
 
   @media (max-width: 568px) {
     --nav-h: 4.85rem;
-    --stack-gap: 3.25rem;
+    --stack-peek: 1.35rem;
+    --stack-gap: 4.5rem;
   }
 
   @media (max-width: 450px) {
     --nav-h: 4.5rem;
-    --stack-gap: 3rem;
+    --stack-peek: 1.25rem;
+    --stack-gap: 4rem;
   }
 }
 
@@ -352,8 +354,9 @@ $red: #9f0000;
 // ─── Small phones (≤ 400px) ───────────────────────
 @media (max-width: 400px) {
   .outerSection {
-    --stack-header-gap: 0.5rem;
-    --stack-peek: 0.75rem;
+    --stack-header-gap: 0.6rem;
+    --stack-peek: 1.15rem;
+    --stack-gap: 3.5rem;
   }
 
   .subtitle {

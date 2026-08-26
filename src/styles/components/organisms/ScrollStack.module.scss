@@ -162,12 +162,12 @@
     .cardWrapper {
       position: sticky;
       /* Each card pins just below the previous one → a peeking deck. */
-      top: calc(var(--stack-top, 84px) + var(--card-index, 0) * var(--stack-peek, 12px));
+      top: calc(var(--stack-top, 84px) + var(--card-index, 0) * var(--stack-peek, 1.5rem));
       left: auto;
       right: auto;
       /* Later cards paint over earlier ones (cover + peek). */
       z-index: calc(10 + var(--card-index, 0));
-      margin-bottom: var(--stack-gap, 1rem);
+      margin-bottom: var(--stack-gap, 4rem);
       transform-origin: 50% 0;
       will-change: auto;
     }
