@@ -53,7 +53,7 @@ const Team: React.FC = () => {
           {/* <span className={styles.aboutLabel}>{'// Meet Our Team'}</span> */}
           <h2 className={styles.description}>Who We Are?</h2>
           <p className={styles.summary}>
-            We&apos;re a dynamic team of <b>45+ innovators</b>, united by a shared passion and diverse perspectives.
+            We&apos;re a dynamic team of <b>40+ innovators</b>, united by a shared passion and diverse perspectives.
             Together, we create, collaborate, and bring bold ideas to life.
           </p>
 
