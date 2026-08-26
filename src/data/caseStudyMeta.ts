@@ -21,7 +21,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://skillina.ai/',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: ['Live Products'],
     category: 'HRTech/AI/ML',
   },
   'ai-mobile-doc': {
@@ -31,7 +31,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: 'Coming soon', label: 'User Retention' },
     ],
     highlight: 'Currently in Testing Phase',
-    tags: ['Live Products', 'IoT x AI Engineering'],
+    tags: [],
     category: 'Healthcare/AI/ML',
   },
   'brainify-edtech-platform': {
@@ -42,7 +42,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: 'Rapid early growth — 20K users in 4 months',
     liveUrl: 'https://play.google.com/store/apps/details?id=com.brainify.app&hl=en',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: ['Live Products'],
     category: 'EdTech/AI/ML',
   },
   'aimi-brain-real-time-financial-intelligence': {
@@ -63,7 +63,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '85%', label: 'User Retention' },
     ],
     highlight: '85% of Business Processes Automated',
-    tags: ['Live Products', 'Custom Build'],
+    tags: ['Custom Build'],
     category: 'E-commerce/AI/ML',
   },
   'legalspendgpt-invoice-intelligence': {
@@ -159,7 +159,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
-  'jove': {
+  'jove ': {
     techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
       { value: '35%', label: 'User Conversions' },
@@ -239,7 +239,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: 'Rapid early growth — 1K+ Users Onboarded in 7 Days',
     liveUrl: 'https://fomo.com',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: ['Live Products'],
     category: 'MarTech/AI/ML',
   },
   'linkedin-ai': {
@@ -269,7 +269,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '35%', label: 'User Retention' },
     ],
     highlight: 'Rapid Early Growth — 500+ Users in 30 Days',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: [],
     category: 'Healthcare/AI/ML',
   },
   'transforming-customer-engagement-and-lead-management-with-ai-powered-automation': {
@@ -312,7 +312,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: 'Total user 20k+',
     ctaLabel: 'View Case Study',
-    tags: ['AI Implemented in Business', 'Custom Build'],
+    tags: ['Custom Build'],
     category: 'E-commerce/AI/ML',
   },
   'fraud-detection-using-machine-learning-techniques': {
@@ -336,7 +336,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '85%', label: 'User Retention' },
     ],
     highlight: 'Rapid early growth — 1K users in 7 days',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: [],
     category: 'HRTech/AI/ML',
   },
 
@@ -372,7 +372,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: 'Rapid early growth — 3K users in 30 days',
     liveUrl: 'https://cracked.ai/',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: ['Live Products'],
     category: 'MarTech/AI/ML',
   },
 
@@ -384,7 +384,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: 'Coming soon', label: 'User Retention' },
     ],
     highlight: 'Just launched last week — 100+ users onboarded.',
-    tags: ['Live Products', 'Custom Build'],
+    tags: ['Custom Build'],
     category: 'HRTech/AI/ML',
   },
 
@@ -397,7 +397,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: '50K+ Existing Paid Users',
     liveUrl: 'https://emaillove.com',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: ['Live Products'],
     category: 'MarTech/AI/ML',
   },
 
@@ -409,7 +409,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '85%', label: 'User Retention' },
     ],
     highlight: '',
-    tags: ['Live Products', 'UI/UX'],
+    tags: ['UI/UX'],
     category: 'SocialTech/AI/ML',
   },
 
@@ -422,7 +422,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: 'Rapid Early Growth — 1K Users in 7 Days',
     ctaLabel: 'View Case Study',
-    tags: ['AI Implemented in Business', 'Custom Build'],
+    tags: ['Custom Build'],
     category: 'MarTech/AI/ML',
   },
 
@@ -448,7 +448,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: 'Rapid Early Growth — 2K Users in 30 Days',
     ctaLabel: 'View Case Study',
-    tags: ['AI Implemented in Business', 'UI/UX'],
+    tags: ['UI/UX'],
     category: 'EdTech/AI/ML',
   },
 
@@ -474,7 +474,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: '',
     ctaLabel: 'View Case Study',
-    tags: ['AI Implemented in Business', 'Custom Build'],
+    tags: ['Custom Build'],
     category: 'HRTech/AI/ML',
   },
 
@@ -485,7 +485,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '92%', label: 'Accuracy' },
     ],
     highlight: 'Currently in Internal Testing',
-    tags: ['Live Products', 'Healthcare AI'],
+    tags: ['Healthcare AI'],
     category: 'Healthcare/AI/ML',
   },
 
@@ -506,7 +506,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     ],
     highlight: '',
     ctaLabel: 'View Case Study',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: [],
     category: 'Healthcare/AI/ML',
   },
 
@@ -532,7 +532,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: 'Coming soon', label: 'User Retention' },
     ],
     highlight: 'Currently in Internal Testing',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: [],
     category: 'Healthcare/AI/ML',
   },
 
@@ -543,7 +543,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: '62%', label: 'User Retention' },
     ],
     highlight: 'Rapid early growth — 100+ Users Onboarded in 14 Days',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: [],
     category: 'MarTech/AI/ML',
   },
 
@@ -556,7 +556,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     highlight: 'Currently in Internal Testing',
     ctaLabel: 'View Research',
     liveUrl: 'https://leading-her-way.com/',
-    tags: ['Live Products', 'AI Implemented in Business'],
+    tags: ['Live Products'],
     category: 'WellTech/AI/ML',
   },
 };
