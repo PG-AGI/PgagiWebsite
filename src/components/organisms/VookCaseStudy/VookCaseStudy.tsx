@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import styles from '@/styles/components/organisms/VookCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
+import EXTERNAL_LINKS from '@/constants/externalLinks';
 
 interface VookCaseStudyProps {
   caseStudy?: CaseStudyData | null;
@@ -647,7 +648,7 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
             We engineer production-grade mobile software, low-latency firmware bridges, and edge AI models for connected hardware and IoT devices.
           </p>
           <a
-            href="https://calendly.com/sahil-pgagi/30min"
+            href={EXTERNAL_LINKS.CALENDLY_BOOKING}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.ctaBtnRed}
