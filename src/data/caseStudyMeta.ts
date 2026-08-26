@@ -393,7 +393,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Email Love: slug ends with '-and-repair' not '-and-autonomous-repair'
   'email-love-ai-powered-email-template-generation-and-repair': {
-    techStack: ['Figma Plugin Architecture', 'Figma Plugin Architecture', 'HTML/MJML Compilation Engine', 'HTML/MJML Compilation Engine', '+3'],
+    techStack: ['LLM', 'Figma API', 'MJML', 'Structured JSON Blueprint', '+3'],
     metrics: [
       { value: '80%', label: 'User Conversions' },
       { value: '72%', label: 'User Retention' },
