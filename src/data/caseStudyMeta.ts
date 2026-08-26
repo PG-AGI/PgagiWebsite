@@ -356,11 +356,8 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
   // SocialJet full slug
   'socialjet-ai-influencer-marketing-os': {
     techStack: ['React', 'FastAPI', 'LangGraph', 'Neon PostgreSQL', '+3'],
-    metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
-    ],
-    highlight: 'Rapid early growth — 1K users in 7 days',
+    metrics: [],
+    highlight: '65% of operational processes automated with human approval.',
     liveUrl: 'https://socialjet.sg/',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
