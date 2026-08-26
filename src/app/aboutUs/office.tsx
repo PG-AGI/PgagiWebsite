@@ -27,7 +27,7 @@ const OfficeSection: React.FC = () => {
       <div className={styles.header}>
         <h2 className={styles.title}>Step into our vibrant office</h2>
         <p className={styles.description}>
-          We&apos;re a dynamic team of 45+ innovators, united by a shared passion and diverse perspectives.
+          We&apos;re a dynamic team of 40+ innovators, united by a shared passion and diverse perspectives.
           Together, we create, collaborate, and bring bold ideas to life.
         </p>
       </div>
