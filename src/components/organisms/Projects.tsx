@@ -79,6 +79,12 @@ function priorityIndex(slug: string): number {
   return idx === -1 ? Infinity : idx;
 }
 
+// Research tab shows only these two cards, not the full "Research"-tagged set.
+const RESEARCH_TAB_SLUGS = new Set<string>([
+  'two-point-correlation-function-spatial-clustering',
+  'cosmological-model-parameter-extraction',
+]);
+
 const STATS = [
   { value: '85+', line1: 'AI Products', line2: 'shipped' },
   { value: '12+', line1: 'Industries', line2: 'served' },
@@ -122,6 +128,8 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
 
     if (activeTab === 'Recent') {
       result = result.slice(0, 4);
+    } else if (activeTab === 'Research') {
+      result = result.filter((cs) => RESEARCH_TAB_SLUGS.has(cs.slug));
     } else if (activeTab !== 'Show All') {
       result = result.filter((cs) => caseStudyMeta[cs.slug]?.tags.includes(activeTab));
     }
