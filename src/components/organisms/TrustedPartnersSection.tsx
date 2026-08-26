@@ -91,7 +91,7 @@ const partners: Partner[] = [
     name: "Vook",
     logo: "/assets/partners/vook (1).png",
     blurb:
-      "Pioneers of the enhanced e-book — now an AI-powered audio and video transcription platform.",
+      "A companion app that turns a phone into a real-time audio control surface for a wireless microphone system — built on a bidirectional USB-HID control channel, a dual transmitter binary protocol, AI audio post-processing, and a 180+ test firmware regression suite.",
     url: "https://vook.in/",
   },
   {

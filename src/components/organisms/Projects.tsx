@@ -36,24 +36,29 @@ const HIDDEN_SLUGS = new Set<string>([
 // equality against the live MongoDB slug (verified against /api/case-studies)
 // so unrelated cards with similar names can never collide.
 const PRIORITY_SLUGS: string[] = [
-  'brainify-edtech-platform',                                                          // Brainify
-  'aimi-brain-real-time-financial-intelligence',                                       // AIMI Brain
+  'brainify-edtech-platform',                                                          // 1. Brainify
+  'aimi-brain-real-time-financial-intelligence',                                       // 2. AIMI Brain
+  'email-love-ai-powered-email-template-generation-and-repair',                        // 3. Email Love
+  'digital-twin-ai-powered-expert-knowledge-platform',                                 // 4. Jove
+  'socialjet-ai-influencer-marketing-os',                                              // 5. Social Jet
+  'nuaiy-ai-driven-multilingual-gamified-learning-platform',                           // 6. Nuaiy
+  'hermayhem-leading-her-ways-cycle-aware-ai-productivity',                            // 7. Leading Her Ways
+  'vook-ai-wireless-microphone-companion-app',                                         // 8. Vook
+  'sheltas-health-dataset-annotation-platform',                                        // 9. Sheltas
+  'sentlogic-instagram-engagement-revenue-attribution',                                // 10. Sentlogic
+  'two-point-correlation-function-spatial-clustering',                                 // 11. Applied Statistical Research... Spatial Clustering
+  'cosmological-model-parameter-extraction',                                           // 12. Applied Cosmology Research... Lambda-CDM
+  'skillina-talent-marketplace',                                                       // 13. Skillinia
+  'mirror-me-ai-virtual-try-on',                                                       // 14. MirrorMe.ai
+  'ai-ecommerce-arbitrage-platform',                                                   // 15. AI Arbitrage
+  'ai-powered-recruiter-agents-to-revolutionize-talent-acquisition',                   // 16. AI-Powered Recruiter Agents...
+  'ai-agent-for-stock-market',                                                         // 17. AI Agent Stock Market
+  // rest, unchanged relative order
   'cracked-ai-growth-platform',                                                        // cracked.ai
-  'email-love-ai-powered-email-template-generation-and-repair',                        // Email love
-  'nuaiy-ai-driven-multilingual-gamified-learning-platform',                           // Nuaiy
-  'socialjet-ai-influencer-marketing-os',                                              // Social jet
-  'digital-twin-ai-powered-expert-knowledge-platform',                                 // jove
   'sayyesai-the-ai-wedding-companion-for-modern-brides',                               // say yes .ai
-  'ai-ecommerce-arbitrage-platform',                                                   // AI Arbitrage
-  'mirror-me-ai-virtual-try-on',                                                       // mirrorMe.ai
   'ai-mobile-doc',                                                                     // AI TO MD
   'workaptix-ai-sourcing-validation-verification',                                     // workaptix
-  'skillina-talent-marketplace',                                                       // skillina
   'innvor-ai-clinical-engagement-documentation-platform',                              // innvor.ai
-  'sheltas-health-dataset-annotation-platform',                                        // sheltas
-  'sentlogic-instagram-engagement-revenue-attribution',                                // sentlogic
-  'hermayhem-leading-her-ways-cycle-aware-ai-productivity',                            // leading her ways
-  'vook-ai-wireless-microphone-companion-app',                                         // vook
   'fomo',                                                                              // Fomo
   'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin',  // Linkedin Ai
   'legalspendgpt-invoice-intelligence',                                                // LegalGPT
@@ -62,14 +67,10 @@ const PRIORITY_SLUGS: string[] = [
   'ai-chatbot-for-legal-assistance',                                                   // AI Chatbot for Legal Assistance
   'ai-data-query-system',                                                              // AI Data Query System
   'ai-marketing-assistant',                                                            // AI Marketing Assistance
-  'ai-agent-for-stock-market',                                                         // AI Agent Stock Market
   'tutorgpt-ai-personalized-tutoring-platform-to-make-education-accessible-and-seamless', // TutorGPT Personalised Tutoring Platform
   'voice-assistant-chatbot-for-shopify-stores-to-enhance-user-engagement',             // Voice Assistant Chatbot for Shopify Stores...
   'multi-agent-trading-system-transforming-cryptocurrency-trading-strategies',         // MultiAgent Trading System...
-  'ai-powered-recruiter-agents-to-revolutionize-talent-acquisition',                   // AI-Powered Recruiter Agents...
   'fraud-detection-ml-techniques-v2',                                                  // Fraud Detection Using Machine Learning Techniques
-  'two-point-correlation-function-spatial-clustering',                                 // Applied Statistical Research... Spatial Clustering
-  'cosmological-model-parameter-extraction',                                           // Applied Cosmology Research... Lambda-CDM
   'onchain-toolkit-ai-analysis-platform',                                              // Onchain Toolkit
 ];
 

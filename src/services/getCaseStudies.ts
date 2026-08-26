@@ -36,8 +36,9 @@ export async function getCaseStudies(): Promise<CaseStudySummary[]> {
     const docs = await collection
       .find(
         {},
-        { projection: { slug: 1, title: 1, coverImage: 1, description: 1, metaDescription: 1 } }
+        { projection: { slug: 1, title: 1, coverImage: 1, description: 1, metaDescription: 1, order: 1 } }
       )
+      .sort({ order: 1 })
       .toArray();
 
     const summaries: CaseStudySummary[] = docs.map((d) => ({

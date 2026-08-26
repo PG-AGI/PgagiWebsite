@@ -216,7 +216,8 @@ export async function GET(request: NextRequest) {
     const db = client.db();
     const collection = db.collection('caseStudies');
     const caseStudies = await collection
-      .find({}, { projection: { slug: 1, title: 1, coverImage: 1, description: 1, metaDescription: 1 } })
+      .find({}, { projection: { slug: 1, title: 1, coverImage: 1, description: 1, metaDescription: 1, order: 1 } })
+      .sort({ order: 1 })
       .toArray();
 
     const response = caseStudies.map((caseStudy) => ({
