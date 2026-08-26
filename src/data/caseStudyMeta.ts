@@ -554,7 +554,7 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
       { value: 'Coming soon', label: 'User Retention' },
     ],
     highlight: 'Currently in Internal Testing',
-    ctaLabel: 'View Research',
+    ctaLabel: 'View Case Study',
     liveUrl: 'https://leading-her-way.com/',
     tags: ['Live Products'],
     category: 'WellTech/AI/ML',
