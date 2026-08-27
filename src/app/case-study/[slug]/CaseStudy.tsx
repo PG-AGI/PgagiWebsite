@@ -15,6 +15,7 @@ import { AiOutlineCopy } from 'react-icons/ai';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import articleShareText from '@/constants/uiText/articleShare.json';
 import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
+import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -99,7 +100,12 @@ const processLinksWithPreview = (content: string) => {
   const CaseStudy = ({ initialCaseStudy }: { initialCaseStudy?: CaseStudyData }) => {
   const router = useRouter();
   const params = useParams() as Params; // Type assertion to ensure params.slug is string
-  const slug = params.slug;
+  const slug = params?.slug;
+
+  if (slug?.toLowerCase()?.includes('sayyes')) {
+    return <SayYesCaseStudy caseStudy={initialCaseStudy} />;
+  }
+
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>((initialCaseStudy as unknown as CaseStudy) ?? null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
