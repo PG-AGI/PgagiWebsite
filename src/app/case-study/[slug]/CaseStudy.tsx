@@ -102,10 +102,6 @@ const processLinksWithPreview = (content: string) => {
   const params = useParams() as Params; // Type assertion to ensure params.slug is string
   const slug = params?.slug;
 
-  if (slug?.toLowerCase()?.includes('sayyes')) {
-    return <SayYesCaseStudy caseStudy={initialCaseStudy} />;
-  }
-
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>((initialCaseStudy as unknown as CaseStudy) ?? null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -353,6 +349,11 @@ const processLinksWithPreview = (content: string) => {
   const isVook = (slug && String(slug).toLowerCase().includes('vook')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('vook'));
   if (isVook) {
     return <VookCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isSayYes = (slug && String(slug).toLowerCase().includes('sayyes')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('sayyes'));
+  if (isSayYes) {
+    return <SayYesCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing

@@ -250,7 +250,7 @@ export default function SayYesCaseStudy({ caseStudy }: SayYesCaseStudyProps) {
           </div>
 
           <p className={styles.sectionParagraph}>
-            Ella is structured as a <strong>loop, not a funnel</strong>. Every interaction feeds back into the couple's preference profile, so the recommendations narrow as the conversation continues rather than resetting each session.
+            Ella is structured as a <strong>loop, not a funnel</strong>. Every interaction feeds back into the couple&apos;s preference profile, so the recommendations narrow as the conversation continues rather than resetting each session.
           </p>
 
           {/* Figure 1: The Planning Loop Diagram */}
@@ -640,7 +640,7 @@ export default function SayYesCaseStudy({ caseStudy }: SayYesCaseStudyProps) {
           </div>
 
           <p className={styles.sectionParagraph}>
-            A wedding is planned by a group, not an individual. The application treats the couple's plan as a <strong>shared workspace</strong> rather than a private account.
+            A wedding is planned by a group, not an individual. The application treats the couple&apos;s plan as a <strong>shared workspace</strong> rather than a private account.
           </p>
 
           <div className={styles.tableWrapper}>
