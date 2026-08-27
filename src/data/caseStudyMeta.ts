@@ -170,10 +170,10 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'HRTech/AI/ML',
   },
   'sayyes-ai': {
-    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
+    techStack: ['Flutter', 'FastAPI', 'Google Places API', 'Google Cloud', '+2'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '45%', label: 'Planning Time Saved' },
+      { value: '87%', label: 'Personalization' },
     ],
     highlight: 'Rapid early growth — 1K users in 7 days',
     tags: ['Live Products', 'UI/UX'],
@@ -403,13 +403,13 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // SayYes.AI: MongoDB slug is 'sayyesai-...' (no hyphen between sayyes and ai)
   'sayyesai-the-ai-wedding-companion-for-modern-brides': {
-    techStack: ['LangChain', 'FastAPI', 'Flutter', 'PostgreSQL', '+3'],
+    techStack: ['Flutter', 'FastAPI', 'Google Places API', 'Google Cloud', '+2'],
     metrics: [
-      { value: '35%', label: 'User Conversions' },
-      { value: '85%', label: 'User Retention' },
+      { value: '45%', label: 'Planning Time Saved' },
+      { value: '87%', label: 'Personalization' },
     ],
     highlight: '',
-    tags: ['UI/UX'],
+    tags: ['UI/UX', 'Live Products'],
     category: 'SocialTech/AI/ML',
   },
 

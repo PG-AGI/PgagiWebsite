@@ -1,0 +1,889 @@
+// ── Color Tokens & Variables ──
+$color-brand-red: #D91B24;
+$color-brand-red-dark: #B91C1C;
+$color-brand-red-deep: #7F1D1D;
+$color-brand-red-light: #FEE2E2;
+$color-brand-red-tint: #FEF2F2;
+
+$color-bg-page: #FFFFFF;
+$color-bg-subtle: #F9FAFB;
+$color-bg-card: #FFFFFF;
+
+$color-text-main: #111827;
+$color-text-secondary: #374151;
+$color-text-muted: #6B7280;
+$color-text-light: #9CA3AF;
+
+$color-border-subtle: #E5E7EB;
+$color-border-medium: #D1D5DB;
+$color-border-red: #FECACA;
+
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+
+.sayYesPage {
+  width: 100%;
+  background-color: $color-bg-page;
+  color: $color-text-main;
+  font-family: inherit;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+  position: relative;
+}
+
+.rail {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+// ── Top Brand Wave Banner ──
+.topWaveWrapper {
+  width: 100%;
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #7F0E13 0%, #BA141C 40%, #D91B24 100%);
+
+  @media (max-width: 768px) {
+    height: 90px;
+  }
+}
+
+.topWaveSvg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+// ── Hero Section (Page 1) ──
+.heroSection {
+  padding-top: 48px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid $color-border-subtle;
+
+  @media (max-width: 768px) {
+    padding-top: 32px;
+    padding-bottom: 40px;
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: $color-brand-red;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+
+  .slash {
+    color: $color-border-medium;
+    font-weight: 400;
+  }
+}
+
+.heroMainTitle {
+  font-size: clamp(2.75rem, 5vw, 4.25rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: $color-text-main;
+  letter-spacing: -0.035em;
+  margin: 0 0 12px;
+}
+
+.heroSubtitle {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: $color-text-main;
+  letter-spacing: -0.025em;
+  margin: 0 0 24px;
+
+  .accentElla {
+    color: $color-brand-red;
+  }
+}
+
+.redAccentBar {
+  width: 56px;
+  height: 4px;
+  background-color: $color-brand-red;
+  border-radius: 2px;
+  margin-bottom: 28px;
+}
+
+.heroLead {
+  font-size: clamp(1.125rem, 2vw, 1.35rem);
+  line-height: 1.6;
+  color: $color-text-secondary;
+  max-width: 800px;
+  margin: 0 0 40px;
+}
+
+// ── Metadata Grid ──
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  background: $color-bg-subtle;
+  border: 1px solid $color-border-subtle;
+  border-radius: 12px;
+  padding: 24px 28px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metaLabel {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-brand-red;
+}
+
+.metaValue {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $color-text-main;
+  line-height: 1.45;
+}
+
+// ── Sticky Navigation Bar ──
+.stickyNav {
+  position: sticky;
+  top: 72px;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid $color-border-subtle;
+  padding: 12px 0;
+  margin-bottom: 48px;
+  transition: box-shadow 0.2s ease;
+
+  @media (max-width: 768px) {
+    top: 60px;
+  }
+}
+
+.navScrollRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.navLink {
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  color: $color-text-muted;
+  background: transparent;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: $color-brand-red;
+    background: $color-brand-red-tint;
+  }
+
+  &.navLinkActive {
+    color: #FFFFFF;
+    background: $color-brand-red;
+  }
+}
+
+// ── Generic Section Layout ──
+.sectionBlock {
+  padding: 56px 0;
+  border-bottom: 1px solid $color-border-subtle;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  @media (max-width: 768px) {
+    padding: 40px 0;
+  }
+}
+
+.sectionHeader {
+  margin-bottom: 32px;
+}
+
+.sectionNumber {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: $color-brand-red;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sectionTitle {
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: $color-text-main;
+  letter-spacing: -0.025em;
+  margin: 0 0 16px;
+}
+
+.sectionDivider {
+  width: 100%;
+  height: 2px;
+  background-color: $color-brand-red;
+  margin-bottom: 24px;
+}
+
+.sectionParagraph {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: $color-text-secondary;
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  strong {
+    color: $color-text-main;
+    font-weight: 700;
+  }
+}
+
+// ── 4 Stat / Feature Cards (Section 01 Overview) ──
+.overviewCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.overviewCard {
+  background: #FFFFFF;
+  border: 1px solid $color-border-subtle;
+  border-top: 4px solid $color-brand-red;
+  border-radius: 8px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: $shadow-sm;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.overviewCardTitle {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: $color-brand-red;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.overviewCardLabel {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  line-height: 1.45;
+}
+
+// ── Styled Tables (Problem, Capabilities, Architecture, Results, Roadmap) ──
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid $color-border-subtle;
+  margin: 32px 0;
+  box-shadow: $shadow-sm;
+}
+
+.customTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9375rem;
+
+  thead {
+    background-color: $color-brand-red;
+    color: #FFFFFF;
+
+    th {
+      padding: 16px 20px;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $color-border-subtle;
+      transition: background-color 0.15s ease;
+
+      &:nth-child(even) {
+        background-color: #FDFDFD;
+      }
+
+      &:hover {
+        background-color: $color-brand-red-tint;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: 18px 20px;
+      color: $color-text-secondary;
+      line-height: 1.6;
+      vertical-align: top;
+
+      &.primaryCol {
+        font-weight: 700;
+        color: $color-text-main;
+        white-space: nowrap;
+        width: 240px;
+
+        @media (max-width: 768px) {
+          white-space: normal;
+          width: auto;
+        }
+      }
+    }
+  }
+}
+
+// ── Figure Container & Caption ──
+.figureContainer {
+  margin: 36px 0;
+  background: $color-bg-subtle;
+  border: 1px solid $color-border-subtle;
+  border-radius: 12px;
+  padding: 32px;
+
+  @media (max-width: 768px) {
+    padding: 20px 14px;
+  }
+}
+
+.figureCaption {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  margin-top: 20px;
+  display: block;
+}
+
+// ── Figure 1: The Planning Loop Diagram ──
+.planningLoopOuter {
+  width: 100%;
+}
+
+.diagramTitle {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: $color-text-main;
+  margin-bottom: 24px;
+}
+
+.loopGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+.loopGridBottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  max-width: 60%;
+  margin-left: auto;
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+}
+
+.loopCard {
+  background: #FFFFFF;
+  border: 1.5px solid $color-brand-red;
+  border-radius: 6px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: $shadow-sm;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $color-brand-red-tint;
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.loopCardHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.loopCardNum {
+  font-size: 0.875rem;
+  font-weight: 900;
+  color: $color-brand-red;
+}
+
+.loopCardTitle {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: $color-text-main;
+}
+
+.loopCardSub {
+  font-size: 0.75rem;
+  color: $color-text-muted;
+  line-height: 1.35;
+}
+
+.feedbackLoopBar {
+  margin-top: 24px;
+  padding: 12px 20px;
+  background: $color-brand-red-tint;
+  border: 1px dashed $color-brand-red;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: $color-brand-red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+// ── Callout Box (What Ella Captures / Why Live Retrieval) ──
+.calloutBox {
+  background: #FFFFFF;
+  border-left: 4px solid $color-brand-red;
+  border-radius: 0 8px 8px 0;
+  padding: 24px 28px;
+  margin: 32px 0;
+  box-shadow: $shadow-sm;
+}
+
+.calloutHeader {
+  font-size: 0.8125rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $color-brand-red;
+  margin-bottom: 12px;
+}
+
+.calloutContent {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: $color-text-secondary;
+  margin: 0;
+}
+
+// ── Figure 2: Venue Recommendation Pipeline Diagram ──
+.pipelineWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.pipelineRow {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: center;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.pipelineStepCard {
+  background: #FFFFFF;
+  border: 1.5px solid $color-brand-red;
+  border-radius: 6px;
+  padding: 16px 20px;
+  box-shadow: $shadow-sm;
+
+  &.highlightRed {
+    background: $color-brand-red;
+    color: #FFFFFF;
+
+    .stepTitle {
+      color: #FFFFFF;
+    }
+
+    .stepDesc {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+}
+
+.stepTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: $color-brand-red;
+  margin-bottom: 6px;
+}
+
+.stepDesc {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: $color-text-secondary;
+}
+
+.sideSignalCard {
+  background: #FFFFFF;
+  border: 1px dashed $color-border-medium;
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sideSignalLabel {
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+}
+
+.sideSignalValue {
+  font-size: 0.75rem;
+  color: $color-text-secondary;
+  line-height: 1.35;
+}
+
+.pipelineDownArrow {
+  text-align: center;
+  color: $color-brand-red;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+// ── Why This Beats Filter-Based Search (5 Points) ──
+.pointsList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 32px 0;
+}
+
+.pointItem {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  align-items: baseline;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+  }
+}
+
+.pointNumber {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: $color-brand-red;
+  line-height: 1;
+}
+
+.pointBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pointTitle {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: $color-text-main;
+}
+
+.pointText {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: $color-text-secondary;
+  margin: 0;
+}
+
+// ── 4 Badges (Section 05 Places API) ──
+.placesBadgesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.placesBadge {
+  background: $color-bg-subtle;
+  border-left: 3px solid $color-brand-red;
+  border-radius: 0 6px 6px 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.placesBadgeTitle {
+  font-size: 1.125rem;
+  font-weight: 900;
+  color: $color-brand-red;
+}
+
+.placesBadgeDesc {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  line-height: 1.35;
+}
+
+// ── Figure 3: Architecture Layers Diagram ──
+.archStack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.archLayer {
+  border: 1.5px solid $color-brand-red;
+  border-radius: 8px;
+  background: #FFFFFF;
+  overflow: hidden;
+
+  &.clientLayer {
+    background: $color-brand-red;
+    color: #FFFFFF;
+    border: none;
+    padding: 18px 24px;
+
+    .archLayerHeader {
+      color: #FFFFFF;
+      font-size: 0.8125rem;
+      letter-spacing: 0.14em;
+    }
+
+    .archClientText {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+  }
+}
+
+.archLayerHeader {
+  background: $color-brand-red-tint;
+  padding: 10px 20px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-brand-red;
+  border-bottom: 1px solid $color-border-red;
+}
+
+.archSubGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 16px 20px;
+
+  &.grid3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &.grid2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.archSubBox {
+  background: $color-bg-subtle;
+  border: 1px solid $color-border-subtle;
+  border-radius: 4px;
+  padding: 12px 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $color-text-main;
+  text-align: center;
+}
+
+// ── Section 09 Results Counters ──
+.resultsCountersGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 36px 0;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resultCounterCard {
+  background: #FFFFFF;
+  border: 1px solid $color-border-subtle;
+  border-top: 4px solid $color-brand-red;
+  border-radius: 8px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: $shadow-sm;
+}
+
+.counterValue {
+  font-size: 3rem;
+  font-weight: 900;
+  color: $color-brand-red;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.counterLabel {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  line-height: 1.4;
+}
+
+// ── Final Quote Callout (Page 12) ──
+.finalQuoteSection {
+  margin: 48px 0 32px;
+  padding: 32px 36px;
+  border-left: 5px solid $color-brand-red;
+  background: $color-bg-subtle;
+  border-radius: 0 12px 12px 0;
+
+  @media (max-width: 600px) {
+    padding: 24px 20px;
+  }
+}
+
+.finalQuoteText {
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.5;
+  color: $color-text-main;
+  font-style: italic;
+  margin: 0;
+}
+
+// ── Footer Case Study Stamp ──
+.caseStudyFooterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  margin-top: 48px;
+  border-top: 1px solid $color-border-subtle;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: $color-text-muted;
+  text-transform: uppercase;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}

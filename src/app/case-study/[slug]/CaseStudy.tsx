@@ -15,6 +15,7 @@ import { AiOutlineCopy } from 'react-icons/ai';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import articleShareText from '@/constants/uiText/articleShare.json';
 import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
+import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -99,7 +100,8 @@ const processLinksWithPreview = (content: string) => {
   const CaseStudy = ({ initialCaseStudy }: { initialCaseStudy?: CaseStudyData }) => {
   const router = useRouter();
   const params = useParams() as Params; // Type assertion to ensure params.slug is string
-  const slug = params.slug;
+  const slug = params?.slug;
+
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>((initialCaseStudy as unknown as CaseStudy) ?? null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -347,6 +349,11 @@ const processLinksWithPreview = (content: string) => {
   const isVook = (slug && String(slug).toLowerCase().includes('vook')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('vook'));
   if (isVook) {
     return <VookCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isSayYes = (slug && String(slug).toLowerCase().includes('sayyes')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('sayyes'));
+  if (isSayYes) {
+    return <SayYesCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing

@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import CaseStudy from './CaseStudy';
 import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
+import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -42,6 +43,18 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
+  const isSayYes = params?.slug?.toLowerCase()?.includes('sayyes');
+  if (isSayYes) {
+    return {
+      title: 'SayYes.AI: Ella, the AI Wedding Planning Companion | PG-AGI Case Study',
+      description: 'A conversational AI platform that understands what a couple actually wants from their wedding, then finds the venues and vendors that match it.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'SayYes.AI Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -67,6 +80,12 @@ export default async function CaseStudyPage({
   if (isVook) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <VookCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isSayYes = params?.slug?.toLowerCase()?.includes('sayyes');
+  if (isSayYes) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <SayYesCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
