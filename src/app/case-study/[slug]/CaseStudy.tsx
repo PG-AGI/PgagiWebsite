@@ -16,6 +16,7 @@ import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import articleShareText from '@/constants/uiText/articleShare.json';
 import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
+import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/BrainifyCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -354,6 +355,11 @@ const processLinksWithPreview = (content: string) => {
   const isSayYes = (slug && String(slug).toLowerCase().includes('sayyes')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('sayyes'));
   if (isSayYes) {
     return <SayYesCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isBrainify = (slug && String(slug).toLowerCase().includes('brainify')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('brainify'));
+  if (isBrainify) {
+    return <BrainifyCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing

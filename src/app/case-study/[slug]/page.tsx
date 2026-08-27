@@ -10,6 +10,7 @@ import type { Metadata } from 'next';
 import CaseStudy from './CaseStudy';
 import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
+import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/BrainifyCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -55,6 +56,18 @@ export async function generateMetadata({
     };
   }
 
+  const isBrainify = params?.slug?.toLowerCase()?.includes('brainify');
+  if (isBrainify) {
+    return {
+      title: 'brAInify: AI-Personalized Language & Skill Learning Platform | PG-AGI Case Study',
+      description: 'A mobile-first, invite-only, multilingual learning platform that turns structured skill-building into a daily habit across 10,000+ learners.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'brAInify Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -86,6 +99,12 @@ export default async function CaseStudyPage({
   if (isSayYes) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <SayYesCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isBrainify = params?.slug?.toLowerCase()?.includes('brainify');
+  if (isBrainify) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <BrainifyCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
