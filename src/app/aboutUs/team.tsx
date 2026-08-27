@@ -40,8 +40,10 @@ const teamMembers: TeamMember[] = [
   { id: 24, name: "Divyansh Mishra", role: "SDE", image: "/assets/team/Divyansh.png" },
   { id: 25, name: "Sahil Nikalje", role: "SDE", image: "/assets/team/Sahil Nikalje PGAGI.png" },
   { id: 26, name: "Shivang Dixit", role: "SDE", image: "/assets/team/Shivang.png" },
-  { id: 27, name: "Nathan Christopher Menon", role: "AI/ML ", image: "/assets/team/Nathan.jpeg" },
-  { id: 28, name: "Venkateramanan Manivannan", role: "AI/ML ", image: "/assets/team/venkate_pic.JPG" },
+  { id: 27, name: "Thanmay M Shetty", role: "AI/ML ", image: "/assets/team/Thanmay.jpg" },
+  { id: 28, name: "Tanish Sarkar", role: "AI/ML ", image: "/assets/team/Tanish.jpg" },
+  { id: 29, name: "Nathan Christopher Menon", role: "AI/ML ", image: "/assets/team/Nathan.jpeg" },
+  { id: 30, name: "Venkateramanan Manivannan", role: "AI/ML ", image: "/assets/team/venkate_pic.JPG" },
 
 
 
