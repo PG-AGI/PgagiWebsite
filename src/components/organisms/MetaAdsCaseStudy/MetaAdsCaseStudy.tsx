@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Maximize2, X } from 'lucide-react';
 import styles from '@/styles/components/organisms/MetaAdsCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
 
@@ -77,32 +77,30 @@ const COMPONENTS_DELIVERED: { area: string; detail: string }[] = [
   { area: 'Deployment', detail: 'Docker, Google Cloud Run, GitHub Actions CI/CD (Workload Identity Federation), Postgres/Neon + Alembic.' },
 ];
 
-// Native pixel dimensions of each screenshot. Serving them at (or below) their
-// real size — instead of a fixed 1200×675 that upscales the ~1000px sources —
-// keeps text-heavy UI screenshots crisp instead of blurred on high-DPI screens.
+// High-definition pixel dimensions for 2x super-sampled screenshots
 const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
-  '/case-studies/meta-ads-run-creation.png': { width: 1017, height: 371 },
-  '/case-studies/meta-ads-live-pipeline.png': { width: 1003, height: 433 },
-  '/case-studies/meta-ads-human-review.png': { width: 1002, height: 479 },
-  '/case-studies/meta-ads-rbac-team.png': { width: 1010, height: 537 },
-  '/case-studies/meta-ads-global-prompts.png': { width: 1005, height: 432 },
-  '/case-studies/meta-ads-naming-system.png': { width: 993, height: 401 },
-  '/case-studies/meta-ads-image-studio.png': { width: 979, height: 444 },
-  '/case-studies/meta-ads-assets-outbox.png': { width: 1005, height: 508 },
-  '/case-studies/meta-ads-notion-integration.png': { width: 971, height: 482 },
-  '/case-studies/meta-ads-logs-and-cost.png': { width: 1002, height: 446 },
-  '/case-studies/meta-ads-runs-dashboard-dark.png': { width: 986, height: 507 },
-  '/case-studies/meta-ads-runs-dashboard-light.png': { width: 991, height: 501 },
-  '/case-studies/meta-ads-compare-scripts-dark.png': { width: 979, height: 509 },
-  '/case-studies/meta-ads-compare-scripts-light.png': { width: 989, height: 509 },
-  '/case-studies/meta-ads-image-studio-plan-dark.png': { width: 837, height: 436 },
-  '/case-studies/meta-ads-image-studio-plan-light.png': { width: 837, height: 429 },
-  '/case-studies/meta-ads-global-prompts-dark.png': { width: 837, height: 438 },
-  '/case-studies/meta-ads-global-prompts-light.png': { width: 837, height: 433 },
-  '/case-studies/meta-ads-settings-dark.png': { width: 837, height: 425 },
-  '/case-studies/meta-ads-settings-light.png': { width: 837, height: 431 },
+  '/case-studies/meta-ads-run-creation.png': { width: 2034, height: 742 },
+  '/case-studies/meta-ads-live-pipeline.png': { width: 2006, height: 866 },
+  '/case-studies/meta-ads-human-review.png': { width: 2004, height: 958 },
+  '/case-studies/meta-ads-rbac-team.png': { width: 2020, height: 1074 },
+  '/case-studies/meta-ads-global-prompts.png': { width: 2010, height: 864 },
+  '/case-studies/meta-ads-naming-system.png': { width: 1986, height: 802 },
+  '/case-studies/meta-ads-image-studio.png': { width: 1958, height: 888 },
+  '/case-studies/meta-ads-assets-outbox.png': { width: 2010, height: 1016 },
+  '/case-studies/meta-ads-notion-integration.png': { width: 1942, height: 964 },
+  '/case-studies/meta-ads-logs-and-cost.png': { width: 2004, height: 892 },
+  '/case-studies/meta-ads-runs-dashboard-dark.png': { width: 1972, height: 1014 },
+  '/case-studies/meta-ads-runs-dashboard-light.png': { width: 1982, height: 1002 },
+  '/case-studies/meta-ads-compare-scripts-dark.png': { width: 1958, height: 1018 },
+  '/case-studies/meta-ads-compare-scripts-light.png': { width: 1978, height: 1018 },
+  '/case-studies/meta-ads-image-studio-plan-dark.png': { width: 1674, height: 872 },
+  '/case-studies/meta-ads-image-studio-plan-light.png': { width: 1674, height: 858 },
+  '/case-studies/meta-ads-global-prompts-dark.png': { width: 1674, height: 876 },
+  '/case-studies/meta-ads-global-prompts-light.png': { width: 1674, height: 866 },
+  '/case-studies/meta-ads-settings-dark.png': { width: 1674, height: 850 },
+  '/case-studies/meta-ads-settings-light.png': { width: 1674, height: 862 },
 };
-const FALLBACK_IMAGE_DIMENSIONS = { width: 1200, height: 675 };
+const FALLBACK_IMAGE_DIMENSIONS = { width: 2000, height: 1000 };
 
 const PRODUCT_SCREENS: {
   title: string;
@@ -219,6 +217,15 @@ const PRODUCT_SCREENS: {
 
 export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
   const [activeSection, setActiveSection] = useState('overview');
+  const [selectedImage, setSelectedImage] = useState<{ src: string; title: string; caption?: string } | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedImage(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -557,7 +564,23 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
                       const dims = IMAGE_DIMENSIONS[imgItem.src] ?? FALLBACK_IMAGE_DIMENSIONS;
                       return (
                         <div key={idx} className={styles.showcaseImageEntry}>
-                          <div className={styles.showcaseImageWrapper}>
+                          <div
+                            className={styles.showcaseImageWrapper}
+                            onClick={() =>
+                              setSelectedImage({
+                                src: imgItem.src,
+                                title: screen.title,
+                                caption: imgItem.caption || screen.caption,
+                              })
+                            }
+                            role="button"
+                            tabIndex={0}
+                            title="Click to view full screen"
+                          >
+                            <div className={styles.zoomHint}>
+                              <Maximize2 size={13} />
+                              <span>Click to enlarge</span>
+                            </div>
                             <Image
                               src={imgItem.src}
                               alt={`${screen.title} - ${idx + 1}`}
@@ -574,7 +597,23 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
                   </div>
                 ) : screen.image ? (
                   <>
-                    <div className={styles.showcaseImageWrapper}>
+                    <div
+                      className={styles.showcaseImageWrapper}
+                      onClick={() =>
+                        setSelectedImage({
+                          src: screen.image!,
+                          title: screen.title,
+                          caption: screen.caption,
+                        })
+                      }
+                      role="button"
+                      tabIndex={0}
+                      title="Click to view full screen"
+                    >
+                      <div className={styles.zoomHint}>
+                        <Maximize2 size={13} />
+                        <span>Click to enlarge</span>
+                      </div>
                       <Image
                         src={screen.image}
                         alt={screen.title}
@@ -784,6 +823,49 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <p className={styles.copyrightLine}>© 2023–2026 PG-AGI. All Rights Reserved.</p>
         </div>
       </div>
+
+      {/* ── High-Resolution Lightbox Modal ── */}
+      {selectedImage && (
+        <div
+          className={styles.lightboxOverlay}
+          onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className={styles.lightboxHeader}>
+            <h3 className={styles.lightboxTitle}>{selectedImage.title}</h3>
+            <button
+              type="button"
+              className={styles.lightboxCloseBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImage(null);
+              }}
+              aria-label="Close image preview"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <div
+            className={styles.lightboxContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={selectedImage.src}
+              alt={selectedImage.title}
+              width={(IMAGE_DIMENSIONS[selectedImage.src] ?? FALLBACK_IMAGE_DIMENSIONS).width}
+              height={(IMAGE_DIMENSIONS[selectedImage.src] ?? FALLBACK_IMAGE_DIMENSIONS).height}
+              unoptimized
+              className={styles.lightboxImage}
+              priority
+            />
+            {selectedImage.caption && (
+              <div className={styles.lightboxCaption}>{selectedImage.caption}</div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
