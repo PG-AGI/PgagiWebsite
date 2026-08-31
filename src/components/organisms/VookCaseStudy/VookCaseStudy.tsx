@@ -474,117 +474,295 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
 
         {/* ── 7. Native Access Section ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>Native Bridge</span>
+          <span className={styles.eyebrowPill}>IMPLEMENTATION</span>
           <h2 className={styles.sectionHeading}>
-            Native access below; a single source of truth above.
+            Native access below, a single source of truth above.
           </h2>
 
-          <p className={styles.sectionParagraph}>
-            Everything below the Dart boundary talks directly to hardware. Everything above it only ever reads from one <code>ChangeNotifier</code> — no screen owns hardware state, and no screen talks to the dongle directly.
+          <div className={styles.implCardGrid}>
+            {/* Left Card: Native platform layer */}
+            <div className={styles.implCard}>
+              <div className={styles.implIconBox}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M2 2H22L12 12L22 22H2V2Z" fill="url(#kotlin-grad-vook)" />
+                  <defs>
+                    <linearGradient id="kotlin-grad-vook" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#7F52FF" />
+                      <stop offset="0.5" stopColor="#E44857" />
+                      <stop offset="1" stopColor="#C711E1" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+
+              <h3 className={styles.implCardTitle}>
+                Native platform layer — UsbHidPlugin (Kotlin)
+              </h3>
+
+              <ul className={styles.implBulletList}>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    <strong>VID/PID filtering</strong> on connect events so only VOOK devices are claimed.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Opens the HID interrupt interface (<span className={styles.greenMono}>Interface[3]</span>).
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    A dedicated <span className={styles.grayMono}>HidReadThread</span> polls continuously at ~20 ms and forwards frames to Flutter over a <span className={styles.grayMono}>MethodChannel</span>.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Writes outbound frames synchronously; manages the USB permission flow per device.
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Right Card: Domain layer */}
+            <div className={styles.implCard}>
+              <div className={styles.implIconBox}>
+                <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+                  <circle cx="16" cy="11" r="5" fill="#F59E0B" fillOpacity="0.2" stroke="#F59E0B" strokeWidth="1.5" />
+                  <rect x="7" y="18" width="18" height="8" rx="4" fill="#9333EA" />
+                  <text x="16" y="24" textAnchor="middle" fill="#ffffff" fontSize="6.5" fontWeight="700" fontFamily="sans-serif">Domain</text>
+                  <path d="M16 6V8M21 11H23M9 11H11" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="23" cy="7" r="1.5" fill="#EC4899" />
+                </svg>
+              </div>
+
+              <h3 className={styles.implCardTitle}>
+                Domain layer — MicController (ChangeNotifier)
+              </h3>
+
+              <ul className={styles.implBulletList}>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Parses every 17–byte frame into a typed <span className={styles.grayMono}>MicState</span> and exposes reactive TX state to the UI.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Builds and writes outbound command frames.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    A suppress-window mechanism prevents incoming reports from overwriting optimistic local state right after a command.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    A background loop sends <span className={styles.blueMono}>GET_STATE</span> on a 3–second interval when no other traffic is active.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    <strong>TX reconnect logic</strong> re-sends last-known state when a transmitter reappears after going out of range.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    <strong>Reset-to-defaults</strong> sets a defined safe state with a 1500 ms suppress window to let firmware settle.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Callout */}
+          <div className={styles.suppressCallout}>
+            — SUPPRESS WINDOW — THE CENTRAL RELIABILITY PATTERN
+          </div>
+
+          <p className={styles.suppressDesc}>
+            Each device supports two wireless transmitters (TX0 and TX1). The receiver reports state for both independently in every input frame; the app tracks them as separate TxState models and renders each with its own controls. Commands can be sent per-transmitter or broadcast to both at once.
           </p>
 
-          <div className={styles.twoCardGrid}>
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
-                <Terminal size={22} />
+          {/* Figure 4 Timing Diagram */}
+          <div className={styles.purpleDiagramWrapper}>
+            <div className={styles.timingInner}>
+              <div className={styles.timingHeader}>
+                <div className={styles.pointerLeft}>
+                  <span className={styles.pointerTextWhite}>SET_MUTE sent</span>
+                  <div className={styles.verticalTickBlue} />
+                </div>
+                <div className={styles.pointerRight}>
+                  <span className={styles.settledText}>settled report accepted</span>
+                </div>
               </div>
-              <h3 className={styles.cardTitle}>Native platform layer — Kotlin / Swift</h3>
-              <ul className={styles.cardBullets}>
-                <li>Kotlin <code>UsbManager</code> / Swift <code>IOKit</code> direct interrupt-endpoint access</li>
-                <li>CRC-8 frame validation before a byte ever reaches Dart</li>
-                <li>MethodChannel bridge exposes typed commands, not raw bytes</li>
-              </ul>
-            </div>
 
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
-                <Activity size={22} />
+              <div className={styles.barsContainer}>
+                <div className={styles.settledVerticalLine} />
+                <div className={styles.barOptimistic}>
+                  UI shows intended state immediately (optimistic)
+                </div>
+                <div className={styles.barSuppress}>
+                  suppress window — incoming reports ignored (800ms · 1500ms on reset)
+                </div>
               </div>
-              <h3 className={styles.cardTitle}>Domain / UI layer — MicController ChangeNotifier</h3>
-              <ul className={styles.cardBullets}>
-                <li>Single <code>ChangeNotifier</code> is the one source of truth for TX0/TX1</li>
-                <li>Optimistic UI updates before hardware acknowledges a command</li>
-                <li>Suppress-window buffering absorbs stale device reports</li>
-              </ul>
+
+              <div className={styles.timelineAxis}>
+                <div className={styles.axisLine} />
+                <div className={styles.dotStale} />
+                <div className={styles.dotCleared} />
+              </div>
+
+              <div className={styles.axisLabelsRow}>
+                <span className={styles.axisLabelT0}>t = 0</span>
+                <span className={styles.axisLabelStale}>stale report (dropped)</span>
+                <span className={styles.axisLabelCleared}>window cleared</span>
+                <span className={styles.axisLabelTime}>time →</span>
+              </div>
             </div>
           </div>
 
-          <div className={styles.flowContainer}>
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>1</div>
-              <div className={styles.stepTitle}>Native Platform Layer</div>
-              <div className={styles.stepDetail}>Kotlin / Swift drivers read raw USB-HID interrupt reports.</div>
-            </div>
-
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>2</div>
-              <div className={styles.stepTitle}>MicController (ChangeNotifier)</div>
-              <div className={styles.stepDetail}>Single domain model reconciles TX0/TX1 state and suppress windows.</div>
-            </div>
-
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>3</div>
-              <div className={styles.stepTitle}>UI Widgets</div>
-              <div className={styles.stepDetail}>Purely reactive — listen to the notifier, never touch hardware.</div>
-            </div>
-          </div>
+          <p className={styles.purpleFigureCaption}>
+            <strong>Figure 4 — Suppress-window timing.</strong> After a command, the UI updates optimistically and incoming reports are ignored for a short window (800 ms; 1500 ms for resets). Stale reports that arrive mid-window are dropped; the first report after the window reflects the firmware’s settled state.
+          </p>
         </section>
 
         {/* ── 8. Testing & Validation ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>Debugging &amp; Validation</span>
+          <span className={styles.eyebrowPill}>FIRMWARE QA</span>
           <h2 className={styles.sectionHeading}>
             180+ automated regression tests, run over raw USB.
           </h2>
 
           <p className={styles.sectionParagraph}>
-            Because firmware runs on a third-party chipset and the hardware engineering team operated remotely, we developed an automated Python hardware-regression test suite. This suite communicates directly with the receiver over raw USB-HID from a dev machine, isolating firmware defects from mobile app bugs and providing the firmware team with reproducible failure cases.
+            Because the firmware runs on a third-party chipset and the hardware team is remote, a Python hardware-regression suite was built to verify firmware behaviour directly over USB-HID from a development machine — independently of the Flutter app. This isolates firmware issues from app issues and gives the firmware team precise, reproducible failure cases instead of vague reports.
           </p>
 
           {/* Terminal Screen Photo */}
           <div className={styles.photoWrapper}>
             <div className={styles.photoFrame}>
               <Image
-                src="https://images.pgagi.in/Vook/IMG_4413.jpg"
+                src="/assets/CaseStudies/vook/vook-lab-tester.jpg"
                 alt="VOOK Firmware Regression Suite Terminal Output"
-                width={1120}
-                height={630}
-                unoptimized
+                width={1200}
+                height={675}
                 className={styles.photoImg}
               />
             </div>
+            <div className={styles.photoEyebrow}>PROOF · QA RUN</div>
             <p className={styles.photoCaption}>
-              <code>run_regression.py</code> against live hardware—full STEREO, RESET, PERSISTENCE, and CRC-validation regressions passing with raw HID frame assertion.
+              <strong>run_regression.py against live hardware.</strong> Full STEREO, RESET, PERSISTENCE and CRC-validation regressions passing — each assertion sends raw HID frames and validates the device’s response, including state persistence across polls and CRC integrity.
             </p>
           </div>
 
           {/* Pipeline Structure / Functional Coverage */}
-          <div className={styles.twoCardGrid}>
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconShield}`}>
-                <Zap size={22} />
+          <div className={styles.implCardGrid}>
+            <div className={styles.implCard}>
+              <div className={styles.floatingIconWrap}>
+                <svg width="42" height="32" viewBox="0 0 42 32" fill="none">
+                  {/* Top server bar */}
+                  <rect x="2" y="2" width="17" height="6.5" rx="2" fill="#F59E0B" />
+                  <rect x="23" y="2" width="17" height="6.5" rx="2" fill="#3B82F6" />
+                  <circle cx="10.5" cy="5.25" r="1.5" fill="#ffffff" />
+                  <circle cx="31.5" cy="5.25" r="1.5" fill="#ffffff" />
+
+                  {/* Middle connection */}
+                  <path d="M10.5 8.5V13M31.5 8.5V13M10.5 13H31.5M21 13V17.5" stroke="#64748B" strokeWidth="1.5" strokeLinecap="round" />
+
+                  {/* Bottom server bar */}
+                  <rect x="2" y="17.5" width="17" height="6.5" rx="2" fill="#F59E0B" />
+                  <rect x="23" y="17.5" width="17" height="6.5" rx="2" fill="#3B82F6" />
+                  <circle cx="10.5" cy="20.75" r="1.5" fill="#ffffff" />
+                  <circle cx="31.5" cy="20.75" r="1.5" fill="#ffffff" />
+
+                  {/* Bottom branch node */}
+                  <path d="M21 24V27.5M14 27.5H28" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="21" cy="27.5" r="2" fill="#10B981" />
+                </svg>
               </div>
-              <h3 className={styles.cardTitle}>Pipeline Structure</h3>
-              <ul className={styles.cardBullets}>
-                <li>Fixture-driven setup/teardown against live hardware</li>
-                <li><code>run_regression.py</code> runs from CI or a dev bench alike</li>
-                <li>Structured pass/fail report per test case with raw frame capture</li>
+              <h3 className={styles.implCardTitle}>Pipeline Structure</h3>
+              <ul className={styles.implBulletList}>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    <strong>180+ individual test scripts (test_01 ... test_182)</strong>, each exercising a specific capability or edge case.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Tests send raw HID frames and validate the device’s response frames.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    A shared utility module handles USB enumeration, frame encoding, CRC calculation, and response parsing.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    run_regression.py orchestrates the full suite and prints pass/fail metrics
+                  </span>
+                </li>
               </ul>
             </div>
 
-            <div className={styles.featureCard}>
-              <div className={`${styles.cardIconWrap} ${styles.iconChip}`}>
-                <Radio size={22} />
+            <div className={styles.implCard}>
+              <div className={styles.floatingIconWrap}>
+                <svg width="36" height="34" viewBox="0 0 36 34" fill="none">
+                  <rect x="8" y="3" width="24" height="28" rx="4" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.5" />
+                  <rect x="12" y="7" width="16" height="3.5" rx="1.5" fill="#0EA5E9" />
+                  <line x1="12" y1="15" x2="28" y2="15" stroke="#CBD5E1" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="12" y1="20" x2="28" y2="20" stroke="#CBD5E1" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="12" y1="25" x2="22" y2="25" stroke="#CBD5E1" strokeWidth="1.8" strokeLinecap="round" />
+                  <circle cx="8" cy="8" r="5" fill="#10B981" />
+                  <circle cx="8" cy="8" r="2.5" fill="#FBBF24" />
+                  <path d="M6.5 8L7.5 9L9.5 7" stroke="#ffffff" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </div>
-              <h3 className={styles.cardTitle}>Functional Coverage</h3>
-              <ul className={styles.cardBullets}>
-                <li>STEREO, RESET, and PERSISTENCE command families</li>
-                <li>CRC-8 frame integrity assertions on every response</li>
-                <li>Mute, gain, and denoise-level command matrices across TX0/TX1</li>
+              <h3 className={styles.implCardTitle}>Functional Coverage</h3>
+              <ul className={styles.implBulletList}>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    <strong>Command round-trips</strong> for mute, volume, denoise, echo, and voice mode; all four denoise levels per device type.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Echo and mute reliability over 20 rapid cycles each; reset-to-defaults returns every field to a safe state.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    <strong>TX hot-plug (transmitter disconnect/reconnect mid-session) and RX replug</strong> (receiver removed and reinserted without app restart).
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Voice-mode persistence across TX power cycles; NC default-on workaround for a known first-connect firmware quirk.
+                  </span>
+                </li>
+                <li className={styles.implBulletItem}>
+                  <span className={styles.implCheck}>✓</span>
+                  <span>
+                    Idle unsolicited-report detection (12-minute passive listen) and a battery-drain baseline (10-minute polling).
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
@@ -592,130 +770,141 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
           {/* 2 Lab Photos Side-by-Side */}
           <div className={styles.twoPhotoGrid}>
             <div className={styles.photoWrapper} style={{ margin: 0 }}>
-              <div className={styles.photoFrame}>
+              <div className={styles.benchPhotoFrame}>
                 <Image
-                  src="https://images.pgagi.in/Vook/IMG_4415%20(1).jpg"
-                  alt="VOOK Dual Transmitters & Receiver on Test Rig"
-                  width={560}
-                  height={380}
-                  unoptimized
-                  className={styles.photoImg}
+                  src="/assets/CaseStudies/vook/vook-lab-telemetry.jpg"
+                  alt="VOOK Pairing on the bench tester"
+                  width={600}
+                  height={375}
+                  className={styles.benchPhotoImg}
+                  style={{ objectPosition: 'center 30%' }}
                 />
               </div>
+              <div className={styles.photoEyebrow}>BENCH</div>
               <p className={styles.photoCaption}>
-                Dual transmitters and receiver exercised against the test rig with real-time pairing telemetry.
+                Pairing on the bench tester — CH2 connecting to a transmitter by address.
               </p>
             </div>
 
             <div className={styles.photoWrapper} style={{ margin: 0 }}>
-              <div className={styles.photoFrame}>
+              <div className={styles.benchPhotoFrame}>
                 <Image
-                  src="https://images.pgagi.in/Vook/IMG_4401%20(1).jpg"
-                  alt="VOOK Pairing & Channel Verification"
-                  width={560}
-                  height={380}
-                  unoptimized
-                  className={styles.photoImg}
+                  src="/assets/CaseStudies/vook/vook-usb-bridge.jpg"
+                  alt="VOOK Both transmitters and receiver exercised against the rig"
+                  width={600}
+                  height={375}
+                  className={styles.benchPhotoImg}
+                  style={{ objectPosition: 'center 65%' }}
                 />
               </div>
+              <div className={styles.photoEyebrow}>BENCH</div>
               <p className={styles.photoCaption}>
-                Bench tester verifying channel assignment, battery telemetry, and firmware build integrity.
+                Both transmitters and receiver exercised against the rig during regression.
               </p>
             </div>
           </div>
         </section>
 
         {/* ── 9. Five Reliability Problems Found Section ── */}
-        <section className={styles.reliabilitySection}>
-          <div className={styles.relHeader}>
-            <h3>Five Reliability Problems, And How They Were Fixed.</h3>
-            <p>
-              Reconciling two independent state machines across an asynchronous, lossy USB channel.
-            </p>
+        <section className={styles.sectionBlock}>
+          {/* Dark Banner */}
+          <div className={styles.darkBanner}>
+            <div className={styles.darkContent}>
+              <span className={styles.darkEyebrow}>ENGINEERING PROBLEMS SOLVED</span>
+              <h2 className={styles.darkTitle}>
+                Five Reliability Problems, And
+                <br />
+                How They Were Fixed.
+              </h2>
+              <p className={styles.darkDesc}>
+                Controlling hardware from a mobile app means reconciling two independent state machines across an asynchronous, lossy channel. Most of the difficult bugs lived in that gap. Each was reproduced in the Python suite before being fixed in the app.
+              </p>
+            </div>
           </div>
 
-          <div className={styles.relList}>
+          {/* Five Problem / Solution Blocks */}
+          <div className={styles.problemsList}>
             {/* 5.1 */}
-            <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>5.1 State suppression window</h4>
-              <div className={styles.relRow}>
-                <span className={styles.badgeIssue}>Issue</span>
-                <p className={styles.relText}>
-                  The physical device takes 200ms–800ms to apply a command while continuously streaming outdated state reports over USB, causing the app UI to flicker back and forth.
+            <div className={styles.problemItem}>
+              <h3 className={styles.problemItemTitle}>5.1 // State suppression window</h3>
+              <div className={styles.problemBox}>
+                <div className={styles.problemBoxLabel}>Problem //</div>
+                <p className={styles.problemBoxText}>
+                  After a command, the device takes ~200–800 ms to apply it and keeps reporting the old state meanwhile. The optimistic UI update was immediately overwritten by the stale report, causing toggles to snap back.
                 </p>
               </div>
-              <div className={styles.relRow}>
-                <span className={styles.badgeFix}>Fix</span>
-                <p className={styles.relText}>
-                  Engineered the <strong>suppress window pattern</strong>: after dispatching a command, the app updates state optimistically and drops incoming device reports for 800ms until the hardware state settles.
+              <div className={styles.solutionBox}>
+                <div className={styles.solutionBoxLabel}>Solution //</div>
+                <p className={styles.solutionBoxText}>
+                  A suppress-window timer blocks incoming state from overwriting local state for a configurable duration (default 800 ms, 1500 ms for resets). The UI shows the intended state at once; the first report after the window reflects the settled firmware state.
                 </p>
               </div>
             </div>
 
             {/* 5.2 */}
-            <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>5.2 Echo rapid-tap race condition</h4>
-              <div className={styles.relRow}>
-                <span className={styles.badgeIssue}>Issue</span>
-                <p className={styles.relText}>
-                  Toggling echo effects on both transmitters in rapid succession fired two independent packets against a stale <code>GET_STATE</code> response, dropping the second command.
+            <div className={styles.problemItem}>
+              <h3 className={styles.problemItemTitle}>5.2 // Echo rapid-tap race condition</h3>
+              <div className={styles.problemBox}>
+                <div className={styles.problemBoxLabel}>Problem //</div>
+                <p className={styles.problemBoxText}>
+                  Setting echo on both transmitters sequentially fired two commands ~10 ms apart; each reset the suppress timer, and interleaving with a stale GET_STATE left one TX in the wrong state, self-correcting only seconds later.
                 </p>
               </div>
-              <div className={styles.relRow}>
-                <span className={styles.badgeFix}>Fix</span>
-                <p className={styles.relText}>
-                  Built an atomic <code>setEchoBoth</code> composite frame and introduced a 120ms hardware debounce that collapses rapid taps into a single deterministic command.
+              <div className={styles.solutionBox}>
+                <div className={styles.solutionBoxLabel}>Solution //</div>
+                <p className={styles.solutionBoxText}>
+                  An atomic setEchoBoth frame sets both transmitters at once, and a 120 ms debounce collapses rapid taps into a single hardware command rather than a queue of frames.
                 </p>
               </div>
             </div>
 
             {/* 5.3 */}
-            <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>5.3 Noise cancellation level reset on toggle-off</h4>
-              <div className={styles.relRow}>
-                <span className={styles.badgeIssue}>Issue</span>
-                <p className={styles.relText}>
-                  Toggling noise cancellation OFF caused the state sync listener to overwrite the user&apos;s stored denoise level preference with zero.
+            <div className={styles.problemItem}>
+              <h3 className={styles.problemItemTitle}>5.3 // Noise-cancellation level lost on toggle-off</h3>
+              <div className={styles.problemBox}>
+                <div className={styles.problemBoxLabel}>Problem //</div>
+                <p className={styles.problemBoxText}>
+                  The NC level (Low/Medium/High) was stored separately from the on/off state. Turning NC off (level = 0) let the sync listener overwrite the stored preference with 0, so turning it back on defaulted to Low.
                 </p>
               </div>
-              <div className={styles.relRow}>
-                <span className={styles.badgeFix}>Fix</span>
-                <p className={styles.relText}>
-                  Guarded the state listener to update stored preferences only on non-zero values, preserving the exact configured intensity (Level 1–4) when toggled back ON.
+              <div className={styles.solutionBox}>
+                <div className={styles.solutionBoxLabel}>Solution //</div>
+                <p className={styles.solutionBoxText}>
+                  The sync listener was guarded to update the stored level only when the incoming denoise level is non-zero, preserving the last configured level so “resume” restores the user’s previous setting.
                 </p>
               </div>
             </div>
 
             {/* 5.4 */}
-            <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>5.4 Reset re-applies stale state</h4>
-              <div className={styles.relRow}>
-                <span className={styles.badgeIssue}>Issue</span>
-                <p className={styles.relText}>
-                  After executing &ldquo;Reset to Defaults&rdquo;, mute would silently re-enable within seconds because the cached last-known TX state was stale and the suppress window was too short.
+            <div className={styles.problemItem}>
+              <h3 className={styles.problemItemTitle}>5.4 // Reset re-applies stale state</h3>
+              <div className={styles.problemBox}>
+                <div className={styles.problemBoxLabel}>Problem //</div>
+                <p className={styles.problemBoxText}>
+                  After “Reset to Defaults”, mute would turn back on within seconds: the cached last-known-TX state (used to restore settings on reconnect) wasn’t updated during reset, and a 500 ms suppress window was too short, letting a background poll scrape stale values.
                 </p>
               </div>
-              <div className={styles.relRow}>
-                <span className={styles.badgeFix}>Fix</span>
-                <p className={styles.relText}>
-                  The reset routine now synchronously purges and refreshes the cache before sending the reset frame, extending the suppress window to 1500ms.
+              <div className={styles.solutionBox}>
+                <div className={styles.solutionBoxLabel}>Solution //</div>
+                <p className={styles.solutionBoxText}>
+                  The reset routine now updates the last-known-TX cache to the post-reset defaults before sending the command, and the suppress window was extended to 1500 ms for all reset operations.
                 </p>
               </div>
             </div>
 
             {/* 5.5 */}
-            <div className={styles.relCard}>
-              <h4 className={styles.relTitle}>5.5 USB hot-plug relaunching the app on Android</h4>
-              <div className={styles.relRow}>
-                <span className={styles.badgeIssue}>Issue</span>
-                <p className={styles.relText}>
-                  Physical button presses on the transmitter caused brief USB re-enumeration, triggering Android&apos;s <code>USB_DEVICE_ATTACHED</code> intent and forcefully stealing focus from active camera apps.
+            <div className={styles.problemItem}>
+              <h3 className={styles.problemItemTitle}>5.5 // USB hot-plug relaunching the app on Android</h3>
+              <div className={styles.problemBox}>
+                <div className={styles.problemBoxLabel}>Problem //</div>
+                <p className={styles.problemBoxText}>
+                  Pressing the physical TX button briefly re-enumerates the USB device. With a USB_DEVICE_ATTACHED intent filter in the manifest, every re-enumeration forced the app into the foreground, disrupting the third-party recording app in use.
                 </p>
               </div>
-              <div className={styles.relRow}>
-                <span className={styles.badgeFix}>Fix</span>
-                <p className={styles.relText}>
-                  Replaced static manifest intent filters with a dynamic runtime <code>BroadcastReceiver</code>, allowing the app to claim hardware endpoints silently in the background without affecting the active video recording lifecycle.
+              <div className={styles.solutionBox}>
+                <div className={styles.solutionBoxLabel}>Solution //</div>
+                <p className={styles.solutionBoxText}>
+                  The manifest intent filter was removed and detection moved entirely to a runtime BroadcastReceiver that handles hot-plug silently — claiming the device without changing the activity lifecycle or hijacking focus.
                 </p>
               </div>
             </div>

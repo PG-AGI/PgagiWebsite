@@ -1333,103 +1333,78 @@ $color-green-fix-bg: #F0FDF4;
 }
 
 /* ── Five Reliability Problems Found Section ── */
-.reliabilitySection {
-  background: $color-dark-card-bg;
-  border-radius: 20px;
-  padding: 48px 36px;
-  margin: 60px 0;
-  color: #ffffff;
-  border: 1px solid $color-dark-border;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+.problemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  margin: 48px 0 64px;
+}
 
-  @media (max-width: 640px) {
-    padding: 32px 20px;
-  }
+.problemItem {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-  .relHeader {
-    text-align: left;
-    margin-bottom: 36px;
+.problemItemTitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+  line-height: 1.35;
+}
 
-    h3 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin: 0 0 10px;
-      letter-spacing: -0.02em;
-    }
+.problemBox {
+  background: #FDECEB;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-    p {
-      font-size: 1.05rem;
-      color: #94A3B8;
-      margin: 0;
-    }
-  }
+.problemBoxLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #EF4444;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
 
-  .relList {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+.problemBoxText {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #334155;
+  margin: 0;
+}
 
-  .relCard {
-    background: #1B1E2E;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+.solutionBox {
+  background: #ECFDF5;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-    &:hover {
-      border-color: rgba(168, 85, 247, 0.4);
-      transform: translateY(-2px);
-    }
+.solutionBoxLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #10B981;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
 
-    .relTitle {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #F8FAFC;
-      margin: 0;
-    }
-
-    .relRow {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-
-      .badgeIssue {
-        background: $color-red-issue-bg;
-        color: $color-red-issue;
-        font-size: 0.75rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        padding: 3px 8px;
-        border-radius: 4px;
-        flex-shrink: 0;
-        margin-top: 2px;
-      }
-
-      .badgeFix {
-        background: $color-green-fix-bg;
-        color: $color-green-fix;
-        font-size: 0.75rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        padding: 3px 8px;
-        border-radius: 4px;
-        flex-shrink: 0;
-        margin-top: 2px;
-      }
-
-      .relText {
-        font-size: 0.95rem;
-        line-height: 1.55;
-        color: #CBD5E1;
-        margin: 0;
-      }
-    }
-  }
+.solutionBoxText {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #334155;
+  margin: 0;
 }
 
 /* ── Bottom CTA ── */
@@ -1480,5 +1455,376 @@ $color-green-fix-bg: #F0FDF4;
       transform: translateY(-2px);
       box-shadow: 0 14px 30px -4px rgba(220, 38, 38, 0.5);
     }
+  }
+}
+
+/* ── Section 7: Implementation 2-Card Grid & Figure 4 Timing Diagram ── */
+.implCardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 32px 0 40px;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.implCard {
+  background: #F8F9FA;
+  border: 1px solid #ECEEF2;
+  border-radius: 24px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.floatingIconWrap {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.implIconBox {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.implCardTitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 20px;
+  line-height: 1.35;
+}
+
+.implBulletList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.implBulletItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #475569;
+
+  strong {
+    font-weight: 700;
+    color: #1E293B;
+  }
+}
+
+.implCheck {
+  color: #10B981;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.5;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.benchPhotoFrame {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  background: #F1F5F9;
+}
+
+.benchPhotoImg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.greenMono {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: #0D9488;
+  background: #E6F8F3;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.grayMono {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: #334155;
+  background: #E2E8F0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.blueMono {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: #2563EB;
+  background: #EFF6FF;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.suppressCallout {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 44px 0 12px;
+}
+
+.suppressDesc {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 14.5px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 28px;
+  max-width: 860px;
+}
+
+/* ── Figure 4: Timing Diagram ── */
+.purpleDiagramWrapper {
+  background: #D973E8;
+  border-radius: 20px;
+  padding: 36px 36px 30px;
+  position: relative;
+  margin: 28px 0 16px;
+  overflow: hidden;
+
+  @media (max-width: 640px) {
+    padding: 24px 16px 20px;
+  }
+}
+
+.timingInner {
+  width: 100%;
+  position: relative;
+}
+
+.timingHeader {
+  position: relative;
+  width: 100%;
+  height: 42px;
+  margin-bottom: 6px;
+}
+
+.pointerLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pointerTextWhite {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.verticalTickBlue {
+  width: 2px;
+  height: 20px;
+  background: #3B49DF;
+  margin-top: 4px;
+}
+
+.pointerRight {
+  position: absolute;
+  left: 68%;
+  top: 6px;
+  transform: translateX(-50%);
+}
+
+.settledText {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.barsContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 6px 0 28px;
+  width: 100%;
+}
+
+.barOptimistic {
+  background: #EEF1FA;
+  color: #3B49DF;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: center;
+  padding: 13px 20px;
+  border-radius: 10px;
+  width: 92%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+  @media (max-width: 640px) {
+    font-size: 11.5px;
+    padding: 10px 12px;
+  }
+}
+
+.barSuppress {
+  background: #FDECE7;
+  color: #B91C1C;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  padding: 13px 20px;
+  border-radius: 10px;
+  width: 68%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+  @media (max-width: 640px) {
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+}
+
+.settledVerticalLine {
+  position: absolute;
+  left: 68%;
+  top: -16px;
+  bottom: -40px;
+  width: 2px;
+  background: #10B981;
+  z-index: 5;
+}
+
+.timelineAxis {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.axisLine {
+  width: 100%;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.dotStale {
+  position: absolute;
+  left: 32%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #EF4444;
+  z-index: 6;
+}
+
+.dotCleared {
+  position: absolute;
+  left: 68%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10B981;
+  z-index: 6;
+}
+
+.axisLabelsRow {
+  position: relative;
+  width: 100%;
+  height: 22px;
+}
+
+.axisLabelT0 {
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+}
+
+.axisLabelStale {
+  position: absolute;
+  left: 32%;
+  transform: translateX(-50%);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #DC2626;
+  white-space: nowrap;
+
+  @media (max-width: 640px) {
+    font-size: 10.5px;
+  }
+}
+
+.axisLabelCleared {
+  position: absolute;
+  left: 68%;
+  transform: translateX(-50%);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+
+  @media (max-width: 640px) {
+    font-size: 10.5px;
+  }
+}
+
+.axisLabelTime {
+  position: absolute;
+  right: 0;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.purpleFigureCaption {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.55;
+  margin: 14px 0 44px;
+
+  strong {
+    color: #1E293B;
+    font-weight: 700;
   }
 }
