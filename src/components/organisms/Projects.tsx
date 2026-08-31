@@ -41,6 +41,7 @@ const PRIORITY_SLUGS: string[] = [
   'brainify-edtech-platform',                                                          // 1. Brainify
   'aimi-brain-real-time-financial-intelligence',                                       // 2. AIMI Brain
   'email-love-ai-powered-email-template-generation-and-repair',                        // 3. Email Love
+  'meta-case-study',                                                                   // 3b. Meta Ads AI Agent
   'digital-twin-ai-powered-expert-knowledge-platform',                                 // 4. Jove
   'socialjet-ai-influencer-marketing-os',                                              // 5. Social Jet
   'nuaiy-ai-driven-multilingual-gamified-learning-platform',                           // 6. Nuaiy
@@ -246,6 +247,18 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                       {cs.description ||
                         'Advancing industry standards with bespoke AI integrations and high-performance system architectures.'}
                     </p>
+
+                    {meta?.stripImage && (
+                      <div className={styles.stripImageWrap}>
+                        <Image
+                          src={meta.stripImage}
+                          alt=""
+                          width={750}
+                          height={142}
+                          className={styles.stripImage}
+                        />
+                      </div>
+                    )}
 
                     {meta?.techStack && (
                       <div className={styles.techRow}>

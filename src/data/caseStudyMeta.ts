@@ -8,6 +8,9 @@ export type CaseStudyMeta = {
   category: string;
   // Overrides the primary CTA's label (default: "View case study").
   ctaLabel?: string;
+  // Optional wide banner (750x142) rendered under the description, above the
+  // tech-stack row. Only this card uses it — everyone else keeps text-only.
+  stripImage?: string;
 };
 
 const caseStudyMeta: Record<string, CaseStudyMeta> = {
@@ -399,6 +402,15 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     liveUrl: 'https://emaillove.com',
     tags: ['Live Products'],
     category: 'MarTech/AI/ML',
+  },
+
+  'meta-case-study': {
+    techStack: [],
+    metrics: [],
+    highlight: '',
+    tags: [],
+    category: 'MarTech/AI/ML',
+    // TODO: add stripImage (750x142) once that asset is provided.
   },
 
   // SayYes.AI: MongoDB slug is 'sayyesai-...' (no hyphen between sayyes and ai)

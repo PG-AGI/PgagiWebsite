@@ -11,6 +11,7 @@ import CaseStudy from './CaseStudy';
 import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
 import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/BrainifyCaseStudy';
+import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -80,6 +81,18 @@ export async function generateMetadata({
     };
   }
 
+  const isMetaAds = params?.slug?.toLowerCase() === 'meta-case-study';
+  if (isMetaAds) {
+    return {
+      title: 'Unisphere Corp: AI Sales Script Automation | PG-AGI Case Study',
+      description: 'An internal AI production platform that turns a marketing hypothesis into a campaign-ready script and launch-ready creative set — built on a 5-stage AI writing pipeline, human-in-the-loop review with full version history, 4-role RBAC, and a 3-mode Image Studio, and shipped end to end from proof-of-concept discovery to a production deployment on Google Cloud Run.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Unisphere Corp Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -117,6 +130,12 @@ export default async function CaseStudyPage({
   if (isBrainify) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <BrainifyCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isMetaAds = params?.slug?.toLowerCase() === 'meta-case-study';
+  if (isMetaAds) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <MetaAdsCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
