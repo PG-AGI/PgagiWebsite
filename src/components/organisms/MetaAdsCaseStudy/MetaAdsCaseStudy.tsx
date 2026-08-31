@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
 import styles from '@/styles/components/organisms/MetaAdsCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
-import ProductVisionCta from '../ProductVisionCta';
 
 interface MetaAdsCaseStudyProps {
   caseStudy?: CaseStudyData | null;
@@ -776,15 +775,11 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
 
         {/* ── Closing (page 19, verbatim) ── */}
         <div className={styles.closingCtaBox}>
-          <ProductVisionCta
-            subtitle={
-              <>
-                We engineer production-grade AI platforms, human-in-the-loop review systems, and
-                <br />
-                creative-generation pipelines for teams that need more than a prompt wrapper.
-              </>
-            }
-          />
+          <h2 className={styles.closingCtaTitle}>See what your AI product could become</h2>
+          <p className={styles.closingCtaText}>
+            We engineer production-grade AI platforms, human-in-the-loop review systems, and
+            creative-generation pipelines for teams that need more than a prompt wrapper.
+          </p>
           <p className={styles.confidentialityNote}>PGAGI Confidential — For Client Use Only</p>
           <p className={styles.copyrightLine}>© 2023–2026 PG-AGI. All Rights Reserved.</p>
         </div>
