@@ -8,6 +8,10 @@ export type CaseStudyMeta = {
   category: string;
   // Overrides the primary CTA's label (default: "View case study").
   ctaLabel?: string;
+  // Overrides the primary CTA's destination (default: the internal
+  // /case-study/[slug] page). Used to link straight to a static asset (e.g.
+  // a PDF in /public) instead. Opens in a new tab.
+  ctaHref?: string;
   // Optional wide banner (750x142) rendered under the description, above the
   // tech-stack row. Only this card uses it — everyone else keeps text-only.
   stripImage?: string;

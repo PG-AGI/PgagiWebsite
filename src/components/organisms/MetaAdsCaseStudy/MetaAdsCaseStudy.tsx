@@ -170,9 +170,7 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
             <div className={styles.runningHeader}>PGAGI Confidential | Unisphere Corp Case Study | August 2026</div>
 
             <h1 className={styles.heroMainTitle}>Unisphere Corp</h1>
-            <h2 className={styles.heroSubtitle}>AI Sales Script Automation</h2>
-
-            <div className={styles.heroDividerBar} />
+            <h2 className={styles.heroSubtitle}>Automated Campaign Creation and Optimization</h2>
 
             <p className={styles.heroLead}>
               An internal AI production platform that turns a marketing hypothesis into a campaign-ready
@@ -234,7 +232,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>Overview</span>
             <h2 className={styles.sectionTitle}>From a read-only PoC walkthrough to a production script factory.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -292,7 +289,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>Project Origin</span>
             <h2 className={styles.sectionTitle}>Reverse-engineered from a vague brief, not built from a finished spec.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -370,7 +366,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>Architecture</span>
             <h2 className={styles.sectionTitle}>A run becomes a script, a script becomes a launch package.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -456,7 +451,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>From The Product</span>
             <h2 className={styles.sectionTitle}>Ten screens that show the platform actually running.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -464,15 +458,13 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
             deployed application, not mockups.
           </p>
 
-          <div className={styles.showcaseGrid}>
+          <div className={styles.showcaseList}>
             {PRODUCT_SCREENS.map((screen) => (
-              <div key={screen.title} className={styles.showcaseCard}>
+              <div key={screen.title} className={styles.showcaseItem}>
+                <h3 className={styles.showcaseTitle}>{screen.title}</h3>
+                <p className={styles.sectionParagraph}>{screen.desc}</p>
                 <div className={styles.showcasePlaceholder}>Screenshot pending</div>
-                <div className={styles.showcaseContent}>
-                  <h3 className={styles.showcaseTitle}>{screen.title}</h3>
-                  <p className={styles.showcaseCaption}>{screen.desc}</p>
-                  <p className={styles.showcaseCaption}><em>{screen.caption}</em></p>
-                </div>
+                <p className={styles.showcaseCaption}>{screen.caption}</p>
               </div>
             ))}
           </div>
@@ -483,7 +475,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>Deployment</span>
             <h2 className={styles.sectionTitle}>Shipped to Cloud Run, not left on a laptop.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <div className={styles.tableWrapper}>
@@ -513,7 +504,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>QA &amp; Reliability</span>
             <h2 className={styles.sectionTitle}>Bugs that were root-caused, not patched around.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -585,7 +575,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>Current State &amp; Known Risks</span>
             <h2 className={styles.sectionTitle}>Documented openly, not hidden.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -620,7 +609,6 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
           <div className={styles.sectionHeader}>
             <span className={styles.redBarLabel}>Project Outcome</span>
             <h2 className={styles.sectionTitle}>A script-centric platform, deployed and in production.</h2>
-            <div className={styles.sectionDivider} />
           </div>
 
           <div className={styles.checklistBox}>
