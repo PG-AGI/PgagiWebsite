@@ -173,13 +173,13 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
 
         {/* ── 4. Architecture Section ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>Architecture</span>
+          <span className={styles.eyebrow}>ARCHITECTURE</span>
           <h2 className={styles.sectionHeading}>
             Feature-first clean architecture on Flutter.
           </h2>
 
           <p className={styles.sectionParagraph}>
-            The application follows a clean feature-first architecture, maintaining distinct presentation, domain, and data layers inside each module, backed by a native platform layer for direct hardware access. This separation keeps hardware-control logic isolated from UI rendering—the <code>mic_controls</code> module manages device domain state independently of the active screen.
+            The app follows a feature-first clean architecture, with distinct data, domain, and presentation layers inside each feature, and a native platform layer beneath for direct hardware access. The separation is what keeps the hardware-control logic testable and isolated from the UI.
           </p>
 
           {/* Layer Responsibility Table */}
@@ -257,136 +257,217 @@ export default function VookCaseStudy({ caseStudy }: VookCaseStudyProps) {
           <div className={styles.calloutDivider}>
             <span className={styles.calloutLine} />
             <p className={styles.calloutText}>
-              mic_controls holds the device-state domain — the core HID business logic — kept deliberately separate from the screens that render it
+              MIC_CONTROLS HOLDS THE DEVICE-STATE DOMAIN — THE CORE HID BUSINESS LOGIC — KEPT DELIBERATELY SEPARATE FROM THE SCREENS THAT RENDER IT
             </p>
           </div>
 
-          {/* Presentation -> Domain -> Data -> Platform Flow */}
-          <div className={styles.flowContainer}>
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>1</div>
-              <div className={styles.stepTitle}>Presentation</div>
-              <div className={styles.stepDetail}>Screens, widgets, screen-scoped state.</div>
+          {/* Layered Architecture Diagram */}
+          <div className={styles.layeredArchContainer}>
+            <div className={styles.archCardWhite}>
+              <strong>Presentation</strong> — Flutter widgets, screens, PageShell
             </div>
 
-            <div className={styles.flowArrow}>↓</div>
+            <div className={styles.archDownArrow}>↓</div>
 
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>2</div>
-              <div className={styles.stepTitle}>Domain</div>
-              <div className={styles.stepDetail}>ChangeNotifiers, use-cases, application rules.</div>
+            <div className={styles.archCardDomain}>
+              <strong>Domain</strong> — Providers / ChangeNotifiers (MicController = source of truth)
             </div>
 
-            <div className={styles.flowArrow}>↓</div>
+            <div className={styles.archDownArrow}>↓</div>
 
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>3</div>
-              <div className={styles.stepTitle}>Data</div>
-              <div className={styles.stepDetail}>Repositories, HID data sources, local cache.</div>
+            <div className={styles.archCardWhite}>
+              <strong>Data</strong> — Repositories, Services, Dio, secure storage
             </div>
 
-            <div className={styles.flowArrow}>↓</div>
+            <div className={styles.archDownArrow}>↓</div>
 
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>4</div>
-              <div className={styles.stepTitle}>Platform</div>
-              <div className={styles.stepDetail}>Native Kotlin / Swift USB-HID bridge to the dongle.</div>
+            <div className={styles.archCardPlatform}>
+              <strong>Platform</strong> — Kotlin / Swift native USB-HID layer
+            </div>
+
+            <div className={styles.archDownArrow}>↓</div>
+
+            <div className={styles.archCardDongle}>
+              USB receiver dongle · dual transmitters
             </div>
           </div>
+
+          <p className={styles.archFigureCaption}>
+            <strong>Figure 1 — Layered architecture.</strong> UI never touches hardware directly; commands and state flow through the domain layer (MicController) and the native platform layer, which owns the USB-HID channel to the receiver dongle.
+          </p>
         </section>
 
         {/* ── 5. Dark Feature Banner ── */}
         <div className={styles.darkBanner}>
           <div className={styles.darkContent}>
-            <h2 className={styles.darkTitle}>USB-HID Hardware Integration</h2>
+            <span className={styles.darkEyebrow}>THE CORE PROBLEM</span>
+            <h2 className={styles.darkTitle}>
+              USB–HID Hardware<br />Integration
+            </h2>
             <p className={styles.darkDesc}>
-              Deep integration with native USB HAL on Android and iOS to achieve deterministic, zero-latency hardware control.
+              Building a bidirectional control channel between a Flutter app and a USB microphone over the HID protocol was the most technically demanding part of the system — the app has to act as a USB HID host, exchanging raw binary frames with firmware it does not own
             </p>
-            <div className={styles.darkPills}>
-              <span className={styles.darkPill}>Direct Interrupt Endpoints</span>
-              <span className={styles.darkPill}>17-Byte CRC-8 Maxim Frames</span>
-              <span className={styles.darkPill}>Optimistic UI with 800ms Suppress Window</span>
-              <span className={styles.darkPill}>Lossless Dual-TX Telemetry</span>
-            </div>
           </div>
         </div>
 
         {/* ── 6. USB HID Host Section ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>USB Protocol</span>
+          <span className={styles.eyebrow}>USB HID · DEVICE CONTROL</span>
           <h2 className={styles.sectionHeading}>
             The app is a USB HID host, not an audio client.
           </h2>
 
           <p className={styles.sectionParagraph}>
-            Standard audio APIs never see the receiver as a control surface — they only expose it as a playback device. VOOK instead claims the dongle&apos;s vendor-specific HID interface directly, reading and writing raw interrupt-endpoint frames rather than routing anything through the audio stack.
+            HID is the same USB protocol used by keyboards and mice. VOOK’s receiver dongle exposes a vendor HID interface alongside its USB-audio interface. The app uses that HID channel — not audio APIs — to send control commands and receive device status, battery level, and transmitter state. In practice this means opening a raw interrupt endpoint and exchanging fixed 17-byte binary frames at runtime.
           </p>
 
-          <div className={styles.compareGrid3}>
-            <div className={styles.compareCard}>
-              <span className={styles.compareLabel}>Audio</span>
-              <p className={styles.compareDesc}>Playback only — no command channel, no device reports</p>
-            </div>
-            <div className={`${styles.compareCard} ${styles.compareActive}`}>
-              <span className={styles.compareLabel}>USB</span>
-              <p className={styles.compareDesc}>Vendor-specific HID interrupt endpoint — the real control path</p>
-            </div>
-            <div className={styles.compareCard}>
-              <span className={styles.compareLabel}>Payload</span>
-              <p className={styles.compareDesc}>Command-specific 17-byte frame, not raw PCM</p>
-            </div>
+          <div className={styles.calloutDivider}>
+            <span className={styles.calloutLine} />
+            <p className={styles.calloutText}>FRAME PROTOCOL</p>
           </div>
 
           <p className={styles.sectionParagraph}>
-            Reach — no device commands over Bluetooth or standard audio routing. Device — no off-the-shelf HID report descriptors either; every field in the frame is vendor-defined and reverse-engineered against the chipset.
+            Every message, in both directions, is a fixed 17-byte binary frame with a CRC-8 checksum (Dallas/Maxim) in the final byte.
           </p>
 
-          {/* VOOK App -> Dongle -> TX0/TX1 Diagram */}
-          <div className={styles.flowContainer}>
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>1</div>
-              <div className={styles.stepTitle}>VOOK App</div>
-              <div className={styles.stepDetail}>Dispatches 17-byte command frames over the HID interrupt endpoint.</div>
-            </div>
-
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowStep}>
-              <div className={styles.stepNum}>2</div>
-              <div className={styles.stepTitle}>USB-HID Dongle</div>
-              <div className={styles.stepDetail}>Validates CRC-8 and routes the frame to the addressed transmitter.</div>
-            </div>
-
-            <div className={styles.flowArrow}>↓</div>
-
-            <div className={styles.flowBranch}>
-              <div className={styles.flowStep}>
-                <div className={styles.stepNum}>TX0</div>
-                <div className={styles.stepTitle}>Transmitter 0</div>
-                <div className={styles.stepDetail}>Independent mute, gain, and denoise state.</div>
+          {/* Green Frame Diagram (Figure 2) */}
+          <div className={styles.greenDiagramWrapper}>
+            <div className={styles.frameCardInner}>
+              <div className={styles.frameCardHeader}>17-BYTE FIXED FRAME</div>
+              <div className={styles.frameBoxesRow}>
+                <div className={styles.frameBoxReport}>
+                  <div className={styles.frameBoxTop}>0x01</div>
+                  <div className={styles.frameBoxBottom}>Report ID</div>
+                </div>
+                <div className={styles.frameBoxCmd}>
+                  <div className={styles.frameBoxTop}>CMD</div>
+                  <div className={styles.frameBoxBottom}>Byte 1</div>
+                </div>
+                <div className={styles.frameBoxPayload}>
+                  <div className={styles.frameBoxTop}>Payload — command-specific</div>
+                  <div className={styles.frameBoxBottom}>Bytes 2 – 15 (14 bytes)</div>
+                </div>
+                <div className={styles.frameBoxCrc}>
+                  <div className={styles.frameBoxTop}>CRC-8</div>
+                  <div className={styles.frameBoxBottom}>Byte 16</div>
+                </div>
               </div>
-              <div className={styles.flowStep}>
-                <div className={styles.stepNum}>TX1</div>
-                <div className={styles.stepTitle}>Transmitter 1</div>
-                <div className={styles.stepDetail}>Independent mute, gain, and denoise state.</div>
+              <p className={styles.frameFootnote}>
+                Byte 0 identifies the report · Byte 1 selects the command · Bytes 2–15 carry the payload · Byte 16 validates integrity.
+              </p>
+            </div>
+          </div>
+
+          <p className={styles.archFigureCaption}>
+            <strong>Figure 2 — HID frame layout.</strong> A single fixed structure carries every host-to-device command and every device-to-host report, with a trailing CRC-8 byte that both sides validate.
+          </p>
+
+          {/* TX Host Commands */}
+          <div className={styles.txHeaderRow}>
+            <span className={styles.txBadge}>TX →</span>
+            <h3 className={styles.txTitle}>Host-to-device commands</h3>
+          </div>
+
+          <div className={styles.txPillsRow}>
+            <span className={`${styles.txPill} ${styles.txPillActive}`}>GET_STATE</span>
+            <span className={styles.txPill}>SET_STATE</span>
+            <span className={styles.txPill}>GET_VERSION</span>
+            <span className={styles.txPill}>SET_MUTE</span>
+            <span className={styles.txPill}>SET_VOLUME</span>
+            <span className={styles.txPill}>SET_DENOISE_LEVEL</span>
+            <span className={styles.txPill}>SET_ECHO</span>
+            <span className={styles.txPill}>SET_VOICE_MODE</span>
+            <span className={styles.txPill}>RESET_TO_DEFAULTS</span>
+          </div>
+
+          {/* RX Device Reports */}
+          <div className={styles.txHeaderRow}>
+            <span className={styles.rxBadge}>← RX</span>
+            <h3 className={styles.txTitle}>Device-to-host reports</h3>
+          </div>
+
+          <p className={styles.sectionParagraph}>
+            Live per-transmitter state: connected, muted, denoise level, echo, voice mode, battery %, volume, and signal strength.
+          </p>
+
+          {/* HID Identifiers */}
+          <h4 className={styles.hidSubheading}>HID Identifiers</h4>
+          <div className={styles.hidPillsRow}>
+            <span className={`${styles.txPill} ${styles.txPillActive}`}>VID 0x4C4A</span>
+            <span className={styles.txPill}>PID 0x4155</span>
+            <span className={styles.txPill}>Interface[3] · vendor HID</span>
+          </div>
+
+          <div className={styles.calloutDivider}>
+            <span className={styles.calloutLine} />
+            <p className={styles.calloutText}>DUAL-TRANSMITTER TOPOLOGY</p>
+          </div>
+
+          <p className={styles.sectionParagraph}>
+            Each device supports two wireless transmitters (TX0 and TX1). The receiver reports state for both independently in every input frame; the app tracks them as separate TxState models and renders each with its own controls. Commands can be sent per-transmitter or broadcast to both at once.
+          </p>
+
+          {/* Dual Transmitter Diagram (Figure 3) */}
+          <div className={styles.coralDiagramWrapper}>
+            <div className={styles.topoNodeWhite}>
+              <div className={styles.topoTitlePurple}>VOOK app</div>
+              <div className={styles.topoSubtitle}>USB HID host</div>
+            </div>
+
+            <div className={styles.topoBidiConnector}>
+              <span className={styles.topoLabelWhite}>17-byte frames</span>
+              <div className={styles.topoBidiArrowRight}>⟶</div>
+              <div className={styles.topoBidiArrowLeft}>⟵</div>
+            </div>
+
+            <div className={styles.topoNodeDark}>
+              <div className={styles.topoTitleWhite}>RX dongle</div>
+              <div className={styles.topoSubtitleLight}>USB-C receiver</div>
+            </div>
+
+            <div className={styles.topoWirelessConnector}>
+              <span className={styles.topoLabelWhite}>2.4 GHz wireless</span>
+              <svg className={styles.topoForkSvg} viewBox="0 0 100 80" fill="none">
+                <path d="M 10 40 L 90 14" stroke="white" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <path d="M 10 40 L 90 66" stroke="white" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                <defs>
+                  <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                    <polygon points="0 0, 6 3, 0 6" fill="white" />
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+
+            <div className={styles.topoTxStack}>
+              <div className={styles.topoTxCard}>
+                <div className={styles.topoTxTitle}>TX0</div>
+                <div className={styles.topoTxSubtitle}>transmitter · own TxState</div>
+              </div>
+              <div className={styles.topoTxCard}>
+                <div className={styles.topoTxTitle}>TX1</div>
+                <div className={styles.topoTxSubtitle}>transmitter · own TxState</div>
               </div>
             </div>
           </div>
+
+          <p className={styles.archFigureCaption}>
+            <strong>Figure 3 — Dual-transmitter topology.</strong> One HID channel between app and receiver carries independent state for both transmitters; the app models and controls each separately, or broadcasts to both.
+          </p>
 
           {/* USB Dongle Photo */}
           <div className={styles.photoWrapper}>
             <div className={styles.photoFrame}>
               <Image
-                src="https://images.pgagi.in/Vook/IMG_4409%20(1).jpg"
+                src="/assets/CaseStudies/vook/vook-regression-terminal.jpg"
                 alt="VOOK USB-C Receiver Dongle Firmware Bridge"
-                width={1120}
-                height={630}
-                unoptimized
+                width={1200}
+                height={675}
                 className={styles.photoImg}
               />
             </div>
+            <div className={styles.photoEyebrow}>TOOLING</div>
             <p className={styles.photoCaption}>
-              Firmware bridge: the vendor&apos;s USB updater exposes serial pads (GND, RX, TX) used to flash and inspect firmware during HID protocol development.
+              <strong>Firmware bridge.</strong> The vendor’s USB updater exposes GND / RX / TX and an update pad, used to flash and inspect firmware over a serial bridge while developing against the HID protocol.
             </p>
           </div>
         </section>
