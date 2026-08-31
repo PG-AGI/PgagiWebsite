@@ -1,0 +1,708 @@
+// ── Color Tokens (flat, document-style — matches the source PDF's plain
+// white-page look: no gradients, no card shadows, no hover animation) ──
+$color-brand-red: #D91E36;
+$color-brand-green: #1A7F37;
+
+$color-bg-page: #FFFFFF;
+$color-bg-subtle: #F7F7F8;
+
+$color-text-main: #111114;
+$color-text-body: #333338;
+$color-text-muted: #6B6B72;
+$color-text-light: #9A9AA1;
+
+$color-border: #E0E0E3;
+
+.metaAdsPage {
+  width: 100%;
+  background-color: $color-bg-page;
+  color: $color-text-main;
+  font-family: inherit;
+}
+
+.rail {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  @media (max-width: 768px) {
+    padding: 0 24px;
+  }
+}
+
+// ── Hero (plain white page header, matching the PDF's title page) ──
+.heroSection {
+  background: $color-bg-page;
+  padding-top: clamp(96px, 12vh, 130px);
+  padding-bottom: 40px;
+}
+
+.heroContent {
+  position: relative;
+}
+
+.runningHeader {
+  text-align: right;
+  font-size: 0.8125rem;
+  color: $color-text-muted;
+  padding-bottom: 14px;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 48px;
+}
+
+.heroMainTitle {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  color: $color-text-main;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+
+.heroSubtitle {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: $color-brand-red;
+  margin: 0 0 24px;
+}
+
+.heroLead {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: $color-text-body;
+  max-width: 760px;
+  margin: 0 0 32px;
+}
+
+// ── Hero Pills (plain 2x2 bordered grid, like the PDF's table cells) ──
+.heroPillsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 40px;
+  border: 1px solid $color-border;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.heroPill {
+  padding: 16px 20px;
+  color: $color-text-main;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid $color-border;
+  margin: -1px;
+}
+
+// ── Hero Metadata Grid (plain label/value pairs, no box) ──
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 40px;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metaLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+}
+
+.metaValue {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: $color-text-main;
+  line-height: 1.45;
+}
+
+// ── Sticky Navigation Bar (plain, minimal — a web-only reading aid) ──
+.stickyNav {
+  position: sticky;
+  top: 72px;
+  z-index: 30;
+  background: $color-bg-page;
+  border-bottom: 1px solid $color-border;
+  padding: 12px 0;
+  margin-bottom: 48px;
+
+  @media (max-width: 768px) {
+    top: 60px;
+  }
+}
+
+.navScrollRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.navLink {
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 4px 0;
+  color: $color-text-muted;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    color: $color-brand-red;
+  }
+
+  &.navLinkActive {
+    color: $color-brand-red;
+    border-bottom-color: $color-brand-red;
+  }
+}
+
+// ── Generic Section Layout ──
+.sectionBlock {
+  padding: 48px 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.sectionHeader {
+  margin-bottom: 24px;
+}
+
+.redBarLabel,
+.subSectionLabel {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-brand-red;
+  margin-bottom: 8px;
+}
+
+.subSectionLabel {
+  margin: 32px 0 12px;
+}
+
+.plainHeading {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: $color-text-main;
+  margin: 36px 0 10px;
+}
+
+.sectionTitle {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: $color-text-main;
+  margin: 0 0 16px;
+}
+
+.sectionParagraph {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: $color-text-body;
+  margin: 0 0 20px;
+  max-width: 820px;
+
+  strong {
+    color: $color-text-main;
+    font-weight: 700;
+  }
+
+  &:last-of-type {
+    margin-bottom: 32px;
+  }
+}
+
+// ── Stats Grid (plain bordered boxes, light-gray numeral like the PDF) ──
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: $color-border;
+  border: 1px solid $color-border;
+  margin: 24px 0 40px;
+  max-width: 620px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statCard {
+  background: $color-bg-subtle;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statValue {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: $color-text-light;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: $color-text-body;
+  line-height: 1.4;
+}
+
+// ── Checklist (plain bordered box, green checkmarks like the PDF) ──
+.checklistBox {
+  background: $color-bg-subtle;
+  border: 1px solid $color-border;
+  padding: 20px 24px;
+  margin: 20px 0 36px;
+}
+
+.checklistBoxTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: $color-text-main;
+  margin: 0 0 14px;
+}
+
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: $color-text-body;
+
+  strong {
+    color: $color-text-main;
+  }
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  color: $color-brand-green;
+  margin-top: 3px;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: $color-brand-green;
+  margin-top: 4px;
+}
+
+// ── Table (plain, bordered, no shadow) ──
+.tableWrapper {
+  overflow-x: auto;
+  margin: 20px 0 36px;
+  border: 1px solid $color-border;
+}
+
+.customTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9375rem;
+
+  thead {
+    background: $color-bg-subtle;
+    border-bottom: 1px solid $color-border;
+
+    th {
+      padding: 12px 16px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $color-text-muted;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $color-border;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: 12px 16px;
+      vertical-align: top;
+      color: $color-text-body;
+      line-height: 1.55;
+    }
+  }
+}
+
+.layerCol {
+  font-weight: 700;
+  color: $color-text-main !important;
+  white-space: nowrap;
+}
+
+// ── Pipeline Steps (plain numbered rows, outlined circle like the PDF) ──
+.pipelineList {
+  margin: 20px 0 32px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $color-border;
+}
+
+.pipelineStep {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  padding: 16px;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.pipelineNum {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid $color-text-muted;
+  color: $color-text-main;
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pipelineStepTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: $color-text-main;
+  margin: 0 0 4px;
+}
+
+.pipelineStepDesc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: $color-text-body;
+  margin: 0;
+}
+
+// ── Flow Diagram (plain red text row, no boxes — matches the PDF) ──
+.diagramContainer {
+  margin: 20px 0 32px;
+}
+
+.flowRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.flowStep {
+  font-weight: 700;
+  font-size: 1rem;
+  color: $color-brand-red;
+}
+
+.flowArrow {
+  color: $color-brand-red;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+// ── Showcase (single-column, full-width — matches the PDF's stacked
+// heading / description / screenshot / caption pattern, one per screen) ──
+.showcaseList {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcaseItem {
+  padding: 28px 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.showcaseTitle {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: $color-text-main;
+  margin: 0 0 8px;
+}
+
+.showcasePlaceholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: $color-bg-subtle;
+  border: 1px solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-text-light;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 12px 0 10px;
+}
+
+.showcaseImageWrapper {
+  width: 100%;
+  margin: 14px 0 12px;
+  border: 1px solid $color-border;
+  background: #0d0d0d;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    transform: translateY(-1px);
+
+    .zoomHint {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.zoomHint {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.showcaseImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.showcaseImagesStacked {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 14px 0 12px;
+}
+
+.showcaseImageEntry {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .showcaseImageWrapper {
+    margin: 0;
+  }
+}
+
+.showcaseCaption {
+  font-style: italic;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+// ── Lightbox Modal ──
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease;
+}
+
+.lightboxHeader {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.lightboxTitle {
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.lightboxCloseBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+  }
+}
+
+.lightboxContent {
+  max-width: 92vw;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0a0a0a;
+}
+
+.lightboxImage {
+  max-width: 92vw;
+  max-height: 76vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.lightboxCaption {
+  padding: 12px 20px;
+  font-size: 0.875rem;
+  color: #a0a0a0;
+  font-style: italic;
+  text-align: center;
+  width: 100%;
+  background: #111111;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ── Closing box (page 19 of the PDF, verbatim) ──
+.closingCtaBox {
+  background: $color-bg-subtle;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  padding: 48px 40px;
+  text-align: center;
+  margin: 8px 0 40px;
+}
+
+.closingCtaTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: $color-text-main;
+  line-height: 1.25;
+  margin: 0 0 16px;
+}
+
+.closingCtaText {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: $color-text-muted;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.confidentialityNote {
+  font-style: italic;
+  color: $color-text-light;
+  font-size: 0.875rem;
+  margin: 24px 0 4px;
+}
+
+.copyrightLine {
+  color: $color-text-light;
+  font-size: 0.8125rem;
+  margin: 0;
+}

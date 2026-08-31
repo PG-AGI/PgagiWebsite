@@ -452,6 +452,21 @@ $content-max: 1400px;
   overflow: hidden;
 }
 
+/* ── Optional wide banner strip (750x142), only used by cards that set
+   meta.stripImage ── */
+.stripImageWrap {
+  width: 100%;
+  max-width: 750px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.stripImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* ── Tech stack tags ── */
 .techRow {
   display: flex;
