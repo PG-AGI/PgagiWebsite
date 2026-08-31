@@ -78,6 +78,33 @@ const COMPONENTS_DELIVERED: { area: string; detail: string }[] = [
   { area: 'Deployment', detail: 'Docker, Google Cloud Run, GitHub Actions CI/CD (Workload Identity Federation), Postgres/Neon + Alembic.' },
 ];
 
+// Native pixel dimensions of each screenshot. Serving them at (or below) their
+// real size — instead of a fixed 1200×675 that upscales the ~1000px sources —
+// keeps text-heavy UI screenshots crisp instead of blurred on high-DPI screens.
+const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
+  '/case-studies/meta-ads-run-creation.png': { width: 1017, height: 371 },
+  '/case-studies/meta-ads-live-pipeline.png': { width: 1003, height: 433 },
+  '/case-studies/meta-ads-human-review.png': { width: 1002, height: 479 },
+  '/case-studies/meta-ads-rbac-team.png': { width: 1010, height: 537 },
+  '/case-studies/meta-ads-global-prompts.png': { width: 1005, height: 432 },
+  '/case-studies/meta-ads-naming-system.png': { width: 993, height: 401 },
+  '/case-studies/meta-ads-image-studio.png': { width: 979, height: 444 },
+  '/case-studies/meta-ads-assets-outbox.png': { width: 1005, height: 508 },
+  '/case-studies/meta-ads-notion-integration.png': { width: 971, height: 482 },
+  '/case-studies/meta-ads-logs-and-cost.png': { width: 1002, height: 446 },
+  '/case-studies/meta-ads-runs-dashboard-dark.png': { width: 986, height: 507 },
+  '/case-studies/meta-ads-runs-dashboard-light.png': { width: 991, height: 501 },
+  '/case-studies/meta-ads-compare-scripts-dark.png': { width: 979, height: 509 },
+  '/case-studies/meta-ads-compare-scripts-light.png': { width: 989, height: 509 },
+  '/case-studies/meta-ads-image-studio-plan-dark.png': { width: 837, height: 436 },
+  '/case-studies/meta-ads-image-studio-plan-light.png': { width: 837, height: 429 },
+  '/case-studies/meta-ads-global-prompts-dark.png': { width: 837, height: 438 },
+  '/case-studies/meta-ads-global-prompts-light.png': { width: 837, height: 433 },
+  '/case-studies/meta-ads-settings-dark.png': { width: 837, height: 425 },
+  '/case-studies/meta-ads-settings-light.png': { width: 837, height: 431 },
+};
+const FALLBACK_IMAGE_DIMENSIONS = { width: 1200, height: 675 };
+
 const PRODUCT_SCREENS: {
   title: string;
   desc: string;
@@ -527,20 +554,24 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
                 <p className={styles.sectionParagraph}>{screen.desc}</p>
                 {screen.images && screen.images.length > 0 ? (
                   <div className={styles.showcaseImagesStacked}>
-                    {screen.images.map((imgItem, idx) => (
-                      <div key={idx} className={styles.showcaseImageEntry}>
-                        <div className={styles.showcaseImageWrapper}>
-                          <Image
-                            src={imgItem.src}
-                            alt={`${screen.title} - ${idx + 1}`}
-                            width={1200}
-                            height={675}
-                            className={styles.showcaseImage}
-                          />
+                    {screen.images.map((imgItem, idx) => {
+                      const dims = IMAGE_DIMENSIONS[imgItem.src] ?? FALLBACK_IMAGE_DIMENSIONS;
+                      return (
+                        <div key={idx} className={styles.showcaseImageEntry}>
+                          <div className={styles.showcaseImageWrapper}>
+                            <Image
+                              src={imgItem.src}
+                              alt={`${screen.title} - ${idx + 1}`}
+                              width={dims.width}
+                              height={dims.height}
+                              unoptimized
+                              className={styles.showcaseImage}
+                            />
+                          </div>
+                          {imgItem.caption && <p className={styles.showcaseCaption}>{imgItem.caption}</p>}
                         </div>
-                        {imgItem.caption && <p className={styles.showcaseCaption}>{imgItem.caption}</p>}
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 ) : screen.image ? (
                   <>
@@ -548,8 +579,9 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
                       <Image
                         src={screen.image}
                         alt={screen.title}
-                        width={1200}
-                        height={675}
+                        width={(IMAGE_DIMENSIONS[screen.image] ?? FALLBACK_IMAGE_DIMENSIONS).width}
+                        height={(IMAGE_DIMENSIONS[screen.image] ?? FALLBACK_IMAGE_DIMENSIONS).height}
+                        unoptimized
                         className={styles.showcaseImage}
                       />
                     </div>

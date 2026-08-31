@@ -533,26 +533,9 @@ $color-border: #E0E0E3;
 
 // ── Closing box (page 19 of the PDF, verbatim) ──
 .closingCtaBox {
-  background: $color-bg-subtle;
-  border: 1px solid $color-border;
-  padding: 40px;
   text-align: center;
+  padding: 24px 0 8px;
   margin: 8px 0 40px;
-}
-
-.closingCtaTitle {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: $color-text-main;
-  margin: 0 0 12px;
-}
-
-.closingCtaText {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: $color-text-body;
-  max-width: 680px;
-  margin: 0 auto;
 }
 
 .confidentialityNote {
