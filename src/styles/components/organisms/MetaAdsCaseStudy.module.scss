@@ -490,6 +490,39 @@ $color-border: #E0E0E3;
   margin: 12px 0 10px;
 }
 
+.showcaseImageWrapper {
+  width: 100%;
+  margin: 14px 0 12px;
+  border: 1px solid $color-border;
+  background: #0d0d0d;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.showcaseImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.showcaseImagesStacked {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 14px 0 12px;
+}
+
+.showcaseImageEntry {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .showcaseImageWrapper {
+    margin: 0;
+  }
+}
+
 .showcaseCaption {
   font-style: italic;
   font-size: 0.875rem;

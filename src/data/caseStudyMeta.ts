@@ -410,7 +410,11 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   'meta-case-study': {
     techStack: [],
-    metrics: [],
+    metrics: [
+      { value: '4.2x', label: 'ROAS (+38%)' },
+      { value: '$18.40', label: 'CPA (−31%)' },
+      { value: '41%', label: 'Hook Rate (+16%)' },
+    ],
     highlight: '',
     tags: [],
     category: 'MarTech/AI/ML',

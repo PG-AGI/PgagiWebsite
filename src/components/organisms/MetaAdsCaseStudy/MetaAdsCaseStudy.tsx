@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
 import styles from '@/styles/components/organisms/MetaAdsCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
+import ProductVisionCta from '../ProductVisionCta';
 
 interface MetaAdsCaseStudyProps {
   caseStudy?: CaseStudyData | null;
@@ -76,56 +78,116 @@ const COMPONENTS_DELIVERED: { area: string; detail: string }[] = [
   { area: 'Deployment', detail: 'Docker, Google Cloud Run, GitHub Actions CI/CD (Workload Identity Federation), Postgres/Neon + Alembic.' },
 ];
 
-const PRODUCT_SCREENS: { title: string; desc: string; caption: string }[] = [
+const PRODUCT_SCREENS: {
+  title: string;
+  desc: string;
+  caption?: string;
+  image?: string;
+  images?: { src: string; caption?: string }[];
+}[] = [
   {
     title: 'Run Creation & The Model Catalogue',
     desc: 'The guided wizard — Run Setup → Inputs → Variations → Review & Submit — and the client-curated, tier-coloured 16-model catalogue behind it.',
     caption: 'New Sandbox Test — Run Setup step of the guided wizard, with the 4-step progress rail and per-agent model selection.',
+    image: '/case-studies/meta-ads-run-creation.png',
   },
   {
     title: 'The Live Pipeline',
     desc: 'A completed 5-stage run — Writer through Revision Writer — with per-stage model, token count, and cost visible at a glance.',
     caption: 'Live Pipeline view for a Control variant: all five stages completed, each showing model, token usage, and cost.',
+    image: '/case-studies/meta-ads-live-pipeline.png',
   },
   {
     title: 'Human Review, Rewrite & Comments',
     desc: 'Reviewers select any passage, attach a targeted comment, and trigger a rewrite — every rewrite inserts a new version rather than overwriting the last.',
     caption: 'Reviewer workspace: a highlighted passage with an attached rewrite comment, ready to submit against the pipeline output.',
+    image: '/case-studies/meta-ads-human-review.png',
   },
   {
     title: 'RBAC & Team Management',
     desc: 'The Owner-only Team page: add members, assign one of four roles, deactivate accounts, and reactivate them later without losing run history.',
     caption: 'Team page showing active and removed members across the Owner / Admin / User / Viewer role set.',
+    image: '/case-studies/meta-ads-rbac-team.png',
   },
   {
     title: 'Global Prompts & Settings',
     desc: 'Every agent system prompt — 5 writer-chain agents, 3 writer-mode variants, extraction prompts, and 3 Image Studio prompts — is editable Markdown with Customized/Default badges.',
     caption: 'Global Prompts screen: prompt categories in the sidebar, with the Adapt Writer Agent system prompt open for editing.',
+    image: '/case-studies/meta-ads-global-prompts.png',
   },
   {
     title: 'Metadata & Naming-Convention System',
     desc: 'A single structured-output call extracts product, condition, mechanism, and per-variation URL/offer/flags at run-setup time; the Script ID is the one operator-editable field in an otherwise read-only panel.',
     caption: 'URL Report: destination URL, offer terms, and resolution flags per variant, assembled from the run-setup extraction.',
+    image: '/case-studies/meta-ads-naming-system.png',
   },
   {
     title: 'Image Studio — Script-Driven Batch',
     desc: 'Mode 3 lets a reviewer pick a batch of images, assign each a category, and let an LLM draft one editable scene per image from the approved script before generating.',
     caption: 'Image Studio, Mode 3: scene-generation step with the approved script visible alongside the drafted scene description.',
+    image: '/case-studies/meta-ads-image-studio.png',
   },
   {
     title: 'Assets Outbox',
     desc: 'Every completed script and generated image lands here automatically — filterable by run, type, and date range, with multi-select batch push to Notion.',
     caption: 'Assets Outbox: generated images with their source run, variant, and Notion upload status.',
+    image: '/case-studies/meta-ads-assets-outbox.png',
   },
   {
     title: 'Notion Integration',
     desc: "A manual, per-asset “Send to Notion” action appends images to that script's own Notion page as real embedded file blocks via Notion's 3-step File Upload API.",
     caption: "Upload to Notion dialog: adset naming convention, product URL, and status prior to sending images to the script's page.",
+    image: '/case-studies/meta-ads-notion-integration.png',
   },
   {
     title: 'Dashboard — Logs & Cost',
     desc: 'Cost is tracked per stage, per model, and per variant, and reported as two genuinely separate categories: script production spend and image generation spend.',
-    caption: 'Logs & Cost view for a run: total spend, per-stage cost breakdown, and per-model cost breakdown.',
+    images: [
+      {
+        src: '/case-studies/meta-ads-logs-and-cost.png',
+        caption: 'Logs & Cost view for a run: total spend, per-stage cost breakdown, and per-model cost breakdown.',
+      },
+      {
+        src: '/case-studies/meta-ads-runs-dashboard-dark.png',
+        caption: 'Runs Dashboard (Dark mode): total runs, review counts, approved scripts, and separated script/image production spend.',
+      },
+      {
+        src: '/case-studies/meta-ads-runs-dashboard-light.png',
+        caption: 'Runs Dashboard (Light mode): status badges, model configurations, and run management.',
+      },
+      {
+        src: '/case-studies/meta-ads-compare-scripts-dark.png',
+        caption: 'Compare Scripts diff engine (Dark mode): multi-panel diff viewer with change tracking and synchronized scrolling.',
+      },
+      {
+        src: '/case-studies/meta-ads-compare-scripts-light.png',
+        caption: 'Compare Scripts diff engine (Light mode): side-by-side script comparison with revision tagging.',
+      },
+      {
+        src: '/case-studies/meta-ads-image-studio-plan-dark.png',
+        caption: 'Image Studio — Mode 3 From Script (Dark mode): planning image batches, category assignment, and custom prompt rules.',
+      },
+      {
+        src: '/case-studies/meta-ads-image-studio-plan-light.png',
+        caption: 'Image Studio — Mode 3 From Script (Light mode): category selection and script association.',
+      },
+      {
+        src: '/case-studies/meta-ads-global-prompts-dark.png',
+        caption: 'Global Prompts & Settings (Dark mode): full agent prompt configurations and versioned factory defaults.',
+      },
+      {
+        src: '/case-studies/meta-ads-global-prompts-light.png',
+        caption: 'Global Prompts & Settings (Light mode): prompt editor and category navigation rail.',
+      },
+      {
+        src: '/case-studies/meta-ads-settings-dark.png',
+        caption: 'Settings & Model Management (Dark mode): model defaults across agent stages and OpenRouter model catalog synchronization.',
+      },
+      {
+        src: '/case-studies/meta-ads-settings-light.png',
+        caption: 'Settings & Model Management (Light mode): model defaults across agent stages and OpenRouter model catalog synchronization.',
+      },
+    ],
   },
 ];
 
@@ -463,8 +525,42 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
               <div key={screen.title} className={styles.showcaseItem}>
                 <h3 className={styles.showcaseTitle}>{screen.title}</h3>
                 <p className={styles.sectionParagraph}>{screen.desc}</p>
-                <div className={styles.showcasePlaceholder}>Screenshot pending</div>
-                <p className={styles.showcaseCaption}>{screen.caption}</p>
+                {screen.images && screen.images.length > 0 ? (
+                  <div className={styles.showcaseImagesStacked}>
+                    {screen.images.map((imgItem, idx) => (
+                      <div key={idx} className={styles.showcaseImageEntry}>
+                        <div className={styles.showcaseImageWrapper}>
+                          <Image
+                            src={imgItem.src}
+                            alt={`${screen.title} - ${idx + 1}`}
+                            width={1200}
+                            height={675}
+                            className={styles.showcaseImage}
+                          />
+                        </div>
+                        {imgItem.caption && <p className={styles.showcaseCaption}>{imgItem.caption}</p>}
+                      </div>
+                    ))}
+                  </div>
+                ) : screen.image ? (
+                  <>
+                    <div className={styles.showcaseImageWrapper}>
+                      <Image
+                        src={screen.image}
+                        alt={screen.title}
+                        width={1200}
+                        height={675}
+                        className={styles.showcaseImage}
+                      />
+                    </div>
+                    {screen.caption && <p className={styles.showcaseCaption}>{screen.caption}</p>}
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.showcasePlaceholder}>Screenshot pending</div>
+                    {screen.caption && <p className={styles.showcaseCaption}>{screen.caption}</p>}
+                  </>
+                )}
               </div>
             ))}
           </div>
@@ -648,11 +744,15 @@ export default function MetaAdsCaseStudy(_props: MetaAdsCaseStudyProps) {
 
         {/* ── Closing (page 19, verbatim) ── */}
         <div className={styles.closingCtaBox}>
-          <h2 className={styles.closingCtaTitle}>See what your AI product could become</h2>
-          <p className={styles.closingCtaText}>
-            We engineer production-grade AI platforms, human-in-the-loop review systems, and
-            creative-generation pipelines for teams that need more than a prompt wrapper.
-          </p>
+          <ProductVisionCta
+            subtitle={
+              <>
+                We engineer production-grade AI platforms, human-in-the-loop review systems, and
+                <br />
+                creative-generation pipelines for teams that need more than a prompt wrapper.
+              </>
+            }
+          />
           <p className={styles.confidentialityNote}>PGAGI Confidential — For Client Use Only</p>
           <p className={styles.copyrightLine}>© 2023–2026 PG-AGI. All Rights Reserved.</p>
         </div>
