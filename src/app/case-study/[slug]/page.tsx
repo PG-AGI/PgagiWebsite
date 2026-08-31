@@ -68,7 +68,19 @@ export async function generateMetadata({
     };
   }
 
-  const cs = await getCaseStudy(params.slug); // cached → no extra DB hit
+  const isVook = params?.slug?.toLowerCase()?.includes('vook');
+  if (isVook) {
+    return {
+      title: 'VOOK.AI: Wireless Microphone Mobile Companion App | PG-AGI Case Study',
+      description: 'A companion app that turns a phone into a real-time audio control surface for a wireless microphone system — built on a bidirectional USB-HID control channel, a dual transmitter binary protocol, AI audio post-processing, and a 180+ test firmware regression suite.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'VOOK.AI Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
+  const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
   return {

@@ -29,6 +29,8 @@ type CaseStudy = {
 const HIDDEN_SLUGS = new Set<string>([
   'ai-asr-doctor-clinical-documentation-platform',
   'onchain-toolkit-ai-analysis-platform',
+  'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin',
+  'linkedin-ai',
 ]);
 
 
@@ -60,7 +62,7 @@ const PRIORITY_SLUGS: string[] = [
   'workaptix-ai-sourcing-validation-verification',                                     // workaptix
   'innvor-ai-clinical-engagement-documentation-platform',                              // innvor.ai
   'fomo',                                                                              // Fomo
-  'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin',  // Linkedin Ai
+  // 'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin',  // Linkedin Ai (hidden)
   'legalspendgpt-invoice-intelligence',                                                // LegalGPT
   'linkedin-ai-doctors-healthcare-awareness-saas',                                     // How We Built An AI SaaS...LinkedIn
   'transforming-customer-engagement-and-lead-management-with-ai-powered-automation',   // Transforming Customer Engagement...
