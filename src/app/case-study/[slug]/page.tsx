@@ -13,6 +13,7 @@ import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseSt
 import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/BrainifyCaseStudy';
 import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCaseStudy';
 import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
+import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBrainCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -106,6 +107,18 @@ export async function generateMetadata({
     };
   }
 
+  const isAimiBrain = params?.slug?.toLowerCase()?.includes('aimi-brain');
+  if (isAimiBrain) {
+    return {
+      title: 'AIMI Brain: Real-Time Conversational Financial Intelligence | PG-AGI Case Study',
+      description: 'A platform that puts institutional-grade macro analysis behind natural language, combining retrieval-augmented generation with live web data, per-user document intelligence and a streaming architecture built for a market where the answer stops being useful the moment it goes stale.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'AIMI Brain Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -155,6 +168,12 @@ export default async function CaseStudyPage({
   if (isEmailLove) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <EmailLoveCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isAimiBrain = params?.slug?.toLowerCase()?.includes('aimi-brain');
+  if (isAimiBrain) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <AIMIBrainCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
