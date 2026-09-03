@@ -19,6 +19,7 @@ import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseSt
 import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/BrainifyCaseStudy';
 import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCaseStudy';
 import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
+import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBrainCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -372,6 +373,11 @@ const processLinksWithPreview = (content: string) => {
   const isEmailLove = (slug && String(slug).toLowerCase().includes('email-love')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('email-love'));
   if (isEmailLove) {
     return <EmailLoveCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isAimiBrain = (slug && String(slug).toLowerCase().includes('aimi-brain')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('aimi-brain'));
+  if (isAimiBrain) {
+    return <AIMIBrainCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing
