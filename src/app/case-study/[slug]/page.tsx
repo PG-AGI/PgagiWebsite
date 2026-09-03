@@ -12,6 +12,7 @@ import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
 import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/BrainifyCaseStudy';
 import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCaseStudy';
+import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -93,6 +94,18 @@ export async function generateMetadata({
     };
   }
 
+  const isEmailLove = params?.slug?.toLowerCase()?.includes('email-love');
+  if (isEmailLove) {
+    return {
+      title: 'Email Love: AI-Powered Email Template Generation and Autonomous Repair | PG-AGI Case Study',
+      description: "A two-pipeline backend system that ingests a client's Figma component library, understands it, and then either generates complete email templates from a campaign brief or autonomously detects and repairs broken ones — removing MJML authorship from the workflow entirely for a platform serving 50,000+ users.",
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Email Love Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -136,6 +149,12 @@ export default async function CaseStudyPage({
   if (isMetaAds) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <MetaAdsCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isEmailLove = params?.slug?.toLowerCase()?.includes('email-love');
+  if (isEmailLove) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <EmailLoveCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
