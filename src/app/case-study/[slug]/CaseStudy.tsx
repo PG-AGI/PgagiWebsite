@@ -18,6 +18,7 @@ import VookCaseStudy from '@/components/organisms/VookCaseStudy/VookCaseStudy';
 import SayYesCaseStudy from '@/components/organisms/SayYesCaseStudy/SayYesCaseStudy';
 import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/BrainifyCaseStudy';
 import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCaseStudy';
+import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -366,6 +367,11 @@ const processLinksWithPreview = (content: string) => {
   const isMetaAds = (slug && String(slug).toLowerCase() === 'meta-case-study') || (caseStudy.slug && caseStudy.slug.toLowerCase() === 'meta-case-study');
   if (isMetaAds) {
     return <MetaAdsCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isEmailLove = (slug && String(slug).toLowerCase().includes('email-love')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('email-love'));
+  if (isEmailLove) {
+    return <EmailLoveCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing
