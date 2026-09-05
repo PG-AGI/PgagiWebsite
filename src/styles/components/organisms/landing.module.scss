@@ -159,6 +159,20 @@
   z-index: 1;
 }
 
+/* Fades the hero's bottom edge into white so it dissolves into the next
+   section instead of cutting hard from the photo/dark bg (#1a1a18) to a
+   flat white section below. Sits above the photo, below the content. */
+.heroFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(4rem, 12vh, 9rem);
+  background: linear-gradient(180deg, rgba(26, 26, 24, 0) 0%, #ffffff 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* NOTE: the CSS crow flock was removed 2026-07-03 — an AI-generated
    sprite/asset will replace it (user-supplied). */
 

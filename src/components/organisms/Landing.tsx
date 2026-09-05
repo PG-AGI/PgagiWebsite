@@ -79,6 +79,10 @@ export default function Landing() {
       {/* Left-side gradient overlay for text legibility */}
       <div className={styles.heroOverlay} aria-hidden="true" />
 
+      {/* Fades the hero's bottom edge into white so it dissolves into the
+          next section instead of cutting hard into a flat white section. */}
+      <div className={styles.heroFade} aria-hidden="true" />
+
       {/* Centered max-width container — keeps content/cards constrained while bg fills 100% */}
       <div className={styles.heroInner}>
         {/* Hero content — bottom-left aligned */}

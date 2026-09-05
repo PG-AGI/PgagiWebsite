@@ -18,6 +18,7 @@ $bar: #d1d1d1; // light-grey accent bar (left of the logo)
 $hover-bg: #f8f4f1;
 
 .section {
+  position: relative;
   background: #ffffff;
   // Clay-style page rhythm — identical on every landing section.
   padding: clamp(4rem, 10vh, 7rem) 0;
@@ -30,25 +31,43 @@ $hover-bg: #f8f4f1;
   }
 }
 
-/* Content rail — identical to the hero / nav so this section lines up
-   edge-to-edge with the section above. Caps content at the 1400px design
-   reference and uses the same 4vw gutters below that. */
+/* Content rail — matches the hero's content width (Landing's .heroInner
+   caps at 77.5rem centered) so the grid lines up edge-to-edge with the
+   cards above instead of sitting inside its own extra gutter on top of
+   .sectionsWrapper's padding. */
 .container {
   width: 100%;
-  padding: 0 max(0px, calc((100% - 77.5rem) / 2)); // Clay rail (rem: fluid root)
+  max-width: 77.5rem;
+  margin: 0 auto;
   box-sizing: border-box;
   font-family: var(--font-plus-jakarta), var(--font-poppins), sans-serif;
 }
 
 /* ── Section heading — centered above the grid ── */
 .heading {
+  position: relative;
   margin: 0 0 clamp(1.6rem, 3vw, 2.75rem);
+  padding-bottom: clamp(0.75rem, 1.4vw, 1.1rem);
   font-size: clamp(1.5rem, 2.4vw, 2.25rem);
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.02em;
   line-height: 1.15;
   text-align: center;
+
+  // Brand-red accent bar, echoing the hero's red CTA — a small visual
+  // thread carried over from the section above.
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 3px;
+    border-radius: 2px;
+    background: $brand;
+  }
 }
 
 /* ── Grid: 3 columns → 2 → 1 ──
