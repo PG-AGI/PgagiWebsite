@@ -14,6 +14,7 @@ import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/Brainify
 import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCaseStudy';
 import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
 import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBrainCaseStudy';
+import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStudy/LeadingHerWayCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -119,6 +120,18 @@ export async function generateMetadata({
     };
   }
 
+  const isLeadingHerWay = params?.slug?.toLowerCase()?.includes('leading-her-way');
+  if (isLeadingHerWay) {
+    return {
+      title: 'LHW — Leading Her Way: A Cycle-Aware AI Productivity Platform | PG-AGI Case Study',
+      description: "Turning cycle data and a live calendar into a daily plan of what to do, what to avoid, and when — delivered through Today's Flow and a conversational AI coach.",
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'LHW Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -174,6 +187,12 @@ export default async function CaseStudyPage({
   if (isAimiBrain) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <AIMIBrainCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isLeadingHerWay = params?.slug?.toLowerCase()?.includes('leading-her-way');
+  if (isLeadingHerWay) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <LeadingHerWayCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
