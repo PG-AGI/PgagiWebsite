@@ -25,6 +25,19 @@ $hover-bg: #f8f4f1;
   content-visibility: auto;
   contain-intrinsic-size: 0 720px;
 
+  // Soft white-on-white top gradient, overlapping the hero's own fade so the
+  // two sections dissolve into one continuous white field with no seam.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: clamp(3rem, 8vh, 6rem);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+  }
+
   @media (max-width: 768px) {
     // Page-wide mobile rhythm token (set on .main in page.module.scss).
     padding: var(--section-space, 3rem) 0;
