@@ -120,7 +120,11 @@ export async function generateMetadata({
     };
   }
 
-  const isLeadingHerWay = params?.slug?.toLowerCase()?.includes('leading-her-way');
+  const isLeadingHerWay =
+    params?.slug?.toLowerCase()?.includes('leading-her-way') ||
+    params?.slug?.toLowerCase()?.includes('learning-her-way') ||
+    params?.slug?.toLowerCase()?.includes('hermayhem') ||
+    params?.slug?.toLowerCase() === 'lhw';
   if (isLeadingHerWay) {
     return {
       title: 'LHW — Leading Her Way: A Cycle-Aware AI Productivity Platform | PG-AGI Case Study',
@@ -189,7 +193,11 @@ export default async function CaseStudyPage({
     return <AIMIBrainCaseStudy caseStudy={caseStudy} />;
   }
 
-  const isLeadingHerWay = params?.slug?.toLowerCase()?.includes('leading-her-way');
+  const isLeadingHerWay =
+    params?.slug?.toLowerCase()?.includes('leading-her-way') ||
+    params?.slug?.toLowerCase()?.includes('learning-her-way') ||
+    params?.slug?.toLowerCase()?.includes('hermayhem') ||
+    params?.slug?.toLowerCase() === 'lhw';
   if (isLeadingHerWay) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <LeadingHerWayCaseStudy caseStudy={caseStudy} />;

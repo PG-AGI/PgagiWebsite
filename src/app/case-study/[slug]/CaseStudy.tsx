@@ -381,7 +381,19 @@ const processLinksWithPreview = (content: string) => {
     return <AIMIBrainCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
-  const isLeadingHerWay = (slug && String(slug).toLowerCase().includes('leading-her-way')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('leading-her-way'));
+  const isLeadingHerWay =
+    (slug && (
+      String(slug).toLowerCase().includes('leading-her-way') ||
+      String(slug).toLowerCase().includes('learning-her-way') ||
+      String(slug).toLowerCase().includes('hermayhem') ||
+      String(slug).toLowerCase() === 'lhw'
+    )) ||
+    (caseStudy.slug && (
+      caseStudy.slug.toLowerCase().includes('leading-her-way') ||
+      caseStudy.slug.toLowerCase().includes('learning-her-way') ||
+      caseStudy.slug.toLowerCase().includes('hermayhem') ||
+      caseStudy.slug.toLowerCase() === 'lhw'
+    ));
   if (isLeadingHerWay) {
     return <LeadingHerWayCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }

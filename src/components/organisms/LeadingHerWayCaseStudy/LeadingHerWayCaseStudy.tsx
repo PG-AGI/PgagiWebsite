@@ -109,17 +109,9 @@ function FooterBar({ page }: { page: string }) {
 
 function DownArrow() {
   return (
-    <svg width="12" height="20" viewBox="0 0 12 20" fill="none" aria-hidden="true">
-      <line x1="6" y1="0" x2="6" y2="12" stroke="currentColor" strokeWidth="2" />
-      <path d="M0 11L6 19L12 11H0Z" fill="currentColor" />
-    </svg>
-  );
-}
-
-function LoopArrowHead() {
-  return (
-    <svg width="9" height="7" viewBox="0 0 9 7" fill="none" aria-hidden="true">
-      <path d="M4.5 0L8.4 6.5H0.6L4.5 0Z" fill="currentColor" />
+    <svg width="12" height="24" viewBox="0 0 12 24" fill="none" aria-hidden="true">
+      <line x1="6" y1="0" x2="6" y2="16" stroke="#841E1E" strokeWidth="2" strokeLinecap="square" />
+      <path d="M1 15L6 23L11 15H1Z" fill="#841E1E" />
     </svg>
   );
 }
@@ -142,7 +134,7 @@ function DiagramArrow({ caption }: { caption: string }) {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.4, rootMargin: '0px 0px -10% 0px' },
+      { threshold: 0.2, rootMargin: '0px 0px -5% 0px' },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -152,6 +144,116 @@ function DiagramArrow({ caption }: { caption: string }) {
     <div ref={ref} className={`${styles.diagramArrow} ${visible ? styles.diagramArrowVisible : ''}`}>
       <span className={styles.diagramArrowGlyph}><DownArrow /></span>
       <span className={styles.diagramArrowCaption}>{caption}</span>
+    </div>
+  );
+}
+
+function PersonalisationLoop({
+  scopeRef,
+  layer1Ref,
+  layer3Ref,
+}: {
+  scopeRef: React.RefObject<HTMLDivElement>;
+  layer1Ref: React.RefObject<HTMLDivElement>;
+  layer3Ref: React.RefObject<HTMLDivElement>;
+}) {
+  const [coords, setCoords] = React.useState<{
+    topY: number;
+    bottomY: number;
+  }>({
+    topY: 66,
+    bottomY: 370,
+  });
+
+  const updatePositions = React.useCallback(() => {
+    if (!scopeRef.current || !layer1Ref.current || !layer3Ref.current) return;
+    const scopeRect = scopeRef.current.getBoundingClientRect();
+    const l1Rect = layer1Ref.current.getBoundingClientRect();
+    const l3Rect = layer3Ref.current.getBoundingClientRect();
+
+    const topY = l1Rect.top - scopeRect.top + l1Rect.height / 2;
+    const bottomY = l3Rect.top - scopeRect.top + l3Rect.height / 2;
+
+    setCoords({
+      topY,
+      bottomY,
+    });
+  }, [scopeRef, layer1Ref, layer3Ref]);
+
+  React.useEffect(() => {
+    updatePositions();
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updatePositions) : null;
+    if (scopeRef.current && ro) {
+      ro.observe(scopeRef.current);
+    }
+    if (layer1Ref.current && ro) {
+      ro.observe(layer1Ref.current);
+    }
+    if (layer3Ref.current && ro) {
+      ro.observe(layer3Ref.current);
+    }
+    window.addEventListener('resize', updatePositions);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener('resize', updatePositions);
+    };
+  }, [updatePositions, scopeRef, layer1Ref, layer3Ref]);
+
+  const midY = (coords.topY + coords.bottomY) / 2;
+
+  return (
+    <div className={styles.diagramLoopRail}>
+      <svg className={styles.diagramLoopSvg} aria-hidden="true">
+        {/* Horizontal bottom line from layer 3 to rail */}
+        <line
+          x1="0"
+          y1={coords.bottomY}
+          x2="16"
+          y2={coords.bottomY}
+          stroke="#8B1E1E"
+          strokeWidth="1.5"
+          strokeDasharray="4 3"
+        />
+        {/* Vertical rail connecting layer 3 to layer 1 */}
+        <line
+          x1="16"
+          y1={coords.bottomY}
+          x2="16"
+          y2={coords.topY}
+          stroke="#8B1E1E"
+          strokeWidth="1.5"
+          strokeDasharray="4 3"
+        />
+        {/* Horizontal top line from rail to layer 1 */}
+        <line
+          x1="16"
+          y1={coords.topY}
+          x2="6"
+          y2={coords.topY}
+          stroke="#8B1E1E"
+          strokeWidth="1.5"
+          strokeDasharray="4 3"
+        />
+        {/* Arrowhead pointing LEFT directly into Layer 1 */}
+        <polygon
+          points={`6,${coords.topY - 4} 0,${coords.topY} 6,${coords.topY + 4}`}
+          fill="#8B1E1E"
+        />
+        {/* Rotated text label positioned beside the vertical rail */}
+        <text
+          x="28"
+          y={midY}
+          textAnchor="middle"
+          transform={`rotate(-90 28 ${midY})`}
+          fill="#706A5E"
+          fontSize="11.5"
+          fontStyle="italic"
+          letterSpacing="0.02em"
+          fontFamily="inherit"
+        >
+          personalisation loop
+        </text>
+      </svg>
     </div>
   );
 }
@@ -171,17 +273,140 @@ function SectionHeader({ numeral, title, subtitle }: { numeral: string; title: s
   );
 }
 
+function TodaysFlowPipeline() {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const card3Ref = React.useRef<HTMLDivElement>(null);
+  const card6Ref = React.useRef<HTMLDivElement>(null);
+  const [loopCoords, setLoopCoords] = React.useState<{ xStart: number; xEnd: number }>({
+    xStart: 620,
+    xEnd: 75,
+  });
+
+  const updateLoop = React.useCallback(() => {
+    if (!containerRef.current || !card3Ref.current || !card6Ref.current) return;
+    const contRect = containerRef.current.getBoundingClientRect();
+    const c3Rect = card3Ref.current.getBoundingClientRect();
+    const c6Rect = card6Ref.current.getBoundingClientRect();
+
+    const xEnd = c3Rect.left - contRect.left + c3Rect.width / 2;
+    const xStart = c6Rect.left - contRect.left + c6Rect.width / 2;
+
+    setLoopCoords({ xStart, xEnd });
+  }, []);
+
+  React.useEffect(() => {
+    updateLoop();
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updateLoop) : null;
+    if (containerRef.current && ro) ro.observe(containerRef.current);
+    if (card3Ref.current && ro) ro.observe(card3Ref.current);
+    if (card6Ref.current && ro) ro.observe(card6Ref.current);
+    window.addEventListener('resize', updateLoop);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener('resize', updateLoop);
+    };
+  }, [updateLoop]);
+
+  return (
+    <div ref={containerRef} className={styles.pipelineContainer}>
+      <div className={styles.pipelineFlowRow}>
+        {/* 1. Left 3 Cards */}
+        <div className={styles.pipelineLeftStack}>
+          <div className={styles.pipelineInputCard}>
+            <span className={styles.pipelineCardTitle}>Cycle phase</span>
+            <span className={styles.pipelineCardSub}>predicted day &amp; phase</span>
+          </div>
+          <div className={styles.pipelineInputCard}>
+            <span className={styles.pipelineCardTitle}>Calendar workload</span>
+            <span className={styles.pipelineCardSub}>Google / Outlook events</span>
+          </div>
+          <div ref={card3Ref} className={styles.pipelineInputCard}>
+            <span className={styles.pipelineCardTitle}>Daily feedback</span>
+            <span className={styles.pipelineCardSub}>energy · mood · focus</span>
+          </div>
+        </div>
+
+        {/* 2. Fork Bracket Connector */}
+        <div className={styles.pipelineForkCol}>
+          <svg className={styles.pipelineForkSvg} viewBox="0 0 20 154" preserveAspectRatio="none">
+            <path
+              d="M 0 23 H 12 V 131 H 0 M 12 77 H 18"
+              fill="none"
+              stroke="#841E1E"
+              strokeWidth="1.5"
+            />
+            <polygon points="14,73 20,77 14,81" fill="#841E1E" />
+          </svg>
+        </div>
+
+        {/* 3. Context assembly */}
+        <div className={styles.pipelineContextCard}>
+          <span className={styles.pipelineCardTitle}>Context assembly</span>
+          <span className={styles.pipelineCardSub}>cycle + schedule + history</span>
+        </div>
+
+        {/* 4. Arrow 1 */}
+        <div className={styles.pipelineArrowCol}>
+          <svg className={styles.pipelineArrowSvg} viewBox="0 0 20 10">
+            <line x1="0" y1="5" x2="14" y2="5" stroke="#841E1E" strokeWidth="1.5" />
+            <polygon points="12,2 18,5 12,8" fill="#841E1E" />
+          </svg>
+        </div>
+
+        {/* 5. Gemini 3.1 Pro */}
+        <div className={styles.pipelineGeminiCard}>
+          <span className={styles.pipelineCardTitleWhite}>Gemini 3.1 Pro</span>
+          <span className={styles.pipelineCardSubWhite}>reasoning over the day</span>
+        </div>
+
+        {/* 6. Arrow 2 */}
+        <div className={styles.pipelineArrowCol}>
+          <svg className={styles.pipelineArrowSvg} viewBox="0 0 20 10">
+            <line x1="0" y1="5" x2="14" y2="5" stroke="#841E1E" strokeWidth="1.5" />
+            <polygon points="12,2 18,5 12,8" fill="#841E1E" />
+          </svg>
+        </div>
+
+        {/* 7. Do · Avoid · Optimize */}
+        <div ref={card6Ref} className={styles.pipelineOutputCard}>
+          <span className={styles.pipelineCardTitleWhite}>Do · Avoid · Optimize</span>
+          <span className={styles.pipelineCardSubWhite}>Today&apos;s Flow + 1 notification</span>
+        </div>
+      </div>
+
+      {/* Dashed Feedback Loop */}
+      <div className={styles.pipelineLoopRail}>
+        <svg className={styles.pipelineLoopSvg} aria-hidden="true">
+          <path
+            d={`M ${loopCoords.xStart} 0 V 22 H ${loopCoords.xEnd} V 6`}
+            fill="none"
+            stroke="#841E1E"
+            strokeWidth="1.5"
+            strokeDasharray="4 3"
+          />
+          <polygon
+            points={`${loopCoords.xEnd - 4},6 ${loopCoords.xEnd},0 ${loopCoords.xEnd + 4},6`}
+            fill="#841E1E"
+          />
+        </svg>
+        <p className={styles.pipelineLoopLabel}>
+          evening reflection re-enters the model — mismatch detection &amp; re-personalisation
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyProps) {
+  const loopScopeRef = React.useRef<HTMLDivElement>(null);
+  const layer1Ref = React.useRef<HTMLDivElement>(null);
+  const layer3Ref = React.useRef<HTMLDivElement>(null);
+
   return (
     <div className={styles.lhwPage}>
       {/* ── Cover (page 1) ── */}
       <div className={`${styles.pageSheet} ${styles.coverSheet}`}>
         <div className={styles.coverBody}>
-          <div className={styles.coverEyebrowRow}>
-            <span>PG-AGI · Applied AI &amp; Platform Engineering</span>
-            <span>Enterprise Case Study</span>
-          </div>
-
           <h1 className={styles.coverWordmark}>
             LHW
             <span className={styles.coverWordmarkSub}>Leading Her Way</span>
@@ -337,71 +562,97 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
           </p>
 
           <div className={styles.diagramBlock}>
-            <div className={styles.diagramLoopScope}>
-              <div className={styles.diagramLayer}>
-                <div className={styles.diagramLayerLabel}>Client Layer — React Native (iOS · Android)</div>
-                <div className={styles.diagramLayerBoxes}>
+            {/* Scope wrapping Layer 1-3 to anchor the personalization loop */}
+            <div ref={loopScopeRef} className={styles.diagramLoopScope}>
+              {/* 1. Client Layer */}
+              <div ref={layer1Ref} className={styles.diagramLayer}>
+                <div className={styles.diagramLayerLabel}>
+                  <span className={styles.diagramLayerTitle}>CLIENT LAYER</span>
+                  <span className={styles.diagramLayerSeparator}>—</span>
+                  <span className={styles.diagramLayerSubtitle}>React Native (iOS · Android)</span>
+                </div>
+                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
                   <div className={styles.diagramBox}>Onboarding &amp; profile</div>
                   <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>Today&apos;s Flow dashboard</div>
                   <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>AI coach chat</div>
                   <div className={styles.diagramBox}>Subscription &amp; billing UI</div>
                 </div>
               </div>
+
               <DiagramArrow caption="HTTPS · JWT session" />
 
+              {/* 2. Orchestration Layer */}
               <div className={styles.diagramLayer}>
-                <div className={styles.diagramLayerLabel}>Orchestration Layer — Python FastAPI</div>
-                <div className={styles.diagramLayerBoxes}>
-                  <div className={styles.diagramBox}>Auth JWT / OAuth2</div>
-                  <div className={styles.diagramBox}>Cycle phase engine</div>
-                  <div className={styles.diagramBox}>Calendar workload analysis</div>
-                  <div className={styles.diagramBox}>AI orchestration</div>
-                  <div className={styles.diagramBox}>Notification scheduler</div>
-                  <div className={styles.diagramBox}>Entitlement &amp; billing</div>
+                <div className={styles.diagramLayerLabel}>
+                  <span className={styles.diagramLayerTitle}>ORCHESTRATION LAYER</span>
+                  <span className={styles.diagramLayerSeparator}>—</span>
+                  <span className={styles.diagramLayerSubtitle}>Python FastAPI</span>
+                </div>
+                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes6}`}>
+                  <div className={styles.diagramBox}><span>Auth JWT /<br />OAuth2</span></div>
+                  <div className={styles.diagramBox}><span>Cycle phase<br />engine</span></div>
+                  <div className={styles.diagramBox}><span>Calendar<br />workload<br />analysis</span></div>
+                  <div className={styles.diagramBox}><span>AI orchestration</span></div>
+                  <div className={styles.diagramBox}><span>Notification<br />scheduler</span></div>
+                  <div className={styles.diagramBox}><span>Entitlement &amp;<br />billing</span></div>
                 </div>
               </div>
+
               <DiagramArrow caption="assembled context" />
 
-              <div className={styles.diagramLayer}>
-                <div className={styles.diagramLayerLabel}>Intelligence Layer</div>
-                <div className={styles.diagramLayerBoxes}>
+              {/* 3. Intelligence Layer */}
+              <div ref={layer3Ref} className={styles.diagramLayer}>
+                <div className={styles.diagramLayerLabel}>
+                  <span className={styles.diagramLayerTitle}>INTELLIGENCE LAYER</span>
+                </div>
+                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes2}`}>
                   <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>Gemini 3.1 Pro — reasoning &amp; daily recommendations</div>
                   <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>AI memory store — learned patterns &amp; history</div>
                 </div>
               </div>
 
-              <div className={styles.diagramLoopRail}>
-                <span className={styles.diagramLoopArrowHead}><LoopArrowHead /></span>
-                <span className={styles.diagramLoopLabel}>personalisation loop</span>
-              </div>
+              {/* Personalisation loop connecting Intelligence Layer to Client Layer */}
+              <PersonalisationLoop
+                scopeRef={loopScopeRef}
+                layer1Ref={layer1Ref}
+                layer3Ref={layer3Ref}
+              />
             </div>
+
             <DiagramArrow caption="persist & learn" />
 
+            {/* 4. Data & Integration Layer */}
             <div className={styles.diagramLayer}>
-              <div className={styles.diagramLayerLabel}>Data &amp; Integration Layer</div>
-              <div className={styles.diagramLayerBoxes}>
-                <div className={styles.diagramBox}>MongoDB profiles · cycles · history</div>
-                <div className={styles.diagramBox}>Google Calendar / Outlook API</div>
-                <div className={styles.diagramBox}>Firebase Cloud Messaging</div>
-                <div className={styles.diagramBox}>Stripe + in-app purchases</div>
+              <div className={styles.diagramLayerLabel}>
+                <span className={styles.diagramLayerTitle}>DATA &amp; INTEGRATION LAYER</span>
+              </div>
+              <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
+                <div className={styles.diagramBox}><span>MongoDB profiles · cycles ·<br />history</span></div>
+                <div className={styles.diagramBox}><span>Google Calendar / Outlook<br />API</span></div>
+                <div className={styles.diagramBox}><span>Firebase Cloud Messaging</span></div>
+                <div className={styles.diagramBox}><span>Stripe + in-app purchases</span></div>
               </div>
             </div>
+
             <DiagramArrow caption="deployed on" />
 
+            {/* 5. Platform Layer */}
             <div className={styles.diagramLayer}>
-              <div className={styles.diagramLayerLabel}>Platform Layer</div>
-              <div className={styles.diagramLayerBoxes}>
-                <div className={styles.diagramBox}>Docker on GCP Cloud Run</div>
-                <div className={styles.diagramBox}>GitHub Actions CI / CD</div>
-                <div className={styles.diagramBox}>GCP Logging &amp; observability</div>
+              <div className={styles.diagramLayerLabel}>
+                <span className={styles.diagramLayerTitle}>PLATFORM LAYER</span>
+              </div>
+              <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes3}`}>
+                <div className={styles.diagramBox}><span>Docker on GCP Cloud Run</span></div>
+                <div className={styles.diagramBox}><span>GitHub Actions CI / CD</span></div>
+                <div className={styles.diagramBox}><span>GCP Logging &amp; observability</span></div>
               </div>
             </div>
           </div>
 
           <p className={styles.figureCaption}>
-            <strong>Figure 1</strong> — LHW platform architecture. Cycle data, calendar workload, and daily
+            <em>Figure 1 — LHW platform architecture. Cycle data, calendar workload, and daily
             feedback flow through FastAPI orchestration into the Gemini intelligence layer, and return to the
-            client as Today&apos;s Flow. The dashed path is the personalisation loop.
+            client as Today&apos;s Flow. The dashed path is the personalisation loop.</em>
           </p>
         </div>
         <FooterBar page="03" />
@@ -536,44 +787,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
 
           <h3 className={styles.plainHeading} style={{ marginTop: '8px' }}>Daily experience</h3>
           <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Onboarding.</strong> The user enters cycle data, goals, and preferences, then connects a calendar through a guided first-run flow.</li>
-            <li className={styles.bulletItem}><strong>Today&apos;s Flow.</strong> A daily dashboard showing the current cycle phase, recommended tasks framed as Do / Avoid / Optimize, energy insight, and calendar-aware suggestions.</li>
-            <li className={styles.bulletItem}><strong>Conversational AI coach.</strong> The user can ask what to prioritise, when to schedule a task, or why they feel a certain way, and receives contextual answers with the reasoning behind each recommendation.</li>
-            <li className={styles.bulletItem}><strong>Feedback capture.</strong> Quick energy, mood, and focus inputs let the system detect mismatches between the predicted phase and how the user actually feels.</li>
+            <li className={styles.bulletItem}>Onboarding. The user enters cycle data, goals, and preferences, then connects a calendar through a guided first-run flow.</li>
+            <li className={styles.bulletItem}>Today&apos;s Flow. A daily dashboard showing the current cycle phase, recommended tasks framed as Do / Avoid / Optimize, energy insight, and calendar-aware suggestions.</li>
+            <li className={styles.bulletItem}>Conversational AI coach. The user can ask what to prioritise, when to schedule a task, or why they feel a certain way, and receives contextual answers with the reasoning behind each recommendation.</li>
+            <li className={styles.bulletItem}>Feedback capture. Quick energy, mood, and focus inputs let the system detect mismatches between the predicted phase and how the user actually feels.</li>
           </ul>
 
-          <div className={styles.pipelineFlow}>
-            <div className={styles.pipelineChip}>
-              <span className={styles.pipelineChipTitle}>Cycle phase</span>
-              <span className={styles.pipelineChipCaption}>predicted day &amp; phase</span>
-            </div>
-            <div className={styles.pipelineChip}>
-              <span className={styles.pipelineChipTitle}>Calendar workload</span>
-              <span className={styles.pipelineChipCaption}>Google / Outlook events</span>
-            </div>
-            <div className={styles.pipelineChip}>
-              <span className={styles.pipelineChipTitle}>Daily feedback</span>
-              <span className={styles.pipelineChipCaption}>energy · mood · focus</span>
-            </div>
-            <span className={styles.pipelineChevron}>›</span>
-            <div className={styles.pipelineChip}>
-              <span className={styles.pipelineChipTitle}>Context assembly</span>
-              <span className={styles.pipelineChipCaption}>cycle + schedule + history</span>
-            </div>
-            <span className={styles.pipelineChevron}>›</span>
-            <div className={`${styles.pipelineChip} ${styles.pipelineChipHighlight}`}>
-              <span className={styles.pipelineChipTitle}>Gemini 3.1 Pro</span>
-              <span className={styles.pipelineChipCaption}>reasoning over the day</span>
-            </div>
-            <span className={styles.pipelineChevron}>›</span>
-            <div className={`${styles.pipelineChip} ${styles.pipelineChipHighlight}`}>
-              <span className={styles.pipelineChipTitle}>Do · Avoid · Optimize</span>
-              <span className={styles.pipelineChipCaption}>Today&apos;s Flow + 1 notification</span>
-            </div>
-          </div>
-          <p className={styles.pipelineLoopNote}>
-            evening reflection re-enters the model — mismatch detection &amp; re-personalisation
-          </p>
+          <TodaysFlowPipeline />
 
           <p className={styles.figureCaption}>
             <strong>Figure 2</strong> — Today&apos;s Flow pipeline. Cycle phase, calendar workload, and daily
@@ -691,9 +911,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
           <div className={styles.decisionList}>
             {DIFFERENTIATORS.map((d, i) => (
               <div key={d.title} className={styles.decisionItem}>
-                <span className={styles.decisionNum}>{String(i + 1).padStart(2, '0')}</span>
-                <h4 className={styles.decisionTitle}>{d.title}</h4>
-                <p className={styles.decisionDesc}>{d.desc}</p>
+                <div className={styles.decisionNumCol}>
+                  <span className={styles.decisionNum}>{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <div className={styles.decisionContentCol}>
+                  <h4 className={styles.decisionTitle}>{d.title}</h4>
+                  <p className={styles.decisionDesc}>{d.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -739,9 +963,9 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
 
           <h3 className={styles.plainHeading}>What the framework is designed to prove</h3>
           <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>That the guidance is trusted.</strong> Recommendation acceptance and notification engagement together separate a product being read from a product being followed.</li>
-            <li className={styles.bulletItem}><strong>That the model is honest.</strong> Prediction alignment measures the system against the user&apos;s reported reality, which is the only ground truth available in this category.</li>
-            <li className={styles.bulletItem}><strong>That the value compounds.</strong> Retention across billing periods is the test of whether the learning loop is actually making the product better for the individual over time.</li>
+            <li className={styles.bulletItem}>That the guidance is trusted. Recommendation acceptance and notification engagement together separate a product being read from a product being followed.</li>
+            <li className={styles.bulletItem}>That the model is honest. Prediction alignment measures the system against the user&apos;s reported reality, which is the only ground truth available in this category.</li>
+            <li className={styles.bulletItem}>That the value compounds. Retention across billing periods is the test of whether the learning loop is actually making the product better for the individual over time.</li>
           </ul>
         </div>
         <FooterBar page="10" />
