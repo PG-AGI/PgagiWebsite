@@ -166,9 +166,13 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  /* Slight negative offset so the solid-white end overlaps the next
+     section by a couple px instead of landing exactly on the boundary —
+     avoids a hairline seam from subpixel viewport-height rounding on
+     mobile (both sides are solid white here, so the overlap is invisible). */
+  bottom: -2px;
   height: clamp(4rem, 12vh, 9rem);
-  background: linear-gradient(180deg, rgba(26, 26, 24, 0) 0%, #ffffff 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
   z-index: 1;
   pointer-events: none;
 }
