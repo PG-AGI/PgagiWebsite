@@ -159,6 +159,38 @@
   z-index: 1;
 }
 
+/* Fades the hero's bottom edge into white so it dissolves into the next
+   section instead of cutting hard from the photo/dark bg (#1a1a18) to a
+   flat white section below. Sits above the photo, below the content. */
+.heroFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Slight negative offset so the solid-white end overlaps the next
+     section by a couple px instead of landing exactly on the boundary —
+     avoids a hairline seam from subpixel viewport-height rounding on
+     mobile (both sides are solid white here, so the overlap is invisible). */
+  bottom: -2px;
+  /* Taller than a plain edge-fade so it reaches up into the rocky
+     foreground strip, washing it toward white as it goes — the stones
+     read as dissolving into the Trusted Partners section below instead
+     of staying fully saturated right up to a hard cut. */
+  height: clamp(7rem, 22vh, 16rem);
+  /* Eased (not linear) alpha ramp — a straight 0%→100% fade has an abrupt
+     rate-of-change right where it meets the solid color below, which the
+     eye perceives as a hairline (Mach-band effect) even though there's no
+     real color discontinuity. Extra stops taper the rate off gradually
+     (same recipe as expertise.module.scss's .heroFade). */
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 45%,
+    rgba(255, 255, 255, 0.75) 70%,
+    rgba(255, 255, 255, 0.93) 88%,
+    #ffffff 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* NOTE: the CSS crow flock was removed 2026-07-03 — an AI-generated
    sprite/asset will replace it (user-supplied). */
 

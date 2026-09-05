@@ -47,11 +47,33 @@
   }
 }
 
+/* Fades the hero photo's bottom edge into white so it dissolves into
+   Section 2 (flat #ffffff) instead of cutting hard at the image edge. */
+.heroFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(4rem, 12vh, 9rem);
+  /* Eased (not linear) alpha ramp — a straight 0%→100% fade has an abrupt
+     rate-of-change right where it meets the solid color below, which the
+     eye perceives as a hairline (Mach-band effect) even though there's no
+     real color discontinuity. Extra stops taper the rate off gradually. */
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 45%,
+    rgba(255, 255, 255, 0.75) 70%,
+    rgba(255, 255, 255, 0.93) 88%,
+    #ffffff 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* Overlay that carries the shared gutter + centres the content rail. */
 .heroOverlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: center;
   padding-inline: clamp(2.5rem, 7vw, 9rem); /* == home .sectionsWrapper */

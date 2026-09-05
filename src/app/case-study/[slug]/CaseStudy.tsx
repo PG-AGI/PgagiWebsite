@@ -20,6 +20,7 @@ import BrainifyCaseStudy from '@/components/organisms/BrainifyCaseStudy/Brainify
 import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCaseStudy';
 import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
 import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBrainCaseStudy';
+import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStudy/LeadingHerWayCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -378,6 +379,23 @@ const processLinksWithPreview = (content: string) => {
   const isAimiBrain = (slug && String(slug).toLowerCase().includes('aimi-brain')) || (caseStudy.slug && caseStudy.slug.toLowerCase().includes('aimi-brain'));
   if (isAimiBrain) {
     return <AIMIBrainCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isLeadingHerWay =
+    (slug && (
+      String(slug).toLowerCase().includes('leading-her-way') ||
+      String(slug).toLowerCase().includes('learning-her-way') ||
+      String(slug).toLowerCase().includes('hermayhem') ||
+      String(slug).toLowerCase() === 'lhw'
+    )) ||
+    (caseStudy.slug && (
+      caseStudy.slug.toLowerCase().includes('leading-her-way') ||
+      caseStudy.slug.toLowerCase().includes('learning-her-way') ||
+      caseStudy.slug.toLowerCase().includes('hermayhem') ||
+      caseStudy.slug.toLowerCase() === 'lhw'
+    ));
+  if (isLeadingHerWay) {
+    return <LeadingHerWayCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing
