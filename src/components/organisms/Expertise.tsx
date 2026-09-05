@@ -73,6 +73,7 @@ export default function Expertise() {
           className={styles.heroBg}
         />
       </picture>
+      <div className={styles.heroFade} aria-hidden="true" />
       <div className={styles.heroOverlay}>
         <div className={styles.heroInner}>
           <h1 className={styles.heroTitle}>Engineering Expertise</h1>

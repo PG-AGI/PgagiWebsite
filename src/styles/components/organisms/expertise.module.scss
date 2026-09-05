@@ -47,11 +47,24 @@
   }
 }
 
+/* Fades the hero photo's bottom edge into white so it dissolves into
+   Section 2 (flat #ffffff) instead of cutting hard at the image edge. */
+.heroFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(4rem, 12vh, 9rem);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #ffffff 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* Overlay that carries the shared gutter + centres the content rail. */
 .heroOverlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: center;
   padding-inline: clamp(2.5rem, 7vw, 9rem); /* == home .sectionsWrapper */
