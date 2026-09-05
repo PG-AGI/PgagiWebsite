@@ -15,6 +15,7 @@ import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCas
 import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
 import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBrainCaseStudy';
 import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStudy/LeadingHerWayCaseStudy';
+import SocialJetCaseStudy from '@/components/organisms/SocialJetCaseStudy/SocialJetCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -136,6 +137,20 @@ export async function generateMetadata({
     };
   }
 
+  const isSocialJet =
+    params?.slug?.toLowerCase()?.includes('socialjet') ||
+    params?.slug?.toLowerCase()?.includes('social-jet');
+  if (isSocialJet) {
+    return {
+      title: 'SocialJet: AI-Powered Influencer Marketing Operating System | PG-AGI Case Study',
+      description: 'An AI-powered operating system that automates the end-to-end workflow of an influencer-marketing agency — spanning lead capture, proposal generation, influencer discovery, outreach, campaign tracking, payouts and post-campaign analytics.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'SocialJet Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -201,6 +216,14 @@ export default async function CaseStudyPage({
   if (isLeadingHerWay) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <LeadingHerWayCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isSocialJet =
+    params?.slug?.toLowerCase()?.includes('socialjet') ||
+    params?.slug?.toLowerCase()?.includes('social-jet');
+  if (isSocialJet) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <SocialJetCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
