@@ -23,6 +23,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   variable: '--font-plus-jakarta',
   weight: ['400', '500', '600', '700'],
   display: 'swap',
+  preload: false,
 });
 
 const inter = Inter({
