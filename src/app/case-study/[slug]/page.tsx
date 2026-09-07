@@ -16,6 +16,7 @@ import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailL
 import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBrainCaseStudy';
 import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStudy/LeadingHerWayCaseStudy';
 import SocialJetCaseStudy from '@/components/organisms/SocialJetCaseStudy/SocialJetCaseStudy';
+import SentlogicCaseStudy from '@/components/organisms/SentlogicCaseStudy/SentlogicCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -151,6 +152,18 @@ export async function generateMetadata({
     };
   }
 
+  const isSentlogic = params?.slug?.toLowerCase()?.includes('sentlogic');
+  if (isSentlogic) {
+    return {
+      title: 'Sentlogic: Instagram Engagement Turned Into Attributable Revenue | PG-AGI Case Study',
+      description: 'An enterprise SaaS product layer built directly on top of a live Instagram automation engine — wrapping keyword detection, follow-gate validation, and first-touch DM dispatch in creator-isolated RAG intelligence, credit-metered monetisation, and post-level revenue attribution.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Sentlogic Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -224,6 +237,12 @@ export default async function CaseStudyPage({
   if (isSocialJet) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <SocialJetCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isSentlogic = params?.slug?.toLowerCase()?.includes('sentlogic');
+  if (isSentlogic) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <SentlogicCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);

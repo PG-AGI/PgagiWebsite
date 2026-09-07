@@ -21,6 +21,8 @@ import MetaAdsCaseStudy from '@/components/organisms/MetaAdsCaseStudy/MetaAdsCas
 import EmailLoveCaseStudy from '@/components/organisms/EmailLoveCaseStudy/EmailLoveCaseStudy';
 import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBrainCaseStudy';
 import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStudy/LeadingHerWayCaseStudy';
+import SocialJetCaseStudy from '@/components/organisms/SocialJetCaseStudy/SocialJetCaseStudy';
+import SentlogicCaseStudy from '@/components/organisms/SentlogicCaseStudy/SentlogicCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -396,6 +398,26 @@ const processLinksWithPreview = (content: string) => {
     ));
   if (isLeadingHerWay) {
     return <LeadingHerWayCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isSocialJet =
+    (slug && (
+      String(slug).toLowerCase().includes('socialjet') ||
+      String(slug).toLowerCase().includes('social-jet')
+    )) ||
+    (caseStudy.slug && (
+      caseStudy.slug.toLowerCase().includes('socialjet') ||
+      caseStudy.slug.toLowerCase().includes('social-jet')
+    ));
+  if (isSocialJet) {
+    return <SocialJetCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isSentlogic =
+    (slug && String(slug).toLowerCase().includes('sentlogic')) ||
+    (caseStudy.slug && caseStudy.slug.toLowerCase().includes('sentlogic'));
+  if (isSentlogic) {
+    return <SentlogicCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing
