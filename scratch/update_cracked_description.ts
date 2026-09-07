@@ -1,32 +1,31 @@
-import { MongoClient } from 'mongodb';
+const { MongoClient } = require('mongodb');
 
 const uri = 'mongodb+srv://sahil:jGkcD58oin2tjwx7@pgagiwebsite.wzf6u.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri);
 
+const NEW_TITLE = 'Cracked.ai';
 const NEW_DESCRIPTION =
-  'Cracked.ai is an agent-driven marketing platform that lets brands turn a small number of winning creatives into high-volume, native-feeling content distributed across a network of AI-operated social accounts.';
+  'Cracked is the execution layer between AI agents and the commercial tool market. One key, 69,826 tools, every one ranked by measured health and real price.';
 
 async function run() {
   try {
     await client.connect();
-    const db = client.db();
-    const collection = db.collection('caseStudies');
-
-    const result = await collection.updateOne(
-      { slug: 'cracked-ai-growth-platform' },
-      { $set: { description: NEW_DESCRIPTION, metaDescription: NEW_DESCRIPTION } }
-    );
-
-    if (result.matchedCount > 0) {
-      console.log('Successfully updated description for slug: cracked-ai-growth-platform');
-    } else {
-      console.log('Failed to find case study with slug: cracked-ai-growth-platform');
+    const dbs = [client.db(), client.db('test')];
+    for (const db of dbs) {
+      const collection = db.collection('caseStudies');
+      const result = await collection.updateMany(
+        { slug: { $in: ['cracked-ai-growth-platform', 'cracked-ai'] } },
+        { $set: { title: NEW_TITLE, description: NEW_DESCRIPTION, metaDescription: NEW_DESCRIPTION } }
+      );
+      console.log(`DB ${db.databaseName}: matched ${result.matchedCount}, modified ${result.modifiedCount}`);
     }
   } catch (error) {
-    console.error('Error updating description:', error);
+    console.error('Error updating:', error);
   } finally {
     await client.close();
   }
 }
 
 run();
+
+

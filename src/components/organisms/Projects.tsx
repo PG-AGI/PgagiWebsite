@@ -242,9 +242,10 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                 <div key={cs.slug} id={cs.slug} className={styles.csCard}>
                   {/* Left */}
                   <div className={styles.csLeft}>
-                    <h2 className={styles.csTitle}>{cs.title}</h2>
+                    <h2 className={styles.csTitle}>{meta?.title ?? cs.title}</h2>
                     <p className={styles.csDesc}>
-                      {cs.description ||
+                      {meta?.description ||
+                        cs.description ||
                         'Advancing industry standards with bespoke AI integrations and high-performance system architectures.'}
                     </p>
 
@@ -351,7 +352,7 @@ export default function Projects({ initialStudies }: { initialStudies: CaseStudy
                   <div className={styles.csRight}>
                     <div className={styles.csImgWrap}>
                       <Image
-                        src={getSafeImageUrl(cs.coverImage)}
+                        src={getSafeImageUrl(meta?.coverImage ?? cs.coverImage)}
                         alt={cs.title}
                         fill
                         unoptimized={true}
