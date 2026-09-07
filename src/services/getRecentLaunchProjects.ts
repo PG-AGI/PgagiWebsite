@@ -51,8 +51,8 @@ export async function getRecentLaunchProjects(): Promise<RecentLaunchProjects> {
 
         return [{
           id:            doc ? doc._id.toString() : slug,
-          title:         (doc?.title as string) ?? slug,
-          description:   (doc?.metaDescription ?? doc?.description) as string | undefined,
+          title:         meta.title ?? (doc?.title as string) ?? slug,
+          description:   meta.description ?? (doc?.metaDescription ?? doc?.description) as string | undefined,
           techStack:     meta.techStack,
           metrics:       meta.metrics,
           highlight:     meta.highlight,

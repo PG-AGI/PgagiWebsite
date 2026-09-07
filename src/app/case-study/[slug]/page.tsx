@@ -17,6 +17,7 @@ import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBr
 import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStudy/LeadingHerWayCaseStudy';
 import SocialJetCaseStudy from '@/components/organisms/SocialJetCaseStudy/SocialJetCaseStudy';
 import SentlogicCaseStudy from '@/components/organisms/SentlogicCaseStudy/SentlogicCaseStudy';
+import CrackedCaseStudy from '@/components/organisms/CrackedCaseStudy/CrackedCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -164,6 +165,21 @@ export async function generateMetadata({
     };
   }
 
+  const isCracked =
+    params?.slug?.toLowerCase()?.includes('cracked') ||
+    params?.slug?.toLowerCase() === 'cracked-ai' ||
+    params?.slug?.toLowerCase() === 'cracked-ai-growth-platform';
+  if (isCracked) {
+    return {
+      title: 'Cracked.ai: The Agent Execution Layer | PG-AGI Engineering Case Study',
+      description: 'One key to 69,826 tools across 1,249 providers, ranked by measured health and real price. Failed runs are free.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Cracked.ai Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -243,6 +259,15 @@ export default async function CaseStudyPage({
   if (isSentlogic) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <SentlogicCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isCracked =
+    params?.slug?.toLowerCase()?.includes('cracked') ||
+    params?.slug?.toLowerCase() === 'cracked-ai' ||
+    params?.slug?.toLowerCase() === 'cracked-ai-growth-platform';
+  if (isCracked) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <CrackedCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
