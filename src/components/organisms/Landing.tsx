@@ -56,6 +56,7 @@ export default function Landing() {
 {/* eslint-disable-next-line @next/next/no-img-element */}
 <video
   autoPlay
+  muted
   loop
   playsInline
   aria-hidden="true"
