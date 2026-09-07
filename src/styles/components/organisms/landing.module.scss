@@ -100,7 +100,11 @@
   overflow: hidden;
   /* clips image to hero bounds */
   transform: translateZ(0);
-
+ video.heroBgImage {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
 
   .heroBgImage {
     position: absolute;

@@ -56,14 +56,13 @@ export default function Landing() {
 {/* eslint-disable-next-line @next/next/no-img-element */}
 <video
   autoPlay
-  muted
   loop
   playsInline
   aria-hidden="true"
   className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
   poster="/hero-sunset.webp"
 >
-  <source src="https://images.pgagi.in/intro-compressed.mp4" type="video/mp4" />
+  <source src="https://images.pgagi.in/intro.MP4" type="video/mp4" />
 </video>
 
 {/* Mobile */}
