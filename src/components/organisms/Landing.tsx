@@ -54,16 +54,14 @@ export default function Landing() {
   <div className={styles.heroBg} aria-hidden="true">
     {/* Desktop — sunset hero, hidden below 768px via CSS */}
 {/* eslint-disable-next-line @next/next/no-img-element */}
-<video
-  autoPlay
-  loop
-  playsInline
+<img
+  src="/hero-sunset.webp"
+  alt=""
   aria-hidden="true"
+  fetchPriority="high"
+  decoding="async"
   className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
-  poster="/hero-sunset.webp"
->
-  <source src="https://images.pgagi.in/intro.MP4" type="video/mp4" />
-</video>
+/>
 
 {/* Mobile */}
 <Image
