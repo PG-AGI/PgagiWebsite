@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  optimizeFonts: false,
   swcMinify: true,
   images: {
     /* WebP only — sources are already hand-optimized WebP, and on-demand AVIF

@@ -15,6 +15,7 @@ COPY . .
 
 # Disable Next.js telemetry at build time
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_DISABLE_FONT_OPTIMIZATION=1
 
 # Build the Next.js application
 RUN npm run build
