@@ -1,0 +1,938 @@
+// ── Sentlogic Case Study SCSS ────────────────────────────────────────────────
+// Exact palette, natural typography tracking, crisp borders, and full fidelity.
+
+$color-page-bg: #FFFFFF;
+$color-canvas: #FFFFFF;
+
+// Exact requested palette tokens:
+$color-primary-dark: #1A1226;
+$color-body-text: #332A41;
+$color-purple-accent: #823AB3;
+$color-pink-accent: #C03483;
+$color-divider: #E9E4F0;
+
+// Card backgrounds:
+$color-card-blue: #3F5CE5;
+$color-card-purple: #8239B3;
+$color-card-pink: #E02F6B;
+$color-card-orange: #FBAE44;
+
+// Orange card text:
+$color-orange-card-text: #35252A;
+$color-orange-card-sub: #5A4407;
+
+$color-text-muted: #6B7280;
+$font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+.sentlogicPage {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-page-bg;
+  color: $color-primary-dark;
+  font-family: $font-sans;
+  padding: 104px 0 96px;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 88px 0 64px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 78px 0 48px;
+  }
+}
+
+.contentContainer {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 16px;
+  }
+}
+
+// ── 7-Segment Color Bar ──
+.segmentedBar {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 0;
+
+  .seg1 { flex: 1; background-color: #405DE5; } // Blue
+  .seg2 { flex: 1; background-color: #5851DB; } // Indigo
+  .seg3 { flex: 1; background-color: #853AB3; } // Purple
+  .seg4 { flex: 1; background-color: #C23584; } // Magenta
+  .seg5 { flex: 1; background-color: #E5306C; } // Pink
+  .seg6 { flex: 1; background-color: #F56040; } // Orange
+  .seg7 { flex: 1; background-color: #FCAF45; } // Amber
+}
+
+// ── Article Sections ──
+.articleSection {
+  margin-bottom: 72px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid $color-divider;
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  @media (max-width: 640px) {
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+  }
+}
+
+// ── Hero Section ──
+.heroSection {
+  margin-bottom: 72px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid $color-divider;
+
+  @media (max-width: 640px) {
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+  }
+}
+
+.heroInner {
+  display: flex;
+  flex-direction: column;
+}
+
+.coverEyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: $color-purple-accent;
+  text-transform: uppercase;
+  margin: 32px 0 16px;
+}
+
+.coverTitle {
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: $color-primary-dark;
+  line-height: 1.05;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    font-size: 3rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2.25rem;
+  }
+}
+
+.coverSubtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $color-pink-accent;
+  margin: 0 0 28px;
+  line-height: 1.35;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.coverDivider {
+  width: 100%;
+  height: 1px;
+  background-color: $color-divider;
+  margin: 24px 0;
+  border: none;
+}
+
+.coverDescription {
+  font-size: 1.0625rem;
+  line-height: 1.68;
+  color: $color-body-text;
+  margin: 0;
+  max-width: 960px;
+}
+
+.coverPillGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 36px 0 44px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.coverPill {
+  padding: 20px 18px;
+  border-radius: 6px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80px;
+
+  &.blue {
+    background-color: #405DE5;
+    .coverPillTitle, .coverPillSub { color: #FFFFFF; }
+  }
+  &.purple {
+    background-color: #853AB3;
+    .coverPillTitle, .coverPillSub { color: #FFFFFF; }
+  }
+  &.pink {
+    background-color: #E5306C;
+    .coverPillTitle, .coverPillSub { color: #FFFFFF; }
+  }
+  &.orange {
+    background-color: #FCAF45;
+    .coverPillTitle { color: #2B2241; }
+    .coverPillSub { color: #5A4407; }
+  }
+}
+
+.coverPillTitle {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.coverPillSub {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.coverBottomSection {
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+.coverMetaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 16px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.coverMetaCol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.coverMetaLabel {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: $color-purple-accent;
+  text-transform: uppercase;
+}
+
+.coverMetaValue {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: $color-primary-dark;
+  line-height: 1.4;
+}
+
+// ── Section Headers with Colored Badges ──
+.sectionHeaderWrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.sectionBadge {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #FFFFFF;
+
+  &.badgeBlue { background-color: #405DE5; }
+  &.badgePurple { background-color: #853AB3; }
+  &.badgeMagenta { background-color: #C03483; }
+  &.badgeRose { background-color: #D82E6F; }
+  &.badgeOrange { background-color: #F46344; }
+  &.badgeAmber { background-color: #FCAF45; color: #2B2241; }
+}
+
+.sectionHeaderContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sectionEyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+
+  &.eyebrowBlue { color: #405DE5; }
+  &.eyebrowPurple { color: #853AB3; }
+  &.eyebrowMagenta { color: #C03483; }
+  &.eyebrowRose { color: #D82E6F; }
+  &.eyebrowOrange { color: #F46344; }
+  &.eyebrowAmber { color: #D97706; }
+}
+
+.sectionTitle {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: $color-primary-dark;
+  margin: 0;
+  line-height: 1.2;
+
+  @media (max-width: 640px) {
+    font-size: 1.5rem;
+  }
+}
+
+.sectionRule {
+  width: 100%;
+  height: 1px;
+  background-color: $color-divider;
+  border: none;
+  margin: 20px 0 24px;
+}
+
+// ── Typography Elements ──
+.bodyParagraph {
+  font-size: 0.96875rem;
+  line-height: 1.68;
+  color: $color-body-text;
+  margin: 0 0 18px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.subSectionHeader {
+  font-size: 0.78125rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 32px 0 14px;
+
+  &.subHeaderBlue { color: #405DE5; }
+  &.subHeaderPurple { color: #853AB3; }
+  &.subHeaderMagenta { color: #C03483; }
+  &.subHeaderRose { color: #D82E6F; }
+  &.subHeaderOrange { color: #F46344; }
+  &.subHeaderAmber { color: #FCAF45; }
+}
+
+// ── Callout Box ──
+.calloutBox {
+  padding: 20px 24px;
+  border-radius: 0 6px 6px 0;
+  margin: 28px 0;
+  border-left-width: 4px;
+  border-left-style: solid;
+
+  &.calloutBlue {
+    border-left-color: #405DE5;
+    background-color: #F4F7FF;
+    .calloutLabel { color: #405DE5; }
+  }
+
+  &.calloutPurple {
+    border-left-color: #853AB3;
+    background-color: #FAF5FF;
+    .calloutLabel { color: #853AB3; }
+  }
+
+  &.calloutMagenta {
+    border-left-color: #C03483;
+    background-color: #FFF1F5;
+    .calloutLabel { color: #C03483; }
+  }
+
+  &.calloutRose {
+    border-left-color: #D82E6F;
+    background-color: #FFF1F4;
+    .calloutLabel { color: #D82E6F; }
+  }
+
+  &.calloutOrange {
+    border-left-color: #F46344;
+    background-color: #FFF5F2;
+    .calloutLabel { color: #F46344; }
+  }
+}
+
+.calloutLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.calloutText {
+  font-size: 0.90625rem;
+  line-height: 1.6;
+  color: $color-body-text;
+  margin: 0;
+}
+
+// ── Table Styles ──
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0 28px;
+  border: 1px solid $color-divider;
+  border-radius: 6px;
+}
+
+.customTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+
+  thead tr th {
+    padding: 12px 16px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    border: none;
+    white-space: nowrap;
+
+    &.thBlue { background-color: #405DE5; }
+    &.thPurple { background-color: #853AB3; }
+    &.thMagenta { background-color: #C03483; }
+    &.thRose { background-color: #D82E6F; }
+    &.thOrange { background-color: #F46344; }
+    &.thAmber { background-color: #FCAF45; color: #2B2241; }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $color-divider;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:nth-child(even) {
+      background-color: #FBFBFE;
+    }
+  }
+
+  tbody tr td {
+    padding: 12px 16px;
+    color: $color-body-text;
+    line-height: 1.5;
+    vertical-align: top;
+
+    &.strongCol {
+      font-weight: 700;
+      color: $color-primary-dark;
+      white-space: nowrap;
+    }
+
+    &.centerCol {
+      text-align: center;
+      color: $color-text-muted;
+      font-weight: 600;
+    }
+  }
+}
+
+// ── Document Structure / Table of Contents ──
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 28px 0 36px;
+}
+
+.tocItem {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background-color: #FAFAFD;
+  border: 1px solid #F0EEF6;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #F4F3FB;
+    border-color: #E2DFEF;
+  }
+}
+
+.tocNum {
+  font-size: 1.25rem;
+  font-weight: 900;
+  min-width: 32px;
+
+  &.numBlue { color: #405DE5; }
+  &.numMagenta { color: #C03483; }
+  &.numOrange { color: #F46344; }
+}
+
+.tocContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tocTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: $color-primary-dark;
+}
+
+.tocDesc {
+  font-size: 0.875rem;
+  color: $color-text-muted;
+  line-height: 1.45;
+}
+
+// ── Numbered List in Section 06 ──
+.numberedList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.numberedItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 6px;
+  background-color: #FFFBF9;
+  border: 1px solid #F8ECE6;
+}
+
+.numberedBadge {
+  font-size: 0.9375rem;
+  font-weight: 900;
+  color: #F46344;
+  min-width: 28px;
+  line-height: 1.5;
+}
+
+.numberedText {
+  font-size: 0.90625rem;
+  line-height: 1.6;
+  color: $color-body-text;
+
+  strong {
+    color: $color-primary-dark;
+    font-weight: 700;
+  }
+}
+
+// ── Bulleted List in Section 07 ──
+.bulletedList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.bulletedItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.90625rem;
+  line-height: 1.6;
+  color: $color-body-text;
+
+  strong {
+    color: $color-primary-dark;
+    font-weight: 700;
+  }
+}
+
+.bulletDot {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #F46344;
+  font-weight: 900;
+}
+
+// ── Figure 1: Layered Architecture Diagram ──
+.figDiagramWrapper {
+  margin: 28px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.figLayerRow {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 12px;
+  align-items: stretch;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.figLayerHeader {
+  padding: 12px 14px;
+  border-radius: 6px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  &.h01 { background-color: #405DE5; }
+  &.h02 { background-color: #5851DB; }
+  &.h03 { background-color: #853AB3; }
+  &.h04 { background-color: #C23584; }
+  &.h05 { background-color: #E5306C; }
+  &.h06 { background-color: #F56040; }
+  &.h07 { background-color: #FCAF45; color: #FFFFFF; }
+  &.h08 { background-color: #2B2241; }
+}
+
+.figLayerTitle {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.15;
+  color: #FFFFFF;
+}
+
+.figLayerSub {
+  font-size: 0.625rem;
+  color: #F6F3FB;
+  opacity: 0.95;
+  text-transform: none;
+}
+
+.figLayerGridContainer {
+  border-radius: 6px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+
+  &.c01 {
+    background-color: rgba(216, 221, 249, 0.25);
+    border: 1px solid #D8DDF9;
+    .figLayerPill { color: #233A8B; }
+  }
+  &.c02 {
+    background-color: rgba(221, 216, 250, 0.25);
+    border: 1px solid #DDD8FA;
+    .figLayerPill { color: #4331A6; }
+  }
+  &.c03 {
+    background-color: rgba(230, 216, 243, 0.25);
+    border: 1px solid #E6D8F3;
+    .figLayerPill { color: #6A2B94; }
+  }
+  &.c04 {
+    background-color: rgba(243, 213, 231, 0.25);
+    border: 1px solid #F3D5E7;
+    .figLayerPill { color: #A52267; }
+  }
+  &.c05 {
+    background-color: rgba(247, 216, 227, 0.25);
+    border: 1px solid #F7D8E3;
+    .figLayerPill { color: #B51F56; }
+  }
+  &.c06 {
+    background-color: rgba(248, 217, 208, 0.25);
+    border: 1px solid #F8D9D0;
+    .figLayerPill { color: #C9472C; }
+  }
+  &.c07 {
+    background-color: rgba(248, 237, 210, 0.25);
+    border: 1px solid #F8EDD2;
+    .figLayerPill { color: #9A6100; }
+  }
+  &.c08 {
+    background-color: rgba(229, 225, 240, 0.25);
+    border: 1px solid #E5E1F0;
+    .figLayerPill { color: #2B2241; }
+  }
+}
+
+.figLayerGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+
+  &.cols3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+    &.cols3 {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.figLayerPill {
+  background-color: #FEFCFD;
+  border-radius: 4px;
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.figDownArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  margin: 4px 0;
+
+  svg {
+    display: block;
+  }
+}
+
+.figCaption {
+  font-size: 0.78125rem;
+  font-style: italic;
+  color: $color-text-muted;
+  text-align: center;
+  margin: 16px 0 24px;
+}
+
+// ── Figure 2: RAG Orchestration Flowchart ──
+.flowchartWrapper {
+  margin: 28px auto;
+  max-width: 580px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flowchartSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+// ── Figure 3: Lifecycle Stages ──
+.fig3StageRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 28px 0 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  @media (max-width: 900px) {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.fig3CardWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.fig3Card {
+  flex: 1;
+  padding: 16px 14px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 100px;
+  justify-content: center;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    min-height: auto;
+    padding: 14px;
+  }
+
+  &.stage01 {
+    background-color: #405DE5;
+    .fig3StageBadge { color: rgba(255, 255, 255, 0.85); }
+    .fig3StageTitle { color: #FFFFFF; }
+    .fig3StageDesc { color: rgba(255, 255, 255, 0.9); }
+  }
+  &.stage02 {
+    background-color: #853AB3;
+    .fig3StageBadge { color: rgba(255, 255, 255, 0.85); }
+    .fig3StageTitle { color: #FFFFFF; }
+    .fig3StageDesc { color: rgba(255, 255, 255, 0.9); }
+  }
+  &.stage03 {
+    background-color: #C23584;
+    .fig3StageBadge { color: rgba(255, 255, 255, 0.85); }
+    .fig3StageTitle { color: #FFFFFF; }
+    .fig3StageDesc { color: rgba(255, 255, 255, 0.9); }
+  }
+  &.stage04 {
+    background-color: #F56040;
+    .fig3StageBadge { color: rgba(255, 255, 255, 0.85); }
+    .fig3StageTitle { color: #FFFFFF; }
+    .fig3StageDesc { color: rgba(255, 255, 255, 0.9); }
+  }
+  &.stage05 {
+    background-color: #FCAF45;
+    .fig3StageBadge { color: rgba(43, 34, 65, 0.75); }
+    .fig3StageTitle { color: #2B2241; }
+    .fig3StageDesc { color: rgba(43, 34, 65, 0.85); }
+  }
+}
+
+.fig3StageBadge {
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.fig3StageTitle {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.fig3StageDesc {
+  font-size: 0.6875rem;
+  line-height: 1.35;
+}
+
+.fig3Arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  flex-shrink: 0;
+
+  svg {
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    transform: rotate(90deg);
+    margin: 4px 0;
+  }
+}
+
+// ── In One Line & Signature ──
+.inOneLineCard {
+  background-color: #1A1226;
+  border: none;
+  border-radius: 4px;
+  padding: 38px 44px;
+  margin: 28px 0 28px;
+  box-shadow: 0 4px 20px rgba(26, 18, 38, 0.08);
+
+  @media (max-width: 640px) {
+    padding: 24px 20px;
+  }
+}
+
+.inOneLineEyebrow {
+  font-size: 0.78125rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #FCAF45;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.inOneLineText {
+  font-size: 1.35rem;
+  line-height: 1.48;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0;
+
+  @media (max-width: 640px) {
+    font-size: 1.125rem;
+  }
+}
+
+.agencySignature {
+  font-size: 0.875rem;
+  color: $color-text-muted;
+  text-align: left;
+  margin: 28px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  strong {
+    font-weight: 900;
+    color: #1A1226;
+    letter-spacing: 0.04em;
+  }
+}
