@@ -63,7 +63,7 @@ export default function Landing() {
   className={`${styles.heroBgImage} ${styles.heroBgDesktop}`}
   poster="/hero-sunset.webp"
 >
-  <source src="https://images.pgagi.in/intro-compressed.mp4" type="video/mp4" />
+  <source src="https://images.pgagi.in/intro-hq.mp4" type="video/mp4" />
 </video>
 
 {/* Mobile */}
