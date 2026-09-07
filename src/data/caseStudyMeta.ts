@@ -1,6 +1,4 @@
 export type CaseStudyMeta = {
-  title?: string;
-  description?: string;
   techStack: string[];
   metrics: { value: string; label: string }[];
   highlight: string;
@@ -17,8 +15,6 @@ export type CaseStudyMeta = {
   // Optional wide banner (750x142) rendered under the description, above the
   // tech-stack row. Only this card uses it — everyone else keeps text-only.
   stripImage?: string;
-  // Custom right-side cover image override
-  coverImage?: string;
 };
 
 const caseStudyMeta: Record<string, CaseStudyMeta> = {
@@ -127,18 +123,13 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'MarTech/AI/ML',
   },
   'cracked-ai': {
-    title: 'Cracked.ai',
-    description:
-      'Cracked is the execution layer between AI agents and the commercial tool market. One key, 69,826 tools, every one ranked by measured health and real price.',
-    techStack: ['Next.js', 'Postgres', 'MCP', 'Stripe', '+4'],
+    techStack: ['Python', 'FastAPI', 'PHP', 'JavaScript', '+3'],
     metrics: [
-      { value: '1,249', label: 'Providers, one key' },
-      { value: '$0.001', label: 'Fee per run' },
-      { value: '159', label: 'Routed tasks' },
+      { value: '35%', label: 'User Conversions' },
+      { value: '85%', label: 'User Retention' },
     ],
-    highlight: 'Failed runs are free — and they still count against the rating.',
+    highlight: 'Rapid early growth — 1K users in 7 days',
     liveUrl: 'https://cracked.ai/',
-    coverImage: '/assets/CaseStudies/CrackedAi.png',
     tags: ['Live Products', 'AI Implemented in Business'],
     category: 'MarTech/AI/ML',
   },
@@ -381,18 +372,13 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
 
   // Cracked.ai full slug
   'cracked-ai-growth-platform': {
-    title: 'Cracked.ai',
-    description:
-      'Cracked is the execution layer between AI agents and the commercial tool market. One key, 69,826 tools, every one ranked by measured health and real price.',
-    techStack: ['Next.js', 'Postgres', 'MCP', 'Stripe', '+4'],
+    techStack: ['LLM', 'AI Agents', 'Generative AI', 'Social Media APIs', '+3'],
     metrics: [
-      { value: '1,249', label: 'Providers, one key' },
-      { value: '$0.001', label: 'Fee per run' },
-      { value: '159', label: 'Routed tasks' },
+      { value: '80%', label: 'User Conversions' },
+      { value: '45%', label: 'User Retention' },
     ],
-    highlight: 'Failed runs are free — and they still count against the rating.',
+    highlight: 'Rapid early growth — 3K users in 30 days',
     liveUrl: 'https://cracked.ai/',
-    coverImage: '/assets/CaseStudies/CrackedAi.png',
     tags: ['Live Products'],
     category: 'MarTech/AI/ML',
   },

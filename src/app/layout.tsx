@@ -15,7 +15,6 @@ const poppins = Poppins({
   variable: '--font-poppins',
   weight: ['400', '600'],
   display: 'swap',
-  preload: false,
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({

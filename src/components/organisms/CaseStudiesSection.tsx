@@ -26,7 +26,7 @@ const caseStudyCards: CaseStudyCard[] = [
     id: "case-study-card-1",
     title: caseStudiesSectionText.cards[0].title,
     brand: caseStudiesSectionText.cards[0].brand,
-    imageSrc: "/assets/CaseStudies/CrackedAi.png",
+    imageSrc: "/assets/CaseStudies/CrackedAi.jpg",
     href: EXTERNAL_LINKS.CRACKED_AI,
     accentStart: "#ddd9ef",
     accentEnd: "#1e1b2a",

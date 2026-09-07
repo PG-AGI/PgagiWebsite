@@ -35,6 +35,7 @@ const ArrowRight = () => (
 // ── Single project card ───────────────────────────────────────────────
 const ProjectCard = ({ project }: { project: Project }) => (
   <div className={styles.card}>
+    {/* LEFT — text content */}
     <div className={styles.cardLeft}>
       <h3 className={styles.cardTitle}>{project.title}</h3>
       <p className={styles.cardDescription}>{project.description}</p>
