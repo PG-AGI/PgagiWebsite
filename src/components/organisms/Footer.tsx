@@ -69,14 +69,25 @@ export default function Footer() {
                     );
                   })}
                 </div>
-                <div className={styles.govLogoWrap}>
-                  <Image
-                    src="/assets/gov-login-img.png"
-                    alt="Government registration logo"
-                    width={200}
-                    height={56}
-                    className={styles.govLogo}
-                  />
+                <div className={styles.badgesRow}>
+                  <div className={styles.govLogoWrap}>
+                    <Image
+                      src="/assets/gov-login-img.png"
+                      alt="Government registration logo"
+                      width={200}
+                      height={56}
+                      className={styles.govLogo}
+                    />
+                  </div>
+                  <div className={`${styles.govLogoWrap} ${styles.googlePartnerWrap}`}>
+                    <Image
+                      src="/assets/Google-Partner-badge.png"
+                      alt="Google Partner badge"
+                      width={1200}
+                      height={628}
+                      className={styles.googlePartnerLogo}
+                    />
+                  </div>
                 </div>
               </div>
 
