@@ -1,0 +1,811 @@
+// ── Cracked.ai Case Study SCSS ────────────────────────────────────────────────
+// Exact palette matching the engineering whitepaper PDF.
+
+$color-page-bg: #FAFAF8;
+$color-canvas: #FFFFFF;
+$color-dark-bg: #0D0D0E;
+$color-dark-surface: #161618;
+$color-dark-border: #26262B;
+
+$color-text-dark: #111113;
+$color-text-body: #232326;
+$color-text-muted: #6E6E77;
+$color-text-sub: #8E8E98;
+
+// Exact PDF Coral/Orange accents
+$color-accent-coral: #E54524;
+$color-accent-orange: #FF4D2D;
+$color-accent-deep: #C84A32;
+$color-subhead-line: #C46D56;
+
+// Exact Eyebrow warm taupe
+$color-eyebrow-taupe: #9C9186;
+$color-eyebrow-dot: #8C827A;
+
+$color-callout-bg: #F5ECE7;
+$color-callout-border: #E54524;
+
+$color-table-header-bg: #000000;
+$color-table-header-text: #FFFFFF;
+$color-table-row-alt: #F8F6F1;
+$color-table-border: #E8E5DE;
+
+$font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+.crackedPage {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  color: $color-text-body;
+  font-family: $font-sans;
+  padding-top: 80px; // account for site navbar
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+// ── Full-Width Dark Hero / Cover (Page 1) ──
+.heroSection {
+  width: 100%;
+  background-color: $color-dark-bg;
+  color: #FFFFFF;
+  padding: 64px 0 72px;
+  border-bottom: 1px solid $color-dark-border;
+}
+
+.heroInner {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+.heroHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 16px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+  }
+}
+
+.heroBrand {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  .brandDot {
+    color: $color-accent-coral;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.15rem;
+  }
+}
+
+.heroCaseTag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #8E847A;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  @media (max-width: 600px) {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+  }
+}
+
+.heroEyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.heroEyebrowNum {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: $color-accent-coral;
+}
+
+.heroEyebrowDot {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $color-eyebrow-dot;
+}
+
+.heroEyebrowText {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: $color-eyebrow-taupe; // Exact warm taupe from PDF
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  margin: 0 0 16px;
+
+  .heroTitleAccent {
+    color: $color-accent-coral;
+    display: block;
+    margin-top: 6px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #D4D0C8;
+  max-width: 820px;
+  margin: 0 0 32px;
+  font-weight: 400;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.terminalBox {
+  background-color: $color-dark-surface;
+  border: 1px solid $color-dark-border;
+  border-left: 3px solid $color-accent-coral;
+  border-radius: 4px;
+  padding: 14px 18px;
+  margin: 28px 0;
+  max-width: 780px;
+  display: flex;
+  align-items: center;
+  font-family: $font-mono;
+  font-size: 0.95rem;
+  color: #F4F4F5;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 600px) {
+    font-size: 0.82rem;
+    padding: 12px 14px;
+  }
+
+  .terminalDollar {
+    color: $color-accent-coral;
+    margin-right: 10px;
+    font-weight: 700;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .terminalCommand {
+    color: #FFFFFF;
+    white-space: nowrap;
+  }
+}
+
+.terminalSubtext {
+  font-size: 0.9rem;
+  color: #8C867E;
+  line-height: 1.5;
+  margin: -12px 0 36px;
+  max-width: 820px;
+}
+
+// ── Hero Stats Grid ──
+.heroStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 32px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 36px 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.heroStatItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.heroStatNumber {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: $color-accent-coral;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.heroStatLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #8C867E;
+  text-transform: uppercase;
+}
+
+// ── Hero Meta Row ──
+.heroMetaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+.heroMetaCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.heroMetaLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #71717A;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.heroMetaValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+// ── Document Body Container ──
+.whitepaperContainer {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 56px 40px 96px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 36px 20px 64px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 24px 16px 48px;
+  }
+}
+
+// ── Section Banner / Header ──
+.sectionBanner {
+  background-color: #111113;
+  color: #FFFFFF;
+  border-radius: 4px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  margin: 64px 0 28px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
+.sectionBadgeNum {
+  background-color: $color-accent-coral;
+  color: #FFFFFF;
+  font-size: 1.85rem;
+  font-weight: 800;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  box-sizing: border-box;
+}
+
+.sectionBannerText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 20px;
+  flex: 1;
+}
+
+.sectionBannerEyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #9E9890;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.sectionBannerTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0;
+  letter-spacing: -0.01em;
+
+  @media (max-width: 600px) {
+    font-size: 1.25rem;
+  }
+}
+
+// ── Section 03 Stat Strip ──
+.section03StatStrip {
+  background-color: #0D0D0E;
+  border: 1px solid #26262B;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 24px 20px;
+  margin: 28px 0 36px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.s3StatItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.s3StatNumber {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: $color-accent-coral;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.s3StatLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #8C867E;
+  text-transform: uppercase;
+}
+
+// ── Table of Contents (Page 2) ──
+.tocSection {
+  background-color: #FFFFFF;
+  padding: 16px 0 32px;
+  margin-bottom: 48px;
+}
+
+.tocEyebrow {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: $color-accent-coral;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tocTitle {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: $color-text-dark;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+}
+
+.tocDivider {
+  height: 2px;
+  background-color: #111113;
+  border: none;
+  margin: 0 0 24px;
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tocItem {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 14px 0 16px;
+  border-bottom: 1px dotted #D0C8C0; // Horizontal dotted line after each TOC item!
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.15s ease;
+
+  &:first-child {
+    padding-top: 4px;
+  }
+
+  &:hover {
+    .tocHeading {
+      color: $color-accent-coral;
+    }
+  }
+
+  @media (max-width: 600px) {
+    gap: 12px;
+  }
+}
+
+.tocNum {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: $color-accent-coral;
+  min-width: 32px;
+  line-height: 1.4;
+  padding-top: 1px;
+}
+
+.tocContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.tocHeading {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: $color-text-dark;
+  margin: 0 0 4px;
+  transition: color 0.15s ease;
+}
+
+.tocSummary {
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: #4B4B55;
+  margin: 0;
+}
+
+// ── Headings & Prose ──
+.h2Title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: $color-text-dark;
+  margin: 36px 0 16px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid $color-accent-coral;
+  letter-spacing: -0.01em;
+}
+
+.h3Title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $color-text-dark;
+  margin: 28px 0 12px;
+}
+
+.h3Accent {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: $color-accent-coral;
+  margin: 28px 0 12px;
+}
+
+.proseP {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: $color-text-body;
+  margin: 0 0 16px;
+}
+
+.proseList {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: $color-text-body;
+
+    &::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: $color-accent-coral;
+      font-weight: 700;
+    }
+
+    strong {
+      color: $color-text-dark;
+      font-weight: 700;
+    }
+  }
+}
+
+// ── Callout Box (Warm Pink/Peach Tint with Left Coral Bar) ──
+.calloutBox {
+  background-color: $color-callout-bg;
+  border-left: 3.5px solid $color-callout-border;
+  border-radius: 0 4px 4px 0;
+  padding: 20px 24px;
+  margin: 32px 0;
+
+  @media (max-width: 600px) {
+    padding: 16px 18px;
+  }
+}
+
+.calloutEyebrow {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: $color-accent-deep;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.calloutSubhead {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: $color-text-dark;
+  margin: 0 0 10px;
+}
+
+.calloutBody {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #332B2B;
+  margin: 0;
+
+  p + p {
+    margin-top: 10px;
+  }
+}
+
+// ── Tables ──
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 24px 0 36px;
+  border: 1px solid $color-table-border;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+}
+
+.specTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  text-align: left;
+  line-height: 1.5;
+
+  thead {
+    background-color: $color-table-header-bg;
+    color: $color-table-header-text;
+
+    th {
+      padding: 12px 16px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $color-table-border;
+
+      &:nth-child(even) {
+        background-color: $color-table-row-alt;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 12px 16px;
+        color: $color-text-body;
+        vertical-align: top;
+
+        &:first-child {
+          font-weight: 600;
+          color: $color-text-dark;
+        }
+      }
+    }
+  }
+}
+
+// ── Code / Curl Terminal in White Body ──
+.codeSnippet {
+  background-color: #18181B;
+  border: 1px solid #27272A;
+  border-left: 3px solid $color-accent-coral;
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin: 20px 0 28px;
+  font-family: $font-mono;
+  font-size: 0.88rem;
+  color: #FAFAFA;
+  overflow-x: auto;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+// ── Figure Containers ──
+.figureCard {
+  background-color: #FAFAF8;
+  border: 1px solid #E8E5DE;
+  border-radius: 6px;
+  padding: 24px;
+  margin: 32px 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 16px 12px;
+    align-items: flex-start;
+  }
+}
+
+.figureSvg {
+  width: 100%;
+  min-width: 680px;
+  max-width: 980px;
+  height: auto;
+  display: block;
+
+  @media (min-width: 860px) {
+    min-width: 100%;
+  }
+}
+
+.figureCaption {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #6B6B76;
+  text-align: center;
+  margin: 10px 0 36px;
+  line-height: 1.4;
+  width: 100%;
+}
+
+// ── Section 06 Differentiator Cards (01 to 07) ──
+.differentiatorsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 28px 0 36px;
+}
+
+.diffCard {
+  background-color: #F5ECE7;
+  border: 1px solid #EAE3DC;
+  border-radius: 4px;
+  padding: 20px 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+.diffNum {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: $color-accent-coral;
+  line-height: 1;
+  min-width: 32px;
+}
+
+.diffBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diffTitle {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: $color-text-dark;
+  margin: 0;
+}
+
+.diffText {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #383840;
+  margin: 0;
+}
+
+// ── Whitepaper Footer ──
+.docFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  margin-top: 56px;
+  border-top: 1px solid #E5E2DA;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #8E8E98;
+  text-transform: uppercase;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
