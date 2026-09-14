@@ -18,6 +18,7 @@ import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStud
 import SocialJetCaseStudy from '@/components/organisms/SocialJetCaseStudy/SocialJetCaseStudy';
 import SentlogicCaseStudy from '@/components/organisms/SentlogicCaseStudy/SentlogicCaseStudy';
 import CrackedCaseStudy from '@/components/organisms/CrackedCaseStudy/CrackedCaseStudy';
+import SheltasCaseStudy from '@/components/organisms/SheltasCaseStudy/SheltasCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -180,6 +181,18 @@ export async function generateMetadata({
     };
   }
 
+  const isSheltas = params?.slug?.toLowerCase()?.includes('sheltas');
+  if (isSheltas) {
+    return {
+      title: 'Sheltas Health: Annotation Marketplace | PG-AGI Case Study',
+      description: 'A three-sided platform for compliant medical data annotation — connecting AI partners, verified healthcare practitioners, and internal quality operations across a single governed workflow.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Sheltas Health Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -268,6 +281,12 @@ export default async function CaseStudyPage({
   if (isCracked) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <CrackedCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isSheltas = params?.slug?.toLowerCase()?.includes('sheltas');
+  if (isSheltas) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <SheltasCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
