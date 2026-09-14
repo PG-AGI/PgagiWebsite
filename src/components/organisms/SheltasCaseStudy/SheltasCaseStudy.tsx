@@ -3009,14 +3009,32 @@ function Figure9PractitionerAccountSetup() {
   );
 }
 
+const INDEX_ITEMS = [
+  { id: 'section-what-we-built', num: 'I', title: 'What We Built', detail: 'Product definition, three-sided marketplace, and core purpose' },
+  { id: 'section-core-architecture', num: 'II', title: 'Core Architecture', detail: 'Layered system design, technology stack, and data flow' },
+  { id: 'section-credit-monetisation', num: 'III', title: 'Credit System & Monetisation', detail: 'Commercial model, billing levers, and financial operations' },
+  { id: 'section-user-features', num: 'IV', title: 'User-Facing Features', detail: 'AI partner portal, practitioner workspace, community, and ops console' },
+  { id: 'section-security-auditability', num: 'V', title: 'Security & Auditability', detail: 'De-identification, role gates, encryption, and verification records' },
+  { id: 'section-differentiators', num: 'VI', title: 'What Makes This Different', detail: 'Structural differentiators against general-purpose labelling tools' },
+  { id: 'section-outcomes', num: 'VII', title: 'Outcomes', detail: 'Delivered capabilities, performance framework, and instrumented KPIs' },
+];
+
 // ── Main Case Study Component ──
 export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <article className={styles.sheltasPage}>
-      <div className={styles.contentContainer}>
-        {/* ════════════════════ HERO SECTION ════════════════════ */}
-        <section className={styles.heroSection}>
-          <div className={styles.heroCard}>
+    <div className={styles.sheltasPage}>
+      {/* ── 1. Hero Section (Full-Bleed Deep Navy spread to top edge) ── */}
+      <section className={styles.heroSection}>
+        <div className={styles.rail}>
+          <div className={styles.heroContent}>
             <span className={styles.coverEyebrow}>
               PG-AGI · APPLIED AI &amp; PLATFORM ENGINEERING
             </span>
@@ -3026,67 +3044,58 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
               A three-sided platform for compliant medical data annotation — connecting AI partners, verified healthcare practitioners, and internal quality operations across a single governed workflow.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className={styles.coverMetaGrid}>
-            <div className={styles.coverMetaCol}>
-              <span className={styles.metaLabel}>Client</span>
+      {/* ── 2. Quick Meta Facts Bar (Exact Sheltas Alternating Navy / Teal) ── */}
+      <div className={styles.metaRail}>
+        <div className={styles.rail}>
+          <div className={styles.metaGrid}>
+            <div className={`${styles.metaItem} ${styles.metaItemNavy}`}>
+              <span className={styles.metaLabel}>CLIENT</span>
               <span className={styles.metaValue}>Sheltas Health Inc.</span>
             </div>
-            <div className={styles.coverMetaCol}>
-              <span className={styles.metaLabel}>Engagement</span>
+            <div className={`${styles.metaItem} ${styles.metaItemTeal}`}>
+              <span className={styles.metaLabel}>ENGAGEMENT</span>
               <span className={styles.metaValue}>Platform Build</span>
             </div>
-            <div className={styles.coverMetaCol}>
-              <span className={styles.metaLabel}>Domain</span>
+            <div className={`${styles.metaItem} ${styles.metaItemNavy}`}>
+              <span className={styles.metaLabel}>DOMAIN</span>
               <span className={styles.metaValue}>Healthcare AI Data</span>
             </div>
-            <div className={styles.coverMetaCol}>
-              <span className={styles.metaLabel}>Document</span>
+            <div className={`${styles.metaItem} ${styles.metaItemTeal}`}>
+              <span className={styles.metaLabel}>DOCUMENT</span>
               <span className={styles.metaValue}>Case Study</span>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
 
-        {/* ════════════════════ INDEX SECTION ════════════════════ */}
-        <section className={styles.articleSection}>
+      {/* ── 3. Main Content Rail ── */}
+      <div className={styles.rail}>
+        {/* ── 3. Index Section (Table of Contents) ── */}
+        <section className={styles.sectionBlock}>
           <div className={styles.indexContainer}>
             <h2 className={styles.indexTitle}>Index</h2>
             <hr className={styles.indexRule} />
             <div className={styles.indexTable}>
-              <div className={`${styles.indexRow} ${styles.rowNavy}`}>
-                <div className={styles.indexNumBox}>I</div>
-                <div className={styles.indexLabel}>What We Built</div>
-              </div>
-              <div className={`${styles.indexRow} ${styles.rowTeal}`}>
-                <div className={styles.indexNumBox}>II</div>
-                <div className={styles.indexLabel}>Core Architecture</div>
-              </div>
-              <div className={`${styles.indexRow} ${styles.rowNavy}`}>
-                <div className={styles.indexNumBox}>III</div>
-                <div className={styles.indexLabel}>Credit System and Monetisation</div>
-              </div>
-              <div className={`${styles.indexRow} ${styles.rowTeal}`}>
-                <div className={styles.indexNumBox}>IV</div>
-                <div className={styles.indexLabel}>User-Facing Features</div>
-              </div>
-              <div className={`${styles.indexRow} ${styles.rowNavy}`}>
-                <div className={styles.indexNumBox}>V</div>
-                <div className={styles.indexLabel}>Security and Auditability</div>
-              </div>
-              <div className={`${styles.indexRow} ${styles.rowTeal}`}>
-                <div className={styles.indexNumBox}>VI</div>
-                <div className={styles.indexLabel}>What Makes This Different</div>
-              </div>
-              <div className={`${styles.indexRow} ${styles.rowNavy}`}>
-                <div className={styles.indexNumBox}>VII</div>
-                <div className={styles.indexLabel}>Outcomes</div>
-              </div>
+              {INDEX_ITEMS.map((item, idx) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => handleSmoothScroll(e, item.id)}
+                  className={`${styles.indexRow} ${idx % 2 === 0 ? styles.rowNavy : styles.rowTeal}`}
+                >
+                  <div className={styles.indexNumBox}>{item.num}</div>
+                  <div className={styles.indexLabel}>{item.title}</div>
+                </a>
+              ))}
             </div>
           </div>
         </section>
 
         {/* ════════════════════ SECTION I: WHAT WE BUILT ════════════════════ */}
-        <section className={styles.articleSection}>
+        <section id="section-what-we-built" className={styles.sectionBlock}>
           <SectionHeader numeral="I" eyebrow="SECTION ONE" title="What We Built" />
 
           <p className={styles.sectionParagraph}>
@@ -3169,7 +3178,7 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
         </section>
 
         {/* ════════════════════ SECTION II: CORE ARCHITECTURE ════════════════════ */}
-        <section className={styles.articleSection}>
+        <section id="section-core-architecture" className={styles.sectionBlock}>
           <SectionHeader numeral="II" eyebrow="SECTION TWO" title="Core Architecture" />
 
           <p className={styles.sectionParagraph}>
@@ -3232,7 +3241,7 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
         </section>
 
         {/* ════════════════════ SECTION III: CREDIT SYSTEM AND MONETISATION ════════════════════ */}
-        <section className={styles.articleSection}>
+        <section id="section-credit-monetisation" className={styles.sectionBlock}>
           <SectionHeader numeral="III" eyebrow="SECTION THREE" title="Credit System and Monetisation" />
 
           <p className={styles.sectionParagraph}>
@@ -3308,7 +3317,7 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
         </section>
 
         {/* ════════════════════ SECTION IV: USER-FACING FEATURES ════════════════════ */}
-        <section className={styles.articleSection}>
+        <section id="section-user-features" className={styles.sectionBlock}>
           <SectionHeader numeral="IV" eyebrow="SECTION FOUR" title="User-Facing Features" />
 
           <p className={styles.sectionParagraph}>
@@ -3382,7 +3391,7 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
         </section>
 
         {/* ════════════════════ SECTION V: SECURITY AND AUDITABILITY ════════════════════ */}
-        <section className={styles.articleSection}>
+        <section id="section-security-auditability" className={styles.sectionBlock}>
           <SectionHeader numeral="V" eyebrow="SECTION FIVE" title="Security and Auditability" />
 
           <p className={styles.sectionParagraph}>
@@ -3454,7 +3463,7 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
         </section>
 
         {/* ════════════════════ SECTION VI: WHAT MAKES THIS DIFFERENT ════════════════════ */}
-        <section className={styles.articleSection}>
+        <section id="section-differentiators" className={styles.sectionBlock}>
           <SectionHeader numeral="VI" eyebrow="SECTION SIX" title="What Makes This Different" />
 
           <p className={styles.sectionParagraph}>
@@ -3512,7 +3521,7 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
         </section>
 
         {/* ════════════════════ SECTION VII: OUTCOMES ════════════════════ */}
-        <section className={styles.articleSection}>
+        <section id="section-outcomes" className={styles.sectionBlock}>
           <SectionHeader numeral="VII" eyebrow="SECTION SEVEN" title="Outcomes" />
 
           <p className={styles.sectionParagraph}>
@@ -3679,6 +3688,6 @@ export default function SheltasCaseStudy({ caseStudy }: SheltasCaseStudyProps) {
           </div>
         </section>
       </div>
-    </article>
+    </div>
   );
 }
