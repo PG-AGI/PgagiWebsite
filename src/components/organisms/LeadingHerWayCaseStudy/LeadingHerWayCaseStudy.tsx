@@ -8,16 +8,14 @@ interface LeadingHerWayCaseStudyProps {
   caseStudy?: CaseStudyData | null;
 }
 
-const FOOTER_TITLE = 'Cycle-aware AI productivity platform';
-
-const INDEX_ITEMS: { num: string; title: string; detail: string }[] = [
-  { num: 'I', title: 'What We Built', detail: 'Product definition, delivery phases, and the problem being solved' },
-  { num: 'II', title: 'Core Architecture', detail: 'Layered system design, technology stack, and data flow' },
-  { num: 'III', title: 'Credit System & Monetisation', detail: 'Entitlement model, subscription tiers, and trial gating' },
-  { num: 'IV', title: 'User-Facing Features', detail: "Today's Flow, AI coach, calendar intelligence, notifications" },
-  { num: 'V', title: 'Security & Auditability', detail: 'Authentication, consent, encryption, logging, and handover' },
-  { num: 'VI', title: 'What Makes This Different', detail: 'Six structural differentiators against adjacent categories' },
-  { num: 'VII', title: 'Outcomes', detail: 'Measurement framework and instrumented KPI set' },
+const INDEX_ITEMS: { id: string; num: string; title: string; detail: string }[] = [
+  { id: 'section-what-we-built', num: 'I', title: 'What We Built', detail: 'Product definition, delivery phases, and the problem being solved' },
+  { id: 'section-core-architecture', num: 'II', title: 'Core Architecture', detail: 'Layered system design, technology stack, and data flow' },
+  { id: 'section-credit-monetisation', num: 'III', title: 'Credit System & Monetisation', detail: 'Entitlement model, subscription tiers, and trial gating' },
+  { id: 'section-user-features', num: 'IV', title: 'User-Facing Features', detail: "Today's Flow, AI coach, calendar intelligence, notifications" },
+  { id: 'section-security-auditability', num: 'V', title: 'Security & Auditability', detail: 'Authentication, consent, encryption, logging, and handover' },
+  { id: 'section-differentiators', num: 'VI', title: 'What Makes This Different', detail: 'Six structural differentiators against adjacent categories' },
+  { id: 'section-outcomes', num: 'VII', title: 'Outcomes', detail: 'Measurement framework and instrumented KPI set' },
 ];
 
 const PHASE_TABLE: { phase: string; scope: string }[] = [
@@ -89,44 +87,11 @@ const OUTCOMES_TABLE: { metric: string; definition: string; target: string }[] =
   { metric: 'Retention / churn', definition: 'Subscriber retention across billing periods.', target: 'Set per cohort' },
 ];
 
-function RunningHeader() {
-  return (
-    <div className={styles.pageRunningHeader}>
-      <span><strong>LHW</strong> · LEADING HER WAY</span>
-      <span>PG-AGI ENTERPRISE CASE STUDY</span>
-    </div>
-  );
-}
-
-function FooterBar({ page }: { page: string }) {
-  return (
-    <div className={styles.pageFooterBar}>
-      <span>{FOOTER_TITLE}</span>
-      <strong>{page}</strong>
-    </div>
-  );
-}
-
-function SectionHeader({ numeral, title, subtitle }: { numeral: string; title: string; subtitle: string }) {
-  return (
-    <div className={styles.sectionHeader}>
-      <div className={styles.sectionEyebrowRow}>
-        <span className={styles.sectionNumeral}>{numeral}</span>
-        <div className={styles.sectionTitleCol}>
-          <h2 className={styles.sectionTitle}>{title}</h2>
-          <p className={styles.sectionSubtitle}>{subtitle}</p>
-        </div>
-      </div>
-      <hr className={styles.sectionRule} />
-    </div>
-  );
-}
-
 function DownArrow() {
   return (
-    <svg width="12" height="24" viewBox="0 0 12 24" fill="none" aria-hidden="true">
-      <line x1="6" y1="0" x2="6" y2="16" stroke="#841E1E" strokeWidth="2" strokeLinecap="square" />
-      <path d="M1 15L6 23L11 15H1Z" fill="#841E1E" />
+    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" aria-hidden="true">
+      <line x1="5" y1="0" x2="5" y2="12" stroke="#841E1E" strokeWidth="1.75" strokeLinecap="square" />
+      <path d="M1 11L5 17L9 11H1Z" fill="#841E1E" />
     </svg>
   );
 }
@@ -367,73 +332,103 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
   const layer1Ref = React.useRef<HTMLDivElement>(null);
   const layer3Ref = React.useRef<HTMLDivElement>(null);
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className={styles.lhwPage}>
-      {/* ── Cover (page 1) ── */}
-      <div className={`${styles.pageSheet} ${styles.coverSheet}`}>
-        <div className={styles.coverBody}>
-          <h1 className={styles.coverWordmark}>
-            LHW
-            <span className={styles.coverWordmarkSub}>Leading Her Way</span>
-          </h1>
+      {/* ── 1. Hero Section (Vook AI Format) ── */}
+      <section className={styles.heroSection}>
+        <div className={styles.rail}>
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroWordmark}>LHW</h1>
+            <span className={styles.heroWordmarkSub}>Leading Her Way</span>
 
-          <hr className={styles.coverRule} />
+            <hr className={styles.heroRule} />
 
-          <h2 className={styles.coverTitle}>A Cycle-Aware AI Productivity Platform</h2>
-          <p className={styles.coverLead}>
-            Turning cycle data and a live calendar into a daily plan of what to do, what to avoid, and when —
-            delivered through Today&apos;s Flow and a conversational AI coach.
-          </p>
+            <h2 className={styles.heroTitle}>A Cycle-Aware AI Productivity Platform</h2>
+
+            <p className={styles.heroDesc}>
+              Turning cycle data and a live calendar into a daily plan of what to do, what to avoid, and when —
+              delivered through Today&apos;s Flow and a conversational AI coach.
+            </p>
+
+            <div className={styles.heroPillGrid}>
+              <div className={styles.heroPillCard}>
+                <span className={styles.heroPillValue}>iOS + Android</span>
+                <span className={styles.heroPillLabel}>React Native App</span>
+              </div>
+              <div className={styles.heroPillCard}>
+                <span className={styles.heroPillValue}>Gemini 3.1 Pro</span>
+                <span className={styles.heroPillLabel}>Intelligence Layer</span>
+              </div>
+              <div className={styles.heroPillCard}>
+                <span className={styles.heroPillValue}>2 Phases</span>
+                <span className={styles.heroPillLabel}>Core, Then Community</span>
+              </div>
+              <div className={styles.heroPillCard}>
+                <span className={styles.heroPillValue}>3-day trial</span>
+                <span className={styles.heroPillLabel}>Then Subscription</span>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div className={styles.coverStatBand}>
-          <div className={styles.coverStatCell}>
-            <span className={styles.coverStatValue}>iOS + Android</span>
-            <span className={styles.coverStatLabel}>React Native App</span>
-          </div>
-          <div className={styles.coverStatCell}>
-            <span className={styles.coverStatValue}>Gemini 3.1 Pro</span>
-            <span className={styles.coverStatLabel}>Intelligence Layer</span>
-          </div>
-          <div className={styles.coverStatCell}>
-            <span className={styles.coverStatValue}>2 Phases</span>
-            <span className={styles.coverStatLabel}>Core, Then Community</span>
-          </div>
-          <div className={styles.coverStatCell}>
-            <span className={styles.coverStatValue}>3-day trial</span>
-            <span className={styles.coverStatLabel}>Then Subscription</span>
-          </div>
-        </div>
-
-        <div className={styles.coverFooterStrip}>
-          <div className={styles.coverFooterCol}>
-            <span>PG-AGI · APPLIED AI &amp; PLATFORM ENGINEERING</span>
-            <span>Tech37, Electronic City Phase 2, Bengaluru</span>
-          </div>
-          <div className={`${styles.coverFooterCol} ${styles.coverFooterColRight}`}>
-            <span>ENTERPRISE CASE STUDY</span>
-            <span>MOBILE + AI · CONSUMER HEALTH &amp; PRODUCTIVITY</span>
+      {/* ── 2. Quick Meta Facts Bar (Vook AI Format) ── */}
+      <div className={styles.metaRail}>
+        <div className={styles.rail}>
+          <div className={styles.metaGrid}>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Platforms</span>
+              <span className={styles.metaValue}>iOS · Android (React Native)</span>
+            </div>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Category</span>
+              <span className={styles.metaValue}>Mobile + AI · Consumer Health</span>
+            </div>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Stack</span>
+              <span className={styles.metaValue}>FastAPI · Gemini 3.1 Pro · MongoDB</span>
+            </div>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Scope</span>
+              <span className={styles.metaValue}>App · AI Orchestration · Calendar Sync</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* ── Index (page 2 · 01) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <h2 className={styles.docTitle}>Index</h2>
-          <hr className={styles.docRule} />
+      {/* ── 3. Main Rail Container for All Sections ── */}
+      <div className={styles.rail}>
+        {/* ── Index Section ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>INDEX</span>
+          <h2 className={styles.sectionHeading}>Table of Contents</h2>
+          <p className={styles.sectionSubtitle}>Structure of the LHW enterprise platform case study</p>
 
-          <div className={styles.indexList}>
-            {INDEX_ITEMS.map((item) => (
-              <div key={item.num} className={styles.indexRow}>
-                <span className={styles.indexNum}>{item.num}</span>
-                <div className={styles.indexContent}>
-                  <span className={styles.indexTitle}>{item.title}</span>
-                  <span className={styles.indexDetail}>{item.detail}</span>
-                </div>
-              </div>
-            ))}
+          <div className={styles.indexContainer}>
+            <div className={styles.indexList}>
+              {INDEX_ITEMS.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => handleSmoothScroll(e, item.id)}
+                  className={styles.indexRow}
+                >
+                  <span className={styles.indexNum}>{item.num}</span>
+                  <div className={styles.indexContent}>
+                    <span className={styles.indexTitle}>{item.title}</span>
+                    <span className={styles.indexDetail}>{item.detail}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
 
           <div className={styles.calloutBox}>
@@ -441,15 +436,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             LHW is not a cycle tracker with productivity features bolted on. It is a productivity system that
             treats the menstrual cycle as a first-class scheduling input.
           </div>
-        </div>
-        <FooterBar page="01" />
-      </div>
+        </section>
 
-      {/* ── I What We Built (page 3 · 02) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader numeral="I" title="What We Built" subtitle="Product definition and delivery scope" />
+        {/* ── Section I: What We Built ── */}
+        <section id="section-what-we-built" className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>SECTION I</span>
+          <h2 className={styles.sectionHeading}>What We Built</h2>
+          <p className={styles.sectionSubtitle}>Product definition and delivery scope</p>
 
           <p className={styles.sectionParagraph}>
             LHW (Leading Her Way) is an intelligent, cycle-aware productivity platform that helps women align
@@ -484,8 +477,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
           </p>
 
           <h3 className={styles.plainHeading}>Delivered in two phases</h3>
-          <div className={styles.tableWrapper}>
-            <table className={styles.customTable}>
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
               <thead>
                 <tr>
                   <th style={{ width: '240px' }}>Phase</th>
@@ -508,15 +501,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             Every recommendation the system makes must be explainable to the user. Guidance without
             reasoning is indistinguishable from a horoscope.
           </div>
-        </div>
-        <FooterBar page="02" />
-      </div>
+        </section>
 
-      {/* ── II Core Architecture (page 4 · 03) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader numeral="II" title="Core Architecture" subtitle="Layered system design and data flow" />
+        {/* ── Section II: Core Architecture ── */}
+        <section id="section-core-architecture" className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>SECTION II</span>
+          <h2 className={styles.sectionHeading}>Core Architecture</h2>
+          <p className={styles.sectionSubtitle}>Layered system design and data flow</p>
 
           <p className={styles.sectionParagraph}>
             The platform uses a modular, layered architecture that cleanly separates responsibilities across
@@ -526,109 +517,105 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             predictive health insight.
           </p>
 
-          <div className={styles.diagramBlock}>
-            <div ref={loopScopeRef} className={styles.diagramLoopScope}>
-              {/* 1. Client Layer */}
-              <div ref={layer1Ref} className={styles.diagramLayer}>
-                <div className={styles.diagramLayerLabel}>
-                  <span className={styles.diagramLayerTitle}>CLIENT LAYER</span>
-                  <span className={styles.diagramLayerSeparator}>—</span>
-                  <span className={styles.diagramLayerSubtitle}>React Native (iOS · Android)</span>
+          {/* Architecture Diagram */}
+          <div className={styles.diagramWrapper}>
+            <div className={styles.diagramBlock}>
+              <div ref={loopScopeRef} className={styles.diagramLoopScope}>
+                {/* 1. Client Layer */}
+                <div ref={layer1Ref} className={styles.diagramLayer}>
+                  <div className={styles.diagramLayerLabel}>
+                    <span className={styles.diagramLayerTitle}>CLIENT LAYER</span>
+                    <span className={styles.diagramLayerSeparator}>—</span>
+                    <span className={styles.diagramLayerSubtitle}>React Native (iOS · Android)</span>
+                  </div>
+                  <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
+                    <div className={styles.diagramBox}>Onboarding &amp; profile</div>
+                    <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>Today&apos;s Flow dashboard</div>
+                    <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>AI coach chat</div>
+                    <div className={styles.diagramBox}>Subscription &amp; billing UI</div>
+                  </div>
                 </div>
-                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
-                  <div className={styles.diagramBox}>Onboarding &amp; profile</div>
-                  <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>Today&apos;s Flow dashboard</div>
-                  <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>AI coach chat</div>
-                  <div className={styles.diagramBox}>Subscription &amp; billing UI</div>
+
+                <DiagramArrow caption="HTTPS · JWT session" />
+
+                {/* 2. Orchestration Layer */}
+                <div className={styles.diagramLayer}>
+                  <div className={styles.diagramLayerLabel}>
+                    <span className={styles.diagramLayerTitle}>ORCHESTRATION LAYER</span>
+                    <span className={styles.diagramLayerSeparator}>—</span>
+                    <span className={styles.diagramLayerSubtitle}>Python FastAPI</span>
+                  </div>
+                  <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes6}`}>
+                    <div className={styles.diagramBox}><span>Auth JWT /<br />OAuth2</span></div>
+                    <div className={styles.diagramBox}><span>Cycle phase<br />engine</span></div>
+                    <div className={styles.diagramBox}><span>Calendar<br />workload<br />analysis</span></div>
+                    <div className={styles.diagramBox}><span>AI orchestration</span></div>
+                    <div className={styles.diagramBox}><span>Notification<br />scheduler</span></div>
+                    <div className={styles.diagramBox}><span>Entitlement &amp;<br />billing</span></div>
+                  </div>
                 </div>
+
+                <DiagramArrow caption="assembled context" />
+
+                {/* 3. Intelligence Layer */}
+                <div ref={layer3Ref} className={styles.diagramLayer}>
+                  <div className={styles.diagramLayerLabel}>
+                    <span className={styles.diagramLayerTitle}>INTELLIGENCE LAYER</span>
+                  </div>
+                  <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes2}`}>
+                    <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>Gemini 3.1 Pro — reasoning &amp; daily recommendations</div>
+                    <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>AI memory store — learned patterns &amp; history</div>
+                  </div>
+                </div>
+
+                {/* Personalisation loop connecting Intelligence Layer to Client Layer */}
+                <PersonalisationLoop
+                  scopeRef={loopScopeRef}
+                  layer1Ref={layer1Ref}
+                  layer3Ref={layer3Ref}
+                />
               </div>
 
-              <DiagramArrow caption="HTTPS · JWT session" />
+              <DiagramArrow caption="persist & learn" />
 
-              {/* 2. Orchestration Layer */}
+              {/* 4. Data & Integration Layer */}
               <div className={styles.diagramLayer}>
                 <div className={styles.diagramLayerLabel}>
-                  <span className={styles.diagramLayerTitle}>ORCHESTRATION LAYER</span>
-                  <span className={styles.diagramLayerSeparator}>—</span>
-                  <span className={styles.diagramLayerSubtitle}>Python FastAPI</span>
+                  <span className={styles.diagramLayerTitle}>DATA &amp; INTEGRATION LAYER</span>
                 </div>
-                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes6}`}>
-                  <div className={styles.diagramBox}><span>Auth JWT /<br />OAuth2</span></div>
-                  <div className={styles.diagramBox}><span>Cycle phase<br />engine</span></div>
-                  <div className={styles.diagramBox}><span>Calendar<br />workload<br />analysis</span></div>
-                  <div className={styles.diagramBox}><span>AI orchestration</span></div>
-                  <div className={styles.diagramBox}><span>Notification<br />scheduler</span></div>
-                  <div className={styles.diagramBox}><span>Entitlement &amp;<br />billing</span></div>
+                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
+                  <div className={styles.diagramBox}><span>MongoDB profiles · cycles ·<br />history</span></div>
+                  <div className={styles.diagramBox}><span>Google Calendar / Outlook<br />API</span></div>
+                  <div className={styles.diagramBox}><span>Firebase Cloud Messaging</span></div>
+                  <div className={styles.diagramBox}><span>Stripe + in-app purchases</span></div>
                 </div>
               </div>
 
-              <DiagramArrow caption="assembled context" />
+              <DiagramArrow caption="deployed on" />
 
-              {/* 3. Intelligence Layer */}
-              <div ref={layer3Ref} className={styles.diagramLayer}>
+              {/* 5. Platform Layer */}
+              <div className={styles.diagramLayer}>
                 <div className={styles.diagramLayerLabel}>
-                  <span className={styles.diagramLayerTitle}>INTELLIGENCE LAYER</span>
+                  <span className={styles.diagramLayerTitle}>PLATFORM LAYER</span>
                 </div>
-                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes2}`}>
-                  <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>Gemini 3.1 Pro — reasoning &amp; daily recommendations</div>
-                  <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>AI memory store — learned patterns &amp; history</div>
+                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes3}`}>
+                  <div className={styles.diagramBox}><span>Docker on GCP Cloud Run</span></div>
+                  <div className={styles.diagramBox}><span>GitHub Actions CI / CD</span></div>
+                  <div className={styles.diagramBox}><span>GCP Logging &amp; observability</span></div>
                 </div>
               </div>
-
-              {/* Personalisation loop connecting Intelligence Layer to Client Layer */}
-              <PersonalisationLoop
-                scopeRef={loopScopeRef}
-                layer1Ref={layer1Ref}
-                layer3Ref={layer3Ref}
-              />
             </div>
 
-            <DiagramArrow caption="persist & learn" />
-
-            {/* 4. Data & Integration Layer */}
-            <div className={styles.diagramLayer}>
-              <div className={styles.diagramLayerLabel}>
-                <span className={styles.diagramLayerTitle}>DATA &amp; INTEGRATION LAYER</span>
-              </div>
-              <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
-                <div className={styles.diagramBox}><span>MongoDB profiles · cycles ·<br />history</span></div>
-                <div className={styles.diagramBox}><span>Google Calendar / Outlook<br />API</span></div>
-                <div className={styles.diagramBox}><span>Firebase Cloud Messaging</span></div>
-                <div className={styles.diagramBox}><span>Stripe + in-app purchases</span></div>
-              </div>
-            </div>
-
-            <DiagramArrow caption="deployed on" />
-
-            {/* 5. Platform Layer */}
-            <div className={styles.diagramLayer}>
-              <div className={styles.diagramLayerLabel}>
-                <span className={styles.diagramLayerTitle}>PLATFORM LAYER</span>
-              </div>
-              <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes3}`}>
-                <div className={styles.diagramBox}><span>Docker on GCP Cloud Run</span></div>
-                <div className={styles.diagramBox}><span>GitHub Actions CI / CD</span></div>
-                <div className={styles.diagramBox}><span>GCP Logging &amp; observability</span></div>
-              </div>
-            </div>
+            <p className={styles.figureCaption}>
+              <em>Figure 1 — LHW platform architecture. Cycle data, calendar workload, and daily
+              feedback flow through FastAPI orchestration into the Gemini intelligence layer, and return to the
+              client as Today&apos;s Flow. The dashed path is the personalisation loop.</em>
+            </p>
           </div>
 
-          <p className={styles.figureCaption}>
-            <em>Figure 1 — LHW platform architecture. Cycle data, calendar workload, and daily
-            feedback flow through FastAPI orchestration into the Gemini intelligence layer, and return to the
-            client as Today&apos;s Flow. The dashed path is the personalisation loop.</em>
-          </p>
-        </div>
-        <FooterBar page="03" />
-      </div>
-
-      {/* ── Technology stack + How a day is assembled + Scalability (page 5 · 04) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <h3 className={styles.plainHeading} style={{ marginTop: '8px' }}>Technology stack by layer</h3>
-          <div className={styles.tableWrapper}>
-            <table className={styles.customTable}>
+          <h3 className={styles.plainHeading}>Technology stack by layer</h3>
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
               <thead>
                 <tr>
                   <th style={{ width: '140px' }}>Layer</th>
@@ -640,7 +627,7 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
                 {TECH_STACK_TABLE.map((row) => (
                   <tr key={row.layer}>
                     <td className={styles.rowLabelCol}>{row.layer}</td>
-                    <td>{row.tech}</td>
+                    <td><strong>{row.tech}</strong></td>
                     <td>{row.purpose}</td>
                   </tr>
                 ))}
@@ -674,15 +661,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             produced on a schedule and the notification budget is capped at one to two sends, the heaviest
             component of platform cost scales linearly with subscribers and stays predictable under growth.
           </p>
-        </div>
-        <FooterBar page="04" />
-      </div>
+        </section>
 
-      {/* ── III Credit System & Monetisation (page 6 · 05) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader numeral="III" title="Credit System &amp; Monetisation" subtitle="Entitlement model, tiers, and trial gating" />
+        {/* ── Section III: Credit System & Monetisation ── */}
+        <section id="section-credit-monetisation" className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>SECTION III</span>
+          <h2 className={styles.sectionHeading}>Credit System &amp; Monetisation</h2>
+          <p className={styles.sectionSubtitle}>Entitlement model, tiers, and trial gating</p>
 
           <p className={styles.sectionParagraph}>
             LHW does not operate a consumable credit currency. Because the platform delivers one bounded,
@@ -693,8 +678,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
           </p>
 
           <h3 className={styles.plainHeading}>Entitlement model</h3>
-          <div className={styles.tableWrapper}>
-            <table className={styles.customTable}>
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
               <thead>
                 <tr>
                   <th style={{ width: '190px' }}>Mechanism</th>
@@ -713,8 +698,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
           </div>
 
           <h3 className={styles.plainHeading}>Published plans</h3>
-          <div className={styles.tableWrapper}>
-            <table className={styles.customTable}>
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
               <thead>
                 <tr>
                   <th style={{ width: '150px' }}>Plan</th>
@@ -726,7 +711,7 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
                 {PLANS_TABLE.map((row) => (
                   <tr key={row.plan}>
                     <td className={styles.rowLabelCol}>{row.plan}</td>
-                    <td>{row.price}</td>
+                    <td><strong>{row.price}</strong></td>
                     <td>{row.notes}</td>
                   </tr>
                 ))}
@@ -739,17 +724,15 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             Consumable credits make sense when value is bursty and expensive. LHW&apos;s value arrives once a
             day, every day — so the unit of sale is the day, not the request.
           </div>
-        </div>
-        <FooterBar page="05" />
-      </div>
+        </section>
 
-      {/* ── IV User-Facing Features (page 7 · 06) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader numeral="IV" title="User-Facing Features" subtitle="Daily experience, calendar intelligence, notifications" />
+        {/* ── Section IV: User-Facing Features ── */}
+        <section id="section-user-features" className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>SECTION IV</span>
+          <h2 className={styles.sectionHeading}>User-Facing Features</h2>
+          <p className={styles.sectionSubtitle}>Daily experience, calendar intelligence, notifications</p>
 
-          <h3 className={styles.plainHeading} style={{ marginTop: '8px' }}>Daily experience</h3>
+          <h3 className={styles.plainHeading}>Daily experience</h3>
           <ul className={styles.bulletList}>
             <li className={styles.bulletItem}><strong>Onboarding.</strong> The user enters cycle data, goals, and preferences, then connects a calendar through a guided first-run flow.</li>
             <li className={styles.bulletItem}><strong>Today&apos;s Flow.</strong> A daily dashboard showing the current cycle phase, recommended tasks framed as Do / Avoid / Optimize, energy insight, and calendar-aware suggestions.</li>
@@ -764,15 +747,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             feedback are assembled into a single context, reasoned over by the model, and returned as Do /
             Avoid / Optimize guidance with a single morning notification.
           </p>
-        </div>
-        <FooterBar page="06" />
-      </div>
 
-      {/* ── Calendar intelligence + Notifications + Phase 2 (page 8 · 07) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <h3 className={styles.plainHeading} style={{ marginTop: '8px' }}>Calendar intelligence</h3>
+          <h3 className={styles.plainHeading}>Calendar intelligence</h3>
           <p className={styles.sectionParagraph}>
             The user securely connects Google Calendar or Outlook to bring real schedule data into the daily
             analysis. The platform combines workload with cycle phase to suggest what to prioritise,
@@ -787,8 +763,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             premise.
           </p>
 
-          <div className={styles.tableWrapper}>
-            <table className={styles.customTable}>
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
               <thead>
                 <tr>
                   <th style={{ width: '170px' }}>Trigger</th>
@@ -800,7 +776,7 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
                 {NOTIFICATION_TABLE.map((row) => (
                   <tr key={row.trigger}>
                     <td className={styles.rowLabelCol}>{row.trigger}</td>
-                    <td>{row.timing}</td>
+                    <td><strong>{row.timing}</strong></td>
                     <td>{row.content}</td>
                   </tr>
                 ))}
@@ -815,15 +791,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             from the outset rather than retrofitted onto identified profiles, alongside an admin panel and
             baseline analytics.
           </p>
-        </div>
-        <FooterBar page="07" />
-      </div>
+        </section>
 
-      {/* ── V Security & Auditability (page 9 · 08) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader numeral="V" title="Security &amp; Auditability" subtitle="Controls across identity, consent, data, and operations" />
+        {/* ── Section V: Security & Auditability ── */}
+        <section id="section-security-auditability" className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>SECTION V</span>
+          <h2 className={styles.sectionHeading}>Security &amp; Auditability</h2>
+          <p className={styles.sectionSubtitle}>Controls across identity, consent, data, and operations</p>
 
           <p className={styles.sectionParagraph}>
             The platform handles two of the most sensitive data classes a consumer app can hold: reproductive
@@ -832,8 +806,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             casually readable.
           </p>
 
-          <div className={styles.tableWrapper}>
-            <table className={styles.customTable}>
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
               <thead>
                 <tr>
                   <th style={{ width: '200px' }}>Domain</th>
@@ -857,15 +831,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             about what a user was shown, what they were entitled to, and whether the system delivered it can
             be answered from stored evidence.
           </div>
-        </div>
-        <FooterBar page="08" />
-      </div>
+        </section>
 
-      {/* ── VI What Makes This Different (page 10 · 09) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader numeral="VI" title="What Makes This Different" subtitle="Six structural differentiators" />
+        {/* ── Section VI: What Makes This Different ── */}
+        <section id="section-differentiators" className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>SECTION VI</span>
+          <h2 className={styles.sectionHeading}>What Makes This Different</h2>
+          <p className={styles.sectionSubtitle}>Six structural differentiators</p>
 
           <p className={styles.sectionParagraph}>
             Most productivity apps are cycle-blind, and most cycle apps stop at tracking. LHW sits
@@ -885,15 +857,13 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
               </div>
             ))}
           </div>
-        </div>
-        <FooterBar page="09" />
-      </div>
+        </section>
 
-      {/* ── VII Outcomes (page 11 · 10) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader numeral="VII" title="Outcomes" subtitle="Measurement framework and instrumented KPI set" />
+        {/* ── Section VII: Outcomes ── */}
+        <section id="section-outcomes" className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>SECTION VII</span>
+          <h2 className={styles.sectionHeading}>Outcomes</h2>
+          <p className={styles.sectionSubtitle}>Measurement framework and instrumented KPI set</p>
 
           <p className={styles.sectionParagraph}>
             The platform ships instrumented against a defined KPI set rather than against retrospective
@@ -902,8 +872,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             contract, not a claim of achieved performance.
           </p>
 
-          <div className={styles.tableWrapper}>
-            <table className={styles.customTable}>
+          <div className={styles.tableOuter}>
+            <table className={styles.compTable}>
               <thead>
                 <tr>
                   <th style={{ width: '210px' }}>Metric</th>
@@ -931,8 +901,7 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             <li className={styles.bulletItem}><strong>That the model is honest.</strong> Prediction alignment measures the system against the user&apos;s reported reality, which is the only ground truth available in this category.</li>
             <li className={styles.bulletItem}><strong>That the value compounds.</strong> Retention across billing periods is the test of whether the learning loop is actually making the product better for the individual over time.</li>
           </ul>
-        </div>
-        <FooterBar page="10" />
+        </section>
       </div>
     </div>
   );
