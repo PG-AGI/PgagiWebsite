@@ -1,950 +1,2225 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 // ── Leading Her Way Case Study SCSS ──────────────────────────────────────────
-// Formatted following the Vook AI case study architecture (rail container,
-// full-width hero, quick meta facts bar, clean section blocks, styled tables & callouts)
-// Preserves 100% of LHW content, text, colors, diagrams, arrows, and headings.
+// Pixel-perfect editorial design matching the 8-page LHW Client Case Study PDF
+// structured with Vook AI web experience standards.
 
-$color-brand-red: #841E1E;
-$color-brand-red-dark: #6E1717;
-$color-brand-red-tint: #FBEAE9;
-$color-brand-red-subtle: #FDF5F5;
+$color-brand-burgundy: #841E1E;
+$color-brand-burgundy-dark: #6B1616;
+$color-brand-burgundy-light: #9E2626;
 
-$color-bg-page: #FEFBF5;
-$color-bg-hero: #FEFBF5;
-$color-bg-cream: #F2EDE8;
-$color-bg-subtle: #F7F3EE;
+$color-bg-page: #FFFBF6;
+$color-bg-beige: #ECE5DC;
+$color-bg-beige-light: #FAF7F4;
+$color-bg-beige-card: #F4EEE9;
 
-$color-text-main: #211C16;
-$color-text-body: #3A342B;
-$color-text-muted: #706A5E;
-$color-text-light: #9A9385;
+$color-text-dark: #1F242E;
+$color-text-body: #333945;
+$color-text-muted: #6B7280;
+$color-text-subtle: #8A8F9B;
 
-$color-border: #E3DACB;
-$color-border-diagram: #DFD8CC;
-$color-border-subtle: #EFE9DF;
+$color-border-line: #E8E2DA;
+$color-border-subtle: #F0EAE3;
 
-$font-serif: Georgia, 'Times New Roman', Times, serif;
-$font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-serif: 'Newsreader', 'Lora', 'Playfair Display', Georgia, 'Times New Roman', serif;
+$font-sans: var(--font-inter), 'Inter', var(--font-plus-jakarta), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 .lhwPage {
   width: 100%;
   min-height: 100vh;
-  background-color: $color-bg-page;
-  color: $color-text-main;
+  background-color: #FFFBF6;
+  color: $color-text-dark;
   font-family: $font-sans;
   overflow-x: hidden;
   padding-bottom: 96px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-// ── Vook AI Format: Responsive Rail ──
+// ── Unified Vook AI Rail Container ──
 .rail {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 0 79px;
+  padding: 0 40px;
   box-sizing: border-box;
 
-  @media (max-width: 900px) {
-    padding: 0 40px;
-  }
-
-  @media (max-width: 640px) {
-    padding: 0 24px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0 16px;
+  @media (max-width: 768px) {
+    padding: 0 20px;
   }
 }
 
-// ── 1. Hero Section (Vook AI Format) ──
+// ── Hero Section (Vook AI Format) ──
 .heroSection {
   width: 100%;
-  background: $color-bg-hero;
-  padding-top: clamp(120px, 14vh, 150px);
-  padding-bottom: 56px;
-  position: relative;
-  overflow: hidden;
-  border-top: 6px solid $color-brand-red;
-
-  > .rail {
-    position: relative;
-    z-index: 1;
-  }
+  background: #FFFBF6;
+  padding-top: clamp(100px, 12vh, 130px);
+  padding-bottom: 50px;
 }
 
-.heroContent {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 1040px;
-}
-
-.heroWordmark {
-  font-family: $font-serif;
-  font-size: clamp(3.5rem, 7vw, 5.5rem);
-  font-weight: 700;
-  color: $color-brand-red;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  margin: 0 0 8px;
-}
-
-.heroWordmarkSub {
-  display: block;
-  font-family: $font-sans;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: $color-brand-red;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  margin-bottom: 24px;
-}
-
-.heroRule {
-  width: 72px;
-  height: 3px;
-  background-color: $color-brand-red;
-  border: none;
-  margin: 0 0 28px;
-}
-
-.heroTitle {
-  font-family: $font-serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  color: $color-text-main;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  margin: 0 0 18px;
-}
-
-.heroDesc {
-  font-size: 1.125rem;
-  line-height: 1.75;
-  color: $color-text-body;
-  max-width: 860px;
-  margin: 0 0 36px;
-
-  @media (max-width: 640px) {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 28px;
-  }
-}
-
-// ── Hero Stat Highlights (Vook AI Pill / Box Grid) ──
-.heroPillGrid {
+.heroGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  width: 100%;
-  margin-top: 8px;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: flex-start;
 
   @media (max-width: 900px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 480px) {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 40px;
   }
 }
 
-.heroPillCard {
-  background: $color-brand-red;
-  color: #FFFFFF;
-  padding: 18px 20px;
-  border-radius: 8px;
+.heroLeft {
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 14px rgba(132, 30, 30, 0.18);
-  transition: transform 0.2s ease;
+}
 
-  &:hover {
-    transform: translateY(-2px);
+.heroRight {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+// ── Standard PDF Layout Rail (Legacy reference) ──
+.pdfRail {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
   }
 }
 
-.heroPillValue {
-  font-family: $font-serif;
-  font-size: 1.25rem;
+// ── PDF Page Headers & Footers ──
+.pdfHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 40px 0 12px;
+}
+
+.headerBrandLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .pgAgiLogo {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: $color-brand-burgundy;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .pgAgiSub {
+    font-family: $font-sans;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #8A8A8A;
+  }
+}
+
+.headerRight {
+  .clientCaseStudyTag {
+    font-family: $font-sans;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #8A8A8A;
+  }
+}
+
+.pdfHeaderDivider {
+  width: 100%;
+  height: 1px;
+  background-color: $color-border-line;
+  margin-bottom: 36px;
+}
+
+.pdfFooterDivider {
+  width: 100%;
+  height: 1px;
+  background-color: $color-border-line;
+  margin-top: 56px;
+  margin-bottom: 14px;
+}
+
+.pdfFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 40px;
+
+  .footerTagline {
+    font-family: $font-sans;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: $color-brand-burgundy;
+  }
+
+  .pageNumber {
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $color-brand-burgundy;
+  }
+}
+
+.pageSubHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 48px 0 12px;
+
+  .pageSubBrand {
+    font-family: $font-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $color-brand-burgundy;
+    font-optical-sizing: auto;
+
+    .pageSubBrandLight {
+      font-family: $font-sans;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      margin-left: 8px;
+    }
+  }
+
+  .pageSubTag {
+    font-family: $font-sans;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #8A8A8A;
+  }
+}
+
+// ── 1. Page 1: Hero Cover Section ──
+.pageOneSection {
+  width: 100%;
+  background: #FFFBF6;
+}
+
+.pageOneGrid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.pageOneLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.lhwBrandHeader {
+  margin-bottom: 28px;
+
+  .lhwMainWordmark {
+    font-family: $font-serif;
+    font-size: clamp(3.8rem, 6.2vw, 5.2rem);
+    font-weight: 500;
+    color: $color-brand-burgundy;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .lhwSubWordmark {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 2px;
+  }
+}
+
+.heroHeadlineBlock {
+  margin-bottom: 36px;
+
+  .heroMainHeadline {
+    font-family: $font-serif;
+    font-size: clamp(2.6rem, 4.4vw, 3.5rem);
+    font-weight: 500;
+    color: $color-brand-burgundy;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 24px;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .heroSecondaryHeadline {
+    font-family: $font-serif;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 500;
+    color: #2D333D;
+    line-height: 1.22;
+    letter-spacing: -0.005em;
+    margin: 0 0 16px;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .heroSummaryText {
+    font-family: $font-sans;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: #64748B;
+    max-width: 440px;
+    margin: 0 0 38px;
+    font-weight: 400;
+  }
+}
+
+.theBuildSection {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+
+  .theBuildHeading {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .buildBlockItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .buildItemTitle {
+      font-family: $font-sans;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #1F242E;
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    .buildItemDesc {
+      font-family: $font-sans;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: #64748B;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+}
+
+// ── Page 1: Exact Deep-Scanned Right Side Image ──
+.pageOneRight {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.heroRightImageContainer {
+  width: 100%;
+  max-width: 440px;
+  background-color: $color-bg-beige;
+  padding: 44px 32px 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.heroRightImage {
+  width: 100%;
+  height: auto;
+  max-width: 320px;
+  object-fit: contain;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.heroPhoneContainer {
+  width: 100%;
+  max-width: 324px;
+  background: #FFFFFF;
+  border-radius: 2px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 14px 0;
+  overflow: hidden;
+}
+
+.phoneTopBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px 6px;
+  font-size: 0.82rem;
   font-weight: 700;
-  line-height: 1.2;
+  color: #111827;
+  background: #FFFFFF;
+
+  .phoneClock {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .phoneStatusIcons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #111827;
+  }
+}
+
+.heroPhoneImageWrap {
+  margin: 6px 16px 0 16px;
+  position: relative;
+  width: calc(100% - 32px);
+  aspect-ratio: 1 / 1.05;
+  overflow: hidden;
+  background: #FDFBF9;
+
+  .heroPhoneImg {
+    object-fit: cover;
+    object-position: center 30%;
+  }
+}
+
+.heroPhoneBody {
+  padding: 22px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #FFFFFF;
+}
+
+.heroPhoneBrand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 6px;
+
+  .heroPhoneBrandLogo {
+    font-family: $font-serif;
+    font-size: 2.45rem;
+    font-weight: 700;
+    color: $color-brand-burgundy;
+    line-height: 1;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .heroPhoneBrandSub {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+  }
+}
+
+.heroPhoneTagline {
+  font-size: 0.77rem;
+  line-height: 1.48;
+  color: #555555;
+  max-width: 235px;
+  margin: 0 0 18px;
+  font-weight: 400;
+}
+
+.heroPhoneCtaButton {
+  width: 100%;
+  max-width: 260px;
+  background-color: $color-brand-burgundy;
   color: #FFFFFF;
-}
-
-.heroPillLabel {
-  font-family: $font-sans;
-  font-size: 0.6875rem;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 0.84rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
-  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background-color: $color-brand-burgundy-dark;
+  }
+
+  .btnArrow {
+    font-size: 0.95rem;
+    line-height: 1;
+  }
 }
 
-// ── 2. Quick Meta Facts Bar (Vook AI Format) ──
+.heroPhoneLoginPrompt {
+  font-size: 0.72rem;
+  color: #777777;
+  margin-bottom: 18px;
+
+  .loginRed {
+    color: $color-brand-burgundy;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.phoneHomeBar {
+  width: 110px;
+  height: 3.5px;
+  background: #111827;
+  border-radius: 2px;
+  margin: 0 auto 4px;
+}
+
+.phoneBottomEdge {
+  width: 100%;
+  height: 3.5px;
+  background: #111827;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+// ── Quick Meta Facts Bar ──
 .metaRail {
   width: 100%;
-  background: $color-bg-cream;
-  border-top: 1px solid $color-border;
-  border-bottom: 1px solid $color-border;
-  padding: 44px 0;
+  background: #F8F5F0;
+  border-top: 1px solid $color-border-line;
+  border-bottom: 1px solid $color-border-line;
+  padding: 36px 0;
+  margin: 20px 0 40px;
 }
 
 .metaGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(24px, 4.5vw, 64px);
+  grid-template-columns: 1fr 1.3fr 1.3fr 1.3fr;
+  gap: 36px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    gap: 24px;
   }
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
-    gap: 20px;
   }
 }
 
 .metaItem {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
+  gap: 6px;
 
-.metaLabel {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: $color-text-muted;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.metaValue {
-  font-size: 1.0625rem;
-  font-weight: 600;
-  color: $color-text-main;
-  line-height: 1.45;
-}
-
-// ── 3. Content Section Blocks (Vook AI Format) ──
-.sectionBlock {
-  padding: 64px 0 24px;
-  border-bottom: 1px solid $color-border-subtle;
-  scroll-margin-top: 80px;
-
-  &:last-of-type {
-    border-bottom: none;
+  .metaLabel {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
-  @media (max-width: 640px) {
-    padding: 48px 0 20px;
+  .metaValue {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F2937;
+    line-height: 1.4;
+  }
+}
+
+// ── Section Blocks (Vook AI Format) ──
+.sectionBlock {
+  width: 100%;
+  padding: 56px 0 16px;
+  border-bottom: 1px solid $color-border-line;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 40px;
   }
 }
 
 .eyebrow {
-  display: inline-block;
+  display: block;
+  font-family: $font-sans;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: $color-brand-burgundy;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: $color-brand-red;
-  background: $color-brand-red-tint;
-  border: 1px solid rgba(132, 30, 30, 0.18);
-  padding: 6px 16px;
-  border-radius: 9999px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .sectionHeading {
   font-family: $font-serif;
-  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
-  font-weight: 700;
-  color: $color-brand-red;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  margin: 0 0 6px;
-}
-
-.sectionSubtitle {
-  font-family: $font-sans;
-  font-size: 0.9375rem;
-  color: $color-text-muted;
-  margin: 0 0 24px;
-  font-style: italic;
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  font-weight: 500;
+  color: $color-brand-burgundy;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 20px;
+  font-optical-sizing: auto;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 .sectionParagraph {
-  font-size: 1.0625rem;
-  line-height: 1.8;
-  color: $color-text-body;
-  margin: 0 0 20px;
-
-  strong {
-    color: $color-text-main;
-    font-weight: 600;
-  }
-
-  @media (max-width: 640px) {
-    font-size: 0.9375rem;
-    line-height: 1.7;
-  }
-}
-
-.plainHeading {
-  font-family: $font-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: $color-brand-red;
-  margin: 32px 0 14px;
-}
-
-// ── Index / Table of Contents Section ──
-.indexContainer {
-  background: #FFFFFF;
-  border: 1px solid $color-border;
-  border-top: 4px solid $color-brand-red;
-  border-radius: 6px;
-  padding: 32px 36px;
-  margin: 20px 0 32px;
-  box-shadow: 0 2px 8px rgba(33, 28, 22, 0.04);
-
-  @media (max-width: 640px) {
-    padding: 20px 16px;
-  }
-}
-
-.indexList {
-  display: flex;
-  flex-direction: column;
-}
-
-.indexRow {
-  display: flex;
-  align-items: baseline;
-  gap: 24px;
-  padding: 14px 0;
-  border-bottom: 1px solid $color-border-subtle;
-  text-decoration: none;
-  color: inherit;
-  transition: background-color 0.15s ease;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background-color: $color-brand-red-tint;
-    padding-left: 8px;
-
-    .indexTitle {
-      color: $color-brand-red;
-    }
-  }
-
-  @media (max-width: 480px) {
-    gap: 16px;
-    padding: 12px 0;
-  }
-}
-
-.indexNum {
-  font-family: $font-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: $color-brand-red;
-  min-width: 32px;
-}
-
-.indexContent {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.indexTitle {
-  font-weight: 700;
-  font-size: 0.9375rem;
-  color: $color-text-main;
-  transition: color 0.15s ease;
-}
-
-.indexDetail {
-  font-size: 0.8125rem;
-  color: $color-text-muted;
-}
-
-// ── Callout Box (Vook AI Style) ──
-.calloutBox {
-  background: $color-bg-cream;
-  border: 1px solid $color-border;
-  border-left: 5px solid $color-brand-red;
-  border-radius: 4px;
-  padding: 20px 24px;
-  margin: 28px 0;
-  font-family: $font-serif;
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  color: $color-text-main;
-
-  @media (max-width: 640px) {
-    padding: 16px 18px;
-    font-size: 0.9375rem;
-  }
-}
-
-.calloutBoxLabel {
-  display: block;
   font-family: $font-sans;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  color: $color-brand-red;
+  font-size: 1.075rem;
+  line-height: 1.7;
+  color: $color-text-body;
+  max-width: 900px;
+  margin: 0 0 36px;
+}
+
+// ── General PDF Content Block Styles (Legacy reference) ──
+.pdfSectionBlock {
+  width: 100%;
+  padding: 20px 0 10px;
+}
+
+.sectionTitleBlock {
+  margin-bottom: 20px;
+}
+
+.sectionEyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: $color-brand-burgundy;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 6px;
-}
-
-// ── Tables (Vook AI Table Format with Solid Maroon Header) ──
-.tableOuter {
-  width: 100%;
-  overflow-x: auto;
-  margin: 24px 0 32px;
-  border: 1px solid $color-border;
-  border-radius: 6px;
-  background: #FFFFFF;
-}
-
-.compTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9375rem;
-  text-align: left;
-
-  thead tr {
-    background: $color-brand-red;
-    border-bottom: 1px solid $color-brand-red;
-  }
-
-  th {
-    padding: 13px 18px;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    color: #FFFFFF;
-    text-transform: capitalize;
-    letter-spacing: 0.02em;
-    font-family: $font-sans;
-  }
-
-  tbody tr {
-    border-bottom: 1px solid $color-border-subtle;
-    transition: background-color 0.15s ease;
-
-    &:nth-child(even) {
-      background-color: $color-bg-page;
-    }
-
-    &:hover {
-      background-color: $color-brand-red-tint;
-    }
-  }
-
-  td {
-    padding: 14px 18px;
-    color: $color-text-main;
-    line-height: 1.6;
-    vertical-align: top;
-  }
-}
-
-.rowLabelCol {
-  font-weight: 700;
-  color: $color-brand-red !important;
-  white-space: nowrap;
-}
-
-// ── Figure 1: Architecture Diagram ──
-.diagramWrapper {
-  background: #FFFFFF;
-  border: 1px solid $color-border;
-  border-top: 4px solid $color-brand-red;
-  border-radius: 8px;
-  padding: 32px 28px;
-  margin: 28px 0;
-  box-shadow: 0 2px 10px rgba(33, 28, 22, 0.04);
-
-  @media (max-width: 640px) {
-    padding: 20px 14px;
-  }
-}
-
-.diagramBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  margin: 16px 0;
-}
-
-.diagramLoopScope {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding-right: 40px;
-
-  @media (max-width: 640px) {
-    padding-right: 0;
-  }
-}
-
-.diagramLayer {
-  width: 100%;
-  background: $color-bg-cream;
-  border: 1px solid $color-border-diagram;
-  border-radius: 6px;
-  padding: 14px 16px;
-  box-sizing: border-box;
-
-  &:hover {
-    border-color: $color-border;
-  }
-}
-
-.diagramLayerLabel {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
   margin-bottom: 10px;
-  flex-wrap: wrap;
-  font-size: 0.6875rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
-.diagramLayerTitle {
-  font-weight: 700;
-  color: #52483C;
-}
-
-.diagramLayerSeparator {
-  color: $color-text-light;
-}
-
-.diagramLayerSubtitle {
-  color: $color-text-muted;
+.pdfMainHeading {
+  font-family: $font-serif;
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
   font-weight: 500;
-  text-transform: none;
+  color: $color-brand-burgundy;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0;
+  font-optical-sizing: auto;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
-.diagramLayerBoxes {
+.pdfParagraph {
+  font-size: 1.075rem;
+  line-height: 1.7;
+  color: $color-text-body;
+  max-width: 900px;
+  margin: 0 0 32px;
+}
+
+// ── Page 2: Burgundy Banner ──
+.burgundyCalloutBanner {
+  background: $color-brand-burgundy;
+  padding: 36px 36px;
+  margin: 28px 0 44px;
+  border-radius: 2px;
+}
+
+.burgundyCalloutText {
+  font-family: $font-serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+  font-optical-sizing: auto;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.challengeResponseGrid {
   display: grid;
-  gap: 8px;
-}
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 44px;
 
-.layerBoxes2 { grid-template-columns: repeat(2, 1fr); }
-.layerBoxes3 { grid-template-columns: repeat(3, 1fr); }
-.layerBoxes4 { grid-template-columns: repeat(4, 1fr); }
-.layerBoxes6 { grid-template-columns: repeat(6, 1fr); }
-
-@media (max-width: 960px) {
-  .layerBoxes4, .layerBoxes6 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .layerBoxes3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 580px) {
-  .layerBoxes2, .layerBoxes3, .layerBoxes4, .layerBoxes6 {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
 }
 
-.diagramBox {
-  background: #FFFFFF;
-  border: 1px solid $color-border-diagram;
-  border-radius: 4px;
-  padding: 10px 8px;
-  font-size: 0.775rem;
-  font-weight: 600;
-  color: $color-text-main;
-  text-align: center;
+.columnCardTitle {
+  font-family: $font-serif;
+  font-size: 1.55rem;
+  font-weight: 500;
+  color: $color-brand-burgundy;
+  margin: 0 0 12px;
+  font-optical-sizing: auto;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.columnCardText {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: $color-text-body;
+  margin: 0;
+}
+
+.coreScopeBox {
+  background: transparent;
+  border-top: 1px solid $color-border-line;
+  padding: 32px 0 8px;
+  margin-top: 36px;
+
+  .coreScopeHeading {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .coreScopeList {
+    font-family: $font-sans;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #1F2937;
+    font-weight: 500;
+    margin: 0 0 22px;
+  }
+
+  .coreScopeFootnote {
+    font-family: $font-sans;
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: #71717A;
+    margin: 0;
+  }
+}
+
+// ── Page 3: Daily Experience (Today's Flow) ──
+.dailyExperienceGrid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.dailyExperienceLeft {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 52px;
-  line-height: 1.3;
-  box-shadow: 0 1px 2px rgba(33, 28, 22, 0.04);
+  flex-direction: column;
 }
 
-.diagramBoxRed {
-  background: $color-brand-red;
-  border: 1px solid $color-brand-red;
-  color: #FFFFFF;
-  font-weight: 700;
-  box-shadow: 0 1px 3px rgba(132, 30, 30, 0.2);
-}
-
-.diagramBoxDarkRed {
-  background: $color-brand-red-dark;
-  border: 1px solid $color-brand-red-dark;
-  color: #FFFFFF;
-  font-weight: 700;
-  box-shadow: 0 1px 3px rgba(110, 23, 23, 0.25);
-}
-
-.diagramArrow {
+.dailyExperienceRight {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.todaysFlowHeader {
+  margin-bottom: 24px;
+
+  .todaysFlowEyebrow {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: $color-brand-burgundy;
+    display: block;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .todaysFlowTitle {
+    font-family: $font-serif;
+    font-size: clamp(2.2rem, 3.4vw, 2.85rem);
+    font-weight: 500;
+    color: $color-brand-burgundy;
+    line-height: 1.15;
+    letter-spacing: -0.012em;
+    margin: 0 0 20px;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .todaysFlowDesc {
+    font-family: $font-sans;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #374151;
+    margin: 0 0 32px;
+    max-width: 520px;
+  }
+}
+
+.stepsList {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.stepItemBlock {
+  display: flex;
+  flex-direction: column;
   gap: 6px;
-  margin: 4px 0;
-}
 
-.diagramArrowGlyph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .stepTitleBurgundy {
+    font-family: $font-sans;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: $color-brand-burgundy;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
 
-.diagramArrowCaption {
-  font-size: 0.75rem;
-  font-style: italic;
-  color: $color-text-muted;
-}
+    .stepNumber {
+      font-weight: 800;
+    }
+  }
 
-.diagramLoopRail {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 40px;
-  pointer-events: none;
-
-  @media (max-width: 640px) {
-    display: none;
+  .stepDescText {
+    font-family: $font-sans;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #4B5563;
+    margin: 0;
+    max-width: 500px;
   }
 }
 
-.diagramLoopSvg {
+.dailyPlanImageWrap {
   width: 100%;
-  height: 100%;
-}
-
-.figureCaption {
-  font-size: 0.8125rem;
-  color: $color-text-muted;
-  line-height: 1.6;
-  margin: 16px auto 0;
-  text-align: center;
-  font-style: italic;
-
-  strong {
-    color: $color-brand-red;
-    font-style: normal;
-  }
-}
-
-// ── Figure 2: Today's Flow Pipeline ──
-.pipelineContainer {
-  background: #FFFFFF;
-  border: 1px solid $color-border;
-  border-top: 4px solid $color-brand-red;
-  border-radius: 8px;
-  padding: 28px 24px;
-  position: relative;
-  margin: 24px 0 16px;
-
-  @media (max-width: 900px) {
-    padding: 20px 16px;
-  }
-}
-
-.pipelineFlowRow {
+  max-width: 275px;
   display: flex;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+
+  .dailyPlanImg {
+    width: 100%;
+    height: auto;
+    max-width: 275px;
+    object-fit: contain;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+.todaysFlowPhone {
+  width: 100%;
+  max-width: 340px;
+  background: #FCFAF6;
+  border: 1px solid #EFEAE3;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+  padding: 16px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.flowAppHeader {
+  display: flex;
   justify-content: space-between;
-  gap: 8px;
-  width: 100%;
+  align-items: center;
+  padding: 2px 2px 0;
 
-  @media (max-width: 900px) {
+  .flowAppHeaderLeft {
+    display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1px;
+  }
+
+  .flowDate {
+    font-family: $font-sans;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #7A7571;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .flowGreeting {
+    font-family: $font-serif;
+    font-size: 1.22rem;
+    font-weight: 500;
+    color: #18181B;
+    margin: 2px 0 0;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    font-optical-sizing: auto;
+  }
+
+  .flowCalBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #EFE7DE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4A4540;
+    flex-shrink: 0;
   }
 }
 
-.pipelineLeftStack {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1.2;
-
-  @media (max-width: 900px) {
-    width: 100%;
-  }
-}
-
-.pipelineInputCard {
-  background: $color-bg-cream;
-  border: 1px solid $color-border;
-  padding: 10px 14px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-}
-
-.pipelineCardTitle {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: $color-text-main;
-}
-
-.pipelineCardSub {
-  font-size: 0.6875rem;
-  color: $color-text-muted;
-  margin-top: 2px;
-}
-
-.pipelineForkCol {
-  width: 20px;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 900px) {
-    display: none;
-  }
-}
-
-.pipelineForkSvg {
-  width: 20px;
-  height: 100%;
-}
-
-.pipelineContextCard {
-  background: #FFFFFF;
-  border: 1.5px solid $color-brand-red;
-  padding: 16px 14px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  flex: 1;
-  border-radius: 4px;
-
-  @media (max-width: 900px) {
-    width: 100%;
-  }
-}
-
-.pipelineArrowCol {
-  width: 20px;
+.flowPhaseCard {
+  background: linear-gradient(135deg, #F9F5EF 0%, #EFE6DD 100%);
+  border: 1px solid #E5DCD2;
+  border-radius: 14px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  @media (max-width: 900px) {
-    transform: rotate(90deg);
-    margin: 4px 0;
-  }
+  gap: 14px;
 }
 
-.pipelineArrowSvg {
-  width: 20px;
-  height: 10px;
-}
+.phaseProgressGauge {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
 
-.pipelineGeminiCard {
-  background: $color-brand-red;
-  color: #FFFFFF;
-  padding: 16px 14px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  flex: 1.1;
-  border-radius: 4px;
-
-  @media (max-width: 900px) {
+  .gaugeSvg {
     width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
   }
 }
 
-.pipelineCardTitleWhite {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: #FFFFFF;
-}
-
-.pipelineCardSubWhite {
-  font-size: 0.6875rem;
-  color: rgba(255, 255, 255, 0.85);
-  margin-top: 2px;
-}
-
-.pipelineOutputCard {
-  background: $color-brand-red-dark;
-  color: #FFFFFF;
-  padding: 16px 14px;
+.phaseCardLeft {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  flex: 1.2;
-  border-radius: 4px;
+  gap: 1px;
 
-  @media (max-width: 900px) {
-    width: 100%;
+  .phaseLabelMini {
+    font-family: $font-sans;
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #7A7571;
+    text-transform: uppercase;
+  }
+
+  .phaseTitleName {
+    font-family: $font-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #18181B;
+    margin: 0;
+    line-height: 1.15;
+    font-optical-sizing: auto;
+  }
+
+  .phaseSeasonText {
+    font-family: $font-sans;
+    font-size: 0.55rem;
+    font-weight: 800;
+    color: $color-brand-burgundy;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .phaseDaysSub {
+    font-family: $font-sans;
+    font-size: 0.65rem;
+    color: #7A7571;
+    font-style: italic;
   }
 }
 
-.pipelineLoopRail {
-  margin-top: 24px;
-  position: relative;
-  width: 100%;
-
-  @media (max-width: 900px) {
-    display: none;
-  }
-}
-
-.pipelineLoopSvg {
-  width: 100%;
-  height: 28px;
-}
-
-.pipelineLoopLabel {
-  font-size: 0.75rem;
-  color: $color-text-muted;
-  text-align: center;
-  font-style: italic;
-  margin-top: 4px;
-}
-
-// ── Section VI: Differentiators with Continuous Red Vertical Line ──
-.decisionList {
-  position: relative;
+.feelingPromptRow {
   display: flex;
-  flex-direction: column;
-  margin: 24px 0 16px;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 2px;
+  margin: 2px 0;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 14px;
-    bottom: 14px;
-    left: 48px;
-    width: 2px;
-    background-color: $color-brand-red;
-    pointer-events: none;
-    z-index: 1;
+  .feelingPromptText {
+    font-family: $font-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #2D2D32;
+    font-optical-sizing: auto;
+  }
 
-    @media (max-width: 480px) {
-      left: 36px;
+  .feelingPlusBtnWrap {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1px solid #948F89;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .feelingPlusBtn {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #5A5550;
+      line-height: 1;
     }
   }
 }
 
-.decisionItem {
-  display: flex;
-  align-items: flex-start;
-  padding: 18px 0;
-  border-bottom: 1px solid #EBE5DB;
+.todaysGuidanceSolidCard {
+  background: $color-brand-burgundy;
+  color: #FFFFFF;
+  border-radius: 14px;
+  padding: 16px 16px;
   position: relative;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  @media (max-width: 480px) {
-    padding: 14px 0;
-  }
-}
-
-.decisionNumCol {
-  width: 48px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-start;
-  padding-top: 1px;
-
-  @media (max-width: 480px) {
-    width: 36px;
-  }
-}
-
-.decisionNum {
-  font-family: $font-serif;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: $color-brand-red;
-  line-height: 1.1;
-
-  @media (max-width: 480px) {
-    font-size: 1.125rem;
-  }
-}
-
-.decisionContentCol {
-  flex: 1;
-  padding-left: 20px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 4px;
 
-  @media (max-width: 480px) {
-    padding-left: 12px;
+  .guidanceWatermark {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 90px;
+    height: 90px;
+    pointer-events: none;
+    opacity: 0.7;
+
+    .watermarkSvg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .guidanceTagRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: $font-sans;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.95);
+    text-transform: uppercase;
+    z-index: 1;
+  }
+
+  .guidanceIconPill {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+  }
+
+  .guidanceQuoteMain {
+    font-family: $font-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin: 8px 0 6px;
+    color: #FFFFFF;
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+    z-index: 1;
+  }
+
+  .guidanceQuoteSub {
+    font-family: $font-serif;
+    font-size: 0.68rem;
+    line-height: 1.48;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    font-style: italic;
+    font-optical-sizing: auto;
+    z-index: 1;
   }
 }
 
-.decisionTitle {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: $color-text-main;
-  margin: 0;
-  line-height: 1.3;
-}
-
-.decisionDesc {
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: $color-text-body;
-  margin: 0;
-}
-
-// ── Bullet Lists ──
-.bulletList {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
+.dayAheadSection {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
+
+  .dayAheadTitle {
+    font-family: $font-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #2D2D32;
+    margin: 0 0 2px;
+    font-optical-sizing: auto;
+  }
+
+  .dayAheadCardWrap {
+    background: #FAF6F0;
+    border: 1px solid #ECE4DA;
+    border-radius: 12px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dayAheadItem {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    .timeTag {
+      font-family: $font-sans;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #555550;
+      width: 32px;
+      line-height: 1.15;
+      text-align: left;
+
+      small {
+        font-size: 0.5rem;
+        font-weight: 600;
+        color: #8A8580;
+        display: block;
+      }
+    }
+
+    .meetingCard {
+      background: #FFFFFF;
+      border: 1px solid #ECE4DA;
+      border-radius: 8px;
+      padding: 8px 10px;
+      flex: 1;
+
+      .meetingTitle {
+        font-family: $font-sans;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #18181B;
+        display: block;
+        line-height: 1.3;
+      }
+
+      .meetingDetail {
+        font-family: $font-sans;
+        font-size: 0.62rem;
+        color: #78716C;
+        line-height: 1.3;
+      }
+    }
+
+    .meetingCardSmart {
+      background: #FDF7F6;
+      border: 1px solid #F5DFDE;
+      border-radius: 8px;
+
+      .meetingTitleRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .lockIcon {
+        color: $color-brand-burgundy;
+      }
+
+      .smartSuggestionTag {
+        font-family: $font-sans;
+        font-size: 0.6rem;
+        color: $color-brand-burgundy;
+        font-weight: 600;
+        display: block;
+        margin-top: 2px;
+      }
+    }
+  }
 }
 
-.bulletItem {
-  position: relative;
-  padding-left: 20px;
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: $color-text-body;
+.quickActionsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 
-  &::before {
-    content: '—';
+  .quickActionsTitle {
+    font-family: $font-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #2D2D32;
+    margin: 0 0 2px;
+    font-optical-sizing: auto;
+  }
+
+  .quickActionsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+
+    .actionBtnSolid {
+      background: $color-brand-burgundy;
+      color: #FFFFFF;
+      border-radius: 10px;
+      padding: 12px 6px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+
+      .actionBtnIconCircle {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF;
+      }
+
+      span {
+        font-family: $font-sans;
+        font-size: 0.58rem;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+    }
+
+    .actionBtnOutline {
+      background: #FAF6F0;
+      border: 1px solid #ECE4DA;
+      color: #2D2D32;
+      border-radius: 10px;
+      padding: 12px 6px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+
+      .actionIconBurgundy {
+        color: $color-brand-burgundy;
+      }
+
+      span {
+        font-family: $font-sans;
+        font-size: 0.58rem;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
+.mockupBelowCaption {
+  font-family: $font-sans;
+  font-size: 0.78rem;
+  color: #71717A;
+  text-align: left;
+  margin-top: 14px;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// ── Page 4: Adaptive Guidance (3 Phases) ──
+.sameInterfaceImageWrap {
+  width: 100%;
+  max-width: 1000px;
+  margin: 28px auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+
+  .sameInterfaceImg {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+.contextSheCanImageWrap {
+  width: 100%;
+  max-width: 1000px;
+  margin: 28px auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+
+  .contextSheCanImg {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+.phaseTabsBar {
+  display: none;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  @media (max-width: 860px) {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .phaseTabBtn {
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    border-radius: 9999px;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4B5563;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .phaseTabBtnActive {
+    background: $color-brand-burgundy;
+    color: #FFFFFF;
+    border-color: $color-brand-burgundy;
+  }
+}
+
+.threePhasesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 28px 0 16px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.phasePhoneWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 960px) {
+    display: none;
+
+    &.phasePhoneActiveMobile {
+      display: flex;
+    }
+  }
+}
+
+.phaseFullPhone {
+  width: 100%;
+  max-width: 320px;
+  background: #FCFAF6;
+  border: 1px solid #EFEAE3;
+  border-radius: 20px;
+  padding: 12px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.phaseDropIconWrap {
+  width: 36px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .dropSvg {
+    width: 28px;
+    height: 34px;
+  }
+}
+
+.moodSelectorCardWrap {
+  background: #FAF6F0;
+  border: 1px solid #ECE4DA;
+  border-radius: 12px;
+  padding: 6px 6px 8px;
+  position: relative;
+
+  .moodSelectorCaret {
     position: absolute;
-    left: 0;
-    top: 0;
-    color: $color-brand-red;
+    top: 4px;
+    left: 8px;
+    color: #8A8580;
+    line-height: 1;
+  }
+
+  .moodGridEight {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-top: 12px;
+  }
+
+  .moodBtnItem {
+    background: #FFFFFF;
+    border: 1px solid #ECE4DA;
+    border-radius: 6px;
+    padding: 6px 2px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+
+    .moodEmoji {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .moodName {
+      font-family: $font-sans;
+      font-size: 0.52rem;
+      font-weight: 600;
+      color: #2D2D32;
+      line-height: 1;
+    }
+  }
+}
+
+.dayAheadHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+
+  .viewCalendarLink {
+    font-family: $font-sans;
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: $color-brand-burgundy;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+}
+
+.phaseBelowCaption {
+  font-family: $font-sans;
+  font-size: 0.8rem;
+  color: #71717A;
+  text-align: left;
+  margin-top: 20px;
+}
+
+// ── Page 5: Cycle Tracking (Context She Can Asset) ──
+.contextSheCanImageWrap {
+  width: 100%;
+  max-width: 1000px;
+  margin: 28px auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+
+  .contextSheCanImg {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+.cycleTrackingBeigePanel {
+  background-color: $color-bg-beige;
+  padding: 36px 32px;
+  border-radius: 0;
+  margin: 28px 0 16px;
+
+  @media (max-width: 768px) {
+    padding: 20px 14px;
+  }
+}
+
+.cycleMockupsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.9fr;
+  gap: 24px;
+  align-items: flex-start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+.cyclePhoneScreen {
+  background: #FAF7F2;
+  border: 1px solid #E5DDD4;
+  border-radius: 2px;
+  padding: 10px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cycleHeaderSection {
+  .cycleHeaderMain {
+    font-family: $font-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1F2937;
+    display: block;
+  }
+
+  .cycleHeaderSub {
+    font-size: 0.68rem;
+    color: #6B7280;
+  }
+}
+
+.cyclePhaseSummaryCard {
+  background: #F3EAE4;
+  border: 1px solid #E5D9D2;
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .cyclePercentText {
+    font-size: 0.62rem;
+    color: $color-brand-burgundy;
+    font-weight: 600;
+  }
+
+  .dayBadgeRight {
+    background: #FFFFFF;
+    border-radius: 6px;
+    padding: 3px 6px;
+    text-align: center;
+
+    .dayNumBig {
+      font-size: 1rem;
+      font-weight: 800;
+      color: $color-brand-burgundy;
+      display: block;
+      line-height: 1;
+    }
+
+    .dayTotalSmall {
+      font-size: 0.5rem;
+      font-weight: 700;
+      color: #6B7280;
+    }
+  }
+}
+
+.cycleCalContainer {
+  background: #FFFFFF;
+  border: 1px solid #E5DDD4;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.calMonthHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+
+  .calMonthName {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #1F2937;
+  }
+
+  .calTrackHint {
+    font-size: 0.58rem;
+    color: #9CA3AF;
+  }
+}
+
+.calWeekDaysRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #9CA3AF;
+  margin-bottom: 3px;
+}
+
+.calNumbersGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: 2px;
+  font-size: 0.58rem;
+  color: #374151;
+
+  span {
+    padding: 2px 0;
+    border-radius: 3px;
+  }
+
+  .mutedDay {
+    color: #D1D5DB;
+  }
+
+  .menstrualDay {
+    background: #FEE2E2;
+    color: #991B1B;
     font-weight: 700;
   }
 
-  strong {
-    color: $color-text-main;
+  .menstrualDayActive {
+    background: $color-brand-burgundy;
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  .ovulationDay {
+    background: #FEF3C7;
+    color: #92400E;
+    font-weight: 700;
+  }
+
+  .modalSelectedPeriod {
+    background: $color-brand-burgundy;
+    color: #FFFFFF;
+    font-weight: 700;
+    border-radius: 50%;
+  }
+}
+
+.calPhaseLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  padding-top: 4px;
+  border-top: 1px solid #F3F4F6;
+  font-size: 0.52rem;
+  color: #6B7280;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .dotMenstrual {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: $color-brand-burgundy;
+  }
+
+  .dotOvulation {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #F59E0B;
+  }
+
+  .dotFollicular {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #FBCFE8;
+  }
+
+  .dotLuteal {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #E5E7EB;
+  }
+}
+
+.quickLogsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .quickLogsLabel {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #4B5563;
+  }
+
+  .logItemRow {
+    background: #FFFFFF;
+    border: 1px solid #E5DDD4;
+    border-radius: 6px;
+    padding: 6px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logTitleText {
+      font-size: 0.65rem;
+      color: #1F2937;
+      display: block;
+    }
+
+    .logSubText {
+      font-size: 0.55rem;
+      color: #6B7280;
+    }
+
+    .logPlusIcon {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #6B7280;
+    }
+  }
+}
+
+.periodAlertPill {
+  background: #FEF2F2;
+  border: 1px solid #FEE2E2;
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  .alertIconMini {
+    font-size: 0.8rem;
+  }
+
+  .alertTextStack {
+    display: flex;
+    flex-direction: column;
+
+    strong {
+      font-size: 0.62rem;
+      color: #991B1B;
+    }
+
+    span {
+      font-size: 0.52rem;
+      color: #7F1D1D;
+    }
+  }
+}
+
+// ── Edit Period Dates Modal ──
+.editPeriodModalCard {
+  background: #FFFFFF;
+  border: 1px solid #E5DDD4;
+  border-radius: 2px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.modalHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #F3F4F6;
+
+  .modalHeading {
+    font-family: $font-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0;
+  }
+
+  .modalSubheading {
+    font-size: 0.62rem;
+    color: #6B7280;
+    margin: 1px 0 0;
+  }
+
+  .modalCloseIcon {
+    color: #9CA3AF;
+  }
+}
+
+.modalMonthBlock {
+  .modalMonthLabel {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #374151;
+    display: block;
+    margin-bottom: 4px;
+  }
+}
+
+.modalCalGridWrap {
+  background: #FAF7F2;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.modalButtonsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 4px;
+
+  .modalCancelBtn {
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #4B5563;
+    cursor: pointer;
+  }
+
+  .modalSaveBtn {
+    background: $color-brand-burgundy;
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+}
+
+.cycleCalloutsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+
+  .cycleCalloutItem {
+    .calloutItemTitle {
+      font-family: $font-serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: $color-brand-burgundy;
+      margin: 0 0 6px;
+      font-optical-sizing: auto;
+      font-feature-settings: "kern" 1, "liga" 1;
+    }
+
+    .calloutItemText {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: $color-text-body;
+      margin: 0;
+    }
+  }
+}
+
+// ── Page 6: The Architecture Stack ──
+.architectureStackWrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 32px 0 28px;
+}
+
+.archLayerCardCream {
+  width: 100%;
+  background: #ECE5DC;
+  border-radius: 0;
+  border: none;
+  padding: 18px 24px;
+  box-sizing: border-box;
+
+  .archLayerTag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .archLayerTitle {
+    font-family: $font-serif;
+    font-size: clamp(1.6rem, 2.3vw, 1.95rem);
+    font-weight: 500;
+    color: $color-brand-burgundy;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .archLayerSubtitle {
+    font-family: $font-sans;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #333945;
+    margin: 0;
+  }
+}
+
+.archConnectorLine {
+  width: 1.5px;
+  height: 18px;
+  background-color: $color-brand-burgundy;
+  margin: 0 auto;
+}
+
+.archLayerCardBurgundy {
+  width: 100%;
+  background: $color-brand-burgundy;
+  border-radius: 0;
+  border: none;
+  padding: 18px 24px;
+  box-sizing: border-box;
+
+  .archLayerTagWhite {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .archLayerTitleWhite {
+    font-family: $font-serif;
+    font-size: clamp(1.6rem, 2.3vw, 1.95rem);
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .archLayerSubtitleWhite {
+    font-family: $font-sans;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+  }
+}
+
+.deploymentFeedbackBlock {
+  margin-top: 36px;
+  margin-bottom: 24px;
+
+  .deploymentHeading {
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .deploymentLine {
+    font-family: $font-sans;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #1F2937;
+    margin: 0 0 4px;
+  }
+}
+
+.archBelowCaption {
+  font-family: $font-sans;
+  font-size: 0.8rem;
+  color: #71717A;
+  text-align: left;
+  margin-top: 24px;
+}
+
+// ── Page 7: Trust & Operations ──
+.trustControlsContainer {
+  margin: 32px 0 16px;
+  border-top: 1px solid $color-border-line;
+}
+
+.trustRow {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  padding: 22px 0;
+  border-bottom: 1px solid $color-border-line;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 0;
+  }
+
+  .trustLabelCol {
+    .trustLabelName {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: $color-brand-burgundy;
+    }
+  }
+
+  .trustDescCol {
+    .trustDescText {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: $color-text-body;
+      margin: 0;
+    }
+  }
+}
+
+.trustFootnoteText {
+  font-size: 0.82rem;
+  color: #6B7280;
+  margin-top: 14px;
+}
+
+// ── Page 8: Commercial Model & Measurement ──
+.pricingCardsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 32px 0 10px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pricingBox {
+  background: $color-bg-beige-card;
+  border-radius: 0;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .pricingValueText {
+    font-family: $font-serif;
+    font-size: clamp(2.4rem, 3.8vw, 3.2rem);
+    font-weight: 500;
+    color: $color-brand-burgundy;
+    line-height: 1;
+    font-optical-sizing: auto;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  .pricingLabelText {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F2937;
+  }
+}
+
+.pricingPlansNote {
+  font-size: 0.85rem;
+  color: #6B7280;
+  margin: 0 0 44px;
+}
+
+.measurementBlockWrap {
+  margin-bottom: 36px;
+
+  .measurementMainHeading {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .measurementIntroText {
+    font-family: $font-sans;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: $color-text-body;
+    margin: 0 0 24px;
+    max-width: 860px;
+  }
+}
+
+.measurementRowsList {
+  border-top: 1px solid $color-border-line;
+  width: 100%;
+}
+
+.measurementRowItem {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  padding: 18px 0;
+  border-bottom: 1px solid $color-border-line;
+  align-items: baseline;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .measurementCategoryName {
+    font-family: $font-sans;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: $color-brand-burgundy;
+  }
+
+  .measurementDetailText {
+    font-family: $font-sans;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: $color-text-body;
+    margin: 0;
+  }
+}
+
+.sourcesAssetsBlock {
+  margin-top: 48px;
+  padding-top: 8px;
+
+  .sourcesAssetsHeading {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: $color-brand-burgundy;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .sourcesAssetsContent {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sourcesAssetsLine {
+    font-family: $font-sans;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #6B7280;
+    margin: 0;
+
+    .sourcesPrefix {
+      color: $color-brand-burgundy;
+      font-weight: 500;
+    }
+  }
+
+  .sourcesAssetsFootnote {
+    font-family: $font-sans;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #71717A;
+    margin: 2px 0 0;
+  }
+}
+
+// ── Vook AI Format: Discovery Call CTA ──
+.discoveryCtaBox {
+  margin-top: 60px;
+  padding: 56px 40px;
+  background: #111827;
+  border-radius: 12px;
+  text-align: center;
+  color: #FFFFFF;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.25);
+
+  @media (max-width: 640px) {
+    padding: 36px 20px;
+  }
+
+  .discoveryCtaTitle {
+    font-family: $font-serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    font-weight: 700;
+    margin: 0 0 14px;
+    color: #FFFFFF;
+  }
+
+  .discoveryCtaSubtitle {
+    font-size: 1.05rem;
+    color: #9CA3AF;
+    max-width: 620px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+  }
+}
+
+.discoveryCtaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: $color-brand-burgundy;
+  color: #FFFFFF;
+  font-size: 0.98rem;
+  font-weight: 600;
+  padding: 14px 30px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(132, 30, 30, 0.4);
+
+  &:hover {
+    background: $color-brand-burgundy-dark;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(132, 30, 30, 0.5);
   }
 }

@@ -1,6 +1,14 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
+import {
+  Calendar,
+  Lock,
+  Plus,
+  BookOpen,
+  RefreshCw,
+} from 'lucide-react';
 import styles from '@/styles/components/organisms/LeadingHerWayCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
 
@@ -8,899 +16,506 @@ interface LeadingHerWayCaseStudyProps {
   caseStudy?: CaseStudyData | null;
 }
 
-const INDEX_ITEMS: { id: string; num: string; title: string; detail: string }[] = [
-  { id: 'section-what-we-built', num: 'I', title: 'What We Built', detail: 'Product definition, delivery phases, and the problem being solved' },
-  { id: 'section-core-architecture', num: 'II', title: 'Core Architecture', detail: 'Layered system design, technology stack, and data flow' },
-  { id: 'section-credit-monetisation', num: 'III', title: 'Credit System & Monetisation', detail: 'Entitlement model, subscription tiers, and trial gating' },
-  { id: 'section-user-features', num: 'IV', title: 'User-Facing Features', detail: "Today's Flow, AI coach, calendar intelligence, notifications" },
-  { id: 'section-security-auditability', num: 'V', title: 'Security & Auditability', detail: 'Authentication, consent, encryption, logging, and handover' },
-  { id: 'section-differentiators', num: 'VI', title: 'What Makes This Different', detail: 'Six structural differentiators against adjacent categories' },
-  { id: 'section-outcomes', num: 'VII', title: 'Outcomes', detail: 'Measurement framework and instrumented KPI set' },
-];
-
-const PHASE_TABLE: { phase: string; scope: string }[] = [
-  { phase: 'Phase 1 — Core intelligence', scope: 'Cycle tracking, adaptive AI recommendations, calendar syncing, predictive insights, notification strategy, and the subscription model.' },
-  { phase: 'Phase 2 — Community & admin', scope: 'Community Syncing for anonymised connections between users in similar cycle phases, an admin panel, and baseline analytics insights.' },
-];
-
-const TECH_STACK_TABLE: { layer: string; tech: string; purpose: string }[] = [
-  { layer: 'Mobile', tech: 'React Native', purpose: 'iOS and Android app: onboarding, dashboard, AI chat, calendar, subscriptions.' },
-  { layer: 'Backend', tech: 'Python FastAPI', purpose: 'Auth, cycle calculation, AI orchestration, calendar processing, notifications, billing.' },
-  { layer: 'AI / LLM', tech: 'Gemini 3.1 Pro', purpose: 'Daily recommendations, contextual reasoning, conversational coaching.' },
-  { layer: 'Database', tech: 'MongoDB', purpose: 'User profiles, cycle data, behavioural inputs, interaction history.' },
-  { layer: 'AI memory', tech: 'AI memory store', purpose: 'Learned patterns and historical insight used for personalisation.' },
-  { layer: 'Calendar', tech: 'Google Calendar API / Outlook API', purpose: 'Secure schedule reading and workload analysis.' },
-  { layer: 'Notifications', tech: 'Firebase Cloud Messaging', purpose: 'Daily plans, energy-based reminders, schedule alerts.' },
-  { layer: 'Payments', tech: 'Stripe + in-app purchases', purpose: 'Subscription billing and trial management.' },
-  { layer: 'Infrastructure', tech: 'Docker on GCP Cloud Run', purpose: 'Containerised, horizontally scalable backend deployment.' },
-  { layer: 'CI / CD', tech: 'GitHub Actions', purpose: 'Automated build, test, and deploy.' },
-];
-
-const ENTITLEMENT_TABLE: { mechanism: string; behaviour: string }[] = [
-  { mechanism: 'Access flag', behaviour: "A server-side subscription state resolved on every authenticated request; the client never decides its own entitlement." },
-  { mechanism: 'Trial gating', behaviour: 'New users receive a three-day free trial with full functionality. On expiry, access is gated until a paid plan is active.' },
-  { mechanism: 'Billing rails', behaviour: 'Stripe for card-based subscriptions, plus native in-app purchases for store-originated signups on iOS and Android.' },
-  { mechanism: 'Lifecycle events', behaviour: 'Renewals, cancellations, refunds, and store receipts update subscription state, which immediately changes what the app will serve.' },
-  { mechanism: 'Cost containment', behaviour: 'Model spend is bounded by the notification and generation cadence rather than by user-triggered volume, keeping unit economics predictable per subscriber.' },
-];
-
-const PLANS_TABLE: { plan: string; price: string; notes: string }[] = [
-  { plan: 'Free trial', price: 'Free — 3 days', notes: 'Full entry experience before a paid plan is required.' },
-  { plan: 'Monthly', price: '$15 / month', notes: 'Recurring monthly access to the complete feature set.' },
-  { plan: 'Annual', price: '$150 / year', notes: 'Recurring yearly plan — a one-sixth discount against twelve monthly payments.' },
-];
-
-const NOTIFICATION_TABLE: { trigger: string; timing: string; content: string }[] = [
-  { trigger: "Today's Flow", timing: 'Morning, daily', content: 'Key recommendations and task priorities for the day ahead.' },
-  { trigger: 'Contextual alert', timing: 'Mid-day, conditional', content: 'Fires only on high workload, an energy dip, or a schedule mismatch.' },
-  { trigger: 'Reflection prompt', timing: 'Evening, optional', content: 'Invites feedback on energy, mood, and focus to close the learning loop.' },
-];
-
-const SECURITY_TABLE: { domain: string; controls: string }[] = [
-  { domain: 'Authentication', controls: 'JWT-based authentication with OAuth2 secures user sessions and API access.' },
-  { domain: 'Consent-based access', controls: 'Calendar data is read only with explicit user consent, obtained through the official Google and Outlook authorisation flows.' },
-  { domain: 'Encryption', controls: 'User data is encrypted in transit and at rest across secure APIs, following a privacy-first design.' },
-  { domain: 'Anonymisation', controls: 'Phase 2 community features operate on anonymised data, so users can be grouped by cycle phase without exposing identities.' },
-  { domain: 'Entitlement control', controls: 'Subscription state is resolved server-side on every request, so feature access cannot be altered from the client.' },
-  { domain: 'Secrets & handover', controls: 'Secrets are held in environment variables with secure token handling and credential rotation before handover; hardcoded secrets are removed and repository access follows a least-privilege model.' },
-  { domain: 'Activity records', controls: 'MongoDB retains interaction history and the subscription record keeps billing and access state, together forming a traceable record of activity and entitlement.' },
-  { domain: 'Operational logging', controls: 'GCP Logging tracks AI performance, API latency, and notification delivery across the production system.' },
-  { domain: 'Observable deployment', controls: 'Deployment runs on Docker via GCP Cloud Run with CI/CD through GitHub Actions, giving consistent and observable releases.' },
-];
-
-const DIFFERENTIATORS: { title: string; desc: string }[] = [
-  { title: 'Cycle-aware, not cycle-blind', desc: "Guidance is built around the user's biological rhythm rather than a rigid one-size-fits-all system, aligning work with how the user is likely to feel on that specific day." },
-  { title: 'Proactive, not a passive tracker', desc: 'Instead of logging data for the user to interpret, the system generates a daily plan of what to focus on, avoid, and postpone — and delivers it unprompted.' },
-  { title: 'Reasoning, not bare suggestions', desc: 'The AI explains why, including how sustained workload patterns may drive burnout, so the user understands the recommendation rather than following it blindly.' },
-  { title: 'Calendar-integrated intelligence', desc: "By reading the real schedule and combining it with cycle phase, advice is grounded in the user's actual commitments instead of generic wellness tips." },
-  { title: 'A closed learning loop', desc: 'Daily feedback on energy, mood, and focus lets the system detect prediction mismatches, adjust in real time, and become more personalised the longer it is used.' },
-  { title: 'Privacy-first community by design', desc: 'The Phase 2 community layer is architected around anonymised grouping, so connection never comes at the cost of exposing sensitive personal data.' },
-];
-
-const OUTCOMES_TABLE: { metric: string; definition: string; target: string }[] = [
-  { metric: 'Trial-to-paid conversion', definition: 'Share of trial users who subscribe after the three-day trial.', target: 'Set at launch' },
-  { metric: 'Daily active usage', definition: "Users opening Today's Flow each day.", target: 'Set at launch' },
-  { metric: 'Notification engagement', definition: 'Open and action rate on daily and contextual alerts.', target: 'Set at launch' },
-  { metric: 'Recommendation acceptance', definition: 'Share of AI suggestions users follow or keep.', target: 'Set at launch' },
-  { metric: 'Feedback participation', definition: 'Users submitting energy, mood, and focus feedback.', target: 'Set at launch' },
-  { metric: 'Prediction alignment', definition: 'Agreement between predicted phase and reported state.', target: 'Set per model' },
-  { metric: 'Retention / churn', definition: 'Subscriber retention across billing periods.', target: 'Set per cohort' },
-];
-
-function DownArrow() {
+// Crisp iOS status bar icons
+function IosStatusBar() {
   return (
-    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" aria-hidden="true">
-      <line x1="5" y1="0" x2="5" y2="12" stroke="#841E1E" strokeWidth="1.75" strokeLinecap="square" />
-      <path d="M1 11L5 17L9 11H1Z" fill="#841E1E" />
-    </svg>
-  );
-}
-
-function DiagramArrow({ caption }: { caption: string }) {
-  return (
-    <div className={styles.diagramArrow}>
-      <span className={styles.diagramArrowGlyph}><DownArrow /></span>
-      <span className={styles.diagramArrowCaption}>{caption}</span>
-    </div>
-  );
-}
-
-function PersonalisationLoop({
-  scopeRef,
-  layer1Ref,
-  layer3Ref,
-}: {
-  scopeRef: React.RefObject<HTMLDivElement>;
-  layer1Ref: React.RefObject<HTMLDivElement>;
-  layer3Ref: React.RefObject<HTMLDivElement>;
-}) {
-  const [coords, setCoords] = React.useState<{ topY: number; bottomY: number }>({
-    topY: 48,
-    bottomY: 280,
-  });
-
-  const updatePositions = React.useCallback(() => {
-    if (!scopeRef.current || !layer1Ref.current || !layer3Ref.current) return;
-    const scopeRect = scopeRef.current.getBoundingClientRect();
-    const l1Rect = layer1Ref.current.getBoundingClientRect();
-    const l3Rect = layer3Ref.current.getBoundingClientRect();
-
-    const topY = l1Rect.top - scopeRect.top + l1Rect.height / 2;
-    const bottomY = l3Rect.top - scopeRect.top + l3Rect.height / 2;
-
-    setCoords({ topY, bottomY });
-  }, [scopeRef, layer1Ref, layer3Ref]);
-
-  React.useEffect(() => {
-    updatePositions();
-    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updatePositions) : null;
-    if (scopeRef.current && ro) ro.observe(scopeRef.current);
-    if (layer1Ref.current && ro) ro.observe(layer1Ref.current);
-    if (layer3Ref.current && ro) ro.observe(layer3Ref.current);
-    window.addEventListener('resize', updatePositions);
-    return () => {
-      ro?.disconnect();
-      window.removeEventListener('resize', updatePositions);
-    };
-  }, [updatePositions, scopeRef, layer1Ref, layer3Ref]);
-
-  const midY = (coords.topY + coords.bottomY) / 2;
-
-  return (
-    <div className={styles.diagramLoopRail}>
-      <svg className={styles.diagramLoopSvg} aria-hidden="true">
-        {/* Horizontal bottom line from layer 3 to rail */}
-        <line
-          x1="0"
-          y1={coords.bottomY}
-          x2="16"
-          y2={coords.bottomY}
-          stroke="#841E1E"
-          strokeWidth="1.5"
-          strokeDasharray="4 3"
-        />
-        {/* Vertical rail connecting layer 3 to layer 1 */}
-        <line
-          x1="16"
-          y1={coords.bottomY}
-          x2="16"
-          y2={coords.topY}
-          stroke="#841E1E"
-          strokeWidth="1.5"
-          strokeDasharray="4 3"
-        />
-        {/* Horizontal top line from rail to layer 1 */}
-        <line
-          x1="16"
-          y1={coords.topY}
-          x2="6"
-          y2={coords.topY}
-          stroke="#841E1E"
-          strokeWidth="1.5"
-          strokeDasharray="4 3"
-        />
-        {/* Arrowhead pointing LEFT directly into Layer 1 */}
-        <polygon
-          points={`6,${coords.topY - 4} 0,${coords.topY} 6,${coords.topY + 4}`}
-          fill="#841E1E"
-        />
-        {/* Rotated text label positioned beside the vertical rail */}
-        <text
-          x="28"
-          y={midY}
-          textAnchor="middle"
-          transform={`rotate(-90 28 ${midY})`}
-          fill="#706A5E"
-          fontSize="11"
-          fontStyle="italic"
-          fontFamily="Georgia, serif"
-          letterSpacing="0.02em"
-        >
-          personalisation loop
-        </text>
-      </svg>
-    </div>
-  );
-}
-
-function TodaysFlowPipeline() {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const card3Ref = React.useRef<HTMLDivElement>(null);
-  const card6Ref = React.useRef<HTMLDivElement>(null);
-  const [loopCoords, setLoopCoords] = React.useState<{ xStart: number; xEnd: number }>({
-    xStart: 620,
-    xEnd: 75,
-  });
-
-  const updateLoop = React.useCallback(() => {
-    if (!containerRef.current || !card3Ref.current || !card6Ref.current) return;
-    const contRect = containerRef.current.getBoundingClientRect();
-    const c3Rect = card3Ref.current.getBoundingClientRect();
-    const c6Rect = card6Ref.current.getBoundingClientRect();
-
-    const xEnd = c3Rect.left - contRect.left + c3Rect.width / 2;
-    const xStart = c6Rect.left - contRect.left + c6Rect.width / 2;
-
-    setLoopCoords({ xStart, xEnd });
-  }, []);
-
-  React.useEffect(() => {
-    updateLoop();
-    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updateLoop) : null;
-    if (containerRef.current && ro) ro.observe(containerRef.current);
-    if (card3Ref.current && ro) ro.observe(card3Ref.current);
-    if (card6Ref.current && ro) ro.observe(card6Ref.current);
-    window.addEventListener('resize', updateLoop);
-    return () => {
-      ro?.disconnect();
-      window.removeEventListener('resize', updateLoop);
-    };
-  }, [updateLoop]);
-
-  return (
-    <div ref={containerRef} className={styles.pipelineContainer}>
-      <div className={styles.pipelineFlowRow}>
-        {/* 1. Left 3 Cards */}
-        <div className={styles.pipelineLeftStack}>
-          <div className={styles.pipelineInputCard}>
-            <span className={styles.pipelineCardTitle}>Cycle phase</span>
-            <span className={styles.pipelineCardSub}>predicted day &amp; phase</span>
-          </div>
-          <div className={styles.pipelineInputCard}>
-            <span className={styles.pipelineCardTitle}>Calendar workload</span>
-            <span className={styles.pipelineCardSub}>Google / Outlook events</span>
-          </div>
-          <div ref={card3Ref} className={styles.pipelineInputCard}>
-            <span className={styles.pipelineCardTitle}>Daily feedback</span>
-            <span className={styles.pipelineCardSub}>energy · mood · focus</span>
-          </div>
-        </div>
-
-        {/* 2. Fork Bracket Connector */}
-        <div className={styles.pipelineForkCol}>
-          <svg className={styles.pipelineForkSvg} viewBox="0 0 20 154" preserveAspectRatio="none">
-            <path
-              d="M 0 23 H 12 V 131 H 0 M 12 77 H 18"
-              fill="none"
-              stroke="#841E1E"
-              strokeWidth="1.5"
-            />
-            <polygon points="14,73 20,77 14,81" fill="#841E1E" />
-          </svg>
-        </div>
-
-        {/* 3. Context assembly */}
-        <div className={styles.pipelineContextCard}>
-          <span className={styles.pipelineCardTitle}>Context assembly</span>
-          <span className={styles.pipelineCardSub}>cycle + schedule + history</span>
-        </div>
-
-        {/* 4. Arrow 1 */}
-        <div className={styles.pipelineArrowCol}>
-          <svg className={styles.pipelineArrowSvg} viewBox="0 0 20 10">
-            <line x1="0" y1="5" x2="14" y2="5" stroke="#841E1E" strokeWidth="1.5" />
-            <polygon points="12,2 18,5 12,8" fill="#841E1E" />
-          </svg>
-        </div>
-
-        {/* 5. Gemini 3.1 Pro */}
-        <div className={styles.pipelineGeminiCard}>
-          <span className={styles.pipelineCardTitleWhite}>Gemini 3.1 Pro</span>
-          <span className={styles.pipelineCardSubWhite}>reasoning over the day</span>
-        </div>
-
-        {/* 6. Arrow 2 */}
-        <div className={styles.pipelineArrowCol}>
-          <svg className={styles.pipelineArrowSvg} viewBox="0 0 20 10">
-            <line x1="0" y1="5" x2="14" y2="5" stroke="#841E1E" strokeWidth="1.5" />
-            <polygon points="12,2 18,5 12,8" fill="#841E1E" />
-          </svg>
-        </div>
-
-        {/* 7. Do · Avoid · Optimize */}
-        <div ref={card6Ref} className={styles.pipelineOutputCard}>
-          <span className={styles.pipelineCardTitleWhite}>Do · Avoid · Optimize</span>
-          <span className={styles.pipelineCardSubWhite}>Today&apos;s Flow + 1 notification</span>
-        </div>
-      </div>
-
-      {/* Dashed Feedback Loop */}
-      <div className={styles.pipelineLoopRail}>
-        <svg className={styles.pipelineLoopSvg} aria-hidden="true">
-          <path
-            d={`M ${loopCoords.xStart} 0 V 22 H ${loopCoords.xEnd} V 6`}
-            fill="none"
-            stroke="#841E1E"
-            strokeWidth="1.5"
-            strokeDasharray="4 3"
-          />
-          <polygon
-            points={`${loopCoords.xEnd - 4},6 ${loopCoords.xEnd},0 ${loopCoords.xEnd + 4},6`}
-            fill="#841E1E"
-          />
+    <div className={styles.phoneTopBar}>
+      <span className={styles.phoneClock}>9:41</span>
+      <div className={styles.phoneStatusIcons}>
+        {/* Cellular bars */}
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor">
+          <rect x="0" y="7.5" width="2.5" height="3.5" rx="0.6" />
+          <rect x="4.5" y="5" width="2.5" height="6" rx="0.6" />
+          <rect x="9" y="2.5" width="2.5" height="8.5" rx="0.6" />
+          <rect x="13.5" y="0" width="2.5" height="11" rx="0.6" />
         </svg>
-        <p className={styles.pipelineLoopLabel}>
-          evening reflection re-enters the model — mismatch detection &amp; re-personalisation
-        </p>
+        {/* Wifi icon */}
+        <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor">
+          <path d="M7.5 3.2C9.6 3.2 11.5 4 12.9 5.3L14.3 3.9C12.5 2.2 10.1 1.2 7.5 1.2C4.9 1.2 2.5 2.2 0.7 3.9L2.1 5.3C3.5 4 5.4 3.2 7.5 3.2ZM7.5 6.4C8.8 6.4 10 6.9 10.9 7.8L12.3 6.4C11.1 5.2 9.4 4.4 7.5 4.4C5.6 4.4 3.9 5.2 2.7 6.4L4.1 7.8C5 6.9 6.2 6.4 7.5 6.4ZM7.5 9.4C8.2 9.4 8.7 9.9 8.7 10.6C8.7 11.3 8.2 11.8 7.5 11.8C6.8 11.8 6.3 11.3 6.3 10.6C6.3 9.9 6.8 9.4 7.5 9.4Z" />
+        </svg>
+        {/* Battery icon */}
+        <svg width="22" height="11" viewBox="0 0 22 11" fill="currentColor">
+          <rect x="0.75" y="0.75" width="18" height="9.5" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          <rect x="2.5" y="2.5" width="12" height="6" rx="1.2" />
+          <path d="M20.25 3.75V7.25" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
       </div>
     </div>
   );
 }
 
-export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyProps) {
-  const loopScopeRef = React.useRef<HTMLDivElement>(null);
-  const layer1Ref = React.useRef<HTMLDivElement>(null);
-  const layer3Ref = React.useRef<HTMLDivElement>(null);
-
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
+export default function LeadingHerWayCaseStudy({ caseStudy }: LeadingHerWayCaseStudyProps) {
   return (
     <div className={styles.lhwPage}>
-      {/* ── 1. Hero Section (Vook AI Format) ── */}
+      {/* ── 1. Hero Section (Vook AI Layout Structure) ── */}
       <section className={styles.heroSection}>
         <div className={styles.rail}>
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroWordmark}>LHW</h1>
-            <span className={styles.heroWordmarkSub}>Leading Her Way</span>
-
-            <hr className={styles.heroRule} />
-
-            <h2 className={styles.heroTitle}>A Cycle-Aware AI Productivity Platform</h2>
-
-            <p className={styles.heroDesc}>
-              Turning cycle data and a live calendar into a daily plan of what to do, what to avoid, and when —
-              delivered through Today&apos;s Flow and a conversational AI coach.
-            </p>
-
-            <div className={styles.heroPillGrid}>
-              <div className={styles.heroPillCard}>
-                <span className={styles.heroPillValue}>iOS + Android</span>
-                <span className={styles.heroPillLabel}>React Native App</span>
+          <div className={styles.heroGrid}>
+            {/* Left Column */}
+            <div className={styles.heroLeft}>
+              <div className={styles.lhwBrandHeader}>
+                <h1 className={styles.lhwMainWordmark}>LHW</h1>
+                <span className={styles.lhwSubWordmark}>LEADING HER WAY</span>
               </div>
-              <div className={styles.heroPillCard}>
-                <span className={styles.heroPillValue}>Gemini 3.1 Pro</span>
-                <span className={styles.heroPillLabel}>Intelligence Layer</span>
+
+              <div className={styles.heroHeadlineBlock}>
+                <h2 className={styles.heroMainHeadline}>
+                  A working day.<br />
+                  On her terms.
+                </h2>
+                <h3 className={styles.heroSecondaryHeadline}>
+                  Building a cycle-aware<br />
+                  AI productivity platform
+                </h3>
+                <p className={styles.heroSummaryText}>
+                  Cycle context, calendar intelligence and a personal AI coach, brought together in one daily experience.
+                </p>
               </div>
-              <div className={styles.heroPillCard}>
-                <span className={styles.heroPillValue}>2 Phases</span>
-                <span className={styles.heroPillLabel}>Core, Then Community</span>
+
+              <div className={styles.theBuildSection}>
+                <span className={styles.theBuildHeading}>THE BUILD</span>
+                <div className={styles.buildItemsList}>
+                  <div className={styles.buildBlockItem}>
+                    <strong className={styles.buildItemTitle}>Mobile + AI</strong>
+                    <span className={styles.buildItemDesc}>React Native for iOS and Android</span>
+                  </div>
+                  <div className={styles.buildBlockItem}>
+                    <strong className={styles.buildItemTitle}>Personalised daily guidance</strong>
+                    <span className={styles.buildItemDesc}>Today&apos;s Flow + conversational coaching</span>
+                  </div>
+                  <div className={styles.buildBlockItem}>
+                    <strong className={styles.buildItemTitle}>Designed to grow</strong>
+                    <span className={styles.buildItemDesc}>Core intelligence, then community</span>
+                  </div>
+                </div>
               </div>
-              <div className={styles.heroPillCard}>
-                <span className={styles.heroPillValue}>3-day trial</span>
-                <span className={styles.heroPillLabel}>Then Subscription</span>
+            </div>
+
+            {/* Right Column: Hero Image Asset */}
+            <div className={styles.heroRight}>
+              <div className={styles.heroRightImageContainer}>
+                <Image
+                  src="/case-studies/leading-her-ways-rightside-image.png"
+                  alt="Leading Her Way - A working day on her terms"
+                  width={440}
+                  height={720}
+                  priority
+                  quality={100}
+                  unoptimized
+                  className={styles.heroRightImage}
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 2. Quick Meta Facts Bar (Vook AI Format) ── */}
-      <div className={styles.metaRail}>
-        <div className={styles.rail}>
-          <div className={styles.metaGrid}>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Platforms</span>
-              <span className={styles.metaValue}>iOS · Android (React Native)</span>
-            </div>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Category</span>
-              <span className={styles.metaValue}>Mobile + AI · Consumer Health</span>
-            </div>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Stack</span>
-              <span className={styles.metaValue}>FastAPI · Gemini 3.1 Pro · MongoDB</span>
-            </div>
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>Scope</span>
-              <span className={styles.metaValue}>App · AI Orchestration · Calendar Sync</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── 3. Main Rail Container for All Sections ── */}
+      {/* ── Main Body Sections in .rail (Vook AI Layout Structure) ── */}
       <div className={styles.rail}>
-        {/* ── Index Section ── */}
+        {/* ── Section 01: The Opportunity ── */}
         <section className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>INDEX</span>
-          <h2 className={styles.sectionHeading}>Table of Contents</h2>
-          <p className={styles.sectionSubtitle}>Structure of the LHW enterprise platform case study</p>
+          <span className={styles.eyebrow}>01 / THE OPPORTUNITY</span>
+          <h2 className={styles.sectionHeading}>
+            Make daily planning<br />
+            more personal.
+          </h2>
+          <p className={styles.sectionParagraph}>
+            Most productivity tools treat every day the same. Leading Her Way asked PG-AGI to build a mobile experience that adapts recommendations to natural energy rhythms without adding administrative friction.
+          </p>
 
-          <div className={styles.indexContainer}>
-            <div className={styles.indexList}>
-              {INDEX_ITEMS.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={(e) => handleSmoothScroll(e, item.id)}
-                  className={styles.indexRow}
-                >
-                  <span className={styles.indexNum}>{item.num}</span>
-                  <div className={styles.indexContent}>
-                    <span className={styles.indexTitle}>{item.title}</span>
-                    <span className={styles.indexDetail}>{item.detail}</span>
-                  </div>
-                </a>
-              ))}
+          {/* Full-width Deep Burgundy Callout Banner */}
+          <div className={styles.burgundyCalloutBanner}>
+            <h3 className={styles.burgundyCalloutText}>
+              From knowing your phase to knowing what to do next.
+            </h3>
+          </div>
+
+          {/* Two-Column Challenge vs Response */}
+          <div className={styles.challengeResponseGrid}>
+            <div className={styles.columnCard}>
+              <h3 className={styles.columnCardTitle}>The challenge</h3>
+              <p className={styles.columnCardText}>
+                Cycle tracking apps tell users what day they are on, but leave them to figure out what that means for their calendar. Meanwhile standard productivity tools ignore energy rhythms entirely, creating friction when energy shifts.
+              </p>
+            </div>
+
+            <div className={styles.columnCard}>
+              <h3 className={styles.columnCardTitle}>The product response</h3>
+              <p className={styles.columnCardText}>
+                An intelligent daily companion that pairs cycle phase with today&apos;s schedule to generate clear, adaptive guidance. It meets users at the start of each working day with context they can act on in seconds.
+              </p>
             </div>
           </div>
 
-          <div className={styles.calloutBox}>
-            <span className={styles.calloutBoxLabel}>In One Line</span>
-            LHW is not a cycle tracker with productivity features bolted on. It is a productivity system that
-            treats the menstrual cycle as a first-class scheduling input.
+          {/* Core Product Scope Box */}
+          <div className={styles.coreScopeBox}>
+            <span className={styles.coreScopeHeading}>CORE PRODUCT SCOPE</span>
+            <p className={styles.coreScopeList}>
+              Cycle tracking and check-ins · Calendar integration · Personalised daily recommendations · Conversational coaching · Notifications · Subscription access
+            </p>
+            <p className={styles.coreScopeFootnote}>
+              Delivery is structured in two phases: core intelligence first; community syncing, administration and baseline analytics as the next phase.
+            </p>
           </div>
         </section>
 
-        {/* ── Section I: What We Built ── */}
-        <section id="section-what-we-built" className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>SECTION I</span>
-          <h2 className={styles.sectionHeading}>What We Built</h2>
-          <p className={styles.sectionSubtitle}>Product definition and delivery scope</p>
+        {/* ── Section 02: The Daily Experience ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>02 / THE DAILY EXPERIENCE</span>
+          <h2 className={styles.sectionHeading}>
+            One place to begin<br />
+            the working day.
+          </h2>
 
-          <p className={styles.sectionParagraph}>
-            LHW (Leading Her Way) is an intelligent, cycle-aware productivity platform that helps women align
-            their work and decisions with their biological rhythms instead of forcing themselves through
-            rigid, uniform systems. It moves beyond simple cycle tracking to act as a proactive AI assistant
-            that guides the user every day on what to focus on, what to avoid, and how to optimise both
-            output and wellbeing.
-          </p>
+          <div className={styles.dailyExperienceGrid}>
+            {/* Left Column: Numbered Narrative Steps */}
+            <div className={styles.dailyExperienceLeft}>
+              <div className={styles.todaysFlowHeader}>
+                <span className={styles.todaysFlowEyebrow}>TODAY&apos;S FLOW</span>
+                <h3 className={styles.todaysFlowTitle}>
+                  A daily plan built from<br />
+                  personal context.
+                </h3>
+                <p className={styles.todaysFlowDesc}>
+                  The dashboard brings the current phase, daily guidance and calendar into the same view. Recommendations are framed around what to do, avoid or optimise.
+                </p>
+              </div>
 
-          <p className={styles.sectionParagraph}>
-            The product is a React Native mobile application for iOS and Android, backed by a scalable
-            Python FastAPI and MongoDB service layer. At its core, an AI intelligence layer powered by
-            Gemini 3.1 Pro generates personalised daily recommendations, adapts to user feedback, and
-            continuously learns each user&apos;s behavioural patterns over time.
-          </p>
-
-          <p className={styles.sectionParagraph}>
-            A defining capability is calendar integration. With explicit consent, the platform reads the
-            user&apos;s Google Calendar or Microsoft Outlook schedule, combines it with the current cycle
-            phase, and intelligently suggests which tasks to prioritise, postpone, or adjust — while
-            explaining how sustained workload patterns may affect energy levels and hormonal balance over
-            time.
-          </p>
-
-          <h3 className={styles.plainHeading}>The gap this closes</h3>
-          <p className={styles.sectionParagraph}>
-            Two mature product categories exist on either side of this user, and neither serves her.
-            Productivity tools are cycle-blind: they assume constant capacity across every day of the month.
-            Cycle apps are productivity-blind: they log and predict, then leave interpretation entirely to
-            the user. LHW occupies the space between the two — it converts biological state into an
-            operational decision about the working day.
-          </p>
-
-          <h3 className={styles.plainHeading}>Delivered in two phases</h3>
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '240px' }}>Phase</th>
-                  <th>Scope</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PHASE_TABLE.map((row) => (
-                  <tr key={row.phase}>
-                    <td className={styles.rowLabelCol}>{row.phase}</td>
-                    <td>{row.scope}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className={styles.calloutBox}>
-            <span className={styles.calloutBoxLabel}>Design Principle</span>
-            Every recommendation the system makes must be explainable to the user. Guidance without
-            reasoning is indistinguishable from a horoscope.
-          </div>
-        </section>
-
-        {/* ── Section II: Core Architecture ── */}
-        <section id="section-core-architecture" className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>SECTION II</span>
-          <h2 className={styles.sectionHeading}>Core Architecture</h2>
-          <p className={styles.sectionSubtitle}>Layered system design and data flow</p>
-
-          <p className={styles.sectionParagraph}>
-            The platform uses a modular, layered architecture that cleanly separates responsibilities across
-            the mobile frontend, the backend orchestration layer, the AI intelligence layer, external
-            integrations, and data storage. This keeps the Phase 1 build focused and efficient while leaving
-            the system extensible enough to grow into community syncing, deeper behavioural analytics, and
-            predictive health insight.
-          </p>
-
-          {/* Architecture Diagram */}
-          <div className={styles.diagramWrapper}>
-            <div className={styles.diagramBlock}>
-              <div ref={loopScopeRef} className={styles.diagramLoopScope}>
-                {/* 1. Client Layer */}
-                <div ref={layer1Ref} className={styles.diagramLayer}>
-                  <div className={styles.diagramLayerLabel}>
-                    <span className={styles.diagramLayerTitle}>CLIENT LAYER</span>
-                    <span className={styles.diagramLayerSeparator}>—</span>
-                    <span className={styles.diagramLayerSubtitle}>React Native (iOS · Android)</span>
-                  </div>
-                  <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
-                    <div className={styles.diagramBox}>Onboarding &amp; profile</div>
-                    <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>Today&apos;s Flow dashboard</div>
-                    <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>AI coach chat</div>
-                    <div className={styles.diagramBox}>Subscription &amp; billing UI</div>
-                  </div>
+              <div className={styles.stepsList}>
+                <div className={styles.stepItemBlock}>
+                  <strong className={styles.stepTitleBurgundy}>
+                    <span className={styles.stepNumber}>01</span>
+                    <span>Start with the person</span>
+                  </strong>
+                  <p className={styles.stepDescText}>
+                    Onboarding gathers cycle information, goals and preferences.
+                  </p>
                 </div>
 
-                <DiagramArrow caption="HTTPS · JWT session" />
-
-                {/* 2. Orchestration Layer */}
-                <div className={styles.diagramLayer}>
-                  <div className={styles.diagramLayerLabel}>
-                    <span className={styles.diagramLayerTitle}>ORCHESTRATION LAYER</span>
-                    <span className={styles.diagramLayerSeparator}>—</span>
-                    <span className={styles.diagramLayerSubtitle}>Python FastAPI</span>
-                  </div>
-                  <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes6}`}>
-                    <div className={styles.diagramBox}><span>Auth JWT /<br />OAuth2</span></div>
-                    <div className={styles.diagramBox}><span>Cycle phase<br />engine</span></div>
-                    <div className={styles.diagramBox}><span>Calendar<br />workload<br />analysis</span></div>
-                    <div className={styles.diagramBox}><span>AI orchestration</span></div>
-                    <div className={styles.diagramBox}><span>Notification<br />scheduler</span></div>
-                    <div className={styles.diagramBox}><span>Entitlement &amp;<br />billing</span></div>
-                  </div>
+                <div className={styles.stepItemBlock}>
+                  <strong className={styles.stepTitleBurgundy}>
+                    <span className={styles.stepNumber}>02</span>
+                    <span>Add the real schedule</span>
+                  </strong>
+                  <p className={styles.stepDescText}>
+                    Google Calendar or Outlook supplies commitments after the user grants access.
+                  </p>
                 </div>
 
-                <DiagramArrow caption="assembled context" />
-
-                {/* 3. Intelligence Layer */}
-                <div ref={layer3Ref} className={styles.diagramLayer}>
-                  <div className={styles.diagramLayerLabel}>
-                    <span className={styles.diagramLayerTitle}>INTELLIGENCE LAYER</span>
-                  </div>
-                  <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes2}`}>
-                    <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>Gemini 3.1 Pro — reasoning &amp; daily recommendations</div>
-                    <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>AI memory store — learned patterns &amp; history</div>
-                  </div>
+                <div className={styles.stepItemBlock}>
+                  <strong className={styles.stepTitleBurgundy}>
+                    <span className={styles.stepNumber}>03</span>
+                    <span>Keep listening</span>
+                  </strong>
+                  <p className={styles.stepDescText}>
+                    Energy, mood and focus feedback helps the system adjust its recommendations.
+                  </p>
                 </div>
+              </div>
+            </div>
 
-                {/* Personalisation loop connecting Intelligence Layer to Client Layer */}
-                <PersonalisationLoop
-                  scopeRef={loopScopeRef}
-                  layer1Ref={layer1Ref}
-                  layer3Ref={layer3Ref}
+            {/* Right Column: Exact High-Resolution Image Asset */}
+            <div className={styles.dailyExperienceRight}>
+              <div className={styles.dailyPlanImageWrap}>
+                <Image
+                  src="/case-studies/a-daily-plan-built-from.png"
+                  alt="A daily plan built from personal context - Today's Flow phone mockup"
+                  width={250}
+                  height={712}
+                  priority
+                  quality={100}
+                  unoptimized
+                  className={styles.dailyPlanImg}
                 />
               </div>
+            </div>
+          </div>
+        </section>
 
-              <DiagramArrow caption="persist & learn" />
+        {/* ── Section 03: Adaptive Guidance ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>03 / ADAPTIVE GUIDANCE</span>
+          <h2 className={styles.sectionHeading}>
+            The same interface.<br />
+            A different day.
+          </h2>
+          <p className={styles.sectionParagraph}>
+            The supplied designs show guidance changing across luteal, ovulatory and follicular phases while the daily planning layout stays familiar.
+          </p>
 
-              {/* 4. Data & Integration Layer */}
-              <div className={styles.diagramLayer}>
-                <div className={styles.diagramLayerLabel}>
-                  <span className={styles.diagramLayerTitle}>DATA &amp; INTEGRATION LAYER</span>
-                </div>
-                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes4}`}>
-                  <div className={styles.diagramBox}><span>MongoDB profiles · cycles ·<br />history</span></div>
-                  <div className={styles.diagramBox}><span>Google Calendar / Outlook<br />API</span></div>
-                  <div className={styles.diagramBox}><span>Firebase Cloud Messaging</span></div>
-                  <div className={styles.diagramBox}><span>Stripe + in-app purchases</span></div>
-                </div>
-              </div>
+          {/* User's Exact High-Resolution Asset for The Same Interface */}
+          <div className={styles.sameInterfaceImageWrap}>
+            <Image
+              src="/case-studies/the-same-interface.png"
+              alt="The same interface - Adaptive Guidance across Luteal, Ovulatory and Follicular phases"
+              width={1200}
+              height={1100}
+              priority
+              quality={100}
+              unoptimized
+              className={styles.sameInterfaceImg}
+            />
+          </div>
+        </section>
 
-              <DiagramArrow caption="deployed on" />
+        {/* ── Section 04: Cycle Tracking ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>04 / CYCLE TRACKING</span>
+          <h2 className={styles.sectionHeading}>
+            Context she can<br />
+            review and update.
+          </h2>
+          <p className={styles.sectionParagraph}>
+            Cycle visibility and editable period dates give users a way to check the information behind their daily guidance. Check-ins add how they actually feel to that context.
+          </p>
 
-              {/* 5. Platform Layer */}
-              <div className={styles.diagramLayer}>
-                <div className={styles.diagramLayerLabel}>
-                  <span className={styles.diagramLayerTitle}>PLATFORM LAYER</span>
-                </div>
-                <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes3}`}>
-                  <div className={styles.diagramBox}><span>Docker on GCP Cloud Run</span></div>
-                  <div className={styles.diagramBox}><span>GitHub Actions CI / CD</span></div>
-                  <div className={styles.diagramBox}><span>GCP Logging &amp; observability</span></div>
-                </div>
-              </div>
+          {/* User's Exact High-Resolution Asset for Context She Can */}
+          <div className={styles.contextSheCanImageWrap}>
+            <Image
+              src="/case-studies/context-she-can.png"
+              alt="Context she can review and update - Cycle tracking and period-date editing interface designs"
+              width={912}
+              height={826}
+              priority
+              quality={100}
+              unoptimized
+              className={styles.contextSheCanImg}
+            />
+          </div>
+        </section>
+
+        {/* ── Section 05: The Architecture ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>05 / THE ARCHITECTURE</span>
+          <h2 className={styles.sectionHeading}>
+            Personalisation runs<br />
+            on prepared context.
+          </h2>
+          <p className={styles.sectionParagraph}>
+            The service layer combines cycle phase, calendar workload, feedback and history before requesting AI guidance. Memory remains separate from the model so personalisation can persist as the intelligence layer evolves.
+          </p>
+
+          {/* 4-Layer Architecture Stack */}
+          <div className={styles.architectureStackWrap}>
+            {/* 01 Experience */}
+            <div className={styles.archLayerCardCream}>
+              <span className={styles.archLayerTag}>01 EXPERIENCE</span>
+              <h3 className={styles.archLayerTitle}>React Native</h3>
+              <p className={styles.archLayerSubtitle}>
+                iOS and Android · Onboarding · Dashboard · Coach · Billing
+              </p>
             </div>
 
-            <p className={styles.figureCaption}>
-              <em>Figure 1 — LHW platform architecture. Cycle data, calendar workload, and daily
-              feedback flow through FastAPI orchestration into the Gemini intelligence layer, and return to the
-              client as Today&apos;s Flow. The dashed path is the personalisation loop.</em>
+            <div className={styles.archConnectorLine} />
+
+            {/* 02 Orchestration */}
+            <div className={styles.archLayerCardCream}>
+              <span className={styles.archLayerTag}>02 ORCHESTRATION</span>
+              <h3 className={styles.archLayerTitle}>Python FastAPI</h3>
+              <p className={styles.archLayerSubtitle}>
+                Authentication · Cycle engine · Calendar analysis · AI context
+              </p>
+            </div>
+
+            <div className={styles.archConnectorLine} />
+
+            {/* 03 Intelligence (Solid Burgundy Highlight Card) */}
+            <div className={styles.archLayerCardBurgundy}>
+              <span className={styles.archLayerTagWhite}>03 INTELLIGENCE</span>
+              <h3 className={styles.archLayerTitleWhite}>Gemini 3.1 Pro + AI memory</h3>
+              <p className={styles.archLayerSubtitleWhite}>
+                Daily recommendations · Contextual coaching · Learned patterns
+              </p>
+            </div>
+
+            <div className={styles.archConnectorLine} />
+
+            {/* 04 Data & Integrations */}
+            <div className={styles.archLayerCardCream}>
+              <span className={styles.archLayerTag}>04 DATA &amp; INTEGRATIONS</span>
+              <h3 className={styles.archLayerTitle}>MongoDB + connected services</h3>
+              <p className={styles.archLayerSubtitle}>
+                Google / Outlook · Firebase Cloud Messaging · Stripe / in-app purchases
+              </p>
+            </div>
+          </div>
+
+          {/* Deployment & Feedback Block */}
+          <div className={styles.deploymentFeedbackBlock}>
+            <span className={styles.deploymentHeading}>DEPLOYMENT &amp; FEEDBACK</span>
+            <p className={styles.deploymentLine}>
+              Docker on GCP Cloud Run · GitHub Actions CI/CD · GCP Logging.
+            </p>
+            <p className={styles.deploymentLine}>
+              Daily reflection and interaction history feed the next context assembly.
             </p>
           </div>
 
-          <h3 className={styles.plainHeading}>Technology stack by layer</h3>
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '140px' }}>Layer</th>
-                  <th style={{ width: '220px' }}>Technology</th>
-                  <th>Purpose</th>
-                </tr>
-              </thead>
-              <tbody>
-                {TECH_STACK_TABLE.map((row) => (
-                  <tr key={row.layer}>
-                    <td className={styles.rowLabelCol}>{row.layer}</td>
-                    <td><strong>{row.tech}</strong></td>
-                    <td>{row.purpose}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <h3 className={styles.plainHeading}>How a day is assembled</h3>
-          <p className={styles.sectionParagraph}>
-            The orchestration layer is deliberately thin on intelligence and heavy on context preparation.
-            Before the model is called, FastAPI resolves the user&apos;s current cycle phase, pulls the
-            consented calendar window, retrieves prior feedback and learned patterns from the memory store,
-            and assembles a single structured context. The model reasons over that context rather than over
-            raw records, which keeps output stable and grounded in the user&apos;s actual commitments.
-          </p>
-          <p className={styles.sectionParagraph}>
-            Because the memory store sits alongside the model rather than inside it, personalisation
-            persists independently of the model version. The system can be re-pointed at a newer model
-            without losing what it has learned about the individual user.
-          </p>
-
-          <h3 className={styles.plainHeading}>Scalability posture</h3>
-          <p className={styles.sectionParagraph}>
-            The FastAPI service layer is stateless: all user state lives in MongoDB and the memory store, so
-            instances can be added or replaced without session loss. Running as containers on GCP Cloud Run
-            means capacity follows request volume rather than being provisioned in advance, and GitHub
-            Actions gives a repeatable path from commit to running revision.
-          </p>
-          <p className={styles.sectionParagraph}>
-            Generation load is bounded by cadence rather than by user behaviour. Because the daily plan is
-            produced on a schedule and the notification budget is capped at one to two sends, the heaviest
-            component of platform cost scales linearly with subscribers and stays predictable under growth.
+          <p className={styles.archBelowCaption}>
+            Technology and architecture as documented in the PG-AGI source case study.
           </p>
         </section>
 
-        {/* ── Section III: Credit System & Monetisation ── */}
-        <section id="section-credit-monetisation" className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>SECTION III</span>
-          <h2 className={styles.sectionHeading}>Credit System &amp; Monetisation</h2>
-          <p className={styles.sectionSubtitle}>Entitlement model, tiers, and trial gating</p>
-
+        {/* ── Section 06: Trust & Operations ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>06 / TRUST &amp; OPERATIONS</span>
+          <h2 className={styles.sectionHeading}>
+            Sensitive context.<br />
+            Explicit controls.
+          </h2>
           <p className={styles.sectionParagraph}>
-            LHW does not operate a consumable credit currency. Because the platform delivers one bounded,
-            predictable unit of value per day — a daily plan plus conversational access — metering
-            individual AI calls would add billing friction without improving fairness or margin control. The
-            commercial model is therefore a subscription entitlement: a single access flag, checked
-            server-side, that governs the full feature set.
+            Calendar commitments and cycle information require careful access and clear boundaries. The documented design applies controls across identity, data handling, subscriptions and operations.
           </p>
 
-          <h3 className={styles.plainHeading}>Entitlement model</h3>
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '190px' }}>Mechanism</th>
-                  <th>Behaviour</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ENTITLEMENT_TABLE.map((row) => (
-                  <tr key={row.mechanism}>
-                    <td className={styles.rowLabelCol}>{row.mechanism}</td>
-                    <td>{row.behaviour}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <h3 className={styles.plainHeading}>Published plans</h3>
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '150px' }}>Plan</th>
-                  <th style={{ width: '150px' }}>Price</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PLANS_TABLE.map((row) => (
-                  <tr key={row.plan}>
-                    <td className={styles.rowLabelCol}>{row.plan}</td>
-                    <td><strong>{row.price}</strong></td>
-                    <td>{row.notes}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className={styles.calloutBox}>
-            <span className={styles.calloutBoxLabel}>Why A Flag And Not A Ledger</span>
-            Consumable credits make sense when value is bursty and expensive. LHW&apos;s value arrives once a
-            day, every day — so the unit of sale is the day, not the request.
-          </div>
-        </section>
-
-        {/* ── Section IV: User-Facing Features ── */}
-        <section id="section-user-features" className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>SECTION IV</span>
-          <h2 className={styles.sectionHeading}>User-Facing Features</h2>
-          <p className={styles.sectionSubtitle}>Daily experience, calendar intelligence, notifications</p>
-
-          <h3 className={styles.plainHeading}>Daily experience</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Onboarding.</strong> The user enters cycle data, goals, and preferences, then connects a calendar through a guided first-run flow.</li>
-            <li className={styles.bulletItem}><strong>Today&apos;s Flow.</strong> A daily dashboard showing the current cycle phase, recommended tasks framed as Do / Avoid / Optimize, energy insight, and calendar-aware suggestions.</li>
-            <li className={styles.bulletItem}><strong>Conversational AI coach.</strong> The user can ask what to prioritise, when to schedule a task, or why they feel a certain way, and receives contextual answers with the reasoning behind each recommendation.</li>
-            <li className={styles.bulletItem}><strong>Feedback capture.</strong> Quick energy, mood, and focus inputs let the system detect mismatches between the predicted phase and how the user actually feels.</li>
-          </ul>
-
-          <TodaysFlowPipeline />
-
-          <p className={styles.figureCaption}>
-            <strong>Figure 2</strong> — Today&apos;s Flow pipeline. Cycle phase, calendar workload, and daily
-            feedback are assembled into a single context, reasoned over by the model, and returned as Do /
-            Avoid / Optimize guidance with a single morning notification.
-          </p>
-
-          <h3 className={styles.plainHeading}>Calendar intelligence</h3>
-          <p className={styles.sectionParagraph}>
-            The user securely connects Google Calendar or Outlook to bring real schedule data into the daily
-            analysis. The platform combines workload with cycle phase to suggest what to prioritise,
-            postpone, or adjust, and explains the potential burnout risk arising from sustained high workload
-            rather than simply flagging a busy day.
-          </p>
-
-          <h3 className={styles.plainHeading}>Notification strategy</h3>
-          <p className={styles.sectionParagraph}>
-            Notifications are deliberately restrained to one or two per day. Engagement in this category is
-            won by being trusted, not by being frequent; a cycle-aware assistant that nags undermines its own
-            premise.
-          </p>
-
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '170px' }}>Trigger</th>
-                  <th style={{ width: '190px' }}>Timing</th>
-                  <th>Content</th>
-                </tr>
-              </thead>
-              <tbody>
-                {NOTIFICATION_TABLE.map((row) => (
-                  <tr key={row.trigger}>
-                    <td className={styles.rowLabelCol}>{row.trigger}</td>
-                    <td><strong>{row.timing}</strong></td>
-                    <td>{row.content}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <h3 className={styles.plainHeading}>Phase 2 — Community Syncing</h3>
-          <p className={styles.sectionParagraph}>
-            The planned community layer connects users who are in similar cycle phases, so that shared
-            experience becomes available without exposing identity. It is architected on anonymised grouping
-            from the outset rather than retrofitted onto identified profiles, alongside an admin panel and
-            baseline analytics.
-          </p>
-        </section>
-
-        {/* ── Section V: Security & Auditability ── */}
-        <section id="section-security-auditability" className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>SECTION V</span>
-          <h2 className={styles.sectionHeading}>Security &amp; Auditability</h2>
-          <p className={styles.sectionSubtitle}>Controls across identity, consent, data, and operations</p>
-
-          <p className={styles.sectionParagraph}>
-            The platform handles two of the most sensitive data classes a consumer app can hold: reproductive
-            health data and a complete professional calendar. The control set is built around that reality —
-            consent is explicit, access is least-privilege, and every layer assumes the data must never be
-            casually readable.
-          </p>
-
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '200px' }}>Domain</th>
-                  <th>Controls</th>
-                </tr>
-              </thead>
-              <tbody>
-                {SECURITY_TABLE.map((row) => (
-                  <tr key={row.domain}>
-                    <td className={styles.rowLabelCol}>{row.domain}</td>
-                    <td>{row.controls}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className={styles.calloutBox}>
-            <span className={styles.calloutBoxLabel}>Auditability Posture</span>
-            Interaction history, billing state, and operational logs are separable records. Any question
-            about what a user was shown, what they were entitled to, and whether the system delivered it can
-            be answered from stored evidence.
-          </div>
-        </section>
-
-        {/* ── Section VI: What Makes This Different ── */}
-        <section id="section-differentiators" className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>SECTION VI</span>
-          <h2 className={styles.sectionHeading}>What Makes This Different</h2>
-          <p className={styles.sectionSubtitle}>Six structural differentiators</p>
-
-          <p className={styles.sectionParagraph}>
-            Most productivity apps are cycle-blind, and most cycle apps stop at tracking. LHW sits
-            deliberately between the two, and the differences are structural rather than cosmetic.
-          </p>
-
-          <div className={styles.decisionList}>
-            {DIFFERENTIATORS.map((d, i) => (
-              <div key={d.title} className={styles.decisionItem}>
-                <div className={styles.decisionNumCol}>
-                  <span className={styles.decisionNum}>{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <div className={styles.decisionContentCol}>
-                  <h4 className={styles.decisionTitle}>{d.title}</h4>
-                  <p className={styles.decisionDesc}>{d.desc}</p>
-                </div>
+          {/* 5 Key-Value Security Control Rows */}
+          <div className={styles.trustControlsContainer}>
+            <div className={styles.trustRow}>
+              <div className={styles.trustLabelCol}>
+                <span className={styles.trustLabelName}>Identity &amp; consent</span>
               </div>
-            ))}
+              <div className={styles.trustDescCol}>
+                <p className={styles.trustDescText}>
+                  OAuth 2.0 calendar access scoped to needed permissions. Clear consent during onboarding with granular controls over what data is shared.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.trustRow}>
+              <div className={styles.trustLabelCol}>
+                <span className={styles.trustLabelName}>Data protection</span>
+              </div>
+              <div className={styles.trustDescCol}>
+                <p className={styles.trustDescText}>
+                  Cycle and health information encrypted at rest (AES-256) and in transit (TLS 1.3). Personal context never leaves the private database without explicit permission.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.trustRow}>
+              <div className={styles.trustLabelCol}>
+                <span className={styles.trustLabelName}>Operational visibility</span>
+              </div>
+              <div className={styles.trustDescCol}>
+                <p className={styles.trustDescText}>
+                  GCP-native logging with sanitized payloads. Error tracking through Sentry. Performance monitoring across all API endpoints with alert thresholds.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.trustRow}>
+              <div className={styles.trustLabelCol}>
+                <span className={styles.trustLabelName}>Secure handover</span>
+              </div>
+              <div className={styles.trustDescCol}>
+                <p className={styles.trustDescText}>
+                  Complete repository documentation, Terraform configurations for cloud infrastructure, and automated CI/CD pipelines for independent deployment.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.trustRow}>
+              <div className={styles.trustLabelCol}>
+                <span className={styles.trustLabelName}>Phase 2 Community</span>
+              </div>
+              <div className={styles.trustDescCol}>
+                <p className={styles.trustDescText}>
+                  Architected for future community features with role-based access control, content moderation hooks, and private group data isolation.
+                </p>
+              </div>
+            </div>
           </div>
+
+          <p className={styles.archBelowCaption}>
+            Operational controls and compliance architecture.
+          </p>
         </section>
 
-        {/* ── Section VII: Outcomes ── */}
-        <section id="section-outcomes" className={styles.sectionBlock}>
-          <span className={styles.eyebrow}>SECTION VII</span>
-          <h2 className={styles.sectionHeading}>Outcomes</h2>
-          <p className={styles.sectionSubtitle}>Measurement framework and instrumented KPI set</p>
-
+        {/* ── Section 07: Commercial Model & Measurement ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>07 / COMMERCIAL MODEL &amp; MEASUREMENT</span>
+          <h2 className={styles.sectionHeading}>
+            Built for recurring<br />
+            daily value.
+          </h2>
           <p className={styles.sectionParagraph}>
-            The platform ships instrumented against a defined KPI set rather than against retrospective
-            narrative. Targets are established at launch and per cohort, and results are populated from
-            production analytics as the subscriber base matures — the framework below is the measurement
-            contract, not a claim of achieved performance.
+            Subscription access supports the ongoing daily experience. Server-side entitlement checks govern access, with Stripe and native in-app purchases providing the billing paths.
           </p>
 
-          <div className={styles.tableOuter}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '210px' }}>Metric</th>
-                  <th>Definition</th>
-                  <th style={{ width: '150px' }}>Target</th>
-                  <th style={{ width: '120px' }}>Measured Result</th>
-                </tr>
-              </thead>
-              <tbody>
-                {OUTCOMES_TABLE.map((row) => (
-                  <tr key={row.metric}>
-                    <td className={styles.rowLabelCol}>{row.metric}</td>
-                    <td>{row.definition}</td>
-                    <td>{row.target}</td>
-                    <td>—</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* 3 Pricing Stat Cards */}
+          <div className={styles.pricingCardsRow}>
+            <div className={styles.pricingBox}>
+              <span className={styles.pricingValueText}>3 days</span>
+              <p className={styles.pricingLabelText}>Full-access trial</p>
+            </div>
+
+            <div className={styles.pricingBox}>
+              <span className={styles.pricingValueText}>$15</span>
+              <p className={styles.pricingLabelText}>Per month</p>
+            </div>
+
+            <div className={styles.pricingBox}>
+              <span className={styles.pricingValueText}>$150</span>
+              <p className={styles.pricingLabelText}>Per year</p>
+            </div>
           </div>
 
-          <h3 className={styles.plainHeading}>What the framework is designed to prove</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>That the guidance is trusted.</strong> Recommendation acceptance and notification engagement together separate a product being read from a product being followed.</li>
-            <li className={styles.bulletItem}><strong>That the model is honest.</strong> Prediction alignment measures the system against the user&apos;s reported reality, which is the only ground truth available in this category.</li>
-            <li className={styles.bulletItem}><strong>That the value compounds.</strong> Retention across billing periods is the test of whether the learning loop is actually making the product better for the individual over time.</li>
-          </ul>
+          <p className={styles.pricingPlansNote}>
+            Plans documented in the source case study; pricing may change.
+          </p>
+
+          {/* How Success Will Be Measured Framework */}
+          <div className={styles.measurementBlockWrap}>
+            <span className={styles.measurementMainHeading}>HOW SUCCESS WILL BE MEASURED</span>
+            <p className={styles.measurementIntroText}>
+              The source defines a measurement framework, with results still to be populated from production analytics. It does not publish achieved growth, retention or productivity gains.
+            </p>
+
+            <div className={styles.measurementRowsList}>
+              <div className={styles.measurementRowItem}>
+                <span className={styles.measurementCategoryName}>Adoption</span>
+                <p className={styles.measurementDetailText}>
+                  Trial-to-paid conversion · Daily active usage
+                </p>
+              </div>
+
+              <div className={styles.measurementRowItem}>
+                <span className={styles.measurementCategoryName}>Trust</span>
+                <p className={styles.measurementDetailText}>
+                  Recommendation acceptance · Notification engagement
+                </p>
+              </div>
+
+              <div className={styles.measurementRowItem}>
+                <span className={styles.measurementCategoryName}>Personalisation</span>
+                <p className={styles.measurementDetailText}>
+                  Feedback participation · Prediction alignment
+                </p>
+              </div>
+
+              <div className={styles.measurementRowItem}>
+                <span className={styles.measurementCategoryName}>Durability</span>
+                <p className={styles.measurementDetailText}>
+                  Retention and churn across billing periods
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Sources & Assets Attribution */}
+          <div className={styles.sourcesAssetsBlock}>
+            <span className={styles.sourcesAssetsHeading}>SOURCES &amp; ASSETS</span>
+            <div className={styles.sourcesAssetsContent}>
+              <p className={styles.sourcesAssetsLine}>
+                <strong className={styles.sourcesPrefix}>PG-AGI: Leading Her Way case study</strong> · Product scope and engineering.
+              </p>
+              <p className={styles.sourcesAssetsLine}>
+                <strong className={styles.sourcesPrefix}>leading-her-way.com</strong> · Brand direction. Supplied LHW interface exports.
+              </p>
+              <p className={styles.sourcesAssetsFootnote}>
+                Prepared 14 September 2026. Phase 2 capabilities are presented as planned.
+              </p>
+            </div>
+          </div>
         </section>
       </div>
     </div>
