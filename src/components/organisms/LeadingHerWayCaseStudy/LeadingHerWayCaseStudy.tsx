@@ -107,6 +107,21 @@ function FooterBar({ page }: { page: string }) {
   );
 }
 
+function SectionHeader({ numeral, title, subtitle }: { numeral: string; title: string; subtitle: string }) {
+  return (
+    <div className={styles.sectionHeader}>
+      <div className={styles.sectionEyebrowRow}>
+        <span className={styles.sectionNumeral}>{numeral}</span>
+        <div className={styles.sectionTitleCol}>
+          <h2 className={styles.sectionTitle}>{title}</h2>
+          <p className={styles.sectionSubtitle}>{subtitle}</p>
+        </div>
+      </div>
+      <hr className={styles.sectionRule} />
+    </div>
+  );
+}
+
 function DownArrow() {
   return (
     <svg width="12" height="24" viewBox="0 0 12 24" fill="none" aria-hidden="true">
@@ -117,31 +132,8 @@ function DownArrow() {
 }
 
 function DiagramArrow({ caption }: { caption: string }) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === 'undefined') {
-      setVisible(true);
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -5% 0px' },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div ref={ref} className={`${styles.diagramArrow} ${visible ? styles.diagramArrowVisible : ''}`}>
+    <div className={styles.diagramArrow}>
       <span className={styles.diagramArrowGlyph}><DownArrow /></span>
       <span className={styles.diagramArrowCaption}>{caption}</span>
     </div>
@@ -157,12 +149,9 @@ function PersonalisationLoop({
   layer1Ref: React.RefObject<HTMLDivElement>;
   layer3Ref: React.RefObject<HTMLDivElement>;
 }) {
-  const [coords, setCoords] = React.useState<{
-    topY: number;
-    bottomY: number;
-  }>({
-    topY: 66,
-    bottomY: 370,
+  const [coords, setCoords] = React.useState<{ topY: number; bottomY: number }>({
+    topY: 48,
+    bottomY: 280,
   });
 
   const updatePositions = React.useCallback(() => {
@@ -174,24 +163,15 @@ function PersonalisationLoop({
     const topY = l1Rect.top - scopeRect.top + l1Rect.height / 2;
     const bottomY = l3Rect.top - scopeRect.top + l3Rect.height / 2;
 
-    setCoords({
-      topY,
-      bottomY,
-    });
+    setCoords({ topY, bottomY });
   }, [scopeRef, layer1Ref, layer3Ref]);
 
   React.useEffect(() => {
     updatePositions();
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updatePositions) : null;
-    if (scopeRef.current && ro) {
-      ro.observe(scopeRef.current);
-    }
-    if (layer1Ref.current && ro) {
-      ro.observe(layer1Ref.current);
-    }
-    if (layer3Ref.current && ro) {
-      ro.observe(layer3Ref.current);
-    }
+    if (scopeRef.current && ro) ro.observe(scopeRef.current);
+    if (layer1Ref.current && ro) ro.observe(layer1Ref.current);
+    if (layer3Ref.current && ro) ro.observe(layer3Ref.current);
     window.addEventListener('resize', updatePositions);
     return () => {
       ro?.disconnect();
@@ -210,7 +190,7 @@ function PersonalisationLoop({
           y1={coords.bottomY}
           x2="16"
           y2={coords.bottomY}
-          stroke="#8B1E1E"
+          stroke="#841E1E"
           strokeWidth="1.5"
           strokeDasharray="4 3"
         />
@@ -220,7 +200,7 @@ function PersonalisationLoop({
           y1={coords.bottomY}
           x2="16"
           y2={coords.topY}
-          stroke="#8B1E1E"
+          stroke="#841E1E"
           strokeWidth="1.5"
           strokeDasharray="4 3"
         />
@@ -230,14 +210,14 @@ function PersonalisationLoop({
           y1={coords.topY}
           x2="6"
           y2={coords.topY}
-          stroke="#8B1E1E"
+          stroke="#841E1E"
           strokeWidth="1.5"
           strokeDasharray="4 3"
         />
         {/* Arrowhead pointing LEFT directly into Layer 1 */}
         <polygon
           points={`6,${coords.topY - 4} 0,${coords.topY} 6,${coords.topY + 4}`}
-          fill="#8B1E1E"
+          fill="#841E1E"
         />
         {/* Rotated text label positioned beside the vertical rail */}
         <text
@@ -246,29 +226,14 @@ function PersonalisationLoop({
           textAnchor="middle"
           transform={`rotate(-90 28 ${midY})`}
           fill="#706A5E"
-          fontSize="11.5"
+          fontSize="11"
           fontStyle="italic"
+          fontFamily="Georgia, serif"
           letterSpacing="0.02em"
-          fontFamily="inherit"
         >
           personalisation loop
         </text>
       </svg>
-    </div>
-  );
-}
-
-function SectionHeader({ numeral, title, subtitle }: { numeral: string; title: string; subtitle: string }) {
-  return (
-    <div className={styles.sectionHeader}>
-      <div className={styles.sectionEyebrowRow}>
-        <span className={styles.sectionNumeral}>{numeral}</span>
-        <div className={styles.sectionTitleCol}>
-          <h2 className={styles.sectionTitle}>{title}</h2>
-          <p className={styles.sectionSubtitle}>{subtitle}</p>
-        </div>
-      </div>
-      <hr className={styles.sectionRule} />
     </div>
   );
 }
@@ -471,7 +436,7 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
             ))}
           </div>
 
-          <div className={styles.calloutBox} style={{ marginTop: '28px' }}>
+          <div className={styles.calloutBox}>
             <span className={styles.calloutBoxLabel}>In One Line</span>
             LHW is not a cycle tracker with productivity features bolted on. It is a productivity system that
             treats the menstrual cycle as a first-class scheduling input.
@@ -562,7 +527,6 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
           </p>
 
           <div className={styles.diagramBlock}>
-            {/* Scope wrapping Layer 1-3 to anchor the personalization loop */}
             <div ref={loopScopeRef} className={styles.diagramLoopScope}>
               {/* 1. Client Layer */}
               <div ref={layer1Ref} className={styles.diagramLayer}>
@@ -606,8 +570,8 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
                   <span className={styles.diagramLayerTitle}>INTELLIGENCE LAYER</span>
                 </div>
                 <div className={`${styles.diagramLayerBoxes} ${styles.layerBoxes2}`}>
-                  <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>Gemini 3.1 Pro — reasoning &amp; daily recommendations</div>
-                  <div className={`${styles.diagramBox} ${styles.diagramBoxRed}`}>AI memory store — learned patterns &amp; history</div>
+                  <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>Gemini 3.1 Pro — reasoning &amp; daily recommendations</div>
+                  <div className={`${styles.diagramBox} ${styles.diagramBoxDarkRed}`}>AI memory store — learned patterns &amp; history</div>
                 </div>
               </div>
 
@@ -787,10 +751,10 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
 
           <h3 className={styles.plainHeading} style={{ marginTop: '8px' }}>Daily experience</h3>
           <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>Onboarding. The user enters cycle data, goals, and preferences, then connects a calendar through a guided first-run flow.</li>
-            <li className={styles.bulletItem}>Today&apos;s Flow. A daily dashboard showing the current cycle phase, recommended tasks framed as Do / Avoid / Optimize, energy insight, and calendar-aware suggestions.</li>
-            <li className={styles.bulletItem}>Conversational AI coach. The user can ask what to prioritise, when to schedule a task, or why they feel a certain way, and receives contextual answers with the reasoning behind each recommendation.</li>
-            <li className={styles.bulletItem}>Feedback capture. Quick energy, mood, and focus inputs let the system detect mismatches between the predicted phase and how the user actually feels.</li>
+            <li className={styles.bulletItem}><strong>Onboarding.</strong> The user enters cycle data, goals, and preferences, then connects a calendar through a guided first-run flow.</li>
+            <li className={styles.bulletItem}><strong>Today&apos;s Flow.</strong> A daily dashboard showing the current cycle phase, recommended tasks framed as Do / Avoid / Optimize, energy insight, and calendar-aware suggestions.</li>
+            <li className={styles.bulletItem}><strong>Conversational AI coach.</strong> The user can ask what to prioritise, when to schedule a task, or why they feel a certain way, and receives contextual answers with the reasoning behind each recommendation.</li>
+            <li className={styles.bulletItem}><strong>Feedback capture.</strong> Quick energy, mood, and focus inputs let the system detect mismatches between the predicted phase and how the user actually feels.</li>
           </ul>
 
           <TodaysFlowPipeline />
@@ -963,9 +927,9 @@ export default function LeadingHerWayCaseStudy(_props: LeadingHerWayCaseStudyPro
 
           <h3 className={styles.plainHeading}>What the framework is designed to prove</h3>
           <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>That the guidance is trusted. Recommendation acceptance and notification engagement together separate a product being read from a product being followed.</li>
-            <li className={styles.bulletItem}>That the model is honest. Prediction alignment measures the system against the user&apos;s reported reality, which is the only ground truth available in this category.</li>
-            <li className={styles.bulletItem}>That the value compounds. Retention across billing periods is the test of whether the learning loop is actually making the product better for the individual over time.</li>
+            <li className={styles.bulletItem}><strong>That the guidance is trusted.</strong> Recommendation acceptance and notification engagement together separate a product being read from a product being followed.</li>
+            <li className={styles.bulletItem}><strong>That the model is honest.</strong> Prediction alignment measures the system against the user&apos;s reported reality, which is the only ground truth available in this category.</li>
+            <li className={styles.bulletItem}><strong>That the value compounds.</strong> Retention across billing periods is the test of whether the learning loop is actually making the product better for the individual over time.</li>
           </ul>
         </div>
         <FooterBar page="10" />
