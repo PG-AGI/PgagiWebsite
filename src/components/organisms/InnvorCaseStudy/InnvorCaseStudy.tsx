@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import {
-  ArrowRight,
   ChevronDown,
   Search,
   Bell,
@@ -45,7 +44,6 @@ import {
 } from 'lucide-react';
 import styles from '@/styles/components/organisms/InnvorCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
-import EXTERNAL_LINKS from '@/constants/externalLinks';
 
 interface InnvorCaseStudyProps {
   caseStudy?: CaseStudyData | null;
@@ -575,274 +573,6 @@ export default function InnvorCaseStudy({ caseStudy }: InnvorCaseStudyProps) {
             </div>
           </div>
 
-
-
-                    <svg width="46" height="46" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'rotate(-8deg)' }}>
-                      <rect x="5" y="10" width="44" height="40" rx="9" fill="#9FC1A3" />
-                      <rect x="14" y="4" width="5" height="10" rx="2.5" fill="#9FC1A3" />
-                      <rect x="35" y="4" width="5" height="10" rx="2.5" fill="#9FC1A3" />
-                      <line x1="5" y1="21" x2="49" y2="21" stroke="#FFFFFF" strokeWidth="2.5" strokeOpacity="0.95" />
-                      <path d="M19 33.5L25.5 40L36 27.5" stroke="#FFFFFF" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* 3 Pending Reviews */}
-                <div className={styles.overviewCardWhite}>
-                  <div>
-                    <div className={styles.statNumberDark}>3</div>
-                    <div className={styles.statSubtextMuted}>Pending Reviews</div>
-                  </div>
-                  <div className={styles.tagIcon3D}>
-                    <svg width="46" height="46" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'rotate(20deg)' }}>
-                      <rect x="9" y="4" width="36" height="46" rx="10" fill="#2563EB" />
-                      <circle cx="27" cy="14" r="4" fill="#FFFFFF" />
-                      <circle cx="19" cy="27" r="2.5" fill="#FFFFFF" />
-                      <rect x="25" y="25" width="15" height="4" rx="2" fill="#FFFFFF" />
-                      <circle cx="19" cy="37" r="2.5" fill="#FFFFFF" />
-                      <rect x="25" y="35" width="15" height="4" rx="2" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Upcoming Appointments */}
-              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#15294E', margin: '16px 0 10px' }}>
-                Upcoming Appointments
-              </div>
-              <div className={styles.appointmentCardList}>
-                {/* 1: Emma Thompson with blue pin indicator */}
-                <div style={{ position: 'relative' }}>
-                  <div className={styles.appointmentCardItem}>
-                    <div className={styles.patientInfo}>
-                      <span className={styles.patientNameText}>Emma Thompson</span>
-                      <span className={styles.appointmentMetaText}>Annual Checkup • 3:00 PM</span>
-                    </div>
-                    <button className={styles.btnStartSession}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="2" y="3" width="20" height="14" rx="2" />
-                        <line x1="8" y1="21" x2="16" y2="21" />
-                        <line x1="12" y1="17" x2="12" y2="21" />
-                        <line x1="12" y1="7" x2="12" y2="13" />
-                        <line x1="9" y1="10" x2="15" y2="10" />
-                      </svg>
-                      Start A Session
-                    </button>
-                  </div>
-                  <div className={styles.blueIndicatorPin} />
-                </div>
-
-                {/* 2: Michael Chen */}
-                <div className={styles.appointmentCardItem}>
-                  <div className={styles.patientInfo}>
-                    <span className={styles.patientNameText}>Michael Chen</span>
-                    <span className={styles.appointmentMetaText}>Follow-up • 3:30 PM</span>
-                  </div>
-                  <button className={styles.btnStartSession}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="3" width="20" height="14" rx="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                      <line x1="12" y1="7" x2="12" y2="13" />
-                      <line x1="9" y1="10" x2="15" y2="10" />
-                    </svg>
-                    Start A Session
-                  </button>
-                </div>
-
-                {/* 3: Lisa Rodriguez */}
-                <div className={styles.appointmentCardItem}>
-                  <div className={styles.patientInfo}>
-                    <span className={styles.patientNameText}>Lisa Rodriguez</span>
-                    <span className={styles.appointmentMetaText}>Consultation • 4:00 PM</span>
-                  </div>
-                  <button className={styles.btnStartSession}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="3" width="20" height="14" rx="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                      <line x1="12" y1="7" x2="12" y2="13" />
-                      <line x1="9" y1="10" x2="15" y2="10" />
-                    </svg>
-                    Start A Session
-                  </button>
-                </div>
-
-                {/* 4: Ashle Bren */}
-                <div className={styles.appointmentCardItem}>
-                  <div className={styles.patientInfo}>
-                    <span className={styles.patientNameText}>Ashle Bren</span>
-                    <span className={styles.appointmentMetaText}>Consultation • 4:00 PM</span>
-                  </div>
-                  <button className={styles.btnStartSession}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="3" width="20" height="14" rx="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                      <line x1="12" y1="7" x2="12" y2="13" />
-                      <line x1="9" y1="10" x2="15" y2="10" />
-                    </svg>
-                    Start A Session
-                  </button>
-                </div>
-
-                {/* 5: Henry J. */}
-                <div className={styles.appointmentCardItem}>
-                  <div className={styles.patientInfo}>
-                    <span className={styles.patientNameText}>Henry J.</span>
-                    <span className={styles.appointmentMetaText}>Consultation • 4:00 PM</span>
-                  </div>
-                  <button className={styles.btnStartSession}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="3" width="20" height="14" rx="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                      <line x1="12" y1="7" x2="12" y2="13" />
-                      <line x1="9" y1="10" x2="15" y2="10" />
-                    </svg>
-                    Start A Session
-                  </button>
-                </div>
-              </div>
-
-              {/* Floating Bottom Dock */}
-              <div className={styles.floatingBottomDock}>
-                {/* Tab 1: Dashboard (Active) */}
-                <div className={`${styles.dockTab} ${styles.dockTabActive}`}>
-                  <LayoutGrid size={17} />
-                  <span>Dashboard</span>
-                  <div className={styles.dockActiveLine} />
-                </div>
-
-                {/* Tab 2: My Patients */}
-                <div className={styles.dockTab}>
-                  <Users size={17} />
-                  <span>My Patients</span>
-                </div>
-
-                {/* Tab 3: Sessions */}
-                <div className={styles.dockTab}>
-                  <FileCheck size={17} />
-                  <span>Sessions</span>
-                </div>
-
-                {/* Tab 4: Notes */}
-                <div className={styles.dockTab}>
-                  <FileText size={17} />
-                  <span>Notes</span>
-                </div>
-
-                {/* Tab 5: Settings */}
-                <div className={styles.dockTab}>
-                  <UserCheck size={17} />
-                  <span>Settings</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Screen 2: Account Creation */}
-            <div className={styles.screenMockupCard} style={{ background: '#F8FAFD', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                <span style={{ fontWeight: 800, fontSize: '1rem', color: '#15294E' }}>innvor.ai</span>
-              </div>
-
-              <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px 20px', border: '1px solid #EAEFF5', boxShadow: '0 4px 18px rgba(21, 41, 78, 0.04)' }}>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#15294E', textAlign: 'center', margin: '0 0 4px' }}>Create Account</h4>
-                <p style={{ fontSize: '0.74rem', color: '#64748B', textAlign: 'center', margin: '0 0 16px' }}>Secure access for healthcare professionals</p>
-
-                {/* Email Field */}
-                <div style={{ marginBottom: '10px' }}>
-                  <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#15294E', display: 'block', marginBottom: '4px' }}>Email *</label>
-                  <div className={styles.formInputWrapper}>
-                    <Mail size={14} color="#94A3B8" />
-                    <input type="text" readOnly defaultValue="doctor@hospital.com" />
-                  </div>
-                </div>
-
-                {/* Password Field */}
-                <div style={{ marginBottom: '10px' }}>
-                  <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#15294E', display: 'block', marginBottom: '4px' }}>Password *</label>
-                  <div className={styles.formInputWrapper}>
-                    <Lock size={14} color="#94A3B8" />
-                    <input type="password" readOnly defaultValue="password123" placeholder="Enter your password" />
-                    <Eye size={14} color="#94A3B8" />
-                  </div>
-                </div>
-
-                {/* Confirm Password Field */}
-                <div style={{ marginBottom: '12px' }}>
-                  <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#15294E', display: 'block', marginBottom: '4px' }}>Confirm Password *</label>
-                  <div className={styles.formInputWrapper}>
-                    <Lock size={14} color="#94A3B8" />
-                    <input type="password" readOnly defaultValue="password123" placeholder="Enter your password" />
-                    <Eye size={14} color="#94A3B8" />
-                  </div>
-                </div>
-
-                {/* Role Field */}
-                <div style={{ marginBottom: '12px' }}>
-                  <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#15294E', display: 'block', marginBottom: '6px' }}>Role *</label>
-                  <div className={styles.roleOptionList}>
-                    {/* Doctor Option (Selected) */}
-                    <div className={styles.roleOptionCard} style={{ border: '1.5px solid #2D7D6F', background: '#F4FBF8' }}>
-                      <div className={styles.roleRadioDot} style={{ borderColor: '#2D7D6F', background: '#2D7D6F' }}>
-                        <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#FFFFFF' }} />
-                      </div>
-                      <div className={styles.roleIconBadge} style={{ background: '#EFF6FF' }}>
-                        <User size={15} color="#2563EB" />
-                      </div>
-                      <div className={styles.roleTextCol}>
-                        <span className={styles.roleTitle}>Doctor</span>
-                        <span className={styles.roleDesc}>Clinical documentation access</span>
-                      </div>
-                    </div>
-
-                    {/* Admin Option */}
-                    <div className={styles.roleOptionCard}>
-                      <div className={styles.roleRadioDot} />
-                      <div className={styles.roleIconBadge} style={{ background: '#F0FDF4' }}>
-                        <User size={15} color="#16A34A" />
-                      </div>
-                      <div className={styles.roleTextCol}>
-                        <span className={styles.roleTitle}>Admin</span>
-                        <span className={styles.roleDesc}>Managing the system</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Terms Checkbox */}
-                <div className={styles.termsCheckboxRow} style={{ marginBottom: '14px' }}>
-                  <input type="checkbox" defaultChecked readOnly style={{ accentColor: '#2D7D6F', marginTop: '3px', cursor: 'default' }} />
-                  <div>
-                    <div style={{ color: '#334155', fontWeight: 600 }}>I agree to the innvor.ai <span style={{ color: '#2563EB', textDecoration: 'underline' }}>term and policies</span></div>
-                    <div style={{ fontSize: '0.65rem', color: '#64748B', marginTop: '1px' }}>
-                      I consent innvor.ai to use my information and feedback data for this AI tool working.
-                    </div>
-                  </div>
-                </div>
-
-                {/* Primary Button */}
-                <button className={styles.btnSubmitForm} style={{ width: '100%', padding: '11px', borderRadius: '8px' }}>
-                  Get Started
-                </button>
-              </div>
-
-              {/* Support Footer */}
-              <div style={{ textAlign: 'center', fontSize: '0.7rem', color: '#64748B', marginTop: '16px', lineHeight: 1.4 }}>
-                <div>Need help? Contact IT Support</div>
-                <div style={{ marginTop: '2px', fontWeight: 600 }}>
-                  <span style={{ color: '#2563EB' }}>📞</span> +234-800-MEDAI &nbsp;&nbsp; <span style={{ color: '#2563EB' }}>✉</span> <span style={{ color: '#2563EB' }}>support@medai.ng</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', textAlign: 'center', margin: '10px 0 24px' }}>
-            <span className={styles.mockupCaption} style={{ margin: 0 }}>Physician dashboard and appointment entry</span>
-            <span className={styles.mockupCaption} style={{ margin: 0 }}>Account creation with doctor and admin roles</span>
-          </div>
-
           <h3 className={styles.tealSubhead}>A workspace for each responsibility</h3>
           <p className={styles.sectionParagraph}>
             Doctors see completed visits, pending reviews, and upcoming appointments. Administrative users manage clinics, doctors, patient records, and subscriptions. Role selection is part of account creation, while patient information stays connected to the encounter.
@@ -958,12 +688,12 @@ export default function InnvorCaseStudy({ caseStudy }: InnvorCaseStudyProps) {
           </p>
 
           {/* Billing Workspace Image Showcase */}
-          <div className={styles.showcaseImageContainer} style={{ maxWidth: '755px' }}>
+          <div className={styles.showcaseImageContainer} style={{ maxWidth: '755px', margin: '28px auto' }}>
             <Image
-              src="/case-studies/Credit System and Monetisation.png"
+              src="/case-studies/innvor-images-hq/p05-billing-workspace.png"
               alt="Innvor.ai - Billing workspace with usage cards, invoices, and plan selection"
-              width={755}
-              height={811}
+              width={1800}
+              height={1980}
               priority
               quality={100}
               unoptimized
@@ -1002,24 +732,34 @@ export default function InnvorCaseStudy({ caseStudy }: InnvorCaseStudyProps) {
             The selected patient remains visible before recording begins. Consent is separated into audio recording, AI processing, and storage and access, with a digital signature area and an explicit confirmation action.
           </p>
 
-          {/* User Facing Features Image Showcase */}
-          <div className={styles.showcaseImageContainer} style={{ maxWidth: '942px' }}>
-            <Image
-              src="/case-studies/User Facing Features.png"
-              alt="Innvor.ai - Patient consent before session start and Recording with timer and pause control"
-              width={942}
-              height={775}
-              priority
-              quality={100}
-              unoptimized
-              className={styles.showcaseImage}
-              style={{ width: '100%', height: 'auto', imageRendering: 'auto' }}
-            />
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', textAlign: 'center', margin: '8px 0 24px' }}>
-            <span className={styles.mockupCaption} style={{ margin: 0 }}>Patient consent before session start</span>
-            <span className={styles.mockupCaption} style={{ margin: 0 }}>Recording with timer and pause control</span>
+          {/* HQ Screenshot Pair: Patient Consent + Recording Session */}
+          <div className={styles.twoImageShowcase}>
+            <div className={styles.showcasePhoneFrame}>
+              <Image
+                src="/case-studies/innvor-images-hq/p06-patient-consent.png"
+                alt="Innvor.ai – Patient consent before session start"
+                width={956}
+                height={2064}
+                priority
+                quality={100}
+                unoptimized
+                className={styles.showcasePhoneImage}
+              />
+              <span className={styles.mockupCaption}>Patient consent before session start</span>
+            </div>
+            <div className={styles.showcasePhoneFrame}>
+              <Image
+                src="/case-studies/innvor-images-hq/p06-recording-session.png"
+                alt="Innvor.ai – Recording with timer and pause control"
+                width={980}
+                height={1456}
+                priority
+                quality={100}
+                unoptimized
+                className={styles.showcasePhoneImage}
+              />
+              <span className={styles.mockupCaption}>Recording with timer and pause control</span>
+            </div>
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -1048,200 +788,34 @@ export default function InnvorCaseStudy({ caseStudy }: InnvorCaseStudyProps) {
             The generated report organizes the encounter into a summary, chief complaint, diagnosis, prescriptions, procedures, and treatment plan. The physician can edit the report before saving or downloading it.
           </p>
 
-          {/* Two Screens Grid */}
-          <div className={styles.twoScreenGrid}>
-            {/* Screen 1: Clinical Report */}
-            <div className={styles.screenMockupCard}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', borderBottom: '1px solid #E2E8F0', paddingBottom: '8px' }}>
-                <span style={{ fontSize: '0.78rem', color: '#718096' }}>← Back</span>
-                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#1A202C' }}>AI-Generated Clinical Report</span>
-                <Edit3 size={14} color="#2A7C6F" />
-              </div>
-
-              {/* Patient Banner */}
-              <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '8px 12px', marginBottom: '14px', display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem' }}>
-                <div>
-                  <strong>Emma Thompson</strong> (PID: #PT-2024-0158)<br />
-                  <span style={{ color: '#718096' }}>DOB: 24/03/1988 • 36 Yrs Old • Female</span>
-                </div>
-                <div style={{ textAlign: 'right', color: '#2A7C6F', fontWeight: 600 }}>
-                  Annual Checkup<br />
-                  3:00 PM - 3:30 PM
-                </div>
-              </div>
-
-              {/* Summary */}
-              <div className={styles.reportSectionBlock}>
-                <div className={styles.reportSectionTitle}>Summary</div>
-                <div className={styles.reportSectionBody}>
-                  Patient presents for annual wellness examination. No acute concerns reported. Patient reports feeling generally well with no significant changes since last visit. Denies fever, chills, weight loss, or weight gain. Sleep patterns normal, appetite good. No new medications, or supplements.
-                </div>
-              </div>
-
-              {/* Chief Complaint */}
-              <div className={styles.reportSectionBlock}>
-                <div className={styles.reportSectionTitle}>Chief Complaint</div>
-                <div className={styles.reportSectionBody}>
-                  Patient presents for annual wellness examination. No acute concerns reported.
-                </div>
-              </div>
-
-              {/* Diagnosis */}
-              <div className={styles.reportSectionBlock}>
-                <div className={styles.reportSectionTitle}>🩺 Diagnosis</div>
-                <div className={styles.reportSectionBody}>
-                  <strong>Encounter for general adult medical examination without abnormal findings</strong><br />
-                  Annual wellness visit for healthy adult female with no acute concerns or abnormal findings on examination.
-                </div>
-              </div>
-
-              {/* Prescriptions */}
-              <div className={styles.reportSectionBlock}>
-                <div className={styles.reportSectionTitle}>💊 Prescriptions</div>
-                <div className={styles.reportSectionBody}>
-                  <strong style={{ color: '#2A7C6F' }}>Vitamin D3 Cholecalciferol 2000 IU</strong><br />
-                  <span style={{ fontSize: '0.72rem', color: '#718096' }}>Dosage: 1 tablet daily | Quantity: 30 tablets | Refills: 2 | Route: Oral</span><br />
-                  <span style={{ fontSize: '0.72rem' }}>Instructions: Take with food to enhance absorption. For bone health maintenance.</span>
-                </div>
-              </div>
-
-              {/* Procedures */}
-              <div className={styles.reportSectionBlock}>
-                <div className={styles.reportSectionTitle}>🩺 Procedures</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <div className={styles.reportSectionBody} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <strong>Lipid Panel</strong><br />
-                      <span style={{ fontSize: '0.7rem', color: '#718096' }}>CPT: 80061 | Priority: Routine | Fasting: Yes</span>
-                    </div>
-                  </div>
-                  <div className={styles.reportSectionBody} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <strong>Mammography Bilateral</strong><br />
-                      <span style={{ fontSize: '0.7rem', color: '#718096' }}>CPT: 77067 | Priority: Routine | Due: 24 months</span>
-                    </div>
-                    <span style={{ background: '#FCE7F3', color: '#BE185D', padding: '2px 6px', borderRadius: '4px', fontSize: '0.68rem', fontWeight: 700 }}>Imaging</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Treatment Plan */}
-              <div className={styles.reportSectionBlock}>
-                <div className={styles.reportSectionTitle}>📋 Treatment Plan</div>
-                <div className={styles.reportSectionBody}>
-                  • Continue current preventive care routine. No acute interventions required at this time.<br />
-                  • Maintain healthy lifestyle and exercise routine.<br />
-                  • Continue balanced diet with adequate calcium and vitamin D.<br />
-                  • Regular sleep schedule and stress management.
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-                <button className={styles.btnSmall} style={{ flex: 1, justifyContent: 'center' }}>Save Report</button>
-                <button className={`${styles.btnSmall} ${styles.btnSmallTeal}`} style={{ flex: 1, justifyContent: 'center' }}>Save &amp; Download Report</button>
-              </div>
+          {/* HQ Screenshot Pair: Clinical Report + Completed Sessions */}
+          <div className={styles.twoImageShowcase}>
+            <div className={styles.showcasePhoneFrame}>
+              <Image
+                src="/case-studies/innvor-images-hq/p07-clinical-report.png"
+                alt="Innvor.ai – AI-generated clinical report with editing controls"
+                width={972}
+                height={1852}
+                priority
+                quality={100}
+                unoptimized
+                className={styles.showcasePhoneImage}
+              />
+              <span className={styles.mockupCaption}>Structured clinical report with editing controls</span>
             </div>
-
-            {/* Screen 2: Review Queue */}
-            <div className={styles.screenMockupCard}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', borderBottom: '1px solid #E2E8F0', paddingBottom: '8px' }}>
-                <span style={{ fontSize: '0.78rem', color: '#718096' }}>← Back</span>
-                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#1A202C' }}>Visit Completed</span>
-              </div>
-
-              <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1A202C', margin: '0 0 2px' }}>Today&apos;s Completed Sessions</h4>
-              <p style={{ fontSize: '0.75rem', color: '#718096', margin: '0 0 14px' }}>All the Today&apos;s sessions with patients</p>
-
-              <div className={styles.searchBar} style={{ maxWidth: '100%', marginBottom: '16px' }}>
-                <Search size={14} />
-                <span>Search patients by name, ID or condition...</span>
-              </div>
-
-              <div className={styles.reviewQueueList}>
-                {/* Session 1 */}
-                <div className={styles.reviewQueueItem}>
-                  <div>
-                    <div className={styles.queuePatientName}>Emma Thompson</div>
-                    <div className={styles.queueMeta}>Patient ID: #PT-2024-0158 • Follow-up • 15 min session</div>
-                    <div style={{ fontSize: '0.7rem', color: '#137333', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#137333' }} /> Generated: 2:45 PM
-                    </div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <span className={styles.badgeAccuracy}>96.5% AI Accuracy</span>
-                    <div style={{ fontSize: '0.72rem', color: '#2A7C6F', fontWeight: 700, marginTop: '4px', cursor: 'default' }}>View Details</div>
-                  </div>
-                </div>
-
-                {/* Session 2 */}
-                <div className={styles.reviewQueueItem}>
-                  <div>
-                    <div className={styles.queuePatientName}>Mrs. Adaora Nwosu</div>
-                    <div className={styles.queueMeta}>Follow-up • 15 min session</div>
-                    <div style={{ fontSize: '0.7rem', color: '#137333', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#137333' }} /> Generated: 2:45 PM
-                    </div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <span style={{ background: '#EBF8FF', color: '#1E88E5', fontSize: '0.72rem', fontWeight: 700, padding: '3px 8px', borderRadius: '12px' }}>Rate now: 4.5 Accuracy</span>
-                    <div style={{ fontSize: '0.72rem', color: '#2A7C6F', fontWeight: 700, marginTop: '4px', cursor: 'default' }}>View Details</div>
-                  </div>
-                </div>
-
-                {/* Session 3 */}
-                <div className={styles.reviewQueueItem}>
-                  <div>
-                    <div className={styles.queuePatientName}>Mrs. Adaora Nwosu</div>
-                    <div className={styles.queueMeta}>Follow-up • 15 min session</div>
-                    <div style={{ fontSize: '0.7rem', color: '#137333', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#137333' }} /> Generated: 2:45 PM
-                    </div>
-                  </div>
-                  <span className={styles.badgePending}>Review Pending</span>
-                </div>
-
-                {/* Session 4 */}
-                <div className={styles.reviewQueueItem}>
-                  <div>
-                    <div className={styles.queuePatientName}>Mrs. Adaora Nwosu</div>
-                    <div className={styles.queueMeta}>Follow-up • 15 min session</div>
-                    <div style={{ fontSize: '0.7rem', color: '#137333', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#137333' }} /> Generated: 2:45 PM
-                    </div>
-                  </div>
-                  <span className={styles.badgePending}>Review Pending</span>
-                </div>
-
-                {/* Session 5 */}
-                <div className={styles.reviewQueueItem}>
-                  <div>
-                    <div className={styles.queuePatientName}>Mrs. Adaora Nwosu</div>
-                    <div className={styles.queueMeta}>Follow-up • 15 min session</div>
-                    <div style={{ fontSize: '0.7rem', color: '#137333', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#137333' }} /> Generated: 2:45 PM
-                    </div>
-                  </div>
-                  <span className={styles.badgePending}>Review Pending</span>
-                </div>
-
-                {/* Session 6 */}
-                <div className={styles.reviewQueueItem}>
-                  <div>
-                    <div className={styles.queuePatientName}>Mrs. Adaora Nwosu</div>
-                    <div className={styles.queueMeta}>Follow-up • 15 min session</div>
-                    <div style={{ fontSize: '0.7rem', color: '#137333', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#137333' }} /> Generated: 2:45 PM
-                    </div>
-                  </div>
-                  <span className={styles.badgePending}>Review Pending</span>
-                </div>
-              </div>
+            <div className={styles.showcasePhoneFrame}>
+              <Image
+                src="/case-studies/innvor-images-hq/p07-completed-sessions.png"
+                alt="Innvor.ai – Completed sessions and outstanding reviews"
+                width={1516}
+                height={2400}
+                priority
+                quality={100}
+                unoptimized
+                className={styles.showcasePhoneImage}
+              />
+              <span className={styles.mockupCaption}>Completed sessions and outstanding reviews</span>
             </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', textAlign: 'center', margin: '8px 0 24px' }}>
-            <span className={styles.mockupCaption} style={{ margin: 0 }}>Structured clinical report with editing controls</span>
-            <span className={styles.mockupCaption} style={{ margin: 0 }}>Completed sessions and outstanding reviews</span>
           </div>
 
           <p className={styles.sectionParagraph}>
@@ -1266,279 +840,35 @@ export default function InnvorCaseStudy({ caseStudy }: InnvorCaseStudyProps) {
             Clinic operations and care team visibility
           </p>
 
-          {/* Screen 1: Clinic Directory */}
-          <div className={styles.mockupFrame}>
-            <div className={styles.mockupBodyLayout}>
-              <aside className={styles.mockupSidebar}>
-                <div className={styles.sidebarBrand}>innvor.ai</div>
-                <div className={styles.sidebarNavItem}><LayoutGrid size={17} /> Dashboard</div>
-                <div className={`${styles.sidebarNavItem} ${styles.activeNav}`}><Building2 size={17} /> Clinics Management</div>
-                <div className={styles.sidebarNavItem}><Stethoscope size={17} /> Manage Doctors</div>
-                <div className={styles.sidebarNavItem}><Users size={17} /> Manage Patient</div>
-                <div className={styles.sidebarNavItem}><CreditCard size={17} /> Billing &amp; Plans</div>
-                <div className={styles.sidebarNavItem}><GraduationCap size={17} /> Training and Tooltips</div>
-              </aside>
-
-              <div style={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0 }}>
-                <div className={styles.mockupTopBar}>
-                  <div className={styles.topBarLeft}>
-                    <div className={styles.clinicDropdown}>
-                      <MapPin size={13} color="#4A5568" />
-                      <span>Clinic: All</span>
-                      <ChevronDown size={13} color="#718096" />
-                    </div>
-                    <div className={styles.searchBar}>
-                      <Search size={13} color="#A0AEC0" />
-                      <span>Search patient or doctor by name, id etc</span>
-                    </div>
-                  </div>
-                  <div className={styles.topBarRight}>
-                    <div className={styles.avatarPill}>NH</div>
-                  </div>
-                </div>
-
-                <main className={styles.mockupMainContent}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
-                    <div>
-                      <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: '#1A202C' }}>Clinic Management</h3>
-                      <span style={{ fontSize: '0.78rem', color: '#718096' }}>Manage clinic details, administrators, and EHR integrations</span>
-                    </div>
-                    <button className={`${styles.btnSmall} ${styles.btnSmallTeal}`}><Plus size={13} /> Add New Clinic</button>
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', maxWidth: '380px', marginBottom: '16px' }}>
-                    <div className={styles.usageStatCard}>
-                      <span className={styles.statLabel}>Total Clinics</span>
-                      <div className={styles.statNumber}>08</div>
-                    </div>
-                    <div className={styles.usageStatCard}>
-                      <span className={styles.statLabel}>Total Admins</span>
-                      <div className={styles.statNumber}>48</div>
-                    </div>
-                  </div>
-
-                  <div className={styles.cardWhite} style={{ padding: 0, overflowX: 'auto' }}>
-                    <table style={{ width: '100%', fontSize: '0.8rem', borderCollapse: 'collapse', textAlign: 'left' }}>
-                      <thead>
-                        <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0', color: '#4A5568', textTransform: 'uppercase', fontSize: '0.72rem' }}>
-                          <th style={{ padding: '10px 14px' }}>Clinic Details</th>
-                          <th>Location</th>
-                          <th>Doctors</th>
-                          <th>Admins</th>
-                          <th>EHR</th>
-                          <th style={{ textAlign: 'right', paddingRight: '14px' }}>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                          <td style={{ padding: '10px 14px', fontWeight: 700 }}>Lagos General Hospital <span style={{ fontSize: '0.68rem', color: '#A0AEC0', display: 'block' }}>ID: LLH-492</span></td>
-                          <td>Lagos, Nigeria</td>
-                          <td>24</td>
-                          <td>3</td>
-                          <td><span style={{ color: '#137333', background: '#E6F4EA', padding: '2px 8px', borderRadius: '12px', fontSize: '0.7rem', fontWeight: 700 }}>● OpenMRS</span></td>
-                          <td style={{ textAlign: 'right', paddingRight: '14px' }}>✏️ 👁️ 🗑️</td>
-                        </tr>
-                        <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                          <td style={{ padding: '10px 14px', fontWeight: 700 }}>Abuja Medical Center <span style={{ fontSize: '0.68rem', color: '#A0AEC0', display: 'block' }}>ID: AMC-102</span></td>
-                          <td>Abuja, Nigeria</td>
-                          <td>18</td>
-                          <td>2</td>
-                          <td><span style={{ color: '#137333', background: '#E6F4EA', padding: '2px 8px', borderRadius: '12px', fontSize: '0.7rem', fontWeight: 700 }}>● Cloud Backup</span></td>
-                          <td style={{ textAlign: 'right', paddingRight: '14px' }}>✏️ 👁️ 🗑️</td>
-                        </tr>
-                        <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                          <td style={{ padding: '10px 14px', fontWeight: 700 }}>Port Harcourt Cardiac Center <span style={{ fontSize: '0.68rem', color: '#A0AEC0', display: 'block' }}>ID: PHC-304</span></td>
-                          <td>Port Harcourt, Nigeria</td>
-                          <td>12</td>
-                          <td>2</td>
-                          <td><span style={{ color: '#137333', background: '#E6F4EA', padding: '2px 8px', borderRadius: '12px', fontSize: '0.7rem', fontWeight: 700 }}>● OpenMRS</span></td>
-                          <td style={{ textAlign: 'right', paddingRight: '14px' }}>✏️ 👁️ 🗑️</td>
-                        </tr>
-                        <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                          <td style={{ padding: '10px 14px', fontWeight: 700 }}>Kano State Hospital <span style={{ fontSize: '0.68rem', color: '#A0AEC0', display: 'block' }}>ID: KSH-804</span></td>
-                          <td>Kano, Nigeria</td>
-                          <td>31</td>
-                          <td>4</td>
-                          <td><span style={{ color: '#137333', background: '#E6F4EA', padding: '2px 8px', borderRadius: '12px', fontSize: '0.7rem', fontWeight: 700 }}>● OpenMRS</span></td>
-                          <td style={{ textAlign: 'right', paddingRight: '14px' }}>✏️ 👁️ 🗑️</td>
-                        </tr>
-                        <tr>
-                          <td style={{ padding: '10px 14px', fontWeight: 700 }}>Ibadan Family Clinic <span style={{ fontSize: '0.68rem', color: '#A0AEC0', display: 'block' }}>ID: IFC-205</span></td>
-                          <td>Ibadan, Nigeria</td>
-                          <td>8</td>
-                          <td>1</td>
-                          <td><span style={{ color: '#137333', background: '#E6F4EA', padding: '2px 8px', borderRadius: '12px', fontSize: '0.7rem', fontWeight: 700 }}>● Cloud Backup</span></td>
-                          <td style={{ textAlign: 'right', paddingRight: '14px' }}>✏️ 👁️ 🗑️</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', fontSize: '0.74rem', color: '#718096', borderTop: '1px solid #E2E8F0' }}>
-                      <span>Showing 1 to 5 of 24 clinics</span>
-                      <span>&lt; 1 2 3 &gt;</span>
-                    </div>
-                  </div>
-                </main>
-              </div>
-            </div>
+          {/* HQ Screenshot: Clinic Directory */}
+          <div className={styles.showcaseImageContainer}>
+            <Image
+              src="/case-studies/innvor-images-hq/p08-clinic-directory.png"
+              alt="Innvor.ai – Clinic directory with location, care team counts, and EHR fields"
+              width={1816}
+              height={1364}
+              priority
+              quality={100}
+              unoptimized
+              className={styles.showcaseImage}
+            />
           </div>
           <div className={styles.mockupCaption}>
             Clinic directory with location, care team counts, and EHR fields
           </div>
 
-          {/* Screen 2: Clinic Profile */}
-          <div className={styles.mockupFrame} style={{ marginTop: '32px' }}>
-            <div className={styles.mockupBodyLayout}>
-              <aside className={styles.mockupSidebar}>
-                <div className={styles.sidebarBrand}>innvor.ai</div>
-                <div className={styles.sidebarNavItem}><LayoutGrid size={17} /> Dashboard</div>
-                <div className={`${styles.sidebarNavItem} ${styles.activeNav}`}><Building2 size={17} /> Clinics Management</div>
-                <div className={styles.sidebarNavItem}><Stethoscope size={17} /> Manage Doctors</div>
-                <div className={styles.sidebarNavItem}><Users size={17} /> Manage Patient</div>
-              </aside>
-
-              <div style={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0 }}>
-                <div className={styles.mockupTopBar}>
-                  <div className={styles.topBarLeft}>
-                    <span className={styles.brandLogo}>innvor.ai</span>
-                  </div>
-                  <div className={styles.topBarRight}>
-                    <div className={styles.avatarPill}>NH</div>
-                  </div>
-                </div>
-
-                <main className={styles.mockupMainContent}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
-                    <div>
-                      <span style={{ fontSize: '0.74rem', color: '#718096' }}>← Back</span>
-                      <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '2px 0 0', color: '#1A202C' }}>Clinic Name Here</h3>
-                    </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <button className={`${styles.btnSmall} ${styles.btnSmallTeal}`}><Edit3 size={12} /> Edit Clinic</button>
-                      <button className={styles.btnSmall}><Download size={12} /> Export Data</button>
-                    </div>
-                  </div>
-
-                  {/* 3 Blocks Grid */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '16px' }}>
-                    {/* Contact Information */}
-                    <div className={styles.cardWhite}>
-                      <div className={styles.cardHeaderTitle}>Contact Information</div>
-                      <div style={{ fontSize: '0.75rem', color: '#4A5568', lineHeight: 1.4 }}>
-                        123 Victoria Island, Lagos, Nigeria<br />
-                        +234 901 234 5678<br />
-                        admin@cnh.ng
-                      </div>
-                    </div>
-
-                    {/* Quick Statistics */}
-                    <div className={styles.cardWhite}>
-                      <div className={styles.cardHeaderTitle}>Quick Statistics</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', textAlign: 'center' }}>
-                        <div>
-                          <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1A202C' }}>24</div>
-                          <div style={{ fontSize: '0.68rem', color: '#718096' }}>Doctors</div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1A202C' }}>1,247</div>
-                          <div style={{ fontSize: '0.68rem', color: '#718096' }}>Patients</div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1A202C' }}>3,892</div>
-                          <div style={{ fontSize: '0.68rem', color: '#718096' }}>Consultations</div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1A202C' }}>3</div>
-                          <div style={{ fontSize: '0.68rem', color: '#718096' }}>Admins</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Integration Status */}
-                    <div className={styles.cardWhite}>
-                      <div className={styles.cardHeaderTitle}>Integration Status</div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.74rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <span>OpenMRS</span>
-                          <span style={{ color: '#137333', fontWeight: 700 }}>● Connected</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <span>Cloud Backup</span>
-                          <span style={{ color: '#137333', fontWeight: 700 }}>● Connected</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <span>Nigeria Compliance</span>
-                          <span style={{ color: '#137333', fontWeight: 700 }}>● Active</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Administrators */}
-                  <div className={styles.cardWhite} style={{ marginBottom: '16px' }}>
-                    <div className={styles.cardHeaderTitle}>
-                      <span>Clinic Administrators</span>
-                      <span className={styles.headerActionLink}>+ Add Administrator</span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '16px', fontSize: '0.78rem' }}>
-                      <div style={{ background: '#F8FAFC', padding: '8px 12px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
-                        <strong>Fatima Okoli</strong>
-                        <div style={{ fontSize: '0.68rem', color: '#718096' }}>Lead Administrator</div>
-                      </div>
-                      <div style={{ background: '#F8FAFC', padding: '8px 12px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
-                        <strong>James Ojo</strong>
-                        <div style={{ fontSize: '0.68rem', color: '#718096' }}>System Administrator</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Medical Staff */}
-                  <div className={styles.cardWhite}>
-                    <div className={styles.cardHeaderTitle}>
-                      <span>Medical Staff</span>
-                      <div style={{ display: 'flex', gap: '8px' }}>
-                        <span style={{ fontSize: '0.74rem', color: '#718096' }}>All Specialties ⌄</span>
-                        <span className={styles.headerActionLink}>+ Add Doctor</span>
-                      </div>
-                    </div>
-                    <table style={{ width: '100%', fontSize: '0.78rem', borderCollapse: 'collapse', textAlign: 'left' }}>
-                      <thead>
-                        <tr style={{ color: '#A0AEC0', borderBottom: '1px solid #E2E8F0' }}>
-                          <th style={{ padding: '6px 0' }}>Doctor</th>
-                          <th>Specialty</th>
-                          <th>Consultations</th>
-                          <th style={{ textAlign: 'right' }}>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                          <td style={{ padding: '8px 0', fontWeight: 700 }}>Dr. Ahmed Hassan</td>
-                          <td>Cardiology</td>
-                          <td>142</td>
-                          <td style={{ textAlign: 'right' }}>✏️ 👁️</td>
-                        </tr>
-                        <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
-                          <td style={{ padding: '8px 0', fontWeight: 700 }}>Dr. Ahmed Hassan</td>
-                          <td>General Practice</td>
-                          <td>98</td>
-                          <td style={{ textAlign: 'right' }}>✏️ 👁️</td>
-                        </tr>
-                        <tr>
-                          <td style={{ padding: '8px 0', fontWeight: 700 }}>Dr. Ahmed Hassan</td>
-                          <td>Pediatrics</td>
-                          <td>76</td>
-                          <td style={{ textAlign: 'right' }}>✏️ 👁️</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Recent Activity */}
-                  <div style={{ marginTop: '14px', fontSize: '0.74rem', color: '#718096' }}>
-                    <strong>Recent Activity:</strong> Dr. Ahmed Hassan completed a consultation with patient Fatima Doe (10 mins ago)
-                  </div>
-                </main>
-              </div>
-            </div>
+          {/* HQ Screenshot: Clinic Profile */}
+          <div className={styles.showcaseImageContainer}>
+            <Image
+              src="/case-studies/innvor-images-hq/p08-clinic-profile.png"
+              alt="Innvor.ai – Clinic profile with administrators, staff, integration status, and activity"
+              width={1808}
+              height={1784}
+              priority
+              quality={100}
+              unoptimized
+              className={styles.showcaseImage}
+            />
           </div>
 
           <div className={styles.mockupCaption}>
@@ -1571,8 +901,19 @@ export default function InnvorCaseStudy({ caseStudy }: InnvorCaseStudyProps) {
             Patient identity, consent status, current vitals, medical history, prescriptions, and recent sessions appear in one administrative view. This gives the care team an encounter entry point with the surrounding context already available.
           </p>
 
-          {/* Full Patient Record Mockup */}
-          <PatientRecordMockup />
+          {/* HQ Screenshot: Full Patient Record */}
+          <div className={styles.showcaseImageContainer}>
+            <Image
+              src="/case-studies/innvor-images-hq/p01-cover-dashboard-screenshot.png"
+              alt="Innvor.ai – Patient record with history, prescriptions, vitals, and session access"
+              width={1800}
+              height={1368}
+              priority
+              quality={100}
+              unoptimized
+              className={styles.showcaseImage}
+            />
+          </div>
           <div className={styles.mockupCaption}>
             Patient record with history, prescriptions, vitals, and session access
           </div>
@@ -1832,22 +1173,6 @@ export default function InnvorCaseStudy({ caseStudy }: InnvorCaseStudyProps) {
           <p className={styles.sectionParagraph}>
             Compare matched encounter types over a defined reporting period. Use session timestamps, review events, record completeness checks, and clinician activity to populate the measures.
           </p>
-
-          {/* VOOK AI Style Discovery CTA */}
-          <div className={styles.ctaBox}>
-            <h3>Build your Healthcare AI platform with PG-AGI</h3>
-            <p>
-              We engineer secure, HIPAA/NDPR-compliant clinical documentation systems, AI voice scribe engines, and scalable healthcare architectures.
-            </p>
-            <a
-              href={EXTERNAL_LINKS.CALENDLY_BOOKING}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.ctaBtnTeal}
-            >
-              Schedule a Discovery Call <ArrowRight size={18} />
-            </a>
-          </div>
 
           <RunningFooter pageNumber="12" />
         </section>

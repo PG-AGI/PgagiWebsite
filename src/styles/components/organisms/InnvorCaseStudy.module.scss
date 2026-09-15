@@ -128,7 +128,7 @@ $status-purple: #8E24AA;
   font-size: clamp(2.8rem, 6vw, 4.5rem);
   font-weight: 900;
   line-height: 1.05;
-  color: $text-dark;
+  color: #0A0A0A;
   margin: 0 0 16px;
   letter-spacing: -0.035em;
 }
@@ -136,7 +136,7 @@ $status-purple: #8E24AA;
 .coverSubtitle {
   font-size: clamp(1.35rem, 3.5vw, 2.15rem);
   font-weight: 600;
-  color: $text-headline;
+  color: $text-dark;
   margin: 0 0 20px;
   letter-spacing: -0.02em;
 }
@@ -276,7 +276,7 @@ $status-purple: #8E24AA;
 .tableOuter {
   width: 100%;
   border-radius: 6px;
-  overflow: hidden;
+  overflow-x: auto;
   border: 1px solid #DDE4EE;
   margin: 24px 0 32px;
   background-color: #FFFFFF;
@@ -285,6 +285,7 @@ $status-purple: #8E24AA;
 
 .enterpriseTable {
   width: 100%;
+  min-width: 420px;
   table-layout: fixed;
   border-collapse: collapse;
   text-align: left;
@@ -305,6 +306,7 @@ $status-purple: #8E24AA;
       text-align: left;
       color: #FFFFFF;
       border-right: 1px solid rgba(255, 255, 255, 0.18);
+      overflow-wrap: break-word;
 
       &:last-child {
         border-right: none;
@@ -338,10 +340,26 @@ $status-purple: #8E24AA;
       text-align: left;
       vertical-align: middle;
       border-right: 1px solid #DDE4EE;
+      overflow-wrap: break-word;
 
       &:last-child {
         border-right: none;
       }
+    }
+  }
+
+  @media (max-width: 600px) {
+    min-width: 0;
+
+    thead th {
+      padding: 10px 8px;
+      font-size: 0.66rem;
+      letter-spacing: 0.03em;
+    }
+
+    tbody td {
+      padding: 10px 8px;
+      font-size: 0.8rem;
     }
   }
 }
@@ -983,6 +1001,35 @@ $status-purple: #8E24AA;
   border-radius: 12px;
   object-fit: contain;
   display: block;
+}
+
+.twoImageShowcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 24px;
+  margin: 24px 0 12px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.showcasePhoneFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.showcasePhoneImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #FFFFFF;
+  border: 1px solid #DDE4EE;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(21, 41, 78, 0.05);
 }
 
 .twoScreenGrid {
