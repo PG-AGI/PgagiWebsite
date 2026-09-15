@@ -508,6 +508,26 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['Healthcare AI'],
     category: 'Healthcare/AI/ML',
   },
+  'innvor-ai': {
+    techStack: ['AI Scribe Engine', 'FastAPI', 'Speech-to-Text', 'ICD-10 Coding', '+3'],
+    metrics: [
+      { value: '45%', label: 'Time Saved' },
+      { value: '92%', label: 'Accuracy' },
+    ],
+    highlight: 'Currently in Internal Testing',
+    tags: ['Healthcare AI'],
+    category: 'Healthcare/AI/ML',
+  },
+  'innvor': {
+    techStack: ['AI Scribe Engine', 'FastAPI', 'Speech-to-Text', 'ICD-10 Coding', '+3'],
+    metrics: [
+      { value: '45%', label: 'Time Saved' },
+      { value: '92%', label: 'Accuracy' },
+    ],
+    highlight: 'Currently in Internal Testing',
+    tags: ['Healthcare AI'],
+    category: 'Healthcare/AI/ML',
+  },
 
   // 'ai-asr-doctor-clinical-documentation-platform' (AI ASR Doctor: Clinical
   // Documentation Platform) has no entry here on purpose — its title and

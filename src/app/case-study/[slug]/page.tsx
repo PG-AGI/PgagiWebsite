@@ -20,6 +20,7 @@ import SentlogicCaseStudy from '@/components/organisms/SentlogicCaseStudy/Sentlo
 import CrackedCaseStudy from '@/components/organisms/CrackedCaseStudy/CrackedCaseStudy';
 import SheltasCaseStudy from '@/components/organisms/SheltasCaseStudy/SheltasCaseStudy';
 import LegalGPTCaseStudy from '@/components/organisms/LegalGPTCaseStudy/LegalGPTCaseStudy';
+import InnvorCaseStudy from '@/components/organisms/InnvorCaseStudy/InnvorCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -210,6 +211,21 @@ export async function generateMetadata({
     };
   }
 
+  const isInnvor =
+    params?.slug?.toLowerCase()?.includes('innvor') ||
+    params?.slug?.toLowerCase() === 'ai-asr-doctor-clinical-documentation-platform' ||
+    params?.slug?.toLowerCase() === 'ai-mobile-doc';
+  if (isInnvor) {
+    return {
+      title: 'Innvor AI: Clinical Engagement and Documentation Platform | PG-AGI Case Study',
+      description: 'An enterprise case study of connected clinical workflows, AI assisted documentation, and physician controlled review.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Innvor AI Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -314,6 +330,15 @@ export default async function CaseStudyPage({
   if (isLegalSpend) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <LegalGPTCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isInnvor =
+    params?.slug?.toLowerCase()?.includes('innvor') ||
+    params?.slug?.toLowerCase() === 'ai-asr-doctor-clinical-documentation-platform' ||
+    params?.slug?.toLowerCase() === 'ai-mobile-doc';
+  if (isInnvor) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <InnvorCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
