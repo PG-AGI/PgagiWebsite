@@ -33,8 +33,8 @@ function RunningFooter({ pageNumber }: { pageNumber: string }) {
 function ArchArrow() {
   return (
     <div className={styles.archArrow}>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 5v14M19 12l-7 7-7-7" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3v16M6 13l6 6 6-6" />
       </svg>
     </div>
   );
@@ -147,36 +147,23 @@ export default function JoveCaseStudy({ caseStudy }: JoveCaseStudyProps) {
             </table>
           </div>
 
-          <div className={styles.twoImageShowcase}>
-            <div className={styles.showcasePhoneFrame}>
-              <Image
-                src="/case-studies/Digital-Twin-Images/02-EntrySignIn-LaptopMockup.jpg"
-                alt="Digital Twin – Access Proven Enterprise Expertise, laptop mockup"
-                width={1391}
-                height={958}
-                priority
-                quality={100}
-                unoptimized
-                className={styles.showcasePhoneImage}
-              />
-            </div>
-            <div className={styles.showcasePhoneFrame}>
-              <Image
-                src="/case-studies/Digital-Twin-Images/03-EntrySignIn-SignInPanel.jpg"
-                alt="Digital Twin – Sign-in panel with LinkedIn, Google, and Email options"
-                width={986}
-                height={878}
-                priority
-                quality={100}
-                unoptimized
-                className={styles.showcasePhoneImage}
-              />
-            </div>
+          <div className={styles.showcaseImageContainer}>
+            <Image
+              src="/case-studies/Digital-Twin-Images/02-EntrySignIn-LaptopMockup.jpg"
+              alt="Digital Twin – Access Proven Enterprise Expertise, laptop mockup"
+              width={1391}
+              height={958}
+              priority
+              quality={100}
+              unoptimized
+              className={styles.showcaseImage}
+            />
           </div>
 
           <p className={styles.calloutLabel}>
             <strong>Entry Experience</strong> / Access to expert knowledge begins with a dedicated sign-in surface
           </p>
+
 
           <p className={styles.sectionParagraph}>
             The case study follows the platform&rsquo;s two connected journeys: experts building and improving twins, and users finding answers through those twins.
@@ -265,12 +252,12 @@ export default function JoveCaseStudy({ caseStudy }: JoveCaseStudyProps) {
           {/* Architecture Flowchart */}
           <div className={styles.archFlowchartContainer}>
             <div className={styles.archRowSplit}>
-              <div className={styles.archBox} style={{ backgroundColor: '#3B5BFB' }}>
-                <span className={styles.archBoxTitle}>Expert Studio</span>
+              <div className={styles.archBoxBlue}>
+                <span className={styles.archBoxTitle}>EXPERT STUDIO</span>
                 <span className={styles.archBoxSubtitle}>Documents • Playground • Publish</span>
               </div>
-              <div className={styles.archBox} style={{ backgroundColor: '#3B5BFB' }}>
-                <span className={styles.archBoxTitle}>User Experience</span>
+              <div className={styles.archBoxBlue}>
+                <span className={styles.archBoxTitle}>USER EXPERIENCE</span>
                 <span className={styles.archBoxSubtitle}>Discovery • Profiles • Text and voice</span>
               </div>
             </div>
@@ -279,22 +266,24 @@ export default function JoveCaseStudy({ caseStudy }: JoveCaseStudyProps) {
               <ArchArrow />
               <ArchArrow />
             </div>
-            <ArchArrow />
 
-            <div className={styles.archBox} style={{ backgroundColor: '#101B33', width: '100%' }}>
-              <span className={styles.archBoxTitle}>FastAPI Application Services</span>
+            <div className={styles.archBoxNavy}>
+              <span className={styles.archBoxTitle}>FASTAPI APPLICATION SERVICES</span>
               <span className={styles.archBoxSubtitle}>Authentication • Twin management • Credits • Feedback</span>
             </div>
 
-            <ArchArrow />
+            <div className={styles.archArrowRowSplit}>
+              <ArchArrow />
+              <ArchArrow />
+            </div>
 
             <div className={styles.archRowSplit}>
-              <div className={styles.archBox} style={{ backgroundColor: '#3B5BFB' }}>
-                <span className={styles.archBoxTitle}>Discovery</span>
+              <div className={styles.archBoxBlue}>
+                <span className={styles.archBoxTitle}>DISCOVERY</span>
                 <span className={styles.archBoxSubtitle}>Cross-twin retrieval • Explicit ranking</span>
               </div>
-              <div className={styles.archBox} style={{ backgroundColor: '#3B5BFB' }}>
-                <span className={styles.archBoxTitle}>Conversation</span>
+              <div className={styles.archBoxBlue}>
+                <span className={styles.archBoxTitle}>CONVERSATION</span>
                 <span className={styles.archBoxSubtitle}>Selected twin only • RAG • Citations</span>
               </div>
             </div>
@@ -303,23 +292,22 @@ export default function JoveCaseStudy({ caseStudy }: JoveCaseStudyProps) {
               <ArchArrow />
               <ArchArrow />
             </div>
-            <ArchArrow />
 
-            <div className={styles.archBox} style={{ backgroundColor: '#101B33', width: '100%' }}>
-              <span className={styles.archBoxTitle}>PostgreSQL and pgvector</span>
+            <div className={styles.archBoxNavy}>
+              <span className={styles.archBoxTitle}>POSTGRESQL AND PGVECTOR</span>
               <span className={styles.archBoxSubtitle}>Knowledge units • Embeddings • Profiles • Credit ledger</span>
             </div>
 
             <ArchArrow />
 
-            <div className={styles.archBox} style={{ backgroundColor: '#101B33', width: '100%' }}>
-              <span className={styles.archBoxTitle}>Google Cloud Runtime</span>
+            <div className={styles.archBoxNavy}>
+              <span className={styles.archBoxTitle}>GOOGLE CLOUD RUNTIME</span>
               <span className={styles.archBoxSubtitle}>Cloud Run • Cloud SQL • Secret Manager • Logging</span>
             </div>
           </div>
 
           <p className={styles.calloutLabel}>
-            <strong>Architecture</strong> / Application services, retrieval boundaries, and managed cloud runtime
+            <strong>ARCHITECTURE</strong> / Application services, retrieval boundaries, and managed cloud runtime
           </p>
 
           <div className={styles.tableOuter}>

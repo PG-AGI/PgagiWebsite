@@ -387,60 +387,137 @@ $text-light: #94A3B8;
   gap: 0;
   margin: 32px 0 24px;
   width: 100%;
-  max-width: 860px;
+  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
-  background: $bg-slate;
+  background: #F4F7FC;
+  border: 1px solid #E2E8F0;
   border-radius: 12px;
-  padding: 24px;
+  padding: 32px 28px;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+    margin: 24px 0 18px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 10px;
+    border-radius: 10px;
+  }
 }
 
 .archRowSplit {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 20px;
   width: 100%;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
 .archBox {
   width: 100%;
-  border-radius: 6px;
-  padding: 18px 20px;
+  border-radius: 8px;
+  padding: 20px 24px;
   color: #FFFFFF;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 768px) {
+    padding: 16px 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px 10px;
+  }
+}
+
+.archBoxBlue {
+  width: 100%;
+  border-radius: 8px;
+  padding: 20px 24px;
+  color: #FFFFFF;
+  background-color: #2563EB;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+
+  @media (max-width: 768px) {
+    padding: 16px 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px 10px;
+  }
+}
+
+.archBoxNavy {
+  width: 100%;
+  border-radius: 8px;
+  padding: 20px 24px;
+  color: #FFFFFF;
+  background-color: #0F172A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+
+  @media (max-width: 768px) {
+    padding: 16px 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px 10px;
+  }
 }
 
 .archBoxTitle {
-  font-size: 0.88rem;
+  font-size: clamp(0.82rem, 1.8vw, 0.95rem);
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 6px;
+  color: #FFFFFF;
+  word-break: break-word;
 }
 
 .archBoxSubtitle {
-  font-size: 0.86rem;
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
   font-weight: 400;
   opacity: 0.92;
+  color: #FFFFFF;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .archArrow {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $accent;
-  padding: 8px 0;
+  color: #475569;
+  padding: 10px 0;
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 640px) {
+    padding: 6px 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 }
 
@@ -450,7 +527,11 @@ $text-light: #94A3B8;
   width: 100%;
 
   @media (max-width: 640px) {
-    display: none;
+    grid-template-columns: 1fr;
+
+    > div:last-child {
+      display: none;
+    }
   }
 }
 
