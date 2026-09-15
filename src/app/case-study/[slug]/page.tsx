@@ -19,6 +19,7 @@ import SocialJetCaseStudy from '@/components/organisms/SocialJetCaseStudy/Social
 import SentlogicCaseStudy from '@/components/organisms/SentlogicCaseStudy/SentlogicCaseStudy';
 import CrackedCaseStudy from '@/components/organisms/CrackedCaseStudy/CrackedCaseStudy';
 import SheltasCaseStudy from '@/components/organisms/SheltasCaseStudy/SheltasCaseStudy';
+import LegalGPTCaseStudy from '@/components/organisms/LegalGPTCaseStudy/LegalGPTCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -193,6 +194,22 @@ export async function generateMetadata({
     };
   }
 
+  const isLegalSpend =
+    params?.slug?.toLowerCase()?.includes('legalspend') ||
+    params?.slug?.toLowerCase()?.includes('legalgpt') ||
+    params?.slug?.toLowerCase()?.includes('legal-spend') ||
+    params?.slug?.toLowerCase() === 'legalgpt';
+  if (isLegalSpend) {
+    return {
+      title: 'LegalSpendGPT: Legal Invoice Intelligence | PG-AGI Case Study',
+      description: 'A Microsoft Azure platform for turning legal invoices into validated records, reviewable decisions and accessible spend intelligence.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'LegalSpendGPT Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -287,6 +304,16 @@ export default async function CaseStudyPage({
   if (isSheltas) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <SheltasCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isLegalSpend =
+    params?.slug?.toLowerCase()?.includes('legalspend') ||
+    params?.slug?.toLowerCase()?.includes('legalgpt') ||
+    params?.slug?.toLowerCase()?.includes('legal-spend') ||
+    params?.slug?.toLowerCase() === 'legalgpt';
+  if (isLegalSpend) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <LegalGPTCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
