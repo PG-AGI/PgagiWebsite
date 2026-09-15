@@ -31,14 +31,16 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
 
           {/* 3-Column Summary Bar */}
           <div className={styles.summaryBarTable}>
-            <div className={styles.summaryBarHeaderRow}>
+            <div className={styles.summaryBarCol}>
               <div className={styles.summaryBarHeaderCell}>CAPTURE</div>
-              <div className={styles.summaryBarHeaderCell}>CONTROL</div>
-              <div className={styles.summaryBarHeaderCell}>UNDERSTAND</div>
-            </div>
-            <div className={styles.summaryBarValuesRow}>
               <div className={styles.summaryBarValueCell}>SharePoint and email</div>
+            </div>
+            <div className={styles.summaryBarCol}>
+              <div className={styles.summaryBarHeaderCell}>CONTROL</div>
               <div className={styles.summaryBarValueCell}>Rules and human review</div>
+            </div>
+            <div className={styles.summaryBarCol}>
+              <div className={styles.summaryBarHeaderCell}>UNDERSTAND</div>
               <div className={styles.summaryBarValueCell}>Power BI and Teams</div>
             </div>
           </div>
@@ -232,41 +234,41 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
                 </div>
               </div>
 
-              {/* Bottom Row: Decision status to Structured JSON */}
-              <div className={styles.fig1Row}>
-                <div className={styles.fig1Card}>
-                  <div className={styles.fig1Title}>Decision status</div>
-                  <div className={styles.fig1Sub}>Approval or exception</div>
+              {/* Bottom Row: Structured JSON to Decision status */}
+              <div className={styles.fig1RowBottom}>
+                <div className={`${styles.fig1Card} ${styles.fig1CardStructured}`}>
+                  <div className={styles.fig1Title}>Structured JSON</div>
+                  <div className={styles.fig1Sub}>Extraction payload</div>
                 </div>
-                <div className={styles.fig1Arrow}>
+                <div className={`${styles.fig1Arrow} ${styles.fig1ArrowBottom1}`}>
                   <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true">
                     <path d="M28 7H8" stroke="#0078D4" strokeWidth="2" />
                     <path d="M10 2L2 7L10 12Z" fill="#0078D4" />
                   </svg>
                 </div>
-                <div className={styles.fig1Card}>
-                  <div className={styles.fig1Title}>Azure SQL</div>
-                  <div className={styles.fig1Sub}>Structured records</div>
-                </div>
-                <div className={styles.fig1Arrow}>
-                  <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true">
-                    <path d="M28 7H8" stroke="#0078D4" strokeWidth="2" />
-                    <path d="M10 2L2 7L10 12Z" fill="#0078D4" />
-                  </svg>
-                </div>
-                <div className={styles.fig1Card}>
+                <div className={`${styles.fig1Card} ${styles.fig1CardValidation}`}>
                   <div className={styles.fig1Title}>Validation</div>
                   <div className={styles.fig1Sub}>Business rule checks</div>
                 </div>
-                <div className={styles.fig1Arrow}>
+                <div className={`${styles.fig1Arrow} ${styles.fig1ArrowBottom2}`}>
                   <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true">
                     <path d="M28 7H8" stroke="#0078D4" strokeWidth="2" />
                     <path d="M10 2L2 7L10 12Z" fill="#0078D4" />
                   </svg>
                 </div>
-                <div className={styles.fig1Card}>
-                  <div className={styles.fig1Title}>Structured JSON</div>
-                  <div className={styles.fig1Sub}>Extraction payload</div>
+                <div className={`${styles.fig1Card} ${styles.fig1CardSql}`}>
+                  <div className={styles.fig1Title}>Azure SQL</div>
+                  <div className={styles.fig1Sub}>Structured records</div>
+                </div>
+                <div className={`${styles.fig1Arrow} ${styles.fig1ArrowBottom3}`}>
+                  <svg width="28" height="14" viewBox="0 0 28 14" fill="none" aria-hidden="true">
+                    <path d="M28 7H8" stroke="#0078D4" strokeWidth="2" />
+                    <path d="M10 2L2 7L10 12Z" fill="#0078D4" />
+                  </svg>
+                </div>
+                <div className={`${styles.fig1Card} ${styles.fig1CardDecision}`}>
+                  <div className={styles.fig1Title}>Decision status</div>
+                  <div className={styles.fig1Sub}>Approval or exception</div>
                 </div>
               </div>
             </div>
@@ -567,6 +569,14 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
                 </svg>
               </div>
 
+              {/* Mobile Down Arrow for Decision Routing */}
+              <div className={styles.fig3MobileBranchArrow}>
+                <svg width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true">
+                  <path d="M7 0V16" stroke="#0078D4" strokeWidth="2" />
+                  <path d="M2 14L7 22L12 14Z" fill="#0078D4" />
+                </svg>
+              </div>
+
               <div className={styles.fig3BranchGrid}>
                 <div className={styles.fig3BranchCard}>
                   <strong>Approved</strong>
@@ -788,6 +798,14 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
                 </svg>
               </div>
 
+              {/* Mobile Down Arrow from Power Apps Review */}
+              <div className={styles.fig4MobileBranchArrow}>
+                <svg width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true">
+                  <path d="M7 0V16" stroke="#0078D4" strokeWidth="2" />
+                  <path d="M2 14L7 22L12 14Z" fill="#0078D4" />
+                </svg>
+              </div>
+
               <div className={styles.fig4BottomSplit}>
                 <div className={styles.fig4BottomCard}>
                   <strong>Audit log</strong>
@@ -915,7 +933,15 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
 
               {/* Loopback Row: Azure SQL -> Formatted insight -> Teams query */}
               <div className={styles.fig5LoopbackGrid}>
-                {/* Column 1: Return Up into Teams query + Label */}
+                {/* Mobile connector down to Formatted Insight */}
+                <div className={styles.fig5MobileArrow}>
+                  <svg width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true">
+                    <path d="M7 0V16" stroke="#0078D4" strokeWidth="2" />
+                    <path d="M2 14L7 22L12 14Z" fill="#0078D4" />
+                  </svg>
+                </div>
+
+                {/* Column 1: Return Up into Teams query + Label (Desktop) */}
                 <div className={styles.fig5LeftCol}>
                   <svg width="100%" height="96" viewBox="0 0 120 96" preserveAspectRatio="none" fill="none" aria-hidden="true" className={styles.fig5LeftSvg}>
                     <path d="M60 54V12" stroke="#0078D4" strokeWidth="2" />
@@ -925,7 +951,7 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
                   <div className={styles.fig5ReturnLabel}>Return to Teams</div>
                 </div>
 
-                {/* Column 2: Horizontal left connector */}
+                {/* Column 2: Horizontal left connector (Desktop) */}
                 <div className={styles.fig5GapLine}>
                   <svg width="100%" height="96" viewBox="0 0 24 96" preserveAspectRatio="none" fill="none" aria-hidden="true">
                     <path d="M0 54H24" stroke="#0078D4" strokeWidth="2" />
@@ -938,7 +964,12 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
                   <span>Spend by firm and matter<br />Budget versus actual</span>
                 </div>
 
-                {/* Column 6: Horizontal right connector with arrow pointing left into Formatted insight */}
+                {/* Mobile Return to Teams badge */}
+                <div className={styles.fig5MobileReturn}>
+                  <span>↩ Return to Teams</span>
+                </div>
+
+                {/* Column 6: Horizontal right connector with arrow pointing left into Formatted insight (Desktop) */}
                 <div className={styles.fig5GapLine}>
                   <svg width="100%" height="96" viewBox="0 0 24 96" preserveAspectRatio="none" fill="none" aria-hidden="true">
                     <path d="M24 54H6" stroke="#0078D4" strokeWidth="2" />
@@ -946,7 +977,7 @@ export default function LegalGPTCaseStudy({ caseStudy }: LegalGPTCaseStudyProps)
                   </svg>
                 </div>
 
-                {/* Column 7: Down from Azure SQL and turn left */}
+                {/* Column 7: Down from Azure SQL and turn left (Desktop) */}
                 <div className={styles.fig5RightCol}>
                   <svg width="100%" height="96" viewBox="0 0 120 96" preserveAspectRatio="none" fill="none" aria-hidden="true" className={styles.fig5RightSvg}>
                     <path d="M60 0V54H0" stroke="#0078D4" strokeWidth="2" />
