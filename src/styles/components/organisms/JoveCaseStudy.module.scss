@@ -1,0 +1,541 @@
+// ── Color Tokens (Digital Twin / Jove AI brand — blue system) ──
+$accent: #2A5BD7;
+$accent-dark: #1E45AC;
+$accent-light: #EEF3FF;
+
+$bright-blue: #3B5BFB;
+$navy: #101B33;
+$navy-deep: #0B1526;
+
+$bg-white: #FFFFFF;
+$bg-slate: #F8FAFC;
+$card-border: #E2E8F0;
+$border-color: #E2E8F0;
+
+$text-dark: #12203D;
+$text-headline: #5A6478;
+$text-body: #33405A;
+$text-muted: #64748B;
+$text-light: #94A3B8;
+
+.jovePage {
+  width: 100%;
+  background-color: $bg-white;
+  color: $text-dark;
+  font-family: inherit;
+  overflow-x: hidden;
+  padding-bottom: 90px;
+}
+
+.rail {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+/* ── Running Header & Footer ── */
+.runningHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: $text-muted;
+  text-transform: uppercase;
+  padding: 24px 0 14px;
+  border-bottom: 1px solid rgba($border-color, 0.7);
+  margin-bottom: 32px;
+
+  .brandLogo {
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: $text-dark;
+    letter-spacing: 0.06em;
+  }
+
+  .headerMeta {
+    color: $text-muted;
+    font-weight: 600;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+  }
+}
+
+.runningFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: $text-light;
+  text-transform: uppercase;
+  padding-top: 24px;
+  margin-top: 48px;
+  border-top: 1px solid rgba($border-color, 0.7);
+
+  .footerPage {
+    color: $text-dark;
+    font-weight: 900;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+  }
+}
+
+/* ── Page 1: Hero Cover Section ── */
+.heroCoverSection {
+  padding-top: clamp(90px, 12vh, 120px);
+  padding-bottom: 50px;
+  position: relative;
+  background: #FFFFFF;
+  border-bottom: 1px solid $border-color;
+}
+
+.coverHeaderTag {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $accent;
+  margin-bottom: 20px;
+}
+
+.coverTitle {
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: $text-dark;
+  margin: 0 0 16px;
+  letter-spacing: -0.035em;
+}
+
+.coverSubtitle {
+  font-size: clamp(1.35rem, 3.5vw, 2.15rem);
+  font-weight: 600;
+  color: $text-headline;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+}
+
+.coverBoldLine {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  font-weight: 700;
+  color: $text-dark;
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+
+.coverLeadDesc {
+  font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+  line-height: 1.6;
+  color: $text-body;
+  max-width: 920px;
+  margin: 0 0 36px;
+  font-weight: 400;
+}
+
+.coverTaglineFooter {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: $accent;
+  text-transform: uppercase;
+  margin-top: 28px;
+}
+
+.coverSignoff {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: $text-body;
+  margin-top: 12px;
+}
+
+/* ── Section Blocks ── */
+.sectionBlock {
+  padding: 48px 0;
+  position: relative;
+  border-bottom: 1px solid rgba($border-color, 0.5);
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.sectionEyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $accent;
+  margin-bottom: 14px;
+}
+
+.sectionTitle {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: $text-dark;
+  letter-spacing: -0.025em;
+  margin: 0 0 10px;
+}
+
+.sectionSubtitle {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  font-weight: 600;
+  color: $text-headline;
+  margin: 0 0 18px;
+  line-height: 1.45;
+}
+
+.sectionParagraph {
+  font-size: 1.02rem;
+  line-height: 1.68;
+  color: $text-body;
+  margin-bottom: 28px;
+  max-width: 1040px;
+}
+
+.accentSubhead {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $accent;
+  margin: 32px 0 12px;
+  letter-spacing: -0.01em;
+}
+
+/* ── Callout label (LABEL / description, used under every screenshot) ── */
+.calloutLabel {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: $text-muted;
+  margin: 14px 0 24px;
+
+  strong {
+    color: $accent;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 6px;
+  }
+}
+
+/* ── Showcase Image (single, full width) ── */
+.showcaseImageContainer {
+  width: 100%;
+  max-width: 1080px;
+  margin: 28px auto 0;
+  background: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid $border-color;
+  box-shadow: 0 10px 30px -5px rgba(16, 27, 51, 0.08), 0 0 1px 1px rgba(16, 27, 51, 0.04);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.showcaseImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 0;
+}
+
+/* ── Two-image showcase (side by side pairs) ── */
+.twoImageShowcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 24px;
+  margin: 24px 0 12px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.showcasePhoneFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.showcasePhoneImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #FFFFFF;
+  border: 1px solid $card-border;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(16, 27, 51, 0.06);
+}
+
+/* ── Tables ── */
+.tableOuter {
+  width: 100%;
+  border-radius: 6px;
+  overflow-x: auto;
+  border: 1px solid #DCE2ED;
+  margin: 24px 0 32px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(16, 27, 51, 0.04);
+}
+
+.enterpriseTable {
+  width: 100%;
+  min-width: 420px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+
+  thead {
+    tr {
+      background-color: $navy;
+      color: #FFFFFF;
+    }
+
+    th {
+      padding: 14px 20px;
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: left;
+      color: #FFFFFF;
+      border-right: 1px solid rgba(255, 255, 255, 0.18);
+      overflow-wrap: break-word;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      background-color: #FFFFFF;
+      border-bottom: 1px solid #DCE2ED;
+      transition: background-color 0.15s ease;
+
+      &:nth-child(even) {
+        background-color: #F5F7FC;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: 14px 20px;
+      color: $text-dark;
+      font-weight: 500;
+      text-align: left;
+      vertical-align: middle;
+      border-right: 1px solid #DCE2ED;
+      overflow-wrap: break-word;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    min-width: 0;
+
+    thead th {
+      padding: 10px 8px;
+      font-size: 0.66rem;
+      letter-spacing: 0.03em;
+    }
+
+    tbody td {
+      padding: 10px 8px;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.colBold {
+  font-weight: 700;
+  color: $text-dark;
+}
+
+/* ── Architecture Flowchart (Page 4) ── */
+.archFlowchartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 32px 0 24px;
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #F4F7FC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 32px 28px;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+    margin: 24px 0 18px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 10px;
+    border-radius: 10px;
+  }
+}
+
+.archRowSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.archBox {
+  width: 100%;
+  border-radius: 8px;
+  padding: 20px 24px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 768px) {
+    padding: 16px 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px 10px;
+  }
+}
+
+.archBoxBlue {
+  width: 100%;
+  border-radius: 8px;
+  padding: 20px 24px;
+  color: #FFFFFF;
+  background-color: #2563EB;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+
+  @media (max-width: 768px) {
+    padding: 16px 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px 10px;
+  }
+}
+
+.archBoxNavy {
+  width: 100%;
+  border-radius: 8px;
+  padding: 20px 24px;
+  color: #FFFFFF;
+  background-color: #0F172A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+
+  @media (max-width: 768px) {
+    padding: 16px 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px 10px;
+  }
+}
+
+.archBoxTitle {
+  font-size: clamp(0.82rem, 1.8vw, 0.95rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: #FFFFFF;
+  word-break: break-word;
+}
+
+.archBoxSubtitle {
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+  font-weight: 400;
+  opacity: 0.92;
+  color: #FFFFFF;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.archArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #475569;
+  padding: 10px 0;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 640px) {
+    padding: 6px 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.archArrowRowSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+
+    > div:last-child {
+      display: none;
+    }
+  }
+}
+
+/* ── Cover hero image (page 1) ── */
+.coverHeroImage {
+  margin: 32px 0 20px;
+}

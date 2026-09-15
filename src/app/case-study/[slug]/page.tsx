@@ -21,6 +21,7 @@ import CrackedCaseStudy from '@/components/organisms/CrackedCaseStudy/CrackedCas
 import SheltasCaseStudy from '@/components/organisms/SheltasCaseStudy/SheltasCaseStudy';
 import LegalGPTCaseStudy from '@/components/organisms/LegalGPTCaseStudy/LegalGPTCaseStudy';
 import InnvorCaseStudy from '@/components/organisms/InnvorCaseStudy/InnvorCaseStudy';
+import JoveCaseStudy from '@/components/organisms/JoveCaseStudy/JoveCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -226,6 +227,20 @@ export async function generateMetadata({
     };
   }
 
+  const isJove =
+    params?.slug?.toLowerCase()?.includes('jove') ||
+    params?.slug?.toLowerCase()?.includes('digital-twin');
+  if (isJove) {
+    return {
+      title: 'Digital Twin: AI Powered Expert Knowledge Platform | PG-AGI Case Study',
+      description: "An enterprise case study of a platform that turns an expert's documented experience into a digital twin — discoverable expertise, cited answers, and text or voice conversation.",
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Digital Twin Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -339,6 +354,14 @@ export default async function CaseStudyPage({
   if (isInnvor) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <InnvorCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isJove =
+    params?.slug?.toLowerCase()?.includes('jove') ||
+    params?.slug?.toLowerCase()?.includes('digital-twin');
+  if (isJove) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <JoveCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
