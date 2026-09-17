@@ -23,6 +23,7 @@ import AIMIBrainCaseStudy from '@/components/organisms/AIMIBrainCaseStudy/AIMIBr
 import LeadingHerWayCaseStudy from '@/components/organisms/LeadingHerWayCaseStudy/LeadingHerWayCaseStudy';
 import SocialJetCaseStudy from '@/components/organisms/SocialJetCaseStudy/SocialJetCaseStudy';
 import SentlogicCaseStudy from '@/components/organisms/SentlogicCaseStudy/SentlogicCaseStudy';
+import OrderLoopCaseStudy from '@/components/organisms/OrderLoopCaseStudy/OrderLoopCaseStudy';
 
 type CaseStudy = {
   slug: string;
@@ -418,6 +419,13 @@ const processLinksWithPreview = (content: string) => {
     (caseStudy.slug && caseStudy.slug.toLowerCase().includes('sentlogic'));
   if (isSentlogic) {
     return <SentlogicCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
+  }
+
+  const isOrderLoop =
+    (slug && String(slug).toLowerCase().includes('order-loop')) ||
+    (caseStudy.slug && caseStudy.slug.toLowerCase().includes('order-loop'));
+  if (isOrderLoop) {
+    return <OrderLoopCaseStudy caseStudy={caseStudy as unknown as CaseStudyData} />;
   }
 
   // Defensive: a case study document seeded with the wrong schema (missing

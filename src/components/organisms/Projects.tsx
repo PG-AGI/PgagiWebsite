@@ -49,6 +49,7 @@ const PRIORITY_SLUGS: string[] = [
   'vook-ai-wireless-microphone-companion-app',                                         // 8. Vook
   'sheltas-health-dataset-annotation-platform',                                        // 9. Sheltas
   'sentlogic-instagram-engagement-revenue-attribution',                                // 10. Sentlogic
+  'order-loop-corimori-marketplace-order-automation',                                  // 10b. Order Loop
   'two-point-correlation-function-spatial-clustering',                                 // 11. Applied Statistical Research... Spatial Clustering
   'cosmological-model-parameter-extraction',                                           // 12. Applied Cosmology Research... Lambda-CDM
   'skillina-talent-marketplace',                                                       // 13. Skillinia

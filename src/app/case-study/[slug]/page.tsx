@@ -22,6 +22,7 @@ import SheltasCaseStudy from '@/components/organisms/SheltasCaseStudy/SheltasCas
 import LegalGPTCaseStudy from '@/components/organisms/LegalGPTCaseStudy/LegalGPTCaseStudy';
 import InnvorCaseStudy from '@/components/organisms/InnvorCaseStudy/InnvorCaseStudy';
 import JoveCaseStudy from '@/components/organisms/JoveCaseStudy/JoveCaseStudy';
+import OrderLoopCaseStudy from '@/components/organisms/OrderLoopCaseStudy/OrderLoopCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -241,6 +242,18 @@ export async function generateMetadata({
     };
   }
 
+  const isOrderLoop = params?.slug?.toLowerCase()?.includes('order-loop');
+  if (isOrderLoop) {
+    return {
+      title: 'Order Loop: AI Mail Support and Returns Automation | PG-AGI Case Study',
+      description: "A two part automation backbone for Corimori, a multi marketplace seller across Amazon and Otto — an AI pipeline that reads order mail from ten storefronts, resolves it against the seller's own order records, and drafts or sends the reply, alongside an independent daily job that clears delivered Otto returns.",
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Order Loop Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -362,6 +375,12 @@ export default async function CaseStudyPage({
   if (isJove) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <JoveCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isOrderLoop = params?.slug?.toLowerCase()?.includes('order-loop');
+  if (isOrderLoop) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <OrderLoopCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);
