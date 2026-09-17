@@ -36,14 +36,22 @@ const teamMembers: TeamMember[] = [
   { id: 20, name: "Hemanath Kumar R", role: "AI/ML", image: "/assets/team/hemanath-kumar-r.png" },
   { id: 21, name: "Saksham Verma", role: "AI/ML", image: "/assets/team/Saksham-verma.png" },
   { id: 22, name: "Amit Verma", role: "AI/ML", image: "/assets/team/Amit.jpeg" },
-  { id: 23, name: "Ayush Sahu", role: "SDE", image: "/assets/team/ayush-github-photo.jpg" },
-  { id: 24, name: "Divyansh Mishra", role: "SDE", image: "/assets/team/Divyansh.png" },
-  { id: 25, name: "Sahil Nikalje", role: "SDE", image: "/assets/team/Sahil Nikalje PGAGI.png" },
-  { id: 26, name: "Shivang Dixit", role: "SDE", image: "/assets/team/Shivang.png" },
-  { id: 27, name: "Thanmay M Shetty", role: "AI/ML ", image: "/assets/team/Thanmay.jpg" },
-  { id: 28, name: "Tanish Sarkar", role: "AI/ML ", image: "/assets/team/Tanish.jpg" },
-  { id: 29, name: "Nathan Christopher Menon", role: "AI/ML ", image: "/assets/team/Nathan.jpeg" },
-  { id: 30, name: "Venkateramanan Manivannan", role: "AI/ML ", image: "/assets/team/venkate_pic.JPG" },
+  { id: 23, name: "Avi Pandey", role: "AI/ML", image: "/assets/team/Avi.jpg" },
+
+
+  { id: 24, name: "Ayush Sahu", role: "SDE", image: "/assets/team/ayush-github-photo.jpg" },
+  { id: 25, name: "Divyansh Mishra", role: "SDE", image: "/assets/team/Divyansh.png" },
+  { id: 26, name: "Sahil Nikalje", role: "SDE", image: "/assets/team/Sahil Nikalje PGAGI.png" },
+  { id: 27, name: "Shivang Dixit", role: "SDE", image: "/assets/team/Shivang.png" },
+  { id: 28, name: "Thanmay M Shetty", role: "AI/ML ", image: "/assets/team/Thanmay.jpg" },
+  { id: 29, name: "Tanish Sarkar", role: "AI/ML ", image: "/assets/team/Tanish.jpg" },
+  { id: 30, name: "Nathan Christopher Menon", role: "AI/ML ", image: "/assets/team/Nathan.jpeg" },
+  { id: 31, name: "Venkateramanan Manivannan", role: "AI/ML ", image: "/assets/team/venkate_pic.JPG" },
+
+
+   { id: 32, name: "Rahul Srinivas Kodunuri", role: "SDE", image: "/assets/team/Rahulg.png" },
+    { id: 33, name: "Anik Dhiman", role: "AI Architecture", image: "/assets/team/Anik.jpeg" },
+     { id: 34, name: "Garv Bahl", role: "AI Architecture ", image: "/assets/team/Garv.png" },
 
 
 
