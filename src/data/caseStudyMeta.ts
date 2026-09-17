@@ -587,6 +587,19 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     category: 'MarTech/AI/ML',
   },
 
+  'order-loop-corimori-marketplace-order-automation': {
+    techStack: ['Fastify', 'Next.js', 'Postgres on Neon', 'SQL Server', 'AWS Bedrock', 'Python'],
+    metrics: [
+      { value: '10', label: 'Storefronts Monitored' },
+      { value: '12', label: 'Live Reply Scenarios' },
+      { value: '100+', label: 'Customer Queries Daily' },
+      { value: '3,658', label: 'Pipeline Runs' },
+    ],
+    highlight: '100+ customer queries resolved daily without manual reply drafting',
+    tags: ['Custom Build'],
+    category: 'E-commerce/AI/ML',
+  },
+
   'hermayhem-leading-her-ways-cycle-aware-ai-productivity': {
     techStack: ['React Native', 'FastAPI', 'Gemini 3.1 Pro', 'MongoDB', '+3'],
     metrics: [

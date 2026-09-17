@@ -488,14 +488,21 @@ $content-max: 1400px;
 /* ── Metrics ── */
 .metricsRow {
   display: flex;
-  gap: clamp(24px, 3.5vw, 44px);
-  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 28px);
+  flex-wrap: nowrap;
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }
 
 .metricBlock {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .metricNum {

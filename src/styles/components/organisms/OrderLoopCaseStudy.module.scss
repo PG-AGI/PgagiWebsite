@@ -1,0 +1,672 @@
+// ── Color Tokens ──
+$navy-deep: #0A1220;
+$navy-panel: #0F1B2E;
+$navy-card: #16233A;
+$blue-primary: #2F6FED;
+$blue-dark: #1D4ED8;
+$blue-light-bg: #EAF2FF;
+$blue-badge-bg: #E3ECFF;
+$blue-badge-text: #1D4ED8;
+
+$text-main: #111827;
+$text-muted: #475569;
+$text-light: #64748B;
+
+$orange-risk: #EA580C;
+$orange-risk-bg: #FFF7ED;
+$green-fix: #16A34A;
+$green-fix-bg: #F0FDF4;
+$red-problem: #DC2626;
+$red-problem-bg: #FEF2F2;
+
+.orderLoopPage {
+  width: 100%;
+  background-color: #ffffff;
+  color: $text-main;
+  font-family: inherit;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+}
+
+/* ── Scroll-reveal (sections fade + rise into view as the page scrolls) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+  }
+}
+
+.rail {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 79px;
+
+  @media (max-width: 640px) {
+    padding: 0 24px;
+  }
+}
+
+/* ── Hero / Cover (flat navy panel — text only, matches the PDF cover) ── */
+.heroSection {
+  width: 100%;
+  background: $navy-deep;
+  padding-top: clamp(100px, 13vh, 130px);
+  padding-bottom: 48px;
+}
+
+.confidentialLine {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+
+.dateLine {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #94A3B8;
+  margin: 0 0 20px;
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #ffffff;
+  margin: 0 0 12px;
+  letter-spacing: -0.03em;
+
+  @media (max-width: 640px) {
+    font-size: 2.6rem;
+  }
+}
+
+.heroSubtitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #7CA6FF;
+  margin: 0 0 22px;
+
+  @media (max-width: 640px) {
+    font-size: 1.05rem;
+  }
+}
+
+.heroDesc {
+  font-size: 1.02rem;
+  color: #CBD5E1;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 780px;
+}
+
+/* Hero stat strip + field/detail table sit on white, right below the navy cover */
+.heroStatsGrid {
+  margin-top: 32px;
+}
+
+.fieldLabelCell {
+  font-weight: 700;
+  color: #0F172A;
+  white-space: nowrap;
+}
+
+/* ── Contents page ── */
+.contentsRunningHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0F172A;
+  padding-bottom: 14px;
+  margin: 40px 0 28px;
+  border-bottom: 1px solid #E2E8F0;
+
+  span + span::before {
+    content: '·';
+    margin-right: 10px;
+    color: #CBD5E1;
+    font-weight: 400;
+  }
+}
+
+.contentsRunningHeaderMuted {
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+.contentsEyebrow {
+  display: block;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $blue-primary;
+  margin-bottom: 10px;
+}
+
+.contentsHeading {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 32px;
+  padding-bottom: 18px;
+  border-bottom: 3px solid $blue-primary;
+  letter-spacing: -0.01em;
+
+  @media (max-width: 640px) {
+    font-size: 1.6rem;
+  }
+}
+
+/* ── Section Number Bar (full-bleed dark navy, matches PDF section headers) ── */
+.sectionNumberBarOuter {
+  width: calc(100% + 158px);
+  margin-left: -79px;
+  margin-right: -79px;
+  margin-top: 56px;
+  margin-bottom: 24px;
+  background: $navy-deep;
+  border-radius: 14px;
+  overflow: hidden;
+
+  @media (max-width: 640px) {
+    width: calc(100% + 48px);
+    margin-left: -24px;
+    margin-right: -24px;
+    border-radius: 10px;
+  }
+}
+
+.sectionNumberBar {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  padding: 0 79px 0 0;
+
+  @media (max-width: 640px) {
+    padding: 0 24px 0 0;
+    gap: 12px;
+  }
+}
+
+.sectionNumberBadge {
+  flex-shrink: 0;
+  width: 58px;
+  background: #1479E8;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+
+  @media (max-width: 640px) {
+    width: 46px;
+    font-size: 1.1rem;
+  }
+}
+
+.sectionNumberText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 14px 0;
+}
+
+.sectionNumberEyebrow {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7CA6FF;
+}
+
+.sectionNumberTitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+
+  @media (max-width: 640px) {
+    font-size: 1rem;
+  }
+}
+
+/* ── Content Sections General ── */
+.sectionBlock {
+  padding: 0 0 8px;
+}
+
+.sectionKicker {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #374151;
+  margin: 0 0 16px;
+}
+
+.sectionSubheading {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: $blue-dark;
+  margin: 36px 0 14px;
+}
+
+.sectionParagraph {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: #2C2C2C;
+  margin: 0 0 20px;
+
+  strong {
+    color: #1D283F;
+    font-weight: 600;
+  }
+}
+
+.captionNote {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 13.5px;
+  color: $text-light;
+  margin: -6px 0 18px;
+}
+
+/* ── Checklist (✓ bold lead + description) ── */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #334155;
+  padding: 6px 10px;
+  margin: 0 -10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: $blue-light-bg;
+    transform: translateX(4px);
+  }
+
+  strong {
+    color: #0F172A;
+    font-weight: 700;
+  }
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  color: $blue-primary;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+/* ── Stat Cards (light blue, PDF cover style) ── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 28px 0 40px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statBox {
+  background: $blue-light-bg;
+  border: 1px solid #D6E6FF;
+  border-radius: 8px;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -10px rgba(29, 78, 216, 0.35);
+    border-color: $blue-primary;
+  }
+
+  .statValue {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: $blue-dark;
+    letter-spacing: -0.01em;
+
+    .statSuffix {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-left: 2px;
+    }
+  }
+
+  .statLabel {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $text-light;
+    line-height: 1.5;
+  }
+}
+
+/* Alternating card background — every other stat card is plain (no fill) */
+.statsGridAlt {
+  .statBox:nth-child(even) {
+    background: transparent;
+    border-color: transparent;
+  }
+}
+
+/* ── Tables ── */
+.tableOuter {
+  width: 100%;
+  overflow-x: auto;
+  margin: 24px 0 36px;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.compTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background: #ffffff;
+
+  th {
+    background: $navy-panel;
+    padding: 14px 20px;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 14px 20px;
+    font-size: 0.92rem;
+    color: #334155;
+    border-bottom: 1px solid #F1F5F9;
+    line-height: 1.5;
+  }
+
+  tr:nth-child(even) td {
+    background: #F8FAFC;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr {
+    transition: background-color 0.15s ease;
+
+    &:hover td {
+      background: $blue-light-bg;
+    }
+  }
+
+  .labelCell {
+    font-weight: 700;
+    color: #0F172A;
+    white-space: nowrap;
+  }
+}
+
+.contentsRow {
+  cursor: pointer;
+
+  &:hover td {
+    background: $blue-light-bg !important;
+  }
+
+  &:hover .labelCell {
+    color: $blue-dark;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $blue-primary;
+    outline-offset: -2px;
+  }
+}
+
+/* ── Figure / photo blocks ── */
+.photoWrapper {
+  margin: 24px 0 36px;
+  width: 100%;
+}
+
+.photoFrame {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px -10px rgba(15, 27, 46, 0.16);
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+}
+
+.photoImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.photoCaption {
+  font-family: var(--font-plus-jakarta), sans-serif;
+  font-size: 13px;
+  color: $text-muted;
+  line-height: 1.5;
+  font-style: italic;
+  margin: 10px 0 0;
+  text-align: center;
+}
+
+/* ── Callout divider ── */
+.calloutDivider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 20px;
+}
+
+.calloutLine {
+  flex: 0 0 32px;
+  height: 2px;
+  background: $blue-primary;
+}
+
+.calloutText {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $navy-panel;
+  margin: 0;
+}
+
+/* ── Core infrastructure decision boxes ── */
+.decisionGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 24px 0 36px;
+}
+
+.decisionBox {
+  border-radius: 10px;
+  padding: 18px 22px;
+  background: #F8FAFC;
+  border-left: 4px solid $blue-primary;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 20px -10px rgba(15, 23, 42, 0.25);
+  }
+
+  .decisionTitle {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 6px;
+  }
+
+  .decisionText {
+    font-family: var(--font-plus-jakarta), sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+  }
+}
+
+.decisionBoxNavy {
+  border-left-color: $navy-panel;
+}
+
+.decisionBoxGreen {
+  border-left-color: $green-fix;
+}
+
+/* ── Risk boxes (Section 05: current state and known risks) ── */
+.riskList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0 36px;
+}
+
+.riskBox {
+  background: #EEF2F8;
+  border-left: 4px solid #991B1B;
+  border-radius: 6px;
+  padding: 18px 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 20px -10px rgba(15, 23, 42, 0.25);
+  }
+
+  .riskTitle {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 6px;
+  }
+
+  .riskText {
+    font-family: var(--font-plus-jakarta), sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+  }
+}
+
+/* ── Status banner (Outcomes close) ── */
+.statusBanner {
+  background: linear-gradient(90deg, $navy-deep 0%, $navy-panel 100%);
+  border-radius: 16px;
+  padding: 32px 32px;
+  margin: 32px 0 8px;
+
+  @media (max-width: 640px) {
+    padding: 24px 20px;
+  }
+
+  .statusEyebrow {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7CA6FF;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .statusTitle {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 10px;
+  }
+
+  .statusDesc {
+    font-family: var(--font-plus-jakarta), sans-serif;
+    font-size: 14.5px;
+    color: #CBD5E1;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 760px;
+  }
+}
+
