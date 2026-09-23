@@ -31,6 +31,7 @@ const HIDDEN_SLUGS = new Set<string>([
   'onchain-toolkit-ai-analysis-platform',
   'how-we-built-an-ai-saas-that-helps-doctors-share-healthcare-awareness-on-linkedin',
   'linkedin-ai',
+  'fomo', // commented out per request (hidden, not deleted)
 ]);
 
 
