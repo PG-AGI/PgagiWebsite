@@ -257,14 +257,15 @@ export const pgagiClientTestimonials: PgagiClientReview[] = [
   },
   {
     name: "Odunayo Talabi",
-    company: "Sheltas Healthcare",
+    position: "Founder & CEO",
+    company: "Sheltas Health",
     country: "",
     gender: "male",
-    platform: "clutch",
-    memberImage: "/assets/Customers/Member11.png",
+    platform: "upwork",
+    memberImage: "/assets/Customers/odunayoTalabi.png",
     caseStudyUrl: "/case-study/sheltas-health-dataset-annotation-platform",
     quote:
-      "PGAGI PRIVATE LIMITED has been an excellent, professional team — they deliver project milestones on time and with excellent work quality. Moreover, the team is technically efficient, very collaborative, and willing to course-correct if needed.",
+      "Working with PGAGI team was great. They were committed to the job and showed great skills and mastery. Very good at what they do. Will hire them again.",
     projectName: "Sheltas Healthcare AI System",
   },
 ];
