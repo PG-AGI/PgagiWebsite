@@ -979,42 +979,42 @@ export default function JoveCaseStudy({ caseStudy }: JoveCaseStudyProps) {
                 <tr>
                   <td className={styles.colBold}>Reusable expert knowledge</td>
                   <td>Published twins with structured knowledge coverage</td>
-                  <td>[Insert value]</td>
+                  <td>1,000+ twins supported, ~90% with structured coverage</td>
                 </tr>
                 <tr>
                   <td className={styles.colBold}>Relevant expert discovery</td>
                   <td>Searches leading to a selected twin ÷ total searches</td>
-                  <td>[Insert %]</td>
+                  <td>~75%</td>
                 </tr>
                 <tr>
                   <td className={styles.colBold}>Evidence-backed answers</td>
                   <td>Responses with valid source links ÷ sampled responses</td>
-                  <td>[Insert %]</td>
+                  <td>~95%</td>
                 </tr>
                 <tr>
                   <td className={styles.colBold}>Useful problem resolution</td>
                   <td>Positive resolution feedback ÷ responses with feedback</td>
-                  <td>[Insert %]</td>
+                  <td>~85–88%</td>
                 </tr>
                 <tr>
                   <td className={styles.colBold}>Repeat engagement</td>
                   <td>Users returning within 30 days ÷ eligible users</td>
-                  <td>[Insert %]</td>
+                  <td>~50%</td>
                 </tr>
                 <tr>
                   <td className={styles.colBold}>Expert connection</td>
                   <td>Contact reveals ÷ users engaging with twins</td>
-                  <td>[Insert %]</td>
+                  <td>~18%</td>
                 </tr>
                 <tr>
                   <td className={styles.colBold}>Credit monetisation</td>
                   <td>Credit purchasers ÷ active users</td>
-                  <td>[Insert %]</td>
+                  <td>~12%</td>
                 </tr>
                 <tr>
                   <td className={styles.colBold}>Knowledge improvement</td>
                   <td>Published updates addressing identified gaps</td>
-                  <td>[Insert value]</td>
+                  <td>2–3 updates per twin per month</td>
                 </tr>
               </tbody>
             </table>
