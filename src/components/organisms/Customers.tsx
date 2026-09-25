@@ -92,71 +92,72 @@ const TestimonialCard = ({ t }: { t: CardTestimonial }) => {
   // Internal case studies (relative paths) open in the same tab; external
   // sites open in a new tab. The URL always comes from the data, never hardcoded.
   const caseStudyIsInternal = t.caseStudyUrl.startsWith("/");
+
   return (
     <div className={styles.card}>
-      <p className={styles.quote}>&ldquo;{t.quote}&rdquo;</p>
+      {t.memberImage ? (
+        <Image
+          src={t.memberImage}
+          alt=""
+          fill
+          sizes="320px"
+          className={styles.cardPhoto}
+        />
+      ) : (
+        <span className={styles.cardPhotoFallback} aria-hidden>
+          {t.name.charAt(0).toUpperCase()}
+        </span>
+      )}
 
-      {t.caseStudyUrl ? (
+      <div className={styles.cardScrim} aria-hidden />
+
+      <span className={styles.cardBrand}>
+        <Image src={logo.src} alt={logo.name} width={20} height={20} className={styles.cardBrandLogo} />
+      </span>
+
+      {t.caseStudyUrl && (
         <a
           href={t.caseStudyUrl}
           {...(caseStudyIsInternal
             ? {}
             : { target: "_blank", rel: "noopener noreferrer" })}
-          className={styles.caseStudyBtn}
+          className={styles.cardCaseStudyLink}
+          aria-label={`View case study: ${t.footerLabel || t.name}`}
         >
-          View case study <span aria-hidden>→</span>
+          <FiExternalLink size={14} aria-hidden />
         </a>
-      ) : (
-        <button className={styles.caseStudyBtn} type="button">
-          View case study <span aria-hidden>→</span>
-        </button>
       )}
 
-      <div className={styles.cardPerson}>
-        <span className={styles.personAvatar}>
-          {t.memberImage ? (
-            <Image
-              src={t.memberImage}
-              alt={t.name}
-              fill
-              sizes="48px"
-              className={styles.personAvatarImg}
-            />
+      <div className={styles.cardBody}>
+        <span className={styles.cardQuoteMark} aria-hidden>&ldquo;</span>
+        <p className={styles.cardQuote}>{t.quote}</p>
+        <p className={styles.cardAttribution}>
+          <span aria-hidden>&mdash; </span>
+          {t.name}
+          {t.subline && <span className={styles.cardAttributionCompany}>, {t.subline}</span>}
+        </p>
+
+        <div className={styles.cardFooter}>
+          <Image src={logo.src} alt={logo.name} width={64} height={20} className={styles.footerLogo} />
+          <span className={styles.footerDivider} aria-hidden />
+          {t.footerUrl ? (
+            <a
+              href={t.footerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerProject}
+              aria-label={`Open ${t.footerLabel} website in a new tab`}
+            >
+              {t.footerLabel}&nbsp;
+              <FiExternalLink size={12} aria-hidden />
+            </a>
           ) : (
-            <span className={styles.personInitials} aria-hidden>
-              {t.name.charAt(0).toUpperCase()}
+            <span className={styles.footerProject}>
+              {t.footerLabel}&nbsp;
+              <FiExternalLink size={12} aria-hidden />
             </span>
           )}
-        </span>
-        <div className={styles.nameBlock}>
-          <p className={styles.name}>{t.name}</p>
-          {t.subline && <p className={styles.company}>{t.subline}</p>}
         </div>
-      </div>
-
-      <div className={styles.cardDivider} />
-
-      <div className={styles.cardFooter}>
-        <span className={styles.footerPlatform}>
-          <Image src={logo.src} alt={logo.name} width={72} height={22} className={styles.footerLogo} />
-        </span>
-        {t.footerUrl ? (
-          <a
-            href={t.footerUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerProject}
-            aria-label={`Open ${t.footerLabel} website in a new tab`}
-          >
-            {t.footerLabel}&nbsp;
-            <FiExternalLink size={13} aria-hidden />
-          </a>
-        ) : (
-          <span className={styles.footerProject}>
-            {t.footerLabel}&nbsp;
-            <FiExternalLink size={13} aria-hidden />
-          </span>
-        )}
       </div>
     </div>
   );
