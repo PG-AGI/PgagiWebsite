@@ -294,6 +294,7 @@ $font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Sego
   &.badgeRose { background-color: #D82E6F; }
   &.badgeOrange { background-color: #F46344; }
   &.badgeAmber { background-color: #FCAF45; color: #2B2241; }
+  &.badgeGreen { background-color: #1A936F; }
 }
 
 .sectionHeaderContent {
@@ -314,6 +315,7 @@ $font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Sego
   &.eyebrowRose { color: #D82E6F; }
   &.eyebrowOrange { color: #F46344; }
   &.eyebrowAmber { color: #D97706; }
+  &.eyebrowGreen { color: #1A936F; }
 }
 
 .sectionTitle {
@@ -361,6 +363,7 @@ $font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Sego
   &.subHeaderRose { color: #D82E6F; }
   &.subHeaderOrange { color: #F46344; }
   &.subHeaderAmber { color: #FCAF45; }
+  &.subHeaderGreen { color: #1A936F; }
 }
 
 // ── Callout Box ──
@@ -399,6 +402,12 @@ $font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Sego
     border-left-color: #F46344;
     background-color: #FFF5F2;
     .calloutLabel { color: #F46344; }
+  }
+
+  &.calloutGreen {
+    border-left-color: #1A936F;
+    background-color: #F0FAF6;
+    .calloutLabel { color: #1A936F; }
   }
 }
 
@@ -449,6 +458,7 @@ $font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Sego
     &.thRose { background-color: #D82E6F; }
     &.thOrange { background-color: #F46344; }
     &.thAmber { background-color: #FCAF45; color: #2B2241; }
+    &.thGreen { background-color: #1A936F; }
   }
 
   tbody tr {
@@ -515,6 +525,7 @@ $font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Sego
   &.numBlue { color: #405DE5; }
   &.numMagenta { color: #C03483; }
   &.numOrange { color: #F46344; }
+  &.numGreen { color: #1A936F; }
 }
 
 .tocContent {
@@ -884,6 +895,15 @@ $font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Sego
     transform: rotate(90deg);
     margin: 4px 0;
   }
+}
+
+// ── Figure 4: Commerce Attribution Lifecycle ──
+.fig4Title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: $color-primary-dark;
+  text-align: center;
+  margin: 4px 0 20px;
 }
 
 // ── In One Line & Signature ──
