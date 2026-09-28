@@ -325,6 +325,150 @@ function RAGOrchestrationFlowchart() {
   );
 }
 
+function CommerceLifecycleFlow() {
+  const rowY1 = 20;
+  const rowY2 = 172;
+  const boxH = 56;
+  const midY1 = rowY1 + boxH / 2;
+  const midY2 = rowY2 + boxH / 2;
+  const cols = [
+    { x: 10 },
+    { x: 290 },
+    { x: 570 },
+  ];
+  const colW = 260;
+
+  const rightArrow = (x1: number, x2: number, y: number, key: string) => (
+    <g key={key}>
+      <line x1={x1} y1={y} x2={x2 - 8} y2={y} stroke="#7F7A93" strokeWidth="1.8" />
+      <polygon points={`${x2 - 8},${y - 5} ${x2},${y} ${x2 - 8},${y + 5}`} fill="#7F7A93" />
+    </g>
+  );
+
+  const leftArrow = (x1: number, x2: number, y: number, key: string) => (
+    <g key={key}>
+      <line x1={x1} y1={y} x2={x2 + 8} y2={y} stroke="#7F7A93" strokeWidth="1.8" />
+      <polygon points={`${x2 + 8},${y - 5} ${x2},${y} ${x2 + 8},${y + 5}`} fill="#7F7A93" />
+    </g>
+  );
+
+  const box = (
+    x: number,
+    y: number,
+    title: string,
+    desc: string,
+    accent: boolean,
+    key: string
+  ) => (
+    <g key={key}>
+      <rect
+        x={x}
+        y={y}
+        width={colW}
+        height={boxH}
+        rx="8"
+        fill={accent ? '#EFF6FF' : '#FFFFFF'}
+        stroke={accent ? '#3B82F6' : '#E2DFEF'}
+        strokeWidth={accent ? '2' : '1.4'}
+      />
+      <text
+        x={x + colW / 2}
+        y={y + 24}
+        textAnchor="middle"
+        fill={accent ? '#1D4ED8' : '#1A1226'}
+        fontSize="13"
+        fontWeight="700"
+        fontFamily="inherit"
+      >
+        {title}
+      </text>
+      <text
+        x={x + colW / 2}
+        y={y + 42}
+        textAnchor="middle"
+        fill="#6B7280"
+        fontSize="11.5"
+        fontWeight="500"
+        fontFamily="inherit"
+      >
+        {desc}
+      </text>
+    </g>
+  );
+
+  const loopX2 = cols[1].x + colW / 2; // paid order matched center
+  const loopX1 = cols[0].x + colW / 2; // net revenue per post center
+  const loopBottomY = rowY2 + boxH + 32;
+
+  return (
+    <div className={styles.flowchartWrapper}>
+      <div className={styles.fig4Title}>Every paid order traces back to the conversation that sold it</div>
+      <svg
+        viewBox="0 0 900 320"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={styles.flowchartSvg}
+        style={{ width: '100%', maxWidth: '760px', height: 'auto', display: 'block' }}
+      >
+        {/* Row 1 */}
+        {box(cols[0].x, rowY1, 'Product question', 'Follower comments or DMs', false, 'b1')}
+        {box(cols[1].x, rowY1, 'Catalog-grounded reply', 'AI answers from live stock', false, 'b2')}
+        {box(cols[2].x, rowY1, 'Tracked buy button', 'Conversation context attached', false, 'b3')}
+
+        {rightArrow(cols[0].x + colW, cols[1].x, midY1, 'a1')}
+        {rightArrow(cols[1].x + colW, cols[2].x, midY1, 'a2')}
+
+        {/* Down arrow: col 3 row1 -> col3 row2 */}
+        <line
+          x1={cols[2].x + colW / 2}
+          y1={rowY1 + boxH}
+          x2={cols[2].x + colW / 2}
+          y2={rowY2 - 8}
+          stroke="#7F7A93"
+          strokeWidth="1.8"
+        />
+        <polygon
+          points={`${cols[2].x + colW / 2 - 5},${rowY2 - 8} ${cols[2].x + colW / 2},${rowY2} ${cols[2].x + colW / 2 + 5},${rowY2 - 8}`}
+          fill="#7F7A93"
+        />
+
+        {/* Row 2 */}
+        {box(cols[0].x, rowY2, 'Net revenue per post', 'Shown in the Living Gallery', true, 'b4')}
+        {box(cols[1].x, rowY2, 'Paid order matched', 'Revenue counted on payment', false, 'b5')}
+        {box(cols[2].x, rowY2, 'Shopify checkout', 'Context stays on the order', false, 'b6')}
+
+        {leftArrow(cols[2].x, cols[1].x + colW, midY2, 'a3')}
+        {leftArrow(cols[1].x, cols[0].x + colW, midY2, 'a4')}
+
+        {/* Dashed recalculation loop: Paid order matched -> Net revenue per post */}
+        <path
+          d={`M ${loopX2} ${rowY2 + boxH} L ${loopX2} ${loopBottomY} L ${loopX1} ${loopBottomY} L ${loopX1} ${rowY2 + boxH + 8}`}
+          stroke="#9CA3AF"
+          strokeWidth="1.6"
+          strokeDasharray="4 3"
+          fill="none"
+        />
+        <polygon
+          points={`${loopX1 - 5},${rowY2 + boxH + 8} ${loopX1},${rowY2 + boxH} ${loopX1 + 5},${rowY2 + boxH + 8}`}
+          fill="#9CA3AF"
+        />
+
+        <text
+          x={(loopX1 + loopX2) / 2}
+          y={loopBottomY + 20}
+          textAnchor="middle"
+          fill="#6B7280"
+          fontSize="12"
+          fontStyle="italic"
+          fontFamily="inherit"
+        >
+          refund or cancellation recalculates it
+        </text>
+      </svg>
+    </div>
+  );
+}
+
 export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
   return (
     <div className={styles.sentlogicPage}>
@@ -451,7 +595,17 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
             </div>
 
             <div className={styles.tocItem}>
-              <span className={`${styles.tocNum} ${styles.numMagenta}`}>05</span>
+              <span className={`${styles.tocNum} ${styles.numGreen}`}>05</span>
+              <div className={styles.tocContent}>
+                <span className={styles.tocTitle}>Shopify Commerce Integration</span>
+                <span className={styles.tocDesc}>
+                  Catalog-grounded AI, in-DM buy buttons, and paid-order revenue attribution.
+                </span>
+              </div>
+            </div>
+
+            <div className={styles.tocItem}>
+              <span className={`${styles.tocNum} ${styles.numMagenta}`}>06</span>
               <div className={styles.tocContent}>
                 <span className={styles.tocTitle}>Security &amp; Auditability</span>
                 <span className={styles.tocDesc}>
@@ -461,7 +615,7 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
             </div>
 
             <div className={styles.tocItem}>
-              <span className={`${styles.tocNum} ${styles.numOrange}`}>06</span>
+              <span className={`${styles.tocNum} ${styles.numOrange}`}>07</span>
               <div className={styles.tocContent}>
                 <span className={styles.tocTitle}>What Makes This Different</span>
                 <span className={styles.tocDesc}>
@@ -471,7 +625,7 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
             </div>
 
             <div className={styles.tocItem}>
-              <span className={`${styles.tocNum} ${styles.numOrange}`}>07</span>
+              <span className={`${styles.tocNum} ${styles.numOrange}`}>08</span>
               <div className={styles.tocContent}>
                 <span className={styles.tocTitle}>Outcomes from the System</span>
                 <span className={styles.tocDesc}>
@@ -484,9 +638,10 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
           <div className={`${styles.calloutBox} ${styles.calloutPurple}`}>
             <span className={styles.calloutLabel}>READING NOTE</span>
             <p className={styles.calloutText}>
-              Sections 01 through 04 describe the product surface and its commercial model. Sections 05 and
-              06 cover platform assurance and competitive positioning. Section 07 defines the measurement
-              framework the platform instruments natively.
+              Sections 01 through 04 describe the product surface and its commercial model. Section 05
+              covers the Shopify commerce integration. Sections 06 and 07 cover platform assurance and
+              competitive positioning. Section 08 defines the measurement framework the platform
+              instruments natively.
             </p>
           </div>
         </section>
@@ -527,7 +682,7 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
             DELIVERED CAPABILITY SURFACE
           </div>
           <p className={styles.bodyParagraph} style={{ marginBottom: '12px' }}>
-            The build spans eight capability areas, each independently operable and independently scalable.
+            The build spans <strong>nine</strong> capability areas, each independently operable and independently scalable.
           </p>
 
           <div className={styles.tableWrapper}>
@@ -570,6 +725,10 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
                 <tr>
                   <td className={styles.strongCol}>Billing &amp; notifications</td>
                   <td>Subscription management via Stripe and transactional email via SendGrid.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Shopify commerce integration</td>
+                  <td>Read-only store connection, catalog-grounded AI, in-DM buy buttons, and paid-order revenue attribution.</td>
                 </tr>
               </tbody>
             </table>
@@ -678,6 +837,7 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
                   <div className={styles.figLayerPill}>URL Ingestion</div>
                   <div className={styles.figLayerPill}>Chunk + Embed</div>
                   <div className={styles.figLayerPill}>Version + Rollback</div>
+                  <div className={styles.figLayerPill}>Shopify Catalog Sync</div>
                 </div>
               </div>
             </div>
@@ -696,6 +856,7 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
                   <div className={styles.figLayerPill}>Attribution Engine</div>
                   <div className={styles.figLayerPill}>KPI Compute</div>
                   <div className={styles.figLayerPill}>Segment Pipeline</div>
+                  <div className={styles.figLayerPill}>Shopify Order Matching</div>
                 </div>
               </div>
             </div>
@@ -981,7 +1142,11 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
                 </tr>
                 <tr>
                   <td className={styles.strongCol}>Revenue attribution</td>
-                  <td>Revenue tied back to the specific post or comment that generated it.</td>
+                  <td>Revenue tied back to the specific post or comment that generated it, reconciled against paid Shopify orders net of refunds.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Shopify connection</td>
+                  <td>Connect a store, view catalog sync status, and attach product buy buttons to automations.</td>
                 </tr>
                 <tr>
                   <td className={styles.strongCol}>Hot leads panel</td>
@@ -1013,12 +1178,124 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
           </div>
         </section>
 
-        {/* ── Section 05 — Security & Auditability ── */}
+        {/* ── Section 05 — Shopify Commerce Integration ── */}
         <section className={styles.articleSection}>
           <SectionBadgeHeader
             badge="05"
-            badgeColorClass={styles.badgeRose}
+            badgeColorClass={styles.badgeGreen}
             eyebrow="SECTION FIVE"
+            eyebrowColorClass={styles.eyebrowGreen}
+            title="Shopify Commerce Integration"
+          />
+
+          <p className={styles.bodyParagraph}>
+            Sentlogic connects straight to a creator&apos;s Shopify store. The AI assistant then answers
+            from the real product catalog, and every sale a conversation produces is traced back to
+            that conversation automatically. Nobody has to tag links or reconcile anything by hand.
+          </p>
+
+          <div className={`${styles.calloutBox} ${styles.calloutGreen}`}>
+            <span className={styles.calloutLabel}>THE CORE SHIFT</span>
+            <p className={styles.calloutText}>
+              Before, attribution stopped at the link tap. Now the loop closes at the paid order: a
+              follower asks about a product in a DM, gets a buy button tied to that conversation,
+              and checks out. The net revenue then shows up against the post and automation that
+              started it.
+            </p>
+          </div>
+
+          <div className={`${styles.subSectionHeader} ${styles.subHeaderGreen}`}>
+            DELIVERED CAPABILITY SURFACE
+          </div>
+
+          <div className={styles.tableWrapper}>
+            <table className={styles.customTable}>
+              <thead>
+                <tr>
+                  <th className={styles.thGreen} style={{ width: '30%' }}>CAPABILITY</th>
+                  <th className={styles.thGreen}>WHAT IT DELIVERS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className={styles.strongCol}>One-click store connection</td>
+                  <td>Standard Shopify OAuth install flow, with the store credential encrypted at rest. The creator can disconnect at any time from the dashboard.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Catalog-grounded AI</td>
+                  <td>Products, variants, prices, stock status and descriptions go into the creator&apos;s knowledge base, so the AI answers &quot;is the large in stock?&quot; from live data.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Always-current catalog</td>
+                  <td>Price changes and restocks reach the AI within moments. Large imports are grouped into a single efficient resync, and a daily reconciliation catches any missed update.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>In-DM buy buttons</td>
+                  <td>Up to three in-stock variants appear as tappable buttons in the Instagram DM. Each one goes straight to checkout or to the product page and carries an invisible attribution marker.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Order-level attribution</td>
+                  <td>Shopify orders are matched to the conversation that produced them. Revenue is counted only once payment is captured.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Refund-aware revenue</td>
+                  <td>Attributed revenue is recalculated from Shopify&apos;s own order state after every change, so refunds and cancellations reverse automatically and repeated notifications can&apos;t double-count.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Data-protection lifecycle</td>
+                  <td>Shopify&apos;s mandatory customer data-request, customer erasure and shop deletion events are handled automatically, with an audit trail.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className={`${styles.subSectionHeader} ${styles.subHeaderGreen}`}>
+            CLOSED-LOOP ATTRIBUTION
+          </div>
+
+          {/* Figure 4: Commerce Attribution Lifecycle */}
+          <CommerceLifecycleFlow />
+
+          <div className={styles.figCaption}>
+            Figure 4 — Commerce attribution lifecycle: product question through paid order to post-level net revenue.
+          </div>
+
+          <p className={styles.bodyParagraph}>
+            A buy button carries its conversation context into checkout, and Shopify keeps that
+            context on the resulting order. When the order is placed, paid, refunded or cancelled,
+            Sentlogic re-reads the order from Shopify and recalculates the conversation&apos;s revenue.
+            Incremental counters are never used. Revenue therefore matches Shopify, however many
+            notifications arrive and in whatever order.
+          </p>
+
+          <div className={`${styles.subSectionHeader} ${styles.subHeaderGreen}`}>
+            READ-ONLY BY DESIGN
+          </div>
+
+          <p className={styles.bodyParagraph}>
+            The integration requests four permissions (products, orders, customers, inventory), and
+            all four are read-only. Sentlogic never creates, edits or deletes a product, order, customer
+            or stock level. The only action it takes on Shopify&apos;s side is subscribing to change
+            notifications for its own connection. It does not store customers&apos; names or email
+            addresses from orders.
+          </p>
+
+          <div className={`${styles.calloutBox} ${styles.calloutGreen}`}>
+            <span className={styles.calloutLabel}>WHY THIS MATTERS</span>
+            <p className={styles.calloutText}>
+              Most social commerce tools stop at click-through rate. Here, a single conversation
+              can be followed from the first comment to the net revenue left after refunds.
+              Revenue Per Comment becomes a figure a finance team can reconcile against Shopify.
+            </p>
+          </div>
+        </section>
+
+        {/* ── Section 06 — Security & Auditability ── */}
+        <section className={styles.articleSection}>
+          <SectionBadgeHeader
+            badge="06"
+            badgeColorClass={styles.badgeRose}
+            eyebrow="SECTION SIX"
             eyebrowColorClass={styles.eyebrowRose}
             title="Security &amp; Auditability"
           />
@@ -1074,6 +1351,18 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
                   <td className={styles.strongCol}>Knowledge versioning</td>
                   <td>All knowledge-base changes versioned with rollback and historical comparison, plus source and ownership metadata.</td>
                 </tr>
+                <tr>
+                  <td className={styles.strongCol}>Shopify access</td>
+                  <td>Read-only permissions only; encrypted store credential; no customer names or emails retained.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Shopify webhook integrity</td>
+                  <td>Every Shopify notification is signature-verified and de-duplicated before processing.</td>
+                </tr>
+                <tr>
+                  <td className={styles.strongCol}>Data-protection events</td>
+                  <td>Customer data-request, erasure and shop deletion events processed automatically, with a separate data-clearing safety net after uninstall.</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -1088,12 +1377,12 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
           </div>
         </section>
 
-        {/* ── Section 06 — What Makes This Different ── */}
+        {/* ── Section 07 — What Makes This Different ── */}
         <section className={styles.articleSection}>
           <SectionBadgeHeader
-            badge="06"
+            badge="07"
             badgeColorClass={styles.badgeOrange}
-            eyebrow="SECTION SIX"
+            eyebrow="SECTION SEVEN"
             eyebrowColorClass={styles.eyebrowOrange}
             title="What Makes This Different"
           />
@@ -1155,8 +1444,10 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
             <div className={styles.numberedItem}>
               <span className={styles.numberedBadge}>07</span>
               <div className={styles.numberedText}>
-                <strong>Built for Phase-2 expansion.</strong> The API-first foundation lets integrations such as Shopify,
-                HubSpot, Slack, Mailchimp, and Zapier be added without touching Phase-1 functionality.
+                <strong>Commerce-connected, with room to grow.</strong> Shopify is live as the first commerce
+                integration: catalog-grounded replies and paid-order attribution. The same API-first
+                foundation lets HubSpot, Slack, Mailchimp and Zapier plug in without touching core
+                functionality.
               </div>
             </div>
           </div>
@@ -1170,12 +1461,12 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
           </div>
         </section>
 
-        {/* ── Section 07 — Outcomes from the System ── */}
+        {/* ── Section 08 — Outcomes from the System ── */}
         <section className={styles.articleSection}>
           <SectionBadgeHeader
-            badge="07"
+            badge="08"
             badgeColorClass={styles.badgeAmber}
-            eyebrow="SECTION SEVEN"
+            eyebrow="SECTION EIGHT"
             eyebrowColorClass={styles.eyebrowAmber}
             title="Outcomes from the System"
           />
@@ -1256,7 +1547,7 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
                 <tr>
                   <td className={styles.strongCol}>Total Revenue</td>
                   <td>Revenue from automation-driven conversations</td>
-                  <td>Sum of conversion value where source = automation</td>
+                  <td>Sum of paid order value, net of refunds, attributed to automation conversations</td>
                   <td className={styles.centerCol}>—</td>
                   <td className={styles.centerCol}>—</td>
                 </tr>
@@ -1320,6 +1611,12 @@ export default function SentlogicCaseStudy(_props: SentlogicCaseStudyProps) {
               <span className={styles.bulletDot}>·</span>
               <div>
                 <strong>Attribution layer.</strong> A revenue-attribution layer that ties Instagram engagement to measurable conversions.
+              </div>
+            </div>
+            <div className={styles.bulletedItem}>
+              <span className={styles.bulletDot}>·</span>
+              <div>
+                <strong>Commerce integration.</strong> A live Shopify connection that grounds AI replies in the real catalog and attributes paid, refund-adjusted revenue to individual conversations.
               </div>
             </div>
             <div className={styles.bulletedItem}>
