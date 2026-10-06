@@ -162,7 +162,7 @@
       border-right: 1px solid #dedede;
     transition: background 0.2s ease;
   
-      &:first-child {
+      &:nth-child(-n + 2) {
         border-top: 0;
       }
 
@@ -172,6 +172,10 @@
 
     &:hover {
       background: #fafafa;
+    }
+
+    &.fillerCard:hover {
+      background: #fff;
     }
 
     .photoCell,
@@ -355,6 +359,21 @@
         .roleCell span {
           line-height: 1.25;
         }
+    }
+  }
+
+  /* Single-column grid: no right borders, restore 2nd card's top border, drop filler */
+  @media (max-width: 900px) {
+    .card {
+      border-right: 0;
+
+      &:nth-child(2) {
+        border-top: 1px solid #dedede;
+      }
+
+      &.fillerCard {
+        display: none;
+      }
     }
   }
   

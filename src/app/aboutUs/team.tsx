@@ -25,8 +25,8 @@ const teamMembers: TeamMember[] = [
   { id: 9, name: "Himanshu Mishra", role: "SDE", image: "/assets/team/Himanshu.png" },
   { id: 10, name: "Arav Prajapati", role: "SDE", image: "/assets/team/arav-prajapati.png" },
   { id: 11, name: "Aayush Soni", role: "DevOps Engineer", image: "/assets/team/aayush-soni.png" },
-  { id: 12, name: "Prasan Vibhuti", role: "QA Tester", image: "/assets/team/prasan-vibhuti.png" },
-  { id: 13, name: "Neelambar Ravindra Kumthekar", role: "Growth Partner", image: "/assets/team/neel.JPG" },
+  
+  
   { id: 14, name: "Airaad Sheikh", role: "SDE", image: "/assets/team/airaad-sheikh.jpeg" },
   { id: 15, name: "Hemanth Terli", role: "AI/ML", image: "/assets/team/hemanth-terli.png" },
   { id: 16, name: "Rohan Mahajan", role: "AI/ML", image: "/assets/team/rohan-mahajan.png" },
@@ -40,7 +40,7 @@ const teamMembers: TeamMember[] = [
 
 
   { id: 24, name: "Ayush Sahu", role: "SDE", image: "/assets/team/ayush-github-photo.jpg" },
-  { id: 25, name: "Divyansh Mishra", role: "SDE", image: "/assets/team/Divyansh.png" },
+ 
   { id: 26, name: "Sahil Nikalje", role: "SDE", image: "/assets/team/Sahil Nikalje PGAGI.png" },
   { id: 27, name: "Shivang Dixit", role: "SDE", image: "/assets/team/Shivang.png" },
   { id: 28, name: "Thanmay M Shetty", role: "AI/ML ", image: "/assets/team/Thanmay.jpg" },
@@ -143,6 +143,7 @@ const Team: React.FC = () => {
             </div>
           </motion.div>
         ))}
+        {teamMembers.length % 2 !== 0 && <div className={`${styles.card} ${styles.fillerCard}`} aria-hidden="true" />}
       </div>
     </section>
   );
