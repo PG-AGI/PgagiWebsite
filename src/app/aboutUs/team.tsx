@@ -17,9 +17,9 @@ const teamMembers: TeamMember[] = [
   { id: 1, name: "Vivekjyoti Bhowmik", role: "Founder", image: "/assets/team/Vivekjyoti Bhowmik.png" },
   { id: 2, name: "Shibajyoti Bhowmik", role: "Managing Director", image: "/assets/team/Shibajyoti Bhowmik.png" },
   { id: 3, name: "Pratik Hegde", role: "Operational Head", image: "/assets/team/PRATIK.png" },
-  { id: 4, name: "Pooja Jain", role: "HR Manager", image: "/assets/team/pooja-jain.jpg" },
+ 
   { id: 5, name: "Javeriya Shaik", role: "HR Generalist", image: "/assets/team/javeriya-shaik.png" },
-  { id: 6, name: "Deb Dey", role: "Accountant", image: "/assets/team/deb-dey.jpg" },
+ 
   { id: 7, name: "Abhishek Khatri", role: "AI/ML", image: "/assets/team/abhishek-khatri.png" },
   { id: 8, name: "Bibin Vinod", role: "Golang Developer", image: "/assets/team/bibin-vinod.jpg" },
   { id: 9, name: "Himanshu Mishra", role: "SDE", image: "/assets/team/Himanshu.png" },
@@ -42,7 +42,7 @@ const teamMembers: TeamMember[] = [
   { id: 24, name: "Ayush Sahu", role: "SDE", image: "/assets/team/ayush-github-photo.jpg" },
  
   { id: 26, name: "Sahil Nikalje", role: "SDE", image: "/assets/team/Sahil Nikalje PGAGI.png" },
-  { id: 27, name: "Shivang Dixit", role: "SDE", image: "/assets/team/Shivang.png" },
+  
   { id: 28, name: "Thanmay M Shetty", role: "AI/ML ", image: "/assets/team/Thanmay.jpg" },
   { id: 29, name: "Tanish Sarkar", role: "AI/ML ", image: "/assets/team/Tanish.jpg" },
   { id: 30, name: "Nathan Christopher Menon", role: "AI/ML ", image: "/assets/team/Nathan.jpeg" },
@@ -50,7 +50,7 @@ const teamMembers: TeamMember[] = [
 
 
    { id: 32, name: "Rahul Srinivas Kodunuri", role: "SDE", image: "/assets/team/Rahulg.png" },
-    { id: 33, name: "Anik Dhiman", role: "AI Architecture", image: "/assets/team/Anik.jpeg" },
+   
      { id: 34, name: "Garv Bahl", role: "AI Architecture ", image: "/assets/team/Garv.png" },
 
 
