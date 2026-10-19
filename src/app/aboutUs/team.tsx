@@ -52,6 +52,8 @@ const teamMembers: TeamMember[] = [
    { id: 32, name: "Rahul Srinivas Kodunuri", role: "SDE", image: "/assets/team/Rahulg.png" },
    
      { id: 34, name: "Garv Bahl", role: "AI Architecture ", image: "/assets/team/Garv.png" },
+      { id: 35, name: "Evelyn Raji Mathew", role: "Founder's office", image: "/assets/team/Evelyn.jpg" },
+      { id: 36, name: "Mohammed Faadil", role: "AI/ML", image: "/assets/team/Mohammed Faadil.jpg" },
 
 
 
