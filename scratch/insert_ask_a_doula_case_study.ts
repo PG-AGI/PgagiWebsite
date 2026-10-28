@@ -7,7 +7,7 @@ const SLUG = 'ask-a-doula-ai-parenting-companion';
 const TITLE = 'Ask a Doula';
 const DESCRIPTION =
   "A mobile-first, AI-powered parenting companion that puts a doula in every new parent's pocket. It streams child-aware answers from pregnancy through the first year, and a deterministic safety layer surfaces crisis resources the moment a parent needs them. Alongside the chat sit five-area baby-care tracking with trend charts and daily wellness check-ins. Family sharing lets a partner, grandparent or nanny help care for the child under the parent's plan.";
-const COVER_IMAGE = '/case-studies/Ask-a-Doula-Images/Ask-a-Doula-Images/05_Web_App_Home_Dashboard.png';
+const COVER_IMAGE = '/case-studies/ask-a-doula-cover.png';
 
 async function run() {
   try {

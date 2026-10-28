@@ -13,6 +13,41 @@ const IMG = '/case-studies/Ask-a-Doula-Images/Ask-a-Doula-Images';
 
 type Shot = { src: string; title: string; caption: string };
 
+// Screenshots were captured on Android. IPhone crops the Android status bar
+// off the top of the image and draws an iOS one (time, Dynamic Island,
+// signal / Wi-Fi / battery) on the app's cream background instead.
+function IPhone({ src, alt, priority, bg = '#F5EEDC' }: { src: string; alt: string; priority?: boolean; bg?: string }) {
+  return (
+    <div className={styles.iphone}>
+      <div className={styles.screen} style={{ background: bg }}>
+        <div className={styles.statusBar} aria-hidden="true">
+          <span className={styles.statusTime}>9:41</span>
+          <span className={styles.island} />
+          <span className={styles.statusIcons}>
+            <svg viewBox="0 0 18 12" className={styles.statusSignal}>
+              <rect x="0" y="8" width="3" height="4" rx="1" />
+              <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
+              <rect x="10" y="3" width="3" height="9" rx="1" />
+              <rect x="15" y="0" width="3" height="12" rx="1" />
+            </svg>
+            <svg viewBox="0 0 16 12" className={styles.statusWifi}>
+              <path d="M8 2.2c2.3 0 4.4.9 6 2.4l1.3-1.4A10.6 10.6 0 0 0 8 .3 10.6 10.6 0 0 0 .7 3.2L2 4.6a8.6 8.6 0 0 1 6-2.4Zm0 3.8c1.3 0 2.5.5 3.4 1.3l1.3-1.4A6.9 6.9 0 0 0 8 4.1a6.9 6.9 0 0 0-4.7 1.8l1.3 1.4C5.5 6.5 6.7 6 8 6Zm0 3.7a1.4 1.4 0 0 0-1 .4L8 11.7l1-1.6a1.4 1.4 0 0 0-1-.4Z" />
+            </svg>
+            <svg viewBox="0 0 27 13" className={styles.statusBattery}>
+              <rect x="0.5" y="0.5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity="0.4" />
+              <rect x="2" y="2" width="20" height="9" rx="2" />
+              <path d="M25 4.5v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" opacity="0.4" />
+            </svg>
+          </span>
+        </div>
+        <div className={styles.screenCrop}>
+          <Image src={src} alt={alt} width={720} height={1600} priority={priority} className={styles.phoneImg} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Portrait phone screenshots (720x1600), laid out side by side with a blue
 // title + grey caption underneath, as in the PDF.
 function PhoneRow({ shots }: { shots: Shot[] }) {
@@ -20,9 +55,7 @@ function PhoneRow({ shots }: { shots: Shot[] }) {
     <div className={`${styles.phoneRow} ${shots.length === 1 ? styles.phoneRowSingle : ''}`}>
       {shots.map((s) => (
         <figure key={s.src} className={styles.phoneFigure}>
-          <div className={styles.phoneFrame}>
-            <Image src={`${IMG}/${s.src}`} alt={`${s.title} — ${s.caption}`} width={720} height={1600} className={styles.phoneImg} />
-          </div>
+          <IPhone src={`${IMG}/${s.src}`} alt={`${s.title} — ${s.caption}`} />
           <figcaption className={styles.figCaption}>
             <span className={styles.figTitle}>{s.title}</span>
             <span className={styles.figText}>{s.caption}</span>
@@ -72,13 +105,11 @@ export default function AskADoulaCaseStudy({ caseStudy }: AskADoulaCaseStudyProp
 
             <div className={styles.heroRight}>
               <div className={styles.heroPhone}>
-                <Image
+                <IPhone
                   src={`${IMG}/01_Splash_Screen.jpg`}
                   alt="Ask a Doula splash screen — Trusted answers for every parenting question"
-                  width={720}
-                  height={1600}
                   priority
-                  className={styles.phoneImg}
+                  bg="#F7E6CC"
                 />
               </div>
             </div>
