@@ -8,8 +8,6 @@ interface AIMIBrainCaseStudyProps {
   caseStudy?: CaseStudyData | null;
 }
 
-const FOOTER_TITLE = 'AIMI Brain · Real-time conversational financial intelligence';
-
 const DOC_FIELDS: { field: string; detail: string }[] = [
   { field: 'Platforms', detail: 'Web · responsive across desktop and mobile' },
   { field: 'Category', detail: 'FinTech · AI · Financial intelligence' },
@@ -52,7 +50,7 @@ const SERVICE_MODULES = [
   'auth', 'session', 'ws-gateway', 'query-orchestrator', 'intent-classifier', 'vector-search', 'web-search',
   're-ranker', 'verification', 'synthesis', 'document-ingestion', 'embedding', 'feature-gates', 'persona',
   'quota-metering', 'stripe-webhooks',
-].join(' · ');
+];
 
 const TIER_TABLE: { dimension: string; free: string; pro: string }[] = [
   { dimension: 'Query volume', free: 'Capped monthly query limit', pro: 'Substantially higher or unmetered limit' },
@@ -107,24 +105,6 @@ const DELIVERED_ITEMS = [
   'Stripe subscription infrastructure', 'React conversational frontend', 'AWS containerised deployment',
 ].join(' · ');
 
-function RunningHeader() {
-  return (
-    <div className={styles.pageRunningHeader}>
-      <span>PGAGI · Case Study <strong>AIMI Brain</strong></span>
-      <span>FinTech + AI · Confidential</span>
-    </div>
-  );
-}
-
-function FooterBar({ page }: { page: string }) {
-  return (
-    <div className={styles.pageFooterBar}>
-      <span>{FOOTER_TITLE}</span>
-      <strong>{page}</strong>
-    </div>
-  );
-}
-
 function CandlestickChart({ className }: { className: string }) {
   return (
     <svg className={className} width="200" height="120" viewBox="0 0 200 120" fill="none" aria-hidden="true">
@@ -147,13 +127,35 @@ function CandlestickChart({ className }: { className: string }) {
 
 function SectionHeader({ num, eyebrow, title }: { num: string; eyebrow: string; title: string }) {
   return (
-    <div className={styles.sectionHeader}>
-      <div className={styles.sectionNumRow}>
-        <span className={styles.sectionNumBadge}>{num}</span>
-        <span className={styles.sectionEyebrow}>{eyebrow}</span>
-      </div>
-      <h2 className={styles.sectionTitle}>{title}</h2>
+    <>
+      <span className={styles.eyebrow}>
+        <span className={styles.eyebrowNum}>{num}</span>
+        {eyebrow}
+      </span>
+      <h2 className={styles.sectionHeading}>{title}</h2>
+    </>
+  );
+}
+
+function Callout({ text }: { text: string }) {
+  return (
+    <div className={styles.calloutDivider}>
+      <span className={styles.calloutLine} />
+      <h3 className={styles.calloutText}>{text}</h3>
     </div>
+  );
+}
+
+function CheckList({ items }: { items: React.ReactNode[] }) {
+  return (
+    <ul className={styles.checkList}>
+      {items.map((item, i) => (
+        <li key={i} className={styles.checkItem}>
+          <span className={styles.checkMark}>✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -170,102 +172,95 @@ function TimelineRow({ actor, text, strong, stream }: { actor: string; text: str
 export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
   return (
     <div className={styles.aimiBrainPage}>
-      {/* ── Cover (page 1) ── */}
-      <div className={`${styles.pageSheet} ${styles.coverSheet}`}>
-        <div className={styles.coverBluePanel}>
-          <p className={styles.heroEyebrow}>Case Study · FinTech + AI</p>
-          <h1 className={styles.heroMainTitle}>AIMI Brain</h1>
-          <h2 className={styles.heroSubtitle}>Real-time conversational financial intelligence</h2>
+      {/* ── 1. Hero Section ── */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroBand}>
+          <div className={styles.rail}>
+            <p className={styles.heroEyebrow}>Case Study · FinTech + AI</p>
+            <h1 className={styles.heroMainTitle}>AIMI Brain</h1>
+            <h2 className={styles.heroSubtitle}>Real-time conversational financial intelligence</h2>
 
-          <p className={styles.heroLead}>
-            A platform that puts institutional-grade macro analysis behind natural language, combining
-            retrieval-augmented generation with live web data, per-user document intelligence and a streaming
-            architecture built for a market where the answer stops being useful the moment it goes stale.
-          </p>
+            <p className={styles.heroLead}>
+              A platform that puts institutional-grade macro analysis behind natural language, combining
+              retrieval-augmented generation with live web data, per-user document intelligence and a streaming
+              architecture built for a market where the answer stops being useful the moment it goes stale.
+            </p>
+          </div>
         </div>
 
-        <div className={styles.coverWhitePanel}>
-          <div className={styles.heroTagsRow}>
-            <span className={styles.heroTag}>RAG orchestration</span>
-            <span className={styles.heroTag}>Live web grounding</span>
-            <span className={styles.heroTag}>WebSocket streaming</span>
-            <span className={styles.heroTag}>Document intelligence</span>
+        <div className={styles.heroWhite}>
+          <div className={`${styles.rail} ${styles.heroWhiteInner}`}>
+            <div className={styles.heroTagsRow}>
+              <span className={styles.heroTag}>RAG orchestration</span>
+              <span className={styles.heroTag}>Live web grounding</span>
+              <span className={styles.heroTag}>WebSocket streaming</span>
+              <span className={styles.heroTag}>Document intelligence</span>
+            </div>
+
+            <div className={styles.heroStatsRow}>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>RAG</span>
+                <span className={styles.heroStatLabel}>grounded, not recalled</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>WS</span>
+                <span className={styles.heroStatLabel}>token-by-token streaming</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>2</span>
+                <span className={styles.heroStatLabel}>tiers, gated end to end</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>AWS</span>
+                <span className={styles.heroStatLabel}>ECS + Fargate, containerised</span>
+              </div>
+
+              <CandlestickChart className={styles.heroCandles} />
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div className={styles.heroStatsRow}>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>RAG</span>
-              <span className={styles.heroStatLabel}>grounded, not recalled</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>WS</span>
-              <span className={styles.heroStatLabel}>token-by-token streaming</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>2</span>
-              <span className={styles.heroStatLabel}>tiers, gated end to end</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>AWS</span>
-              <span className={styles.heroStatLabel}>ECS + Fargate, containerised</span>
-            </div>
-          </div>
-
-          <CandlestickChart className={styles.candleIconDesktop} />
-          <CandlestickChart className={styles.candleIconMobile} />
-
-          <div className={styles.coverFooterRow}>
-            <span>PGAGI · Confidential</span>
-            <span className={styles.coverFooterStrong}>Playing God With AGI</span>
+      {/* ── 2. Quick Meta Facts Bar ── */}
+      <div className={styles.metaRail}>
+        <div className={styles.rail}>
+          <span className={styles.docSectionLabel}>Document</span>
+          <h2 className={styles.docTitle}>AIMI Brain — platform case study</h2>
+          <div className={styles.metaGrid}>
+            {DOC_FIELDS.map((row) => (
+              <div key={row.field} className={styles.metaItem}>
+                <span className={styles.metaLabel}>{row.field}</span>
+                <span className={styles.metaValue}>{row.detail}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* ── Document / At A Glance / Index (page 2) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <span className={styles.docSectionLabel}>Document</span>
-          <h2 className={styles.docTitle}>AIMI Brain — platform case study</h2>
-
-          <table className={styles.fieldTable}>
-            <thead>
-              <tr>
-                <th>Field</th>
-                <th>Detail</th>
-              </tr>
-            </thead>
-            <tbody>
-              {DOC_FIELDS.map((row) => (
-                <tr key={row.field}>
-                  <td className={styles.fieldNameCell}>{row.field}</td>
-                  <td className={styles.fieldDetailCell}>{row.detail}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <span className={styles.glanceLabel}>At A Glance</span>
-          <div className={styles.glanceGrid}>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>RAG</span>
-              <span className={styles.glanceCaption}>Every claim grounded in documents or live web</span>
+      <div className={styles.rail}>
+        {/* ── 3. At A Glance + Index ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>At A Glance</span>
+          <div className={styles.statsGrid}>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>RAG</span>
+              <span className={styles.statLabel}>Every claim grounded in documents or live web</span>
             </div>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>WS</span>
-              <span className={styles.glanceCaption}>Token-by-token streaming over a persistent socket</span>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>WS</span>
+              <span className={styles.statLabel}>Token-by-token streaming over a persistent socket</span>
             </div>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>2</span>
-              <span className={styles.glanceCaption}>Tiers gated on quota, model access and persona</span>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>2</span>
+              <span className={styles.statLabel}>Tiers gated on quota, model access and persona</span>
             </div>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>AWS</span>
-              <span className={styles.glanceCaption}>Containerised on ECS and Fargate with CI/CD</span>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>AWS</span>
+              <span className={styles.statLabel}>Containerised on ECS and Fargate with CI/CD</span>
             </div>
           </div>
 
-          <span className={`${styles.glanceLabel} ${styles.indexLabelTop}`}>Index</span>
+          <span className={styles.eyebrow}>Index</span>
           <div className={styles.indexList}>
             {INDEX_ITEMS.map((item) => (
               <div key={item.num} className={styles.indexRow}>
@@ -275,14 +270,10 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               </div>
             ))}
           </div>
-        </div>
-        <FooterBar page="02" />
-      </div>
+        </section>
 
-      {/* ── 01 What We Built ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+        {/* ── 4. 01 What We Built ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="01" eyebrow="What We Built" title="Institutional-grade macro analysis, reachable in a sentence." />
 
           <p className={styles.sectionParagraph}>
@@ -305,7 +296,7 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             grounded in the user&apos;s own documents or in live web results.
           </div>
 
-          <h3 className={styles.plainHeading}>The four capabilities that had to work together</h3>
+          <Callout text="The four capabilities that had to work together" />
           <div className={styles.tableWrapper}>
             <table className={styles.customTable}>
               <thead>
@@ -317,29 +308,30 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {CAPABILITIES_TABLE.map((row) => (
                   <tr key={row.capability}>
-                    <td className={styles.layerCol}>{row.capability}</td>
-                    <td>{row.contributes}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '200px' }}>Capability" className={styles.layerCol}>{row.capability}</td>
+                    <td data-label="What It Contributes">{row.contributes}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <h3 className={styles.subHeadingBlue}>What the platform replaces</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>Reading a research note to find one macro number, then verifying it elsewhere.</li>
-            <li className={styles.bulletItem}>Manually opening a filing to locate the figure behind a question.</li>
-            <li className={styles.bulletItem}>Trusting a general-purpose assistant that cannot show where an answer came from.</li>
-            <li className={styles.bulletItem}>Waiting on a static page while a long retrieval completes with no feedback.</li>
-          </ul>
-        </div>
-        <FooterBar page="03" />
-      </div>
+          <div className={styles.featureCard}>
+            <h3 className={styles.cardTitle}>What the platform replaces</h3>
+            <CheckList
+              items={[
+                'Reading a research note to find one macro number, then verifying it elsewhere.',
+                'Manually opening a filing to locate the figure behind a question.',
+                'Trusting a general-purpose assistant that cannot show where an answer came from.',
+                'Waiting on a static page while a long retrieval completes with no feedback.',
+              ]}
+            />
+          </div>
+        </section>
 
-      {/* ── 02 Core Architecture (intro + layer table) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+        {/* ── 5. 02 Core Architecture ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="02" eyebrow="Core Architecture" title="A distributed system tuned for low latency and high reliability." />
 
           <p className={styles.sectionParagraph}>
@@ -361,23 +353,38 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {ARCHITECTURE_TABLE.map((row) => (
                   <tr key={row.layer}>
-                    <td className={styles.layerCol}>{row.layer}</td>
-                    <td>{row.responsibility}</td>
-                    <td>{row.tech}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '170px' }}>Layer" className={styles.layerCol}>{row.layer}</td>
+                    <td data-label="Responsibility">{row.responsibility}</td>
+                    <td data-label="Technology">{row.tech}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-        <FooterBar page="04" />
-      </div>
 
-      {/* ── Figure 1 + Service modules + Infra + RAG orchestration intro ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <div className={styles.diagramBlock}>
+          <div className={styles.twoCardGrid}>
+            <div className={styles.featureCard}>
+              <h3 className={styles.cardTitle}>Service modules</h3>
+              <div className={styles.moduleTags}>
+                {SERVICE_MODULES.map((m, i) => (
+                  <span key={m} className={`${styles.moduleTag} ${i === 0 ? styles.moduleTagActive : ''}`}>{m}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.featureCard}>
+              <h3 className={styles.cardTitle}>Infrastructure and deployment</h3>
+              <p className={styles.cardText}>
+                The platform is deployed on AWS using a containerised approach with ECS and Fargate. CI/CD
+                pipelines support rapid, reliable deployment, with comprehensive monitoring and logging through
+                CloudWatch.
+              </p>
+            </div>
+          </div>
+
+          {/* Figure 1 — System architecture */}
+          <div className={styles.diagramContainer}>
             <div className={styles.diagramRow}>
               <div className={styles.diagramRowLabel}>Client</div>
               <div className={styles.diagramRowBoxes}>
@@ -478,82 +485,77 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             the RAG pipeline to a cited, streamed response, with entitlement resolved at the gateway before
             retrieval begins.
           </p>
+        </section>
 
-          <h3 className={styles.subHeadingBlue}>Service modules</h3>
-          <p className={styles.moduleLine}>{SERVICE_MODULES}</p>
+        {/* ── 6. Dark Feature Banner — RAG orchestration ── */}
+        <div className={styles.darkBanner}>
+          <div className={styles.darkContent}>
+            <span className={styles.darkEyebrow}>Core Architecture</span>
+            <h2 className={styles.darkTitle}>The AI pipeline — RAG orchestration</h2>
+            <p className={styles.darkDesc}>
+              The core of the platform is its retrieval-augmented generation pipeline. Unlike a static LLM
+              implementation, the system decides dynamically when to fetch external data and when to rely on
+              internal models. That decision is the first stage rather than an afterthought, and it is what
+              keeps a simple definitional question from triggering a full web crawl.
+            </p>
+          </div>
+        </div>
 
-          <h3 className={styles.plainHeading}>Infrastructure and deployment</h3>
-          <p className={styles.sectionParagraph}>
-            The platform is deployed on AWS using a containerised approach with ECS and Fargate. CI/CD
-            pipelines support rapid, reliable deployment, with comprehensive monitoring and logging through
-            CloudWatch.
-          </p>
-
-          <h3 className={styles.plainHeading}>The AI pipeline — RAG orchestration</h3>
-          <p className={styles.sectionParagraph}>
-            The core of the platform is its retrieval-augmented generation pipeline. Unlike a static LLM
-            implementation, the system decides dynamically when to fetch external data and when to rely on
-            internal models. That decision is the first stage rather than an afterthought, and it is what
-            keeps a simple definitional question from triggering a full web crawl.
-          </p>
+        {/* ── 7. RAG stages, streaming, documents, grounding ── */}
+        <section className={styles.sectionBlock}>
           <p className={styles.sectionParagraph}>
             The orchestration runs in stages: intent classification, semantic search across a vector
             database, and real-time web search, followed by re-ranking and multi-stage verification before
             anything is synthesised.
           </p>
-        </div>
-        <FooterBar page="05" />
-      </div>
-
-      {/* ── Figure 2 + Real-time streaming intro ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
           <p className={styles.sectionParagraph}>
             The synthesis model is selected by the user&apos;s tier and its persona by their stated expertise
             level.
           </p>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Stage One — Decide What This Query Needs</span>
+          {/* Figure 2 — RAG orchestration */}
+          <div className={styles.diagramContainer}>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Stage One — Decide What This Query Needs</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Query received</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Intent classified</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Retrieval decision fetch, or answer internally</div>
+              </div>
             </div>
-            <div className={styles.stageFlow}>
-              <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Query received</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Intent classified</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Retrieval decision fetch, or answer internally</div>
-            </div>
-          </div>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Stage Two — Gather And Rank Evidence</span>
-              <span className={styles.stageNote}>· run only when retrieval is warranted</span>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Stage Two — Gather And Rank Evidence</span>
+                <span className={styles.stageNote}>· run only when retrieval is warranted</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={styles.stageChip}>Semantic search user vector store</div>
+                <span className={styles.stageChevron}>+</span>
+                <div className={styles.stageChip}>Live web search multiple APIs</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Re-ranking most relevant sources</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Multi-stage verification</div>
+              </div>
             </div>
-            <div className={styles.stageFlow}>
-              <div className={styles.stageChip}>Semantic search user vector store</div>
-              <span className={styles.stageChevron}>+</span>
-              <div className={styles.stageChip}>Live web search multiple APIs</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Re-ranking most relevant sources</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Multi-stage verification</div>
-            </div>
-          </div>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Stage Three — Answer, Grounded</span>
-              <span className={styles.stageNote}>· model selected by the user&apos;s tier</span>
-            </div>
-            <div className={styles.stageFlow}>
-              <div className={styles.stageChip}>Persona applied expertise level</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Synthesis over selected sources</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={`${styles.stageChip} ${styles.stageChipDark}`}>Streamed answer with citations</div>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Stage Three — Answer, Grounded</span>
+                <span className={styles.stageNote}>· model selected by the user&apos;s tier</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={styles.stageChip}>Persona applied expertise level</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Synthesis over selected sources</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={`${styles.stageChip} ${styles.stageChipDark}`}>Streamed answer with citations</div>
+              </div>
             </div>
           </div>
 
@@ -562,21 +564,15 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             before use, and verification sits between gathering and answering.
           </p>
 
-          <h3 className={styles.plainHeading}>Real-time streaming — WebSocket architecture</h3>
+          <Callout text="Real-time streaming — WebSocket architecture" />
           <p className={styles.sectionParagraph}>
             Financial data is time-sensitive, so we implemented a WebSocket architecture supporting
             token-by-token streaming, real-time status updates and live data feeds. The effect is a
             low-latency sense of the system thinking while it does genuinely slow background work —
             searching, parsing, re-ranking.
           </p>
-        </div>
-        <FooterBar page="06" />
-      </div>
 
-      {/* ── Figure 3, Document intelligence, Figure 4, Web search intro ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+          {/* Figure 3 — WebSocket message sequence */}
           <div className={styles.timelineBlock}>
             <div className={styles.timelineHeaderBar}>
               WEBSOCKET MESSAGE SEQUENCE<span>· one persistent socket, asynchronous query processing</span>
@@ -604,7 +600,7 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             turn.
           </p>
 
-          <h3 className={styles.plainHeading}>Document intelligence</h3>
+          <Callout text="Document intelligence" />
           <p className={styles.sectionParagraph}>
             Users can upload financial reports, PDFs and spreadsheets. Ingestion uses high-precision parsing
             to extract structured data and text, which is chunked and embedded into a per-user vector store.
@@ -612,23 +608,26 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             full citations.
           </p>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Document Ingestion</span>
-              <span className={styles.stageNote}>· upload to citation-ready, per user</span>
-            </div>
-            <div className={styles.stageFlow}>
-              <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Upload PDF · report · sheet</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>High-precision parsing</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Structured data + text extracted</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Chunked</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Embedded</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={`${styles.stageChip} ${styles.stageChipDark}`}>Per-user vector store</div>
+          {/* Figure 4 — Document ingestion */}
+          <div className={styles.diagramContainer}>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Document Ingestion</span>
+                <span className={styles.stageNote}>· upload to citation-ready, per user</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Upload PDF · report · sheet</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>High-precision parsing</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Structured data + text extracted</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Chunked</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Embedded</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={`${styles.stageChip} ${styles.stageChipDark}`}>Per-user vector store</div>
+              </div>
             </div>
           </div>
 
@@ -642,20 +641,16 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             a security boundary as much as an architectural one.
           </p>
 
-          <h3 className={styles.plainHeading}>Web search and source grounding</h3>
+          <Callout text="Web search and source grounding" />
           <p className={styles.sectionParagraph}>
             To prevent hallucination, every claim is grounded in the user&apos;s documents or in live web
             results. We integrated multiple search APIs and a re-ranking algorithm, so the citation attached
             to a claim is the source that actually supports it.
           </p>
-        </div>
-        <FooterBar page="07" />
-      </div>
+        </section>
 
-      {/* ── 03 Credit System intro + Figure 5 + What the tier controls ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+        {/* ── 8. 03 Credit System and Monetisation ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="03" eyebrow="Credit System and Monetisation" title="Tiered intelligence, metered where inference actually costs." />
 
           <p className={styles.sectionParagraph}>
@@ -671,42 +666,45 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             tier a commercial boundary rather than a cosmetic one.
           </p>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Entitlement Path</span>
-              <span className={styles.stageNote}>· checked before any expensive work is scheduled</span>
+          {/* Figure 5 — Entitlement + subscription lifecycle */}
+          <div className={styles.diagramContainer}>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Entitlement Path</span>
+                <span className={styles.stageNote}>· checked before any expensive work is scheduled</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Query arrives</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Tier resolved free or pro</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Quota checked query limit</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Model gate advanced or standard</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Persona selected expertise level</div>
+              </div>
             </div>
-            <div className={styles.stageFlow}>
-              <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Query arrives</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Tier resolved free or pro</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Quota checked query limit</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Model gate advanced or standard</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Persona selected expertise level</div>
-            </div>
-          </div>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Subscription Lifecycle</span>
-              <span className={styles.stageNote}>· Stripe webhooks drive entitlement, not the other way round</span>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Subscription Lifecycle</span>
+                <span className={styles.stageNote}>· Stripe webhooks drive entitlement, not the other way round</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={styles.stageChip}>Created</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Renewed</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Payment failed</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Cancelled</div>
+              </div>
             </div>
-            <div className={styles.stageFlow}>
-              <div className={styles.stageChip}>Created</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Renewed</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Payment failed</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Cancelled</div>
-            </div>
-          </div>
 
-          <div className={`${styles.diagramBar} ${styles.diagramBarBlack}`}>
-            <strong>Access updates in real time</strong> · every lifecycle event rewrites the user&apos;s tier and permissions immediately, so entitlement and billing never drift apart
+            <div className={`${styles.diagramBar} ${styles.diagramBarBlack}`}>
+              <strong>Access updates in real time</strong> · every lifecycle event rewrites the user&apos;s tier and permissions immediately, so entitlement and billing never drift apart
+            </div>
           </div>
 
           <p className={styles.figureCaption}>
@@ -714,7 +712,7 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             from billing state, so a failed payment changes access without a manual step.
           </p>
 
-          <h3 className={styles.plainHeading}>What the tier controls</h3>
+          <Callout text="What the tier controls" />
           <div className={styles.tableWrapper}>
             <table className={styles.customTable}>
               <thead>
@@ -727,24 +725,17 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {TIER_TABLE.map((row) => (
                   <tr key={row.dimension}>
-                    <td className={styles.layerCol}>{row.dimension}</td>
-                    <td>{row.free}</td>
-                    <td className={styles.mutedCell}>{row.pro}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '190px' }}>Gated Dimension" className={styles.layerCol}>{row.dimension}</td>
+                    <td data-label="Free">{row.free}</td>
+                    <td data-label="Pro" className={styles.mutedCell}>{row.pro}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <h3 className={styles.plainHeading}>Where cost is actually incurred</h3>
-        </div>
-        <FooterBar page="08" />
-      </div>
-
-      {/* ── Operation table + unit economics + metering + subscription infra ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+          <Callout text="Where cost is actually incurred" />
           <p className={styles.sectionParagraph}>
             Subscription pricing only works if the marginal cost of a query is understood, and in this
             architecture it varies by an order of magnitude depending on the route the orchestrator chooses.
@@ -762,16 +753,17 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {OPERATION_TABLE.map((row) => (
                   <tr key={row.operation}>
-                    <td className={styles.layerCol}>{row.operation}</td>
-                    <td>{row.when}</td>
-                    <td className={styles.mutedCell}>{row.cost}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '190px' }}>Operation" className={styles.layerCol}>{row.operation}</td>
+                    <td data-label="When It Runs">{row.when}</td>
+                    <td data-label="Relative Cost" className={styles.mutedCell}>{row.cost}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <h3 className={styles.plainHeading}>Why conditional retrieval is the unit economics</h3>
+          <Callout text="Why conditional retrieval is the unit economics" />
           <p className={styles.sectionParagraph}>
             A pipeline that retrieves on every query pays web search and re-ranking costs even for questions
             a small model could answer outright. By making retrieval a routed decision rather than a
@@ -779,40 +771,38 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             with users who ask a lot of simple ones.
           </p>
 
-          <h3 className={styles.subHeadingBlue}>Metering and quota mechanics</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Checked before work, decremented after.</strong>&nbsp;Tier and quota are validated at query submission and the quota is decremented on the completion event, so a query that fails mid-retrieval costs the user nothing.</li>
-            <li className={styles.bulletItem}><strong>Gated at the gateway.</strong>&nbsp;Model access, retrieval breadth and persona are resolved server-side. The client cannot request a model its tier does not carry.</li>
-            <li className={styles.bulletItem}><strong>Ingestion charged once.</strong>&nbsp;Parsing and embedding are paid on upload, not per question, so the marginal cost of the hundredth question about a filing is a vector lookup.</li>
-          </ul>
+          <div className={styles.implCardGrid}>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Metering and quota mechanics</h3>
+              <CheckList
+                items={[
+                  <><strong>Checked before work, decremented after.</strong>&nbsp;Tier and quota are validated at query submission and the quota is decremented on the completion event, so a query that fails mid-retrieval costs the user nothing.</>,
+                  <><strong>Gated at the gateway.</strong>&nbsp;Model access, retrieval breadth and persona are resolved server-side. The client cannot request a model its tier does not carry.</>,
+                  <><strong>Ingestion charged once.</strong>&nbsp;Parsing and embedding are paid on upload, not per question, so the marginal cost of the hundredth question about a filing is a vector lookup.</>,
+                ]}
+              />
+            </div>
 
-          <h3 className={styles.plainHeading}>Subscription infrastructure</h3>
-          <p className={styles.sectionParagraph}>
-            The platform integrates with Stripe for subscription management. We built a robust webhook
-            listener to handle subscription lifecycle events — creation, renewal, cancellation and payment
-            failure — automatically updating user tiers and access permissions in real time.
-          </p>
-        </div>
-        <FooterBar page="09" />
-      </div>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Subscription infrastructure</h3>
+              <p className={styles.cardText}>
+                The platform integrates with Stripe for subscription management. We built a robust webhook
+                listener to handle subscription lifecycle events — creation, renewal, cancellation and payment
+                failure — automatically updating user tiers and access permissions in real time.
+              </p>
+              <CheckList
+                items={[
+                  <><strong>Billing is the source of truth.</strong>&nbsp;Entitlement is derived from subscription state rather than maintained alongside it, which removes the class of bug where a cancelled account keeps its access.</>,
+                  <><strong>Failure is a state, not an exception.</strong>&nbsp;A failed payment is a lifecycle event with a defined effect on permissions, handled by the same listener as a successful renewal.</>,
+                  <><strong>Real-time propagation.</strong>&nbsp;Tier changes take effect on the next query rather than at the next session, because the gate is evaluated per request.</>,
+                ]}
+              />
+            </div>
+          </div>
+        </section>
 
-      {/* ── Billing lifecycle properties (continuation) ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Billing is the source of truth.</strong>&nbsp;Entitlement is derived from subscription state rather than maintained alongside it, which removes the class of bug where a cancelled account keeps its access.</li>
-            <li className={styles.bulletItem}><strong>Failure is a state, not an exception.</strong>&nbsp;A failed payment is a lifecycle event with a defined effect on permissions, handled by the same listener as a successful renewal.</li>
-            <li className={styles.bulletItem}><strong>Real-time propagation.</strong>&nbsp;Tier changes take effect on the next query rather than at the next session, because the gate is evaluated per request.</li>
-          </ul>
-        </div>
-        <FooterBar page="10" />
-      </div>
-
-      {/* ── 04 User-Facing Features ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+        {/* ── 9. 04 User-Facing Features ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="04" eyebrow="User-Facing Features" title="A conversation that shows its working." />
 
           <p className={styles.sectionParagraph}>
@@ -822,59 +812,67 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             citations — rather than treating them as edge cases.
           </p>
 
-          <h3 className={styles.plainHeading}>Ask in plain language</h3>
-          <p className={styles.sectionParagraph}>
-            The entry point is a sentence. There is no query syntax to learn, no ticker field, no report to
-            select first. Intent classification happens server-side, so the user does not have to tell the
-            system what kind of question they are asking.
-          </p>
-
-          <h3 className={styles.plainHeading}>Watch the system work</h3>
-          <p className={styles.sectionParagraph}>
-            Status events surface what is happening during a retrieval — classifying, searching, parsing,
-            re-ranking — and the answer then arrives token by token. For a query that takes several seconds
-            of genuine background work, this is the difference between a responsive tool and an apparently
-            frozen one.
-          </p>
-
-          <h3 className={styles.plainHeading}>Interactive citations</h3>
-          <p className={styles.sectionParagraph}>
-            Every claim carries its source, and sources are interactive rather than footnoted. A user can
-            move from an assertion in the answer to the web result or the passage in their own document that
-            supports it — which is the feature that makes the output usable in a context where being
-            confidently wrong is expensive.
-          </p>
-
-          <h3 className={styles.plainHeading}>Bring your own documents</h3>
-          <p className={styles.sectionParagraph}>
-            Financial reports, PDFs and spreadsheets can be uploaded and then questioned directly. Because
-            ingestion extracts structured data as well as text, questions about figures in a table are
-            answerable, not just questions about prose.
-          </p>
-
-          <h3 className={styles.plainHeading}>Answers pitched at the reader</h3>
-          <p className={styles.sectionParagraph}>
-            The persona system tailors the register of a response to the user&apos;s expertise level. The
-            same macro question can return a plain-language explanation or an analytical read, without the
-            user having to prompt for either.
-          </p>
-
-          <div className={styles.pillGrid}>
-            <div className={styles.pillCard}>
-              <div className={styles.pillTitle}>Plain</div>
-              <div className={styles.pillCaption}>Natural language in, no query syntax</div>
+          <div className={styles.featureGrid}>
+            <div className={styles.featureCard}>
+              <h3 className={styles.cardTitle}>Ask in plain language</h3>
+              <p className={styles.cardText}>
+                The entry point is a sentence. There is no query syntax to learn, no ticker field, no report to
+                select first. Intent classification happens server-side, so the user does not have to tell the
+                system what kind of question they are asking.
+              </p>
             </div>
-            <div className={styles.pillCard}>
-              <div className={styles.pillTitle}>Live</div>
-              <div className={styles.pillCaption}>Status events during background retrieval</div>
+            <div className={styles.featureCard}>
+              <h3 className={styles.cardTitle}>Watch the system work</h3>
+              <p className={styles.cardText}>
+                Status events surface what is happening during a retrieval — classifying, searching, parsing,
+                re-ranking — and the answer then arrives token by token. For a query that takes several seconds
+                of genuine background work, this is the difference between a responsive tool and an apparently
+                frozen one.
+              </p>
             </div>
-            <div className={styles.pillCard}>
-              <div className={styles.pillTitle}>Cited</div>
-              <div className={styles.pillCaption}>Interactive sources on every claim</div>
+            <div className={styles.featureCard}>
+              <h3 className={styles.cardTitle}>Interactive citations</h3>
+              <p className={styles.cardText}>
+                Every claim carries its source, and sources are interactive rather than footnoted. A user can
+                move from an assertion in the answer to the web result or the passage in their own document that
+                supports it — which is the feature that makes the output usable in a context where being
+                confidently wrong is expensive.
+              </p>
             </div>
-            <div className={styles.pillCard}>
-              <div className={styles.pillTitle}>Yours</div>
-              <div className={styles.pillCaption}>Questions answered from your own documents</div>
+            <div className={styles.featureCard}>
+              <h3 className={styles.cardTitle}>Bring your own documents</h3>
+              <p className={styles.cardText}>
+                Financial reports, PDFs and spreadsheets can be uploaded and then questioned directly. Because
+                ingestion extracts structured data as well as text, questions about figures in a table are
+                answerable, not just questions about prose.
+              </p>
+            </div>
+            <div className={styles.featureCard}>
+              <h3 className={styles.cardTitle}>Answers pitched at the reader</h3>
+              <p className={styles.cardText}>
+                The persona system tailors the register of a response to the user&apos;s expertise level. The
+                same macro question can return a plain-language explanation or an analytical read, without the
+                user having to prompt for either.
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.statsGrid}>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>Plain</span>
+              <span className={styles.statLabel}>Natural language in, no query syntax</span>
+            </div>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>Live</span>
+              <span className={styles.statLabel}>Status events during background retrieval</span>
+            </div>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>Cited</span>
+              <span className={styles.statLabel}>Interactive sources on every claim</span>
+            </div>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>Yours</span>
+              <span className={styles.statLabel}>Questions answered from your own documents</span>
             </div>
           </div>
 
@@ -883,14 +881,10 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             the nuances of macro-economics and institutional data, and it is designed to deliver actionable
             intelligence rather than generic text.
           </div>
-        </div>
-        <FooterBar page="11" />
-      </div>
+        </section>
 
-      {/* ── 05 Security and Auditability ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+        {/* ── 10. 05 Security and Auditability ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="05" eyebrow="Security and Auditability" title="Isolated per user, encrypted throughout, traceable to a source." />
 
           <p className={styles.sectionParagraph}>
@@ -900,66 +894,80 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             first-order requirements.
           </p>
 
-          <h3 className={styles.subHeadingBlue}>Authentication and sessions</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>A secure authentication layer supporting email and password alongside Google OAuth, with managed sessions.</li>
-            <li className={styles.bulletItem}>User documents and chat histories are isolated per account and encrypted, so an authentication boundary is also a data boundary.</li>
-            <li className={styles.bulletItem}>Auth and session validation happen at the gateway on every query, not once at login.</li>
-          </ul>
-
-          <h3 className={styles.subHeadingBlue}>Data protection</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>Encryption at rest and in transit, following established best practice.</li>
-            <li className={styles.bulletItem}>Uploaded documents are stored in secure S3 buckets accessed through time-limited URLs, so a leaked link expires rather than persisting as an open door.</li>
-            <li className={styles.bulletItem}>Vector data is logically partitioned per user, which means retrieval cannot cross an account boundary even when two users ask the same question.</li>
-          </ul>
-
-          <h3 className={styles.subHeadingBlue}>Answer traceability</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>Every claim is grounded in a retrievable source — a live web result or a passage in the user&apos;s own document — and the citation is delivered with the answer rather than reconstructed afterwards.</li>
-            <li className={styles.bulletItem}>Re-ranking selects the source that supports a claim, so a citation is evidence rather than decoration.</li>
-            <li className={styles.bulletItem}>Because retrieval is a routed decision, whether an answer used external data at all is itself part of the record of that turn.</li>
-          </ul>
-
-          <h3 className={styles.subHeadingBlue}>Operational visibility</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>Comprehensive monitoring and logging through CloudWatch across containerised services.</li>
-            <li className={styles.bulletItem}>CI/CD pipelines make deployments repeatable, which is what allows a security fix to ship quickly rather than carefully.</li>
-            <li className={styles.bulletItem}>Quota decrement on completion gives an accurate per-user record of consumption that matches what the system actually did.</li>
-          </ul>
+          <div className={styles.implCardGrid}>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Authentication and sessions</h3>
+              <CheckList
+                items={[
+                  'A secure authentication layer supporting email and password alongside Google OAuth, with managed sessions.',
+                  'User documents and chat histories are isolated per account and encrypted, so an authentication boundary is also a data boundary.',
+                  'Auth and session validation happen at the gateway on every query, not once at login.',
+                ]}
+              />
+            </div>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Data protection</h3>
+              <CheckList
+                items={[
+                  'Encryption at rest and in transit, following established best practice.',
+                  'Uploaded documents are stored in secure S3 buckets accessed through time-limited URLs, so a leaked link expires rather than persisting as an open door.',
+                  'Vector data is logically partitioned per user, which means retrieval cannot cross an account boundary even when two users ask the same question.',
+                ]}
+              />
+            </div>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Answer traceability</h3>
+              <CheckList
+                items={[
+                  <>Every claim is grounded in a retrievable source — a live web result or a passage in the user&apos;s own document — and the citation is delivered with the answer rather than reconstructed afterwards.</>,
+                  'Re-ranking selects the source that supports a claim, so a citation is evidence rather than decoration.',
+                  'Because retrieval is a routed decision, whether an answer used external data at all is itself part of the record of that turn.',
+                ]}
+              />
+            </div>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Operational visibility</h3>
+              <CheckList
+                items={[
+                  'Comprehensive monitoring and logging through CloudWatch across containerised services.',
+                  'CI/CD pipelines make deployments repeatable, which is what allows a security fix to ship quickly rather than carefully.',
+                  'Quota decrement on completion gives an accurate per-user record of consumption that matches what the system actually did.',
+                ]}
+              />
+            </div>
+          </div>
 
           <div className={styles.darkBox}>
             <strong>Design Principle</strong>
             Ground every claim in a source the user can open — in finance, an answer without provenance is
             not a faster answer, it is an unusable one.
           </div>
-        </div>
-        <FooterBar page="12" />
-      </div>
+        </section>
 
-      {/* ── 06 What Makes This Different ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <SectionHeader num="06" eyebrow="What Makes This Different" title="Seven decisions that separate an engine from a wrapper." />
+        {/* ── 11. 06 What Makes This Different ── */}
+        <section className={styles.sectionBlock}>
+          <div className={styles.darkBanner}>
+            <div className={styles.darkContent}>
+              <span className={styles.darkEyebrow}>06 · What Makes This Different</span>
+              <h2 className={styles.darkTitle}>Seven decisions that separate an engine from a wrapper.</h2>
+            </div>
+          </div>
 
           <div className={styles.decisionList}>
             {DECISIONS.map((d, i) => (
               <div key={d.title} className={styles.decisionItem}>
-                <span className={styles.decisionNum}>{String(i + 1).padStart(2, '0')}</span>
-                <h4 className={styles.decisionTitle}>{d.title}</h4>
+                <h3 className={styles.decisionTitle}>
+                  <span className={styles.decisionNum}>{String(i + 1).padStart(2, '0')}</span>
+                  {d.title}
+                </h3>
                 <p className={styles.decisionDesc}>{d.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-        <FooterBar page="13" />
-      </div>
+        </section>
 
-      {/* ── 07 Outcomes ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
+        {/* ── 12. 07 Outcomes ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="07" eyebrow="Outcomes" title="What was delivered, and how it is measured." />
 
           <p className={styles.sectionParagraph}>
@@ -970,31 +978,31 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             a document.
           </p>
 
-          <span className={styles.glanceLabel}>Confirmed</span>
-          <div className={styles.confirmedGrid}>
-            <div className={styles.confirmedCard}>
-              <span className={styles.confirmedValue}>2</span>
-              <span className={styles.confirmedLabel}>User tiers</span>
+          <Callout text="Confirmed" />
+          <div className={`${styles.statsGrid} ${styles.statsGridFive}`}>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>2</span>
+              <span className={styles.statLabel}>User tiers</span>
             </div>
-            <div className={styles.confirmedCard}>
-              <span className={styles.confirmedValue}>3</span>
-              <span className={styles.confirmedLabel}>Grounding sources</span>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>3</span>
+              <span className={styles.statLabel}>Grounding sources</span>
             </div>
-            <div className={styles.confirmedCard}>
-              <span className={styles.confirmedValue}>1</span>
-              <span className={styles.confirmedLabel}>Socket per session</span>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>1</span>
+              <span className={styles.statLabel}>Socket per session</span>
             </div>
-            <div className={styles.confirmedCard}>
-              <span className={styles.confirmedValue}>AWS</span>
-              <span className={styles.confirmedLabel}>ECS + Fargate</span>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>AWS</span>
+              <span className={styles.statLabel}>ECS + Fargate</span>
             </div>
-            <div className={styles.confirmedCard}>
-              <span className={styles.confirmedValue}>Stripe</span>
-              <span className={styles.confirmedLabel}>Billing integration</span>
+            <div className={styles.statBox}>
+              <span className={styles.statValue}>Stripe</span>
+              <span className={styles.statLabel}>Billing integration</span>
             </div>
           </div>
 
-          <h3 className={styles.plainHeading}>Measurement framework</h3>
+          <Callout text="Measurement framework" />
           <div className={styles.tableWrapper}>
             <table className={styles.customTable}>
               <thead>
@@ -1007,23 +1015,17 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {MEASUREMENT_TABLE.map((row) => (
                   <tr key={row.metric}>
-                    <td className={styles.layerCol}>{row.metric}</td>
-                    <td>{row.measures}</td>
-                    <td className={styles.mutedCell}>[ populate ]</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '220px' }}>Instrumented Metric" className={styles.layerCol}>{row.metric}</td>
+                    <td data-label="What It Measures">{row.measures}</td>
+                    <td data-label="Current" className={styles.mutedCell}>[ populate ]</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-        <FooterBar page="14" />
-      </div>
 
-      {/* ── What this demonstrates / Delivered ── */}
-      <div className={styles.pageSheet}>
-        <RunningHeader />
-        <div className={styles.pageInner}>
-          <h3 className={styles.plainHeading}>What this demonstrates</h3>
+          <Callout text="What this demonstrates" />
           <p className={styles.sectionParagraph}>
             Real-time financial intelligence is not a prompt problem. It is an architecture problem —
             conditional retrieval to control cost, re-ranked grounding to control correctness, streaming to
@@ -1036,12 +1038,13 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
             provides real, actionable intelligence rather than generic text — a purpose-built financial
             engine that understands the nuances of macro-economics and institutional data.
           </div>
+        </section>
 
-          <div className={styles.deliveredBar}>
-            <strong>Delivered</strong>· {DELIVERED_ITEMS}
-          </div>
+        {/* ── 13. Delivered (closing box, in place of Vook's CTA) ── */}
+        <div className={styles.deliveredBox}>
+          <span className={styles.deliveredLabel}>Delivered</span>
+          <p>{DELIVERED_ITEMS}</p>
         </div>
-        <FooterBar page="15" />
       </div>
     </div>
   );
