@@ -42,58 +42,41 @@ $color-dark-bg: #12151C;
 /* ── Hero Section (Vook layout: copy left, visual right) ── */
 .heroSection {
   width: 100%;
-  background: linear-gradient(180deg, $color-bg-blue-tint 0%, #FFFFFF 100%);
-  padding-top: clamp(120px, 14vh, 150px);
-  padding-bottom: 60px;
 }
 
-.heroGrid {
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 40px;
-  align-items: center;
-
-  @media (max-width: 960px) {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-}
-
-.heroLeft {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.heroRight {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.heroVisual {
-  width: 100%;
-  max-width: 560px;
-  background: $color-bg-page;
-  border: 1px solid $color-border;
-  border-radius: 20px;
-  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.12);
-  padding: 40px 32px 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
+.heroBand {
+  background: $color-bg-blue-tint;
+  border-bottom: 4px solid $color-brand-blue;
+  padding: clamp(120px, 14vh, 150px) 0 56px;
 
   @media (max-width: 640px) {
-    padding: 28px 20px 20px;
+    padding-bottom: 32px;
   }
+}
+
+.heroWhite {
+  background: $color-bg-page;
+}
+
+.heroWhiteInner {
+  padding-top: 28px;
+  padding-bottom: 56px;
 }
 
 .heroCandles {
+  flex-shrink: 0;
+  margin: 18px 0 0 auto;
   color: $color-brand-blue;
-  width: 100%;
-  max-width: 320px;
-  height: auto;
+
+  @media (max-width: 900px) {
+    width: 110px;
+    height: auto;
+    margin: 24px 0 0;
+  }
+
+  @media (max-width: 640px) {
+    align-self: center;
+  }
 }
 
 /* ── Quick Meta Facts Bar ── */
@@ -287,9 +270,42 @@ $color-dark-bg: #12151C;
 
 .featureGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 24px;
   margin: 36px 0;
+
+  > div {
+    grid-column: span 2;
+    margin: 0;
+  }
+
+  > :nth-child(4),
+  > :nth-child(5) {
+    grid-column: span 3;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+
+    > div,
+    > :nth-child(4) {
+      grid-column: span 1;
+    }
+
+    > :nth-child(5) {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+
+    > div,
+    > :nth-child(4),
+    > :nth-child(5) {
+      grid-column: span 1;
+    }
+  }
 }
 
 .featureCard {
@@ -542,16 +558,12 @@ $color-dark-bg: #12151C;
 }
 
 .heroMainTitle {
-  font-size: 3.75rem;
-  font-weight: 900;
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 800;
   line-height: 1.05;
   color: $color-text-main;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.01em;
   margin: 0 0 14px;
-
-  @media (max-width: 640px) {
-    font-size: 2.85rem;
-  }
 }
 
 .heroSubtitle {
@@ -562,64 +574,83 @@ $color-dark-bg: #12151C;
 }
 
 .heroLead {
-  font-size: 1.05rem;
+  font-size: 1.0625rem;
   line-height: 1.65;
   color: $color-text-body;
-  max-width: 520px;
-  margin: 0 0 28px;
+  max-width: none;
+  margin: 0;
 }
 
 .heroTagsRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  width: 100%;
-}
+  gap: 16px 24px;
+  margin-bottom: 32px;
 
-.heroTag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: $color-bg-page;
-  color: $color-text-body;
-  font-size: 0.92rem;
-  font-weight: 500;
-  padding: 10px 22px;
-  border-radius: 9999px;
-  border: 1px solid $color-border;
-
-  &:first-child {
-    background: $color-dark-bg;
-    border-color: $color-dark-bg;
-    color: #fff;
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
+.heroTag {
+  background-color: #EFF5FE;
+  color: $color-brand-blue-dark;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 3px;
+  border: 1px solid #C9DBFA;
+}
+
 .heroStatsRow {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   width: 100%;
+  gap: 0;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 
 .heroStat {
-  background: $color-bg-blue-tint;
-  border-radius: 12px;
-  padding: 16px 18px;
+  padding: 0 32px;
+  border-right: 1px solid $color-border;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-of-type {
+    border-right: none;
+  }
+
+  @media (max-width: 640px) {
+    padding: 0 0 16px;
+    border-right: none;
+    border-bottom: 1px solid $color-border;
+
+    &:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
 }
 
 .heroStatValue {
   display: block;
-  font-family: var(--font-inter), sans-serif;
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: clamp(1.75rem, 2.8vw, 2rem);
+  font-weight: 800;
   color: $color-brand-blue;
   line-height: 1;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .heroStatLabel {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: $color-text-muted;
   line-height: 1.35;
 }
@@ -1093,3 +1124,193 @@ $color-dark-bg: #12151C;
   }
 }
 
+
+// ── Mobile refinements ──
+@media (max-width: 640px) {
+  .sectionBlock {
+    padding: 44px 0 16px;
+  }
+
+  .sectionHeading,
+  .sectionTitle {
+    font-size: 1.625rem;
+    line-height: 1.25;
+  }
+
+  .darkBanner {
+    margin: 32px 0 16px;
+
+    .darkTitle {
+      font-size: 1.75rem;
+    }
+  }
+
+  // Hero: tags wrap in rows, stats sit in a 2×2 grid
+  .heroTagsRow {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .heroTag {
+    font-size: 0.8125rem;
+    padding: 7px 12px;
+  }
+
+  .heroStatsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+  }
+
+  .heroStat {
+    padding: 0;
+    border: none;
+
+    &:last-of-type {
+      padding-bottom: 0;
+    }
+  }
+
+  .heroStatsRow > svg {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin: 8px 0 0;
+  }
+
+  // Tables stack into one labelled card per row
+  .tableWrapper {
+    overflow: visible;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .customTable {
+    thead {
+      display: none;
+    }
+
+    tbody tr {
+      display: block;
+      border: 1px solid $color-border;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: $color-bg-page;
+
+      &:nth-child(even) {
+        background: $color-bg-page;
+      }
+
+      &:last-child {
+        border-bottom: 1px solid $color-border;
+      }
+    }
+
+    tbody td {
+      display: block;
+      padding: 4px 0;
+      white-space: normal;
+    }
+
+    tbody td + td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $color-text-light;
+      margin: 6px 0 2px;
+    }
+
+    tbody td:first-child {
+      font-size: 1rem;
+      white-space: normal;
+    }
+  }
+
+  .diagramContainer {
+    padding: 20px 14px;
+    border-radius: 16px;
+  }
+}
+@media (max-width: 640px) {
+  .implCard,
+  .featureCard {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  // Five stats in two columns: last one spans the row
+  .statsGridFive > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  // Stat cards stay two-up on phones instead of tall single-column blocks
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .statBox {
+    min-height: 0;
+    padding: 18px 16px;
+
+    .statValue {
+      font-size: 28px;
+      line-height: 34px;
+    }
+
+    .statLabel {
+      font-size: 13px;
+      line-height: 18px;
+      letter-spacing: 0;
+    }
+  }
+
+  .heroStatsRow > svg {
+    width: 160px;
+    height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  // Delivered list reads as a justified block on phones
+  .deliveredBox {
+    padding: 36px 20px;
+
+    p {
+      text-align: justify;
+    }
+  }
+
+  .deliveredLabel {
+    font-size: 1.75rem;
+  }
+}
+
+// Delivered list is justified at every width
+.deliveredBox p {
+  text-align: justify;
+}
+
+// Delivered box hugs its text; the list fills the box edge to edge
+.deliveredBox {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px 44px;
+
+  p {
+    max-width: none;
+  }
+
+  @media (max-width: 640px) {
+    padding: 32px 20px;
+  }
+}

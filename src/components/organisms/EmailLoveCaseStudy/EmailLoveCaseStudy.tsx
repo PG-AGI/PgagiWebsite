@@ -303,9 +303,10 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               <tbody>
                 {PIPELINES_TABLE.map((row) => (
                   <tr key={row.pipeline}>
-                    <td className={styles.layerCol}>{row.pipeline}</td>
-                    <td>{row.input}</td>
-                    <td>{row.output}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '220px' }}>Pipeline" className={styles.layerCol}>{row.pipeline}</td>
+                    <td data-label="Input">{row.input}</td>
+                    <td data-label="Output">{row.output}</td>
                   </tr>
                 ))}
               </tbody>
@@ -348,9 +349,10 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               <tbody>
                 {ARCHITECTURE_TABLE.map((row) => (
                   <tr key={row.component}>
-                    <td className={styles.layerCol}>{row.component}</td>
-                    <td>{row.tech}</td>
-                    <td>{row.role}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '180px' }}>Component" className={styles.layerCol}>{row.component}</td>
+                    <td data-label="Technology / Approach">{row.tech}</td>
+                    <td data-label="Role">{row.role}</td>
                   </tr>
                 ))}
               </tbody>
@@ -569,8 +571,9 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               <tbody>
                 {REPAIR_PASS_TABLE.map((row) => (
                   <tr key={row.step}>
-                    <td className={styles.layerCol}>{row.step}</td>
-                    <td>{row.what}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '220px' }}>Pass Step" className={styles.layerCol}>{row.step}</td>
+                    <td data-label="What Happens">{row.what}</td>
                   </tr>
                 ))}
               </tbody>
@@ -710,16 +713,18 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               <tbody>
                 {CREDIT_OPS_TABLE.map((row) => (
                   <tr key={row.op}>
-                    <td className={styles.layerCol}>{row.op}</td>
-                    <td>{row.unit}</td>
-                    <td>{row.driver}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '220px' }}>Metered Operation" className={styles.layerCol}>{row.op}</td>
+                    <td data-label="Unit of Consumption">{row.unit}</td>
+                    <td data-label="Primary Cost Driver">{row.driver}</td>
                   </tr>
                 ))}
                 {FREE_OPS_TABLE.map((row) => (
                   <tr key={row.op}>
-                    <td className={styles.layerCol}>{row.op}</td>
-                    <td className={styles.mutedCell}>{row.unit}</td>
-                    <td className={styles.mutedCell}>{row.driver}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '220px' }}>Metered Operation" className={styles.layerCol}>{row.op}</td>
+                    <td data-label="Unit of Consumption" className={styles.mutedCell}>{row.unit}</td>
+                    <td data-label="Primary Cost Driver" className={styles.mutedCell}>{row.driver}</td>
                   </tr>
                 ))}
               </tbody>
@@ -760,10 +765,11 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               <tbody>
                 {PLAN_TABLE.map((row) => (
                   <tr key={row.tier}>
-                    <td className={styles.layerCol}>{row.tier}</td>
-                    <td>{row.volume}</td>
-                    <td>{row.scope}</td>
-                    <td>{row.included}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '110px' }}>Tier" className={styles.layerCol}>{row.tier}</td>
+                    <td data-label="Committed Volume">{row.volume}</td>
+                    <td data-label="Library Scope">{row.scope}</td>
+                    <td data-label="Included Beyond Credits">{row.included}</td>
                   </tr>
                 ))}
               </tbody>
@@ -1007,9 +1013,10 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               <tbody>
                 {MEASUREMENT_TABLE.map((row) => (
                   <tr key={row.metric}>
-                    <td className={styles.layerCol}>{row.metric}</td>
-                    <td>{row.measures}</td>
-                    <td className={styles.mutedCell}>[ populate ]</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '260px' }}>Instrumented Metric" className={styles.layerCol}>{row.metric}</td>
+                    <td data-label="What It Measures">{row.measures}</td>
+                    <td data-label="Current" className={styles.mutedCell}>[ populate ]</td>
                   </tr>
                 ))}
               </tbody>

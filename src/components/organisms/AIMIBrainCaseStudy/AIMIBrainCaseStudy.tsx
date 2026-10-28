@@ -174,49 +174,48 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
     <div className={styles.aimiBrainPage}>
       {/* ── 1. Hero Section ── */}
       <section className={styles.heroSection}>
-        <div className={styles.rail}>
-          <div className={styles.heroGrid}>
-            <div className={styles.heroLeft}>
-              <p className={styles.heroEyebrow}>Case Study · FinTech + AI</p>
-              <h1 className={styles.heroMainTitle}>AIMI Brain</h1>
-              <h2 className={styles.heroSubtitle}>Real-time conversational financial intelligence</h2>
+        <div className={styles.heroBand}>
+          <div className={styles.rail}>
+            <p className={styles.heroEyebrow}>Case Study · FinTech + AI</p>
+            <h1 className={styles.heroMainTitle}>AIMI Brain</h1>
+            <h2 className={styles.heroSubtitle}>Real-time conversational financial intelligence</h2>
 
-              <p className={styles.heroLead}>
-                A platform that puts institutional-grade macro analysis behind natural language, combining
-                retrieval-augmented generation with live web data, per-user document intelligence and a streaming
-                architecture built for a market where the answer stops being useful the moment it goes stale.
-              </p>
+            <p className={styles.heroLead}>
+              A platform that puts institutional-grade macro analysis behind natural language, combining
+              retrieval-augmented generation with live web data, per-user document intelligence and a streaming
+              architecture built for a market where the answer stops being useful the moment it goes stale.
+            </p>
+          </div>
+        </div>
 
-              <div className={styles.heroTagsRow}>
-                <span className={styles.heroTag}>RAG orchestration</span>
-                <span className={styles.heroTag}>Live web grounding</span>
-                <span className={styles.heroTag}>WebSocket streaming</span>
-                <span className={styles.heroTag}>Document intelligence</span>
-              </div>
+        <div className={styles.heroWhite}>
+          <div className={`${styles.rail} ${styles.heroWhiteInner}`}>
+            <div className={styles.heroTagsRow}>
+              <span className={styles.heroTag}>RAG orchestration</span>
+              <span className={styles.heroTag}>Live web grounding</span>
+              <span className={styles.heroTag}>WebSocket streaming</span>
+              <span className={styles.heroTag}>Document intelligence</span>
             </div>
 
-            <div className={styles.heroRight}>
-              <div className={styles.heroVisual}>
-                <CandlestickChart className={styles.heroCandles} />
-                <div className={styles.heroStatsRow}>
-                  <div className={styles.heroStat}>
-                    <span className={styles.heroStatValue}>RAG</span>
-                    <span className={styles.heroStatLabel}>grounded, not recalled</span>
-                  </div>
-                  <div className={styles.heroStat}>
-                    <span className={styles.heroStatValue}>WS</span>
-                    <span className={styles.heroStatLabel}>token-by-token streaming</span>
-                  </div>
-                  <div className={styles.heroStat}>
-                    <span className={styles.heroStatValue}>2</span>
-                    <span className={styles.heroStatLabel}>tiers, gated end to end</span>
-                  </div>
-                  <div className={styles.heroStat}>
-                    <span className={styles.heroStatValue}>AWS</span>
-                    <span className={styles.heroStatLabel}>ECS + Fargate, containerised</span>
-                  </div>
-                </div>
+            <div className={styles.heroStatsRow}>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>RAG</span>
+                <span className={styles.heroStatLabel}>grounded, not recalled</span>
               </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>WS</span>
+                <span className={styles.heroStatLabel}>token-by-token streaming</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>2</span>
+                <span className={styles.heroStatLabel}>tiers, gated end to end</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>AWS</span>
+                <span className={styles.heroStatLabel}>ECS + Fargate, containerised</span>
+              </div>
+
+              <CandlestickChart className={styles.heroCandles} />
             </div>
           </div>
         </div>
@@ -309,8 +308,9 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {CAPABILITIES_TABLE.map((row) => (
                   <tr key={row.capability}>
-                    <td className={styles.layerCol}>{row.capability}</td>
-                    <td>{row.contributes}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '200px' }}>Capability" className={styles.layerCol}>{row.capability}</td>
+                    <td data-label="What It Contributes">{row.contributes}</td>
                   </tr>
                 ))}
               </tbody>
@@ -353,9 +353,10 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {ARCHITECTURE_TABLE.map((row) => (
                   <tr key={row.layer}>
-                    <td className={styles.layerCol}>{row.layer}</td>
-                    <td>{row.responsibility}</td>
-                    <td>{row.tech}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '170px' }}>Layer" className={styles.layerCol}>{row.layer}</td>
+                    <td data-label="Responsibility">{row.responsibility}</td>
+                    <td data-label="Technology">{row.tech}</td>
                   </tr>
                 ))}
               </tbody>
@@ -724,9 +725,10 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {TIER_TABLE.map((row) => (
                   <tr key={row.dimension}>
-                    <td className={styles.layerCol}>{row.dimension}</td>
-                    <td>{row.free}</td>
-                    <td className={styles.mutedCell}>{row.pro}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '190px' }}>Gated Dimension" className={styles.layerCol}>{row.dimension}</td>
+                    <td data-label="Free">{row.free}</td>
+                    <td data-label="Pro" className={styles.mutedCell}>{row.pro}</td>
                   </tr>
                 ))}
               </tbody>
@@ -751,9 +753,10 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {OPERATION_TABLE.map((row) => (
                   <tr key={row.operation}>
-                    <td className={styles.layerCol}>{row.operation}</td>
-                    <td>{row.when}</td>
-                    <td className={styles.mutedCell}>{row.cost}</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '190px' }}>Operation" className={styles.layerCol}>{row.operation}</td>
+                    <td data-label="When It Runs">{row.when}</td>
+                    <td data-label="Relative Cost" className={styles.mutedCell}>{row.cost}</td>
                   </tr>
                 ))}
               </tbody>
@@ -1012,9 +1015,10 @@ export default function AIMIBrainCaseStudy(_props: AIMIBrainCaseStudyProps) {
               <tbody>
                 {MEASUREMENT_TABLE.map((row) => (
                   <tr key={row.metric}>
-                    <td className={styles.layerCol}>{row.metric}</td>
-                    <td>{row.measures}</td>
-                    <td className={styles.mutedCell}>[ populate ]</td>
+                    <td data-label="<tr>
+                  <th style={{ width: '220px' }}>Instrumented Metric" className={styles.layerCol}>{row.metric}</td>
+                    <td data-label="What It Measures">{row.measures}</td>
+                    <td data-label="Current" className={styles.mutedCell}>[ populate ]</td>
                   </tr>
                 ))}
               </tbody>

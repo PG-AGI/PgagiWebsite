@@ -1242,3 +1242,177 @@ $color-dark-bg: #17171A;
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+// ── Mobile refinements ──
+@media (max-width: 640px) {
+  .sectionBlock {
+    padding: 44px 0 16px;
+  }
+
+  .sectionHeading,
+  .sectionTitle {
+    font-size: 1.625rem;
+    line-height: 1.25;
+  }
+
+  .darkBanner {
+    margin: 32px 0 16px;
+
+    .darkTitle {
+      font-size: 1.75rem;
+    }
+  }
+
+  // Hero: tags wrap in rows, stats sit in a 2×2 grid
+  .heroTagsRow {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .heroTag {
+    font-size: 0.8125rem;
+    padding: 7px 12px;
+  }
+
+  .heroStatsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+  }
+
+  .heroStat {
+    padding: 0;
+    border: none;
+
+    &:last-of-type {
+      padding-bottom: 0;
+    }
+  }
+
+  .heroStatsRow > svg {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin: 8px 0 0;
+  }
+
+  // Tables stack into one labelled card per row
+  .tableWrapper {
+    overflow: visible;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .customTable {
+    thead {
+      display: none;
+    }
+
+    tbody tr {
+      display: block;
+      border: 1px solid $color-border;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: $color-bg-page;
+
+      &:nth-child(even) {
+        background: $color-bg-page;
+      }
+
+      &:last-child {
+        border-bottom: 1px solid $color-border;
+      }
+    }
+
+    tbody td {
+      display: block;
+      padding: 4px 0;
+      white-space: normal;
+    }
+
+    tbody td + td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: $color-text-light;
+      margin: 6px 0 2px;
+    }
+
+    tbody td:first-child {
+      font-size: 1rem;
+      white-space: normal;
+    }
+  }
+
+  .diagramContainer {
+    padding: 20px 14px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  // Repair loop keeps legible text; scrolls sideways inside its panel
+  .diagramContainer {
+    overflow-x: auto;
+  }
+
+  .repairLoopSvg {
+    min-width: 560px;
+  }
+}
+
+@media (max-width: 700px) {
+  // Odd cell count: last stat spans the row instead of leaving a gap
+  .confirmedCard:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    border-left: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .implCard,
+  .featureCard {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  // Delivered list reads as a justified block on phones
+  .deliveredBox {
+    padding: 36px 20px;
+
+    p {
+      text-align: justify;
+    }
+  }
+
+  .deliveredLabel {
+    font-size: 1.75rem;
+  }
+}
+
+// Delivered list is justified at every width
+.deliveredBox p {
+  text-align: justify;
+}
+
+// Delivered box hugs its text; the list fills the box edge to edge
+.deliveredBox {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px 44px;
+
+  p {
+    max-width: none;
+  }
+
+  @media (max-width: 640px) {
+    padding: 32px 20px;
+  }
+}
