@@ -53,7 +53,7 @@ const PIPELINE_MODULES = [
   'library-ingestion', 'component-vision-analysis', 'semantic-summary', 'blueprint-builder', 'section-matcher',
   'mjml-json-editor', 'section-merger', 'render-service', 'visual-diff', 'fault-analyser', 'repair-executor',
   'best-of-n-selector', 'credit-metering',
-].join(' · ');
+];
 
 const CREDIT_OPS_TABLE: { op: string; unit: string; driver: string }[] = [
   { op: 'Library onboarding', unit: 'Per component variant analysed', driver: 'Vision plus language inference, one-off' },
@@ -112,115 +112,137 @@ const DELIVERED_ITEMS = [
 
 function SectionHeader({ num, eyebrow, title }: { num: string; eyebrow: string; title: string }) {
   return (
-    <div className={styles.sectionHeader}>
-      <div className={styles.sectionNumRow}>
-        <span className={styles.sectionNumBadge}>{num}</span>
-        <span className={styles.sectionEyebrow}>{eyebrow}</span>
-      </div>
-      <h2 className={styles.sectionTitle}>{title}</h2>
+    <>
+      <span className={styles.eyebrow}>
+        <span className={styles.eyebrowNum}>{num}</span>
+        {eyebrow}
+      </span>
+      <h2 className={styles.sectionHeading}>{title}</h2>
+    </>
+  );
+}
+
+function Callout({ text }: { text: string }) {
+  return (
+    <div className={styles.calloutDivider}>
+      <span className={styles.calloutLine} />
+      <h3 className={styles.calloutText}>{text}</h3>
     </div>
+  );
+}
+
+function CheckList({ items }: { items: React.ReactNode[] }) {
+  return (
+    <ul className={styles.checkList}>
+      {items.map((item, i) => (
+        <li key={i} className={styles.checkItem}>
+          <span className={styles.checkMark}>✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
 export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
   return (
     <div className={styles.emailLovePage}>
-      {/* ── Cover (page 1) ── */}
-      <div className={`${styles.pageSheet} ${styles.coverSheet}`}>
-        <div className={styles.coverPeachPanel}>
-          <p className={styles.heroEyebrow}>Case Study · MarTech + AI</p>
-          <h1 className={styles.heroMainTitle}>Email Love</h1>
-          <h2 className={styles.heroSubtitle}>AI-powered email template generation and autonomous repair</h2>
+      {/* ── 1. Hero Section ── */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroPeach}>
+          <div className={styles.rail}>
+            <p className={styles.heroEyebrow}>Case Study · MarTech + AI</p>
+            <h1 className={styles.heroMainTitle}>Email Love</h1>
+            <h2 className={styles.heroSubtitle}>AI-powered email template generation and autonomous repair</h2>
 
-          <p className={styles.heroLead}>
-            A two-pipeline backend system that ingests a client&apos;s Figma component library, understands
-            it, and then either generates complete email templates from a campaign brief or autonomously
-            detects and repairs broken ones — removing MJML authorship from the workflow entirely for a
-            platform serving 50,000+ users.
-          </p>
+            <p className={styles.heroLead}>
+              A two-pipeline backend system that ingests a client&apos;s Figma component library, understands
+              it, and then either generates complete email templates from a campaign brief or autonomously
+              detects and repairs broken ones — removing MJML authorship from the workflow entirely for a
+              platform serving 50,000+ users.
+            </p>
+          </div>
         </div>
 
-        <div className={styles.coverWhitePanel}>
-          <div className={styles.heroTagsRow}>
-            <span className={styles.heroTag}>AI email automation</span>
-            <span className={styles.heroTag}>Figma to MJML</span>
-            <span className={styles.heroTag}>Generative AI pipeline</span>
-            <span className={styles.heroTag}>Autonomous template repair</span>
-          </div>
+        <div className={styles.heroWhite}>
+          <div className={`${styles.rail} ${styles.heroWhiteInner}`}>
+            <div className={styles.heroTagsRow}>
+              <span className={styles.heroTag}>AI email automation</span>
+              <span className={styles.heroTag}>Figma to MJML</span>
+              <span className={styles.heroTag}>Generative AI pipeline</span>
+              <span className={styles.heroTag}>Autonomous template repair</span>
+            </div>
 
-          <div className={styles.heroStatsRow}>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>50K+</span>
-              <span className={styles.heroStatLabel}>platform users served</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>2</span>
-              <span className={styles.heroStatLabel}>AI pipelines delivered</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>3</span>
-              <span className={styles.heroStatLabel}>repair passes, hard cap</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatValue}>0</span>
-              <span className={styles.heroStatLabel}>lines of MJML authored</span>
+            <div className={styles.heroStatsRow}>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>50K+</span>
+                <span className={styles.heroStatLabel}>platform users served</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>2</span>
+                <span className={styles.heroStatLabel}>AI pipelines delivered</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>3</span>
+                <span className={styles.heroStatLabel}>repair passes, hard cap</span>
+              </div>
+              <div className={styles.heroStat}>
+                <span className={styles.heroStatValue}>0</span>
+                <span className={styles.heroStatLabel}>lines of MJML authored</span>
+              </div>
+
+              <svg className={styles.heroEnvelope} width="146" height="112" viewBox="0 0 130 100" fill="none" aria-hidden="true">
+                <rect x="1" y="1" width="128" height="98" rx="2" stroke="currentColor" strokeWidth="1.25" />
+                <path d="M1 1L65 59L129 1" stroke="currentColor" strokeWidth="1.25" />
+                <circle cx="65" cy="59" r="2.75" fill="currentColor" />
+                <circle cx="28" cy="82" r="2.75" fill="currentColor" />
+                <circle cx="102" cy="82" r="2.75" fill="currentColor" />
+              </svg>
             </div>
           </div>
+        </div>
+      </section>
 
-          <svg className={styles.envelopeIcon} width="130" height="100" viewBox="0 0 130 100" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="128" height="98" rx="2" stroke="currentColor" strokeWidth="1.25" />
-            <path d="M1 1L65 59L129 1" stroke="currentColor" strokeWidth="1.25" />
-            <circle cx="65" cy="59" r="2.75" fill="currentColor" />
-            <circle cx="28" cy="82" r="2.75" fill="currentColor" />
-            <circle cx="102" cy="82" r="2.75" fill="currentColor" />
-          </svg>
+      {/* ── 2. Quick Meta Facts Bar ── */}
+      <div className={styles.metaRail}>
+        <div className={styles.rail}>
+          <span className={styles.docSectionLabel}>Document</span>
+          <h2 className={styles.docTitle}>Email Love — platform case study</h2>
+          <div className={styles.metaGrid}>
+            {DOC_FIELDS.map((row) => (
+              <div key={row.field} className={styles.metaItem}>
+                <span className={styles.metaLabel}>{row.field}</span>
+                <span className={styles.metaValue}>{row.detail}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* ── Document / At A Glance / Index (page 2) ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
-          <span className={styles.docSectionLabel}>Document</span>
-          <h2 className={styles.docTitle}>Email Love — platform case study</h2>
-
-          <table className={styles.fieldTable}>
-            <thead>
-              <tr>
-                <th>Field</th>
-                <th>Detail</th>
-              </tr>
-            </thead>
-            <tbody>
-              {DOC_FIELDS.map((row) => (
-                <tr key={row.field}>
-                  <td className={styles.fieldNameCell}>{row.field}</td>
-                  <td className={styles.fieldDetailCell}>{row.detail}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <span className={styles.glanceLabel}>At A Glance</span>
-          <div className={styles.glanceGrid}>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>50K+</span>
-              <span className={styles.glanceCaption}>Users on the platform the pipelines serve</span>
+      <div className={styles.rail}>
+        {/* ── 3. At A Glance + Index ── */}
+        <section className={styles.sectionBlock}>
+          <span className={styles.eyebrow}>At A Glance</span>
+          <div className={`${styles.confirmedGrid} ${styles.confirmedGridFour}`}>
+            <div className={styles.confirmedCard}>
+              <span className={styles.confirmedValue}>50K+</span>
+              <span className={styles.confirmedLabel}>Users on the platform the pipelines serve</span>
             </div>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>2</span>
-              <span className={styles.glanceCaption}>Independent AI pipelines on one shared foundation</span>
+            <div className={styles.confirmedCard}>
+              <span className={styles.confirmedValue}>2</span>
+              <span className={styles.confirmedLabel}>Independent AI pipelines on one shared foundation</span>
             </div>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>3</span>
-              <span className={styles.glanceCaption}>Repair passes, hard-capped for bounded cost</span>
+            <div className={styles.confirmedCard}>
+              <span className={styles.confirmedValue}>3</span>
+              <span className={styles.confirmedLabel}>Repair passes, hard-capped for bounded cost</span>
             </div>
-            <div className={styles.glanceCard}>
-              <span className={styles.glanceValue}>0</span>
-              <span className={styles.glanceCaption}>Lines of MJML authored by hand</span>
+            <div className={styles.confirmedCard}>
+              <span className={styles.confirmedValue}>0</span>
+              <span className={styles.confirmedLabel}>Lines of MJML authored by hand</span>
             </div>
           </div>
 
-          <span className={`${styles.glanceLabel} ${styles.indexLabelTop}`}>Index</span>
+          <span className={styles.eyebrow}>Index</span>
           <div className={styles.indexList}>
             {INDEX_ITEMS.map((item) => (
               <div key={item.num} className={styles.indexRow}>
@@ -230,12 +252,10 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* ── 01 What We Built ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
+        {/* ── 4. 01 What We Built ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="01" eyebrow="What We Built" title="Two AI pipelines that take MJML authorship out of the workflow entirely." />
 
           <p className={styles.sectionParagraph}>
@@ -252,7 +272,7 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             email templates from a campaign brief or autonomously detects and repairs broken ones.
           </p>
 
-          <h3 className={styles.plainHeading}>The starting point</h3>
+          <Callout text="The starting point" />
           <p className={styles.sectionParagraph}>
             The client already ran a working Figma plugin. Their users — marketing teams and designers —
             composed email layouts inside a curated component library, and the plugin exported the finished
@@ -270,7 +290,7 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             from intent, and one that repairs a template from evidence.
           </div>
 
-          <h3 className={styles.plainHeading}>What the two pipelines do</h3>
+          <Callout text="What the two pipelines do" />
           <div className={styles.tableWrapper}>
             <table className={styles.customTable}>
               <thead>
@@ -292,19 +312,21 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             </table>
           </div>
 
-          <h3 className={styles.subHeadingOrange}>What the engagement removed</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>Manual component selection and arrangement for every campaign.</li>
-            <li className={styles.bulletItem}>Hand-editing of MJML to adapt copy, type and colour to a new brief.</li>
-            <li className={styles.bulletItem}>The design-to-engineering round trip when an export rendered incorrectly.</li>
-            <li className={styles.bulletItem}>The dependency on whoever on the team happens to know MJML.</li>
-          </ul>
-        </div>
-      </div>
+          <div className={styles.featureCard}>
+            <h3 className={styles.cardTitle}>What the engagement removed</h3>
+            <CheckList
+              items={[
+                'Manual component selection and arrangement for every campaign.',
+                'Hand-editing of MJML to adapt copy, type and colour to a new brief.',
+                'The design-to-engineering round trip when an export rendered incorrectly.',
+                'The dependency on whoever on the team happens to know MJML.',
+              ]}
+            />
+          </div>
+        </section>
 
-      {/* ── 02 Core Architecture ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
+        {/* ── 5. 02 Core Architecture ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="02" eyebrow="Core Architecture" title="Two pipelines, one shared foundation." />
 
           <p className={styles.sectionParagraph}>
@@ -335,7 +357,8 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             </table>
           </div>
 
-          <div className={styles.diagramBlock}>
+          {/* Figure 1 — System architecture */}
+          <div className={styles.diagramContainer}>
             <div className={styles.diagramRow}>
               <div className={styles.diagramRowLabel}>Client Surface</div>
               <div className={styles.diagramRowBoxes}>
@@ -422,14 +445,23 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             plugin and campaign tooling remain the surface, and both pipelines sit behind one programmatic
             API.
           </p>
+        </section>
 
-          <h3 className={styles.plainHeading}>Pipeline One — automated template generation</h3>
-          <p className={styles.sectionParagraph}>
-            Before any template can be generated automatically, the system has to understand what it is
-            working with. We ingest the full component library and analyse every component twice over:
-            structurally, through its MJML JSON schema, its nesting and its configurable fields; and
-            visually, through the rendered image of the component.
-          </p>
+        {/* ── 6. Dark Feature Banner — Pipeline One ── */}
+        <div className={styles.darkBanner}>
+          <div className={styles.darkContent}>
+            <span className={styles.darkEyebrow}>Core Architecture</span>
+            <h2 className={styles.darkTitle}>Pipeline One — automated template generation</h2>
+            <p className={styles.darkDesc}>
+              Before any template can be generated automatically, the system has to understand what it is
+              working with. We ingest the full component library and analyse every component twice over:
+              structurally, through its MJML JSON schema, its nesting and its configurable fields; and
+              visually, through the rendered image of the component.
+            </p>
+          </div>
+        </div>
+
+        <section className={styles.sectionBlock}>
           <p className={styles.sectionParagraph}>
             From that, a vision-capable model produces a semantic summary of each component — what it
             visually communicates, which campaign types it suits, what its content slots expect, and its
@@ -455,37 +487,40 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             a human touching a line of MJML.
           </p>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Stage One — Understand The Library</span>
-              <span className={styles.stageNote}>· rebuilt only when the library changes</span>
+          {/* Figure 2 — Generation pipeline */}
+          <div className={styles.diagramContainer}>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Stage One — Understand The Library</span>
+                <span className={styles.stageNote}>· rebuilt only when the library changes</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Component library ingested</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Multi-modal analysis schema + rendered image</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Semantic summary per component variant</div>
+              </div>
             </div>
-            <div className={styles.stageFlow}>
-              <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Component library ingested</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Multi-modal analysis schema + rendered image</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Semantic summary per component variant</div>
-            </div>
-          </div>
 
-          <div className={styles.stageGroup}>
-            <div className={styles.stageHeader}>
-              <span className={styles.stageLabel}>Stage Two — Generate The Template</span>
-              <span className={styles.stageNote}>· run per campaign brief</span>
-            </div>
-            <div className={styles.stageFlow}>
-              <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Campaign brief submitted</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Blueprint built intent · tone · sections</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Variant matched per section</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Targeted MJML JSON edits</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={styles.stageChip}>Merged in blueprint order</div>
-              <span className={styles.stageChevron}>›</span>
-              <div className={`${styles.stageChip} ${styles.stageChipDark}`}>Template delivered</div>
+            <div className={styles.stageGroup}>
+              <div className={styles.stageHeader}>
+                <span className={styles.stageLabel}>Stage Two — Generate The Template</span>
+                <span className={styles.stageNote}>· run per campaign brief</span>
+              </div>
+              <div className={styles.stageFlow}>
+                <div className={`${styles.stageChip} ${styles.stageChipHighlight}`}>Campaign brief submitted</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Blueprint built intent · tone · sections</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Variant matched per section</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Targeted MJML JSON edits</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={styles.stageChip}>Merged in blueprint order</div>
+                <span className={styles.stageChevron}>›</span>
+                <div className={`${styles.stageChip} ${styles.stageChipDark}`}>Template delivered</div>
+              </div>
             </div>
           </div>
 
@@ -499,20 +534,24 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             <strong>Figure 2</strong> The generation pipeline. Stage one is amortised across every template
             the library ever produces; stage two runs per brief.
           </p>
-        </div>
-      </div>
+        </section>
 
-      {/* ── Pipeline Two — autonomous MJML repair ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
-          <h3 className={styles.plainHeading}>Pipeline Two — autonomous MJML repair</h3>
-          <p className={styles.sectionParagraph}>
-            Even experienced Figma users do not always follow every structural convention the MJML export
-            layer depends on. When constraints are violated — improper nesting, a missing required element,
-            an unsupported layout pattern — the exported JSON can be malformed or render incorrectly in email
-            clients. Rather than returning an error and asking the user to go and fix their design, the
-            system attempts the repair itself.
-          </p>
+        {/* ── 7. Dark Feature Banner — Pipeline Two ── */}
+        <div className={styles.darkBanner}>
+          <div className={styles.darkContent}>
+            <span className={styles.darkEyebrow}>Core Architecture</span>
+            <h2 className={styles.darkTitle}>Pipeline Two — autonomous MJML repair</h2>
+            <p className={styles.darkDesc}>
+              Even experienced Figma users do not always follow every structural convention the MJML export
+              layer depends on. When constraints are violated — improper nesting, a missing required element,
+              an unsupported layout pattern — the exported JSON can be malformed or render incorrectly in email
+              clients. Rather than returning an error and asking the user to go and fix their design, the
+              system attempts the repair itself.
+            </p>
+          </div>
+        </div>
+
+        <section className={styles.sectionBlock}>
           <p className={styles.sectionParagraph}>
             The pipeline is built on one insight: the ground truth for what an email should look like is the
             original Figma design. So the system does not try to fix MJML by reading code alone. It reasons
@@ -543,61 +582,69 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             fidelity becomes the measurable objective, and the loop lets the system correct itself
             progressively rather than succeeding or failing in one shot.
           </p>
-          <svg className={styles.repairLoopSvg} viewBox="0 0 600 380" role="img" aria-label="The iterative repair loop">
-            <defs>
-              <marker id="repairArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-                <path d="M0,0 L8,4 L0,8 Z" fill="#E2672D" />
-              </marker>
-            </defs>
 
-            <path d="M175,90 L235,52" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
-            <path d="M345,55 L425,150" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
-            <path d="M470,205 L345,282" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
-            <path d="M235,300 L150,270" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
-            <path d="M105,225 L100,140" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
+          {/* Figure 3 — Iterative repair loop */}
+          <div className={styles.diagramContainer}>
+            <svg className={styles.repairLoopSvg} viewBox="0 0 600 380" role="img" aria-label="The iterative repair loop">
+              <defs>
+                <marker id="repairArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="#E2672D" />
+                </marker>
+              </defs>
 
-            <rect x="365" y="223" width="90" height="16" fill="#fff" />
-            <text x="410" y="235" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C34F1D">up to 3 passes</text>
+              <path d="M175,90 L235,52" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
+              <path d="M345,55 L425,150" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
+              <path d="M470,205 L345,282" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
+              <path d="M235,300 L150,270" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
+              <path d="M105,225 L100,140" stroke="#E2672D" strokeWidth="1.5" fill="none" markerEnd="url(#repairArrow)" />
 
-            <rect x="20" y="80" width="150" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
-            <text x="95" y="100" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Structured</text>
-            <text x="95" y="116" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">fault analysis</text>
+              <rect x="365" y="223" width="90" height="16" fill="#F7F7F8" />
+              <text x="410" y="235" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C34F1D">up to 3 passes</text>
 
-            <rect x="235" y="10" width="170" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
-            <text x="320" y="30" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Code-level repair</text>
-            <text x="320" y="46" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">on MJML JSON</text>
+              <rect x="20" y="80" width="150" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
+              <text x="95" y="100" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Structured</text>
+              <text x="95" y="116" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">fault analysis</text>
 
-            <rect x="425" y="150" width="150" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
-            <text x="500" y="170" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Candidate</text>
-            <text x="500" y="186" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">re-rendered</text>
+              <rect x="235" y="10" width="170" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
+              <text x="320" y="30" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Code-level repair</text>
+              <text x="320" y="46" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">on MJML JSON</text>
 
-            <rect x="15" y="225" width="185" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
-            <text x="107" y="245" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Visual comparison</text>
-            <text x="107" y="261" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">against the Figma design</text>
+              <rect x="425" y="150" width="150" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
+              <text x="500" y="170" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Candidate</text>
+              <text x="500" y="186" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">re-rendered</text>
 
-            <rect x="235" y="290" width="170" height="50" rx="8" fill="#FCEEE2" stroke="#E2672D" strokeWidth="1.5" />
-            <text x="320" y="310" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Broken MJML</text>
-            <text x="320" y="326" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">rendered</text>
+              <rect x="15" y="225" width="185" height="50" rx="8" fill="#fff" stroke="#E7DFD6" />
+              <text x="107" y="245" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Visual comparison</text>
+              <text x="107" y="261" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">against the Figma design</text>
 
-            <text x="290" y="168" textAnchor="middle" fontSize="13" fontWeight="800" fill="#17171A">ITERATIVE REPAIR LOOP</text>
-            <text x="290" y="189" textAnchor="middle" fontSize="11" fill="#6B6B72">the Figma design is the ground truth,</text>
-            <text x="290" y="204" textAnchor="middle" fontSize="11" fill="#6B6B72">not a schema validator</text>
-            <text x="290" y="224" textAnchor="middle" fontSize="11" fontWeight="700" fill="#E2672D">best result selected across passes</text>
-          </svg>
+              <rect x="235" y="290" width="170" height="50" rx="8" fill="#FCEEE2" stroke="#E2672D" strokeWidth="1.5" />
+              <text x="320" y="310" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">Broken MJML</text>
+              <text x="320" y="326" textAnchor="middle" fontSize="12" fontWeight="600" fill="#17171A">rendered</text>
+
+              <text x="290" y="168" textAnchor="middle" fontSize="13" fontWeight="800" fill="#17171A">ITERATIVE REPAIR LOOP</text>
+              <text x="290" y="189" textAnchor="middle" fontSize="11" fill="#6B6B72">the Figma design is the ground truth,</text>
+              <text x="290" y="204" textAnchor="middle" fontSize="11" fill="#6B6B72">not a schema validator</text>
+              <text x="290" y="224" textAnchor="middle" fontSize="11" fontWeight="700" fill="#E2672D">best result selected across passes</text>
+            </svg>
+          </div>
 
           <p className={styles.figureCaption}>
             <strong>Figure 3</strong> The iterative repair loop. Because the evaluation function is
             perceptual rather than syntactic, the system targets what actually matters for email rendering.
           </p>
 
-          <h3 className={styles.subHeadingOrange}>Pipeline modules</h3>
-          <p className={styles.moduleLine}>{PIPELINE_MODULES}</p>
-        </div>
-      </div>
+          <div className={styles.featureCard}>
+            <h3 className={styles.cardTitle}>Pipeline modules</h3>
+            <div className={styles.moduleTags}>
+              {PIPELINE_MODULES.map((m, i) => (
+                <span key={m} className={`${styles.moduleTag} ${i === 0 ? styles.moduleTagActive : ''}`}>{m}</span>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      {/* ── 03 Credit System and Monetisation ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
+        {/* ── 8. 03 Credit System and Monetisation ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="03" eyebrow="Credit System and Monetisation" title="Metered where compute is spent, capped where cost could run away." />
 
           <p className={styles.sectionParagraph}>
@@ -606,39 +653,43 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             understanding a library, generating a template and running a repair pass — and everything else is
             free at the point of use.
           </p>
-          <div className={styles.meterGroup}>
-            <div className={styles.meterLabelBar}>
-              Generation Credits <span className={styles.meterNote}>· metered per template · sub-metered by blueprint section count</span>
-            </div>
-            <div className={styles.meterBoxRow}>
-              <div className={`${styles.meterBox} ${styles.meterBoxHighlight}`}>Brief received hold placed</div>
-              <div className={styles.meterBox}>Sections counted cost quoted</div>
-              <div className={styles.meterBox}>Pipeline runs</div>
-              <div className={styles.meterBox}>Settled on delivery failed run released</div>
-              <div className={styles.meterBox}>Ledger debit idempotent</div>
-            </div>
-          </div>
 
-          <div className={styles.meterGroup}>
-            <div className={styles.meterLabelBar}>
-              Repair Credits <span className={styles.meterNote}>· metered per iteration · hard-capped at three · unused passes never billed</span>
+          {/* Figure 4 — Metering model */}
+          <div className={styles.diagramContainer}>
+            <div className={styles.meterGroup}>
+              <div className={styles.meterLabelBar}>
+                Generation Credits <span className={styles.meterNote}>· metered per template · sub-metered by blueprint section count</span>
+              </div>
+              <div className={styles.meterBoxRow}>
+                <div className={`${styles.meterBox} ${styles.meterBoxHighlight}`}>Brief received hold placed</div>
+                <div className={styles.meterBox}>Sections counted cost quoted</div>
+                <div className={styles.meterBox}>Pipeline runs</div>
+                <div className={styles.meterBox}>Settled on delivery failed run released</div>
+                <div className={styles.meterBox}>Ledger debit idempotent</div>
+              </div>
             </div>
-            <div className={styles.meterBoxRow}>
-              <div className={`${styles.meterBox} ${styles.meterBoxHighlight}`}>Pass 1 billed succeeds in most cases</div>
-              <div className={styles.meterBox}>Pass 2 billed only if pass 1 fell short</div>
-              <div className={styles.meterBox}>Pass 3 is the ceiling best-of-N then returned</div>
+
+            <div className={styles.meterGroup}>
+              <div className={styles.meterLabelBar}>
+                Repair Credits <span className={styles.meterNote}>· metered per iteration · hard-capped at three · unused passes never billed</span>
+              </div>
+              <div className={styles.meterBoxRow}>
+                <div className={`${styles.meterBox} ${styles.meterBoxHighlight}`}>Pass 1 billed succeeds in most cases</div>
+                <div className={styles.meterBox}>Pass 2 billed only if pass 1 fell short</div>
+                <div className={styles.meterBox}>Pass 3 is the ceiling best-of-N then returned</div>
+              </div>
             </div>
-          </div>
 
-          <div className={styles.freeBox}>
-            <span className={styles.freeLabel}>Free at the point of use</span>
-            <span>composing in Figma</span>
-            <span>exporting an already-clean MJML</span>
-            <span>re-downloading a delivered template</span>
-          </div>
+            <div className={styles.freeBox}>
+              <span className={styles.freeLabel}>Free at the point of use</span>
+              <span>composing in Figma</span>
+              <span>exporting an already-clean MJML</span>
+              <span>re-downloading a delivered template</span>
+            </div>
 
-          <div className={`${styles.diagramBar} ${styles.diagramBarBlack}`}>
-            <strong>Reconciliation</strong> · credit debits reconciled against multi-modal provider invoices, split by pipeline and by pass
+            <div className={`${styles.diagramBar} ${styles.diagramBarBlack}`}>
+              <strong>Reconciliation</strong> · credit debits reconciled against multi-modal provider invoices, split by pipeline and by pass
+            </div>
           </div>
 
           <p className={styles.figureCaption}>
@@ -646,7 +697,7 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             billed per pass against a hard ceiling of three.
           </p>
 
-          <h3 className={styles.plainHeading}>What consumes credits</h3>
+          <Callout text="What consumes credits" />
           <div className={styles.tableWrapper}>
             <table className={styles.customTable}>
               <thead>
@@ -674,13 +725,8 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
 
-      {/* ── Repair cap / Cost shape / Plan structure ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
-          <h3 className={styles.plainHeading}>Why the repair cap is a commercial decision</h3>
+          <Callout text="Why the repair cap is a commercial decision" />
           <p className={styles.sectionParagraph}>
             An autonomous repair loop with no ceiling is an unbounded bill. Capping the loop at three passes
             turns worst-case cost into a number that can be quoted before the work starts, which is what
@@ -689,14 +735,18 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             also the cheap case.
           </p>
 
-          <h3 className={styles.subHeadingOrange}>Cost shape</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Library cost is paid once.</strong>&nbsp;The semantic index is built per library, not per template, so the marginal cost of the thousandth template is the same as the second.</li>
-            <li className={styles.bulletItem}><strong>Generation cost scales with structure, not length.</strong>&nbsp;A nine-section newsletter costs more than a three-section transactional email because it runs more matching and editing operations, and that is quoted from the blueprint before the pipeline executes.</li>
-            <li className={styles.bulletItem}><strong>Repair cost is bounded by design.</strong>&nbsp;Three passes is the ceiling, and the ceiling is a contract term rather than an implementation detail.</li>
-          </ul>
+          <div className={styles.featureCard}>
+            <h3 className={styles.cardTitle}>Cost shape</h3>
+            <CheckList
+              items={[
+                <><strong>Library cost is paid once.</strong>&nbsp;The semantic index is built per library, not per template, so the marginal cost of the thousandth template is the same as the second.</>,
+                <><strong>Generation cost scales with structure, not length.</strong>&nbsp;A nine-section newsletter costs more than a three-section transactional email because it runs more matching and editing operations, and that is quoted from the blueprint before the pipeline executes.</>,
+                <><strong>Repair cost is bounded by design.</strong>&nbsp;Three passes is the ceiling, and the ceiling is a contract term rather than an implementation detail.</>,
+              ]}
+            />
+          </div>
 
-          <h3 className={styles.plainHeading}>Plan structure</h3>
+          <Callout text="Plan structure" />
           <div className={styles.tableWrapper}>
             <table className={styles.customTable}>
               <thead>
@@ -719,28 +769,29 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
 
-      {/* ── Ledger integrity ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
-          <h3 className={styles.plainHeading}>Ledger integrity</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Quote before execution.</strong>&nbsp;The blueprint is built first, so the section count — and therefore the cost — is known before the expensive part of the pipeline runs.</li>
-            <li className={styles.bulletItem}><strong>Pre-authorisation holds.</strong>&nbsp;Credits are held when a run starts and settled on delivery. A run that fails to produce a deliverable template releases its hold, so the client never pays for nothing.</li>
-            <li className={styles.bulletItem}><strong>Idempotent debits.</strong>&nbsp;A retried brief submission or a dropped connection cannot double-charge, because the debit is keyed to the run rather than the request.</li>
-            <li className={styles.bulletItem}><strong>Append-only ledger.</strong>&nbsp;Every debit records the pipeline, the operation, the pass number, the model identifier, the credits consumed and a correlation identifier back to the artefact produced.</li>
-            <li className={styles.bulletItem}><strong>Per-library scoping.</strong>&nbsp;Credit allocation is partitioned by library, so one agency client&apos;s volume cannot consume another&apos;s.</li>
-            <li className={styles.bulletItem}><strong>Reconciliation.</strong>&nbsp;Debits are reconciled against multi-modal provider invoices split by pipeline and by pass, which keeps credit pricing anchored above true unit cost as model rates change.</li>
-          </ul>
-        </div>
-      </div>
+          <div className={styles.implCard}>
+            <h3 className={styles.implCardTitle}>Ledger integrity</h3>
+            <CheckList
+              items={[
+                <><strong>Quote before execution.</strong>&nbsp;The blueprint is built first, so the section count — and therefore the cost — is known before the expensive part of the pipeline runs.</>,
+                <><strong>Pre-authorisation holds.</strong>&nbsp;Credits are held when a run starts and settled on delivery. A run that fails to produce a deliverable template releases its hold, so the client never pays for nothing.</>,
+                <><strong>Idempotent debits.</strong>&nbsp;A retried brief submission or a dropped connection cannot double-charge, because the debit is keyed to the run rather than the request.</>,
+                <><strong>Append-only ledger.</strong>&nbsp;Every debit records the pipeline, the operation, the pass number, the model identifier, the credits consumed and a correlation identifier back to the artefact produced.</>,
+                <><strong>Per-library scoping.</strong>&nbsp;Credit allocation is partitioned by library, so one agency client&apos;s volume cannot consume another&apos;s.</>,
+                <><strong>Reconciliation.</strong>&nbsp;Debits are reconciled against multi-modal provider invoices split by pipeline and by pass, which keeps credit pricing anchored above true unit cost as model rates change.</>,
+              ]}
+            />
+          </div>
+        </section>
 
-      {/* ── 04 User-Facing Features ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
-          <SectionHeader num="04" eyebrow="User-Facing Features" title="The surface does not change. What happens behind it does." />
+        {/* ── 9. 04 User-Facing Features ── */}
+        <section className={`${styles.sectionBlock} ${styles.docSection}`}>
+          <div className={styles.sectionNumRow}>
+            <span className={styles.sectionNumBadge}>04</span>
+            <span className={styles.sectionEyebrowPlain}>User-Facing Features</span>
+          </div>
+          <h2 className={styles.sectionTitle}>The surface does not change. What happens behind it does.</h2>
 
           <p className={styles.sectionParagraph}>
             No frontend was built as part of this engagement. That is deliberate: the client&apos;s users
@@ -813,12 +864,10 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             MJML authorship from the workflow, replacing it with a structured, AI-mediated pipeline that
             starts from intent and ends with a deliverable.
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* ── 05 Security and Auditability ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
+        {/* ── 10. 05 Security and Auditability ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="05" eyebrow="Security and Auditability" title="Non-destructive by default, deterministic where it counts." />
 
           <p className={styles.sectionParagraph}>
@@ -828,58 +877,78 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             structurally rather than by policy.
           </p>
 
-          <h3 className={styles.subHeadingOrange}>Design-system integrity</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Editing is non-destructive.</strong>&nbsp;Production-tested MJML JSON is modified field by field rather than regenerated, which eliminates an entire class of structurally invalid output before it can occur.</li>
-            <li className={styles.bulletItem}><strong>Layout, padding and breakpoints are never in scope for an edit</strong>, so output cannot break responsive behaviour the client already validated.</li>
-            <li className={styles.bulletItem}><strong>Type, colour and spacing come from the client&apos;s own component tokens.</strong>&nbsp;The system has no mechanism for inventing a brand value that is not already in the library.</li>
-          </ul>
-
-          <h3 className={styles.subHeadingOrange}>Determinism and explainability</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Blueprints are schema-driven</strong>, which makes component selection deterministic and auditable rather than a black-box outcome of a single long prompt.</li>
-            <li className={styles.bulletItem}><strong>Every selection carries its reasoning</strong> — what the blueprint required and why this variant satisfied it — so a questioned template can be explained without a re-run.</li>
-            <li className={styles.bulletItem}><strong>Prompt version and model identifier are recorded per run</strong>, so output produced under an earlier model generation remains attributable.</li>
-          </ul>
-
-          <h3 className={styles.subHeadingOrange}>Artefact provenance</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}>Component summaries, blueprints, intermediate MJML JSON and every repair iteration are retained as versioned artefacts.</li>
-            <li className={styles.bulletItem}>Any delivered template traces back to the exact variants it came from, field by field.</li>
-            <li className={styles.bulletItem}>Repair runs retain each pass and the comparison scores behind the best-of-N choice, so the selection is reviewable rather than asserted.</li>
-          </ul>
-
-          <h3 className={styles.subHeadingOrange}>Tenancy and asset handling</h3>
-          <ul className={styles.bulletList}>
-            <li className={styles.bulletItem}><strong>Component libraries and their semantic indexes are tenant-scoped.</strong>&nbsp;A summary derived from one library never enters another&apos;s candidate set — which matters most in the agency case, where several brands sit behind one account.</li>
-            <li className={styles.bulletItem}>Generated templates reference image placeholders rather than embedding media, so campaign assets stay in the client&apos;s own store and never transit as payload.</li>
-            <li className={styles.bulletItem}>Because the engagement is backend-only, the exposed surface is the programmatic API. Authentication and session handling remain with the client&apos;s plugin backend.</li>
-          </ul>
+          <div className={styles.implCardGrid}>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Design-system integrity</h3>
+              <CheckList
+                items={[
+                  <><strong>Editing is non-destructive.</strong>&nbsp;Production-tested MJML JSON is modified field by field rather than regenerated, which eliminates an entire class of structurally invalid output before it can occur.</>,
+                  <><strong>Layout, padding and breakpoints are never in scope for an edit</strong>, so output cannot break responsive behaviour the client already validated.</>,
+                  <><strong>Type, colour and spacing come from the client&apos;s own component tokens.</strong>&nbsp;The system has no mechanism for inventing a brand value that is not already in the library.</>,
+                ]}
+              />
+            </div>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Determinism and explainability</h3>
+              <CheckList
+                items={[
+                  <><strong>Blueprints are schema-driven</strong>, which makes component selection deterministic and auditable rather than a black-box outcome of a single long prompt.</>,
+                  <><strong>Every selection carries its reasoning</strong> — what the blueprint required and why this variant satisfied it — so a questioned template can be explained without a re-run.</>,
+                  <><strong>Prompt version and model identifier are recorded per run</strong>, so output produced under an earlier model generation remains attributable.</>,
+                ]}
+              />
+            </div>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Artefact provenance</h3>
+              <CheckList
+                items={[
+                  'Component summaries, blueprints, intermediate MJML JSON and every repair iteration are retained as versioned artefacts.',
+                  'Any delivered template traces back to the exact variants it came from, field by field.',
+                  'Repair runs retain each pass and the comparison scores behind the best-of-N choice, so the selection is reviewable rather than asserted.',
+                ]}
+              />
+            </div>
+            <div className={styles.implCard}>
+              <h3 className={styles.implCardTitle}>Tenancy and asset handling</h3>
+              <CheckList
+                items={[
+                  <><strong>Component libraries and their semantic indexes are tenant-scoped.</strong>&nbsp;A summary derived from one library never enters another&apos;s candidate set — which matters most in the agency case, where several brands sit behind one account.</>,
+                  <>Generated templates reference image placeholders rather than embedding media, so campaign assets stay in the client&apos;s own store and never transit as payload.</>,
+                  <>Because the engagement is backend-only, the exposed surface is the programmatic API. Authentication and session handling remain with the client&apos;s plugin backend.</>,
+                ]}
+              />
+            </div>
+          </div>
 
           <div className={styles.darkBox}>
             <strong>Design Principle</strong>
             Edit what has already been proven to work rather than generating a replacement for it — the
             design system stays intact by construction, not by review.
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* ── 06 What Makes This Different ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
-          <SectionHeader num="06" eyebrow="What Makes This Different" title="Seven decisions that separate this from prompt-to-code generation." />
+        {/* ── 11. 06 What Makes This Different ── */}
+        <section className={styles.sectionBlock}>
+          <div className={styles.darkBanner}>
+            <div className={styles.darkContent}>
+              <span className={styles.darkEyebrow}>06 · What Makes This Different</span>
+              <h2 className={styles.darkTitle}>Seven decisions that separate this from prompt-to-code generation.</h2>
+            </div>
+          </div>
 
           <div className={styles.decisionList}>
             {DECISIONS.map((d, i) => (
               <div key={d.title} className={styles.decisionItem}>
-                <span className={styles.decisionNum}>{String(i + 1).padStart(2, '0')}</span>
-                <h4 className={styles.decisionTitle}>{d.title}</h4>
+                <h3 className={styles.decisionTitle}>
+                  <span className={styles.decisionNum}>{String(i + 1).padStart(2, '0')}</span>
+                  {d.title}
+                </h3>
                 <p className={styles.decisionDesc}>{d.desc}</p>
               </div>
             ))}
           </div>
 
-          <h3 className={styles.plainHeading}>Extensibility</h3>
+          <Callout text="Extensibility" />
           <p className={styles.sectionParagraph}>
             The architecture is built to be re-pointed rather than rebuilt. The component summary layer can
             be regenerated whenever the library evolves. The blueprint schema can be extended to capture new
@@ -887,12 +956,10 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             core mechanisms are general enough to adapt as both the design system and the email requirements
             grow.
           </p>
-        </div>
-      </div>
+        </section>
 
-      {/* ── 07 Outcomes ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
+        {/* ── 12. 07 Outcomes ── */}
+        <section className={styles.sectionBlock}>
           <SectionHeader num="07" eyebrow="Outcomes" title="What was delivered, and how it is measured." />
 
           <p className={styles.sectionParagraph}>
@@ -903,7 +970,7 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             document.
           </p>
 
-          <span className={styles.glanceLabel}>Confirmed</span>
+          <Callout text="Confirmed" />
           <div className={styles.confirmedGrid}>
             <div className={styles.confirmedCard}>
               <span className={styles.confirmedValue}>50K+</span>
@@ -927,7 +994,7 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             </div>
           </div>
 
-          <h3 className={styles.plainHeading}>Measurement framework</h3>
+          <Callout text="Measurement framework" />
           <div className={styles.tableWrapper}>
             <table className={styles.customTable}>
               <thead>
@@ -948,13 +1015,8 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
 
-      {/* ── What this demonstrates / Delivered ── */}
-      <div className={styles.pageSheet}>
-        <div className={styles.pageInner}>
-          <h3 className={styles.plainHeading}>What this demonstrates</h3>
+          <Callout text="What this demonstrates" />
           <p className={styles.sectionParagraph}>
             AI-powered email template generation and autonomous template repair are not hypothetical
             capabilities. Both were built and delivered as parts of one coherent backend system, grounded in
@@ -967,10 +1029,12 @@ export default function EmailLoveCaseStudy(_props: EmailLoveCaseStudyProps) {
             — automating the translation work that has always demanded design expertise and engineering skill
             at the same time.
           </div>
+        </section>
 
-          <div className={styles.deliveredBar}>
-            <strong>Delivered</strong>· {DELIVERED_ITEMS}
-          </div>
+        {/* ── 13. Delivered (closing box, in place of Vook's CTA) ── */}
+        <div className={styles.deliveredBox}>
+          <span className={styles.deliveredLabel}>Delivered</span>
+          <p>{DELIVERED_ITEMS}</p>
         </div>
       </div>
     </div>
