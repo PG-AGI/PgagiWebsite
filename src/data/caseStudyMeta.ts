@@ -612,6 +612,18 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: ['Live Products'],
     category: 'WellTech/AI/ML',
   },
+
+  'ask-a-doula-ai-parenting-companion': {
+    techStack: ['React Native (Expo)', 'Next.js (Web)', 'FastAPI (Python)', 'PostgreSQL + pgvector', '+3'],
+    metrics: [
+      { value: 'Coming soon', label: 'User Conversions' },
+      { value: 'Coming soon', label: 'User Retention' },
+    ],
+    highlight: 'Currently in Internal Testing',
+    ctaLabel: 'View case study',
+    tags: [],
+    category: 'HealthTech/AI/ML',
+  },
 };
 
 export const FILTER_TABS = [

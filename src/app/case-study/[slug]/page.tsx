@@ -23,6 +23,7 @@ import LegalGPTCaseStudy from '@/components/organisms/LegalGPTCaseStudy/LegalGPT
 import InnvorCaseStudy from '@/components/organisms/InnvorCaseStudy/InnvorCaseStudy';
 import JoveCaseStudy from '@/components/organisms/JoveCaseStudy/JoveCaseStudy';
 import OrderLoopCaseStudy from '@/components/organisms/OrderLoopCaseStudy/OrderLoopCaseStudy';
+import AskADoulaCaseStudy from '@/components/organisms/AskADoulaCaseStudy/AskADoulaCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -254,6 +255,18 @@ export async function generateMetadata({
     };
   }
 
+  const isAskADoula = params?.slug?.toLowerCase()?.includes('ask-a-doula');
+  if (isAskADoula) {
+    return {
+      title: 'Ask a Doula: AI-Powered Pregnancy, Postpartum & Baby-Care Companion | PG-AGI Case Study',
+      description: "A mobile-first, AI-powered parenting companion that puts a doula in every new parent's pocket — child-aware streaming answers, a deterministic safety layer, five-area baby-care tracking and family sharing.",
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Ask a Doula Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const cs = await getCaseStudy(params.slug).catch(() => null); // cached → no extra DB hit
   if (!cs) return {};
 
@@ -381,6 +394,12 @@ export default async function CaseStudyPage({
   if (isOrderLoop) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <OrderLoopCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isAskADoula = params?.slug?.toLowerCase()?.includes('ask-a-doula');
+  if (isAskADoula) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <AskADoulaCaseStudy caseStudy={caseStudy} />;
   }
 
   const caseStudy = await getCaseStudy(params.slug);

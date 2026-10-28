@@ -1,0 +1,449 @@
+// ── Color Tokens (taken from the Ask a Doula case-study PDF) ──
+$color-navy: #16264C;          // headings, pills, table rules
+$color-blue: #2B5FC7;          // subtitle, eyebrows, stat numbers, figure titles
+$color-table-head: #E4EAF3;    // table header / flow bar fill
+$color-rule: #D5DCE7;          // light row dividers
+$color-text-main: #2F3542;
+$color-text-muted: #6B7280;
+$font-serif: Cambria, 'Noto Serif', Georgia, 'Times New Roman', serif;
+
+.doulaPage {
+  width: 100%;
+  background-color: #ffffff;
+  color: $color-text-main;
+  font-family: inherit;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+}
+
+.rail {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 79px;
+
+  @media (max-width: 640px) {
+    padding: 0 20px;
+  }
+}
+
+/* ── Hero Section ── */
+.heroSection {
+  width: 100%;
+  background: #ffffff;
+  padding-top: clamp(120px, 14vh, 150px);
+  padding-bottom: 56px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 48px;
+  align-items: center;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heroEyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $color-text-muted;
+  margin-bottom: 12px;
+}
+
+.heroTitle {
+  font-family: $font-serif;
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 1.05;
+  color: $color-navy;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+
+  @media (max-width: 640px) {
+    font-size: 3rem;
+  }
+}
+
+.heroSubtitle {
+  font-family: $font-serif;
+  font-style: italic;
+  font-size: 1.6rem;
+  line-height: 1.35;
+  color: $color-blue;
+  margin: 0 0 20px;
+
+  @media (max-width: 640px) {
+    font-size: 1.25rem;
+  }
+}
+
+.heroDesc {
+  font-size: 1.05rem;
+  color: $color-text-main;
+  line-height: 1.7;
+  margin: 0 0 28px;
+  max-width: 760px;
+}
+
+.heroPillGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 240px));
+  gap: 12px 20px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  background: $color-navy;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 12px 16px;
+}
+
+.heroRight {
+  display: flex;
+  justify-content: center;
+}
+
+.heroPhone {
+  width: 100%;
+  max-width: 300px;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 16px 36px -12px rgba(22, 38, 76, 0.25);
+}
+
+/* ── Meta Facts Table + Headline Stats ── */
+.metaRail {
+  width: 100%;
+  padding: 8px 0 24px;
+}
+
+.metaTable {
+  border-top: 2px solid $color-navy;
+  border-bottom: 3px solid $color-navy;
+}
+
+.metaRow {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid $color-rule;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+.metaLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-navy;
+  padding-top: 2px;
+}
+
+.metaValue {
+  font-size: 1rem;
+  color: $color-text-main;
+  line-height: 1.55;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid $color-rule;
+  border-bottom: 1px solid $color-rule;
+  margin: 36px 0;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statsRowThree {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 820px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px 18px 0;
+}
+
+.statValue {
+  font-family: $font-serif;
+  font-size: 3.4rem;
+  font-weight: 400;
+  line-height: 1;
+  color: $color-blue;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: $color-text-muted;
+  line-height: 1.45;
+}
+
+/* ── Content Sections ── */
+.sectionBlock {
+  padding: 64px 0 16px;
+  scroll-margin-top: 100px;
+}
+
+.sectionHeading {
+  font-family: $font-serif;
+  font-size: 3.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: $color-navy;
+  margin: 0 0 6px;
+
+  @media (max-width: 640px) {
+    font-size: 2.1rem;
+  }
+}
+
+.sectionNum {
+  margin-right: 0.35em;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-blue;
+  margin-bottom: 20px;
+}
+
+.kicker {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $color-navy;
+  margin: 0 0 14px;
+}
+
+.subHeading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $color-navy;
+  margin: 32px 0 12px;
+}
+
+.sectionParagraph {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: $color-text-main;
+  margin: 0 0 16px;
+  text-align: justify;
+
+  strong {
+    color: $color-navy;
+    font-weight: 700;
+  }
+}
+
+.bulletList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: $color-text-main;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      color: $color-blue;
+      font-weight: 700;
+    }
+
+    strong {
+      color: $color-navy;
+    }
+  }
+}
+
+.flowBar {
+  background: $color-table-head;
+  border-left: 5px solid $color-blue;
+  color: $color-navy;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 12px 18px;
+  margin-bottom: 8px;
+}
+
+/* ── Tables ── */
+.tableOuter {
+  width: 100%;
+  overflow-x: auto;
+  margin: 24px 0 32px;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  border-bottom: 3px solid $color-navy;
+
+  th {
+    background: $color-table-head;
+    padding: 12px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: $color-navy;
+    border-bottom: 2px solid $color-navy;
+  }
+
+  td {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    color: $color-text-main;
+    border-bottom: 1px solid $color-rule;
+    line-height: 1.55;
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .firstCell {
+    font-weight: 700;
+    color: $color-navy;
+    min-width: 200px;
+
+    @media (max-width: 640px) {
+      min-width: 140px;
+    }
+  }
+}
+
+.tocLink {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-blue;
+  }
+}
+
+/* ── Screenshots ── */
+.phoneRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 260px));
+  justify-content: center;
+  gap: 16px;
+  margin: 32px 0;
+
+  @media (max-width: 480px) {
+    grid-template-columns: minmax(0, 260px);
+  }
+}
+
+.phoneRowSingle {
+  grid-template-columns: minmax(0, 260px);
+}
+
+.phoneFigure,
+.wideFigure {
+  margin: 0;
+}
+
+.phoneFrame {
+  overflow: hidden;
+  border-radius: 4px;
+  background: #F8F5EC;
+}
+
+.phoneImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.wideFigure {
+  margin: 36px auto 8px;
+  max-width: 1000px;
+}
+
+.wideFrame {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.wideImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.figCaption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+  margin-top: 10px;
+}
+
+.figTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: $color-blue;
+}
+
+.figText {
+  font-size: 0.88rem;
+  color: $color-text-muted;
+}
