@@ -1,19 +1,28 @@
-// ── Color tokens — taken from the RS-Engine / Beaver Infra case study PDF ──
-$red: #C0392B;          // header band, section titles, table headers, stat tile 1
-$red-deep: #A93226;     // stat tile 4, "next phase" banner
-$black: #1C1C1C;        // stat tile 2
-$gray-tile: #555555;    // stat tile 3
-$green: #27AE60;        // check marks, status line, "delivered" banner
-$text: #1A1A1A;
-$text-body: #333333;
-$text-muted: #777777;
-$row-bg: #F8F8F8;
-$border: #DDDDDD;
+// ── Brand tokens — RS-Engine / Beaver Infra report palette ──
+// Core colours
+$navy: #1F3864;       // headings and primary brand colour
+$blue: #2E75B6;       // accent
+$grey: #595959;       // secondary text
+$red: #C00000;        // warnings and red-flagged text
+$slot: #1F6F6B;       // teal, for template {{slot}} placeholders (ticks, status)
+$navy-dark: #000050;  // dark navy
+$black: #000000;      // body text
+// Fills and backgrounds
+$lgrey: #F4F6F8;      // light panel or table background
+$sub: #DCE6F1;        // sub-header fill (light blue)
+$entry: #FFFBEA;      // input-cell fill (pale cream)
+$yel: #FFF3B0;        // highlight (yellow)
+$notepink: #FCF2F2;   // note box fill (pale pink)
+$border: #D5DCE4;
+// Fonts — Times New Roman for body text, Arial for headings and tables
+$font-body: 'Times New Roman', Times, serif;
+$font-head: Arial, Helvetica, sans-serif;
 
 .beaverPage {
   width: 100%;
   background: #FFFFFF;
-  color: $text;
+  color: $black;
+  font-family: $font-body;
   overflow-x: hidden;
   padding-bottom: 80px;
 }
@@ -36,13 +45,15 @@ $border: #DDDDDD;
 }
 
 .heroBand {
-  background: $red;
+  background: $navy;
   color: #FFFFFF;
+  font-family: $font-head;
   padding: 28px 36px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-bottom: 44px;
+  border-bottom: 4px solid $blue;
 
   @media (max-width: 640px) {
     padding: 22px 20px;
@@ -81,13 +92,13 @@ $border: #DDDDDD;
 }
 
 .heroTitle {
-  font-family: 'Arial Black', 'Archivo Black', var(--font-inter), sans-serif;
+  font-family: 'Arial Black', $font-head;
   font-size: 2.9rem;
   font-weight: 900;
   line-height: 1.08;
   text-transform: uppercase;
   letter-spacing: 0.01em;
-  color: $text;
+  color: $navy;
   margin: 0 0 20px;
 
   @media (max-width: 640px) {
@@ -96,9 +107,9 @@ $border: #DDDDDD;
 }
 
 .heroDesc {
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: $text-body;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: $black;
   margin: 0 0 26px;
 }
 
@@ -112,22 +123,23 @@ $border: #DDDDDD;
 .pillLight {
   display: inline-flex;
   align-items: center;
-  font-size: 0.9rem;
+  font-family: $font-head;
+  font-size: 0.88rem;
   font-weight: 500;
   padding: 9px 20px;
   border-radius: 9999px;
 }
 
 .pillDark {
-  background: $red;
+  background: $navy;
   color: #FFFFFF;
-  border: 1px solid $red;
+  border: 1px solid $navy;
 }
 
 .pillLight {
-  background: $row-bg;
-  color: $text-body;
-  border: 1px solid $border;
+  background: $sub;
+  color: $navy;
+  border: 1px solid $sub;
 }
 
 .heroRight {
@@ -138,7 +150,7 @@ $border: #DDDDDD;
   border: 1px solid $border;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 18px 40px -18px rgba(31, 56, 100, 0.35);
 }
 
 /* ── Stat tiles ── */
@@ -171,14 +183,15 @@ $border: #DDDDDD;
   align-items: center;
   text-align: center;
   color: #FFFFFF;
+  font-family: $font-head;
   padding: 26px 18px 24px;
   gap: 8px;
 }
 
-.tileRed { background: $red; }
-.tileBlack { background: $black; }
-.tileGray { background: $gray-tile; }
-.tileDeepRed { background: $red-deep; }
+.tileNavy { background: $navy; }
+.tileDarkNavy { background: $navy-dark; }
+.tileGrey { background: $grey; }
+.tileBlue { background: $blue; }
 
 .statValue {
   font-size: 2.4rem;
@@ -195,7 +208,7 @@ $border: #DDDDDD;
 /* ── Meta facts (PDF "Field / Details" block) ── */
 .metaRail {
   width: 100%;
-  background: $row-bg;
+  background: $lgrey;
   border-top: 1px solid $border;
   border-bottom: 1px solid $border;
   padding: 40px 0;
@@ -224,21 +237,21 @@ $border: #DDDDDD;
 }
 
 .metaLabel {
+  font-family: $font-head;
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: $red;
+  color: $blue;
 }
 
 .metaValue {
-  font-size: 1rem;
-  font-weight: 500;
-  color: $text;
-  line-height: 1.55;
+  font-size: 1.08rem;
+  color: $black;
+  line-height: 1.5;
 }
 
-/* ── Section scaffolding (PDF: red title with red rule, bold subtitle) ── */
+/* ── Section scaffolding (navy title with accent rule, bold subtitle) ── */
 .coversBlock {
   padding: 48px 0 0;
 }
@@ -249,11 +262,12 @@ $border: #DDDDDD;
 
 .eyebrow {
   display: block;
+  font-family: $font-head;
   font-size: 2rem;
   font-weight: 700;
-  color: $red;
+  color: $navy;
   padding-bottom: 10px;
-  border-bottom: 2px solid $red;
+  border-bottom: 2px solid $blue;
   margin-bottom: 22px;
 
   @media (max-width: 640px) {
@@ -262,10 +276,11 @@ $border: #DDDDDD;
 }
 
 .sectionHeading {
+  font-family: $font-head;
   font-size: 1.4rem;
   font-weight: 700;
   line-height: 1.35;
-  color: $text;
+  color: $navy;
   margin: 0 0 12px;
 
   @media (max-width: 640px) {
@@ -274,9 +289,10 @@ $border: #DDDDDD;
 }
 
 .subHeading {
+  font-family: $font-head;
   font-size: 1.25rem;
   font-weight: 700;
-  color: $text;
+  color: $navy;
   margin: 36px 0 14px;
 }
 
@@ -286,17 +302,26 @@ $border: #DDDDDD;
 }
 
 .sectionParagraph {
-  font-size: 1.02rem;
-  line-height: 1.7;
-  color: $text-body;
+  font-size: 1.12rem;
+  line-height: 1.65;
+  color: $black;
   margin: 0 0 16px;
 }
 
+/* Note box — pale cream "entry" fill with a yellow highlight for key terms */
 .noteText {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #555555;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: $black;
+  background: $entry;
+  border-left: 4px solid $blue;
+  padding: 14px 18px;
   margin: 20px 0 0;
+
+  strong {
+    background: $yel;
+    padding: 0 4px;
+  }
 }
 
 .dotList {
@@ -305,16 +330,24 @@ $border: #DDDDDD;
   list-style: disc;
 
   li {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: $text-body;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: $black;
     margin-bottom: 8px;
+
+    &::marker {
+      color: $blue;
+    }
+  }
+
+  strong {
+    color: $navy;
   }
 }
 
 /* ── Cards & check lists ── */
 .card {
-  background: #FFFFFF;
+  background: $lgrey;
   border: 1px solid $border;
   border-radius: 12px;
   padding: 28px 30px;
@@ -326,13 +359,19 @@ $border: #DDDDDD;
 }
 
 .riskCard {
+  background: $notepink;
   border-left: 4px solid $red;
+
+  .cardTitle {
+    color: $red;
+  }
 }
 
 .cardTitle {
+  font-family: $font-head;
   font-size: 1.2rem;
   font-weight: 700;
-  color: $text;
+  color: $navy;
   margin: 0 0 16px;
 }
 
@@ -347,27 +386,29 @@ $border: #DDDDDD;
   li {
     display: flex;
     gap: 12px;
-    font-size: 1rem;
-    line-height: 1.65;
-    color: $text-body;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: $black;
   }
 
   strong {
-    color: $text;
+    color: $navy;
   }
 }
 
 .check {
-  color: $green;
+  font-family: $font-head;
+  color: $slot;
   font-weight: 700;
   flex-shrink: 0;
 }
 
 /* ── Flow bar ── */
 .flowLead {
+  font-family: $font-head;
   font-size: 1rem;
   font-weight: 700;
-  color: $text;
+  color: $navy;
   margin: 32px 0 12px;
 }
 
@@ -377,24 +418,25 @@ $border: #DDDDDD;
   justify-content: center;
   align-items: center;
   gap: 10px 14px;
-  background: $row-bg;
+  background: $sub;
   border: 1px solid $border;
   padding: 20px 16px;
+  font-family: $font-head;
 }
 
 .flowStep {
   font-size: 1.1rem;
   font-weight: 700;
-  color: $red;
+  color: $navy;
 }
 
 .flowArrow {
   font-size: 1.1rem;
   font-weight: 700;
-  color: $red;
+  color: $blue;
 }
 
-/* ── Tables (PDF: red header, light rows) ── */
+/* ── Tables (navy header, light-blue key column, light grey rows) ── */
 .tableOuter {
   width: 100%;
   overflow-x: auto;
@@ -407,41 +449,50 @@ $border: #DDDDDD;
   width: 100%;
   min-width: 560px;
   border-collapse: collapse;
+  font-family: $font-head;
 
   th {
-    background: $red;
+    background: $navy;
     color: #FFFFFF;
     font-size: 0.95rem;
     font-weight: 700;
     text-align: left;
     padding: 14px 16px;
-    border-right: 1px solid rgba(255, 255, 255, 0.35);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
 
     &:last-child { border-right: none; }
   }
 
   td {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     line-height: 1.6;
-    color: $text-body;
+    color: $black;
     padding: 14px 16px;
     vertical-align: top;
-    background: $row-bg;
+    background: $lgrey;
     border-top: 1px solid $border;
     border-right: 1px solid $border;
 
     &:last-child { border-right: none; }
   }
+
+  tr:nth-child(even) td {
+    background: #FFFFFF;
+  }
+
+  td.keyCell {
+    background: $sub;
+  }
 }
 
 .keyCell {
   font-weight: 700;
-  color: $text !important;
+  color: $navy !important;
   width: 26%;
 }
 
 /* Phones: tables become stacked cards — first column is the card title,
-   every other cell gets its column header as a small red label. */
+   every other cell gets its column header as a small label. */
 @media (max-width: 640px) {
   .tableOuter {
     overflow-x: visible;
@@ -464,15 +515,17 @@ $border: #DDDDDD;
 
     tr {
       border: 1px solid $border;
-      border-top: 4px solid $red;
+      border-top: 4px solid $navy;
       margin-bottom: 14px;
-      background: $row-bg;
+      background: $lgrey;
     }
 
-    td {
+    td,
+    tr:nth-child(even) td {
       border: none;
       padding: 6px 14px 10px;
       font-size: 0.93rem;
+      background: transparent;
 
       &::before {
         content: attr(data-label);
@@ -481,14 +534,16 @@ $border: #DDDDDD;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: $red;
+        color: $blue;
         margin-bottom: 2px;
       }
     }
 
-    td:first-child {
+    td:first-child,
+    td.keyCell {
       padding-top: 12px;
       font-size: 1rem;
+      background: $sub;
 
       &::before {
         display: none;
@@ -512,6 +567,7 @@ $border: #DDDDDD;
   display: grid;
   grid-template-columns: 56px 200px 1fr;
   border-bottom: 1px solid $border;
+  background: $lgrey;
 
   @media (max-width: 720px) {
     grid-template-columns: 48px 1fr;
@@ -519,8 +575,9 @@ $border: #DDDDDD;
 }
 
 .pipeNum {
-  background: $red;
+  background: $navy;
   color: #FFFFFF;
+  font-family: $font-head;
   font-size: 1.2rem;
   font-weight: 700;
   display: flex;
@@ -533,16 +590,17 @@ $border: #DDDDDD;
 }
 
 .pipeTitle {
+  font-family: $font-head;
   font-size: 1rem;
   font-weight: 700;
-  color: $text;
+  color: $navy;
   padding: 18px 16px;
 }
 
 .pipeText {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: $text-body;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: $black;
   margin: 0;
   padding: 18px 16px;
 
@@ -557,16 +615,17 @@ $border: #DDDDDD;
 }
 
 .shotTitle {
+  font-family: $font-head;
   font-size: 1.08rem;
   font-weight: 700;
-  color: #555555;
+  color: $navy;
   margin: 0 0 8px;
 }
 
 .shotText {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: $text-body;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: $black;
   margin: 0 0 18px;
 }
 
@@ -578,7 +637,7 @@ $border: #DDDDDD;
   border-radius: 10px;
   overflow: hidden;
   background: #FFFFFF;
-  box-shadow: 0 12px 32px -18px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 32px -18px rgba(31, 56, 100, 0.35);
 }
 
 .photoImg {
@@ -590,9 +649,9 @@ $border: #DDDDDD;
 .shotCaption {
   display: block;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   font-style: italic;
-  color: $text-muted;
+  color: $grey;
   margin-top: 10px;
   line-height: 1.5;
 }
@@ -619,19 +678,21 @@ $border: #DDDDDD;
 
 /* ── Status + banners ── */
 .statusLine {
+  font-family: $font-head;
   font-size: 1.02rem;
   font-weight: 700;
-  color: $text;
+  color: $navy;
   margin: 18px 0 0;
 
   span {
-    color: $green;
+    color: $slot;
   }
 }
 
-.bannerGreen,
-.bannerRed {
+.bannerTeal,
+.bannerBlue {
   color: #FFFFFF;
+  font-family: $font-head;
   text-align: center;
   font-size: 1.3rem;
   font-weight: 700;
@@ -644,55 +705,8 @@ $border: #DDDDDD;
   }
 }
 
-.bannerGreen { background: $green; }
-.bannerRed { background: $red-deep; }
-
-/* ── CTA ── */
-.ctaBox {
-  background: $row-bg;
-  border: 1px solid $border;
-  padding: 48px 28px;
-  text-align: center;
-  margin: 28px 0 20px;
-
-  h3 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    color: $text;
-    margin: 0 0 12px;
-
-    @media (max-width: 640px) {
-      font-size: 1.5rem;
-    }
-  }
-
-  p {
-    font-size: 1.05rem;
-    color: #555555;
-    max-width: 640px;
-    margin: 0 auto 26px;
-    line-height: 1.6;
-  }
-}
-
-.ctaBtnRed {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: $red;
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 14px 32px;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: background 0.2s ease, transform 0.2s ease;
-
-  &:hover {
-    background: $red-deep;
-    transform: translateY(-2px);
-  }
-}
+.bannerTeal { background: $slot; }
+.bannerBlue { background: $navy; }
 
 /* ── Phone-width tightening ── */
 @media (max-width: 640px) {
@@ -719,7 +733,7 @@ $border: #DDDDDD;
   }
 
   .heroDesc {
-    font-size: 0.98rem;
+    font-size: 1.05rem;
   }
 
   .pillDark,
@@ -753,7 +767,7 @@ $border: #DDDDDD;
   .shotText,
   .checkList li,
   .dotList li {
-    font-size: 0.95rem;
+    font-size: 1.02rem;
   }
 
   .subHeading {
@@ -785,16 +799,6 @@ $border: #DDDDDD;
 
   .pipeText {
     padding: 0 14px 14px;
-    font-size: 0.92rem;
-  }
-
-  .ctaBox {
-    padding: 32px 18px;
-  }
-
-  .ctaBtnRed {
-    width: 100%;
-    justify-content: center;
-    padding: 14px 20px;
+    font-size: 1rem;
   }
 }

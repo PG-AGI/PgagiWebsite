@@ -2,10 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
 import styles from '@/styles/components/organisms/BeaverCaseStudy.module.scss';
 import type { CaseStudyData } from '@/services/getCaseStudy';
-import EXTERNAL_LINKS from '@/constants/externalLinks';
 
 interface BeaverCaseStudyProps {
   caseStudy?: CaseStudyData | null;
@@ -300,19 +298,19 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
       {/* ── 2. Headline stats ── */}
       <div className={styles.rail}>
         <div className={styles.statStrip}>
-          <div className={`${styles.statTile} ${styles.tileRed}`}>
+          <div className={`${styles.statTile} ${styles.tileNavy}`}>
             <span className={styles.statValue}>15</span>
             <span className={styles.statLabel}>Report templates generating end to end across 4 report sections</span>
           </div>
-          <div className={`${styles.statTile} ${styles.tileBlack}`}>
+          <div className={`${styles.statTile} ${styles.tileDarkNavy}`}>
             <span className={styles.statValue}>~650</span>
             <span className={styles.statLabel}>Input fields read, validated and mapped into the report</span>
           </div>
-          <div className={`${styles.statTile} ${styles.tileGray}`}>
+          <div className={`${styles.statTile} ${styles.tileGrey}`}>
             <span className={styles.statValue}>4</span>
             <span className={styles.statLabel}>Roles with deliberately separate powers</span>
           </div>
-          <div className={`${styles.statTile} ${styles.tileDeepRed}`}>
+          <div className={`${styles.statTile} ${styles.tileBlue}`}>
             <span className={styles.statValue}>707</span>
             <span className={styles.statLabel}>Automated test functions across 46 test files</span>
           </div>
@@ -362,11 +360,11 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
           </p>
 
           <div className={styles.statPair}>
-            <div className={`${styles.statTile} ${styles.tileRed}`}>
+            <div className={`${styles.statTile} ${styles.tileNavy}`}>
               <span className={styles.statValue}>3</span>
               <span className={styles.statLabel}>Validation layers run before any document is generated — template integrity, deterministic checks, AI review</span>
             </div>
-            <div className={`${styles.statTile} ${styles.tileBlack}`}>
+            <div className={`${styles.statTile} ${styles.tileDarkNavy}`}>
               <span className={styles.statValue}>42</span>
               <span className={styles.statLabel}>AWS resources stood up by a single Terraform command</span>
             </div>
@@ -621,20 +619,10 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             <CheckList items={OUTCOME} />
           </div>
 
-          <div className={styles.bannerGreen}>Phase 1 Delivered — Live On The Client’s AWS Account</div>
-          <div className={styles.bannerRed}>Ready For Next Phase: Hardening &amp; Follow-Up</div>
+          <div className={styles.bannerTeal}>Phase 1 Delivered — Live On The Client’s AWS Account</div>
+          <div className={styles.bannerBlue}>Ready For Next Phase: Hardening &amp; Follow-Up</div>
         </section>
 
-        {/* ── 15. CTA ── */}
-        <div className={styles.ctaBox}>
-          <h3>See what your documents could become</h3>
-          <p>
-            We engineer production-grade document automation, validation and human-in-the-loop review systems for teams whose reports carry professional liability.
-          </p>
-          <a href={EXTERNAL_LINKS.CALENDLY_BOOKING} target="_blank" rel="noopener noreferrer" className={styles.ctaBtnRed}>
-            Schedule a Discovery Call <ArrowRight size={18} />
-          </a>
-        </div>
       </div>
     </div>
   );
