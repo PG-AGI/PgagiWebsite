@@ -624,6 +624,18 @@ const caseStudyMeta: Record<string, CaseStudyMeta> = {
     tags: [],
     category: 'HealthTech/AI/ML',
   },
+
+  'rs-engine-beaver-infra-ai-engineering-report-production': {
+    techStack: ['FastAPI', 'React / Vite', 'PostgreSQL (AWS RDS)', 'Aspose.Words', '+4'],
+    metrics: [
+      { value: 'Coming soon', label: 'User Conversions' },
+      { value: 'Coming soon', label: 'User Retention' },
+    ],
+    highlight: 'Currently in Internal Testing',
+    ctaLabel: 'View case study',
+    tags: [],
+    category: 'SaaS/AI/ML',
+  },
 };
 
 export const FILTER_TABS = [

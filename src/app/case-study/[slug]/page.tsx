@@ -24,6 +24,7 @@ import InnvorCaseStudy from '@/components/organisms/InnvorCaseStudy/InnvorCaseSt
 import JoveCaseStudy from '@/components/organisms/JoveCaseStudy/JoveCaseStudy';
 import OrderLoopCaseStudy from '@/components/organisms/OrderLoopCaseStudy/OrderLoopCaseStudy';
 import AskADoulaCaseStudy from '@/components/organisms/AskADoulaCaseStudy/AskADoulaCaseStudy';
+import BeaverCaseStudy from '@/components/organisms/BeaverCaseStudy/BeaverCaseStudy';
 import styles from '@/styles/app/case-study/[slug]/CaseStudy.module.scss';
 import { getCaseStudy } from '@/services/getCaseStudy';
 import clientPromise from '@/utils/mongodb';
@@ -255,6 +256,18 @@ export async function generateMetadata({
     };
   }
 
+  const isBeaver = params?.slug?.toLowerCase()?.includes('beaver');
+  if (isBeaver) {
+    return {
+      title: 'Beaver Infra Consultants: AI-Assisted Engineering Report Production | PG-AGI Case Study',
+      description: 'A production report-generation platform that turns structured Excel inputs into reviewed, issued engineering reports — built on the client’s own approved templates, a three-layer validation gate with a bounded AI review, rendered-page version comparison, role-separated review and release, and an immutable audit trail.',
+      robots: { index: true, follow: true },
+      appleWebApp: { title: 'Beaver Infra Case Study | PG-AGI' },
+      applicationName: 'PG-AGI Case Studies',
+      authors: [{ name: 'PG-AGI' }],
+    };
+  }
+
   const isAskADoula = params?.slug?.toLowerCase()?.includes('ask-a-doula');
   if (isAskADoula) {
     return {
@@ -394,6 +407,12 @@ export default async function CaseStudyPage({
   if (isOrderLoop) {
     const caseStudy = await getCaseStudy(params.slug).catch(() => null);
     return <OrderLoopCaseStudy caseStudy={caseStudy} />;
+  }
+
+  const isBeaver = params?.slug?.toLowerCase()?.includes('beaver');
+  if (isBeaver) {
+    const caseStudy = await getCaseStudy(params.slug).catch(() => null);
+    return <BeaverCaseStudy caseStudy={caseStudy} />;
   }
 
   const isAskADoula = params?.slug?.toLowerCase()?.includes('ask-a-doula');
