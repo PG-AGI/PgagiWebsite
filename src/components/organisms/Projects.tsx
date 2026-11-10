@@ -48,6 +48,7 @@ const PRIORITY_SLUGS: string[] = [
   'nuaiy-ai-driven-multilingual-gamified-learning-platform',                           // 6. Nuaiy
   'hermayhem-leading-her-ways-cycle-aware-ai-productivity',                            // 7. Leading Her Ways
   'ask-a-doula-ai-parenting-companion',                                                // 7b. Ask a Doula
+  'rs-engine-beaver-infra-ai-engineering-report-production',                           // 7c. Beaver Infra (RS-Engine)
   'vook-ai-wireless-microphone-companion-app',                                         // 8. Vook
   'sheltas-health-dataset-annotation-platform',                                        // 9. Sheltas
   'sentlogic-instagram-engagement-revenue-attribution',                                // 10. Sentlogic
