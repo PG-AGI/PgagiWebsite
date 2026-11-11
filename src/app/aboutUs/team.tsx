@@ -22,7 +22,7 @@ const teamMembers: TeamMember[] = [
  
   { id: 7, name: "Abhishek Khatri", role: "AI/ML", image: "/assets/team/abhishek-khatri.png" },
   { id: 8, name: "Bibin Vinod", role: "Golang Developer", image: "/assets/team/bibin-vinod.jpg" },
-  { id: 9, name: "Himanshu Mishra", role: "SDE", image: "/assets/team/Himanshu.png" },
+
   { id: 10, name: "Arav Prajapati", role: "SDE", image: "/assets/team/arav-prajapati.png" },
   { id: 11, name: "Aayush Soni", role: "DevOps Engineer", image: "/assets/team/aayush-soni.png" },
   
@@ -35,7 +35,7 @@ const teamMembers: TeamMember[] = [
   { id: 19, name: "Shreya S Acharya", role: "QA", image: "/assets/team/shreya-acharya.jpg" },
   { id: 20, name: "Hemanath Kumar R", role: "AI/ML", image: "/assets/team/hemanath-kumar-r.png" },
   { id: 21, name: "Saksham Verma", role: "AI/ML", image: "/assets/team/Saksham-verma.png" },
-  { id: 22, name: "Amit Verma", role: "AI/ML", image: "/assets/team/Amit.jpeg" },
+  
   { id: 23, name: "Avi Pandey", role: "AI/ML", image: "/assets/team/Avi.jpg" },
 
 
@@ -46,7 +46,7 @@ const teamMembers: TeamMember[] = [
   { id: 28, name: "Thanmay M Shetty", role: "AI/ML ", image: "/assets/team/Thanmay.jpg" },
   { id: 29, name: "Tanish Sarkar", role: "AI/ML ", image: "/assets/team/Tanish.jpg" },
   { id: 30, name: "Nathan Christopher Menon", role: "AI/ML ", image: "/assets/team/Nathan.jpeg" },
-  { id: 31, name: "Venkateramanan Manivannan", role: "AI/ML ", image: "/assets/team/venkate_pic.JPG" },
+ 
 
 
    { id: 32, name: "Rahul Srinivas Kodunuri", role: "SDE", image: "/assets/team/Rahulg.png" },
