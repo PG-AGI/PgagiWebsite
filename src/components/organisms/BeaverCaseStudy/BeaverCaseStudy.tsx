@@ -456,7 +456,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
           </p>
 
           <Shot
-            src="01_Screenshot1_Input_Sheet_Section3.1.png"
+            src="01_Screenshot1_Input_Sheet_Section3.1_v2.png"
             width={1112}
             height={572}
             title="Screenshot 1 — The input sheet."
@@ -464,7 +464,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             caption="Section 3.1 input sheet: locked metadata, a yellow Value column, and a repeating block for each reach."
           />
           <Shot
-            src="02_Screenshot2_Excel_Input_Step.png"
+            src="02_Screenshot2_Excel_Input_Step_v2.png"
             width={1917}
             height={931}
             title="Screenshot 2 — The Excel Input step."
@@ -472,7 +472,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             caption="Excel Input step for Section 1 — Introduction: sheet versions, validation state and the sheet grid."
           />
           <Shot
-            src="03_Screenshot3_Staged_Edits.png"
+            src="03_Screenshot3_Staged_Edits_v2.png"
             width={1917}
             height={925}
             title="Screenshot 3 — Staged edits."
@@ -488,7 +488,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             caption="The five validation stages shown to the engineer while the sheet is checked."
           />
           <Shot
-            src="05_Screenshot5_System_Validation.png"
+            src="05_Screenshot5_System_Validation_v2.png"
             width={1012}
             height={672}
             title="Screenshot 5 — System Validation."
@@ -496,7 +496,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             caption="System Validation for Section 3.5: 13 inputs read, 0 serious, 0 minor, 2 observations; AI review validated."
           />
           <Shot
-            src="06_Screenshot6_Review_Anchored_Comments.png"
+            src="06_Screenshot6_Review_Anchored_Comments_v2.png"
             width={1917}
             height={930}
             title="Screenshot 6 — Review with anchored comments."
@@ -512,7 +512,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             caption="Issue step for Section 3.1: internal V1 and client C0 numbered separately, with release actions."
           />
           <Shot
-            src="08_Screenshot8_Comparison_Real_Pages.png"
+            src="08_Screenshot8_Comparison_Real_Pages_v3.png"
             width={1917}
             height={922}
             title="Screenshot 8 — Comparison on real pages."
@@ -528,7 +528,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             caption="Admin log view with filters and a per-action trail (signed in, started session, requested download, previewed document)."
           />
           <Shot
-            src="10_Screenshot10_Generated_Output_Section3.10.png"
+            src="10_Screenshot10_Generated_Output_Section3.10_v3.png"
             width={1917}
             height={935}
             title="Screenshot 10 — Generated output."
@@ -536,7 +536,7 @@ export default function BeaverCaseStudy(_props: BeaverCaseStudyProps) {
             caption="Section 3.10 Assumptions & Limitations — tables rendered as repeating blocks (document V0)."
           />
           <Shot
-            src="11_Screenshot11_Generated_Figure_Q-Support_Chart.png"
+            src="11_Screenshot11_Generated_Figure_Q-Support_Chart_v2.png"
             width={1490}
             height={561}
             title="Screenshot 11 — Generated figures."
