@@ -29,7 +29,7 @@ const teamMembers: TeamMember[] = [
   
   { id: 14, name: "Airaad Sheikh", role: "SDE", image: "/assets/team/airaad-sheikh.jpeg" },
   { id: 15, name: "Hemanth Terli", role: "AI/ML", image: "/assets/team/hemanth-terli.png" },
-  { id: 16, name: "Rohan Mahajan", role: "AI/ML", image: "/assets/team/rohan-mahajan.png" },
+  { id: 16, name: "Rohan Mahajan", role: "AI/ML", image: "/assets/team/Rohan_Mahajan_Formal_Pic.png" },
   { id: 17, name: "Jayesh Pandey", role: "AI/ML", image: "/assets/team/jayesh-pandey.jpg" },
   { id: 18, name: "Mradul Gandhi", role: "SDE", image: "/assets/team/mradul-gandhi.png" },
   { id: 19, name: "Shreya S Acharya", role: "QA", image: "/assets/team/shreya-acharya.jpg" },
